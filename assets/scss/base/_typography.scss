@@ -1,0 +1,148 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BASE TYPOGRAPHY — surface-aware
+   Reset (box-sizing, html, body) lives in _reset.scss — not here.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+// Headings
+/* Headings read from surface vars */
+
+[data-surface="public"] {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--bt-font-serif);
+    font-weight: 300;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--s-heading-leading);
+  color: var(--bt-text);
+}
+
+h1 {
+  font-size: var(--bt-text-2xl);
+}
+h2 {
+  font-size: var(--bt-text-xl);
+}
+h3 {
+  font-size: var(--bt-text-lg);
+}
+h4 {
+  font-size: var(--bt-text-md);
+}
+h5 {
+  font-size: var(--bt-text-base);
+}
+h6 {
+  font-size: var(--bt-text-sm);
+}
+
+/* Backoffice: h3/h4 always sans — used as section labels in dense forms */
+[data-surface="backoffice"] h3,
+[data-surface="backoffice"] h4,
+.s-backoffice h3,
+.s-backoffice h4 {
+  font-family: var(--bt-font-sans);
+  font-weight: 500;
+}
+
+// Displays
+
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+  line-height: var(--s-heading-leading);
+  margin-bottom: var(--bt-sp-4) !important;
+  color: var(--bt-text) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+  &.display-1 {
+    line-height: 1.05 !important;
+    font-weight: 500 !important;
+    font-size: var(--bt-text-3xl) !important;
+  }
+
+  &.display-2 {
+    line-height: 1.05 !important;
+    font-weight: 500 !important;
+    font-size: var(--bt-text-2xl) !important;
+  }
+
+  &.display-3 {
+    line-height: 1.05 !important;
+    font-weight: 500 !important;
+    font-size: var(--bt-text-xl) !important;
+  }
+
+  &.display-4 {
+    line-height: 1.2 !important;
+    font-weight: 500 !important;
+    font-size: var(--bt-text-lg) !important;
+  }
+
+  &.display-5 {
+    font-weight: 600 !important;
+    font-size: var(--bt-text-md) !important;
+    color: var(--bt-gray-600) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  &.display-6 {
+    font-weight: 600 !important;
+    font-size: var(--bt-text-md) !important;
+    font-style: italic !important;
+    margin-bottom: var(--bt-sp-1) !important;
+  }
+}
+
+.lead {
+  font-size: var(--bt-text-md);
+  line-height: 1.7;
+  font-weight: 400;
+  color: var(--bt-gray-700);
+  margin-bottom: var(--bt-sp-6);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--bt-dark-gray);
+  text-underline-offset: 2px;
+  transition: color var(--bt-dur-fast);
+}
+a:hover {
+  color: var(--bt-blue);
+}
+
+code {
+  background: var(--bt-bg-alt);
+  color: var(--bt-text);
+  padding: .1em .35em;
+  border-radius: 3px;
+}
+
+code, kbd, pre, samp {
+  font-family: var(--bt-font-mono);
+  font-size: .875em;
+}
+
+.ff-serif {
+  font-family: var(--bt-font-serif);;
+}
+
+.ff-serif {
+  font-family: var(--bt-font-sans);;
+}

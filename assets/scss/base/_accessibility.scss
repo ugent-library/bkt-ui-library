@@ -1,0 +1,54 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   FOCUS & ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Universal visible focus ring */
+:focus-visible {
+  outline: 3px solid rgba(46, 106, 158, .5);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link — held for review.
+ * top: -999px has known issues at high zoom and in RTL layouts.
+ * Modern approach uses translate(-100%) instead. Revisit before shipping.
+ */
+// .skip-link {
+//   position: absolute;
+//   top: -999px;
+//   left: 0;
+//   background: var(--bt-blue-900);
+//   color: white;
+//   padding: .75rem 1.25rem;
+//   font-weight: 500;
+//   font-size: var(--bt-text-sm);
+//   z-index: 9999;
+//   border-radius: 0 0 var(--bt-radius) 0;
+//   text-decoration: none;
+// }
+// .skip-link:focus {
+//   top: 0;
+//   outline: none;
+// }
+
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}

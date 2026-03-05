@@ -1,0 +1,385 @@
+<!-- @title: Surfaces — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Foundations</p>
+    <h1 class="display-2 fw-light">Surfaces</h1>
+    <p class="lead">The same design system serves two fundamentally different contexts. One faces readers, researchers, and the world. One faces curators, librarians, and depot managers. They share tokens, components, and HTML structure. What changes is the personality — applied by a single attribute on the layout container.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The Split</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="row g-6 justify-content-between">
+          <div class="col-lg-5">
+            <div class="p-4">
+              <h3 data-surface="public">Public surface</h3>
+              <p class="lead">Faces researchers, readers, the open web. Knowledge is the subject. The interface steps back to let content speak.</p>
+              <dl>
+                <dt>Tag</dt>
+                <dd><code>data-surface="public"</code></dd>
+                <dt>Headings</dt>
+                <dd>IBM Plex Serif, weight 300</dd>
+                <dt>Body</dt>
+                <dd>IBM Plex Sans, 16px, 1.7 leading</dd>
+                <dt>Density</dt>
+                <dd>Generous — 24px section gaps, 8px card radius</dd>
+                <dt>Cards</dt>
+                <dd>Shadow, hover lift, breathing room</dd>
+                <dt>Topbar</dt>
+                <dd>64px height</dd>
+              </dl>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="p-4">
+              <h3>Backoffice surface</h3>
+              <p class="lead">Faces curators, librarians, depot workers. Work is the subject. The interface serves tasks, not attention. Information density is a feature.</p>
+              <dl>
+                <dt>Tag</dt>
+                <dd><code>data-surface="backoffice"</code></dd>
+                <dt>Headings</dt>
+                <dd>IBM Plex Sans, weight 500</dd>
+                <dt>Body</dt>
+                <dd>IBM Plex Sans, 15px, 1.5 leading</dd>
+                <dt>Density</dt>
+                <dd>Compact — 6px section gaps, 4px card radius</dd>
+                <dt>Cards</dt>
+                <dd>Flat, no shadow, border only</dd>
+                <dt>Topbar</dt>
+                <dd>52px height</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Live comparison — same component, two surfaces</h2>
+
+    <!-- Heading comparison -->
+    <div class="ds-demo">
+      <div class="ds-demo-label">Heading — same h1 text, two surfaces</div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div data-surface="public" class="p-4 bg-white rounded-3">
+              <p class="form-label mb-3">Public</p>
+              <h1>Research output</h1>
+              <p class="lead mb-0">Discover, cite, and build on the academic work of Ghent University researchers.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div data-surface="backoffice" class="p-4 bg-white rounded-3">
+              <p class="form-label mb-3">Backoffice</p>
+              <h1>Research output</h1>
+              <p class="lead mb-0">Discover, cite, and build on the academic work of Ghent University researchers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button comparison -->
+    <div class="ds-demo">
+      <div class="ds-demo-label">Buttons — same variants, different padding</div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div data-surface="public" class="p-4 bg-white rounded-3">
+              <p class="form-label mb-3">Public — more breathing room</p>
+              <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-primary">
+                  <i class="if if-add if-sm" aria-hidden="true"></i>
+                  Add to list
+                </button>
+                <button type="button" class="btn btn-secondary">Cite</button>
+                <button type="button" class="btn btn-ghost">Share</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div data-surface="backoffice" class="p-4 bg-white rounded-3">
+              <p class="form-label mb-3">Backoffice — tighter, more actions visible</p>
+              <div class="d-flex flex-wrap gap-2">
+                <button type="button" class="btn btn-primary">
+                  <i class="if if-add if-sm" aria-hidden="true"></i>
+                  Add research output
+                </button>
+                <button type="button" class="btn btn-secondary">Import</button>
+                <button type="button" class="btn btn-ghost">Export</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Research card -->
+    <div class="ds-demo">
+      <div class="ds-demo-label">Research output card — Public vs Backoffice</div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+
+          <!-- Public card -->
+          <div class="col-md-6">
+            <div data-surface="public">
+              <p class="form-label mb-3">Public</p>
+              <!-- <article class="card card-interactive">
+                <div class="card-body">
+                  <div class="d-flex gap-2 mb-2 flex-wrap">
+                    <span class="badge-oa">
+                      <i class="if if-unlock if-xs me-1" aria-hidden="true"></i>
+                      Open access
+                    </span>
+                    <span class="badge bg-secondary">Journal article</span>
+                  </div>
+                  <h3 class="card-title">
+                    <a href="#">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+                  </h3>
+                  <p>Esperon-Rodriguez, M., Arndt, S., De Pauw, K. <span>+6 authors</span></p>
+                  <p>Plants People Planet · 2026</p>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                  <a href="#">
+                    <i class="if if-download if-sm me-1" aria-hidden="true"></i>
+                    Download PDF
+                  </a>
+                  <a href="#">
+                    <i class="if if-cite if-sm me-1" aria-hidden="true"></i>
+                    Cite
+                  </a>
+                </div>
+              </article> -->
+            </div>
+          </div>
+
+          <!-- Backoffice row -->
+          <div class="col-md-6">
+            <div data-surface="backoffice">
+              <p class="form-label mb-3">Backoffice</p>
+              <!-- <div class="d-flex align-items-start gap-2 p-3 bg-white rounded-3">
+                <input type="checkbox" class="form-check-input mt-1 flex-shrink-0" aria-label="Select record">
+                <div class="flex-grow-1 min-width-0">
+                  <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                    <span class="badge bg-success">Published</span>
+                    <span class="badge-oa">OA</span>
+                    <span>2026</span>
+                  </div>
+                  <a href="#">Urban forests as essential infrastructure for climate resilience</a>
+                  <p>Esperon-Rodriguez, M., De Pauw, K. +6 · Journal article</p>
+                </div>
+                <div class="d-flex gap-1 flex-shrink-0">
+                  <button type="button" class="btn btn-ghost btn-sm py-1 px-2" aria-label="Edit record">
+                    <i class="if if-edit" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="btn btn-ghost btn-sm py-1 px-2" aria-label="More options">
+                    <i class="if if-more-options-horizontal" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">How to use it</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p>Apply the attribute to the outermost layout element. Everything inside inherits the surface variables. You can nest surfaces — a backoffice shell can contain a public-facing preview.</p>
+
+        <div class="ds-code">
+          <div class="ds-code-bar"><span class="ds-code-lang">html — public layout</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;body data-surface="public"&gt;
+  &lt;!-- all components render with serif headings, generous spacing --&gt;
+&lt;/body&gt;</pre>
+        </div>
+
+        <div class="ds-code mt-3">
+          <div class="ds-code-bar"><span class="ds-code-lang">html — backoffice layout</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;body data-surface="backoffice"&gt;
+  &lt;!-- all components render compact, sans headings --&gt;
+&lt;/body&gt;</pre>
+        </div>
+
+        <div class="ds-code mt-3">
+          <div class="ds-code-bar"><span class="ds-code-lang">html — mixed: backoffice with public preview panel</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;body data-surface="backoffice"&gt;
+  &lt;!-- curator toolbar and record form --&gt;
+  &lt;div class="bc-toolbar"&gt;...&lt;/div&gt;
+
+  &lt;!-- live public preview of how the record will appear --&gt;
+  &lt;aside data-surface="public" class="record-preview"&gt;
+    &lt;article class="card"&gt;...&lt;/article&gt;
+  &lt;/aside&gt;
+&lt;/body&gt;</pre>
+        </div>
+
+        <div class="ds-code mt-3">
+          <div class="ds-code-bar"><span class="ds-code-lang">css — reading surface variables in a custom component</span><button class="ds-code-copy">Copy</button></div>
+<pre>/* Component reads from surface — works in both contexts */
+.my-component-title {
+  font-family: var(--s-heading-font);      /* serif on public, sans on backoffice */
+  font-weight: var(--s-heading-weight);
+  letter-spacing: var(--s-heading-tracking);
+}
+
+.my-component-body {
+  font-size: var(--s-body-size);           /* 16px public, 15px backoffice */
+  line-height: var(--s-body-leading);      /* 1.7 public, 1.5 backoffice */
+  padding: var(--s-card-pad);              /* 1.5rem public, .875rem 1rem backoffice */
+}</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Surface decision guide</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="d-flex flex-column gap-2">
+          <div class="p-3 rounded-3 bt-bg d-flex gap-3">
+            <span>?</span>
+            <div>
+              <strong>The user is reading or discovering content.</strong>
+              <span> → Public surface. The content is the product.</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-3 bt-bg d-flex gap-3">
+            <span>?</span>
+            <div>
+              <strong>The user is managing, curating, or operating on records.</strong>
+              <span> → Backoffice surface. Speed and overview are the product.</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-3 bt-bg d-flex gap-3">
+            <span>?</span>
+            <div>
+              <strong>The user is depositing their own research output.</strong>
+              <span> → Public surface. This is a researcher's interaction with their own work, not a curation workflow. It should feel like the public face, not the backoffice.</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-3 bt-bg d-flex gap-3">
+            <span>?</span>
+            <div>
+              <strong>The interface serves multiple user types on the same screen.</strong>
+              <span> → Use the surface of the primary user. A librarian reviewing a researcher's submission is doing curation work → backoffice.</span>
+            </div>
+          </div>
+          <div class="p-3 rounded-3 bt-bg d-flex gap-3">
+            <span>?</span>
+            <div>
+              <strong>depotmanagement (physical depot operations).</strong>
+              <span> → Backoffice. Dense. Fast. The worker is scanning, picking, moving — not reading.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Icon system</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p>Two icon systems, one role each. They are not interchangeable.</p>
+
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="p-3 rounded-3 h-100">
+              <p class="form-label mb-2">UGent icon font — <code>i.if.if-[name]</code></p>
+              <p>All functional UI icons. Actions, navigation, status, form decorations. Your team extends this set when you need new functional icons.</p>
+              <ul>
+                <li>Button icons: download, upload, edit, delete, close, add</li>
+                <li>Navigation: home, back, forward, menu, settings</li>
+                <li>Status: check, warning, error, info, lock, unlock</li>
+                <li>Custom domain icons your team has added</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 rounded-3 h-100">
+              <p class="form-label mb-2">Remix Icons — <code>.ri-[name]</code></p>
+              <p>Decorative and graphic use only. Structural marks, illustration accents, empty state graphics. Never in buttons, labels, or status indicators.</p>
+              <ul>
+                <li>Empty state illustrations</li>
+                <li>Decorative section marks (◎ as SVG)</li>
+                <li>Large graphic icons in onboarding</li>
+                <li>Where a visual accent is needed, not a functional signal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <p class="form-label mb-3">Accessible icon usage — three patterns</p>
+
+          <div class="d-flex flex-column gap-3">
+
+            <div class="p-3 bg-ok-pale rounded-3">
+              <p class="form-label mb-2">✓ Icon + visible text (most common)</p>
+              <p>Icon is decorative. <code>aria-hidden="true"</code> hides it from screen readers. The visible text carries the meaning.</p>
+              <div class="ds-code">
+                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;button type="button" class="btn btn-primary"&gt;
+  &lt;i class="if if-download" aria-hidden="true"&gt;&lt;/i&gt;
+  Download PDF
+&lt;/button&gt;</pre>
+              </div>
+            </div>
+
+            <div class="p-3 bg-ok-pale rounded-3">
+              <p class="form-label mb-2">✓ Icon alone — label on the button</p>
+              <p>The <code>aria-label</code> goes on the <strong>button</strong>, never on the <code>&lt;i&gt;</code>. Screen readers announce the button's label, then its role ("Close dialog, button"). VoiceOver and NVDA both read this correctly.</p>
+              <div class="ds-code">
+                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- ✓ Correct: aria-label on the button --&gt;
+&lt;button type="button" class="btn btn-ghost" aria-label="Close dialog"&gt;
+  &lt;i class="if if-close" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;!-- ✗ Wrong: aria-label on the icon --&gt;
+&lt;button type="button" class="btn btn-ghost"&gt;
+  &lt;i class="if if-close" aria-label="Close"&gt;&lt;/i&gt;  &lt;!-- unreliable --&gt;
+&lt;/button&gt;</pre>
+              </div>
+              <div class="mt-3 p-3 bg-white rounded-3">
+                <p class="form-label mb-2">Live example — tab to this button</p>
+                <button type="button" class="btn btn-ghost" aria-label="Close dialog">
+                  <i class="if if-close" aria-hidden="true">✕</i>
+                </button>
+                <p>VoiceOver announces: <em>"Close dialog, button"</em></p>
+              </div>
+            </div>
+
+            <div class="p-3 bg-ok-pale rounded-3">
+              <p class="form-label mb-2">✓ Status icon alongside text</p>
+              <p>When the icon reinforces visible text, hide it. The text is sufficient.</p>
+              <div class="ds-code">
+                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;span class="badge-oa"&gt;
+  &lt;i class="if if-unlock if-xs" aria-hidden="true"&gt;&lt;/i&gt;
+  Open access
+&lt;/span&gt;
+
+&lt;!-- If the icon IS the only indicator, wrap with a span --&gt;
+&lt;span aria-label="Open access"&gt;
+  &lt;i class="if if-unlock" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/span&gt;</pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

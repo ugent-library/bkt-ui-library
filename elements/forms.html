@@ -1,0 +1,206 @@
+<!-- @title: Forms &amp; Inputs — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-2 fw-light">Forms &amp; Inputs</h1>
+    <p class="lead">Forms are where the "opinions over options" principle is most testable. Every field is a question. Questions cost the user something. Ask only when necessary, from the right person, once. The form's job is to make answering easy — not to be thorough.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Text inputs</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Default — label, input, optional hint</div>
+      <div class="ds-demo-body">
+        <div class="mb-3">
+          <label for="ex-title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="ex-title" placeholder="Enter the title as published">
+          <div class="form-text">Use the title exactly as it appears on the publication. Do not correct capitalisation.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Valid &amp; invalid states</div>
+      <div class="ds-demo-body">
+        <div class="row g-3">
+          <div class="col-6">
+            <label for="ex-doi-ok" class="form-label">DOI</label>
+            <input type="text" class="form-control is-valid" id="ex-doi-ok" value="10.1002/ppp3.70125">
+            <div class="valid-feedback">DOI verified — metadata prefilled from Crossref.</div>
+          </div>
+          <div class="col-6">
+            <label for="ex-doi-bad" class="form-label">DOI</label>
+            <input type="text" class="form-control is-invalid" id="ex-doi-bad" value="10.1002/ppp3.XXXXX">
+            <div class="invalid-feedback">This DOI could not be found. Check for typos or enter metadata manually.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Textarea</div>
+      <div class="ds-demo-body">
+        <div>
+          <label for="ex-abstract" class="form-label">Abstract</label>
+          <textarea class="form-control" id="ex-abstract" rows="4" placeholder="Paste or type the abstract…"></textarea>
+          <div class="form-text">Abstracts are indexed for search. A good abstract increases discoverability.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Select</div>
+      <div class="ds-demo-body">
+        <div>
+          <label for="ex-type" class="form-label">Publication type</label>
+          <select class="form-select" id="ex-type">
+            <option value="">Choose a type…</option>
+            <option value="journal-article" selected>Journal article</option>
+            <option value="book">Book</option>
+            <option value="book-chapter">Book chapter</option>
+            <option value="dataset">Dataset</option>
+            <option value="software">Software</option>
+            <option value="thesis">Thesis</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="mb-3"&gt;
+  &lt;label for="field-id" class="form-label"&gt;Label&lt;/label&gt;
+  &lt;input type="text" class="form-control" id="field-id"&gt;
+  &lt;div class="form-text"&gt;Hint text.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Validation states --&gt;
+&lt;input class="form-control is-valid" ...&gt;
+&lt;div class="valid-feedback"&gt;Success message&lt;/div&gt;
+
+&lt;input class="form-control is-invalid" ...&gt;
+&lt;div class="invalid-feedback"&gt;Error message&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Checkboxes &amp; radios</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Checkboxes</div>
+      <div class="ds-demo-body">
+        <fieldset>
+          <legend class="form-label">Access level</legend>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="oa-open" checked>
+            <label class="form-check-label" for="oa-open">Open access</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="oa-embargo">
+            <label class="form-check-label" for="oa-embargo">Under embargo</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="oa-restricted">
+            <label class="form-check-label" for="oa-restricted">Restricted access</label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Radios — publication type selector (backoffice pattern)</div>
+      <div class="ds-demo-body">
+        <fieldset>
+          <legend class="form-label">Publication type</legend>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="pub-type" id="type-journal" checked>
+            <label class="form-check-label" for="type-journal">Journal article</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="pub-type" id="type-book">
+            <label class="form-check-label" for="type-book">Book</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="pub-type" id="type-chapter">
+            <label class="form-check-label" for="type-chapter">Book chapter</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="pub-type" id="type-dataset">
+            <label class="form-check-label" for="type-dataset">Dataset</label>
+          </div>
+        </fieldset>
+        <div class="alert alert-warning mt-3">
+          <strong>Reality gap:</strong> In the actual backoffice, this renders as large radio cards (<code>c-radio-card</code>), not standard form checks. The radio card pattern is more scannable for deposit flows. See the deposit template for in-context usage.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Search input</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div>
+          <label for="ex-search" class="visually-hidden">Search research output</label>
+          <div class="input-group">
+            <input type="search" class="form-control form-control-search" id="ex-search" placeholder="Search by title, author, DOI…">
+            <button class="btn btn-primary" type="button">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Search with submit — always use a real button, not just an icon --&gt;
+&lt;!-- The label is visually hidden but present for screen readers --&gt;
+&lt;label for="search" class="visually-hidden"&gt;Search research output&lt;/label&gt;
+&lt;div class="input-group"&gt;
+  &lt;input type="search" class="form-control" id="search" placeholder="Search…"&gt;
+  &lt;button class="btn btn-primary" type="button"&gt;Search&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- HTMX live search (with debounce) --&gt;
+&lt;input type="search" class="form-control"
+  hx-get="/search"
+  hx-trigger="keyup changed delay:300ms"
+  hx-target="#results"
+  hx-swap="innerHTML"
+  name="q"
+  placeholder="Search…"&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility rules for forms</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Every <code>&lt;input&gt;</code> must have an associated <code>&lt;label&gt;</code> — never use <code>placeholder</code> as the only label</li>
+          <li>Group related controls with <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code></li>
+          <li>Error messages must be associated via <code>aria-describedby</code> or rendered adjacent to the field</li>
+          <li><code>autocomplete</code> attributes on personal data fields (name, email) improve usability and are WCAG 2.1 AA required</li>
+          <li>Required fields: use <code>required</code> attribute, not just a visual asterisk</li>
+          <li>Never disable a submit button to indicate errors — show the errors instead</li>
+          <li>On server-side validation failure (HTMX form post), move focus to the first error or the error summary</li>
+        </ul>
+        <div class="ds-code mt-3">
+          <div class="ds-code-bar"><span class="ds-code-lang">html — accessible error association</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="mb-3"&gt;
+  &lt;label for="email" class="form-label"&gt;Email address&lt;/label&gt;
+  &lt;input type="email"
+    class="form-control is-invalid"
+    id="email"
+    aria-describedby="email-error"
+    autocomplete="email"
+    required&gt;
+  &lt;div id="email-error" class="invalid-feedback"&gt;
+    Enter a valid email address.
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

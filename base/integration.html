@@ -1,0 +1,144 @@
+<!-- @title: Using in your app -->
+
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Base</p>
+    <h1 class="display-2">Using in your app</h1>
+    <p class="lead">How to integrate the Booktower design system into an application — CSS, icons, surfaces, and overrides.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">What you need</h2>
+    <p>The design system ships as two things: a compiled CSS file and a font file. That's it.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Files to copy from the UI kit</div>
+      <div class="ds-demo-body">
+        <pre><code>assets/booktower.css        ← the design system
+ assets/fonts/icon-font.woff2  ← icon font (primary)
+ assets/fonts/icon-font.woff   ← icon font (fallback)</code></pre>
+        <p class="mt-3 mb-0 text-muted" style="font-size: var(--bt-text-sm)">The font files must be served at <code>/assets/fonts/</code> relative to your app root, or you'll need to update the font paths (see below).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Load order</h2>
+    <p>Bootstrap must come before <code>booktower.css</code>. The design system overrides and extends Bootstrap — it does not replace it.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">HTML &lt;head&gt;</div>
+      <div class="ds-demo-body">
+        <pre><code>&lt;link rel="stylesheet" href="bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="booktower.css"&gt;</code></pre>
+      </div>
+    </div>
+
+    <p>For Bootstrap JS (dropdowns, modals etc.):</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Before &lt;/body&gt;</div>
+      <div class="ds-demo-body">
+        <pre><code>&lt;script src="bootstrap.bundle.min.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+
+    <p>Bootstrap CDN links if you're not bundling it:</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">CDN</div>
+      <div class="ds-demo-body">
+        <pre><code>&lt;!-- CSS --&gt;
+&lt;link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"&gt;
+&lt;link rel="stylesheet" href="/assets/booktower.css"&gt;
+
+&lt;!-- JS --&gt;
+&lt;script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;
+&lt;/script&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Surfaces</h2>
+    <p>Add <code>data-surface="public"</code> or <code>data-surface="backoffice"</code> to your <code>&lt;body&gt;</code> or any layout container. This activates the correct typographic personality for the context — serif headings and generous spacing for public-facing pages, sans and compact for backoffice tools.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Public app</div>
+      <div class="ds-demo-body">
+        <pre><code>&lt;body data-surface="public"&gt;</code></pre>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Backoffice app</div>
+      <div class="ds-demo-body">
+        <pre><code>&lt;body data-surface="backoffice"&gt;</code></pre>
+      </div>
+    </div>
+
+    <p>You can mix surfaces within a page — for example, a public-facing header above a backoffice data entry area:</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Mixed surfaces</div>
+      <div class="ds-demo-body">
+        <pre><code>&lt;header data-surface="public"&gt;...&lt;/header&gt;
+&lt;main data-surface="backoffice"&gt;...&lt;/main&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Icons</h2>
+    <p>Icons are included in <code>booktower.css</code> — no extra stylesheet needed. The font files must be reachable at <code>/assets/fonts/</code>.</p>
+
+    <p>See <a href="/foundations/icons.html">the icons page</a> for the full list of available icons.</p>
+
+    <h3 class="h5 mt-4 mb-2">If your font path is different</h3>
+    <p>The icon font is referenced as <code>/assets/fonts/icon-font.woff2</code> in <code>booktower.css</code>. If your app serves static files from a different path, you have two options:</p>
+    <ol>
+      <li><strong>Serve the fonts at the expected path.</strong> This is the simplest option — put the font files at <code>/assets/fonts/</code> on your server.</li>
+      <li><strong>Override the font-face declaration</strong> in your own stylesheet, loaded after <code>booktower.css</code>:
+        <div class="ds-demo mt-2">
+          <div class="ds-demo-label">your-overrides.css</div>
+          <div class="ds-demo-body">
+            <pre><code>@font-face {
+  font-family: "icon-font";
+  src: url("/your/path/icon-font.woff2") format("woff2"),
+       url("/your/path/icon-font.woff") format("woff");
+}</code></pre>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Overrides</h2>
+    <p>Keep overrides minimal and in one place — a single <code>overrides.css</code> loaded after <code>booktower.css</code>. Use CSS custom properties where possible, since most visual decisions are already tokenised.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Typical override pattern</div>
+      <div class="ds-demo-body">
+        <pre><code>/* overrides.css — loaded after booktower.css */
+
+/* Example: change the primary brand colour for this app */
+:root {
+  --bt-blue: #0057a8;
+  --bt-dark-blue: #003d7a;
+}</code></pre>
+      </div>
+    </div>
+
+    <p>Avoid overriding component classes directly where a token will do the same job. The token system is the intended extension point.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Keeping up to date</h2>
+    <p>When the UI kit updates, copy the new <code>booktower.css</code> and font files into your app and test. There is no automated update mechanism yet — this is intentional while the system is still evolving.</p>
+    <p>Breaking changes will be noted in the <a href="https://github.com/ugent-library/booktower-ui-library" target="_blank" rel="noopener">CHANGELOG</a>. In practice, token-based overrides are very unlikely to break between updates.</p>
+  </section>
+
+</div>

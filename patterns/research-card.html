@@ -1,0 +1,131 @@
+<!-- @title: Research Card — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-2 fw-light">Research Card</h1>
+    <p class="lead">The primary unit of the public interface. Not a "publication card" — research output includes journal articles, datasets, theses, software, policy reports, and heritage items. A 15th century manuscript and a 2024 preprint should feel equally at home in this component.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Open access</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <article class="card card-research" aria-label="Research output">
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="badge-oa">● Open access</span>
+              <span class="badge bg-primary">Journal article</span>
+              <span class="badge bg-success">Peer reviewed</span>
+            </div>
+            <h2 class="card-title">
+              <a href="#">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
+            </h2>
+            <p>
+              <a href="#">Esperon-Rodriguez, M.</a>,
+              <a href="#">Arndt, S.</a>,
+              <a href="#">De Pauw, K.</a>
+              <span> +6 authors</span>
+              · Plants People Planet · 2026
+            </p>
+            <p>
+              Urban areas are facing increasing risks from climate change, including heatwaves, flooding, wildfires, and growing social inequality. Urban forests form the backbone of green infrastructure supporting resilient, equitable, and sustainable cities.
+            </p>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-primary btn-sm">Download PDF</button>
+            <button type="button" class="btn btn-ghost btn-sm">Add to list</button>
+            <button type="button" class="btn btn-ghost btn-sm">Cite</button>
+            <span class="ms-auto">
+              <button type="button" class="btn btn-ghost btn-sm">Share</button>
+            </span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Restricted / embargo</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <article class="card card-research" aria-label="Research output">
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="badge-restricted">⚿ Restricted</span>
+              <span class="badge bg-primary">Book chapter</span>
+              <span class="badge bg-warning">Embargo until 2025</span>
+            </div>
+            <h2 class="card-title">
+              <a href="#">De Leuvense Codex: cataloguering en digitalisering van middeleeuwse handschriften in de universitaire context</a>
+            </h2>
+            <p>
+              <a href="#">Janssens, P.</a>
+              · In: Medieval Manuscripts in the Digital Age, pp. 145–178 · 2023
+            </p>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-secondary btn-sm">Request access</button>
+            <button type="button" class="btn btn-ghost btn-sm">Add to list</button>
+            <button type="button" class="btn btn-ghost btn-sm">Cite</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Semantic HTML</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-label">The card uses <code>&lt;article&gt;</code> — each record is a self-contained piece of content</div>
+      <div class="ds-code">
+        <div class="ds-code-bar">
+          <span class="ds-code-lang">html</span>
+          <button class="ds-code-copy">Copy</button>
+        </div>
+<pre>&lt;article class="card card-research" aria-label="Research output"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;div class="d-flex flex-wrap gap-2 mb-3"&gt;
+      &lt;span class="badge-oa"&gt;● Open access&lt;/span&gt;
+      &lt;span class="badge bg-primary"&gt;Journal article&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;h2 class="card-title"&gt;
+      &lt;a href="/research/01K9..."&gt;Title of the research output&lt;/a&gt;
+    &lt;/h2&gt;
+    &lt;p class="text-muted"&gt;Author, A., Author, B. · Journal · Year&lt;/p&gt;
+    &lt;p&gt;Abstract excerpt…&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="card-footer"&gt;
+    &lt;button type="button" class="btn btn-primary btn-sm"&gt;Download PDF&lt;/button&gt;
+    &lt;button type="button" class="btn btn-ghost btn-sm"&gt;Cite&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</pre>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">HTMX partial — load more without page reload</div>
+      <div class="ds-code">
+        <div class="ds-code-bar">
+          <span class="ds-code-lang">html</span>
+          <button class="ds-code-copy">Copy</button>
+        </div>
+<pre>&lt;!-- Results container --&gt;
+&lt;div id="results"&gt;
+  &lt;!-- cards here --&gt;
+&lt;/div&gt;
+
+&lt;!-- Load more — replaces itself with next page of cards --&gt;
+&lt;button
+  class="btn btn-secondary"
+  hx-get="/research?page=2&amp;partial=true"
+  hx-target="#results"
+  hx-swap="beforeend"
+  hx-indicator="#loading"&gt;
+  Load more
+&lt;/button&gt;
+
+&lt;span id="loading" class="htmx-indicator"&gt;Loading…&lt;/span&gt;</pre>
+      </div>
+    </div>
+  </section>
+</div>

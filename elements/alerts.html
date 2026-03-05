@@ -1,0 +1,141 @@
+<!-- @title: Alerts — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-2 fw-light">Alerts</h1>
+    <p class="lead">Alerts communicate system state. They are never decorative. Each variant maps to a specific type of information — using the wrong variant erodes trust. The system tells you what happened and why. Never leave the user wondering.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Variants</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Info — system action, context, prefilled data</div>
+      <div class="ds-demo-body">
+        <div class="alert alert-primary" role="alert">
+          <p class="alert-heading mb-1">
+            Metadata prefilled from Crossref
+          </p>
+          We found your research output by DOI. Please review the fields below — you only need to correct what's wrong.
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Success — action completed</div>
+      <div class="ds-demo-body">
+        <div class="alert alert-success" role="alert">
+          <p class="alert-heading mb-1">
+            Deposit submitted successfully</p>
+          Your research output has been received and is now in the curation queue. You will receive an email when it is published.
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Warning — attention required, not blocking</div>
+      <div class="ds-demo-body">
+        <div class="alert alert-warning" role="alert">
+          <p class="alert-heading mb-1">
+            Embargo period active</p>
+          This research output is under embargo until March 2025. Full text will become openly available automatically on that date.
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Danger — blocking error, action failed</div>
+      <div class="ds-demo-body">
+        <div class="alert alert-danger" role="alert">
+          <p class="alert-heading mb-1">
+            File upload failed</p>
+          The file exceeds the 500 MB limit, or the format is not supported. Accepted formats: PDF, DOCX, EPUB, XML.
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Secondary — neutral system message, no action required</div>
+      <div class="ds-demo-body">
+        <div class="alert alert-secondary" role="alert">
+          This record was last updated 3 days ago by a curator.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Dismissible</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="alert alert-primary alert-dismissible" role="alert">
+          <p class="alert-heading mb-1">
+            New curation guidelines available</p>
+          The metadata standards for datasets have been updated. <a href="#">Read the changes</a>.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="alert alert-primary alert-dismissible" role="alert"&gt;
+  &lt;p class="alert-heading mb-1"&gt;Heading&lt;/p&gt;
+  Message text here.
+  &lt;button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"&gt;&lt;/button&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Writing alerts</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-6">
+            <p class="form-label text-success mb-3">✓ Do</p>
+            <div class="d-flex flex-column gap-2">
+              <div class="p-2 bg-ok-pale rounded-3">Say what happened: <em>"Deposit submitted successfully"</em></div>
+              <div class="p-2 bg-ok-pale rounded-3">Say what to do next: <em>"You will receive an email when published"</em></div>
+              <div class="p-2 bg-ok-pale rounded-3">Be specific about errors: <em>"File exceeds 500 MB limit"</em></div>
+              <div class="p-2 bg-ok-pale rounded-3">Blame the system, not the user</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <p class="form-label text-danger mb-3">✗ Don't</p>
+            <div class="d-flex flex-column gap-2">
+              <div class="p-2 bg-err-pale rounded-3">Vague: <em>"An error occurred"</em></div>
+              <div class="p-2 bg-err-pale rounded-3">Blaming: <em>"You uploaded the wrong file type"</em></div>
+              <div class="p-2 bg-err-pale rounded-3">Using danger for non-critical info</div>
+              <div class="p-2 bg-err-pale rounded-3">Showing alerts that auto-dismiss before they're read</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Always include <code>role="alert"</code> — this triggers screen reader announcement</li>
+          <li>For non-urgent messages, use <code>role="status"</code> instead</li>
+          <li>Don't rely on colour alone — icons and text carry the meaning</li>
+          <li>Dismissible alerts must have a visible close button with <code>aria-label="Close"</code></li>
+          <li>Dynamically injected alerts (HTMX) must be inside an <code>aria-live</code> region</li>
+        </ul>
+        <div class="ds-code mt-3">
+          <div class="ds-code-bar"><span class="ds-code-lang">html — live region for HTMX alerts</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Place once near top of page, inject alerts into it with HTMX --&gt;
+&lt;div aria-live="polite" aria-atomic="true" id="alert-region"&gt;&lt;/div&gt;
+
+&lt;!-- HTMX response targets this region --&gt;
+&lt;form hx-post="/deposit" hx-target="#alert-region" hx-swap="innerHTML"&gt;
+  ...
+&lt;/form&gt;</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

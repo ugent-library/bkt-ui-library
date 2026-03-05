@@ -1,0 +1,2097 @@
+@charset "UTF-8";
+/* IBM Plex via Google Fonts — replace with self-hosted in production */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,300&display=swap");
+/*
+ * booktower.css — v2
+ * Bootstrap override layer + Booktower component system
+ *
+ * LOAD ORDER:
+ *   1. bootstrap.min.css
+ *   2. booktower.css          ← this file
+ *
+ * TWO-SURFACE ARCHITECTURE:
+ *   [data-surface="public"]     → expressive, serif, breathable, reader-paced
+ *   [data-surface="backoffice"] → dense, sans, information-first, action-ready
+ *
+ *   Apply to <body> or any layout container.
+ *   Components read from surface variables — same HTML, two personalities.
+ *
+ * ICON SYSTEM:
+ *   i.if.if-[name]  → UGent icon font — all icons (actions, nav, status, form decorations)
+ */
+/* ═══════════════════════════════════════════════════════════════════════════════
+   1. FOUNDATION TOKENS — shared by both surfaces
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Typography */
+  --bt-font-serif: 'IBM Plex Serif', serif;
+  --bt-font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --bt-font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  /* Type scale */
+  --bt-text-xs: 0.6875rem;
+  --bt-text-sm: 0.875rem;
+  --bt-text-base: 1rem;
+  --bt-text-md: 1.125rem;
+  --bt-text-lg: 1.375rem;
+  --bt-text-xl: 1.75rem;
+  --bt-text-2xl: 2.25rem;
+  --bt-text-3xl: 3rem;
+  /* Spacing — 4px base */
+  --bt-sp-1: 0.25rem;
+  --bt-sp-2: 0.5rem;
+  --bt-sp-3: 0.75rem;
+  --bt-sp-4: 1rem;
+  --bt-sp-5: 1.25rem;
+  --bt-sp-6: 1.5rem;
+  --bt-sp-8: 2rem;
+  --bt-sp-10: 2.5rem;
+  --bt-sp-12: 3rem;
+  --bt-sp-16: 4rem;
+  --bt-sp-20: 5rem;
+  --bt-sp-24: 6rem;
+  /* Borders & radius */
+  --bt-border: 1px solid var(--bt-border-color);
+  --bt-radius-sm: 2px;
+  --bt-radius: 4px;
+  --bt-radius-md: 6px;
+  --bt-radius-lg: 8px;
+  --bt-radius-xl: 12px;
+  --bt-radius-pill: 100px;
+  /* Shadows */
+  --bt-shadow-xs: 0 1px 2px rgba(26,24,20,.05);
+  --bt-shadow-sm: 0 1px 3px rgba(26,24,20,.08), 0 1px 2px rgba(26,24,20,.04);
+  --bt-shadow: 0 2px 8px rgba(26,24,20,.08), 0 1px 3px rgba(26,24,20,.04);
+  --bt-shadow-md: 0 4px 16px rgba(26,24,20,.10), 0 2px 4px rgba(26,24,20,.05);
+  --bt-shadow-modal: 0 20px 60px rgba(26,24,20,.18), 0 4px 12px rgba(26,24,20,.10);
+  /* Motion */
+  --bt-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --bt-dur-fast: 120ms;
+  --bt-dur-base: 200ms;
+  --bt-dur-slow: 350ms;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+  1. FOUNDATION TOKENS — shared by both surfaces
+  ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  --bt-white: #fff;
+  --bt-black: #000;
+  /* Grays */
+  --bt-gray-25: #fafafa;
+  --bt-gray-50: #f2f2f2;
+  --bt-gray-100: #e6e6e6;
+  --bt-gray-150: #dedede;
+  --bt-gray-200: #cccccc;
+  --bt-gray-300: #b4b4b4;
+  --bt-gray-400: #999999;
+  --bt-gray-500: #808080;
+  --bt-gray-550: #737373;
+  --bt-gray-600: #646464;
+  --bt-gray-700: #4d4d4d;
+  --bt-gray-800: #333333;
+  --bt-gray-900: #202020;
+  --bt-gray-1000: #14161a;
+  /* Blues */
+  --bt-blue-50: #e9f0fa;
+  --bt-blue-100: #d5e3f6;
+  --bt-blue-200: #a8c7f0;
+  --bt-blue-400: #4e8ee4;
+  --bt-blue-500: #3e7eda;
+  --bt-blue-600: #1e64c8;
+  --bt-blue-700: #003fa3;
+  --bt-blue-800: #132e53;
+  --bt-blue-900: #09172a;
+  /* Greens */
+  --bt-green-50: #f1f7ed;
+  --bt-green-100: #e3f0db;
+  --bt-green-200: #c5deba;
+  --bt-green-400: #8abe74;
+  --bt-green-500: #71a860;
+  --bt-green-600: #4e8b41;
+  --bt-green-700: #3a6831;
+  --bt-green-800: #23471f;
+  --bt-green-900: #11240f;
+  /* Reds */
+  --bt-red-50: #fdece7;
+  --bt-red-100: #fcd9cf;
+  --bt-red-200: #f7b4a1;
+  --bt-red-500: #dc4e28;
+  --bt-red-600: #bc3510;
+  --bt-red-700: #8d280c;
+  --bt-red-800: #601906;
+  --bt-red-900: #300d03;
+  /* Oranges */
+  --bt-orange-50: #fef7e7;
+  --bt-orange-100: #fdefce;
+  --bt-orange-200: #fadb9e;
+  --bt-orange-400: #f4b857;
+  --bt-orange-500: #f1a42b;
+  --bt-orange-600: #da840b;
+  --bt-orange-700: #915808;
+  --bt-orange-800: #623804;
+  --bt-orange-900: #311c02;
+  /* Primaries */
+  --bt-blue: var(--bt-blue-600);
+  --bt-dark-blue: var(--bt-blue-700);
+  --bt-light-blue: var(--bt-blue-50);
+  --bt-yellow: #ffd200;
+  --bt-dark-yellow: #e5b400;
+  --bt-light-yellow: #fffae5;
+  --bt-gray: var(--bt-gray-800);
+  --bt-dark-gray: var(--bt-gray-1000);
+  /* Secondaries and status */
+  --bt-green: var(--bt-green-500);
+  --bt-dark-green: var(--bt-green-700);
+  --bt-light-green: var(--bt-green-200);
+  --bt-red: var(--bt-red-500);
+  --bt-dark-red: var(--bt-red-600);
+  --bt-light-red: var(--bt-red-200);
+  --bt-orange: var(--bt-orange-600);
+  --bt-dark-orange: var(--bt-orange-700);
+  --bt-light-orange: var(--bt-orange-200);
+  --bt-turquoise: #27abad;
+  --bt-aqua: #2d8ca8;
+  --bt-grey-blue: #6f71b9;
+  --bt-purple: #825491;
+  --bt-light-purple: #be5190;
+  --bt-salmon-pink: #e85e71;
+  --bt-warm-orange: #fb7e3a;
+  /* Utilities */
+  --bt-success: var(--bt-green);
+  --bt-light-success: var(--bt-light-green);
+  --bt-dark-success: var(--bt-dark-green);
+  --bt-warning: var(--bt-orange);
+  --bt-light-warning: var(--bt-light-orange);
+  --bt-dark-warning: var(--bt-orange);
+  --bt-danger: var(--bt-red);
+  --bt-light-danger: var(--bt-light-red);
+  --bt-dark-danger: var(--bt-dark-red);
+  --bt-text: var(--bt-gray-700);
+  --bt-text-muted: var(--bt-gray-550);
+  --bt-border-color: var(--bt-gray-150);
+  --bt-icon-muted: var(--bt-gray-400);
+  --bt-icon-default: var(--bt-gray-600);
+  --bt-bg: var(--bt-gray-25);
+  --bt-bg-alt: var(--bt-gray-50);
+  --bt-bg-dark: var(--bt-gray);
+  --bt-bg-dark-alt: var(--bt-dark-gray);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   2. SURFACE TOKENS — the personality split
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   Apply data-surface="public" or data-surface="backoffice" to <body>
+   or any layout container. Mix within a page if needed (e.g. a public header
+   above a backoffice content area).
+
+   Surface variables:
+     --s-heading-font      font-family for h1–h4
+     --s-heading-weight    font-weight for headings
+     --s-heading-leading   line-height for headings
+     --s-body-font         font-family for body text
+     --s-body-size         base font size
+     --s-body-leading      line-height for body text
+     --s-lead-font         font-family for .lead
+     --s-lead-style        font-style for .lead
+     --s-section-gap       gap between major page sections
+     --s-card-pad          padding inside cards
+     --s-card-radius       border-radius for cards
+     --s-card-shadow       default card shadow
+     --s-card-shadow-hover card shadow on hover/focus
+     --s-input-pad-y/x     form input padding
+     --s-btn-pad-y/x       button padding
+     --s-topbar-height     application topbar height
+*/
+[data-surface=public],
+.s-public {
+  --s-heading-font: var(--bt-font-serif);
+  --s-heading-leading: 1.25;
+}
+
+[data-surface=backoffice],
+.s-backoffice {
+  --s-heading-font: var(--bt-font-sans);
+  --s-heading-leading: 1.25;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   3. BOOTSTRAP VARIABLE OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════════════ */
+:root {
+  --bs-font-sans-serif: 'IBM Plex Sans', system-ui, sans-serif;
+  --bs-font-monospace: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-color: var(--bt-text);
+  --bs-body-bg: var(--bt-bg);
+  --bs-border-color: var(--bt-border-color);
+  --bs-border-radius: var(--bt-radius);
+  --bs-border-radius-sm: var(--bt-radius-sm);
+  --bs-border-radius-lg: var(--bt-radius-lg);
+  --bs-border-radius-xl: var(--bt-radius-xl);
+  --bs-primary: var(--bt-gray-1000);
+  --bs-danger: var(--bt-danger);
+  --bs-success: var(--bt-green);
+  --bs-warning: var(--bt-warning);
+  --bs-heading-color: var(--bt-text-dark-gray);
+  --bs-link-color: var(--bt-blue-700);
+  --bs-link-hover-color: var(--bt-blue-500);
+  --bs-focus-ring-color: rgba(46, 106, 158, 0.25);
+  --bs-focus-ring-width: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BASE RESET
+   ═══════════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  font-family: var(--bt-font-sans);
+  font-size: var(--s-body-size, 1rem);
+  line-height: var(--s-body-leading, 1.6);
+  color: var(--bt-gray-1000);
+  background: var(--bt-bg);
+}
+
+ul, ol {
+  margin-bottom: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BASE TYPOGRAPHY — surface-aware
+   Reset (box-sizing, html, body) lives in _reset.scss — not here.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Headings read from surface vars */
+[data-surface=public] h1, [data-surface=public] h2, [data-surface=public] h3, [data-surface=public] h4, [data-surface=public] h5, [data-surface=public] h6 {
+  font-family: var(--bt-font-serif);
+  font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--s-heading-leading);
+  color: var(--bt-text);
+}
+
+h1 {
+  font-size: var(--bt-text-2xl);
+}
+
+h2 {
+  font-size: var(--bt-text-xl);
+}
+
+h3 {
+  font-size: var(--bt-text-lg);
+}
+
+h4 {
+  font-size: var(--bt-text-md);
+}
+
+h5 {
+  font-size: var(--bt-text-base);
+}
+
+h6 {
+  font-size: var(--bt-text-sm);
+}
+
+/* Backoffice: h3/h4 always sans — used as section labels in dense forms */
+[data-surface=backoffice] h3,
+[data-surface=backoffice] h4,
+.s-backoffice h3,
+.s-backoffice h4 {
+  font-family: var(--bt-font-sans);
+  font-weight: 500;
+}
+
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6 {
+  line-height: var(--s-heading-leading);
+  margin-bottom: var(--bt-sp-4) !important;
+  color: var(--bt-text) !important;
+}
+
+h1.display-1,
+h2.display-1,
+h3.display-1,
+h4.display-1,
+h5.display-1,
+h6.display-1 {
+  line-height: 1.05 !important;
+  font-weight: 500 !important;
+  font-size: var(--bt-text-3xl) !important;
+}
+h1.display-2,
+h2.display-2,
+h3.display-2,
+h4.display-2,
+h5.display-2,
+h6.display-2 {
+  line-height: 1.05 !important;
+  font-weight: 500 !important;
+  font-size: var(--bt-text-2xl) !important;
+}
+h1.display-3,
+h2.display-3,
+h3.display-3,
+h4.display-3,
+h5.display-3,
+h6.display-3 {
+  line-height: 1.05 !important;
+  font-weight: 500 !important;
+  font-size: var(--bt-text-xl) !important;
+}
+h1.display-4,
+h2.display-4,
+h3.display-4,
+h4.display-4,
+h5.display-4,
+h6.display-4 {
+  line-height: 1.2 !important;
+  font-weight: 500 !important;
+  font-size: var(--bt-text-lg) !important;
+}
+h1.display-5,
+h2.display-5,
+h3.display-5,
+h4.display-5,
+h5.display-5,
+h6.display-5 {
+  font-weight: 600 !important;
+  font-size: var(--bt-text-md) !important;
+  color: var(--bt-gray-600) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+h1.display-6,
+h2.display-6,
+h3.display-6,
+h4.display-6,
+h5.display-6,
+h6.display-6 {
+  font-weight: 600 !important;
+  font-size: var(--bt-text-md) !important;
+  font-style: italic !important;
+  margin-bottom: var(--bt-sp-1) !important;
+}
+
+.lead {
+  font-size: var(--bt-text-md);
+  line-height: 1.7;
+  font-weight: 400;
+  color: var(--bt-gray-700);
+  margin-bottom: var(--bt-sp-6);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--bt-dark-gray);
+  text-underline-offset: 2px;
+  transition: color var(--bt-dur-fast);
+}
+
+a:hover {
+  color: var(--bt-blue);
+}
+
+code {
+  background: var(--bt-bg-alt);
+  color: var(--bt-text);
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+code, kbd, pre, samp {
+  font-family: var(--bt-font-mono);
+  font-size: 0.875em;
+}
+
+.ff-serif {
+  font-family: var(--bt-font-serif);
+}
+
+.ff-serif {
+  font-family: var(--bt-font-sans);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   FOCUS & ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Universal visible focus ring */
+:focus-visible {
+  outline: 3px solid rgba(46, 106, 158, 0.5);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip link — held for review.
+ * top: -999px has known issues at high zoom and in RTL layouts.
+ * Modern approach uses translate(-100%) instead. Revisit before shipping.
+ */
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+/* ── Forms & inputs ─────────────────────────────────────────────────────────── */
+.form-control, .form-select {
+  font-family: var(--bt-font-sans);
+  font-size: var(--s-body-size, 0.9375rem);
+  color: var(--bt-gray-1000);
+  background: var(--bt-white);
+  border: 1px solid #b5b2ae;
+  border-radius: var(--bt-radius);
+  padding: var(--s-input-pad-y, 0.4375rem) var(--s-input-pad-x, 0.75rem);
+  line-height: 1.5;
+  width: 100%;
+  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--bt-blue-700);
+  box-shadow: 0 0 0 3px rgba(46, 106, 158, 0.15);
+  outline: none;
+  background: var(--bt-white);
+}
+
+.form-control:disabled, .form-select:disabled {
+  background: var(--bt-bg-alt);
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.form-control.is-valid {
+  border-color: var(--bt-green);
+}
+
+.form-control.is-valid:focus {
+  box-shadow: 0 0 0 3px rgba(26, 107, 58, 0.15);
+}
+
+.form-control.is-invalid {
+  border-color: var(--bt-danger);
+}
+
+.form-control.is-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(155, 28, 28, 0.12);
+}
+
+.form-label {
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-1000);
+  margin-bottom: 0.375rem;
+  display: block;
+}
+
+.form-text {
+  font-size: 0.8125rem;
+  color: var(--bt-gray-700);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}
+
+.valid-feedback {
+  font-size: 0.8125rem;
+  color: var(--bt-green);
+  margin-top: 0.25rem;
+}
+
+.invalid-feedback {
+  font-size: 0.8125rem;
+  color: var(--bt-danger);
+  margin-top: 0.25rem;
+}
+
+.form-control-search {
+  border-radius: var(--bt-radius-pill);
+  background-color: var(--bt-bg-alt);
+  border-color: transparent;
+  padding-left: 2.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24' stroke='%23b5b2ae' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0.75rem center;
+  background-size: 16px;
+}
+
+.form-control-search:focus {
+  background-color: var(--bt-white);
+  border-color: var(--bt-blue-700);
+}
+
+.form-check-input {
+  accent-color: var(--bt-blue-900);
+  cursor: pointer;
+}
+
+.form-check-input:focus-visible {
+  outline: 3px solid rgba(46, 106, 158, 0.4);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   6. ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+/* ── Buttons ────────────────────────────────────────────────────────────────── */
+.btn {
+  font-family: var(--bt-font-sans);
+  font-weight: 500;
+  font-size: var(--bt-text-sm);
+  border-radius: var(--bt-radius);
+  padding: var(--s-btn-pad-y, 0.4375rem) var(--s-btn-pad-x, 1rem);
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  transition: background-color var(--bt-dur-fast) var(--bt-ease), border-color var(--bt-dur-fast) var(--bt-ease), color var(--bt-dur-fast) var(--bt-ease), transform var(--bt-dur-fast) var(--bt-ease);
+}
+
+.btn-sm {
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.625rem;
+}
+
+.btn-lg {
+  font-size: 1rem;
+  padding: 0.625rem 1.375rem;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(46, 106, 158, 0.45);
+  outline-offset: 2px;
+}
+
+.btn:disabled, .btn[aria-disabled=true] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--bt-blue-900);
+  border: 1px solid var(--bt-blue-900);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #152f47;
+  border-color: #152f47;
+  color: white;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--bt-blue-900);
+  color: var(--bt-blue-900);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bt-blue-200);
+}
+
+.btn-link {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--bt-gray-700);
+}
+
+.btn-link:hover:not(:disabled) {
+  background: var(--bt-gray-50);
+  color: var(--bt-gray-1000);
+}
+
+.btn-danger {
+  background: transparent;
+  border: 1px solid var(--bt-danger);
+  color: var(--bt-danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--bt-light-red);
+}
+
+/* ── bc-toolbar ─────────────────────────────────────────────────────────────── */
+.bc-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 0.625rem 0;
+  gap: 1rem;
+}
+
+.bc-toolbar.h-auto {
+  align-items: flex-start;
+}
+
+.bc-toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.bc-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.bc-toolbar__title {
+  font-family: var(--s-heading-font, var(--bt-font-serif));
+  font-size: 1.375rem;
+  font-weight: var(--s-heading-weight, 300);
+  color: var(--bt-gray-1000);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-surface=backoffice] .bc-toolbar__title,
+.s-backoffice .bc-toolbar__title {
+  font-family: var(--bt-font-sans);
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.c-button-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.c-button-toolbar--wide-spacing {
+  gap: 0.875rem;
+}
+
+.c-button-toolbar--vertical {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   u-layout — Application layout shells
+   CSS grid replacement for the OLD flex + u-scroll-wrapper stacking approach.
+
+   The OLD system used:
+     d-flex + u-scroll-wrapper + u-scroll-wrapper__body + overflow: hidden on main
+   This caused sticky positioning to break inside overflow:hidden ancestors.
+
+   v2 uses CSS grid on the outermost shell so sidebars can be position:sticky
+   without fighting overflow constraints.
+
+   Three shells are defined:
+
+   1. u-layout--app         topbar + left sidebar + main
+                            Used by: reviewer overview, researcher detail,
+                            depot management, design system shell
+                            Optional: right panel via u-layout--app.has-panel
+
+   2. u-layout--deposit     topbar + step navigator + wide content column
+                            Used by: add publication, deposit flow
+
+   3. u-layout--public      topbar + constrained centred content
+                            Used by: public research detail, public search
+
+   All three share .bc-navbar as their topbar component.
+   Surface is set on the layout root: data-surface="backoffice" or "public".
+   ═══════════════════════════════════════════════════════════════════════════════ */
+/* ── 1. u-layout--app ───────────────────────────────────────────────────────── */
+.u-layout--app {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "navbar  navbar" "sidebar main";
+  min-height: 100vh;
+}
+
+.u-layout--app > .bc-navbar {
+  grid-area: navbar;
+}
+
+.u-layout--app > .c-sub-sidebar {
+  grid-area: sidebar;
+  position: sticky;
+  top: var(--bc-navbar-height, 48px);
+  height: calc(100vh - var(--bc-navbar-height, 48px));
+  overflow-y: auto;
+}
+
+.u-layout--app > main {
+  grid-area: main;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional right panel — section stepper, activity log, metadata */
+.u-layout--app.has-panel {
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "navbar  navbar  navbar" "sidebar main    panel";
+}
+
+.u-layout--app > .c-side-panel--inline {
+  grid-area: panel;
+  position: sticky;
+  top: var(--bc-navbar-height, 48px);
+  height: calc(100vh - var(--bc-navbar-height, 48px));
+  overflow-y: auto;
+}
+
+/* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
+.u-layout--deposit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "navbar  navbar" "stepper content";
+  min-height: 100vh;
+}
+
+.u-layout--deposit > .bc-navbar {
+  grid-area: navbar;
+}
+
+.u-layout--deposit > .c-stepper {
+  grid-area: stepper;
+  position: sticky;
+  top: var(--bc-navbar-height, 48px);
+  height: calc(100vh - var(--bc-navbar-height, 48px));
+  overflow-y: auto;
+  width: 200px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--bt-border-color);
+  padding: var(--bt-sp-5) 0;
+}
+
+.u-layout--deposit > main {
+  grid-area: content;
+  min-width: 0;
+  padding: var(--bt-sp-8) var(--bt-sp-10);
+  max-width: 800px;
+}
+
+/* ── 3. u-layout--public ────────────────────────────────────────────────────── */
+.u-layout--public {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.u-layout--public > .bc-navbar {
+  flex-shrink: 0;
+}
+
+.u-layout--public > main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--bt-sp-8) var(--bt-sp-6);
+}
+
+/* DO NOT EDIT — generated by `npm run build:icons` from assets/icon-font-source/ */
+@font-face {
+  font-family: "icon-font";
+  src: url("/assets/fonts/icon-font.woff2") format("woff2"), url("/assets/fonts/icon-font.woff") format("woff");
+}
+i[class^=if-]:before, i[class*=" if-"]:before {
+  font-family: icon-font !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.if-add:before {
+  content: "\f101";
+}
+
+.if-alert-fill:before {
+  content: "\f102";
+}
+
+.if-alert:before {
+  content: "\f103";
+}
+
+.if-arrow-double-down:before {
+  content: "\f104";
+}
+
+.if-arrow-double-up:before {
+  content: "\f105";
+}
+
+.if-arrow-down:before {
+  content: "\f106";
+}
+
+.if-arrow-go-back:before {
+  content: "\f107";
+}
+
+.if-arrow-left:before {
+  content: "\f108";
+}
+
+.if-arrow-right-double-line:before {
+  content: "\f109";
+}
+
+.if-arrow-right:before {
+  content: "\f10a";
+}
+
+.if-arrow-up:before {
+  content: "\f10b";
+}
+
+.if-article:before {
+  content: "\f10c";
+}
+
+.if-asterisk:before {
+  content: "\f10d";
+}
+
+.if-bar-chart:before {
+  content: "\f10e";
+}
+
+.if-book:before {
+  content: "\f10f";
+}
+
+.if-briefcase:before {
+  content: "\f110";
+}
+
+.if-building:before {
+  content: "\f111";
+}
+
+.if-calendar-1:before {
+  content: "\f112";
+}
+
+.if-calendar:before {
+  content: "\f113";
+}
+
+.if-caret-down:before {
+  content: "\f114";
+}
+
+.if-caret-left:before {
+  content: "\f115";
+}
+
+.if-caret-right:before {
+  content: "\f116";
+}
+
+.if-caret-up:before {
+  content: "\f117";
+}
+
+.if-cc-by-line:before {
+  content: "\f118";
+}
+
+.if-cc-line:before {
+  content: "\f119";
+}
+
+.if-cc-nc-line:before {
+  content: "\f11a";
+}
+
+.if-cc-nd-line:before {
+  content: "\f11b";
+}
+
+.if-cc-sa-line:before {
+  content: "\f11c";
+}
+
+.if-cc-zero-line:before {
+  content: "\f11d";
+}
+
+.if-check-circle-fill:before {
+  content: "\f11e";
+}
+
+.if-check-circle:before {
+  content: "\f11f";
+}
+
+.if-check-double:before {
+  content: "\f120";
+}
+
+.if-check:before {
+  content: "\f121";
+}
+
+.if-chevron-down:before {
+  content: "\f122";
+}
+
+.if-chevron-left:before {
+  content: "\f123";
+}
+
+.if-chevron-right:before {
+  content: "\f124";
+}
+
+.if-chevron-up:before {
+  content: "\f125";
+}
+
+.if-close-circle-fill:before {
+  content: "\f126";
+}
+
+.if-close:before {
+  content: "\f127";
+}
+
+.if-contract-left-line:before {
+  content: "\f128";
+}
+
+.if-contract-left-right-line:before {
+  content: "\f129";
+}
+
+.if-contract-right-line:before {
+  content: "\f12a";
+}
+
+.if-contract-up-down-line:before {
+  content: "\f12b";
+}
+
+.if-copy:before {
+  content: "\f12c";
+}
+
+.if-corner-right-up-line:before {
+  content: "\f12d";
+}
+
+.if-database:before {
+  content: "\f12e";
+}
+
+.if-delete:before {
+  content: "\f12f";
+}
+
+.if-double-quotes:before {
+  content: "\f130";
+}
+
+.if-download:before {
+  content: "\f131";
+}
+
+.if-draft-fill:before {
+  content: "\f132";
+}
+
+.if-draft:before {
+  content: "\f133";
+}
+
+.if-drag:before {
+  content: "\f134";
+}
+
+.if-edit:before {
+  content: "\f135";
+}
+
+.if-empty:before {
+  content: "\f136";
+}
+
+.if-error-circle-fill:before {
+  content: "\f137";
+}
+
+.if-error-circle:before {
+  content: "\f138";
+}
+
+.if-expand-height-line:before {
+  content: "\f139";
+}
+
+.if-expand-left-line:before {
+  content: "\f13a";
+}
+
+.if-expand-left-right-line:before {
+  content: "\f13b";
+}
+
+.if-expand-right-line:before {
+  content: "\f13c";
+}
+
+.if-expand-up-down-line:before {
+  content: "\f13d";
+}
+
+.if-expand-width-line:before {
+  content: "\f13e";
+}
+
+.if-external-link:before {
+  content: "\f13f";
+}
+
+.if-eye-fill:before {
+  content: "\f140";
+}
+
+.if-eye-off:before {
+  content: "\f141";
+}
+
+.if-eye:before {
+  content: "\f142";
+}
+
+.if-feedback-fill:before {
+  content: "\f143";
+}
+
+.if-file-pdf:before {
+  content: "\f144";
+}
+
+.if-file-text:before {
+  content: "\f145";
+}
+
+.if-file-word:before {
+  content: "\f146";
+}
+
+.if-file:before {
+  content: "\f147";
+}
+
+.if-forbid:before {
+  content: "\f148";
+}
+
+.if-ghent-university:before {
+  content: "\f149";
+}
+
+.if-global:before {
+  content: "\f14a";
+}
+
+.if-grid:before {
+  content: "\f14b";
+}
+
+.if-home:before {
+  content: "\f14c";
+}
+
+.if-info-circle-filled:before {
+  content: "\f14d";
+}
+
+.if-info-circle:before {
+  content: "\f14e";
+}
+
+.if-list-check:before {
+  content: "\f14f";
+}
+
+.if-list-unordered:before {
+  content: "\f150";
+}
+
+.if-lock-unlock:before {
+  content: "\f151";
+}
+
+.if-lock:before {
+  content: "\f152";
+}
+
+.if-log-out:before {
+  content: "\f153";
+}
+
+.if-mail:before {
+  content: "\f154";
+}
+
+.if-map-pin-line:before {
+  content: "\f155";
+}
+
+.if-menu:before {
+  content: "\f156";
+}
+
+.if-message:before {
+  content: "\f157";
+}
+
+.if-messages:before {
+  content: "\f158";
+}
+
+.if-more:before {
+  content: "\f159";
+}
+
+.if-move-bottom:before {
+  content: "\f15a";
+}
+
+.if-move-left:before {
+  content: "\f15b";
+}
+
+.if-move-right:before {
+  content: "\f15c";
+}
+
+.if-move-top:before {
+  content: "\f15d";
+}
+
+.if-no-edit:before {
+  content: "\f15e";
+}
+
+.if-notification:before {
+  content: "\f15f";
+}
+
+.if-orcid:before {
+  content: "\f160";
+}
+
+.if-pin:before {
+  content: "\f161";
+}
+
+.if-request-change:before {
+  content: "\f162";
+}
+
+.if-reset-left-line:before {
+  content: "\f163";
+}
+
+.if-search:before {
+  content: "\f164";
+}
+
+.if-service:before {
+  content: "\f165";
+}
+
+.if-settings:before {
+  content: "\f166";
+}
+
+.if-share:before {
+  content: "\f167";
+}
+
+.if-skip-down-line:before {
+  content: "\f168";
+}
+
+.if-skip-left-line:before {
+  content: "\f169";
+}
+
+.if-skip-right-line:before {
+  content: "\f16a";
+}
+
+.if-skip-up-line:before {
+  content: "\f16b";
+}
+
+.if-start:before {
+  content: "\f16c";
+}
+
+.if-subtract:before {
+  content: "\f16d";
+}
+
+.if-table:before {
+  content: "\f16e";
+}
+
+.if-time:before {
+  content: "\f16f";
+}
+
+.if-tool:before {
+  content: "\f170";
+}
+
+.if-upload:before {
+  content: "\f171";
+}
+
+.if-user-add:before {
+  content: "\f172";
+}
+
+.if-user:before {
+  content: "\f173";
+}
+
+.if-zoom-in:before {
+  content: "\f174";
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ICON SYSTEM — UGent icon font (.if)
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   USAGE RULES:
+
+   Icon + visible text (icon is decorative — most common):
+     <button type="button">
+       <i class="if if-download" aria-hidden="true"></i>
+       Download PDF
+     </button>
+
+   Icon alone — label MUST be on the button, NOT the icon:
+     <button type="button" aria-label="Close dialog">
+       <i class="if if-close" aria-hidden="true"></i>
+     </button>
+
+   NEVER:
+     <i class="if if-close" aria-label="Close">  ← label on wrong element
+     <i class="if if-download">                   ← no label anywhere
+*/
+.if {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
+/* Size variants */
+.if-xs {
+  font-size: 0.75rem;
+}
+
+.if-sm {
+  font-size: 0.875rem;
+}
+
+/* .if default = 1rem — set by the font itself */
+.if-lg {
+  font-size: 1.25rem;
+}
+
+.if-xl {
+  font-size: 1.5rem;
+}
+
+.if-2xl {
+  font-size: 2rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   9. UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════════════════════ */
+.bt-border {
+  border: 1px solid var(--bt-gray-200);
+}
+
+.bt-border-top {
+  border-top: 1px solid var(--bt-gray-200);
+}
+
+.bt-border-right {
+  border-right: 1px solid var(--bt-gray-200);
+}
+
+.bt-border-bottom {
+  border-bottom: 1px solid var(--bt-gray-200);
+}
+
+.bt-border-left {
+  border-left: 1px solid var(--bt-gray-200);
+}
+
+.bt-border-dark {
+  border-color: var(--bt-gray-500);
+}
+
+/* Grays */
+.bt-bg-white {
+  background-color: var(--bt-white);
+}
+
+.bt-bg-gray-25 {
+  background-color: var(--bt-gray-25);
+}
+
+.bt-bg-gray-50 {
+  background-color: var(--bt-gray-50);
+}
+
+.bt-bg-gray-100 {
+  background-color: var(--bt-gray-100);
+}
+
+.bt-bg-gray-150 {
+  background-color: var(--bt-gray-150);
+}
+
+.bt-bg-gray-200 {
+  background-color: var(--bt-gray-200);
+}
+
+.bt-bg-gray-300 {
+  background-color: var(--bt-gray-300);
+}
+
+.bt-bg-gray-400 {
+  background-color: var(--bt-gray-400);
+}
+
+.bt-bg-gray-500 {
+  background-color: var(--bt-gray-500);
+}
+
+.bt-bg-gray-550 {
+  background-color: var(--bt-gray-550);
+}
+
+.bt-bg-gray-600 {
+  background-color: var(--bt-gray-600);
+}
+
+.bt-bg-gray-700 {
+  background-color: var(--bt-gray-700);
+}
+
+.bt-bg-gray-800 {
+  background-color: var(--bt-gray-800);
+}
+
+.bt-bg-gray-900 {
+  background-color: var(--bt-gray-900);
+}
+
+.bt-bg-gray-1000 {
+  background-color: var(--bt-gray-1000);
+}
+
+.bt-bg-black {
+  background-color: var(--bt-black);
+}
+
+/* Blues */
+.bt-bg-blue-50 {
+  background-color: var(--bt-blue-50);
+}
+
+.bt-bg-blue-100 {
+  background-color: var(--bt-blue-100);
+}
+
+.bt-bg-blue-200 {
+  background-color: var(--bt-blue-200);
+}
+
+.bt-bg-blue-400 {
+  background-color: var(--bt-blue-400);
+}
+
+.bt-bg-blue-500 {
+  background-color: var(--bt-blue-500);
+}
+
+.bt-bg-blue-600 {
+  background-color: var(--bt-blue-600);
+}
+
+.bt-bg-blue-700 {
+  background-color: var(--bt-blue-700);
+}
+
+.bt-bg-blue-800 {
+  background-color: var(--bt-blue-800);
+}
+
+.bt-bg-blue-900 {
+  background-color: var(--bt-blue-900);
+}
+
+/* Greens */
+.bt-bg-green-50 {
+  background-color: var(--bt-green-50);
+}
+
+.bt-bg-green-100 {
+  background-color: var(--bt-green-100);
+}
+
+.bt-bg-green-200 {
+  background-color: var(--bt-green-200);
+}
+
+.bt-bg-green-400 {
+  background-color: var(--bt-green-400);
+}
+
+.bt-bg-green-500 {
+  background-color: var(--bt-green-500);
+}
+
+.bt-bg-green-600 {
+  background-color: var(--bt-green-600);
+}
+
+.bt-bg-green-700 {
+  background-color: var(--bt-green-700);
+}
+
+.bt-bg-green-800 {
+  background-color: var(--bt-green-800);
+}
+
+.bt-bg-green-900 {
+  background-color: var(--bt-green-900);
+}
+
+/* Reds */
+.bt-bg-red-50 {
+  background-color: var(--bt-red-50);
+}
+
+.bt-bg-red-100 {
+  background-color: var(--bt-red-100);
+}
+
+.bt-bg-red-200 {
+  background-color: var(--bt-red-200);
+}
+
+.bt-bg-red-500 {
+  background-color: var(--bt-red-500);
+}
+
+.bt-bg-red-600 {
+  background-color: var(--bt-red-600);
+}
+
+.bt-bg-red-700 {
+  background-color: var(--bt-red-700);
+}
+
+.bt-bg-red-800 {
+  background-color: var(--bt-red-800);
+}
+
+.bt-bg-red-900 {
+  background-color: var(--bt-red-900);
+}
+
+/* Oranges */
+.bt-bg-orange-50 {
+  background-color: var(--bt-orange-50);
+}
+
+.bt-bg-orange-100 {
+  background-color: var(--bt-orange-100);
+}
+
+.bt-bg-orange-200 {
+  background-color: var(--bt-orange-200);
+}
+
+.bt-bg-orange-400 {
+  background-color: var(--bt-orange-400);
+}
+
+.bt-bg-orange-500 {
+  background-color: var(--bt-orange-500);
+}
+
+.bt-bg-orange-600 {
+  background-color: var(--bt-orange-600);
+}
+
+.bt-bg-orange-700 {
+  background-color: var(--bt-orange-700);
+}
+
+.bt-bg-orange-800 {
+  background-color: var(--bt-orange-800);
+}
+
+.bt-bg-orange-900 {
+  background-color: var(--bt-orange-900);
+}
+
+/* Primaries */
+.bt-bg-blue {
+  background-color: var(--bt-blue);
+}
+
+.bt-bg-dark-blue {
+  background-color: var(--bt-dark-blue);
+}
+
+.bt-bg-light-blue {
+  background-color: var(--bt-light-blue);
+}
+
+.bt-bg-yellow {
+  background-color: var(--bt-yellow);
+}
+
+.bt-bg-dark-yellow {
+  background-color: var(--bt-dark-yellow);
+}
+
+.bt-bg-light-yellow {
+  background-color: var(--bt-light-yellow);
+}
+
+/* Secondaries and status */
+.bt-bg-green {
+  background-color: var(--bt-green);
+}
+
+.bt-bg-dark-green {
+  background-color: var(--bt-dark-green);
+}
+
+.bt-bg-light-green {
+  background-color: var(--bt-light-green);
+}
+
+.bt-bg-red {
+  background-color: var(--bt-red);
+}
+
+.bt-bg-dark-red {
+  background-color: var(--bt-dark-red);
+}
+
+.bt-bg-light-red {
+  background-color: var(--bt-light-red);
+}
+
+.bt-bg-orange {
+  background-color: var(--bt-orange);
+}
+
+.bt-bg-dark-orange {
+  background-color: var(--bt-dark-orange);
+}
+
+.bt-bg-light-orange {
+  background-color: var(--bt-light-orange);
+}
+
+.bt-bg-turquoise {
+  background-color: var(--bt-turquoise);
+}
+
+.bt-bg-aqua {
+  background-color: var(--bt-aqua);
+}
+
+.bt-bg-grey-blue {
+  background-color: var(--bt-grey-blue);
+}
+
+.bt-bg-purple {
+  background-color: var(--bt-purple);
+}
+
+.bt-bg-light-purple {
+  background-color: var(--bt-light-purple);
+}
+
+.bt-bg-salmon-pink {
+  background-color: var(--bt-salmon-pink);
+}
+
+.bt-bg-warm-orange {
+  background-color: var(--bt-warm-orange);
+}
+
+/* Utilities */
+.bt-bg-success {
+  background-color: var(--bt-success);
+}
+
+.bt-bg-light-success {
+  background-color: var(--bt-light-success);
+}
+
+.bt-bg-dark-success {
+  background-color: var(--bt-dark-success);
+}
+
+.bt-bg-warning {
+  background-color: var(--bt-warning);
+}
+
+.bt-bg-light-warning {
+  background-color: var(--bt-light-warning);
+}
+
+.bt-bg-dark-warning {
+  background-color: var(--bt-dark-warning);
+}
+
+.bt-bg-danger {
+  background-color: var(--bt-danger);
+}
+
+.bt-bg-light-danger {
+  background-color: var(--bt-light-danger);
+}
+
+.bt-bg-dark-danger {
+  background-color: var(--bt-dark-danger);
+}
+
+.bt-bg {
+  background-color: var(--bt-bg);
+}
+
+.bt-bg-alt {
+  background-color: var(--bt-bg-alt);
+}
+
+.bt-bg-dark {
+  background-color: var(--bt-bg-dark);
+}
+
+.bt-bg-dark-alt {
+  background-color: var(--bt-bg-dark-alt);
+}
+
+/* Grays */
+.bt-text-white {
+  color: var(--bt-white);
+}
+
+.bt-text-gray-25 {
+  color: var(--bt-gray-25);
+}
+
+.bt-text-gray-50 {
+  color: var(--bt-gray-50);
+}
+
+.bt-text-gray-100 {
+  color: var(--bt-gray-100);
+}
+
+.bt-text-gray-150 {
+  color: var(--bt-gray-150);
+}
+
+.bt-text-gray-200 {
+  color: var(--bt-gray-200);
+}
+
+.bt-text-gray-300 {
+  color: var(--bt-gray-300);
+}
+
+.bt-text-gray-400 {
+  color: var(--bt-gray-400);
+}
+
+.bt-text-gray-500 {
+  color: var(--bt-gray-500);
+}
+
+.bt-text-gray-550 {
+  color: var(--bt-gray-550);
+}
+
+.bt-text-gray-600 {
+  color: var(--bt-gray-600);
+}
+
+.bt-text-gray-700 {
+  color: var(--bt-gray-700);
+}
+
+.bt-text-gray-800 {
+  color: var(--bt-gray-800);
+}
+
+.bt-text-gray-900 {
+  color: var(--bt-gray-900);
+}
+
+.bt-text-gray-1000 {
+  color: var(--bt-gray-1000);
+}
+
+.bt-text-black {
+  color: var(--bt-black);
+}
+
+/* Blues */
+.bt-text-blue-50 {
+  color: var(--bt-blue-50);
+}
+
+.bt-text-blue-100 {
+  color: var(--bt-blue-100);
+}
+
+.bt-text-blue-200 {
+  color: var(--bt-blue-200);
+}
+
+.bt-text-blue-400 {
+  color: var(--bt-blue-400);
+}
+
+.bt-text-blue-500 {
+  color: var(--bt-blue-500);
+}
+
+.bt-text-blue-600 {
+  color: var(--bt-blue-600);
+}
+
+.bt-text-blue-700 {
+  color: var(--bt-blue-700);
+}
+
+.bt-text-blue-800 {
+  color: var(--bt-blue-800);
+}
+
+.bt-text-blue-900 {
+  color: var(--bt-blue-900);
+}
+
+/* Greens */
+.bt-text-green-50 {
+  color: var(--bt-green-50);
+}
+
+.bt-text-green-100 {
+  color: var(--bt-green-100);
+}
+
+.bt-text-green-200 {
+  color: var(--bt-green-200);
+}
+
+.bt-text-green-400 {
+  color: var(--bt-green-400);
+}
+
+.bt-text-green-500 {
+  color: var(--bt-green-500);
+}
+
+.bt-text-green-600 {
+  color: var(--bt-green-600);
+}
+
+.bt-text-green-700 {
+  color: var(--bt-green-700);
+}
+
+.bt-text-green-800 {
+  color: var(--bt-green-800);
+}
+
+.bt-text-green-900 {
+  color: var(--bt-green-900);
+}
+
+/* Reds */
+.bt-text-red-50 {
+  color: var(--bt-red-50);
+}
+
+.bt-text-red-100 {
+  color: var(--bt-red-100);
+}
+
+.bt-text-red-200 {
+  color: var(--bt-red-200);
+}
+
+.bt-text-red-500 {
+  color: var(--bt-red-500);
+}
+
+.bt-text-red-600 {
+  color: var(--bt-red-600);
+}
+
+.bt-text-red-700 {
+  color: var(--bt-red-700);
+}
+
+.bt-text-red-800 {
+  color: var(--bt-red-800);
+}
+
+.bt-text-red-900 {
+  color: var(--bt-red-900);
+}
+
+/* Oranges */
+.bt-text-orange-50 {
+  color: var(--bt-orange-50);
+}
+
+.bt-text-orange-100 {
+  color: var(--bt-orange-100);
+}
+
+.bt-text-orange-200 {
+  color: var(--bt-orange-200);
+}
+
+.bt-text-orange-400 {
+  color: var(--bt-orange-400);
+}
+
+.bt-text-orange-500 {
+  color: var(--bt-orange-500);
+}
+
+.bt-text-orange-600 {
+  color: var(--bt-orange-600);
+}
+
+.bt-text-orange-700 {
+  color: var(--bt-orange-700);
+}
+
+.bt-text-orange-800 {
+  color: var(--bt-orange-800);
+}
+
+.bt-text-orange-900 {
+  color: var(--bt-orange-900);
+}
+
+/* Primaries */
+.bt-text-blue {
+  color: var(--bt-blue);
+}
+
+.bt-text-dark-blue {
+  color: var(--bt-dark-blue);
+}
+
+.bt-text-light-blue {
+  color: var(--bt-light-blue);
+}
+
+.bt-text-yellow {
+  color: var(--bt-yellow);
+}
+
+.bt-text-dark-yellow {
+  color: var(--bt-dark-yellow);
+}
+
+.bt-text-light-yellow {
+  color: var(--bt-light-yellow);
+}
+
+.bt-text-gray {
+  color: var(--bt-gray);
+}
+
+.bt-text-dark-gray {
+  color: var(--bt-dark-gray);
+}
+
+/* Secondaries and status */
+.bt-text-green {
+  color: var(--bt-green);
+}
+
+.bt-text-dark-green {
+  color: var(--bt-dark-green);
+}
+
+.bt-text-light-green {
+  color: var(--bt-light-green);
+}
+
+.bt-text-red {
+  color: var(--bt-red);
+}
+
+.bt-text-dark-red {
+  color: var(--bt-dark-red);
+}
+
+.bt-text-light-red {
+  color: var(--bt-light-red);
+}
+
+.bt-text-orange {
+  color: var(--bt-orange);
+}
+
+.bt-text-dark-orange {
+  color: var(--bt-dark-orange);
+}
+
+.bt-text-light-orange {
+  color: var(--bt-light-orange);
+}
+
+.bt-text-turquoise {
+  color: var(--bt-turquoise);
+}
+
+.bt-text-aqua {
+  color: var(--bt-aqua);
+}
+
+.bt-text-grey-blue {
+  color: var(--bt-grey-blue);
+}
+
+.bt-text-purple {
+  color: var(--bt-purple);
+}
+
+.bt-text-light-purple {
+  color: var(--bt-light-purple);
+}
+
+.bt-text-salmon-pink {
+  color: var(--bt-salmon-pink);
+}
+
+.bt-text-warm-orange {
+  color: var(--bt-warm-orange);
+}
+
+/* Utilities */
+.bt-text-success {
+  color: var(--bt-success);
+}
+
+.bt-text-light-success {
+  color: var(--bt-light-success);
+}
+
+.bt-text-dark-success {
+  color: var(--bt-dark-success);
+}
+
+.bt-text-warning {
+  color: var(--bt-warning);
+}
+
+.bt-text-light-warning {
+  color: var(--bt-light-warning);
+}
+
+.bt-text-dark-warning {
+  color: var(--bt-dark-warning);
+}
+
+.bt-text-danger {
+  color: var(--bt-danger);
+}
+
+.bt-text-light-danger {
+  color: var(--bt-light-danger);
+}
+
+.bt-text-dark-danger {
+  color: var(--bt-dark-danger);
+}
+
+.bt-text {
+  color: var(--bt-text);
+}
+
+.bt-text-muted {
+  color: var(--bt-text-muted);
+}
+
+.bt-icon-muted {
+  color: var(--bt-icon-muted);
+}
+
+.bt-icon-default {
+  color: var(--bt-icon-default);
+}

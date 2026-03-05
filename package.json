@@ -1,0 +1,20 @@
+{
+  "name": "booktower-ui-library",
+  "version": "0.1.0",
+  "description": "Booktower UI Library — biblio.ugent.be and family",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "npm run build && concurrently -k \"node server.js\" \"npm:watch:css\"",
+    "build": "npm run build:icons && npm run build:css",
+    "build:icons": "fantasticon",
+    "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css",
+    "watch:css": "sass --watch --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "fantasticon": "^4.1.0",
+    "sass": "^1.94.0"
+  }
+}

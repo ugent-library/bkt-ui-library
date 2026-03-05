@@ -1,0 +1,401 @@
+<!-- @title: HTMX Patterns — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-2 fw-light">HTMX &amp; Hypermedia Patterns</h1>
+    <p class="lead">The Biblio stack is SSR-first with HTMX for interactions. This page documents the patterns your developers should reach for — and the rules that keep the architecture clean. HTMX works best when you treat it as what it is: an extension of HTML, not a JavaScript framework with different syntax.</p>
+  </header>
+
+  <!-- Architecture statement -->
+  <div class="arch-note mb-12">
+    <strong>The architecture in one sentence:</strong> the server renders HTML, HTMX swaps fragments of it, and progressive enhancement means every form and link works without JavaScript first. A page should be <em>functional without HTMX</em> and <em>better with it</em> — not broken without it.
+  </div>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Core principles for this stack</h2>
+    <div class="principle-row">
+      <div class="principle-box">
+        <h3>HTML first</h3>
+        Every form posts to a real URL. Every link navigates. HTMX intercepts and upgrades — it never replaces the underlying semantic behaviour. Test with JavaScript disabled regularly.
+      </div>
+      <div class="principle-box">
+        <h3>Server owns state</h3>
+        The server returns HTML fragments, not JSON for the client to render. HTMX swaps them in. This means your templates stay on the server, close to your data.
+      </div>
+      <div class="principle-box">
+        <h3>Stable URLs</h3>
+        Every significant view has a URL. Detail pages, search results with filters, paginated lists — all bookmarkable and shareable. Use <code>hx-push-url</code> when a user would want to bookmark the current state.
+      </div>
+      <div class="principle-box">
+        <h3>Accessible by default</h3>
+        HTMX swaps don't automatically notify screen readers. You must use <code>aria-live</code> regions for dynamic updates, and manage focus explicitly when content changes. See the a11y section below.
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pattern 1 — Live search</h2>
+    <p>Used in: backoffice overview, public search, people lookup. Debounced keyup, targets a results container, shows a loading indicator.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">The pattern</div>
+      <div class="ds-demo-body">
+        <label for="demo-search" class="visually-hidden">Search research output</label>
+        <input type="search" class="form-control" id="demo-search"
+          placeholder="Search by title, author, DOI…"
+          aria-controls="search-results"
+          aria-label="Search research output">
+        <div id="search-results" role="region" aria-live="polite" aria-label="Search results"
+         >
+          <!-- Server returns &lt;article&gt; elements or an empty state here -->
+          Type to search…
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- The input --&gt;
+&lt;label for="q" class="visually-hidden"&gt;Search research output&lt;/label&gt;
+&lt;input type="search"
+  class="form-control"
+  id="q"
+  name="q"
+  placeholder="Search by title, author, DOI…"
+  aria-controls="search-results"
+  hx-get="/search"
+  hx-trigger="keyup changed delay:300ms, search"
+  hx-target="#search-results"
+  hx-swap="innerHTML"
+  hx-indicator="#search-spinner"&gt;
+
+&lt;!-- Loading indicator --&gt;
+&lt;span id="search-spinner" class="htmx-indicator"&gt;
+  &lt;span class="spinner-border spinner-border-sm" role="status" aria-label="Searching…"&gt;&lt;/span&gt;
+&lt;/span&gt;
+
+&lt;!-- Live region — screen readers announce updates --&gt;
+&lt;div id="search-results"
+  role="region"
+  aria-live="polite"
+  aria-label="Search results"&gt;
+  &lt;!-- Server returns article elements here --&gt;
+&lt;/div&gt;</pre>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — server partial response (/search?q=urban)</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- This is what the server returns — raw HTML fragment, no shell --&gt;
+&lt;p class="text-muted"&gt;12 results for "urban"&lt;/p&gt;
+
+&lt;article class="card card-research"&gt;
+  &lt;div class="card-body"&gt;
+    &lt;h2 class="card-title"&gt;
+      &lt;a href="/research/01K9..."&gt;Urban forests as essential infrastructure…&lt;/a&gt;
+    &lt;/h2&gt;
+    &lt;p class="text-muted"&gt;Esperon-Rodriguez et al. · 2026&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+
+&lt;!-- More articles… --&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pattern 2 — Inline form save (draft autosave)</h2>
+    <p>Used in: deposit flow. The form posts on blur or button click. The server returns a success fragment or validation errors. No page reload.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Save with status feedback</div>
+      <div class="ds-demo-body">
+        <div>
+          <div class="mb-3">
+            <label for="demo-title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="demo-title"
+              value="Urban forests as essential infrastructure…">
+          </div>
+          <div class="d-flex gap-2 align-items-center">
+            <button type="button" class="btn btn-secondary btn-sm">
+              Save draft
+              <span class="htmx-indicator ms-1">
+                <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
+              </span>
+            </button>
+            <span id="save-feedback" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;form hx-post="/deposit/01K9.../save"
+  hx-target="#save-feedback"
+  hx-swap="innerHTML"
+  hx-indicator="#save-spinner"&gt;
+
+  &lt;div class="mb-3"&gt;
+    &lt;label for="title" class="form-label"&gt;Title&lt;/label&gt;
+    &lt;input type="text" class="form-control" id="title" name="title"
+      value="{{ publication.title }}"&gt;
+  &lt;/div&gt;
+
+  &lt;!-- More fields… --&gt;
+
+  &lt;div class="d-flex gap-2 align-items-center"&gt;
+    &lt;button type="submit" class="btn btn-secondary btn-sm"&gt;
+      Save draft
+      &lt;span id="save-spinner" class="htmx-indicator ms-1"&gt;
+        &lt;span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"&gt;&lt;/span&gt;
+      &lt;/span&gt;
+    &lt;/button&gt;
+    &lt;span id="save-feedback" role="status" aria-live="polite"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;!-- Server returns on success (replaces #save-feedback) --&gt;
+&lt;span&gt;
+  &lt;i class="ri-checkbox-circle-line" aria-hidden="true"&gt;&lt;/i&gt;
+  Saved
+&lt;/span&gt;
+
+&lt;!-- Server returns on validation error (replaces whole form via hx-target="closest form") --&gt;
+&lt;!-- Return the full form HTML with is-invalid classes applied to failing fields --&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pattern 3 — Inline confirm (destructive actions)</h2>
+    <p>Used in: delete record, remove author, archive item. Show a confirmation in-place before the irreversible action. Never use a modal for a single-field confirmation.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">In-place confirm — no modal, no page reload</div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-2" id="delete-demo-row">
+          <span>Urban forests as essential infrastructure…</span>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <div id="delete-actions" class="d-flex gap-1">
+              <button type="button" class="btn btn-ghost btn-sm"
+                onclick="document.getElementById('delete-actions').style.display='none';document.getElementById('delete-confirm').classList.add('visible')">
+                <i class="ri-delete-bin-line" aria-hidden="true"></i>
+                <span class="visually-hidden">Delete</span>
+              </button>
+            </div>
+            <div id="delete-confirm" class="inline-confirm align-items-center gap-2">
+              <span>Delete this record?</span>
+              <button type="button" class="btn btn-danger btn-sm">Yes, delete</button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                onclick="document.getElementById('delete-confirm').classList.remove('visible');document.getElementById('delete-actions').style.display='flex'">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — the HTMX version</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Initial state --&gt;
+&lt;div id="record-row-{{ id }}"&gt;
+  &lt;span&gt;{{ title }}&lt;/span&gt;
+  &lt;button
+    hx-get="/research/{{ id }}/delete-confirm"
+    hx-target="#record-row-{{ id }}"
+    hx-swap="outerHTML"
+    class="btn btn-ghost btn-sm"
+    aria-label="Delete {{ title }}"&gt;
+    &lt;i class="ri-delete-bin-line" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Server returns (replaces the whole row) --&gt;
+&lt;div id="record-row-{{ id }}"&gt;
+  &lt;span&gt;{{ title }}&lt;/span&gt;
+  &lt;span&gt;Delete this record?&lt;/span&gt;
+  &lt;button
+    hx-delete="/research/{{ id }}"
+    hx-target="#record-row-{{ id }}"
+    hx-swap="outerHTML swap:300ms"
+    class="btn btn-danger btn-sm"&gt;Yes, delete&lt;/button&gt;
+  &lt;button
+    hx-get="/research/{{ id }}/row"
+    hx-target="#record-row-{{ id }}"
+    hx-swap="outerHTML"
+    class="btn btn-ghost btn-sm"&gt;Cancel&lt;/button&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pattern 4 — Load more / infinite scroll</h2>
+    <p>Used in: public research overview. The server returns the next page of cards. The "Load more" button replaces itself with the next page's button.</p>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — load more button</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Results container --&gt;
+&lt;div id="results" role="list" aria-live="polite" aria-label="Research results"&gt;
+  &lt;!-- Initial page of cards --&gt;
+&lt;/div&gt;
+
+&lt;!-- Load more button — replaces itself with next page's button --&gt;
+&lt;div id="load-more"&gt;
+  &lt;button
+    class="btn btn-secondary"
+    hx-get="/research?page=2&amp;q={{ query }}"
+    hx-target="#results"
+    hx-swap="beforeend"
+    hx-indicator="#load-spinner"&gt;
+    Load more
+    &lt;span id="load-spinner" class="htmx-indicator ms-1"&gt;
+      &lt;span class="spinner-border spinner-border-sm" role="status" aria-label="Loading…"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Server appends to #results AND replaces #load-more via OOB swap --&gt;
+&lt;!-- Use hx-swap-oob="true" on the new load-more element in the response --&gt;</pre>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — server partial (/research?page=2 response)</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- These cards get appended to #results --&gt;
+&lt;article class="card card-research" role="listitem"&gt;…&lt;/article&gt;
+&lt;article class="card card-research" role="listitem"&gt;…&lt;/article&gt;
+&lt;article class="card card-research" role="listitem"&gt;…&lt;/article&gt;
+
+&lt;!-- OOB swap replaces the Load more button --&gt;
+&lt;div id="load-more" hx-swap-oob="true"&gt;
+  &lt;button
+    class="btn btn-secondary"
+    hx-get="/research?page=3&amp;q={{ query }}"
+    hx-target="#results"
+    hx-swap="beforeend"&gt;
+    Load more
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;!-- If no more pages, return an empty #load-more div --&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pattern 5 — Lazy-loaded detail sections</h2>
+    <p>Used in: research detail page — related output, citation metrics. Load expensive sections only when the user scrolls to them.</p>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;section aria-labelledby="related-heading"&gt;
+  &lt;h2 id="related-heading"&gt;Related research output&lt;/h2&gt;
+
+  &lt;!-- hx-trigger="revealed" fires when element enters viewport --&gt;
+  &lt;div
+    hx-get="/research/{{ id }}/related"
+    hx-trigger="revealed"
+    hx-swap="innerHTML"
+    hx-indicator="#related-spinner"&gt;
+
+    &lt;span id="related-spinner"&gt;
+      &lt;span class="spinner-border spinner-border-sm" role="status" aria-label="Loading related output…"&gt;&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pattern 6 — Filter facets with URL persistence</h2>
+    <p>Toggling a facet updates the results AND the URL, so the filtered view is bookmarkable.</p>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — facet checkbox</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Each facet is a form that posts to the search endpoint --&gt;
+&lt;!-- hx-push-url keeps the URL in sync with state --&gt;
+&lt;form
+  hx-get="/research"
+  hx-target="#results"
+  hx-swap="innerHTML"
+  hx-push-url="true"
+  hx-trigger="change"
+  id="facet-form"&gt;
+
+  &lt;!-- Hidden: carry forward other active filters --&gt;
+  &lt;input type="hidden" name="q" value="{{ current_query }}"&gt;
+
+  &lt;div class="c-facet-title"&gt;Type&lt;/div&gt;
+  &lt;div class="c-facet-check"&gt;
+    &lt;input class="form-check-input mt-0" type="checkbox"
+      id="f-journal" name="type" value="journal-article"
+      {{ 'checked' if 'journal-article' in selected_types }}&gt;
+  &lt;/div&gt;
+  &lt;div class="c-facet-name"&gt;
+    &lt;label for="f-journal"&gt;Journal article&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;div class="c-facet-count"&gt;1,234&lt;/div&gt;
+
+  &lt;!-- More facets… --&gt;
+&lt;/form&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility rules for HTMX</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="d-flex flex-column gap-3">
+
+          <div class="p-3 rounded-3">
+            <p class="form-label text-danger mb-2">Never do this</p>
+            <ul>
+              <li>Swap content into a container without notifying screen readers — use <code>aria-live</code></li>
+              <li>Move focus silently after a swap (e.g. a form submit that scrolls to errors)</li>
+              <li>Rely on HTMX for navigation without also supporting regular links</li>
+              <li>Use <code>hx-boost</code> on elements that aren't links or forms</li>
+            </ul>
+          </div>
+
+          <div class="p-3 rounded-3">
+            <p class="form-label text-success mb-2">Always do this</p>
+            <ul>
+              <li>Wrap dynamic regions in <code>aria-live="polite"</code> (results, status messages)</li>
+              <li>Use <code>aria-live="assertive"</code> only for errors that need immediate attention</li>
+              <li>After a form error swap, move focus to the error summary: <code>htmx.on('htmx:afterSwap', ...)</code></li>
+              <li>Show <code>htmx-indicator</code> spinners with proper <code>role="status"</code> and <code>aria-label</code></li>
+              <li>Test keyboard navigation after every dynamic swap</li>
+              <li>Use <code>hx-push-url</code> when the user would expect Back to work</li>
+            </ul>
+          </div>
+
+          <div class="ds-code">
+            <div class="ds-code-bar"><span class="ds-code-lang">javascript — focus management after swap</span><button class="ds-code-copy">Copy</button></div>
+<pre>// Move focus to first error after a failed form submission
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+  const firstError = evt.detail.target.querySelector('.is-invalid, [role="alert"]');
+  if (firstError) {
+    firstError.focus();
+    // If the element isn't focusable, focus its label instead:
+    // document.querySelector(`[for="${firstError.id}"]`)?.focus();
+  }
+});</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">What HTMX is not for</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p>HTMX handles server-driven interactions well. It is not the right tool for:</p>
+        <ul>
+          <li><strong>Real-time collaboration</strong> (multiple users editing the same record simultaneously) — use WebSockets or SSE</li>
+          <li><strong>Complex client-side state</strong> (drag-and-drop reordering with optimistic UI) — consider a small Alpine.js component</li>
+          <li><strong>File upload progress</strong> — the browser's native progress API or a dedicated upload library is more appropriate</li>
+          <li><strong>Very high-frequency updates</strong> (notifications polling faster than 30s) — use SSE (<code>hx-sse</code> extension)</li>
+        </ul>
+        <p>When you reach for JavaScript beyond HTMX, keep it small, isolated, and framework-free. Vanilla JS or Alpine.js only.</p>
+      </div>
+    </div>
+  </section>
+</div>

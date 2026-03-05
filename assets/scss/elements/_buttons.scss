@@ -1,0 +1,93 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   6. ELEMENTS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Buttons ────────────────────────────────────────────────────────────────── */
+.btn {
+  font-family: var(--bt-font-sans);
+  font-weight: 500;
+  font-size: var(--bt-text-sm);
+  border-radius: var(--bt-radius);
+  padding: var(--s-btn-pad-y, .4375rem) var(--s-btn-pad-x, 1rem);
+  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  transition:
+    background-color var(--bt-dur-fast) var(--bt-ease),
+    border-color var(--bt-dur-fast) var(--bt-ease),
+    color var(--bt-dur-fast) var(--bt-ease),
+    transform var(--bt-dur-fast) var(--bt-ease);
+}
+.btn:active:not(:disabled) {
+  // transform: translateY(1px);
+}
+
+.btn-sm {
+  font-size: .8125rem;
+  padding: .25rem .625rem;
+}
+.btn-lg {
+  font-size: 1rem;
+  padding: .625rem 1.375rem;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(46,106,158,.45);
+  outline-offset: 2px;
+}
+.btn:disabled, .btn[aria-disabled="true"] {
+  opacity: .45;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--bt-blue-900);
+  border: 1px solid var(--bt-blue-900);
+  color: white;
+}
+.btn-primary:hover:not(:disabled) {
+  background: #152f47;
+  border-color: #152f47;
+  color: white;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--bt-blue-900);
+  color: var(--bt-blue-900);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--bt-blue-200);
+}
+
+.btn-link {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--bt-gray-700);
+}
+.btn-link:hover:not(:disabled) {
+  background: var(--bt-gray-50);
+  color: var(--bt-gray-1000);
+}
+
+.btn-danger {
+  background: transparent;
+  border: 1px solid var(--bt-danger);
+  color: var(--bt-danger);
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--bt-light-red);
+}
+
+// /* btn-outline-primary — Bootstrap convention used in existing system */
+// .btn-outline-primary {
+//   background: transparent;
+//   border: 1px solid var(--bt-blue-900);
+//   color: var(--bt-blue-900);
+// }
+// .btn-outline-primary:hover:not(:disabled) {
+//   background: var(--bt-blue-200);
+//   border-color: var(--bt-blue-900);
+//   color: var(--bt-blue-900);
+// }

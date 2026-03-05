@@ -1,0 +1,38 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ICON SYSTEM — UGent icon font (.if)
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   USAGE RULES:
+
+   Icon + visible text (icon is decorative — most common):
+     <button type="button">
+       <i class="if if-download" aria-hidden="true"></i>
+       Download PDF
+     </button>
+
+   Icon alone — label MUST be on the button, NOT the icon:
+     <button type="button" aria-label="Close dialog">
+       <i class="if if-close" aria-hidden="true"></i>
+     </button>
+
+   NEVER:
+     <i class="if if-close" aria-label="Close">  ← label on wrong element
+     <i class="if if-download">                   ← no label anywhere
+*/
+
+.if {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
+/* Size variants */
+.if-xs  { font-size: .75rem;   }
+.if-sm  { font-size: .875rem;  }
+/* .if default = 1rem — set by the font itself */
+.if-lg  { font-size: 1.25rem;  }
+.if-xl  { font-size: 1.5rem;   }
+.if-2xl { font-size: 2rem;     }

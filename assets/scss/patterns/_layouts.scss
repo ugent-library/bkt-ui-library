@@ -1,0 +1,132 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   u-layout — Application layout shells
+   CSS grid replacement for the OLD flex + u-scroll-wrapper stacking approach.
+
+   The OLD system used:
+     d-flex + u-scroll-wrapper + u-scroll-wrapper__body + overflow: hidden on main
+   This caused sticky positioning to break inside overflow:hidden ancestors.
+
+   v2 uses CSS grid on the outermost shell so sidebars can be position:sticky
+   without fighting overflow constraints.
+
+   Three shells are defined:
+
+   1. u-layout--app         topbar + left sidebar + main
+                            Used by: reviewer overview, researcher detail,
+                            depot management, design system shell
+                            Optional: right panel via u-layout--app.has-panel
+
+   2. u-layout--deposit     topbar + step navigator + wide content column
+                            Used by: add publication, deposit flow
+
+   3. u-layout--public      topbar + constrained centred content
+                            Used by: public research detail, public search
+
+   All three share .bc-navbar as their topbar component.
+   Surface is set on the layout root: data-surface="backoffice" or "public".
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+
+/* ── 1. u-layout--app ───────────────────────────────────────────────────────── */
+
+.u-layout--app {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "navbar  navbar"
+    "sidebar main";
+  min-height: 100vh;
+}
+
+.u-layout--app > .bc-navbar {
+  grid-area: navbar;
+}
+
+.u-layout--app > .c-sub-sidebar {
+  grid-area: sidebar;
+  position: sticky;
+  top: var(--bc-navbar-height, 48px);
+  height: calc(100vh - var(--bc-navbar-height, 48px));
+  overflow-y: auto;
+}
+
+.u-layout--app > main {
+  grid-area: main;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Optional right panel — section stepper, activity log, metadata */
+.u-layout--app.has-panel {
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "navbar  navbar  navbar"
+    "sidebar main    panel";
+}
+
+.u-layout--app > .c-side-panel--inline {
+  grid-area: panel;
+  position: sticky;
+  top: var(--bc-navbar-height, 48px);
+  height: calc(100vh - var(--bc-navbar-height, 48px));
+  overflow-y: auto;
+}
+
+
+/* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
+
+.u-layout--deposit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "navbar  navbar"
+    "stepper content";
+  min-height: 100vh;
+}
+
+.u-layout--deposit > .bc-navbar {
+  grid-area: navbar;
+}
+
+.u-layout--deposit > .c-stepper {
+  grid-area: stepper;
+  position: sticky;
+  top: var(--bc-navbar-height, 48px);
+  height: calc(100vh - var(--bc-navbar-height, 48px));
+  overflow-y: auto;
+  width: 200px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--bt-border-color);
+  padding: var(--bt-sp-5) 0;
+}
+
+.u-layout--deposit > main {
+  grid-area: content;
+  min-width: 0;
+  padding: var(--bt-sp-8) var(--bt-sp-10);
+  max-width: 800px;
+}
+
+
+/* ── 3. u-layout--public ────────────────────────────────────────────────────── */
+
+.u-layout--public {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.u-layout--public > .bc-navbar {
+  flex-shrink: 0;
+}
+
+.u-layout--public > main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--bt-sp-8) var(--bt-sp-6);
+}

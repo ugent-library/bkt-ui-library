@@ -1,0 +1,307 @@
+<!-- @title: AI Code Guidelines — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Base</p>
+    <h1 class="display-2 fw-light">AI Code Guidelines &amp; Testing Protocol</h1>
+    <p class="lead">This document governs how AI-assisted code — including code written by Claude in collaboration with this design system's maintainer — is written, reviewed, and verified. AI systems produce plausible-looking code that contains real errors in predictable categories. Knowing those categories is the correction.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The core problem</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p>Human developers make random mistakes. AI systems make <strong>systematic, confident-sounding mistakes</strong> in the same categories every time. You cannot review AI code the way you review human code. You need specific checkpoints, run in order.</p>
+        <div class="row g-3 mt-1">
+          <div class="col-md-6">
+            <div class="p-3 rounded-3 h-100">
+              <p class="risk-label text-danger mb-2">AI is systematically unreliable for</p>
+              <ul>
+                <li>ARIA attributes that <em>look</em> right but aren't wired up</li>
+                <li>Your specific CSS class names — it invents plausible ones</li>
+                <li>HTMX attribute combinations and timing edge cases</li>
+                <li>Real states: empty, error, loading, locked, concurrent edit</li>
+                <li>Copy and microcopy — defaults to generic American English</li>
+                <li>Bootstrap version differences (5.3 vs 5.2)</li>
+                <li>Whether a pattern exists in your system vs inventing one</li>
+                <li>Focus management after dynamic content updates</li>
+                <li>Right-to-left text handling</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 rounded-3 h-100">
+              <p class="risk-label text-success mb-2">AI is reliably good for</p>
+              <ul>
+                <li>Scaffolding structure and layout</li>
+                <li>Bootstrap utility class combinations</li>
+                <li>schema.org JSON-LD structure</li>
+                <li>HTMX attribute names and basic patterns</li>
+                <li>Refactoring repetitive HTML consistently</li>
+                <li>Catching typos and inconsistencies</li>
+                <li>Explaining what a pattern should do before writing it</li>
+                <li>Generating realistic, varied placeholder content</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">How to prompt Claude for this stack</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <table class="pattern-table">
+          <thead>
+            <tr><th>Situation</th><th>How to prompt</th><th>Risk</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New component</td>
+              <td>Say "use our existing CSS classes from booktower.css" and paste the relevant CSS. Claude will use <em>your</em> classes, not invented ones.</td>
+              <td><span class="tag-risk-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td>HTMX interaction</td>
+              <td>Describe the server behaviour explicitly: "the server returns a full &lt;article&gt; fragment". Claude cannot assume your server's response shape.</td>
+              <td><span class="tag-risk-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td>Accessibility</td>
+              <td>Always ask: "show me the keyboard interaction and ARIA". Then test yourself — do not trust it on sight.</td>
+              <td><span class="tag-risk-hi">High</span></td>
+            </tr>
+            <tr>
+              <td>Microcopy</td>
+              <td>Never accept AI copy for errors, empty states, confirmations. Write them yourself. Use Claude to check grammar/clarity only.</td>
+              <td><span class="tag-risk-hi">High</span></td>
+            </tr>
+            <tr>
+              <td>Iterating on existing HTML</td>
+              <td><strong>Paste the exact current HTML.</strong> Do not describe it — Claude will reconstruct from description and introduce drift. Paste. The. HTML.</td>
+              <td><span class="tag-risk-med">Medium</span></td>
+            </tr>
+            <tr>
+              <td>Design tokens</td>
+              <td">Tell Claude "use CSS custom properties, e.g. <code>var(--bt-blue-900)</code>". It will otherwise use raw hex values that bypass your token system.</td>
+              <td><span class="tag-risk-lo">Low</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Testing protocol — run these in order after every AI-generated component</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-label">Run in this order. Structure before detail before interaction before copy.</div>
+      <div class="ds-demo-body">
+
+        <div class="test-step">
+          <div class="test-step-num">1</div>
+          <div class="test-step-body">
+            <h3>Load in browser — visual inspection</h3>
+            <p>Open the page. Resize to 375px. Is the spacing consistent? Is anything overflowing, clipping, or misaligned?</p>
+            <div class="check-note">Common AI failure: correct structure but wrong spacing, margins collapsing incorrectly, elements not on the 4px grid.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">2</div>
+          <div class="test-step-body">
+            <h3>Heading hierarchy</h3>
+            <p>Open DevTools → Elements. Is there exactly one <code>&lt;h1&gt;</code>? Does h1 → h2 → h3 make sense without CSS? Install the Headings Map extension and look at the outline.</p>
+            <div class="check-note">Common AI failure: uses heading tags for visual sizing, or creates duplicate h1/h2 when the shell already has one.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">3</div>
+          <div class="test-step-body">
+            <h3>Keyboard navigation — Tab through everything</h3>
+            <p>Put the mouse away. Tab through every interactive element. Is every button and link reachable? Is the focus order logical? Is there a visible focus ring? Can you activate with Enter / Space? Do modals trap focus correctly?</p>
+            <div class="check-note">Common AI failure: <code>tabindex="-1"</code> on focusable elements, or focus rings removed with <code>outline: none</code> with no replacement.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">4</div>
+          <div class="test-step-body">
+            <h3>Form label association</h3>
+            <p>Click each label text. Does it focus the correct input? Check: every <code>&lt;input&gt;</code> has <code>id</code> matching its <code>&lt;label for="..."&gt;</code>. Check: validation errors linked via <code>aria-describedby</code>.</p>
+            <div class="check-note">Most common AI failure: generates correct label text but wrong or missing <code>for</code> attribute. The input and label look associated but aren't.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">5</div>
+          <div class="test-step-body">
+            <h3>Screen reader smoke test</h3>
+            <p>macOS: <kbd>Cmd + F5</kbd> (VoiceOver). Navigate by headings (<kbd>H</kbd>), landmarks (<kbd>W</kbd>), form controls (<kbd>F</kbd>). Ask: are landmarks correct? Do icon-only buttons have names? Are status messages announced? Does "● OA" announce as "Open access"?</p>
+            <div class="check-note">Common AI failure: icon buttons without accessible names, <code>aria-live</code> on wrong element, decorative icons not hidden with <code>aria-hidden="true"</code>.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">6</div>
+          <div class="test-step-body">
+            <h3>Colour contrast</h3>
+            <p>DevTools → Lighthouse → Accessibility. WCAG 2.1 AA minimum: 4.5:1 for body text, 3:1 for large text and UI elements. Check: badge text on pale backgrounds, grey helper text, disabled states, text on <code>--bt-blue-900</code> background.</p>
+            <div class="check-note">Note: <code>--bt-gray-700</code> (#6b6660) on white = 5.1:1 ✓. <code>--bt-gray-300</code> (#b5b2ae) on white = 2.8:1 ✗ — decorative use only.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">7</div>
+          <div class="test-step-body">
+            <h3>JavaScript disabled — progressive enhancement baseline</h3>
+            <p>DevTools → Settings → Disable JavaScript. Reload. Do forms still submit to their <code>action</code> URL? Do links still navigate? Is there a meaningful page state?</p>
+            <div class="check-note">HTMX is progressive enhancement. A form without JavaScript should post to a real URL and return a full-page response. If it only works with JS, fix the HTML.</div>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">8</div>
+          <div class="test-step-body">
+            <h3>HTMX dynamic interactions</h3>
+            <p>Re-enable JavaScript. For each HTMX interaction: does the loading indicator appear? Does the target update? Does the URL update when expected? After a swap, is focus in the right place? Does Back work after <code>hx-push-url</code>?</p>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">9</div>
+          <div class="test-step-body">
+            <h3>Edge cases — the states AI always forgets</h3>
+            <p>For every list and form, explicitly test:</p>
+            <ul>
+              <li><strong>Empty:</strong> 0 items. Is there a blank state?</li>
+              <li><strong>Error:</strong> server-side validation failure. Are errors visible and useful?</li>
+              <li><strong>Long strings:</strong> paste a 300-character title. Does it overflow?</li>
+              <li><strong>Loading:</strong> does the loading state look intentional, not broken?</li>
+              <li><strong>No permission:</strong> what does a locked or restricted record look like?</li>
+              <li><strong>RTL:</strong> paste Arabic text. Does it render with correct direction?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="test-step">
+          <div class="test-step-num">10</div>
+          <div class="test-step-body">
+            <h3>Copy review — is this your voice?</h3>
+            <p>Read every label, button text, error message, and empty state out loud. Check: is it "research output" not "publication"? Does the error say what went wrong AND what to do? Is the button a verb? Is the tone correct for this audience?</p>
+            <div class="check-note">AI defaults to American English corporate tone. The Biblio voice is direct, institutional, and precise — but not cold. "Your research output has been received" not "Successfully submitted!"</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Pre-commit checklist — copy into PR description</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="ds-code">
+          <div class="ds-code-bar"><span class="ds-code-lang">markdown</span><button class="ds-code-copy">Copy</button></div>
+<pre>## Accessibility & quality checklist
+
+### Structure
+- [ ] Single &lt;h1&gt; per page, correct heading hierarchy
+- [ ] Semantic HTML: article, section, nav, aside, main
+- [ ] Landmark regions present: header, nav, main
+- [ ] All interactive elements reachable by Tab, logical order
+
+### Forms
+- [ ] Every input has an associated &lt;label&gt; (click label → input focused)
+- [ ] Error messages linked via aria-describedby
+- [ ] Required fields use the `required` attribute
+- [ ] Checkboxes/radios grouped with fieldset + legend
+
+### Icons
+- [ ] Decorative icons have aria-hidden="true"
+- [ ] Icon-only buttons have accessible name (aria-label or .visually-hidden span)
+
+### Dynamic content (HTMX)
+- [ ] Dynamic regions wrapped in aria-live="polite"
+- [ ] Loading indicators have role="status" and aria-label
+- [ ] Focus managed after swaps
+- [ ] Forms work with JavaScript disabled
+
+### Visual & content
+- [ ] Tested at 375px width — no overflow
+- [ ] Empty state handled
+- [ ] Error state handled with correct alert variant
+- [ ] Copy reviewed: "research output" not "publication"
+- [ ] Error messages say what went wrong + what to do
+- [ ] Button labels are verbs
+
+### Design system
+- [ ] Uses existing design system classes, no invented names
+- [ ] Uses var(--bt-*) tokens, not raw hex values</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Known gaps — tracked here, not hidden</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="d-flex flex-column gap-2">
+
+          <div class="p-3 rounded-3">
+            <div class="d-flex align-items-baseline gap-2 mb-1">
+              <span class="tag-open">Open</span>
+              <strong>Icon system</strong>
+            </div>
+            <p>The original UI kit uses <code>if if-*</code> (UGent icon font). This system uses Remix Icons (<code>ri-*</code> via CDN). Decision needed before production: adopt Remix Icons system-wide, or bring in the UGent font.</p>
+          </div>
+
+          <div class="p-3 rounded-3">
+            <div class="d-flex align-items-baseline gap-2 mb-1">
+              <span class="tag-open">Open</span>
+              <strong>Self-hosted fonts</strong>
+            </div>
+            <p>IBM Plex currently loads from Google Fonts CDN. For production, fonts must be self-hosted. <code class="path">assets/ibm-plex/</code> exists but is empty.</p>
+          </div>
+
+          <div class="p-3 rounded-3">
+            <div class="d-flex align-items-baseline gap-2 mb-1">
+              <span class="tag-open">Open</span>
+              <strong>Dutch language voice</strong>
+            </div>
+            <p>All templates are in English. Writing guidelines and tone of voice for Dutch are not documented. Error messages and empty states particularly need Dutch equivalents.</p>
+          </div>
+
+          <div class="p-3 rounded-3">
+            <div class="d-flex align-items-baseline gap-2 mb-1">
+              <span class="tag-planned">Planned</span>
+              <strong>Depotmanagement template</strong>
+            </div>
+            <p>Dense operational interfaces for depot staff (task detail, shelf management, scanning) need their own template with higher information density defaults.</p>
+          </div>
+
+          <div class="p-3 rounded-3">
+            <div class="d-flex align-items-baseline gap-2 mb-1">
+              <span class="tag-planned">Planned</span>
+              <strong>Error pages (404, 500)</strong>
+            </div>
+            <p>Should live in <code class="path">templates/</code>. A library's 404 should be warm and helpful. The existing prototype has these — they need bringing into this system.</p>
+          </div>
+
+          <div class="p-3 rounded-3">
+            <div class="d-flex align-items-baseline gap-2 mb-1">
+              <span class="tag-planned">Planned</span>
+              <strong>Writing guidelines</strong>
+            </div>
+            <p>The design system enforces visual consistency but not verbal consistency. A <code class="path">foundations/writing.html</code> page documenting button label rules, error message patterns, and voice is needed.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
