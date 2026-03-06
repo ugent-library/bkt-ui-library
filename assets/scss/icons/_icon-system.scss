@@ -20,19 +20,61 @@
      <i class="if if-download">                   ← no label anywhere
 */
 
+/*
+  .if sits inside inline-flex containers (buttons, links).
+  We use display:inline-flex + align-items:center so the glyph centres on
+  the cap-height of the surrounding text without a magic-number offset.
+  No vertical-align nudge — the parent's align-items does the work cleanly.
+*/
+
 .if {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  vertical-align: -0.15em;
   flex-shrink: 0;
+  /* inherit font-size from parent by default */
 }
 
-/* Size variants */
-.if-xs  { font-size: .75rem;   }
-.if-sm  { font-size: .875rem;  }
-/* .if default = 1rem — set by the font itself */
-.if-lg  { font-size: 1.25rem;  }
-.if-xl  { font-size: 1.5rem;   }
-.if-2xl { font-size: 2rem;     }
+/*
+  Icons inside buttons — optical size correction
+  ────────────────────────────────────────────────
+  Icon glyphs in the UGent font render optically heavier than the text
+  beside them at equal size. Nudging icons to --bt-text-xs (12px) inside
+  14px buttons keeps them visually balanced without feeling too small.
+  The btn-lg exception brings icons back to 14px to match its 16px text.
+*/
+.btn > .if {
+  font-size: var(--bt-text-xs);
+}
+.btn-lg > .if {
+  font-size: var(--bt-text-sm);
+}
+
+/*
+  Size variants — mapped to type scale tokens.
+  Use these when the icon needs to be a specific size regardless of context.
+  Inside .btn, don't set a size — the button's font-size drives it naturally.
+  Inside .btn-sm and .btn-lg, same rule applies.
+*/
+.if-xs  { font-size: var(--bt-text-xs);   }   /* 11px — tight metadata, table cells */
+.if-sm  { font-size: var(--bt-text-sm);   }   /* 14px — inline with body text      */
+/* .if (no modifier) — inherits from parent, matches surrounding text            */
+.if-lg  { font-size: var(--bt-text-lg);   }   /* 22px — section icons              */
+.if-xl  { font-size: var(--bt-text-xl);   }   /* 28px — feature icons              */
+.if-2xl { font-size: var(--bt-text-2xl);  }   /* 36px — hero / illustration icons  */
+
+/*
+  Icons inside plain <a> links
+  ─────────────────────────────
+  Handled automatically via a:has(> .if) in _typography.scss.
+  Any <a> with a direct .if child becomes inline-flex — no extra class needed.
+
+  Example:
+    <a href="/download">
+      <i class="if if-download" aria-hidden="true"></i>
+      Download PDF
+    </a>
+
+  Do NOT add .if to .btn — buttons are already inline-flex.
+*/

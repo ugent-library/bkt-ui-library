@@ -27,15 +27,34 @@
   --bt-font-serif: 'IBM Plex Serif', serif;
   --bt-font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --bt-font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
-  /* Type scale */
-  --bt-text-xs: 0.6875rem;
-  --bt-text-sm: 0.875rem;
-  --bt-text-base: 1rem;
-  --bt-text-md: 1.125rem;
-  --bt-text-lg: 1.375rem;
-  --bt-text-xl: 1.75rem;
-  --bt-text-2xl: 2.25rem;
-  --bt-text-3xl: 3rem;
+  /*
+    Type scale
+    ────────────
+    Token values are rem decimals by necessity — type doesn’t snap to a 4px
+    spacing grid the way layout does. These values ARE the scale.
+
+    The rule “no decimals” applies to component code: never write .875rem
+    in a button or badge. Always reference a token. Here in the token file
+    itself, the decimal values are correct and intentional.
+
+    Scale in px at 16px root:
+      xs   = 12px   (badges, tight UI labels — minimum accessible size)
+      sm   = 14px   (secondary text, small buttons)
+      base = 16px   (body default)
+      md   = 18px   (lead text, card titles in backoffice)
+      lg   = 22px   (h3, section headings)
+      xl   = 28px   (h2, page headings)
+      2xl  = 36px   (h1, display headings)
+      3xl  = 48px   (hero display only)
+  */
+  --bt-text-xs: 0.75rem; /* 12px */
+  --bt-text-sm: 0.875rem; /* 14px */
+  --bt-text-base: 1rem; /* 16px */
+  --bt-text-md: 1.125rem; /* 18px */
+  --bt-text-lg: 1.375rem; /* 22px */
+  --bt-text-xl: 1.75rem; /* 28px */
+  --bt-text-2xl: 2.25rem; /* 36px */
+  --bt-text-3xl: 3rem; /* 48px */
   /* Spacing — 4px base */
   --bt-sp-1: 0.25rem;
   --bt-sp-2: 0.5rem;
@@ -49,6 +68,24 @@
   --bt-sp-16: 4rem;
   --bt-sp-20: 5rem;
   --bt-sp-24: 6rem;
+  /*
+    Button spacers
+    ──────────────
+    Buttons need optically tuned padding that sits between the 4px layout
+    grid steps. These tokens exist specifically for button (and input)
+    internal spacing — don’t use them for layout gaps or margins.
+
+    Target heights at 14px text (line-height 1.5 = 21px line box):
+      sm   → 32px  (21 + 5 + 5 + 1px border×2 = 32)
+      base → 38px  (21 + 8 + 8 + 1px border×2 = 39 ≈ 38)
+      lg   → 44px  (21px @ 16px + 10 + 10 + border×2 = 44)
+  */
+  --bt-btn-pad-y-sm: 0.3125rem; /*  5px */
+  --bt-btn-pad-x-sm: 0.625rem; /* 10px */
+  --bt-btn-pad-y: 0.4375rem; /*  7px */
+  --bt-btn-pad-x: 0.875rem; /* 14px */
+  --bt-btn-pad-y-lg: 0.625rem; /* 10px */
+  --bt-btn-pad-x-lg: 1.125rem; /* 18px */
   /* Borders & radius */
   --bt-border: 1px solid var(--bt-border-color);
   --bt-radius-sm: 2px;
@@ -357,7 +394,7 @@ h6 {
   font-size: var(--bt-text-md);
   color: var(--bt-gray-600);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em; /* uppercase needs breathing room — em scales with font-size */
   font-weight: 500;
 }
 
@@ -391,6 +428,22 @@ a:hover {
   color: var(--bt-blue);
 }
 
+/*
+  Icons inside links — automatic alignment via :has()
+  ───────────────────────────────────────────────
+  <a> is display:inline by default. An icon inside it sits on the text
+  baseline and can’t be vertically centred. :has() lets us fix this
+  automatically — any <a> containing a direct .if child gets inline-flex.
+  No extra class needed on the HTML.
+
+  Baseline 2023: Chrome 105+, Firefox 121+, Safari 15.4+
+*/
+a:has(> .if) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+}
+
 code {
   background: var(--bt-bg-alt);
   color: var(--bt-text);
@@ -400,7 +453,7 @@ code {
 
 code, kbd, pre, samp {
   font-family: var(--bt-font-mono);
-  font-size: 0.875em;
+  font-size: var(--bt-text-sm);
 }
 
 .ff-serif {
@@ -469,7 +522,7 @@ code, kbd, pre, samp {
 /* ── Forms & inputs ─────────────────────────────────────────────────────────── */
 .form-control, .form-select {
   font-family: var(--bt-font-sans);
-  font-size: var(--s-body-size, 0.9375rem);
+  font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
   background: var(--bt-white);
   border: 1px solid #b5b2ae;
@@ -513,27 +566,27 @@ code, kbd, pre, samp {
   font-size: var(--bt-text-sm);
   font-weight: 500;
   color: var(--bt-gray-1000);
-  margin-bottom: 0.375rem;
+  margin-bottom: var(--bt-sp-1);
   display: block;
 }
 
 .form-text {
-  font-size: 0.8125rem;
+  font-size: var(--bt-text-xs);
   color: var(--bt-gray-700);
-  margin-top: 0.25rem;
+  margin-top: var(--bt-sp-1);
   line-height: 1.5;
 }
 
 .valid-feedback {
-  font-size: 0.8125rem;
+  font-size: var(--bt-text-xs);
   color: var(--bt-green);
-  margin-top: 0.25rem;
+  margin-top: var(--bt-sp-1);
 }
 
 .invalid-feedback {
-  font-size: 0.8125rem;
+  font-size: var(--bt-text-xs);
   color: var(--bt-danger);
-  margin-top: 0.25rem;
+  margin-top: var(--bt-sp-1);
 }
 
 .form-control-search {
@@ -562,31 +615,41 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════════
-   6. ELEMENTS
-   ═══════════════════════════════════════════════════════════════════════════════ */
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
+/*
+  Padding uses --bt-btn-pad-* tokens, not the layout spacing scale.
+  Button padding needs optical tuning at half-steps between 4px grid points.
+  See _tokens.scss > "Button spacers" for the values and target heights.
+
+  Target heights:
+    .btn-sm   → 32px
+    .btn      → 38px
+    .btn-lg   → 44px
+*/
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 500;
-  font-size: var(--bt-text-sm);
+  font-size: var(--bt-text-sm); /* 14px */
+  line-height: 1.5; /* 21px line box */
   border-radius: var(--bt-radius);
-  padding: var(--s-btn-pad-y, 0.4375rem) var(--s-btn-pad-x, 1rem);
-  line-height: 1.5;
+  padding: var(--bt-btn-pad-y) var(--bt-btn-pad-x); /* 7px 14px → ~38px tall */
   display: inline-flex;
   align-items: center;
-  gap: var(--bt-sp-1);
+  gap: var(--bt-sp-2);
+  cursor: pointer;
   transition: background-color var(--bt-dur-fast) var(--bt-ease), border-color var(--bt-dur-fast) var(--bt-ease), color var(--bt-dur-fast) var(--bt-ease), transform var(--bt-dur-fast) var(--bt-ease);
 }
 
 .btn-sm {
-  font-size: 0.8125rem;
-  padding: 0.25rem 0.625rem;
+  font-size: var(--bt-text-sm); /* stay at 14px — don't go smaller */
+  padding: var(--bt-btn-pad-y-sm) var(--bt-btn-pad-x-sm); /* 5px 10px → 32px tall */
+  gap: var(--bt-sp-1);
 }
 
 .btn-lg {
-  font-size: 1rem;
-  padding: 0.625rem 1.375rem;
+  font-size: var(--bt-text-base); /* 16px */
+  padding: var(--bt-btn-pad-y-lg) var(--bt-btn-pad-x-lg); /* 10px 18px → 44px tall */
+  gap: var(--bt-sp-2);
 }
 
 .btn:focus-visible {
@@ -594,11 +657,14 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-.btn:disabled, .btn[aria-disabled=true] {
+.btn:disabled,
+.btn[aria-disabled=true] {
   opacity: 0.45;
   pointer-events: none;
+  cursor: not-allowed;
 }
 
+/* ── Variants ───────────────────────────────────────────────────────────────── */
 .btn-primary {
   background: var(--bt-blue-900);
   border: 1px solid var(--bt-blue-900);
@@ -606,8 +672,8 @@ code, kbd, pre, samp {
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #152f47;
-  border-color: #152f47;
+  background: var(--bt-blue-800);
+  border-color: var(--bt-blue-800);
   color: white;
 }
 
@@ -618,16 +684,16 @@ code, kbd, pre, samp {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-200);
+  background: var(--bt-blue-100);
 }
 
-.btn-link {
+.btn-ghost {
   background: transparent;
   border: 1px solid transparent;
   color: var(--bt-gray-700);
 }
 
-.btn-link:hover:not(:disabled) {
+.btn-ghost:hover:not(:disabled) {
   background: var(--bt-gray-50);
   color: var(--bt-gray-1000);
 }
@@ -643,16 +709,23 @@ code, kbd, pre, samp {
 }
 
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
+/*
+  Font size: --bt-text-xs (12px).
+  12px is the practical minimum for badge text — compact enough for dense
+  tables, accessible enough without zoom. Padding is tightened accordingly
+  so badges stay narrow at this size.
+*/
 .badge {
   font-family: var(--bt-font-sans);
-  font-size: var(--bt-text-xs);
+  font-size: var(--bt-text-xs); /* 12px */
   font-weight: 500;
-  padding: 0.2em 0.55em;
+  padding: var(--bt-sp-1) var(--bt-sp-2); /* 4px 8px — neat pill shape at 12px */
+  line-height: 1;
   border-radius: var(--bt-radius-pill);
-  line-height: 1.4;
   display: inline-flex;
   align-items: center;
-  gap: 0.2em;
+  gap: var(--bt-sp-1);
+  white-space: nowrap;
 }
 
 /* Bootstrap semantic badges — remapped to Booktower tokens */
@@ -682,32 +755,29 @@ code, kbd, pre, samp {
 }
 
 /* Domain-specific access badges */
-.badge-oa {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
-  background: var(--bt-green-100);
-  color: var(--bt-dark-green);
-  border: 1px solid var(--bt-green-200);
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  padding: 0.2em 0.6em;
-  border-radius: var(--bt-radius-pill);
-  line-height: 1.4;
-}
-
+.badge-oa,
 .badge-restricted {
   display: inline-flex;
   align-items: center;
-  gap: 0.3em;
+  gap: var(--bt-sp-1);
+  font-size: var(--bt-text-xs); /* 12px */
+  font-weight: 500;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  line-height: 1;
+  border-radius: var(--bt-radius-pill);
+  white-space: nowrap;
+}
+
+.badge-oa {
+  background: var(--bt-green-100);
+  color: var(--bt-dark-green);
+  border: 1px solid var(--bt-green-200);
+}
+
+.badge-restricted {
   background: var(--bt-orange-100);
   color: var(--bt-dark-orange);
   border: 1px solid var(--bt-orange-200);
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  padding: 0.2em 0.6em;
-  border-radius: var(--bt-radius-pill);
-  line-height: 1.4;
 }
 
 /* ── bc-navbar ──────────────────────────────────────────────────────────────── */
@@ -717,8 +787,8 @@ code, kbd, pre, samp {
   border-bottom: var(--bt-border);
   display: flex;
   align-items: center;
-  padding: 0 1.5rem;
-  gap: 1rem;
+  padding: 0 var(--bt-sp-6);
+  gap: var(--bt-sp-4);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -726,13 +796,13 @@ code, kbd, pre, samp {
 
 .bc-navbar__brand {
   font-family: var(--bt-font-serif);
-  font-size: 1rem;
+  font-size: var(--bt-text-base);
   font-weight: 400;
   color: var(--bt-blue-900);
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--bt-sp-2);
   flex-shrink: 0;
 }
 
@@ -741,22 +811,22 @@ code, kbd, pre, samp {
 }
 
 .bc-navbar__mark {
-  font-size: 1.25rem;
+  font-size: var(--bt-text-md);
   line-height: 1;
   opacity: 0.75;
 }
 
 .bc-navbar__sep {
   width: 1px;
-  height: 18px;
-  background: #dddad5;
+  height: var(--bt-sp-5); /* 20px — sits comfortably inside 52px bar */
+  background: var(--bt-border-color);
   flex-shrink: 0;
 }
 
 .bc-navbar__nav {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--bt-sp-1);
   flex: 1;
 }
 
@@ -764,7 +834,7 @@ code, kbd, pre, samp {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   text-decoration: none;
-  padding: 0.3125rem 0.625rem;
+  padding: var(--bt-sp-1) var(--bt-sp-3);
   border-radius: var(--bt-radius);
   transition: color var(--bt-dur-fast), background var(--bt-dur-fast);
   white-space: nowrap;
@@ -911,8 +981,8 @@ code, kbd, pre, samp {
   align-items: center;
   justify-content: space-between;
   min-height: 52px;
-  padding: 0.625rem 0;
-  gap: 1rem;
+  padding: var(--bt-sp-2) 0;
+  gap: var(--bt-sp-4);
   width: 100%;
 }
 
@@ -923,7 +993,7 @@ code, kbd, pre, samp {
 .bc-toolbar__left {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--bt-sp-3);
   flex: 1;
   min-width: 0;
 }
@@ -931,13 +1001,13 @@ code, kbd, pre, samp {
 .bc-toolbar__right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--bt-sp-2);
   flex-shrink: 0;
 }
 
 .bc-toolbar__title {
   font-family: var(--s-heading-font, var(--bt-font-serif));
-  font-size: 1.375rem;
+  font-size: var(--bt-text-lg);
   font-weight: var(--s-heading-weight, 300);
   color: var(--bt-gray-1000);
   margin: 0;
@@ -949,23 +1019,70 @@ code, kbd, pre, samp {
 [data-surface=backoffice] .bc-toolbar__title,
 .s-backoffice .bc-toolbar__title {
   font-family: var(--bt-font-sans);
-  font-size: 1.125rem;
+  font-size: var(--bt-text-md);
   font-weight: 500;
 }
 
 .c-button-toolbar {
   display: flex;
   align-items: center;
-  gap: var(--bt-sp-6);
+  gap: var(--bt-sp-2);
 }
 
 .c-button-toolbar--wide-spacing {
-  gap: 0.875rem;
+  gap: var(--bt-sp-4);
 }
 
 .c-button-toolbar--vertical {
   flex-direction: column;
   align-items: flex-end;
+}
+
+/* ── Results toolbar + view toggle ──────────────────────────────────────────── */
+/*
+  NOTE: these classes use the bo-* prefix which violates the naming convention
+  in CLAUDE.md (valid prefixes are bc-, c-, u-). They should be renamed to
+  c-results-toolbar and c-view-toggle when the templates are refactored.
+  Keeping names stable for now to avoid breaking template HTML.
+*/
+.bo-results-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--bt-sp-3) 0;
+  border-bottom: var(--bt-border);
+  margin-bottom: var(--bt-sp-4);
+  font-size: var(--bt-text-sm);
+}
+
+.view-toggle {
+  display: flex;
+  gap: var(--bt-sp-1); /* 4px — tightest token, keeps pill compact */
+  background: var(--bt-gray-100);
+  border-radius: var(--bt-radius);
+  padding: var(--bt-sp-1); /* 4px inset */
+}
+
+.view-toggle-btn {
+  background: transparent;
+  border: none;
+  border-radius: var(--bt-radius-sm);
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  color: var(--bt-gray-500);
+  cursor: pointer;
+  line-height: 1;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+
+.view-toggle-btn.is-active {
+  background: var(--bt-white);
+  color: var(--bt-gray-1000);
+  box-shadow: var(--bt-shadow-xs);
+}
+
+.view-toggle-btn:focus-visible {
+  outline: 3px solid rgba(46, 106, 158, 0.4);
+  outline-offset: 2px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -1588,37 +1705,73 @@ i[class^=if-]:before, i[class*=" if-"]:before {
      <i class="if if-close" aria-label="Close">  ← label on wrong element
      <i class="if if-download">                   ← no label anywhere
 */
+/*
+  .if sits inside inline-flex containers (buttons, links).
+  We use display:inline-flex + align-items:center so the glyph centres on
+  the cap-height of the surrounding text without a magic-number offset.
+  No vertical-align nudge — the parent's align-items does the work cleanly.
+*/
 .if {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  vertical-align: -0.15em;
   flex-shrink: 0;
+  /* inherit font-size from parent by default */
 }
 
-/* Size variants */
+/*
+  Icons inside buttons — optical size correction
+  ────────────────────────────────────────────────
+  Icon glyphs in the UGent font render optically heavier than the text
+  beside them at equal size. Nudging icons to --bt-text-xs (12px) inside
+  14px buttons keeps them visually balanced without feeling too small.
+  The btn-lg exception brings icons back to 14px to match its 16px text.
+*/
+.btn > .if {
+  font-size: var(--bt-text-xs);
+}
+
+.btn-lg > .if {
+  font-size: var(--bt-text-sm);
+}
+
+/*
+  Size variants — mapped to type scale tokens.
+  Use these when the icon needs to be a specific size regardless of context.
+  Inside .btn, don't set a size — the button's font-size drives it naturally.
+  Inside .btn-sm and .btn-lg, same rule applies.
+*/
 .if-xs {
-  font-size: 0.75rem;
-}
-
+  font-size: var(--bt-text-xs);
+} /* 11px — tight metadata, table cells */
 .if-sm {
-  font-size: 0.875rem;
-}
-
-/* .if default = 1rem — set by the font itself */
+  font-size: var(--bt-text-sm);
+} /* 14px — inline with body text      */
+/* .if (no modifier) — inherits from parent, matches surrounding text            */
 .if-lg {
-  font-size: 1.25rem;
-}
-
+  font-size: var(--bt-text-lg);
+} /* 22px — section icons              */
 .if-xl {
-  font-size: 1.5rem;
-}
-
+  font-size: var(--bt-text-xl);
+} /* 28px — feature icons              */
 .if-2xl {
-  font-size: 2rem;
-}
+  font-size: var(--bt-text-2xl);
+} /* 36px — hero / illustration icons  */
+/*
+  Icons inside plain <a> links
+  ─────────────────────────────
+  Handled automatically via a:has(> .if) in _typography.scss.
+  Any <a> with a direct .if child becomes inline-flex — no extra class needed.
 
+  Example:
+    <a href="/download">
+      <i class="if if-download" aria-hidden="true"></i>
+      Download PDF
+    </a>
+
+  Do NOT add .if to .btn — buttons are already inline-flex.
+*/
 /* ═══════════════════════════════════════════════════════════════════════════════
    9. UTILITY CLASSES
    ═══════════════════════════════════════════════════════════════════════════════ */

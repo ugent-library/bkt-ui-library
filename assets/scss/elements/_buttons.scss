@@ -1,45 +1,59 @@
-/* ═══════════════════════════════════════════════════════════════════════════════
-   6. ELEMENTS
-   ═══════════════════════════════════════════════════════════════════════════════ */
-
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
+
+/*
+  Padding uses --bt-btn-pad-* tokens, not the layout spacing scale.
+  Button padding needs optical tuning at half-steps between 4px grid points.
+  See _tokens.scss > "Button spacers" for the values and target heights.
+
+  Target heights:
+    .btn-sm   → 32px
+    .btn      → 38px
+    .btn-lg   → 44px
+*/
+
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 500;
-  font-size: var(--bt-text-sm);
+  font-size: var(--bt-text-sm);         /* 14px */
+  line-height: 1.5;                      /* 21px line box */
   border-radius: var(--bt-radius);
-  padding: var(--s-btn-pad-y, .4375rem) var(--s-btn-pad-x, 1rem);
-  line-height: 1.5;
+  padding: var(--bt-btn-pad-y) var(--bt-btn-pad-x);   /* 7px 14px → ~38px tall */
   display: inline-flex;
   align-items: center;
-  gap: var(--bt-sp-1);
+  gap: var(--bt-sp-2);
+  cursor: pointer;
   transition:
     background-color var(--bt-dur-fast) var(--bt-ease),
-    border-color var(--bt-dur-fast) var(--bt-ease),
-    color var(--bt-dur-fast) var(--bt-ease),
-    transform var(--bt-dur-fast) var(--bt-ease);
-}
-.btn:active:not(:disabled) {
-  // transform: translateY(1px);
+    border-color     var(--bt-dur-fast) var(--bt-ease),
+    color            var(--bt-dur-fast) var(--bt-ease),
+    transform        var(--bt-dur-fast) var(--bt-ease);
 }
 
 .btn-sm {
-  font-size: .8125rem;
-  padding: .25rem .625rem;
+  font-size: var(--bt-text-sm);         /* stay at 14px — don't go smaller */
+  padding: var(--bt-btn-pad-y-sm) var(--bt-btn-pad-x-sm);   /* 5px 10px → 32px tall */
+  gap: var(--bt-sp-1);
 }
+
 .btn-lg {
-  font-size: 1rem;
-  padding: .625rem 1.375rem;
+  font-size: var(--bt-text-base);       /* 16px */
+  padding: var(--bt-btn-pad-y-lg) var(--bt-btn-pad-x-lg);   /* 10px 18px → 44px tall */
+  gap: var(--bt-sp-2);
 }
 
 .btn:focus-visible {
-  outline: 3px solid rgba(46,106,158,.45);
+  outline: 3px solid rgba(46, 106, 158, .45);
   outline-offset: 2px;
 }
-.btn:disabled, .btn[aria-disabled="true"] {
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
   opacity: .45;
   pointer-events: none;
+  cursor: not-allowed;
 }
+
+/* ── Variants ───────────────────────────────────────────────────────────────── */
 
 .btn-primary {
   background: var(--bt-blue-900);
@@ -47,8 +61,8 @@
   color: white;
 }
 .btn-primary:hover:not(:disabled) {
-  background: #152f47;
-  border-color: #152f47;
+  background: var(--bt-blue-800);
+  border-color: var(--bt-blue-800);
   color: white;
 }
 
@@ -58,15 +72,15 @@
   color: var(--bt-blue-900);
 }
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-200);
+  background: var(--bt-blue-100);
 }
 
-.btn-link {
+.btn-ghost {
   background: transparent;
   border: 1px solid transparent;
   color: var(--bt-gray-700);
 }
-.btn-link:hover:not(:disabled) {
+.btn-ghost:hover:not(:disabled) {
   background: var(--bt-gray-50);
   color: var(--bt-gray-1000);
 }
@@ -79,15 +93,3 @@
 .btn-danger:hover:not(:disabled) {
   background: var(--bt-light-red);
 }
-
-// /* btn-outline-primary — Bootstrap convention used in existing system */
-// .btn-outline-primary {
-//   background: transparent;
-//   border: 1px solid var(--bt-blue-900);
-//   color: var(--bt-blue-900);
-// }
-// .btn-outline-primary:hover:not(:disabled) {
-//   background: var(--bt-blue-200);
-//   border-color: var(--bt-blue-900);
-//   color: var(--bt-blue-900);
-// }

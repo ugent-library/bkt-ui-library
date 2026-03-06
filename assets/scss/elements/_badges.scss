@@ -1,15 +1,23 @@
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
 
+/*
+  Font size: --bt-text-xs (12px).
+  12px is the practical minimum for badge text — compact enough for dense
+  tables, accessible enough without zoom. Padding is tightened accordingly
+  so badges stay narrow at this size.
+*/
+
 .badge {
   font-family: var(--bt-font-sans);
-  font-size: var(--bt-text-xs);
+  font-size: var(--bt-text-xs);      /* 12px */
   font-weight: 500;
-  padding: .2em .55em;
+  padding: var(--bt-sp-1) var(--bt-sp-2); /* 4px 8px — neat pill shape at 12px */
+  line-height: 1;
   border-radius: var(--bt-radius-pill);
-  line-height: 1.4;
   display: inline-flex;
   align-items: center;
-  gap: .2em;
+  gap: var(--bt-sp-1);
+  white-space: nowrap;
 }
 
 /* Bootstrap semantic badges — remapped to Booktower tokens */
@@ -35,30 +43,27 @@
 }
 
 /* Domain-specific access badges */
-.badge-oa {
-  display: inline-flex;
-  align-items: center;
-  gap: .3em;
-  background: var(--bt-green-100);
-  color: var(--bt-dark-green);
-  border: 1px solid var(--bt-green-200);
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  padding: .2em .6em;
-  border-radius: var(--bt-radius-pill);
-  line-height: 1.4;
-}
-
+.badge-oa,
 .badge-restricted {
   display: inline-flex;
   align-items: center;
-  gap: .3em;
+  gap: var(--bt-sp-1);
+  font-size: var(--bt-text-xs);      /* 12px */
+  font-weight: 500;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  line-height: 1;
+  border-radius: var(--bt-radius-pill);
+  white-space: nowrap;
+}
+
+.badge-oa {
+  background: var(--bt-green-100);
+  color: var(--bt-dark-green);
+  border: 1px solid var(--bt-green-200);
+}
+
+.badge-restricted {
   background: var(--bt-orange-100);
   color: var(--bt-dark-orange);
   border: 1px solid var(--bt-orange-200);
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  padding: .2em .6em;
-  border-radius: var(--bt-radius-pill);
-  line-height: 1.4;
 }

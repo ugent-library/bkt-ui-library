@@ -9,48 +9,48 @@
   border-bottom: var(--bt-border);
   display: flex;
   align-items: center;
-  padding: 0 1.5rem;
-  gap: 1rem;
+  padding: 0 var(--bt-sp-6);
+  gap: var(--bt-sp-4);
   position: sticky;
   top: 0;
   z-index: 50;
 }
 .bc-navbar__brand {
   font-family: var(--bt-font-serif);
-  font-size: 1rem;
+  font-size: var(--bt-text-base);
   font-weight: 400;
   color: var(--bt-blue-900);
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: var(--bt-sp-2);
   flex-shrink: 0;
 }
 .bc-navbar__brand:hover {
   color: var(--bt-blue-900);
 }
 .bc-navbar__mark {
-  font-size: 1.25rem;
+  font-size: var(--bt-text-md);
   line-height: 1;
   opacity: .75;
 }
 .bc-navbar__sep {
   width: 1px;
-  height: 18px;
-  background: #dddad5;
+  height: var(--bt-sp-5);    /* 20px — sits comfortably inside 52px bar */
+  background: var(--bt-border-color);
   flex-shrink: 0;
 }
 .bc-navbar__nav {
   display: flex;
   align-items: center;
-  gap: .25rem;
+  gap: var(--bt-sp-1);
   flex: 1;
 }
 .bc-navbar__link {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   text-decoration: none;
-  padding: .3125rem .625rem;
+  padding: var(--bt-sp-1) var(--bt-sp-3);
   border-radius: var(--bt-radius);
   transition: color var(--bt-dur-fast), background var(--bt-dur-fast);
   white-space: nowrap;
@@ -197,8 +197,8 @@
   align-items: center;
   justify-content: space-between;
   min-height: 52px;
-  padding: .625rem 0;
-  gap: 1rem;
+  padding: var(--bt-sp-2) 0;
+  gap: var(--bt-sp-4);
   width: 100%;
 }
 .bc-toolbar.h-auto {
@@ -207,19 +207,19 @@
 .bc-toolbar__left {
   display: flex;
   align-items: center;
-  gap: .75rem;
+  gap: var(--bt-sp-3);
   flex: 1;
   min-width: 0;
 }
 .bc-toolbar__right {
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: var(--bt-sp-2);
   flex-shrink: 0;
 }
 .bc-toolbar__title {
   font-family: var(--s-heading-font, var(--bt-font-serif));
-  font-size: 1.375rem;
+  font-size: var(--bt-text-lg);
   font-weight: var(--s-heading-weight, 300);
   color: var(--bt-gray-1000);
   margin: 0;
@@ -230,21 +230,69 @@
 [data-surface="backoffice"] .bc-toolbar__title,
 .s-backoffice .bc-toolbar__title {
   font-family: var(--bt-font-sans);
-  font-size: 1.125rem;
+  font-size: var(--bt-text-md);
   font-weight: 500;
 }
 
 .c-button-toolbar {
   display: flex;
   align-items: center;
-  gap: var(--bt-sp-6);
+  gap: var(--bt-sp-2);
 }
 .c-button-toolbar--wide-spacing {
-  gap: .875rem;
+  gap: var(--bt-sp-4);
 }
 .c-button-toolbar--vertical {
   flex-direction: column;
   align-items: flex-end;
+}
+
+
+/* ── Results toolbar + view toggle ──────────────────────────────────────────── */
+/*
+  NOTE: these classes use the bo-* prefix which violates the naming convention
+  in CLAUDE.md (valid prefixes are bc-, c-, u-). They should be renamed to
+  c-results-toolbar and c-view-toggle when the templates are refactored.
+  Keeping names stable for now to avoid breaking template HTML.
+*/
+.bo-results-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--bt-sp-3) 0;
+  border-bottom: var(--bt-border);
+  margin-bottom: var(--bt-sp-4);
+  font-size: var(--bt-text-sm);
+}
+
+.view-toggle {
+  display: flex;
+  gap: var(--bt-sp-1);               /* 4px — tightest token, keeps pill compact */
+  background: var(--bt-gray-100);
+  border-radius: var(--bt-radius);
+  padding: var(--bt-sp-1);           /* 4px inset */
+}
+
+.view-toggle-btn {
+  background: transparent;
+  border: none;
+  border-radius: var(--bt-radius-sm);
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  color: var(--bt-gray-500);
+  cursor: pointer;
+  line-height: 1;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+
+.view-toggle-btn.is-active {
+  background: var(--bt-white);
+  color: var(--bt-gray-1000);
+  box-shadow: var(--bt-shadow-xs);
+}
+
+.view-toggle-btn:focus-visible {
+  outline: 3px solid rgba(46,106,158,.4);
+  outline-offset: 2px;
 }
 
 

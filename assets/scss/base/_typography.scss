@@ -66,7 +66,7 @@ h6 {
   font-size: var(--bt-text-md);
   color: var(--bt-gray-600);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;  /* uppercase needs breathing room — em scales with font-size */
   font-weight: 500;
 }
 
@@ -103,6 +103,22 @@ a:hover {
   color: var(--bt-blue);
 }
 
+/*
+  Icons inside links — automatic alignment via :has()
+  ───────────────────────────────────────────────
+  <a> is display:inline by default. An icon inside it sits on the text
+  baseline and can’t be vertically centred. :has() lets us fix this
+  automatically — any <a> containing a direct .if child gets inline-flex.
+  No extra class needed on the HTML.
+
+  Baseline 2023: Chrome 105+, Firefox 121+, Safari 15.4+
+*/
+a:has(> .if) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+}
+
 // Code
 
 code {
@@ -114,7 +130,7 @@ code {
 
 code, kbd, pre, samp {
   font-family: var(--bt-font-mono);
-  font-size: .875em;
+  font-size: var(--bt-text-sm);
 }
 
 // Utility

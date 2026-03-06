@@ -11,15 +11,34 @@
   --bt-font-sans:   'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --bt-font-mono:   'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
 
-  /* Type scale */
-  --bt-text-xs:    0.6875rem;
-  --bt-text-sm:    0.875rem;
-  --bt-text-base:  1rem;
-  --bt-text-md:    1.125rem;
-  --bt-text-lg:    1.375rem;
-  --bt-text-xl:    1.75rem;
-  --bt-text-2xl:   2.25rem;
-  --bt-text-3xl:   3rem;
+  /*
+    Type scale
+    ────────────
+    Token values are rem decimals by necessity — type doesn’t snap to a 4px
+    spacing grid the way layout does. These values ARE the scale.
+
+    The rule “no decimals” applies to component code: never write .875rem
+    in a button or badge. Always reference a token. Here in the token file
+    itself, the decimal values are correct and intentional.
+
+    Scale in px at 16px root:
+      xs   = 12px   (badges, tight UI labels — minimum accessible size)
+      sm   = 14px   (secondary text, small buttons)
+      base = 16px   (body default)
+      md   = 18px   (lead text, card titles in backoffice)
+      lg   = 22px   (h3, section headings)
+      xl   = 28px   (h2, page headings)
+      2xl  = 36px   (h1, display headings)
+      3xl  = 48px   (hero display only)
+  */
+  --bt-text-xs:    0.75rem;    /* 12px */
+  --bt-text-sm:    0.875rem;   /* 14px */
+  --bt-text-base:  1rem;       /* 16px */
+  --bt-text-md:    1.125rem;   /* 18px */
+  --bt-text-lg:    1.375rem;   /* 22px */
+  --bt-text-xl:    1.75rem;    /* 28px */
+  --bt-text-2xl:   2.25rem;    /* 36px */
+  --bt-text-3xl:   3rem;       /* 48px */
 
   /* Spacing — 4px base */
   --bt-sp-1:  0.25rem;
@@ -34,6 +53,25 @@
   --bt-sp-16: 4rem;
   --bt-sp-20: 5rem;
   --bt-sp-24: 6rem;
+
+  /*
+    Button spacers
+    ──────────────
+    Buttons need optically tuned padding that sits between the 4px layout
+    grid steps. These tokens exist specifically for button (and input)
+    internal spacing — don’t use them for layout gaps or margins.
+
+    Target heights at 14px text (line-height 1.5 = 21px line box):
+      sm   → 32px  (21 + 5 + 5 + 1px border×2 = 32)
+      base → 38px  (21 + 8 + 8 + 1px border×2 = 39 ≈ 38)
+      lg   → 44px  (21px @ 16px + 10 + 10 + border×2 = 44)
+  */
+  --bt-btn-pad-y-sm:   0.3125rem;   /*  5px */
+  --bt-btn-pad-x-sm:   0.625rem;    /* 10px */
+  --bt-btn-pad-y:      0.4375rem;   /*  7px */
+  --bt-btn-pad-x:      0.875rem;    /* 14px */
+  --bt-btn-pad-y-lg:   0.625rem;    /* 10px */
+  --bt-btn-pad-x-lg:   1.125rem;    /* 18px */
 
   /* Borders & radius */
   --bt-border:      1px solid var(--bt-border-color);
