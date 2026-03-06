@@ -145,17 +145,21 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 ### Verified existing classes (from the real styleguide)
 ```
-bc-toolbar          bc-toolbar-left      bc-toolbar-right     bc-toolbar-title
-bc-navbar           bc-navbar-brand      bc-navbar-nav        bc-navbar-link
+bc-toolbar          bc-toolbar__left     bc-toolbar__right    bc-toolbar__title
+bc-navbar           bc-navbar__brand     bc-navbar__nav       bc-navbar__link
+bc-navbar__sep      bc-navbar__mark
 bc-avatar           bc-avatar--small     bc-avatar--large
 c-blank-slate       c-blank-slate-default  c-blank-slate-muted  c-blank-slate-primary
 c-facets            c-facet-title        c-facet-check        c-facet-name
 c-facet-count       c-facet-separator
 c-button-toolbar    c-button-toolbar--wide-spacing  c-button-toolbar--vertical
 c-sub-sidebar       c-sub-sidebar--bordered
-c-radio-card        c-radio-card-body    c-radio-card-group
-app-sidebar         app-sidebar-link     app-sidebar-label
+c-radio-card        c-radio-card__body   c-radio-card__group
+c-results-toolbar   c-filter-bar         c-bulk-bar           c-content-area
+c-facets-col        c-results-col        c-pagination-bar     c-table
 ```
+
+**Removed from verified list:** `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` — these were carried over from the old system and are never defined in the current SCSS. Do not use them.
 
 ### Classes I defined in booktower.css v2 (new, not in the existing production system)
 ```
@@ -203,7 +207,7 @@ All CSS belongs in `assets/scss/` and compiles to `assets/booktower.css`. This i
 
 ---
 
-## CSS architecture: where styles live
+## CSS architecture: where styles live (rule summary)
 
 All CSS belongs in the SCSS architecture under `assets/scss/`. This is not a preference — it is the rule.
 

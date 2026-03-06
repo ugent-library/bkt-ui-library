@@ -161,7 +161,7 @@
   font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
   background: var(--bt-white);
-  border: 1px solid #b5b2ae;
+  border: 1px solid var(--bt-gray-300);
   border-radius: var(--bt-radius);
   padding: var(--s-input-pad-y, .4375rem) var(--s-input-pad-x, .75rem);
   line-height: 1.5;
@@ -170,7 +170,7 @@
 }
 .form-control:focus, .form-select:focus {
   border-color: var(--bt-blue-700);
-  box-shadow: 0 0 0 3px rgba(46,106,158,.15);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-sm);
   outline: none;
   background: var(--bt-white);
 }
@@ -183,13 +183,13 @@
   border-color: var(--bt-green);
 }
 .form-control.is-valid:focus {
-  box-shadow: 0 0 0 3px rgba(26,107,58,.15);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-valid);
 }
 .form-control.is-invalid {
   border-color: var(--bt-danger);
 }
 .form-control.is-invalid:focus {
-  box-shadow: 0 0 0 3px rgba(155,28,28,.12);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-invalid);
 }
 
 .form-label {
@@ -236,7 +236,7 @@
   cursor: pointer;
 }
 .form-check-input:focus-visible {
-  outline: 3px solid rgba(46,106,158,.4);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 

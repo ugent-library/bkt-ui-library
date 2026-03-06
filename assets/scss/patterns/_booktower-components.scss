@@ -15,30 +15,31 @@
   top: 0;
   z-index: 50;
 }
-.bc-navbar__brand {
-  font-family: var(--bt-font-serif);
-  font-size: var(--bt-text-base);
-  font-weight: 400;
-  color: var(--bt-blue-900);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  flex-shrink: 0;
-}
-.bc-navbar__brand:hover {
-  color: var(--bt-blue-900);
-}
-.bc-navbar__mark {
-  font-size: var(--bt-text-md);
-  line-height: 1;
-  opacity: .75;
-}
+// .bc-navbar__brand {
+//   font-family: var(--bt-font-serif);
+//   font-size: var(--bt-text-base);
+//   font-weight: 400;
+//   color: var(--bt-blue-900);
+//   text-decoration: none;
+//   display: flex;
+//   align-items: center;
+//   gap: var(--bt-sp-2);
+//   flex-shrink: 0;
+// }
+// .bc-navbar__brand:hover {
+//   color: var(--bt-blue-900);
+// }
+// .bc-navbar__mark {
+//   font-size: var(--bt-text-md);
+//   line-height: 1;
+//   opacity: .75;
+// }
 .bc-navbar__sep {
   width: 1px;
   height: var(--bt-sp-5);    /* 20px — sits comfortably inside 52px bar */
   background: var(--bt-border-color);
   flex-shrink: 0;
+  display: block;
 }
 .bc-navbar__nav {
   display: flex;
@@ -66,7 +67,7 @@
   font-weight: 500;
 }
 .bc-navbar__link:focus-visible {
-  outline: 3px solid rgba(46,106,158,.4);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
@@ -249,13 +250,7 @@
 
 
 /* ── Results toolbar + view toggle ──────────────────────────────────────────── */
-/*
-  NOTE: these classes use the bo-* prefix which violates the naming convention
-  in CLAUDE.md (valid prefixes are bc-, c-, u-). They should be renamed to
-  c-results-toolbar and c-view-toggle when the templates are refactored.
-  Keeping names stable for now to avoid breaking template HTML.
-*/
-.bo-results-toolbar {
+.c-results-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -291,8 +286,22 @@
 }
 
 .view-toggle-btn:focus-visible {
-  outline: 3px solid rgba(46,106,158,.4);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
+}
+
+
+/* ── Footers ──────────────────────────────────────────────────────────────── */
+
+/* Public footer — no component classes needed.
+   Uses Bootstrap grid + utilities directly, same as the production footer.
+   Only .nav-title needs a definition (used on <h2> in footer nav columns). */
+.nav-title {
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bt-gray-700);
 }
 
 
@@ -350,94 +359,52 @@
 
 
 // /* ── c-facets ───────────────────────────────────────────────────────────────── */
-// .c-facets {
-//   display: grid;
-//   grid-template-columns: auto 1fr auto;
-//   align-items: center;
-//   gap: .2rem .5rem;
-// }
-// .c-facet-title {
-//   grid-column: 1/-1;
-//   font-size: var(--bt-text-xs);
-//   font-weight: 500;
-//   text-transform: uppercase;
-//   color: var(--bt-gray-300);
-//   padding: .625rem 0 .2rem;
-// }
-// .c-facet-title:first-child {
-//   padding-top: 0;
-// }
-// .c-facet-name label {
-//   font-size: var(--bt-text-sm);
-//   color: var(--bt-gray-700);
-//   cursor: pointer;
-//   margin: 0;
-//   line-height: 1.4;
-// }
-// .c-facet-count {
-//   font-size: .75rem;
-//   color: var(--bt-gray-300);
-//   font-family: var(--bt-font-mono);
-//   text-align: right;
-//   white-space: nowrap;
-// }
-// .c-facet-separator {
-//   grid-column: 1/-1;
-//   height: 1px;
-//   background: var(--bt-gray-50);
-//   margin: .3rem 0;
-// }
+.c-facets {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: .2rem .5rem;
+}
+.c-facet-title {
+  grid-column: 1/-1;
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--bt-gray-300);
+  padding: .625rem 0 .2rem;
+}
+.c-facet-title:first-child {
+  padding-top: 0;
+}
+.c-facet-name label {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-700);
+  cursor: pointer;
+  margin: 0;
+  line-height: 1.4;
+}
+.c-facet-count {
+  font-size: .75rem;
+  color: var(--bt-gray-300);
+  font-family: var(--bt-font-mono);
+  text-align: right;
+  white-space: nowrap;
+}
+.c-facet-separator {
+  grid-column: 1/-1;
+  height: 1px;
+  background: var(--bt-gray-50);
+  margin: .3rem 0;
+}
 
 
 // /* ── c-sub-sidebar ──────────────────────────────────────────────────────────── */
-// .c-sub-sidebar {
-//   padding-right: 1rem;
-// }
-// .c-sub-sidebar--bordered {
-//   border-right: var(--bt-border);
-// }
-
-
-// /* ── Application sidebar ────────────────────────────────────────────────────── */
-// .app-sidebar {
-//   background: var(--bt-bg-alt);
-//   border-right: var(--bt-border);
-//   padding: 1rem 0;
-//   flex-shrink: 0;
-// }
-// .app-sidebar__label {
-//   font-size: var(--bt-text-xs);
-//   font-weight: 500;
-//   text-transform: uppercase;
-//   color: var(--bt-gray-300);
-//   padding: .75rem 1rem .25rem;
-//   display: block;
-// }
-// .app-sidebar__link {
-//   display: flex;
-//   align-items: center;
-//   gap: .5rem;
-//   padding: .3125rem 1rem;
-//   font-size: var(--bt-text-sm);
-//   color: var(--bt-gray-700);
-//   text-decoration: none;
-//   border-left: 2px solid transparent;
-//   transition: all var(--bt-dur-fast);
-// }
-// .app-sidebar__link:hover {
-//   color: var(--bt-gray-1000);
-//   background: var(--bt-white);
-// }
-// .app-sidebar__link.active, .app-sidebar__link[aria-current="page"] {
-//   color: var(--bt-blue-900);
-//   background: var(--bt-white);
-//   border-left-color: var(--bt-blue-900);
-//   font-weight: 500;
-// }
-// .app-sidebar__link:focus-visible {
-//   outline: 3px solid rgba(46,106,158,.4);
-//   outline-offset: -2px;
-// }
+.c-sub-sidebar {
+  padding-right: 1rem;
+}
+.c-sub-sidebar--bordered {
+  border-right: var(--bt-border);
+}
 
 
 // /* ── Metadata / definition list ─────────────────────────────────────────────── */
@@ -623,24 +590,24 @@
 
 
 // /* ── Filter tag ─────────────────────────────────────────────────────────────── */
-// .filter-tag {
-//   display: inline-flex;
-//   align-items: center;
-//   gap: .25rem;
-//   background: var(--bt-blue-200);
-//   color: var(--bt-blue-900);
-//   font-size: var(--bt-text-xs);
-//   font-weight: 500;
-//   padding: .2em .5em .2em .625em;
-//   border-radius: var(--bt-radius-pill);
-//   cursor: pointer;
-//   border: none;
-//   transition: background var(--bt-dur-fast);
-// }
-// .filter-tag:hover {
-//   background: #ccdfe8;
-// }
-// .filter-tag__remove {
-//   opacity: .6;
-//   font-size: .7em;
-// }
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-900);
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  padding: .2em .5em .2em .625em;
+  border-radius: var(--bt-radius-pill);
+  cursor: pointer;
+  border: none;
+  transition: background var(--bt-dur-fast);
+}
+.filter-tag:hover {
+  background: var(--bt-blue-200); /* was #ccdfe8 — bt-blue-200 (#a8c7f0) is the nearest token */
+}
+.filter-tag__remove {
+  opacity: .6;
+  font-size: .7em;
+}

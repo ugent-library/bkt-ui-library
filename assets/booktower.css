@@ -100,6 +100,11 @@
   --bt-shadow: 0 2px 8px rgba(26,24,20,.08), 0 1px 3px rgba(26,24,20,.04);
   --bt-shadow-md: 0 4px 16px rgba(26,24,20,.10), 0 2px 4px rgba(26,24,20,.05);
   --bt-shadow-modal: 0 20px 60px rgba(26,24,20,.18), 0 4px 12px rgba(26,24,20,.10);
+  /* Focus rings — semantic tokens per state colour */
+  --bt-focus-ring: rgba(46, 106, 158, .45); /* default — blue, buttons + links */
+  --bt-focus-ring-sm: rgba(46, 106, 158, .15); /* default — softer, input shadow */
+  --bt-focus-ring-valid: rgba(26, 107, 58, .15); /* valid input shadow */
+  --bt-focus-ring-invalid: rgba(155, 28, 28, .12); /* invalid input shadow */
   /* Motion */
   --bt-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --bt-dur-fast: 120ms;
@@ -296,7 +301,7 @@ body {
   --bs-heading-color: var(--bt-text-dark-gray);
   --bs-link-color: var(--bt-blue-700);
   --bs-link-hover-color: var(--bt-blue-500);
-  --bs-focus-ring-color: rgba(46, 106, 158, 0.25);
+  --bs-focus-ring-color: var(--bt-focus-ring-sm);
   --bs-focus-ring-width: 3px;
 }
 
@@ -469,7 +474,7 @@ code, kbd, pre, samp {
    ═══════════════════════════════════════════════════════════════════════════════ */
 /* Universal visible focus ring */
 :focus-visible {
-  outline: 3px solid rgba(46, 106, 158, 0.5);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
@@ -519,13 +524,17 @@ code, kbd, pre, samp {
     animation-duration: 0.01ms !important;
   }
 }
+.btn-link {
+  text-decoration: none;
+}
+
 /* ── Forms & inputs ─────────────────────────────────────────────────────────── */
 .form-control, .form-select {
   font-family: var(--bt-font-sans);
   font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
   background: var(--bt-white);
-  border: 1px solid #b5b2ae;
+  border: 1px solid var(--bt-gray-300);
   border-radius: var(--bt-radius);
   padding: var(--s-input-pad-y, 0.4375rem) var(--s-input-pad-x, 0.75rem);
   line-height: 1.5;
@@ -535,7 +544,7 @@ code, kbd, pre, samp {
 
 .form-control:focus, .form-select:focus {
   border-color: var(--bt-blue-700);
-  box-shadow: 0 0 0 3px rgba(46, 106, 158, 0.15);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-sm);
   outline: none;
   background: var(--bt-white);
 }
@@ -551,7 +560,7 @@ code, kbd, pre, samp {
 }
 
 .form-control.is-valid:focus {
-  box-shadow: 0 0 0 3px rgba(26, 107, 58, 0.15);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-valid);
 }
 
 .form-control.is-invalid {
@@ -559,7 +568,7 @@ code, kbd, pre, samp {
 }
 
 .form-control.is-invalid:focus {
-  box-shadow: 0 0 0 3px rgba(155, 28, 28, 0.12);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-invalid);
 }
 
 .form-label {
@@ -611,7 +620,7 @@ code, kbd, pre, samp {
 }
 
 .form-check-input:focus-visible {
-  outline: 3px solid rgba(46, 106, 158, 0.4);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
@@ -653,7 +662,7 @@ code, kbd, pre, samp {
 }
 
 .btn:focus-visible {
-  outline: 3px solid rgba(46, 106, 158, 0.45);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
@@ -794,33 +803,12 @@ code, kbd, pre, samp {
   z-index: 50;
 }
 
-.bc-navbar__brand {
-  font-family: var(--bt-font-serif);
-  font-size: var(--bt-text-base);
-  font-weight: 400;
-  color: var(--bt-blue-900);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  flex-shrink: 0;
-}
-
-.bc-navbar__brand:hover {
-  color: var(--bt-blue-900);
-}
-
-.bc-navbar__mark {
-  font-size: var(--bt-text-md);
-  line-height: 1;
-  opacity: 0.75;
-}
-
 .bc-navbar__sep {
   width: 1px;
   height: var(--bt-sp-5); /* 20px — sits comfortably inside 52px bar */
   background: var(--bt-border-color);
   flex-shrink: 0;
+  display: block;
 }
 
 .bc-navbar__nav {
@@ -853,7 +841,7 @@ code, kbd, pre, samp {
 }
 
 .bc-navbar__link:focus-visible {
-  outline: 3px solid rgba(46, 106, 158, 0.4);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
@@ -1039,13 +1027,7 @@ code, kbd, pre, samp {
 }
 
 /* ── Results toolbar + view toggle ──────────────────────────────────────────── */
-/*
-  NOTE: these classes use the bo-* prefix which violates the naming convention
-  in CLAUDE.md (valid prefixes are bc-, c-, u-). They should be renamed to
-  c-results-toolbar and c-view-toggle when the templates are refactored.
-  Keeping names stable for now to avoid breaking template HTML.
-*/
-.bo-results-toolbar {
+.c-results-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1081,8 +1063,95 @@ code, kbd, pre, samp {
 }
 
 .view-toggle-btn:focus-visible {
-  outline: 3px solid rgba(46, 106, 158, 0.4);
+  outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
+}
+
+/* ── Footers ──────────────────────────────────────────────────────────────── */
+/* Public footer — no component classes needed.
+   Uses Bootstrap grid + utilities directly, same as the production footer.
+   Only .nav-title needs a definition (used on <h2> in footer nav columns). */
+.nav-title {
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bt-gray-700);
+}
+
+.c-facets {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.2rem 0.5rem;
+}
+
+.c-facet-title {
+  grid-column: 1/-1;
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--bt-gray-300);
+  padding: 0.625rem 0 0.2rem;
+}
+
+.c-facet-title:first-child {
+  padding-top: 0;
+}
+
+.c-facet-name label {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-700);
+  cursor: pointer;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.c-facet-count {
+  font-size: 0.75rem;
+  color: var(--bt-gray-300);
+  font-family: var(--bt-font-mono);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.c-facet-separator {
+  grid-column: 1/-1;
+  height: 1px;
+  background: var(--bt-gray-50);
+  margin: 0.3rem 0;
+}
+
+.c-sub-sidebar {
+  padding-right: 1rem;
+}
+
+.c-sub-sidebar--bordered {
+  border-right: var(--bt-border);
+}
+
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-900);
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  padding: 0.2em 0.5em 0.2em 0.625em;
+  border-radius: var(--bt-radius-pill);
+  cursor: pointer;
+  border: none;
+  transition: background var(--bt-dur-fast);
+}
+
+.filter-tag:hover {
+  background: var(--bt-blue-200); /* was #ccdfe8 — bt-blue-200 (#a8c7f0) is the nearest token */
+}
+
+.filter-tag__remove {
+  opacity: 0.6;
+  font-size: 0.7em;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -1146,14 +1215,7 @@ code, kbd, pre, samp {
   grid-template-areas: "navbar  navbar  navbar" "sidebar main    panel";
 }
 
-.u-layout--app > .c-side-panel--inline {
-  grid-area: panel;
-  position: sticky;
-  top: var(--bc-navbar-height, 48px);
-  height: calc(100vh - var(--bc-navbar-height, 48px));
-  overflow-y: auto;
-}
-
+/* .c-side-panel--inline — not yet implemented in any template. Add CSS here when needed. */
 /* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
 .u-layout--deposit {
   display: grid;
@@ -1165,6 +1227,141 @@ code, kbd, pre, samp {
 
 .u-layout--deposit > .bc-navbar {
   grid-area: navbar;
+}
+
+/* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
+/*
+  Used inside u-layout--app > main.
+  Combines the filter bar, bulk action bar, faceted results area,
+  and pagination row that make up a standard backoffice list view.
+*/
+.c-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+  border-bottom: var(--bt-border);
+}
+
+.c-bulk-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  padding: var(--bt-sp-2) var(--bt-sp-6);
+  background: var(--bt-blue-100);
+  border-bottom: var(--bt-border);
+  font-size: var(--bt-text-sm);
+}
+
+.c-content-area {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.c-facets-col {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: var(--bt-border);
+  padding: var(--bt-sp-5) var(--bt-sp-4);
+  overflow-y: auto;
+}
+
+.c-results-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--bt-sp-6);
+}
+
+.c-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--bt-sp-3) 0;
+  border-top: var(--bt-border);
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-700);
+  margin-top: auto;
+}
+
+/* ── c-table ──────────────────────────────────────────────────────────────── */
+/*
+  Standard backoffice data table.
+  .td-title     title cell with secondary metadata below
+  .td-meta      subdued secondary line inside a title cell
+  .td-actions   right-aligned icon buttons, revealed on row hover
+*/
+.c-table {
+  width: 100%;
+  font-size: var(--bt-text-sm);
+  border-collapse: collapse;
+}
+
+.c-table thead th {
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--bt-gray-700);
+  border-bottom: var(--bt-border);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  white-space: nowrap;
+  text-align: left;
+}
+
+.c-table tbody td {
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  border-bottom: var(--bt-border);
+  vertical-align: middle;
+}
+
+.c-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.c-table tbody tr:hover td {
+  background: var(--bt-gray-50);
+}
+
+.c-table tbody tr.is-selected td {
+  background: var(--bt-blue-100);
+}
+
+.c-table .td-title a {
+  color: var(--bt-gray-1000);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.c-table .td-title a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.c-table .td-meta {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-500);
+  margin-top: var(--bt-sp-1);
+}
+
+.c-table .td-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.c-table .td-actions-inner {
+  display: flex;
+  gap: var(--bt-sp-1);
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity var(--bt-dur-fast);
+}
+
+.c-table tbody tr:hover .td-actions-inner,
+.c-table tbody tr.is-selected .td-actions-inner {
+  opacity: 1;
 }
 
 .u-layout--deposit > .c-stepper {
@@ -1729,7 +1926,7 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   The btn-lg exception brings icons back to 14px to match its 16px text.
 */
 .btn > .if {
-  font-size: var(--bt-text-xs);
+  font-size: var(--bt-text-base);
 }
 
 .btn-lg > .if {
@@ -2509,4 +2706,487 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 
 .bt-icon-default {
   color: var(--bt-icon-default);
+}
+
+:root {
+  --bg:#fafafa;
+  /* super light ink family */
+  --i02: rgba(12,23,41,.02);
+  --i03: rgba(12,23,41,.03);
+  --i04: rgba(12,23,41,.04);
+  --i06: rgba(12,23,41,.06);
+  --i08: rgba(12,23,41,.08);
+  --i10: rgba(12,23,41,.10);
+  --i12: rgba(12,23,41,.12);
+  --i15: rgba(12,23,41,.15);
+  --i18: rgba(12,23,41,.18);
+  --i22: rgba(12,23,41,.22);
+  --i40: rgba(12,23,41,.40);
+}
+
+/* ---------------------------------------------
+   HERO WRAPPERS (landing + detail)
+---------------------------------------------- */
+.c-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--bt-gray-25);
+  padding: 10vh 0;
+}
+
+.c-hero_bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.c-hero_content {
+  position: relative;
+  z-index: 1;
+}
+
+/* SVG background fill */
+.c-hero_bg svg {
+  position: absolute;
+}
+
+/* ---------------------------------------------
+   SVG UTILS (shared)
+---------------------------------------------- */
+.noFill {
+  fill: none;
+}
+
+.faintFill {
+  fill: var(--i03);
+}
+
+.stroke {
+  stroke: var(--i22);
+}
+
+.faint {
+  stroke: var(--i10);
+}
+
+.muted {
+  stroke: var(--i12);
+}
+
+.mid {
+  stroke: var(--i15);
+}
+
+.hot {
+  stroke: var(--i18);
+}
+
+.fill {
+  fill: var(--i22);
+  stroke: none;
+}
+
+.fillFaint {
+  fill: var(--i12);
+  stroke: none;
+}
+
+.fillMuted {
+  fill: var(--i12);
+  stroke: none;
+}
+
+/* background grid */
+.gridLine {
+  stroke: var(--i40);
+  stroke-width: 0.75;
+  stroke-dasharray: 1 22;
+  opacity: 0.85;
+}
+
+/* ---------------------------------------------
+   LANDING GRAPH: edges + pulses + particles
+---------------------------------------------- */
+.edge {
+  stroke-width: 1;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  opacity: 0;
+  animation: draw var(--edge-dur, 7.6s) ease-in-out infinite alternate;
+  animation-delay: var(--edge-delay, 0s);
+}
+
+.edge.e2 {
+  --edge-delay: 1.0s;
+  --edge-dur: 7.9s;
+}
+
+.edge.e3 {
+  --edge-delay: 2.1s;
+  --edge-dur: 8.6s;
+}
+
+.edge.e4 {
+  --edge-delay: 3.2s;
+  --edge-dur: 7.6s;
+}
+
+.edge.e5 {
+  --edge-delay: 4.3s;
+  --edge-dur: 9.0s;
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 620;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.52;
+  }
+  45% {
+    stroke-dashoffset: 0;
+    opacity: 0.52;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+.pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse var(--pulse-dur, 3.8s) ease-in-out infinite alternate;
+  animation-delay: var(--pulse-delay, 0s);
+  opacity: var(--pulse-base-o, 0.75);
+}
+
+.pulse.p2 {
+  --pulse-delay: .7s;
+}
+
+.pulse.p3 {
+  --pulse-delay: 1.4s;
+}
+
+.pulse.p4 {
+  --pulse-delay: 2.1s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: var(--pulse-min-o, 0.2);
+  }
+  50% {
+    transform: scale(var(--pulse-scale, 1.28));
+    opacity: var(--pulse-max-o, 0.55);
+  }
+}
+.particle {
+  fill: var(--i40);
+}
+
+/* ---------------------------------------------
+   SCROLL CUE (landing)
+---------------------------------------------- */
+.scroll-cue-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scroll-cue {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.scroll-cue__icon {
+  display: block;
+}
+
+.scroll-cue__icon path {
+  fill: var(--i22);
+}
+
+.scroll-cue__icon g.page path {
+  fill: var(--i12);
+}
+
+.scroll-cue .page {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: leafTurn 6.8s ease-in-out infinite alternate;
+}
+
+@keyframes leafTurn {
+  0% {
+    transform: translateX(0) rotate(0deg) skewX(0deg) scaleX(1);
+  }
+  18% {
+    transform: translateX(0.2px) rotate(-12deg) skewX(-6deg) scaleX(1);
+  }
+  45% {
+    transform: translateX(0.4px) rotate(-3deg) skewX(7deg) scaleX(0.12);
+  }
+  66% {
+    transform: translateX(0.2px) rotate(10deg) skewX(10deg) scaleX(-1);
+  }
+  84% {
+    transform: translateX(0) rotate(3deg) skewX(2deg) scaleX(1);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg) skewX(0deg) scaleX(1);
+  }
+}
+/* ---------------------------------------------
+   DETAIL GLOBE: rims, grid, axis, shimmer, pins
+---------------------------------------------- */
+.gRimInner {
+  stroke: var(--i12);
+  stroke-width: 1.5;
+}
+
+.gRimOuter {
+  stroke: var(--i10);
+  stroke-width: 0.3;
+}
+
+.gMer {
+  stroke: var(--i08);
+  stroke-width: 0.75;
+  opacity: 0.75;
+}
+
+.gLat {
+  stroke: var(--i10);
+  stroke-width: 0.8;
+  opacity: 0.65;
+}
+
+/* axis */
+.axis {
+  stroke: var(--i08);
+  stroke-width: 1;
+  opacity: 0.9;
+}
+
+.axisDot {
+  fill: var(--i12);
+  opacity: 0.9;
+}
+
+/* shimmer / dash */
+.shimmer,
+.shimmerSmall {
+  stroke: var(--i10);
+  stroke-dashoffset: 0;
+  opacity: 0.4;
+  will-change: stroke-dashoffset;
+  animation: dash var(--dash-dur, 30s) linear infinite alternate;
+}
+
+.shimmer {
+  stroke-width: 2;
+  stroke-dasharray: 15 30;
+  --dash-dur: 30s;
+}
+
+.shimmerSmall {
+  stroke-width: 1;
+  stroke-dasharray: 12 20;
+  --dash-dur: 40s;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+/* pins (static strokes) */
+.pinTall,
+.pinMed,
+.pinShort {
+  stroke: var(--i22);
+}
+
+.pinTall {
+  stroke-width: 0.5;
+}
+
+.pinMed {
+  stroke-width: 0.8;
+}
+
+.pinShort {
+  stroke-width: 0.3;
+}
+
+/* pin “shoot” */
+.pinShoot {
+  stroke-dasharray: var(--len, 160);
+  stroke-dashoffset: var(--len, 160);
+  opacity: 0;
+  animation: pinShoot var(--dur, 18s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+  will-change: stroke-dashoffset, opacity;
+}
+
+.pinShoot.fast {
+  --dur: 30s;
+}
+
+@keyframes pinShoot {
+  0% {
+    stroke-dashoffset: var(--len, 160);
+    opacity: 0;
+  }
+  30% {
+    opacity: var(--o, 0.35);
+  }
+  55% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+/* pin dots */
+.pinDot {
+  opacity: 0.5;
+  animation: pinDot var(--dur, 18s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes pinDot {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.18;
+  }
+  55% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* shooting stars */
+.shoot {
+  stroke: var(--i18);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-dasharray: 42 140;
+  stroke-dashoffset: 140;
+  opacity: 0;
+  animation: shoot var(--dur, 40s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+  will-change: stroke-dashoffset, opacity;
+}
+
+.shoot.fast {
+  stroke: var(--i15);
+  stroke-width: 1.05;
+}
+
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 140;
+  }
+  12% {
+    opacity: 0.3;
+  }
+  28% {
+    opacity: 0.46;
+  }
+  48% {
+    opacity: 0;
+    stroke-dashoffset: -90;
+  }
+  100% {
+    opacity: 0;
+    stroke-dashoffset: -90;
+  }
+}
+/* traveling dots */
+.travDot {
+  fill: var(--i15);
+  opacity: 0;
+  animation: dotTravel var(--dur, 18s) linear infinite alternate;
+  animation-delay: var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+.travDot.faint {
+  fill: var(--i12);
+}
+
+@keyframes dotTravel {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0);
+  }
+  10% {
+    opacity: 0.34;
+  }
+  60% {
+    opacity: 0.34;
+    transform: translate(var(--dx, 560px), var(--dy, -140px));
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx, 560px), var(--dy, -140px));
+  }
+}
+/* ---------------------------------------------
+   REDUCED MOTION
+---------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .edge,
+  .pulse,
+  .shimmer,
+  .shimmerSmall,
+  .pinShoot,
+  .pinDot,
+  .shoot,
+  .travDot {
+    animation: none !important;
+  }
+  .edge {
+    opacity: 0.35;
+    stroke-dashoffset: 0;
+  }
+  .pinShoot {
+    opacity: 0.5;
+    stroke-dashoffset: 0;
+  }
+  .pinDot {
+    opacity: 1;
+  }
+  .shoot, .travDot {
+    opacity: 0.22;
+  }
 }

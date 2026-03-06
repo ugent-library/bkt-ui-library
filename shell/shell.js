@@ -17,7 +17,6 @@
   function setProtoMode(on) {
     shell.classList.toggle('prototype-mode', on);
     sessionStorage.setItem(PROTO_KEY, on ? '1' : '');
-    showBadge(on);
   }
 
   // Restore state on load
