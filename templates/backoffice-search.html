@@ -1,0 +1,330 @@
+<!-- @title: Search research output — Biblio -->
+<!-- @surface: backoffice -->
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="bc-navbar" role="banner">
+  <a href="#" class="bc-navbar-brand" aria-label="Biblio — go to dashboard">
+    <span class="bc-navbar-mark" aria-hidden="true">◎</span>
+    Biblio
+  </a>
+  <div class="bc-navbar-sep" aria-hidden="true"></div>
+  <nav class="bc-navbar-nav" aria-label="Application navigation">
+    <a href="#" class="bc-navbar-link active" aria-current="page">Research output</a>
+    <a href="#" class="bc-navbar-link">Datasets</a>
+    <a href="#" class="bc-navbar-link">People</a>
+    <a href="#" class="bc-navbar-link">Projects</a>
+  </nav>
+  <div class="ms-auto d-flex align-items-center gap-2">
+    <div class="dropdown">
+      <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+        data-bs-toggle="dropdown" aria-label="Current role: Researcher">
+        Researcher
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#" aria-current="true">
+          <i class="if if-user" aria-hidden="true"></i> Researcher
+        </a></li>
+        <li><a class="dropdown-item" href="#">
+          <i class="if if-book" aria-hidden="true"></i> Librarian
+        </a></li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <button class="bc-avatar btn" type="button"
+        data-bs-toggle="dropdown" aria-label="Account menu for Wouter Bosmans">
+        WB
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><span class="dropdown-item-text">
+          <strong>Wouter Bosmans</strong><br>
+          <span class="text-muted">Wouter.Bosmans@UGent.be</span>
+        </span></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="bo-body">
+
+  <nav class="bo-sidenav" aria-label="Section navigation">
+    <span class="app-sidebar-label">My work</span>
+    <a href="#" class="app-sidebar-link active" aria-current="page">
+      <i class="if if-article" aria-hidden="true"></i>
+      Research output
+    </a>
+    <a href="#" class="app-sidebar-link">
+      <i class="if if-database" aria-hidden="true"></i>
+      Datasets
+    </a>
+    <a href="#" class="app-sidebar-link">
+      <i class="if if-notification" aria-hidden="true"></i>
+      Suggestions
+      <span class="badge bg-warning ms-auto" aria-label="3 new suggestions">3</span>
+    </a>
+    <span class="app-sidebar-label">Acting for</span>
+    <a href="#" class="app-sidebar-link">
+      <i class="if if-user-add" aria-hidden="true"></i>
+      Manage proxies
+    </a>
+  </nav>
+
+  <main class="bo-main" id="main-content">
+
+    <!-- Toolbar -->
+    <div class="bc-toolbar-wrap">
+      <div class="bc-toolbar">
+        <div class="bc-toolbar__left">
+          <h1 class="bc-toolbar__title">Research output</h1>
+          <span class="text-muted" aria-live="polite" id="result-count">4,831 records</span>
+        </div>
+        <div class="bc-toolbar__right">
+          <div class="c-button-toolbar">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                data-bs-toggle="dropdown">
+                <i class="if if-download if-sm" aria-hidden="true"></i> Export
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">CSV</a></li>
+                <li><a class="dropdown-item" href="#">BibTeX</a></li>
+                <li><a class="dropdown-item" href="#">RIS</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-secondary btn-sm" type="button">
+              <i class="if if-upload if-sm" aria-hidden="true"></i> Import
+            </button>
+            <a href="/templates/deposit-flow.html" class="btn btn-primary btn-sm">
+              <i class="if if-add if-sm" aria-hidden="true"></i>
+              Add research output
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search + filters -->
+    <div class="bo-filter-bar" role="search" aria-label="Search and filter research output">
+      <div>
+        <label for="bo-search" class="visually-hidden">Search by title, author, DOI</label>
+        <input type="search"
+          class="form-control form-control-search"
+          id="bo-search"
+          value="Quantum computing"
+          placeholder="Search by title, author, DOI…"
+          hx-get="/search"
+          hx-trigger="keyup changed delay:300ms"
+          hx-target="#results-body"
+          hx-indicator="#search-indicator">
+      </div>
+      <div class="d-flex gap-2 flex-wrap align-items-center" role="group" aria-label="Active filters">
+        <button type="button" class="filter-tag">
+          Type: Journal article <span class="filter-tag-remove" aria-hidden="true">×</span>
+        </button>
+        <button type="button" class="filter-tag">
+          Year: 2024 <span class="filter-tag-remove" aria-hidden="true">×</span>
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm py-0 px-2">Clear all</button>
+      </div>
+      <span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching…</span>
+    </div>
+
+
+
+    <!-- Content -->
+    <div class="bo-content-area">
+
+      <!-- Facets -->
+      <aside class="bo-facets-col" aria-label="Filter by">
+        <div class="c-facets">
+          <div class="c-facet-title">Status</div>
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-published" checked aria-label="Published (3 results)"></div>
+          <div class="c-facet-name"><label for="f-published">Published</label></div>
+          <div class="c-facet-count" aria-hidden="true">3</div>
+
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-draft" aria-label="Draft (1 result)"></div>
+          <div class="c-facet-name"><label for="f-draft">Draft</label></div>
+          <div class="c-facet-count" aria-hidden="true">1</div>
+
+          <div class="c-facet-separator" role="separator"></div>
+          <div class="c-facet-title">Type</div>
+
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-journal" checked aria-label="Journal article (2 results)"></div>
+          <div class="c-facet-name"><label for="f-journal">Journal article</label></div>
+          <div class="c-facet-count" aria-hidden="true">2</div>
+
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-dataset" aria-label="Dataset (1 result)"></div>
+          <div class="c-facet-name"><label for="f-dataset">Dataset</label></div>
+          <div class="c-facet-count" aria-hidden="true">1</div>
+
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-chapter" aria-label="Book chapter (1 result)"></div>
+          <div class="c-facet-name"><label for="f-chapter">Book chapter</label></div>
+          <div class="c-facet-count" aria-hidden="true">1</div>
+
+          <div class="c-facet-separator" role="separator"></div>
+          <div class="c-facet-title">Access</div>
+
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-oa" checked aria-label="Open access (3 results)"></div>
+          <div class="c-facet-name"><label for="f-oa">Open access</label></div>
+          <div class="c-facet-count" aria-hidden="true">3</div>
+
+          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-restricted" aria-label="Restricted (1 result)"></div>
+          <div class="c-facet-name"><label for="f-restricted">Restricted</label></div>
+          <div class="c-facet-count" aria-hidden="true">1</div>
+        </div>
+      </aside>
+
+      <!-- Results: cards in backoffice surface -->
+      <div class="bo-results-col d-flex flex-column" id="results-body">
+        <div class="flex-grow-1">
+
+          <article class="card-research" aria-label="Research output">
+            <div class="card-meta">
+              <span class="badge-oa">Open access</span>
+              <span class="badge bg-primary">Journal article</span>
+              <span class="badge bg-success">Published</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                <i class="if if-edit" aria-hidden="true"></i> Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                <i class="if if-eye" aria-hidden="true"></i> View
+              </a>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="#">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
+              </h2>
+              <p class="card-authors">
+                Kiewiet, M., Cuyvers, S., Billet, M.
+                <span class="text-muted">et al.</span>
+              </p>
+              <p class="card-publication">
+                <span>2025</span>
+                <a href="#">Laser &amp; Photonics Reviews</a>
+                <span>33(2) · p.2227–2246</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="card-research" aria-label="Research output">
+            <div class="card-meta">
+              <span class="badge-restricted">Restricted</span>
+              <span class="badge bg-primary">Book chapter</span>
+              <span class="badge bg-warning">Draft</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                <i class="if if-edit" aria-hidden="true"></i> Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                <i class="if if-eye" aria-hidden="true"></i> View
+              </a>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a>
+              </h2>
+              <p class="card-authors">
+                Verstraeten, D., De Wolf, K.
+              </p>
+              <p class="card-publication">
+                <span>2024</span>
+                <a href="#">Advances in Quantum Computing</a>
+                <span>pp. 78–112</span>
+              </p>
+            </div>
+          </article>
+
+          <article class="card-research" aria-label="Research output">
+            <div class="card-meta">
+              <span class="badge-oa">Open access</span>
+              <span class="badge bg-primary">Dataset</span>
+              <span class="badge bg-success">Published</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                <i class="if if-edit" aria-hidden="true"></i> Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                <i class="if if-eye" aria-hidden="true"></i> View
+              </a>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="#">Benchmark results for variational quantum eigensolver across 14 molecular systems</a>
+              </h2>
+              <p class="card-authors">
+                Maes, J., Billet, M.
+              </p>
+              <p class="card-publication">
+                <span>2024</span>
+                <a href="#">Zenodo</a>
+              </p>
+            </div>
+          </article>
+
+          <article class="card-research" aria-label="Research output">
+            <div class="card-meta">
+              <span class="badge-oa">Open access</span>
+              <span class="badge bg-primary">Journal article</span>
+              <span class="badge bg-success">Published</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                <i class="if if-edit" aria-hidden="true"></i> Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                <i class="if if-eye" aria-hidden="true"></i> View
+              </a>
+            </div>
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
+              </h2>
+              <p class="card-authors">
+                Van Damme, T., Esperon-Rodriguez, M., Akritidis, K.
+                <span class="text-muted">et al.</span>
+              </p>
+              <p class="card-publication">
+                <span>2023</span>
+                <a href="#">npj Quantum Information</a>
+                <span>9(1) · p.44</span>
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Pagination -->
+        <div class="bo-pagination">
+          <span aria-live="polite">Showing 1–25 of 4,831 records</span>
+          <nav aria-label="Results pagination">
+            <ul class="pagination mb-0">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#" aria-current="page">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+              <li class="page-item"><a class="page-link" href="#">194</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next page">›</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+
