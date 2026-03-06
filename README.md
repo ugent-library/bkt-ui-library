@@ -84,6 +84,12 @@ Minimal page template:
 
 The server injects Bootstrap, `booktower.css`, and the shell nav automatically.
 
+Pages without a surface declaration default to `backoffice`. To set a page to public:
+
+```html
+<!-- @surface: public -->
+```
+
 ---
 
 ## Adding an icon
@@ -115,6 +121,8 @@ For surface-aware components, add `data-surface="public"` or `data-surface="back
 ## Troubleshooting
 
 **Icons not showing** — run `npm run build:icons` then `npm run build:css`. Check `assets/fonts/icon-font.woff2` exists.
+
+**Icons showing the wrong glyph** — the codepoints in `assets/scss/icons/_icon-font.scss` are out of sync with the font files. Run `npm run build:icons` to regenerate both from the SVG sources, then `npm run build:css`. Never edit `_icon-font.scss` by hand — it is generated output.
 
 **CSS not updating** — make sure you're running `npm run dev`, not just `npm start`.
 

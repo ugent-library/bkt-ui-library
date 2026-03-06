@@ -29,6 +29,8 @@ Backoffice: IBM Plex Sans headings  · 15px body · 1.5 leading · compact paddi
 
 **When I forget this, I produce inconsistent UIs.** Check every new template has the attribute on `<body>` or the outermost layout element.
 
+In the UI kit, pages without any `data-surface` declaration get `data-surface="backoffice"` injected on `<body>` automatically by the server. To override this for a specific page, add `<!-- @surface: public -->` at the top of the file.
+
 ---
 
 ## The icon system

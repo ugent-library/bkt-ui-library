@@ -3,19 +3,13 @@
    Reset (box-sizing, html, body) lives in _reset.scss — not here.
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-// Headings
-/* Headings read from surface vars */
-
-[data-surface="public"] {
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--bt-font-serif);
-    font-weight: 300;
-  }
-}
+// Heading
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--s-heading-font);
   line-height: var(--s-heading-leading);
-  color: var(--bt-text);
+  font-weight: var(--s-heading-weight);
+  color: var(--s-body-color);
 }
 
 h1 {
@@ -37,15 +31,6 @@ h6 {
   font-size: var(--bt-text-sm);
 }
 
-/* Backoffice: h3/h4 always sans — used as section labels in dense forms */
-[data-surface="backoffice"] h3,
-[data-surface="backoffice"] h4,
-.s-backoffice h3,
-.s-backoffice h4 {
-  font-family: var(--bt-font-sans);
-  font-weight: 500;
-}
-
 // Displays
 
 .display-1,
@@ -54,65 +39,56 @@ h6 {
 .display-4,
 .display-5,
 .display-6 {
-  line-height: var(--s-heading-leading);
-  margin-bottom: var(--bt-sp-4) !important;
-  color: var(--bt-text) !important;
+  font-family: var(--bt-font-serif);
+  line-height: var(--s-display-leading);
+  font-weight: var(--s-display-weight);
+  margin-bottom: var(--bt-sp-4);
+  color: var(--bt-text);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-
-  &.display-1 {
-    line-height: 1.05 !important;
-    font-weight: 500 !important;
-    font-size: var(--bt-text-3xl) !important;
-  }
-
-  &.display-2 {
-    line-height: 1.05 !important;
-    font-weight: 500 !important;
-    font-size: var(--bt-text-2xl) !important;
-  }
-
-  &.display-3 {
-    line-height: 1.05 !important;
-    font-weight: 500 !important;
-    font-size: var(--bt-text-xl) !important;
-  }
-
-  &.display-4 {
-    line-height: 1.2 !important;
-    font-weight: 500 !important;
-    font-size: var(--bt-text-lg) !important;
-  }
-
-  &.display-5 {
-    font-weight: 600 !important;
-    font-size: var(--bt-text-md) !important;
-    color: var(--bt-gray-600) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-  }
-
-  &.display-6 {
-    font-weight: 600 !important;
-    font-size: var(--bt-text-md) !important;
-    font-style: italic !important;
-    margin-bottom: var(--bt-sp-1) !important;
-  }
+.display-1 {
+  font-size: var(--bt-text-3xl);
 }
+
+.display-2 {
+  font-size: var(--bt-text-2xl);
+}
+
+.display-3 {
+  font-size: var(--bt-text-xl);
+}
+
+.display-4 {
+  font-size: var(--bt-text-lg);
+}
+
+.display-5 {
+  font-size: var(--bt-text-md);
+  color: var(--bt-gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.display-6 {
+  font-size: var(--bt-text-lg);
+  font-style: italic;
+  margin-bottom: var(--bt-sp-1);
+  font-weight: 500;
+}
+
+// Lead
 
 .lead {
-  font-size: var(--bt-text-md);
   line-height: 1.7;
+  font-size: var(--bt-text-md);
   font-weight: 400;
+  font-family: var(--s-lead-font);
   color: var(--bt-gray-700);
   margin-bottom: var(--bt-sp-6);
 }
+
+// Body
 
 p:last-child {
   margin-bottom: 0;
@@ -127,6 +103,8 @@ a:hover {
   color: var(--bt-blue);
 }
 
+// Code
+
 code {
   background: var(--bt-bg-alt);
   color: var(--bt-text);
@@ -139,10 +117,12 @@ code, kbd, pre, samp {
   font-size: .875em;
 }
 
-.ff-serif {
-  font-family: var(--bt-font-serif);;
-}
+// Utility
 
 .ff-serif {
-  font-family: var(--bt-font-sans);;
+  font-family: var(--bt-font-serif);
+}
+
+.ff-sans {
+  font-family: var(--bt-font-sans);
 }

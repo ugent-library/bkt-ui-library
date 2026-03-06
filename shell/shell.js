@@ -20,21 +20,6 @@
     showBadge(on);
   }
 
-  function showBadge(visible) {
-    let badge = document.querySelector('.bt-prototype-badge');
-    if (!badge) {
-      badge = document.createElement('div');
-      badge.className = 'bt-prototype-badge';
-      badge.textContent = 'Prototype mode';
-      document.body.appendChild(badge);
-    }
-    badge.classList.toggle('visible', visible);
-    if (visible) {
-      clearTimeout(badge._t);
-      badge._t = setTimeout(() => badge.classList.remove('visible'), 2000);
-    }
-  }
-
   // Restore state on load
   if (sessionStorage.getItem(PROTO_KEY)) {
     shell.classList.add('prototype-mode');
