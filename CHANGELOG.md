@@ -144,7 +144,7 @@ system, or do I reach for something new?"
 | `.btn-primary` | `.btn-primary` | ✅ Carried over | Dark navy (`--bt-blue-900`), not UGent blue. |
 | `.btn-secondary` | `.btn-secondary` | ✅ Carried over | Outlined, blue-navy border. |
 | `.btn-danger` | `.btn-danger` | ✅ Carried over | Outlined danger. |
-| `.btn-link` | `.btn-link` | ✅ Carried over | Ghost-style, replaces OLD `btn-link`. |
+| `.btn-link` | `.btn-link` | ✅ Carried over | |
 | `.btn-sm`, `.btn-lg` | `.btn-sm`, `.btn-lg` | ✅ Carried over | |
 | `.btn-ghost` | `.btn-ghost` | ⏳ Planned | Used extensively in templates but not yet in SCSS. |
 | `.btn-outline-primary` | Bootstrap `btn-outline-primary` | 🔧 Revised | Use Bootstrap directly — v2 overrides to match token colours. Currently commented. |
