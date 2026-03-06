@@ -1,0 +1,116 @@
+<!-- @title: Public Search Template -->
+<!-- @surface: public -->
+
+<header class="bc-navbar bc-navbar--white" role="banner">
+  <div class="bc-toolbar h-auto">
+    <div class="bc-toolbar__left">
+      <h1 class="h6 ff-sans">
+        <a href="/">
+          <i class="if if-ghent-university if-md" aria-hidden="true"></i>
+          Ghent University Academic Repository & Bibliography
+        </a>
+      </h1>
+    </div>
+    <nav aria-label="Site navigation" class="bc-toolbar__middle">
+      <div class="c-button-toolbar">
+        <!-- Replace with your nav items -->
+        <a href="#" class="bt-topbar-link active" aria-current="page">Search</a>
+        <a href="#" class="bt-topbar-link">Authors</a>
+        <a href="#" class="bt-topbar-link">Projects</a>
+        <a href="#" class="bt-topbar-link">How it works</a>
+      </div>
+    </nav>
+    <div class="bc-toolbar__right">
+      <div class="bc-toolbar__item">
+        <a href="#" class="bt-topbar-link">My lists</a>
+      </div>
+      <div class="bc-toolbar__item">
+        <a href="#" class="btn btn-secondary btn-sm">
+          <i class="if if-add if-sm" aria-hidden="true"></i>
+          Add research
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- Search hero -->
+  <div>
+    <div>
+      <form role="search" aria-label="Search research output">
+        <label for="q" class="visually-hidden">Search research output</label>
+        <div>
+          <i class="if if-search" aria-hidden="true"></i>
+          <input
+            type="search"
+            id="q"
+            name="q"
+            placeholder="Search research output..."
+            autocomplete="off"
+            hx-get="/search"
+            hx-trigger="keyup changed delay:400ms"
+            hx-target="#search-results"
+            hx-swap="innerHTML"
+            hx-indicator="#search-indicator">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </form>
+      <p aria-live="polite">
+        <!-- Replace with results count -->
+      </p>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div role="group" aria-label="Active filters">
+    <!-- Replace with active filter tags -->
+  </div>
+
+  <!-- Body: facets + results -->
+  <div>
+
+    <!-- Facets -->
+    <aside aria-label="Filter results">
+      <!-- Replace with your facets -->
+      <div class="c-facets">
+        <!-- Facet content -->
+      </div>
+    </aside>
+
+    <!-- Results -->
+    <div id="search-results">
+
+      <!-- Toolbar: sort + count -->
+      <div>
+        <span aria-live="polite"><!-- Replace with count --></span>
+        <div class="d-flex align-items-center gap-3 ms-auto">
+          <label for="sort-by" class="visually-hidden">Sort by</label>
+          <select id="sort-by" class="form-select form-select-sm" style="width: auto;">
+            <option>Year (new to old)</option>
+            <option>Year (old to new)</option>
+            <option>Relevance</option>
+            <option>Title (A–Z)</option>
+          </select>
+          <div class="dropdown">
+            <button class="btn btn-ghost btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              Actions
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Save search</a></li>
+              <li><a class="dropdown-item" href="#">Download results</a></li>
+              <li><a class="dropdown-item" href="#">Subscribe to feed</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <!-- Replace with your research cards -->
+
+    </div>
+
+  </div>
+
+</main>

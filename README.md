@@ -43,7 +43,19 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 | `elements/` | UI kit docs: buttons, forms |
 | `patterns/` | UI kit docs: components |
 | `templates/` | Full-page prototype templates |
+| `templates/partials/` | Reusable HTML templates for common layouts |
 | `shell/` | UI kit navigation chrome (not part of the design system) |
+
+---
+
+## Reusable templates
+
+For common page layouts, copy from `templates/partials/` and customize. These use only existing CSS classes from the design system:
+
+- `backoffice-overview.html` — Backoffice list view with sidebar, toolbar, filters, facets, and table results (uses `u-layout--app`, `c-sub-sidebar`, etc.)
+- `public-search.html` — Public search page with hero, filters, facets, and card results
+
+These include placeholder content and comments showing where to customize. The full HTML output remains copy-paste friendly for developers.
 
 ---
 

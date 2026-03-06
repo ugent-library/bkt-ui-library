@@ -1,0 +1,198 @@
+<!-- @title: Backoffice Overview Template -->
+<!-- @surface: backoffice -->
+
+<!-- Skip link — first focusable element, keyboard users navigate to main content -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ── Application topbar ─────────────────────────────────────────────── -->
+<header class="bc-navbar" role="banner">
+  <a href="#" class="bc-navbar__brand" aria-label="Biblio — go to dashboard">
+    <span class="bc-navbar__mark" aria-hidden="true">◎</span>
+    Biblio
+  </a>
+
+  <!-- Primary navigation -->
+  <nav class="bc-navbar__nav" aria-label="Application navigation">
+    <!-- Replace with your nav items -->
+    <a href="#" class="bc-navbar__link active" aria-current="page">Research output</a>
+    <a href="#" class="bc-navbar__link">Datasets</a>
+    <a href="#" class="bc-navbar__link">People</a>
+    <a href="#" class="bc-navbar__link">Projects</a>
+    <a href="#" class="bc-navbar__link">Reports</a>
+  </nav>
+
+  <!-- User menu -->
+  <div class="ms-auto d-flex align-items-center gap-2">
+    <!-- Role switcher -->
+    <div class="dropdown">
+      <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+        id="role-menu" data-bs-toggle="dropdown"
+        aria-expanded="false"
+        aria-label="Current role: Researcher. Switch role">
+        Researcher
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="role-menu">
+        <li><a class="dropdown-item" href="#" aria-current="true">
+          <i class="if if-user" aria-hidden="true"></i>
+          Researcher
+        </a></li>
+        <li><a class="dropdown-item" href="#">
+          <i class="if if-librarian" aria-hidden="true"></i>
+          Librarian
+        </a></li>
+      </ul>
+    </div>
+
+    <!-- User account -->
+    <div class="dropdown">
+      <button class="bc-avatar btn" type="button"
+        id="user-menu" data-bs-toggle="dropdown"
+        aria-expanded="false"
+        aria-label="Account menu for Wouter Bosmans">
+        WB
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-menu">
+        <li><span class="dropdown-item-text">
+          <strong>Wouter Bosmans</strong><br>
+          <span>Wouter.Bosmans@UGent.be</span>
+        </span></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<!-- ── Body ──────────────────────────────────────────────────────────── -->
+<div class="u-layout--app">
+
+  <!-- Application sidebar — role-scoped navigation -->
+  <nav class="c-sub-sidebar" aria-label="Section navigation">
+    <!-- Replace with your sidebar content -->
+    <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">My work</p>
+    <a href="#" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-current="page">
+      <i class="if if-article" aria-hidden="true"></i>
+      Research output
+    </a>
+    <a href="#" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2">
+      <i class="if if-dataset" aria-hidden="true"></i>
+      Datasets
+    </a>
+    <a href="#" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2">
+      <i class="if if-suggestion" aria-hidden="true"></i>
+      Suggestions
+      <span class="badge bg-warning ms-auto" aria-label="3 new suggestions">3</span>
+    </a>
+
+    <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
+    <a href="#" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2">
+      <i class="if if-user-delegate" aria-hidden="true"></i>
+      Manage proxies
+    </a>
+  </nav>
+
+  <!-- Main content -->
+  <main id="main-content">
+
+    <!-- Page toolbar -->
+    <div class="bc-toolbar">
+      <div class="bc-toolbar__left">
+        <!-- h1 reads from --s-heading-font which is sans at backoffice surface -->
+        <h1 class="bc-toolbar__title"><!-- Replace with page title --></h1>
+        <!-- Result count — gives orientation, not decoration -->
+        <span aria-live="polite" id="result-count"><!-- Replace with count --></span>
+      </div>
+      <div class="bc-toolbar__right">
+        <div class="c-button-toolbar">
+          <!-- Replace with your toolbar actions -->
+          <a href="#" class="btn btn-primary btn-sm">
+            <i class="if if-add if-sm" aria-hidden="true"></i>
+            Add item
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div role="search" aria-label="Search and filter">
+      <!-- Search input -->
+      <div>
+        <label for="bo-search" class="visually-hidden">Search</label>
+        <input type="search"
+          class="form-control form-control-search"
+          id="bo-search"
+          placeholder="Search..."
+          name="q"
+          hx-get="/search"
+          hx-trigger="keyup changed delay:300ms"
+          hx-target="#results-body"
+          hx-swap="innerHTML"
+          hx-indicator="#search-indicator">
+      </div>
+
+      <!-- Active filter tags -->
+      <div class="d-flex gap-2 flex-wrap align-items-center" aria-label="Active filters" role="group">
+        <!-- Replace with active filters -->
+      </div>
+
+      <!-- Search loading indicator — hidden until HTMX request fires -->
+      <span id="search-indicator" class="htmx-indicator" aria-live="polite">
+        Searching…
+      </span>
+    </div>
+
+    <!-- Bulk action bar — shown when rows are selected -->
+    <div role="toolbar" aria-label="Bulk actions" hidden>
+      <span id="bulk-count" aria-live="polite"><!-- Replace with selected count --></span>
+      <div class="d-flex gap-2 ms-2">
+        <!-- Replace with bulk actions -->
+        <button type="button" class="btn btn-ghost btn-sm">
+          <i class="if if-delete if-sm" aria-hidden="true"></i>
+          Delete
+        </button>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm ms-auto" id="bulk-deselect"
+        aria-label="Deselect all">
+        Deselect all
+      </button>
+    </div>
+
+    <!-- Content: facets + results -->
+    <div class="d-flex">
+
+      <!-- Facets sidebar -->
+      <aside aria-label="Filter by">
+        <div class="c-facets">
+          <!-- Facet content -->
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <div class="flex-grow-1 d-flex flex-column">
+        <div class="flex-grow-1">
+          <!-- Replace with your results table or content -->
+          <table aria-label="Records">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <input type="checkbox" class="form-check-input mt-0"
+                    id="select-all"
+                    aria-label="Select all records">
+                </th>
+                <th scope="col">Title</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="results-body">
+              <!-- Table rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

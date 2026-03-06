@@ -83,6 +83,8 @@ function parseMetaAndBody(raw, filePath) {
   while (i < lines.length) {
     const m = lines[i].match(/^\s*<!--\s*@([\w-]+)\s*:\s*(.*?)\s*-->\s*$/);
     if (!m) break;
+    // Stop parsing meta directives when we hit an @include — leave it in the body
+    if (m[1].toLowerCase() === 'include') break;
     meta[m[1].toLowerCase()] = m[2];
     i += 1;
   }
@@ -95,8 +97,22 @@ function parseMetaAndBody(raw, filePath) {
   return { meta, body };
 }
 
+function resolveIncludes(body, filePath) {
+  return body.replace(/<!--\s*@include:\s*([^\s]+)\s*-->/g, (match, includePath) => {
+    const abs = path.join(ROOT, includePath.trim());
+    if (!fs.existsSync(abs)) {
+      return `<!-- @include not found: ${includePath} -->`;
+    }
+    // Strip meta comments from included file — include only the body fragment
+    const raw = fs.readFileSync(abs, 'utf8');
+    const { body: fragment } = parseMetaAndBody(raw, abs);
+    return fragment;
+  });
+}
+
 function renderBodyTemplate(raw, filePath) {
-  const { meta, body } = parseMetaAndBody(raw, filePath);
+  const { meta, body: rawBody } = parseMetaAndBody(raw, filePath);
+  const body = resolveIncludes(rawBody, filePath);
   const surface = meta.surface ? ` data-surface="${meta.surface}"` : '';
   const headCss = DEFAULT_CSS.map(href => `  <link rel="stylesheet" href="${href}">`).join('\n');
   const headScripts = DEFAULT_HEAD_SCRIPTS
