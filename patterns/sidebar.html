@@ -1,0 +1,181 @@
+<!-- @title: Sidebar Navigation — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Sidebar Navigation</h1>
+    <p class="lead">Two sidebar components serve distinct purposes. <code>c-sub-sidebar</code> is a persistent section navigator inside <code>u-layout--app</code>. <code>c-stepper</code> is a step-progress navigator inside <code>u-layout--deposit</code>. Neither is decorative — both carry meaningful navigation state.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">c-sub-sidebar — section navigator</h2>
+    <p class="mb-4">Used in backoffice list and detail pages. Sits in the left column of <code>u-layout--app</code>, sticky below the topbar. Links use Bootstrap <code>.nav-link</code> directly — no extra wrapper class needed beyond the sidebar container.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Standard — with active item and badge</h3>
+      <div class="ds-demo-body" style="max-width:240px">
+        <nav class="c-sub-sidebar" aria-label="Section navigation">
+          <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">My work</p>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-current="page">
+            <i class="if if-article" aria-hidden="true"></i>
+            Research output
+          </a>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+            <i class="if if-database" aria-hidden="true"></i>
+            Datasets
+          </a>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+            <i class="if if-notification" aria-hidden="true"></i>
+            Suggestions
+            <span class="badge bg-warning ms-auto" aria-label="3 new suggestions">3</span>
+          </a>
+          <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+            <i class="if if-user-add" aria-hidden="true"></i>
+            Manage proxies
+          </a>
+        </nav>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;nav class="c-sub-sidebar" aria-label="Section navigation"&gt;
+
+  &lt;p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1"&gt;My work&lt;/p&gt;
+
+  &lt;a href="/research" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2"
+    aria-current="page"&gt;
+    &lt;i class="if if-article" aria-hidden="true"&gt;&lt;/i&gt;
+    Research output
+  &lt;/a&gt;
+
+  &lt;a href="/suggestions" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2"&gt;
+    &lt;i class="if if-notification" aria-hidden="true"&gt;&lt;/i&gt;
+    Suggestions
+    &lt;!-- Badge: keep aria-label on the badge for screen readers --&gt;
+    &lt;span class="badge bg-warning ms-auto" aria-label="3 new suggestions"&gt;3&lt;/span&gt;
+  &lt;/a&gt;
+
+&lt;/nav&gt;</pre>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Bordered variant — when the sidebar needs visual separation from a panel</h3>
+      <div class="ds-demo-body" style="max-width:240px">
+        <nav class="c-sub-sidebar c-sub-sidebar--bordered" aria-label="Panel navigation">
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-current="page">
+            <i class="if if-info-circle" aria-hidden="true"></i>
+            Description
+          </a>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+            <i class="if if-user" aria-hidden="true"></i>
+            People
+          </a>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+            <i class="if if-file" aria-hidden="true"></i>
+            Files
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">c-stepper — deposit step navigator</h2>
+    <p class="mb-4">Used inside <code>u-layout--deposit</code> for multi-step workflows. Each step shows a numbered circle, a label, and an optional "Required" indicator. Completed steps replace the number with a check icon. The current step carries <code>aria-current="step"</code>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Mid-flow — step 1 done, step 2 active</h3>
+      <div class="ds-demo-body" style="max-width:200px">
+        <nav class="c-stepper" aria-label="Deposit steps">
+          <a href="#type" class="c-stepper__item c-stepper__item--done" aria-current="false">
+            <span class="c-stepper__num">
+              <i class="if if-check" aria-hidden="true"></i>
+            </span>
+            <span class="c-stepper__label">Type</span>
+          </a>
+          <a href="#description" class="c-stepper__item" aria-current="step">
+            <span class="c-stepper__num">2</span>
+            <span class="c-stepper__label">
+              Description
+              <span class="c-stepper__required">Required</span>
+            </span>
+          </a>
+          <a href="#people" class="c-stepper__item">
+            <span class="c-stepper__num">3</span>
+            <span class="c-stepper__label">
+              People &amp; affiliations
+              <span class="c-stepper__required">Required</span>
+            </span>
+          </a>
+          <a href="#files" class="c-stepper__item">
+            <span class="c-stepper__num">4</span>
+            <span class="c-stepper__label">Full text &amp; files</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;nav class="c-stepper" aria-label="Deposit steps"&gt;
+
+  &lt;!-- Completed step --&gt;
+  &lt;a href="#type" class="c-stepper__item c-stepper__item--done" aria-current="false"&gt;
+    &lt;span class="c-stepper__num"&gt;
+      &lt;i class="if if-check" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;span class="c-stepper__label"&gt;Type&lt;/span&gt;
+  &lt;/a&gt;
+
+  &lt;!-- Current step --&gt;
+  &lt;a href="#description" class="c-stepper__item" aria-current="step"&gt;
+    &lt;span class="c-stepper__num"&gt;2&lt;/span&gt;
+    &lt;span class="c-stepper__label"&gt;
+      Description
+      &lt;span class="c-stepper__required"&gt;Required&lt;/span&gt;
+    &lt;/span&gt;
+  &lt;/a&gt;
+
+  &lt;!-- Future step --&gt;
+  &lt;a href="#people" class="c-stepper__item"&gt;
+    &lt;span class="c-stepper__num"&gt;3&lt;/span&gt;
+    &lt;span class="c-stepper__label"&gt;People &amp; affiliations&lt;/span&gt;
+  &lt;/a&gt;
+
+&lt;/nav&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Layout integration</h2>
+    <p class="mb-3"><code>c-sub-sidebar</code> is a direct child of <code>u-layout--app</code>. <code>c-stepper</code> is a direct child of <code>u-layout--deposit</code>. Both are made sticky by the layout shell — do not add <code>position: sticky</code> manually.</p>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — u-layout--app with c-sub-sidebar</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
+  &lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
+
+  &lt;nav class="c-sub-sidebar" aria-label="Section navigation"&gt;
+    &lt;!-- nav links --&gt;
+  &lt;/nav&gt;
+
+  &lt;main id="main-content"&gt;
+    &lt;!-- bc-toolbar, c-filter-bar, c-content-area … --&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</pre>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — u-layout--deposit with c-stepper</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="u-layout--deposit" data-surface="backoffice"&gt;
+  &lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
+
+  &lt;nav class="c-stepper" aria-label="Deposit steps"&gt;
+    &lt;!-- stepper items --&gt;
+  &lt;/nav&gt;
+
+  &lt;main id="main-content"&gt;
+    &lt;!-- form sections --&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+</div>

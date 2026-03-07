@@ -143,31 +143,133 @@ Public-facing record pages must include `<script type="application/ld+json">` wi
 
 This is the most common mistake I make. I produce plausible-looking class names with high confidence. Many of them do not exist in the actual CSS.
 
-### Verified existing classes (from the real styleguide)
+### Complete verified class list (ground truth — cross-checked against SCSS source)
+
+**Navigation & topbar**
 ```
-bc-toolbar          bc-toolbar__left     bc-toolbar__right    bc-toolbar__title
-bc-navbar           bc-navbar__brand     bc-navbar__nav       bc-navbar__link
-bc-navbar__sep      bc-navbar__mark
-bc-avatar           bc-avatar--small     bc-avatar--large
-c-blank-slate       c-blank-slate-default  c-blank-slate-muted  c-blank-slate-primary
-c-facets            c-facet-title        c-facet-check        c-facet-name
-c-facet-count       c-facet-separator
-c-button-toolbar    c-button-toolbar--wide-spacing  c-button-toolbar--vertical
-c-sub-sidebar       c-sub-sidebar--bordered
-c-radio-card        c-radio-card__body   c-radio-card__group
-c-results-toolbar   c-filter-bar         c-bulk-bar           c-content-area
-c-facets-col        c-results-col        c-pagination-bar     c-table
+bc-navbar               bc-navbar__brand        bc-navbar__nav
+bc-navbar__link         bc-navbar__sep
+```
+Note: `bc-navbar__brand` is used (backoffice logo link). `bc-navbar__mark` does NOT exist — do not use it.
+
+**Toolbar & button groups**
+```
+bc-toolbar              bc-toolbar__left        bc-toolbar__right
+bc-toolbar__title
+c-button-toolbar        c-button-toolbar--wide-spacing  c-button-toolbar--vertical
 ```
 
-**Removed from verified list:** `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` — these were carried over from the old system and are never defined in the current SCSS. Do not use them.
-
-### Classes I defined in booktower.css v2 (new, not in the existing production system)
+**Avatar**
 ```
-bt-dl               (definition list)
-c-stepper           c-stepper-item       c-stepper-num        c-stepper-label
-c-file-drop         c-file-drop-icon     c-file-drop-text
-filter-tag          filter-tag-remove
-badge-oa            badge-restricted
+bc-avatar               bc-avatar--small        bc-avatar--large
+```
+
+**Hero (public surface)**
+```
+c-hero                  c-hero__bg              c-hero__content
+```
+
+**Research card**
+```
+card-research           card-meta               card-actions
+card-body               card-title              card-authors
+card-publication
+```
+
+**Facets sidebar**
+```
+c-facets                c-facet-title           c-facet-check
+c-facet-name            c-facet-count           c-facet-separator
+```
+
+**Sub-sidebar navigation**
+```
+c-sub-sidebar           c-sub-sidebar--bordered
+```
+
+**Backoffice list layout**
+<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
+```
+c-filter-bar            c-bulk-bar              c-content-area
+c-facets-col            c-results-col           c-results-toolbar
+c-pagination-bar
+```
+
+**View toggle**
+<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
+```
+view-toggle             view-toggle-btn         view-toggle-btn.is-active
+```
+
+**Table**
+<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
+```
+c-table                 td-title                td-meta
+td-actions              td-actions-inner
+```
+
+**Empty states**
+```
+c-blank-slate           c-blank-slate--default  c-blank-slate--muted
+c-blank-slate--primary
+```
+Note: BEM modifier double-dash (`--`). The old styleguide used single-dash — that was wrong.
+
+**Deposit flow components**
+```
+c-stepper               c-stepper__item         c-stepper__item--done
+c-stepper__num          c-stepper__label        c-stepper__required
+c-radio-card            c-radio-card__body      c-radio-card__group
+c-file-drop             c-file-drop__icon       c-file-drop__text
+c-file-drop__hint
+```
+
+**Filter tags**
+<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
+```
+filter-tag              filter-tag__remove
+```
+Note: `filter-tag__remove` is a BEM element (double underscore). The name `filter-tag-remove` (single dash) no longer exists.
+
+**Definition list**
+<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
+```
+bt-dl
+```
+
+**HTMX state classes**
+```
+htmx-indicator          htmx-swapping           htmx-settling
+```
+
+**Badges**
+<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
+```
+badge-oa                badge-restricted
+```
+
+**Footer**
+```
+nav-title
+```
+
+**Layout shells**
+```
+u-layout--app           u-layout--deposit       u-layout--public
+```
+
+### Classes that no longer exist — do not use
+
+```
+app-sidebar             app-sidebar-link        app-sidebar-label
+bc-navbar__mark
+filter-tag-remove       (replaced by filter-tag__remove)
+c-blank-slate-default   (replaced by c-blank-slate--default)
+c-blank-slate-muted     (replaced by c-blank-slate--muted)
+c-blank-slate-primary   (replaced by c-blank-slate--primary)
+u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
+c-sidebar               (OLD narrow icon rail — removed in v2)
+u-maximize-height       (OLD layout utility — removed in v2)
 ```
 
 ### Icon names — verified source of truth
@@ -177,7 +279,7 @@ Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any 
 
 ## What to do when uncertain
 
-**About a class name:** search the existing `booktower.css` and the production styleguide at `https://booktower-ui.vercel.app/styleguide/` before using it. If I can't confirm it exists, say so.
+**About a class name:** search the existing `booktower.css`, the SCSS source and Bootstrap. If I can't confirm it exists, say so and add it to the correct SCSS partial rather than guessing.
 
 **About an icon name:** do not guess. Use a placeholder (`if-[placeholder]`) and flag it explicitly.
 
@@ -185,7 +287,7 @@ Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any 
 
 **About accessibility:** produce the correct static HTML, then explicitly state that screen reader testing has not been performed.
 
-**About the surface of a new page:** ask which user this is for before writing the first line of HTML.
+**About the surface of a new page:** check or ask which user this is for before writing the first line of HTML.
 
 ---
 
@@ -193,31 +295,13 @@ Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any 
 
 All CSS belongs in `assets/scss/` and compiles to `assets/booktower.css`. This is not negotiable.
 
-**Never put CSS in:**
-- `<style>` blocks inside HTML files
-- `style="..."` inline attributes
-- `<script>` files (no programmatic style mutations unless toggling a class)
-- Any file outside the `assets/scss/` architecture
-
-**The one documented exception:** `shell/scss/` compiles to `shell/shell.css`. This exists because the shell chrome (nav, layout, demo wrappers) and the `?view=html` source viewer load without `booktower.css`. The shell is design-system tooling, not the design system itself. If a style applies to the shell chrome only and would be meaningless in a production app, it belongs in `shell/scss/`. If it could reasonably be used in a page built with the design system, it belongs in `assets/scss/`.
-
-**When I produce HTML:** I must not add a `<style>` block or inline styles even as a quick patch. If a style is missing from the system, I flag it and add it to the correct SCSS partial. One-off styles in HTML are invisible to the system and will not be reused or maintained.
-
-**When I produce JavaScript:** I must not write `element.style.foo = 'bar'`. I add or remove classes. The classes are defined in SCSS.
-
----
-
-## CSS architecture: where styles live (rule summary)
-
-All CSS belongs in the SCSS architecture under `assets/scss/`. This is not a preference — it is the rule.
-
 ```
 assets/scss/
   foundation/   ← tokens, colors, surfaces, bootstrap overrides
-  base/         ← typography, accessibility resets
-  elements/     ← buttons and other discrete UI elements
+  base/         ← reset, typography, accessibility
+  elements/     ← buttons, badges
   components/   ← bootstrap component overrides
-  patterns/     ← booktower-specific components (toolbar, facets, etc.)
+  patterns/     ← booktower-specific components and layout shells
   icons/        ← icon system rules
   utilities/    ← utility classes
 ```
@@ -225,127 +309,81 @@ assets/scss/
 **I must never put CSS in:**
 - `<style>` blocks inside HTML files
 - `style=` attributes on HTML elements
-- JavaScript files (no style manipulation via `.style.*` except for unavoidable dynamic values like drag coordinates)
-- `<head>` of any HTML page
-- Shell files, template files, or any file outside `assets/scss/`
+- JavaScript files (no style mutation via `.style.*` except unavoidable dynamic values like drag coordinates)
+- Any file outside `assets/scss/`
 
-**The only acceptable exceptions:**
-- A CSS custom property set dynamically by JS where the value cannot be known at build time (e.g. a drag offset in pixels)
-- A `:root` override scoped to a specific page that genuinely cannot live in the shared system (and even then, open a discussion first)
+**The one documented exception:** `shell/scss/` compiles to `shell/shell.css` for shell chrome only (`bt-shell`, `bt-nav`, `bt-content`, `ds-page`, `ds-demo`, `ds-code`). Do not add to it — only remove from it as the design system matures.
 
-**When I'm tempted to write inline CSS**, the correct response is:
-1. Identify which SCSS partial the rule belongs in
-2. Add a class there
-3. Apply the class in HTML
+**When I produce HTML:** if a style is missing from the system, I flag it and add it to the correct SCSS partial. No inline patches.
 
-This is how the system dogfoods itself. A design system that uses inline styles to style its own documentation is undermining its own argument.
-
----
-
-## What this project is not
-
-- Not a React / Vue / Angular project. Do not suggest component frameworks.
-- Not a utility-first CSS project. Do not suggest replacing the token system with Tailwind.
-- Not a REST API client. HTMX replaces the need for most JavaScript fetch calls.
-- Not a visually-only project. Machine-readability (schema.org, stable URLs, meta tags) is a first-class concern.
-- Not finished. The icon font class names need verification. HTMX endpoints are stubs. Screen reader testing has not been performed.
-
----
-
-## Layout shells: what exists and what to build
-
-The OLD system had no CSS grid layout shell. Page layout was `d-flex` + `u-scroll-wrapper` + `u-scroll-wrapper__body` — Bootstrap flex utilities stacked as siblings, with `height: 100%` and `overflow: hidden` on `<main>`. Sidebars were `c-sidebar` (narrow icon rail) and `c-sub-sidebar` (wider text nav), placed as flex children.
-
-The new system should **improve** on this, not replicate it. The old approach's weaknesses:
-- Sticky positioning breaks inside `overflow: hidden` ancestors
-- Scroll management is fragile and requires careful nesting
-- No named layout concept — structure lived entirely in the HTML
-
-**Confirmed existing classes for layout (verified against OLD source):**
-- `bc-navbar`, `bc-navbar--fixed`, `bc-navbar--white` — topbar bar component
-- `bc-toolbar`, `bc-toolbar-left`, `bc-toolbar-right`, `bc-toolbar-title` — page header row
-- `bc-toolbar-item` — spacing unit inside toolbar halves
-- `c-sidebar` — narrow icon rail sidebar (blue background, icon+label)
-- `c-sub-sidebar`, `c-sub-sidebar--bordered` — wider text navigation sidebar
-- `c-stepper`, `c-stepper__item`, `c-stepper__step` — step navigator for deposit flows
-- `c-facets`, `c-facet-title`, `c-facet-check`, `c-facet-name`, `c-facet-count`, `c-facet-separator` — filter sidebar
-- `c-button-toolbar` — button groups
-- `c-blank-slate` — empty states
-- `c-radio-card` — large radio option cards
-- `u-scroll-wrapper`, `u-scroll-wrapper__body` — scroll management utility
-- `u-maximize-height` — `height: 100%`
-
-**Layout shells (agreed and active in `_layouts.scss`):**
-- `u-layout--app` — topbar + left sidebar + main. Optional right panel with `.has-panel`.
-- `u-layout--deposit` — topbar + `c-stepper` + main content column
-- `u-layout--public` — topbar + centred content, no sidebar
-
-All three expect `.bc-navbar` as their topbar child. Sidebars use existing `c-sub-sidebar` and `c-stepper` — no new sidebar classes invented.
-
----
-
-## Naming conventions
-
-The system uses three prefixes, each with a clear job:
-
-| Prefix | Meaning | Examples |
-|--------|---------|----------|
-| `bc-`  | Bootstrap Custom — extends/wraps Bootstrap components | `bc-navbar`, `bc-toolbar`, `bc-avatar` |
-| `c-`   | Component — built from scratch, no Bootstrap base | `c-sidebar`, `c-facets`, `c-stepper`, `c-blank-slate` |
-| `u-`   | Utility — single-purpose helpers AND layout shells | `u-scroll-wrapper`, `u-layout--app`, `u-layout--deposit` |
-
-Bootstrap's own utilities (`d-flex`, `gap-3`, `text-muted`, `mb-4`) are used directly without wrapping.
-
-**I must not invent new prefixes** (`bt-app-*`, `bt-deposit-*`, `bo-*`, `ds-*` outside the shell, etc.) without an explicit decision to do so.
-
----
-
-## The design system dogfoods itself
-
-The design system documentation (the shell, the `ds-page`, `ds-demo`, `ds-code` chrome) should use the same CSS it produces. If the system cannot style its own documentation using its own classes, that is a gap to fix in `assets/scss/` — not a reason to write one-off CSS in `shell/shell.css`.
-
-`shell/shell.css` is the current exception. It now contains **only** the shell navigation chrome (`bt-shell`, `bt-nav`, `bt-content`) and design system documentation classes (`ds-page`, `ds-demo`, `ds-code`). The reset, font import, and accessibility utilities have been moved to `assets/scss/`. Do not add to `shell/shell.css` — only remove from it.
-
----
-
-## Distributing the design system to other apps
-
-Current approach: copy `assets/booktower.css` and `assets/fonts/` into the consumer app. The font path in `booktower.css` is `/assets/fonts/` — the consumer app must serve the fonts at that path, or rebuild with a different `fontsUrl` in `.fantasticonrc.js`.
-
-Future approach: npm package. Not set up yet. When distribution to multiple apps becomes painful, publishing to a registry (public or private) is the right move. The package output would be the compiled CSS, font files, and optionally SCSS source for apps that customise tokens.
-
-Do not suggest symlinks (breaks on other machines) or git submodules (unfamiliar UX, overhead not yet justified).
+**When I produce JavaScript:** I add or remove classes. Classes are defined in SCSS. No `.style.foo = 'bar'`.
 
 ---
 
 ## No redundancy between files
 
-Every rule must live in exactly one place. Before writing any CSS, check whether it already exists elsewhere in the system.
+Every rule must live in exactly one place.
 
-Known boundaries:
-- **Reset** (`box-sizing`, `html`, `body`, `ul`/`ol`) — `assets/scss/base/_reset.scss` only
-- **Fonts** (`@import url(...)`) — `assets/scss/_header.scss` only. Sass requires `@use` rules to come before any other statements, so the CSS `@import` must live in a partial (`_header.scss`) that is itself `@use`d first.
-- **Colour tokens** — `assets/scss/foundation/_colors.scss` only. Two layers: raw palette (`--bt-gray-*`, `--bt-blue-*` etc.) then semantic aliases (`--bt-text`, `--bt-danger`, `--bt-bg` etc.). Component code references only semantic aliases, never palette steps directly. No hex values anywhere else in the system.
-- **Non-colour tokens** (type, spacing, borders, shadows, focus rings, motion) — `assets/scss/foundation/_tokens.scss` only
-- **SVG ink-alpha tokens** (`--i02` through `--i40`) — `assets/scss/patterns/_svg-animations.scss` only. Nothing outside SVG uses them.
-- **Accessibility** (focus ring, `.visually-hidden`, reduced motion) — `assets/scss/base/_accessibility.scss` only
-- **Component overrides** (`.form-label`, `.btn`, etc.) — their respective SCSS partials only, never in `_typography.scss` or the shell
-- **Shell chrome** — `shell/shell.css` only, and only for `bt-shell`, `bt-nav`, `bt-content`, `ds-page`, `ds-demo`, `ds-code`
+| What | Where |
+|------|-------|
+| Reset (`box-sizing`, `html`, `body`, list reset) | `base/_reset.scss` |
+| Font `@import` | `_header.scss` (must precede all `@use`) |
+| Colour tokens (palette + semantic aliases) | `foundation/_colors.scss` |
+| Non-colour tokens (type, spacing, borders, shadows, motion) | `foundation/_tokens.scss` |
+| Layout geometry (`--s-topbar-height`) | `foundation/_surfaces.scss` |
+| Surface tokens (`--s-heading-font` etc.) | `foundation/_surfaces.scss` |
+| SVG ink-alpha tokens (`--i02`–`--i40`) | `patterns/_svg-animations.scss` |
+| Accessibility (focus ring, `.visually-hidden`, reduced motion) | `base/_accessibility.scss` |
+| Bootstrap overrides | `foundation/_bootstrap-overrides.scss` |
+| Shell chrome only | `shell/shell.css` |
 
-If I find myself writing a rule that already exists somewhere, I stop and use the existing one. If the existing one is wrong, I fix it in place — I do not write a second copy.
+Component code references only semantic aliases (`--bt-text`, `--bt-danger`, `--bt-bg` etc.), never raw palette steps or hex values.
+
+---
+
+## Layout shells
+
+Three CSS grid shells live in `patterns/_layouts.scss`. All use `--s-topbar-height` (defined in `foundation/_surfaces.scss`) for sticky sidebar calculations.
+
+| Shell | Used for | Children |
+|-------|----------|----------|
+| `u-layout--app` | Backoffice list/detail pages | `.bc-navbar` + `.c-sub-sidebar` + `<main>` |
+| `u-layout--deposit` | Deposit flow | `.bc-navbar` + `.c-stepper` + `<main>` |
+| `u-layout--public` | Public search/detail | `.bc-navbar` + `<main>` |
+
+Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell itself has no `max-width` or padding.
+
+`u-layout--app` supports an optional right panel with `.has-panel` on the shell.
+
+**Deprecated layout classes (OLD system — do not use):**
+`u-scroll-wrapper`, `u-scroll-wrapper__body`, `c-sidebar`, `u-maximize-height`
+
+---
+
+## Naming conventions
+
+| Prefix | Meaning | Examples |
+|--------|---------|----------|
+| `bc-` | Bootstrap Custom — extends/wraps Bootstrap | `bc-navbar`, `bc-toolbar`, `bc-avatar` |
+| `c-` | Component — no Bootstrap base | `c-facets`, `c-stepper`, `c-blank-slate` |
+| `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--deposit` |
+
+BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.
+
+Bootstrap utilities (`d-flex`, `gap-3`, `text-muted`, `mb-4`) are used directly without wrapping.
+
+**Do not invent new prefixes** without an explicit decision.
 
 ---
 
 ## UI kit page conventions
 
-Before creating a new page in `foundations/`, `elements/`, or `patterns/`, read at least two existing pages in that folder. Match their structure exactly. Do not invent new wrapper elements, heading patterns, or layout approaches.
-
-The established patterns from reading the existing pages:
+Before creating a new page in `foundations/`, `elements/`, or `patterns/`, read at least two existing pages. Match their structure exactly.
 
 ```html
-<!-- Page header -->
+<!-- Page header — data-surface="public" for serif display -->
 <header class="ds-page-header col-6" data-surface="public">
-  <p class="ds-eyebrow">Foundations</p>
+  <p class="ds-eyebrow">Patterns</p>
   <h1 class="display-1">Page title</h1>
   <p class="lead">Introduction.</p>
 </header>
@@ -356,33 +394,54 @@ The established patterns from reading the existing pages:
 
   <!-- Demo block -->
   <div class="ds-demo">
-    <h3 class="ds-demo-label">Label</h3>
+    <h3 class="ds-demo-label">Variant label</h3>
     <div class="ds-demo-body">
-      <!-- component HTML -->
+      <!-- live component HTML here -->
     </div>
+  </div>
+
+  <!-- Code block -->
+  <div class="ds-code">
+    <div class="ds-code-bar">
+      <span class="ds-code-lang">html</span>
+      <button class="ds-code-copy">Copy</button>
+    </div>
+    <pre>…</pre>
   </div>
 </section>
 ```
 
-Key rules:
-- Page header uses `<header>`, not `<div>`
-- Sections use `<section>`, not `<div>`
-- Section headings are `<h2 class="h4 mb-3">`, not plain `<h2>`
-- Demo labels use `<h3 class="ds-demo-label">`, not `<div class="ds-demo-label">`
-- No `<style>` blocks in HTML files — styles go in the correct SCSS partial
-- No `style=` attributes except when the value is genuinely dynamic or a one-off token reference with no class equivalent
+Rules:
+- `<header>` not `<div>` for the page header
+- `<section>` not `<div>` for each content section
+- Section headings: `<h2 class="h4 mb-3">`
+- Demo labels: `<h3 class="ds-demo-label">` not `<div>`
+- No `<style>` blocks — all styles go in SCSS
+- No `style=` attributes unless the value is genuinely dynamic
+- `ds-demo-body` wraps live demos; `ds-code` wraps code examples — never mix them
 
-If something looks wrong or inconsistent across pages, flag it rather than silently picking one approach.
+---
+
+## The design system dogfoods itself
+
+The design system documentation uses the same CSS it produces. If a component can't be shown in the kit using its own classes, the gap is in `assets/scss/` — not an excuse for inline styles in HTML.
+
+---
+
+## Distributing the design system
+
+Current: copy `assets/booktower.css` + `assets/fonts/` to the consumer app. Font path in CSS is `/assets/fonts/` — the consumer must serve fonts there.
+
+Future: npm package. Not set up yet. Don't suggest symlinks or git submodules.
 
 ---
 
 ## A note on confidence
 
-I produce code confidently regardless of whether I am correct. Confidence is not a reliability signal. The higher the confidence, the more important it is to check:
+I produce code confidently regardless of whether I am correct. Confidence is not a reliability signal. Before finalising any output, check:
 
-1. Does this class name actually exist?
-2. Does this ARIA attribute go on the right element?
-3. Does this icon name match the actual font?
+1. Does this class name actually exist in SCSS?
+2. Does this ARIA attribute belong on the right element?
+3. Does this icon name match `_icon-font.scss`?
 4. Does this HTMX pattern account for the empty, error, and loading states?
-
-Treat my output as a well-researched first draft, not a finished implementation.
+5. Does this template carry the correct `data-surface`?

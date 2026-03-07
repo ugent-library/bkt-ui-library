@@ -1,0 +1,217 @@
+<!-- @title: Deposit Components — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Deposit Components</h1>
+    <p class="lead">Components specific to the deposit (add publication) workflow: publication type picker, file upload area, and author/contributor rows. These live inside <code>u-layout--deposit</code> and always run on the backoffice surface.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">c-radio-card — publication type picker</h2>
+    <p class="mb-4">A grid of large radio inputs styled as selectable cards. The hidden <code>&lt;input type="radio"&gt;</code> drives state; the visible <code>.c-radio-card__body</code> responds via adjacent sibling CSS. Group them in <code>.c-radio-card__group</code> for the responsive grid layout.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Standard — one type selected</h3>
+      <div class="ds-demo-body">
+        <fieldset>
+          <legend class="visually-hidden">Select publication type</legend>
+          <div class="c-radio-card__group">
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="journal-article" checked>
+              <span class="c-radio-card__body">Journal article</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="book">
+              <span class="c-radio-card__body">Book</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="book-chapter">
+              <span class="c-radio-card__body">Book chapter</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="dataset">
+              <span class="c-radio-card__body">Dataset</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="software">
+              <span class="c-radio-card__body">Software</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="thesis">
+              <span class="c-radio-card__body">Thesis</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Always wrap in fieldset/legend for accessibility --&gt;
+&lt;fieldset&gt;
+  &lt;legend class="visually-hidden"&gt;Select publication type&lt;/legend&gt;
+  &lt;div class="c-radio-card__group"&gt;
+
+    &lt;label class="c-radio-card"&gt;
+      &lt;input type="radio" name="pub-type" value="journal-article" checked&gt;
+      &lt;span class="c-radio-card__body"&gt;Journal article&lt;/span&gt;
+    &lt;/label&gt;
+
+    &lt;label class="c-radio-card"&gt;
+      &lt;input type="radio" name="pub-type" value="book"&gt;
+      &lt;span class="c-radio-card__body"&gt;Book&lt;/span&gt;
+    &lt;/label&gt;
+
+    &lt;!-- repeat for each type --&gt;
+
+  &lt;/div&gt;
+&lt;/fieldset&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">c-file-drop — file upload area</h2>
+    <p class="mb-4">An accessible drag-and-drop zone. The entire area is a <code>&lt;label&gt;</code> that activates a visually-hidden <code>&lt;input type="file"&gt;</code>. Drag-over state is added via JavaScript by toggling the class <code>drag-over</code>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Default — idle state</h3>
+      <div class="ds-demo-body">
+        <label class="c-file-drop d-block" for="file-upload-demo">
+          <i class="if if-upload c-file-drop__icon" aria-hidden="true"></i>
+          <p class="c-file-drop__text">Drag a file here, or <strong>browse</strong></p>
+          <p class="c-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
+          <input type="file" id="file-upload-demo" class="visually-hidden" accept=".pdf,.docx,.epub,.xml">
+        </label>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Drag-over state — <code>.drag-over</code> toggled by JS</h3>
+      <div class="ds-demo-body">
+        <label class="c-file-drop d-block drag-over" for="file-upload-demo-2">
+          <i class="if if-upload c-file-drop__icon" aria-hidden="true"></i>
+          <p class="c-file-drop__text">Drop to upload</p>
+          <p class="c-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
+          <input type="file" id="file-upload-demo-2" class="visually-hidden" accept=".pdf,.docx,.epub,.xml">
+        </label>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;label class="c-file-drop d-block"
+  for="file-upload"
+  ondragover="event.preventDefault();this.classList.add('drag-over')"
+  ondragleave="this.classList.remove('drag-over')"
+  ondrop="event.preventDefault();this.classList.remove('drag-over')"&gt;
+  &lt;i class="if if-upload c-file-drop__icon" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;p class="c-file-drop__text"&gt;Drag a file here, or &lt;strong&gt;browse&lt;/strong&gt;&lt;/p&gt;
+  &lt;p class="c-file-drop__hint"&gt;PDF, DOCX, EPUB, XML — max 500 MB&lt;/p&gt;
+  &lt;input type="file" id="file-upload" class="visually-hidden"
+    accept=".pdf,.docx,.epub,.xml"&gt;
+&lt;/label&gt;</pre>
+    </div>
+
+    <section class="ds-section">
+      <h2 class="h4 mb-3">Uploaded file row</h2>
+      <p class="mb-3">Once a file is attached, it is listed above the drop zone as a simple flex row with Bootstrap utilities. No dedicated component — the structure is just <code>d-flex align-items-center gap-3 p-3 bg-white border rounded</code>.</p>
+      <div class="ds-demo">
+        <h3 class="ds-demo-label">Attached file — with view/remove actions</h3>
+        <div class="ds-demo-body">
+          <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+            <i class="if if-file-pdf" aria-hidden="true"></i>
+            <div class="flex-grow-1">
+              <div>publisher-version.pdf</div>
+              <div class="text-muted">Full text · Published version · Open access · 158.71 KB</div>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm">View</button>
+            <button type="button" class="btn btn-ghost btn-sm text-danger"
+              aria-label="Remove publisher-version.pdf">Remove</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Author/contributor row</h2>
+    <p class="mb-4">A contributor is shown as a flex row with an avatar, name, role/affiliation, and edit/remove actions. Uses existing <code>.bc-avatar</code> and Bootstrap utilities — no dedicated component class needed.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Two authors — external and UGent affiliated</h3>
+      <div class="ds-demo-body">
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+            <span class="bc-avatar bc-avatar--small" aria-hidden="true">ER</span>
+            <div class="flex-grow-1">
+              <div>Esperon-Rodriguez, Manuel</div>
+              <div class="text-muted">Author · External</div>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm">Edit</button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove Esperon-Rodriguez, Manuel">
+              <i class="if if-delete" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+            <span class="bc-avatar bc-avatar--small" aria-hidden="true">KD</span>
+            <div class="flex-grow-1">
+              <div>De Pauw, Karen</div>
+              <div class="text-muted">Author · <strong>UGent</strong> — Department of Environment</div>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm">Edit</button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove De Pauw, Karen">
+              <i class="if if-delete" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm mt-3">
+          <i class="if if-add" aria-hidden="true"></i>
+          Add author
+        </button>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="d-flex align-items-center gap-3 p-3 bg-white border rounded"&gt;
+  &lt;!-- Initials avatar — aria-hidden because the name follows immediately --&gt;
+  &lt;span class="bc-avatar bc-avatar--small" aria-hidden="true"&gt;KD&lt;/span&gt;
+  &lt;div class="flex-grow-1"&gt;
+    &lt;div&gt;De Pauw, Karen&lt;/div&gt;
+    &lt;div class="text-muted"&gt;Author · &lt;strong&gt;UGent&lt;/strong&gt; — Department of Environment&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button type="button" class="btn btn-ghost btn-sm"&gt;Edit&lt;/button&gt;
+  &lt;button type="button" class="btn btn-ghost btn-sm"
+    aria-label="Remove De Pauw, Karen"&gt;
+    &lt;i class="if if-delete" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Section action bar</h2>
+    <p class="mb-3">The action bar at the bottom of each deposit section provides navigation between steps and draft saving. Uses Bootstrap flex utilities.</p>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Mid-flow — previous, save draft, next</h3>
+      <div class="ds-demo-body">
+        <div class="d-flex justify-content-between align-items-center pt-4 mt-4 border-top">
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-arrow-left" aria-hidden="true"></i>
+            Previous section
+          </button>
+          <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-secondary">
+              Save draft
+            </button>
+            <button type="button" class="btn btn-primary">
+              Next section
+              <i class="if if-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

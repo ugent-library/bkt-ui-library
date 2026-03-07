@@ -1,0 +1,130 @@
+<!-- @title: Hero — Booktower Design System -->
+<!-- @surface: public -->
+<div class="ds-page" data-surface="public">
+  <header class="ds-page-header col-6">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Hero</h1>
+    <p class="lead">The <code>c-hero</code> component is the full-bleed introductory section used on the public homepage and research detail pages. It stacks a decorative SVG background layer behind a constrained content column.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Structure</h2>
+    <p class="mb-4">Three parts: the shell (<code>.c-hero</code>), the absolute background (<code>.c-hero__bg</code>), and the content column (<code>.c-hero__content</code>). The background layer is <code>pointer-events: none</code> and purely decorative.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Homepage hero — search bar variant</h3>
+      <div class="ds-demo-body" style="padding:0;overflow:hidden;border-radius:var(--bt-radius-lg)">
+        <section class="c-hero">
+          <div class="c-hero__bg">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 300" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" aria-hidden="true">
+              <rect x="0" y="0" width="1400" height="300" fill="var(--bg)"></rect>
+              <path class="gridLine" d="M0 40H1400 M0 80H1400 M0 120H1400 M0 160H1400 M0 200H1400 M0 240H1400 M0 280H1400"></path>
+              <path class="gridLine" d="M60 0V300 M120 0V300 M180 0V300 M240 0V300 M300 0V300 M360 0V300 M420 0V300 M480 0V300 M540 0V300 M600 0V300 M660 0V300 M720 0V300 M780 0V300 M840 0V300 M900 0V300 M960 0V300 M1020 0V300 M1080 0V300 M1140 0V300 M1200 0V300 M1260 0V300 M1320 0V300 M1380 0V300"></path>
+              <path class="stroke noFill edge muted" d="M-100 200 C 200 180, 400 140, 700 120 C 900 100, 1100 130, 1500 120"></path>
+              <circle class="fillFaint pulse" cx="300" cy="160" r="3"></circle>
+              <circle class="fillMuted pulse p2" cx="520" cy="130" r="2.8"></circle>
+              <circle class="fillFaint pulse p3" cx="700" cy="120" r="3.2"></circle>
+              <circle class="fillMuted pulse p4" cx="900" cy="110" r="2.6"></circle>
+              <circle class="fillFaint pulse" cx="1100" cy="125" r="2.8"></circle>
+            </svg>
+          </div>
+          <div class="c-hero__content container py-8">
+            <div class="col-lg-8">
+              <h1 class="display-3 fw-semibold mb-4">Search, use &amp; cite trusted&nbsp;research</h1>
+              <div class="input-group input-group-lg mb-4">
+                <span class="input-group-text">
+                  <i class="if if-search" aria-hidden="true"></i>
+                </span>
+                <input class="form-control" type="search"
+                  placeholder="Try &ldquo;climate change&rdquo; or &ldquo;quantum computing&rdquo;"
+                  aria-label="Search the repository">
+                <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+              <div class="d-flex gap-3">
+                <a class="btn btn-sm btn-outline-dark" href="#">Open access research</a>
+                <a class="btn btn-sm btn-outline-dark" href="#">Student theses</a>
+                <a class="btn btn-sm btn-outline-dark" href="#">Research heritage</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;section class="c-hero"&gt;
+
+  &lt;!-- Decorative SVG background — always aria-hidden --&gt;
+  &lt;div class="c-hero__bg"&gt;
+    &lt;svg … aria-hidden="true"&gt;…&lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Constrained content column — Bootstrap .container for gutters --&gt;
+  &lt;div class="c-hero__content container"&gt;
+    &lt;h1&gt;…&lt;/h1&gt;
+    &lt;!-- search bar, CTAs --&gt;
+  &lt;/div&gt;
+
+&lt;/section&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Research detail hero</h2>
+    <p class="mb-4">On research detail pages the hero carries the record title, badges, and primary actions. The SVG globe animation from <code>_svg-animations.scss</code> runs in the background. The hero is still <code>data-surface="public"</code> even when reached from the backoffice — it is always the public-facing record view.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Record detail variant</h3>
+      <div class="ds-demo-body" style="padding:0;overflow:hidden;border-radius:var(--bt-radius-lg)">
+        <section class="c-hero">
+          <div class="c-hero__bg">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 280" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" aria-hidden="true">
+              <rect x="0" y="0" width="1400" height="280" fill="var(--bg)"></rect>
+              <path class="gridLine" d="M0 40H1400 M0 80H1400 M0 120H1400 M0 160H1400 M0 200H1400 M0 240H1400"></path>
+              <path class="gridLine" d="M60 0V280 M120 0V280 M180 0V280 M240 0V280 M300 0V280 M360 0V280 M420 0V280 M480 0V280 M540 0V280 M600 0V280 M660 0V280 M720 0V280 M780 0V280 M840 0V280 M900 0V280 M960 0V280 M1020 0V280 M1080 0V280 M1140 0V280 M1200 0V280 M1260 0V280 M1320 0V280 M1380 0V280"></path>
+              <path class="stroke noFill edge mid" d="M-100 240 C 300 220, 500 160, 800 140 C 1050 120, 1250 140, 1500 130"></path>
+              <circle class="fillMuted pulse" cx="400" cy="180" r="3.2"></circle>
+              <circle class="fillFaint pulse p2" cx="700" cy="150" r="2.6"></circle>
+              <circle class="fillMuted pulse p3" cx="1000" cy="135" r="3.0"></circle>
+            </svg>
+          </div>
+          <div class="c-hero__content container py-8">
+            <div class="d-flex flex-wrap gap-2 mb-3">
+              <span class="badge-oa">● Open access</span>
+              <span class="badge bg-primary">Journal article</span>
+              <span class="badge bg-success">Peer reviewed</span>
+            </div>
+            <h1 class="col-lg-8 mb-3">Urban forests as essential infrastructure for climate resilience and biodiversity</h1>
+            <p class="text-muted mb-0">Esperon-Rodriguez, M., Arndt, S., De Pauw, K. <em>et al.</em> · 2026 · <em>Plants People Planet</em></p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">SVG animation classes</h2>
+    <p class="mb-3">The SVG uses CSS classes defined in <code>_svg-animations.scss</code> — not inline styles or <code>fill</code>/<code>stroke</code> attributes. This lets the animation respond to the surface token <code>--bg</code> (which maps to <code>--bt-gray-25</code>) and the ink-alpha tokens <code>--i02</code>–<code>--i40</code>.</p>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">svg class reference</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Background fill --&gt;
+&lt;rect fill="var(--bg)"&gt;           &lt;!-- bt-gray-25 --&gt;
+
+&lt;!-- Strokes --&gt;
+&lt;path class="gridLine"&gt;           &lt;!-- faint grid --&gt;
+&lt;path class="stroke noFill edge muted"&gt;  &lt;!-- muted path --&gt;
+&lt;path class="stroke noFill edge mid"&gt;    &lt;!-- slightly more visible path --&gt;
+
+&lt;!-- Fills --&gt;
+&lt;circle class="fillFaint pulse"&gt;  &lt;!-- faint node, animated opacity --&gt;
+&lt;circle class="fillMuted pulse"&gt;  &lt;!-- muted node --&gt;
+&lt;circle class="fill"&gt;             &lt;!-- solid primary ink --&gt;
+
+&lt;!-- Animation helpers --&gt;
+&lt;circle class="particle"&gt;         &lt;!-- moving dot along a path --&gt;
+&lt;g class="frontSoft"&gt;             &lt;!-- front layer with soft opacity --&gt;</pre>
+    </div>
+  </section>
+
+</div>

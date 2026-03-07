@@ -1,0 +1,179 @@
+<!-- @title: Navbar & Topbar — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Navbar &amp; Topbar</h1>
+    <p class="lead">The <code>bc-navbar</code> component is the persistent application topbar. It appears on every page, sticks to the top, and defines the primary navigation and identity of the surface. Backoffice and public variants differ in content and tone — not in structure.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Backoffice navbar</h2>
+    <p class="mb-4">Carries the application logo, section navigation, role switcher, and account menu. The account avatar doubles as a dropdown trigger.</p>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Standard — researcher logged in</h3>
+      <div class="ds-demo-body" style="padding:0;overflow:hidden;border-radius:var(--bt-radius-lg)">
+        <header class="bc-navbar" role="banner">
+          <a href="#" class="bc-navbar__brand" aria-label="Biblio — go to dashboard">
+            <i class="if if-ghent-university" aria-hidden="true"></i>
+            Biblio
+          </a>
+          <div class="bc-navbar__sep" aria-hidden="true"></div>
+          <nav class="bc-navbar__nav" aria-label="Application navigation">
+            <a href="#" class="bc-navbar__link active" aria-current="page">Research output</a>
+            <a href="#" class="bc-navbar__link">Datasets</a>
+            <a href="#" class="bc-navbar__link">People</a>
+            <a href="#" class="bc-navbar__link">Projects</a>
+          </nav>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <div class="dropdown">
+              <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                data-bs-toggle="dropdown"
+                aria-label="Current role: Researcher. Switch role">
+                Researcher
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" aria-current="true">
+                  <i class="if if-user" aria-hidden="true"></i> Researcher
+                </a></li>
+                <li><a class="dropdown-item" href="#">
+                  <i class="if if-book" aria-hidden="true"></i> Librarian
+                </a></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button class="bc-avatar btn" type="button"
+                data-bs-toggle="dropdown"
+                aria-label="Account menu for Wouter Bosmans">
+                WB
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><span class="dropdown-item-text">
+                  <strong>Wouter Bosmans</strong><br>
+                  <span class="text-muted">Wouter.Bosmans@UGent.be</span>
+                </span></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Log out</a></li>
+              </ul>
+            </div>
+          </div>
+        </header>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;header class="bc-navbar" role="banner"&gt;
+
+  &lt;!-- Logo / brand link --&gt;
+  &lt;a href="/" class="bc-navbar__brand" aria-label="Biblio — go to dashboard"&gt;
+    &lt;i class="if if-ghent-university" aria-hidden="true"&gt;&lt;/i&gt;
+    Biblio
+  &lt;/a&gt;
+
+  &lt;!-- Visual separator --&gt;
+  &lt;div class="bc-navbar__sep" aria-hidden="true"&gt;&lt;/div&gt;
+
+  &lt;!-- Primary navigation --&gt;
+  &lt;nav class="bc-navbar__nav" aria-label="Application navigation"&gt;
+    &lt;a href="/research" class="bc-navbar__link" aria-current="page"&gt;Research output&lt;/a&gt;
+    &lt;a href="/datasets" class="bc-navbar__link"&gt;Datasets&lt;/a&gt;
+    &lt;a href="/people" class="bc-navbar__link"&gt;People&lt;/a&gt;
+    &lt;a href="/projects" class="bc-navbar__link"&gt;Projects&lt;/a&gt;
+  &lt;/nav&gt;
+
+  &lt;!-- Right slot: role switcher + account --&gt;
+  &lt;div class="ms-auto d-flex align-items-center gap-2"&gt;
+    &lt;!-- role switcher dropdown --&gt;
+    &lt;button class="bc-avatar btn" type="button"
+      data-bs-toggle="dropdown"
+      aria-label="Account menu for Wouter Bosmans"&gt;
+      WB
+    &lt;/button&gt;
+    &lt;!-- account dropdown --&gt;
+  &lt;/div&gt;
+
+&lt;/header&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Public navbar</h2>
+    <p class="mb-4">Carries the repository identity, site navigation, and a shortcut to the researcher's own deposit workflow. The site name acts as the <code>&lt;h1&gt;</code> equivalent for identity — it is a heading styled as nav text, not a bare link.</p>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Standard — anonymous visitor</h3>
+      <div class="ds-demo-body" style="padding:0;overflow:hidden;border-radius:var(--bt-radius-lg)">
+        <header class="bc-navbar" role="banner">
+          <h1 class="h6 ff-sans mb-0">
+            <a href="/" aria-label="Biblio — go to homepage">
+              <i class="if if-ghent-university if-md" aria-hidden="true"></i>
+              Ghent University Academic Repository &amp; Bibliography
+            </a>
+          </h1>
+          <div class="bc-navbar__sep ms-3" aria-hidden="true"></div>
+          <nav class="bc-navbar__nav" aria-label="Site navigation">
+            <a href="#" class="bc-navbar__link active" aria-current="page">Search</a>
+            <a href="#" class="bc-navbar__link">Authors</a>
+            <a href="#" class="bc-navbar__link">Projects</a>
+            <a href="#" class="bc-navbar__link">How it works</a>
+          </nav>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <a href="#" class="bc-navbar__link">My lists</a>
+            <a href="#" class="btn btn-secondary btn-sm">
+              <i class="if if-add" aria-hidden="true"></i>
+              Add research
+            </a>
+          </div>
+        </header>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Active link state</h2>
+    <p class="mb-3">Apply <code>aria-current="page"</code> to the link matching the current URL. The CSS responds to this attribute — no extra class needed.</p>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Nav with active item</h3>
+      <div class="ds-demo-body">
+        <nav class="bc-navbar__nav" aria-label="Demo navigation">
+          <a href="#" class="bc-navbar__link" aria-current="page">Research output</a>
+          <a href="#" class="bc-navbar__link">Datasets</a>
+          <a href="#" class="bc-navbar__link">People</a>
+        </nav>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- aria-current="page" drives the active style — no extra class --&gt;
+&lt;a href="/research" class="bc-navbar__link" aria-current="page"&gt;Research output&lt;/a&gt;
+&lt;a href="/datasets" class="bc-navbar__link"&gt;Datasets&lt;/a&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Skip link</h2>
+    <p class="mb-3">Every page must include a skip link <em>before</em> the navbar as the first focusable element. It is visually hidden until focused.</p>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- First element in &lt;body&gt; — before bc-navbar --&gt;
+&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;
+
+&lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
+
+&lt;main id="main-content"&gt;…&lt;/main&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Layout integration</h2>
+    <p class="mb-3">The navbar is always a direct child of a layout shell. It fills the <code>navbar</code> grid area and sticks to the top via <code>position: sticky; top: 0</code>. The <code>--s-topbar-height</code> token (52px) is used by sidebar children to offset their own <code>top</code> value.</p>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — u-layout--app</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
+  &lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
+  &lt;nav class="c-sub-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
+  &lt;main id="main-content"&gt;…&lt;/main&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+</div>

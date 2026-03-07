@@ -1,6 +1,11 @@
 @charset "UTF-8";
 /* IBM Plex via Google Fonts — replace with self-hosted in production */
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+/* IBM Plex — 9 variants only (audited against actual usage)
+   Mono  400          — code blocks
+   Sans  300,400,500,600 + italic 400  — UI text, labels, italic journal names
+   Serif 300,400 + italic 400          — public headings, display text
+   Weights 700 and italic 300/500/600/700 are unused — removed to save ~14 variant downloads */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,400&display=swap");
 /*
  * booktower.css — v2
  * Bootstrap override layer + Booktower component system
@@ -20,42 +25,43 @@
  *   i.if.if-[name]  → UGent icon font — all icons (actions, nav, status, form decorations)
  */
 /* ═══════════════════════════════════════════════════════════════════════════════
-   1. FOUNDATION TOKENS — shared by both surfaces
+   FOUNDATION TOKENS
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   Non-colour design decisions: type scale, spacing, borders, radius,
+   shadows, focus rings, motion.
+
+   Colour tokens (palette + semantic aliases) live in _colors.scss.
+   Surface tokens (--s-*) live in _surfaces.scss.
    ═══════════════════════════════════════════════════════════════════════════════ */
 :root {
-  /* Typography */
+  /* ── Typography ────────────────────────────────────────────────────────────── */
   --bt-font-serif: 'IBM Plex Serif', serif;
   --bt-font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
   --bt-font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
   /*
-    Type scale
-    ────────────
-    Token values are rem decimals by necessity — type doesn’t snap to a 4px
-    spacing grid the way layout does. These values ARE the scale.
+    Type scale — rem values by necessity, type doesn't snap to a 4px grid.
+    Never write .875rem in component code — always reference a token.
 
-    The rule “no decimals” applies to component code: never write .875rem
-    in a button or badge. Always reference a token. Here in the token file
-    itself, the decimal values are correct and intentional.
-
-    Scale in px at 16px root:
-      xs   = 12px   (badges, tight UI labels — minimum accessible size)
-      sm   = 14px   (secondary text, small buttons)
-      base = 16px   (body default)
-      md   = 18px   (lead text, card titles in backoffice)
-      lg   = 22px   (h3, section headings)
-      xl   = 28px   (h2, page headings)
-      2xl  = 36px   (h1, display headings)
-      3xl  = 48px   (hero display only)
+    px at 16px root:
+      xs   = 12px   badges, tight UI labels
+      sm   = 14px   secondary text, small buttons
+      base = 16px   body default
+      md   = 18px   lead text, card titles
+      lg   = 22px   h3, section headings
+      xl   = 28px   h2, page headings
+      2xl  = 36px   h1, display headings
+      3xl  = 48px   hero display only
   */
-  --bt-text-xs: 0.75rem; /* 12px */
-  --bt-text-sm: 0.875rem; /* 14px */
-  --bt-text-base: 1rem; /* 16px */
-  --bt-text-md: 1.125rem; /* 18px */
-  --bt-text-lg: 1.375rem; /* 22px */
-  --bt-text-xl: 1.75rem; /* 28px */
-  --bt-text-2xl: 2.25rem; /* 36px */
-  --bt-text-3xl: 3rem; /* 48px */
-  /* Spacing — 4px base */
+  --bt-text-xs: 0.75rem;
+  --bt-text-sm: 0.875rem;
+  --bt-text-base: 1rem;
+  --bt-text-md: 1.125rem;
+  --bt-text-lg: 1.375rem;
+  --bt-text-xl: 1.75rem;
+  --bt-text-2xl: 2.25rem;
+  --bt-text-3xl: 3rem;
+  /* ── Spacing — 4px base ────────────────────────────────────────────────────── */
   --bt-sp-1: 0.25rem;
   --bt-sp-2: 0.5rem;
   --bt-sp-3: 0.75rem;
@@ -68,17 +74,15 @@
   --bt-sp-16: 4rem;
   --bt-sp-20: 5rem;
   --bt-sp-24: 6rem;
+  /* ── Button spacers ────────────────────────────────────────────────────────── */
   /*
-    Button spacers
-    ──────────────
-    Buttons need optically tuned padding that sits between the 4px layout
-    grid steps. These tokens exist specifically for button (and input)
-    internal spacing — don’t use them for layout gaps or margins.
+    Optically tuned padding between 4px grid steps.
+    Use only for button and input internal spacing — not for layout.
 
-    Target heights at 14px text (line-height 1.5 = 21px line box):
-      sm   → 32px  (21 + 5 + 5 + 1px border×2 = 32)
-      base → 38px  (21 + 8 + 8 + 1px border×2 = 39 ≈ 38)
-      lg   → 44px  (21px @ 16px + 10 + 10 + border×2 = 44)
+    Target heights (14px text, line-height 1.5 = 21px line box):
+      sm   → 32px  (21 + 5 + 5 + 1px border×2)
+      base → 38px  (21 + 7 + 7 + 1px border×2)
+      lg   → 44px  (21px @ 16px + 10 + 10 + border×2)
   */
   --bt-btn-pad-y-sm: 0.3125rem; /*  5px */
   --bt-btn-pad-x-sm: 0.625rem; /* 10px */
@@ -86,7 +90,7 @@
   --bt-btn-pad-x: 0.875rem; /* 14px */
   --bt-btn-pad-y-lg: 0.625rem; /* 10px */
   --bt-btn-pad-x-lg: 1.125rem; /* 18px */
-  /* Borders & radius */
+  /* ── Borders & radius ──────────────────────────────────────────────────────── */
   --bt-border: 1px solid var(--bt-border-color);
   --bt-radius-sm: 2px;
   --bt-radius: 4px;
@@ -94,36 +98,18 @@
   --bt-radius-lg: 8px;
   --bt-radius-xl: 12px;
   --bt-radius-pill: 100px;
-  /* Shadows */
+  /* ── Shadows ───────────────────────────────────────────────────────────────── */
   --bt-shadow-xs: 0 1px 2px rgba(26,24,20,.05);
   --bt-shadow-sm: 0 1px 3px rgba(26,24,20,.08), 0 1px 2px rgba(26,24,20,.04);
   --bt-shadow: 0 2px 8px rgba(26,24,20,.08), 0 1px 3px rgba(26,24,20,.04);
   --bt-shadow-md: 0 4px 16px rgba(26,24,20,.10), 0 2px 4px rgba(26,24,20,.05);
   --bt-shadow-modal: 0 20px 60px rgba(26,24,20,.18), 0 4px 12px rgba(26,24,20,.10);
-  /* SVG background fill — alias for the hero SVG rect background.
-     Matches --bt-gray-25 exactly. Named --bg for brevity in SVG markup. */
-  --bg: var(--bt-gray-25);
-  /* Ink-alpha family — dark navy at varying opacities
-     Used for SVG animation strokes, fills, and grid lines.
-     Base colour matches --bt-blue-900 (#09172a) closely.
-     Named --i* for brevity since they appear many times in SVG markup. */
-  --i02: rgba(9, 23, 42, .02);
-  --i03: rgba(9, 23, 42, .03);
-  --i04: rgba(9, 23, 42, .04);
-  --i06: rgba(9, 23, 42, .06);
-  --i08: rgba(9, 23, 42, .08);
-  --i10: rgba(9, 23, 42, .10);
-  --i12: rgba(9, 23, 42, .12);
-  --i15: rgba(9, 23, 42, .15);
-  --i18: rgba(9, 23, 42, .18);
-  --i22: rgba(9, 23, 42, .22);
-  --i40: rgba(9, 23, 42, .40);
-  /* Focus rings — semantic tokens per state colour */
-  --bt-focus-ring: rgba(46, 106, 158, .45); /* default — blue, buttons + links */
-  --bt-focus-ring-sm: rgba(46, 106, 158, .15); /* default — softer, input shadow */
-  --bt-focus-ring-valid: rgba(26, 107, 58, .15); /* valid input shadow */
-  --bt-focus-ring-invalid: rgba(155, 28, 28, .12); /* invalid input shadow */
-  /* Motion */
+  /* ── Focus rings ───────────────────────────────────────────────────────────── */
+  --bt-focus-ring: rgba(46, 106, 158, .45);
+  --bt-focus-ring-sm: rgba(46, 106, 158, .15);
+  --bt-focus-ring-valid: rgba(26, 107, 58, .15);
+  --bt-focus-ring-invalid: rgba(155, 28, 28, .12);
+  /* ── Motion ────────────────────────────────────────────────────────────────── */
   --bt-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --bt-dur-fast: 120ms;
   --bt-dur-base: 200ms;
@@ -131,12 +117,22 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-  1. FOUNDATION TOKENS — shared by both surfaces
-  ═══════════════════════════════════════════════════════════════════════════════ */
+   COLOUR TOKENS
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   Two layers:
+     1. Palette  — raw named steps. Reference these only when creating semantic
+                   aliases below, or in documentation. Never use palette steps
+                   directly in component code.
+     2. Semantic — named by role, not by colour. These are what component code
+                   references: --bt-text, --bt-danger, --bt-bg, etc.
+
+   All colour decisions live here. No hex values anywhere else in the system.
+   ═══════════════════════════════════════════════════════════════════════════════ */
 :root {
+  /* ── Palette ───────────────────────────────────────────────────────────────── */
   --bt-white: #fff;
   --bt-black: #000;
-  /* Grays */
   --bt-gray-25: #fafafa;
   --bt-gray-50: #f2f2f2;
   --bt-gray-100: #e6e6e6;
@@ -151,7 +147,6 @@
   --bt-gray-800: #333333;
   --bt-gray-900: #202020;
   --bt-gray-1000: #14161a;
-  /* Blues */
   --bt-blue-50: #e9f0fa;
   --bt-blue-100: #d5e3f6;
   --bt-blue-200: #a8c7f0;
@@ -161,7 +156,6 @@
   --bt-blue-700: #003fa3;
   --bt-blue-800: #132e53;
   --bt-blue-900: #09172a;
-  /* Greens */
   --bt-green-50: #f1f7ed;
   --bt-green-100: #e3f0db;
   --bt-green-200: #c5deba;
@@ -171,7 +165,6 @@
   --bt-green-700: #3a6831;
   --bt-green-800: #23471f;
   --bt-green-900: #11240f;
-  /* Reds */
   --bt-red-50: #fdece7;
   --bt-red-100: #fcd9cf;
   --bt-red-200: #f7b4a1;
@@ -180,7 +173,6 @@
   --bt-red-700: #8d280c;
   --bt-red-800: #601906;
   --bt-red-900: #300d03;
-  /* Oranges */
   --bt-orange-50: #fef7e7;
   --bt-orange-100: #fdefce;
   --bt-orange-200: #fadb9e;
@@ -190,16 +182,30 @@
   --bt-orange-700: #915808;
   --bt-orange-800: #623804;
   --bt-orange-900: #311c02;
-  /* Primaries */
-  --bt-blue: var(--bt-blue-600);
-  --bt-dark-blue: var(--bt-blue-700);
-  --bt-light-blue: var(--bt-blue-50);
+  /* Tertiaries — accent colours for badges and illustration */
   --bt-yellow: #ffd200;
   --bt-dark-yellow: #e5b400;
   --bt-light-yellow: #fffae5;
+  --bt-turquoise: #27abad;
+  --bt-aqua: #2d8ca8;
+  --bt-grey-blue: #6f71b9;
+  --bt-purple: #825491;
+  --bt-light-purple: #be5190;
+  --bt-salmon-pink: #e85e71;
+  --bt-warm-orange: #fb7e3a;
+  /* ── Semantic aliases ──────────────────────────────────────────────────────── */
+  /*
+    Name by role, not by colour.
+    Component code references these — never the palette steps above.
+  */
+  /* Brand blues */
+  --bt-blue: var(--bt-blue-600);
+  --bt-dark-blue: var(--bt-blue-700);
+  --bt-light-blue: var(--bt-blue-50);
+  /* Grays */
   --bt-gray: var(--bt-gray-800);
   --bt-dark-gray: var(--bt-gray-1000);
-  /* Secondaries and status */
+  /* Status */
   --bt-green: var(--bt-green-500);
   --bt-dark-green: var(--bt-green-700);
   --bt-light-green: var(--bt-green-200);
@@ -209,14 +215,7 @@
   --bt-orange: var(--bt-orange-600);
   --bt-dark-orange: var(--bt-orange-700);
   --bt-light-orange: var(--bt-orange-200);
-  --bt-turquoise: #27abad;
-  --bt-aqua: #2d8ca8;
-  --bt-grey-blue: #6f71b9;
-  --bt-purple: #825491;
-  --bt-light-purple: #be5190;
-  --bt-salmon-pink: #e85e71;
-  --bt-warm-orange: #fb7e3a;
-  /* Utilities */
+  /* Semantic status tokens */
   --bt-success: var(--bt-green);
   --bt-light-success: var(--bt-light-green);
   --bt-dark-success: var(--bt-dark-green);
@@ -226,11 +225,15 @@
   --bt-danger: var(--bt-red);
   --bt-light-danger: var(--bt-light-red);
   --bt-dark-danger: var(--bt-dark-red);
+  /* Text */
   --bt-text: var(--bt-gray-700);
   --bt-text-muted: var(--bt-gray-550);
-  --bt-border-color: var(--bt-gray-150);
-  --bt-icon-muted: var(--bt-gray-400);
+  /* Icons */
   --bt-icon-default: var(--bt-gray-600);
+  --bt-icon-muted: var(--bt-gray-400);
+  /* Borders */
+  --bt-border-color: var(--bt-gray-150);
+  /* Backgrounds */
   --bt-bg: var(--bt-gray-25);
   --bt-bg-alt: var(--bt-gray-50);
   --bt-bg-dark: var(--bt-gray);
@@ -269,6 +272,16 @@
      --s-btn-pad-y/x       button padding
      --s-topbar-height     application topbar height
 */
+/* ── Layout geometry — shared across both surfaces ─────────────────────────── */
+/*
+  --s-topbar-height is the single source of truth for the sticky topbar height.
+  It is used by _layouts.scss to calculate sticky sidebar offsets.
+  Override per surface if the topbar height ever differs between public and backoffice.
+*/
+:root {
+  --s-topbar-height: 52px;
+}
+
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 body {
   --s-heading-font: var(--bt-font-sans);
@@ -316,7 +329,7 @@ body {
   --bs-danger: var(--bt-danger);
   --bs-success: var(--bt-green);
   --bs-warning: var(--bt-warning);
-  --bs-heading-color: var(--bt-text-dark-gray);
+  --bs-heading-color: var(--bt-dark-gray);
   --bs-link-color: var(--bt-blue-700);
   --bs-link-hover-color: var(--bt-blue-500);
   --bs-focus-ring-color: var(--bt-focus-ring-sm);
@@ -542,12 +555,15 @@ code, kbd, pre, samp {
     animation-duration: 0.01ms !important;
   }
 }
+/* ── .btn-link override ──────────────────────────────────────────────────────── */
+/* Bootstrap's btn-link adds underline on hover — suppress it */
 .btn-link {
   text-decoration: none;
 }
 
 /* ── Forms & inputs ─────────────────────────────────────────────────────────── */
-.form-control, .form-select {
+.form-control,
+.form-select {
   font-family: var(--bt-font-sans);
   font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
@@ -560,14 +576,16 @@ code, kbd, pre, samp {
   transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: var(--bt-blue-700);
   box-shadow: 0 0 0 3px var(--bt-focus-ring-sm);
   outline: none;
   background: var(--bt-white);
 }
 
-.form-control:disabled, .form-select:disabled {
+.form-control:disabled,
+.form-select:disabled {
   background: var(--bt-bg-alt);
   opacity: 0.65;
   cursor: not-allowed;
@@ -616,6 +634,7 @@ code, kbd, pre, samp {
   margin-top: var(--bt-sp-1);
 }
 
+/* Pill search input with inset search icon */
 .form-control-search {
   border-radius: var(--bt-radius-pill);
   background-color: var(--bt-bg-alt);
@@ -861,7 +880,7 @@ code, kbd, pre, samp {
 
 .bc-navbar__sep {
   width: 1px;
-  height: var(--bt-sp-5); /* 20px — sits comfortably inside 52px bar */
+  height: var(--bt-sp-5);
   background: var(--bt-border-color);
   flex-shrink: 0;
   display: block;
@@ -901,7 +920,69 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* ── card-research ─────────────────────────────────────────────────────────── */
+/* ── c-blank-slate ─────────────────────────────────────────────────────────── */
+/* Used in toolbar-blank-slate.html and any empty-state screen */
+.c-blank-slate {
+  text-align: center;
+  padding: var(--bt-sp-8) var(--bt-sp-6);
+  color: var(--bt-gray-700);
+  font-size: var(--bt-text-sm);
+}
+
+.c-blank-slate p {
+  margin: var(--bt-sp-2) 0 0;
+}
+
+.c-blank-slate--default {
+  background: var(--bt-bg);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
+}
+
+.c-blank-slate--muted {
+  background: var(--bt-bg-alt);
+  border-radius: var(--bt-radius-lg);
+}
+
+.c-blank-slate--primary {
+  background: var(--bt-blue-100);
+  border-radius: var(--bt-radius-lg);
+  color: var(--bt-blue-900);
+}
+
+/* ── bc-avatar ──────────────────────────────────────────────────────────────── */
+/* Used in backoffice-header.html as the account menu trigger */
+.bc-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-900);
+  font-size: var(--bt-text-sm);
+  font-weight: 600;
+  flex-shrink: 0;
+  line-height: 1;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.bc-avatar--small {
+  width: 28px;
+  height: 28px;
+  font-size: var(--bt-text-xs);
+}
+
+.bc-avatar--large {
+  width: 48px;
+  height: 48px;
+  font-size: 1rem;
+}
+
+/* ── card-research ──────────────────────────────────────────────────────────── */
 .card-research {
   background: var(--bt-white);
   border-bottom: 1px solid var(--bt-border-color);
@@ -989,7 +1070,6 @@ code, kbd, pre, samp {
   color: var(--bt-blue);
 }
 
-/* First card in a list — no top padding */
 .card-research:first-child {
   padding-top: 0;
 }
@@ -1095,10 +1175,10 @@ code, kbd, pre, samp {
 
 .view-toggle {
   display: flex;
-  gap: var(--bt-sp-1); /* 4px — tightest token, keeps pill compact */
+  gap: var(--bt-sp-1);
   background: var(--bt-gray-100);
   border-radius: var(--bt-radius);
-  padding: var(--bt-sp-1); /* 4px inset */
+  padding: var(--bt-sp-1);
 }
 
 .view-toggle-btn {
@@ -1123,9 +1203,8 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* ── Footers ──────────────────────────────────────────────────────────────── */
-/* Public footer — no component classes needed.
-   Uses Bootstrap grid + utilities directly, same as the production footer.
+/* ── Public footer ──────────────────────────────────────────────────────────── */
+/* Uses Bootstrap grid + utilities directly.
    Only .nav-title needs a definition (used on <h2> in footer nav columns). */
 .nav-title {
   font-size: var(--bt-text-xs);
@@ -1135,6 +1214,8 @@ code, kbd, pre, samp {
   color: var(--bt-gray-700);
 }
 
+/* ── c-facets ───────────────────────────────────────────────────────────────── */
+/* Used in public-search.html and deposit-flow.html */
 .c-facets {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -1164,7 +1245,7 @@ code, kbd, pre, samp {
 }
 
 .c-facet-count {
-  font-size: 0.75rem;
+  font-size: var(--bt-text-xs);
   color: var(--bt-gray-300);
   font-family: var(--bt-font-mono);
   text-align: right;
@@ -1178,6 +1259,7 @@ code, kbd, pre, samp {
   margin: 0.3rem 0;
 }
 
+/* ── c-sub-sidebar ──────────────────────────────────────────────────────────── */
 .c-sub-sidebar {
   padding-right: 1rem;
 }
@@ -1186,6 +1268,216 @@ code, kbd, pre, samp {
   border-right: var(--bt-border);
 }
 
+/* ── bt-dl — metadata definition list ──────────────────────────────────────── */
+/* Used in research-detail.html sidebar */
+.bt-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.3125rem 1.25rem;
+  font-size: var(--bt-text-sm);
+}
+
+.bt-dl dt {
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--bt-gray-700);
+  padding-top: 0.1rem;
+}
+
+.bt-dl dd {
+  margin: 0;
+  color: var(--bt-gray-1000);
+}
+
+/* ── c-stepper ──────────────────────────────────────────────────────────────── */
+/* Used in u-layout--deposit (deposit-flow.html) */
+.c-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.c-stepper__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.4375rem 0.5rem;
+  border-radius: var(--bt-radius);
+  text-decoration: none;
+  color: var(--bt-gray-700);
+  font-size: var(--bt-text-sm);
+  line-height: 1.4;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+
+.c-stepper__item:hover {
+  background: var(--bt-bg-alt);
+  color: var(--bt-gray-1000);
+}
+
+.c-stepper__item[aria-current=step] {
+  background: var(--bt-white);
+  color: var(--bt-blue-900);
+  font-weight: 500;
+  box-shadow: var(--bt-shadow-xs);
+}
+
+.c-stepper__item--done {
+  color: var(--bt-green);
+}
+
+.c-stepper__num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+.c-stepper__item--done .c-stepper__num {
+  background: var(--bt-green);
+  border-color: var(--bt-green);
+  color: white;
+}
+
+.c-stepper__item[aria-current=step] .c-stepper__num {
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
+  color: white;
+}
+
+.c-stepper__label {
+  flex: 1;
+}
+
+.c-stepper__required {
+  color: var(--bt-danger);
+  font-size: var(--bt-text-xs);
+  font-weight: 400;
+  display: block;
+}
+
+/* ── c-radio-card ───────────────────────────────────────────────────────────── */
+/* Used in deposit-flow.html publication type picker */
+.c-radio-card__group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--bt-sp-2);
+}
+
+.c-radio-card {
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+
+.c-radio-card input[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.c-radio-card__body {
+  border: 1.5px solid var(--bt-gray-150);
+  border-radius: var(--bt-radius-md);
+  padding: 0.75rem 0.875rem;
+  background: var(--bt-white);
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-700);
+  line-height: 1.35;
+  user-select: none;
+}
+
+.c-radio-card:hover .c-radio-card__body {
+  border-color: var(--bt-blue-700);
+}
+
+.c-radio-card input:checked + .c-radio-card__body {
+  border-color: var(--bt-blue-900);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-900);
+}
+
+.c-radio-card input:focus-visible + .c-radio-card__body {
+  outline: 3px solid var(--bt-focus-ring-sm);
+  outline-offset: 2px;
+}
+
+/* ── c-file-drop ────────────────────────────────────────────────────────────── */
+/* Used in deposit-flow.html file upload area */
+.c-file-drop {
+  border: 2px dashed var(--bt-gray-150);
+  border-radius: var(--bt-radius-lg);
+  padding: var(--bt-sp-8) var(--bt-sp-6);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
+}
+
+.c-file-drop:hover,
+.c-file-drop.drag-over {
+  border-color: var(--bt-blue-700);
+  background: var(--bt-blue-50);
+}
+
+.c-file-drop__icon {
+  font-size: 1.75rem;
+  color: var(--bt-gray-300);
+  display: block;
+  margin-bottom: var(--bt-sp-2);
+}
+
+.c-file-drop__text {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-700);
+  margin: 0;
+}
+
+.c-file-drop__hint {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-400);
+  margin: var(--bt-sp-1) 0 0;
+}
+
+/* ── HTMX states ────────────────────────────────────────────────────────────── */
+/* Used in research-detail.html, deposit-flow.html, backoffice-search.html */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+  display: inline-flex;
+  align-items: center;
+}
+
+.htmx-swapping {
+  opacity: 0.5;
+  transition: opacity var(--bt-dur-base);
+}
+
+.htmx-settling {
+  transition: opacity var(--bt-dur-base);
+}
+
+.htmx-request.btn {
+  opacity: 0.7;
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* ── filter-tag ─────────────────────────────────────────────────────────────── */
+/* Used in public-search.html active-filter pills */
 .filter-tag {
   display: inline-flex;
   align-items: center;
@@ -1202,7 +1494,7 @@ code, kbd, pre, samp {
 }
 
 .filter-tag:hover {
-  background: var(--bt-blue-200); /* was #ccdfe8 — bt-blue-200 (#a8c7f0) is the nearest token */
+  background: var(--bt-blue-300);
 }
 
 .filter-tag__remove {
@@ -1253,8 +1545,8 @@ code, kbd, pre, samp {
 .u-layout--app > .c-sub-sidebar {
   grid-area: sidebar;
   position: sticky;
-  top: var(--bc-navbar-height, 48px);
-  height: calc(100vh - var(--bc-navbar-height, 48px));
+  top: var(--s-topbar-height);
+  height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
 }
 
@@ -1423,12 +1715,12 @@ code, kbd, pre, samp {
 .u-layout--deposit > .c-stepper {
   grid-area: stepper;
   position: sticky;
-  top: var(--bc-navbar-height, 48px);
-  height: calc(100vh - var(--bc-navbar-height, 48px));
+  top: var(--s-topbar-height);
+  height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
   width: 200px;
   flex-shrink: 0;
-  border-right: 1px solid var(--bt-border-color);
+  border-right: var(--bt-border);
   padding: var(--bt-sp-5) 0;
 }
 
@@ -1453,9 +1745,8 @@ code, kbd, pre, samp {
 .u-layout--public > main {
   flex: 1;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--bt-sp-8) var(--bt-sp-6);
+  /* No max-width or padding here — public templates use Bootstrap .container
+     inside main for consistent responsive gutters. */
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -1465,14 +1756,32 @@ code, kbd, pre, samp {
    These classes are applied directly to SVG elements (<path>, <circle>, etc.)
    inside .c-hero__bg on the landing page and research detail page.
 
-   Colour tokens used: --i* ink-alpha family (defined in _tokens.scss).
-   These are dark navy at varying opacities — see token definitions for values.
-
-   SVG UTILITY CLASSES
-   ───────────────────
-   camelCase names are intentional here — they are SVG presentation classes,
-   not UI component classes. They never appear on HTML elements.
+   camelCase class names are intentional — SVG presentation classes only,
+   never applied to HTML elements.
    ═══════════════════════════════════════════════════════════════════════════════ */
+/* ── Ink-alpha tokens ────────────────────────────────────────────────────────── */
+/*
+   Dark navy at varying opacities, derived from --bt-blue-900 (#09172a).
+   Named --i* for brevity — they appear 20+ times each in SVG markup.
+   Scoped here rather than in _tokens.scss because nothing outside SVG uses them.
+*/
+:root {
+  /* --bg: SVG rect background fill — alias for --bt-gray-25.
+     Named short because it appears once in the hero SVG rect. */
+  --bg: var(--bt-gray-25);
+  --i02: rgba(9, 23, 42, .02);
+  --i03: rgba(9, 23, 42, .03);
+  --i04: rgba(9, 23, 42, .04);
+  --i06: rgba(9, 23, 42, .06);
+  --i08: rgba(9, 23, 42, .08);
+  --i10: rgba(9, 23, 42, .10);
+  --i12: rgba(9, 23, 42, .12);
+  --i15: rgba(9, 23, 42, .15);
+  --i18: rgba(9, 23, 42, .18);
+  --i22: rgba(9, 23, 42, .22);
+  --i40: rgba(9, 23, 42, .40);
+}
+
 /* ── Shared SVG fill / stroke utils ─────────────────────────────────────────── */
 .noFill {
   fill: none;
@@ -2457,242 +2766,69 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   Do NOT add .if to .btn — buttons are already inline-flex.
 */
 /* ═══════════════════════════════════════════════════════════════════════════════
-   9. UTILITY CLASSES
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   Semantic colour utilities only — one per named token.
+   These exist to support the colour documentation page and occasional
+   one-off needs. Do not expand this into a per-step utility library.
+
+   For palette step colours, reference the token directly:
+     style="background-color: var(--bt-gray-25)"  ← acceptable in documentation
+     class="bt-bg-gray-25"                         ← do not create
+
+   For layout, spacing, and typography: use Bootstrap utilities.
    ═══════════════════════════════════════════════════════════════════════════════ */
+/* ── Borders ─────────────────────────────────────────────────────────────────── */
 .bt-border {
-  border: 1px solid var(--bt-gray-200);
+  border: var(--bt-border);
 }
 
 .bt-border-top {
-  border-top: 1px solid var(--bt-gray-200);
+  border-top: var(--bt-border);
 }
 
 .bt-border-right {
-  border-right: 1px solid var(--bt-gray-200);
+  border-right: var(--bt-border);
 }
 
 .bt-border-bottom {
-  border-bottom: 1px solid var(--bt-gray-200);
+  border-bottom: var(--bt-border);
 }
 
 .bt-border-left {
-  border-left: 1px solid var(--bt-gray-200);
+  border-left: var(--bt-border);
 }
 
 .bt-border-dark {
   border-color: var(--bt-gray-500);
 }
 
-/* Grays */
+/* ── Background — semantic tokens only ──────────────────────────────────────── */
+.bt-bg {
+  background-color: var(--bt-bg);
+}
+
+.bt-bg-alt {
+  background-color: var(--bt-bg-alt);
+}
+
+.bt-bg-dark {
+  background-color: var(--bt-bg-dark);
+}
+
+.bt-bg-dark-alt {
+  background-color: var(--bt-bg-dark-alt);
+}
+
 .bt-bg-white {
   background-color: var(--bt-white);
-}
-
-.bt-bg-gray-25 {
-  background-color: var(--bt-gray-25);
-}
-
-.bt-bg-gray-50 {
-  background-color: var(--bt-gray-50);
-}
-
-.bt-bg-gray-100 {
-  background-color: var(--bt-gray-100);
-}
-
-.bt-bg-gray-150 {
-  background-color: var(--bt-gray-150);
-}
-
-.bt-bg-gray-200 {
-  background-color: var(--bt-gray-200);
-}
-
-.bt-bg-gray-300 {
-  background-color: var(--bt-gray-300);
-}
-
-.bt-bg-gray-400 {
-  background-color: var(--bt-gray-400);
-}
-
-.bt-bg-gray-500 {
-  background-color: var(--bt-gray-500);
-}
-
-.bt-bg-gray-550 {
-  background-color: var(--bt-gray-550);
-}
-
-.bt-bg-gray-600 {
-  background-color: var(--bt-gray-600);
-}
-
-.bt-bg-gray-700 {
-  background-color: var(--bt-gray-700);
-}
-
-.bt-bg-gray-800 {
-  background-color: var(--bt-gray-800);
-}
-
-.bt-bg-gray-900 {
-  background-color: var(--bt-gray-900);
-}
-
-.bt-bg-gray-1000 {
-  background-color: var(--bt-gray-1000);
 }
 
 .bt-bg-black {
   background-color: var(--bt-black);
 }
 
-/* Blues */
-.bt-bg-blue-50 {
-  background-color: var(--bt-blue-50);
-}
-
-.bt-bg-blue-100 {
-  background-color: var(--bt-blue-100);
-}
-
-.bt-bg-blue-200 {
-  background-color: var(--bt-blue-200);
-}
-
-.bt-bg-blue-400 {
-  background-color: var(--bt-blue-400);
-}
-
-.bt-bg-blue-500 {
-  background-color: var(--bt-blue-500);
-}
-
-.bt-bg-blue-600 {
-  background-color: var(--bt-blue-600);
-}
-
-.bt-bg-blue-700 {
-  background-color: var(--bt-blue-700);
-}
-
-.bt-bg-blue-800 {
-  background-color: var(--bt-blue-800);
-}
-
-.bt-bg-blue-900 {
-  background-color: var(--bt-blue-900);
-}
-
-/* Greens */
-.bt-bg-green-50 {
-  background-color: var(--bt-green-50);
-}
-
-.bt-bg-green-100 {
-  background-color: var(--bt-green-100);
-}
-
-.bt-bg-green-200 {
-  background-color: var(--bt-green-200);
-}
-
-.bt-bg-green-400 {
-  background-color: var(--bt-green-400);
-}
-
-.bt-bg-green-500 {
-  background-color: var(--bt-green-500);
-}
-
-.bt-bg-green-600 {
-  background-color: var(--bt-green-600);
-}
-
-.bt-bg-green-700 {
-  background-color: var(--bt-green-700);
-}
-
-.bt-bg-green-800 {
-  background-color: var(--bt-green-800);
-}
-
-.bt-bg-green-900 {
-  background-color: var(--bt-green-900);
-}
-
-/* Reds */
-.bt-bg-red-50 {
-  background-color: var(--bt-red-50);
-}
-
-.bt-bg-red-100 {
-  background-color: var(--bt-red-100);
-}
-
-.bt-bg-red-200 {
-  background-color: var(--bt-red-200);
-}
-
-.bt-bg-red-500 {
-  background-color: var(--bt-red-500);
-}
-
-.bt-bg-red-600 {
-  background-color: var(--bt-red-600);
-}
-
-.bt-bg-red-700 {
-  background-color: var(--bt-red-700);
-}
-
-.bt-bg-red-800 {
-  background-color: var(--bt-red-800);
-}
-
-.bt-bg-red-900 {
-  background-color: var(--bt-red-900);
-}
-
-/* Oranges */
-.bt-bg-orange-50 {
-  background-color: var(--bt-orange-50);
-}
-
-.bt-bg-orange-100 {
-  background-color: var(--bt-orange-100);
-}
-
-.bt-bg-orange-200 {
-  background-color: var(--bt-orange-200);
-}
-
-.bt-bg-orange-400 {
-  background-color: var(--bt-orange-400);
-}
-
-.bt-bg-orange-500 {
-  background-color: var(--bt-orange-500);
-}
-
-.bt-bg-orange-600 {
-  background-color: var(--bt-orange-600);
-}
-
-.bt-bg-orange-700 {
-  background-color: var(--bt-orange-700);
-}
-
-.bt-bg-orange-800 {
-  background-color: var(--bt-orange-800);
-}
-
-.bt-bg-orange-900 {
-  background-color: var(--bt-orange-900);
-}
-
-/* Primaries */
 .bt-bg-blue {
   background-color: var(--bt-blue);
 }
@@ -2717,7 +2853,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   background-color: var(--bt-light-yellow);
 }
 
-/* Secondaries and status */
 .bt-bg-green {
   background-color: var(--bt-green);
 }
@@ -2754,35 +2889,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   background-color: var(--bt-light-orange);
 }
 
-.bt-bg-turquoise {
-  background-color: var(--bt-turquoise);
-}
-
-.bt-bg-aqua {
-  background-color: var(--bt-aqua);
-}
-
-.bt-bg-grey-blue {
-  background-color: var(--bt-grey-blue);
-}
-
-.bt-bg-purple {
-  background-color: var(--bt-purple);
-}
-
-.bt-bg-light-purple {
-  background-color: var(--bt-light-purple);
-}
-
-.bt-bg-salmon-pink {
-  background-color: var(--bt-salmon-pink);
-}
-
-.bt-bg-warm-orange {
-  background-color: var(--bt-warm-orange);
-}
-
-/* Utilities */
 .bt-bg-success {
   background-color: var(--bt-success);
 }
@@ -2819,232 +2925,51 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   background-color: var(--bt-dark-danger);
 }
 
-.bt-bg {
-  background-color: var(--bt-bg);
+.bt-bg-turquoise {
+  background-color: var(--bt-turquoise);
 }
 
-.bt-bg-alt {
-  background-color: var(--bt-bg-alt);
+.bt-bg-aqua {
+  background-color: var(--bt-aqua);
 }
 
-.bt-bg-dark {
-  background-color: var(--bt-bg-dark);
+.bt-bg-grey-blue {
+  background-color: var(--bt-grey-blue);
 }
 
-.bt-bg-dark-alt {
-  background-color: var(--bt-bg-dark-alt);
+.bt-bg-purple {
+  background-color: var(--bt-purple);
 }
 
-/* Grays */
+.bt-bg-light-purple {
+  background-color: var(--bt-light-purple);
+}
+
+.bt-bg-salmon-pink {
+  background-color: var(--bt-salmon-pink);
+}
+
+.bt-bg-warm-orange {
+  background-color: var(--bt-warm-orange);
+}
+
+/* ── Text — semantic tokens only ────────────────────────────────────────────── */
+.bt-text {
+  color: var(--bt-text);
+}
+
+.bt-text-muted {
+  color: var(--bt-text-muted);
+}
+
 .bt-text-white {
   color: var(--bt-white);
-}
-
-.bt-text-gray-25 {
-  color: var(--bt-gray-25);
-}
-
-.bt-text-gray-50 {
-  color: var(--bt-gray-50);
-}
-
-.bt-text-gray-100 {
-  color: var(--bt-gray-100);
-}
-
-.bt-text-gray-150 {
-  color: var(--bt-gray-150);
-}
-
-.bt-text-gray-200 {
-  color: var(--bt-gray-200);
-}
-
-.bt-text-gray-300 {
-  color: var(--bt-gray-300);
-}
-
-.bt-text-gray-400 {
-  color: var(--bt-gray-400);
-}
-
-.bt-text-gray-500 {
-  color: var(--bt-gray-500);
-}
-
-.bt-text-gray-550 {
-  color: var(--bt-gray-550);
-}
-
-.bt-text-gray-600 {
-  color: var(--bt-gray-600);
-}
-
-.bt-text-gray-700 {
-  color: var(--bt-gray-700);
-}
-
-.bt-text-gray-800 {
-  color: var(--bt-gray-800);
-}
-
-.bt-text-gray-900 {
-  color: var(--bt-gray-900);
-}
-
-.bt-text-gray-1000 {
-  color: var(--bt-gray-1000);
 }
 
 .bt-text-black {
   color: var(--bt-black);
 }
 
-/* Blues */
-.bt-text-blue-50 {
-  color: var(--bt-blue-50);
-}
-
-.bt-text-blue-100 {
-  color: var(--bt-blue-100);
-}
-
-.bt-text-blue-200 {
-  color: var(--bt-blue-200);
-}
-
-.bt-text-blue-400 {
-  color: var(--bt-blue-400);
-}
-
-.bt-text-blue-500 {
-  color: var(--bt-blue-500);
-}
-
-.bt-text-blue-600 {
-  color: var(--bt-blue-600);
-}
-
-.bt-text-blue-700 {
-  color: var(--bt-blue-700);
-}
-
-.bt-text-blue-800 {
-  color: var(--bt-blue-800);
-}
-
-.bt-text-blue-900 {
-  color: var(--bt-blue-900);
-}
-
-/* Greens */
-.bt-text-green-50 {
-  color: var(--bt-green-50);
-}
-
-.bt-text-green-100 {
-  color: var(--bt-green-100);
-}
-
-.bt-text-green-200 {
-  color: var(--bt-green-200);
-}
-
-.bt-text-green-400 {
-  color: var(--bt-green-400);
-}
-
-.bt-text-green-500 {
-  color: var(--bt-green-500);
-}
-
-.bt-text-green-600 {
-  color: var(--bt-green-600);
-}
-
-.bt-text-green-700 {
-  color: var(--bt-green-700);
-}
-
-.bt-text-green-800 {
-  color: var(--bt-green-800);
-}
-
-.bt-text-green-900 {
-  color: var(--bt-green-900);
-}
-
-/* Reds */
-.bt-text-red-50 {
-  color: var(--bt-red-50);
-}
-
-.bt-text-red-100 {
-  color: var(--bt-red-100);
-}
-
-.bt-text-red-200 {
-  color: var(--bt-red-200);
-}
-
-.bt-text-red-500 {
-  color: var(--bt-red-500);
-}
-
-.bt-text-red-600 {
-  color: var(--bt-red-600);
-}
-
-.bt-text-red-700 {
-  color: var(--bt-red-700);
-}
-
-.bt-text-red-800 {
-  color: var(--bt-red-800);
-}
-
-.bt-text-red-900 {
-  color: var(--bt-red-900);
-}
-
-/* Oranges */
-.bt-text-orange-50 {
-  color: var(--bt-orange-50);
-}
-
-.bt-text-orange-100 {
-  color: var(--bt-orange-100);
-}
-
-.bt-text-orange-200 {
-  color: var(--bt-orange-200);
-}
-
-.bt-text-orange-400 {
-  color: var(--bt-orange-400);
-}
-
-.bt-text-orange-500 {
-  color: var(--bt-orange-500);
-}
-
-.bt-text-orange-600 {
-  color: var(--bt-orange-600);
-}
-
-.bt-text-orange-700 {
-  color: var(--bt-orange-700);
-}
-
-.bt-text-orange-800 {
-  color: var(--bt-orange-800);
-}
-
-.bt-text-orange-900 {
-  color: var(--bt-orange-900);
-}
-
-/* Primaries */
 .bt-text-blue {
   color: var(--bt-blue);
 }
@@ -3077,7 +3002,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   color: var(--bt-dark-gray);
 }
 
-/* Secondaries and status */
 .bt-text-green {
   color: var(--bt-green);
 }
@@ -3114,35 +3038,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   color: var(--bt-light-orange);
 }
 
-.bt-text-turquoise {
-  color: var(--bt-turquoise);
-}
-
-.bt-text-aqua {
-  color: var(--bt-aqua);
-}
-
-.bt-text-grey-blue {
-  color: var(--bt-grey-blue);
-}
-
-.bt-text-purple {
-  color: var(--bt-purple);
-}
-
-.bt-text-light-purple {
-  color: var(--bt-light-purple);
-}
-
-.bt-text-salmon-pink {
-  color: var(--bt-salmon-pink);
-}
-
-.bt-text-warm-orange {
-  color: var(--bt-warm-orange);
-}
-
-/* Utilities */
 .bt-text-success {
   color: var(--bt-success);
 }
@@ -3179,18 +3074,38 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   color: var(--bt-dark-danger);
 }
 
-.bt-text {
-  color: var(--bt-text);
+.bt-text-turquoise {
+  color: var(--bt-turquoise);
 }
 
-.bt-text-muted {
-  color: var(--bt-text-muted);
+.bt-text-aqua {
+  color: var(--bt-aqua);
 }
 
-.bt-icon-muted {
-  color: var(--bt-icon-muted);
+.bt-text-grey-blue {
+  color: var(--bt-grey-blue);
+}
+
+.bt-text-purple {
+  color: var(--bt-purple);
+}
+
+.bt-text-light-purple {
+  color: var(--bt-light-purple);
+}
+
+.bt-text-salmon-pink {
+  color: var(--bt-salmon-pink);
+}
+
+.bt-text-warm-orange {
+  color: var(--bt-warm-orange);
 }
 
 .bt-icon-default {
   color: var(--bt-icon-default);
+}
+
+.bt-icon-muted {
+  color: var(--bt-icon-muted);
 }

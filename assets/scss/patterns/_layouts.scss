@@ -46,8 +46,8 @@
 .u-layout--app > .c-sub-sidebar {
   grid-area: sidebar;
   position: sticky;
-  top: var(--bc-navbar-height, 48px);
-  height: calc(100vh - var(--bc-navbar-height, 48px));
+  top: var(--s-topbar-height);
+  height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
 }
 
@@ -215,12 +215,12 @@
 .u-layout--deposit > .c-stepper {
   grid-area: stepper;
   position: sticky;
-  top: var(--bc-navbar-height, 48px);
-  height: calc(100vh - var(--bc-navbar-height, 48px));
+  top: var(--s-topbar-height);
+  height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
   width: 200px;
   flex-shrink: 0;
-  border-right: 1px solid var(--bt-border-color);
+  border-right: var(--bt-border);
   padding: var(--bt-sp-5) 0;
 }
 
@@ -247,7 +247,6 @@
 .u-layout--public > main {
   flex: 1;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--bt-sp-8) var(--bt-sp-6);
+  /* No max-width or padding here — public templates use Bootstrap .container
+     inside main for consistent responsive gutters. */
 }

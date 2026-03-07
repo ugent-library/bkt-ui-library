@@ -31,6 +31,17 @@
      --s-topbar-height     application topbar height
 */
 
+/* ── Layout geometry — shared across both surfaces ─────────────────────────── */
+/*
+  --s-topbar-height is the single source of truth for the sticky topbar height.
+  It is used by _layouts.scss to calculate sticky sidebar offsets.
+  Override per surface if the topbar height ever differs between public and backoffice.
+*/
+:root {
+  --s-topbar-height: 52px;
+}
+
+
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 body {
   --s-heading-font:     var(--bt-font-sans);
