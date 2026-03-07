@@ -154,10 +154,12 @@ Note: `bc-navbar__brand` is used (backoffice logo link). `bc-navbar__mark` does 
 
 **Toolbar & button groups**
 ```
-bc-toolbar              bc-toolbar__left        bc-toolbar__right
+bc-toolbar              bc-toolbar--bordered
+bc-toolbar__left        bc-toolbar__right       bc-toolbar__item
 bc-toolbar__title
 c-button-toolbar        c-button-toolbar--wide-spacing  c-button-toolbar--vertical
 ```
+`bc-toolbar__item` is a flex child that takes `flex:1` — use it (with `w-100` if needed) instead of reaching for utility class hacks on `__left`.
 
 **Avatar**
 ```
@@ -188,25 +190,23 @@ c-sub-sidebar           c-sub-sidebar--bordered
 ```
 
 **Backoffice list layout**
-<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
 ```
-c-filter-bar            c-bulk-bar              c-content-area
-c-facets-col            c-results-col           c-results-toolbar
-c-pagination-bar
+c-content-area          c-facets-col            c-results-col
 ```
+Use `bc-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
 
 **View toggle**
-<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
 ```
 view-toggle             view-toggle-btn         view-toggle-btn.is-active
 ```
 
 **Table**
-<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
-```
-c-table                 td-title                td-meta
-td-actions              td-actions-inner
-```
+
+Use Bootstrap classes directly: `<table class="table table-hover align-middle">`. Apply `text-uppercase text-muted small` to `<thead>`. No custom table classes exist in this system.
+
+For title cells: `fw-semibold text-reset text-decoration-none` on the link, `small text-muted mt-1` on the secondary line. For action cells: `text-end` on `<td>`, then `btn-ghost btn-sm` buttons directly inside.
+
+Row selection state: Bootstrap's `.table-active` on `<tr>`. The CSS tokens `--bs-table-active-bg` and `--bs-table-hover-bg` are overridden in `_layouts.scss` to match design system colours. Action buttons use `btn-ghost` which is already visually quiet at rest — no reveal mechanism needed.
 
 **Empty states**
 ```
@@ -225,14 +225,11 @@ c-file-drop__hint
 ```
 
 **Filter tags**
-<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
 ```
-filter-tag              filter-tag__remove
+filter-tag
 ```
-Note: `filter-tag__remove` is a BEM element (double underscore). The name `filter-tag-remove` (single dash) no longer exists.
 
 **Definition list**
-<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
 ```
 bt-dl
 ```
@@ -243,7 +240,6 @@ htmx-indicator          htmx-swapping           htmx-settling
 ```
 
 **Badges**
-<!-- // Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below). -->
 ```
 badge-oa                badge-restricted
 ```
@@ -263,10 +259,16 @@ u-layout--app           u-layout--deposit       u-layout--public
 ```
 app-sidebar             app-sidebar-link        app-sidebar-label
 bc-navbar__mark
-filter-tag-remove       (replaced by filter-tag__remove)
 c-blank-slate-default   (replaced by c-blank-slate--default)
 c-blank-slate-muted     (replaced by c-blank-slate--muted)
 c-blank-slate-primary   (replaced by c-blank-slate--primary)
+c-table                 (use Bootstrap .table .table-hover .align-middle)
+c-filter-bar            (use bc-toolbar)
+c-bulk-bar              (use bc-toolbar)
+c-pagination-bar        (use bc-toolbar)
+c-results-toolbar       (use bc-toolbar bc-toolbar--bordered)
+is-selected on <tr>     (use Bootstrap .table-active)
+td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
 c-sidebar               (OLD narrow icon rail — removed in v2)
 u-maximize-height       (OLD layout utility — removed in v2)

@@ -87,28 +87,9 @@
 
 /* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
 /*
-  Used inside u-layout--app > main.
-  Combines the filter bar, bulk action bar, faceted results area,
-  and pagination row that make up a standard backoffice list view.
+  Use bc-toolbar for filter/search bars and bulk action bars.
+  c-content-area, c-facets-col, c-results-col handle the facets+results split.
 */
-
-.c-filter-bar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bt-sp-3);
-  padding: var(--bt-sp-4) var(--bt-sp-6);
-  border-bottom: var(--bt-border);
-}
-
-.c-bulk-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  padding: var(--bt-sp-2) var(--bt-sp-6);
-  background: var(--bt-blue-100);
-  border-bottom: var(--bt-border);
-  font-size: var(--bt-text-sm);
-}
 
 .c-content-area {
   display: flex;
@@ -132,83 +113,12 @@
   padding: 0 var(--bt-sp-6);
 }
 
-.c-pagination-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--bt-sp-3) 0;
-  border-top: var(--bt-border);
-  font-size: var(--bt-text-sm);
-  color: var(--bt-gray-700);
-  margin-top: auto;
-}
 
-
-/* ── c-table ──────────────────────────────────────────────────────────────── */
-/*
-  Standard backoffice data table.
-  .td-title     title cell with secondary metadata below
-  .td-meta      subdued secondary line inside a title cell
-  .td-actions   right-aligned icon buttons, revealed on row hover
-*/
-.c-table {
-  width: 100%;
-  font-size: var(--bt-text-sm);
-  border-collapse: collapse;
-}
-.c-table thead th {
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  color: var(--bt-gray-700);
-  border-bottom: var(--bt-border);
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-  white-space: nowrap;
-  text-align: left;
-}
-.c-table tbody td {
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-  border-bottom: var(--bt-border);
-  vertical-align: middle;
-}
-.c-table tbody tr:last-child td {
-  border-bottom: none;
-}
-.c-table tbody tr:hover td {
-  background: var(--bt-gray-50);
-}
-.c-table tbody tr.is-selected td {
-  background: var(--bt-blue-100);
-}
-.c-table .td-title a {
-  color: var(--bt-gray-1000);
-  text-decoration: none;
-  font-weight: 500;
-}
-.c-table .td-title a:hover {
-  color: var(--bt-blue);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.c-table .td-meta {
-  font-size: var(--bt-text-xs);
-  color: var(--bt-gray-500);
-  margin-top: var(--bt-sp-1);
-}
-.c-table .td-actions {
-  text-align: right;
-  white-space: nowrap;
-}
-.c-table .td-actions-inner {
-  display: flex;
-  gap: var(--bt-sp-1);
-  justify-content: flex-end;
-  opacity: 0;
-  transition: opacity var(--bt-dur-fast);
-}
-.c-table tbody tr:hover .td-actions-inner,
-.c-table tbody tr.is-selected .td-actions-inner {
-  opacity: 1;
+/* ── Backoffice table ──────────────────────────────────────────────────────────────── */
+/* Use .table .table-hover .align-middle. Color tokens for Bootstrap's own vars. */
+.table {
+  --bs-table-active-bg: var(--bt-blue-100);
+  --bs-table-hover-bg:  var(--bt-gray-50);
 }
 
 

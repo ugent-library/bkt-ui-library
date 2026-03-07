@@ -29,63 +29,64 @@
 
   <main id="main-content">
 
-    <!-- Toolbar -->
-    <div class="bc-toolbar">
-      <div class="bc-toolbar__left">
-        <h1 class="bc-toolbar__title">Research output</h1>
-        <span class="text-muted" aria-live="polite" id="result-count">4,831 records</span>
-      </div>
-      <div class="bc-toolbar__right">
-        <div class="c-button-toolbar">
-          <div class="dropdown">
-            <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
-              data-bs-toggle="dropdown">
-              <i class="if if-download if-sm" aria-hidden="true"></i> Export
+    <!-- Toolbar + Search -->
+    <div class="border-bottom px-4">
+      <!-- Toolbar -->
+      <div class="bc-toolbar">
+        <div class="bc-toolbar__left">
+          <h1 class="bc-toolbar__title">Research output</h1>
+          <span class="text-muted" aria-live="polite" id="result-count">4,831 records</span>
+        </div>
+        <div class="bc-toolbar__right">
+          <div class="c-button-toolbar">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
+                data-bs-toggle="dropdown">
+                <i class="if if-download if-sm" aria-hidden="true"></i> Export
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">CSV</a></li>
+                <li><a class="dropdown-item" href="#">BibTeX</a></li>
+                <li><a class="dropdown-item" href="#">RIS</a></li>
+              </ul>
+            </div>
+            <button class="btn btn-secondary btn-sm" type="button">
+              <i class="if if-upload if-sm" aria-hidden="true"></i> Import
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">CSV</a></li>
-              <li><a class="dropdown-item" href="#">BibTeX</a></li>
-              <li><a class="dropdown-item" href="#">RIS</a></li>
-            </ul>
+            <a href="/templates/deposit-flow.html" class="btn btn-primary btn-sm">
+              <i class="if if-add if-sm" aria-hidden="true"></i>
+              Add research output
+            </a>
           </div>
-          <button class="btn btn-secondary btn-sm" type="button">
-            <i class="if if-upload if-sm" aria-hidden="true"></i> Import
-          </button>
-          <a href="/templates/deposit-flow.html" class="btn btn-primary btn-sm">
-            <i class="if if-add if-sm" aria-hidden="true"></i>
-            Add research output
-          </a>
+        </div>
+      </div>
+
+      <!-- Search + filters -->
+      <div class="bc-toolbar" role="search" aria-label="Search and filter research output">
+        <div class="bc-toolbar__left flex-column align-items-start">
+          <label for="bo-search" class="visually-hidden">Search by title, author, DOI</label>
+          <input type="search"
+            class="form-control form-control-search"
+            id="bo-search"
+            value="Quantum computing"
+            placeholder="Search by title, author, DOI…"
+            hx-get="/search"
+            hx-trigger="keyup changed delay:300ms"
+            hx-target="#results-body"
+            hx-indicator="#search-indicator">
+          <div class="d-flex gap-2 flex-wrap align-items-center mt-2" role="group" aria-label="Active filters">
+            <button type="button" class="filter-tag" aria-label="Remove filter: Type is Journal article">
+              Type: Journal article <i class="if if-close" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="filter-tag" aria-label="Remove filter: Year is 2024">
+              Year: 2024 <i class="if if-close" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm py-0 px-2">Clear all</button>
+            <span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching…</span>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- Search + filters -->
-    <div class="c-filter-bar" role="search" aria-label="Search and filter research output">
-      <div>
-        <label for="bo-search" class="visually-hidden">Search by title, author, DOI</label>
-        <input type="search"
-          class="form-control form-control-search"
-          id="bo-search"
-          value="Quantum computing"
-          placeholder="Search by title, author, DOI…"
-          hx-get="/search"
-          hx-trigger="keyup changed delay:300ms"
-          hx-target="#results-body"
-          hx-indicator="#search-indicator">
-      </div>
-      <div class="d-flex gap-2 flex-wrap align-items-center" role="group" aria-label="Active filters">
-        <button type="button" class="filter-tag" aria-label="Remove filter: Type is Journal article">
-          Type: Journal article <span class="filter-tag__remove" aria-hidden="true">×</span>
-        </button>
-        <button type="button" class="filter-tag" aria-label="Remove filter: Year is 2024">
-          Year: 2024 <span class="filter-tag__remove" aria-hidden="true">×</span>
-        </button>
-        <button type="button" class="btn btn-ghost btn-sm py-0 px-2">Clear all</button>
-      </div>
-      <span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching…</span>
-    </div>
-
-
 
     <!-- Content -->
     <div class="c-content-area">
@@ -134,17 +135,21 @@
       <div class="c-results-col" id="results-body">
 
         <!-- Results toolbar: count + view toggle -->
-        <div class="c-results-toolbar">
-          <span class="text-muted" aria-live="polite">4 results for "Quantum computing"</span>
-          <div class="view-toggle" role="group" aria-label="Switch view">
-            <button type="button" class="view-toggle-btn is-active" id="btn-card-view"
-              aria-pressed="true" aria-label="Card view">
-              <i class="if if-list-bullets" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="view-toggle-btn" id="btn-table-view"
-              aria-pressed="false" aria-label="Table view">
-              <i class="if if-table" aria-hidden="true"></i>
-            </button>
+        <div class="bc-toolbar bc-toolbar--bordered">
+          <div class="bc-toolbar__item">
+            <span class="text-muted" aria-live="polite">4 results for "Quantum computing"</span>
+          </div>
+          <div class="bc-toolbar__right">
+            <div class="view-toggle" role="group" aria-label="Switch view">
+              <button type="button" class="view-toggle-btn is-active" id="btn-card-view"
+                aria-pressed="true" aria-label="Card view">
+                <i class="if if-list-bullets" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="view-toggle-btn" id="btn-table-view"
+                aria-pressed="false" aria-label="Table view">
+                <i class="if if-table" aria-hidden="true"></i>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -157,12 +162,14 @@
               <span class="badge bg-success">Published</span>
             </div>
             <div class="card-actions">
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
-                <i class="if if-edit" aria-hidden="true"></i> Edit
-              </a>
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
-                <i class="if if-eye" aria-hidden="true"></i> View
-              </a>
+              <div class="btn-group">
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                  <i class="if if-edit" aria-hidden="true"></i> Edit
+                </a>
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                  <i class="if if-eye" aria-hidden="true"></i> View
+                </a>
+              </div>
             </div>
             <div class="card-body">
               <h2 class="card-title">
@@ -187,12 +194,14 @@
               <span class="badge bg-warning">Draft</span>
             </div>
             <div class="card-actions">
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
-                <i class="if if-edit" aria-hidden="true"></i> Edit
-              </a>
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
-                <i class="if if-eye" aria-hidden="true"></i> View
-              </a>
+              <div class="btn-group">
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                  <i class="if if-edit" aria-hidden="true"></i> Edit
+                </a>
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                  <i class="if if-eye" aria-hidden="true"></i> View
+                </a>
+              </div>
             </div>
             <div class="card-body">
               <h2 class="card-title">
@@ -216,12 +225,14 @@
               <span class="badge bg-success">Published</span>
             </div>
             <div class="card-actions">
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
-                <i class="if if-edit" aria-hidden="true"></i> Edit
-              </a>
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
-                <i class="if if-eye" aria-hidden="true"></i> View
-              </a>
+              <div class="btn-group">
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                  <i class="if if-edit" aria-hidden="true"></i> Edit
+                </a>
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                  <i class="if if-eye" aria-hidden="true"></i> View
+                </a>
+              </div>
             </div>
             <div class="card-body">
               <h2 class="card-title">
@@ -244,12 +255,14 @@
               <span class="badge bg-success">Published</span>
             </div>
             <div class="card-actions">
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
-                <i class="if if-edit" aria-hidden="true"></i> Edit
-              </a>
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
-                <i class="if if-eye" aria-hidden="true"></i> View
-              </a>
+              <div class="btn-group">
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit record">
+                  <i class="if if-edit" aria-hidden="true"></i> Edit
+                </a>
+                <a href="#" class="btn btn-ghost btn-sm" aria-label="View record">
+                  <i class="if if-eye" aria-hidden="true"></i> View
+                </a>
+              </div>
             </div>
             <div class="card-body">
               <h2 class="card-title">
@@ -271,13 +284,10 @@
 
         <!-- Table view (hidden by default) -->
         <div id="view-table" hidden>
-          <table class="c-table" aria-label="Research output records">
-            <thead>
+          <table class="table table-hover align-middle" aria-label="Research output records">
+            <thead class="text-uppercase text-muted small">
               <tr>
-                <th scope="col">
-                  <input type="checkbox" class="form-check-input mt-0" id="select-all"
-                    aria-label="Select all records on this page">
-                </th>
+                <th scope="col"><input type="checkbox" class="form-check-input mt-0" id="select-all" aria-label="Select all records on this page"></th>
                 <th scope="col">Title</th>
                 <th scope="col">Type</th>
                 <th scope="col">
@@ -293,86 +303,88 @@
             <tbody>
               <tr>
                 <td><input type="checkbox" class="form-check-input mt-0 row-check" aria-label="Select: The role of the parameter landscape"></td>
-                <td class="td-title">
-                  <a href="#">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
-                  <div class="td-meta">Kiewiet, M., Cuyvers, S., Billet, M. et al.</div>
+                <td>
+                  <a href="#" class="fw-semibold text-reset text-decoration-none">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
+                  <div class="small text-muted mt-1">Kiewiet, M., Cuyvers, S., Billet, M. et al.</div>
                 </td>
                 <td><span class="badge bg-primary">Journal article</span></td>
                 <td>2025</td>
                 <td><span class="badge bg-success">Published</span></td>
                 <td><span class="badge-oa">OA</span></td>
-                <td class="td-actions"><div class="td-actions-inner">
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit"><i class="if if-edit" aria-hidden="true"></i></a>
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View"><i class="if if-eye" aria-hidden="true"></i></a>
-                </div></td>
+                <td class="text-end">
+                  <div class="btn-group">
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: The role of the parameter landscape"><i class="if if-edit" aria-hidden="true"></i></a>
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View: The role of the parameter landscape"><i class="if if-eye" aria-hidden="true"></i></a>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input mt-0 row-check" aria-label="Select: Quantum error correction"></td>
-                <td class="td-title">
-                  <a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a>
-                  <div class="td-meta">Verstraeten, D., De Wolf, K.</div>
+                <td>
+                  <a href="#" class="fw-semibold text-reset text-decoration-none">Quantum error correction in near-term devices: a practical guide to surface codes</a>
+                  <div class="small text-muted mt-1">Verstraeten, D., De Wolf, K.</div>
                 </td>
                 <td><span class="badge bg-primary">Book chapter</span></td>
                 <td>2024</td>
                 <td><span class="badge bg-warning">Draft</span></td>
                 <td><span class="badge-restricted">Restricted</span></td>
-                <td class="td-actions"><div class="td-actions-inner">
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit"><i class="if if-edit" aria-hidden="true"></i></a>
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View"><i class="if if-eye" aria-hidden="true"></i></a>
-                </div></td>
+                <td class="text-end">
+                  <div class="btn-group">
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Quantum error correction"><i class="if if-edit" aria-hidden="true"></i></a>
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View: Quantum error correction"><i class="if if-eye" aria-hidden="true"></i></a>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input mt-0 row-check" aria-label="Select: Benchmark results"></td>
-                <td class="td-title">
-                  <a href="#">Benchmark results for variational quantum eigensolver across 14 molecular systems</a>
-                  <div class="td-meta">Maes, J., Billet, M.</div>
+                <td>
+                  <a href="#" class="fw-semibold text-reset text-decoration-none">Benchmark results for variational quantum eigensolver across 14 molecular systems</a>
+                  <div class="small text-muted mt-1">Maes, J., Billet, M.</div>
                 </td>
                 <td><span class="badge bg-primary">Dataset</span></td>
                 <td>2024</td>
                 <td><span class="badge bg-success">Published</span></td>
                 <td><span class="badge-oa">OA</span></td>
-                <td class="td-actions"><div class="td-actions-inner">
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit"><i class="if if-edit" aria-hidden="true"></i></a>
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View"><i class="if if-eye" aria-hidden="true"></i></a>
-                </div></td>
+                <td class="text-end">
+                  <div class="btn-group">
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Benchmark results"><i class="if if-edit" aria-hidden="true"></i></a>
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View: Benchmark results"><i class="if if-eye" aria-hidden="true"></i></a>
+                  </div>
+                </td>
               </tr>
               <tr>
                 <td><input type="checkbox" class="form-check-input mt-0 row-check" aria-label="Select: Hybrid classical–quantum"></td>
-                <td class="td-title">
-                  <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
-                  <div class="td-meta">Van Damme, T., Esperon-Rodriguez, M., Akritidis, K. et al.</div>
+                <td>
+                  <a href="#" class="fw-semibold text-reset text-decoration-none">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
+                  <div class="small text-muted mt-1">Van Damme, T., Esperon-Rodriguez, M., Akritidis, K. et al.</div>
                 </td>
                 <td><span class="badge bg-primary">Journal article</span></td>
                 <td>2023</td>
                 <td><span class="badge bg-success">Published</span></td>
                 <td><span class="badge-oa">OA</span></td>
-                <td class="td-actions"><div class="td-actions-inner">
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit"><i class="if if-edit" aria-hidden="true"></i></a>
-                  <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View"><i class="if if-eye" aria-hidden="true"></i></a>
-                </div></td>
+                <td class="text-end">
+                  <div class="btn-group">
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Hybrid classical–quantum"><i class="if if-edit" aria-hidden="true"></i></a>
+                    <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="View: Hybrid classical–quantum"><i class="if if-eye" aria-hidden="true"></i></a>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
         </div><!-- /table-view -->
 
         <!-- Pagination -->
-        <div class="c-pagination-bar">
-          <span aria-live="polite">Showing 1–25 of 4,831 records</span>
+        <div class="bc-toolbar border-top mt-auto">
+          <span class="text-muted small" aria-live="polite">Showing 1–25 of 4,831 records</span>
           <nav aria-label="Results pagination">
             <ul class="pagination mb-0">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#" aria-current="page">1</a>
-              </li>
+              <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a></li>
+              <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
               <li class="page-item"><a class="page-link" href="#">2</a></li>
               <li class="page-item"><a class="page-link" href="#">3</a></li>
               <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
               <li class="page-item"><a class="page-link" href="#">194</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next page">›</a>
-              </li>
+              <li class="page-item"><a class="page-link" href="#" aria-label="Next page">›</a></li>
             </ul>
           </nav>
         </div>

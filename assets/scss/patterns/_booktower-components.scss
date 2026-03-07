@@ -268,11 +268,16 @@
   flex: 1;
   min-width: 0;
 }
+.bc-toolbar__item {
+  flex: 1;
+  min-width: 0;
+}
 .bc-toolbar__right {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
   flex-shrink: 0;
+  margin-left: auto;
 }
 .bc-toolbar__title {
   font-family: var(--s-heading-font, var(--bt-font-serif));
@@ -305,17 +310,12 @@
 }
 
 
-/* ── Results toolbar + view toggle ──────────────────────────────────────────── */
-// Weed out, probably replacable with Bootstrap utilities, but held for review as it's used in a few places and has some custom behavior (see view-toggle-btn styles below).
-.c-results-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--bt-sp-3) 0;
+/* ── bc-toolbar modifier ────────────────────────────────────────────────────── */
+.bc-toolbar--bordered {
   border-bottom: var(--bt-border);
-  margin-bottom: var(--bt-sp-4);
-  font-size: var(--bt-text-sm);
 }
+
+/* ── View toggle ────────────────────────────────────────────────────────────── */
 
 .view-toggle {
   display: flex;
@@ -613,8 +613,4 @@
 }
 .filter-tag:hover {
   background: var(--bt-blue-300);
-}
-.filter-tag__remove {
-  opacity: .6;
-  font-size: .7em;
 }
