@@ -3,61 +3,83 @@
 
 <!-- @include: templates/partials/backoffice-header.html -->
 
-<div class="deposit-layout">
-  <!-- Main content -->
-  <main class="deposit-content" id="main-content">
+<div class="u-layout--deposit" data-surface="backoffice">
+  <nav class="c-stepper" aria-label="Deposit steps">
+    <a href="#type" class="c-stepper__item c-stepper__item--done" aria-current="false">
+      <span class="c-stepper__num"><i class="if if-check" aria-hidden="true"></i></span>
+      <span class="c-stepper__label">Type</span>
+    </a>
+    <a href="#description" class="c-stepper__item" aria-current="step">
+      <span class="c-stepper__num">2</span>
+      <span class="c-stepper__label">
+        Description
+        <span class="c-stepper__required">Required</span>
+      </span>
+    </a>
+    <a href="#people" class="c-stepper__item">
+      <span class="c-stepper__num">3</span>
+      <span class="c-stepper__label">
+        People &amp; affiliations
+        <span class="c-stepper__required">Required</span>
+      </span>
+    </a>
+    <a href="#files" class="c-stepper__item">
+      <span class="c-stepper__num">4</span>
+      <span class="c-stepper__label">Full text &amp; files</span>
+    </a>
+  </nav>
+
+  <main id="main-content">
 
     <!-- Prefill notice -->
     <div class="alert alert-primary mb-4" role="status">
-      <i class="ri-flashlight-line me-1" aria-hidden="true"></i>
+      <i class="if if-info-circle" aria-hidden="true"></i>
       <strong>Metadata prefilled from Crossref</strong> via DOI <code>10.1002/ppp3.70125</code>. Review the fields below — only correct what's wrong.
     </div>
 
     <!-- Section: Type (completed) -->
-    <section id="type" class="deposit-section" aria-labelledby="type-heading">
-      <h2 id="type-heading" class="deposit-section-title d-flex align-items-center gap-2">
+    <section id="type" aria-labelledby="type-heading" class="mb-6">
+      <h2 id="type-heading" class="bc-toolbar__title d-flex align-items-center gap-2 mb-4">
         Type
         <span class="badge bg-success ms-auto">Completed</span>
       </h2>
-      <div class="c-radio-card-group">
+      <div class="c-radio-card__group">
         <label class="c-radio-card">
           <input type="radio" name="pub-type" value="journal-article" checked>
-          <span class="c-radio-card-body">Journal article</span>
+          <span class="c-radio-card__body">Journal article</span>
         </label>
         <label class="c-radio-card">
           <input type="radio" name="pub-type" value="book">
-          <span class="c-radio-card-body">Book</span>
+          <span class="c-radio-card__body">Book</span>
         </label>
         <label class="c-radio-card">
           <input type="radio" name="pub-type" value="book-chapter">
-          <span class="c-radio-card-body">Book chapter</span>
+          <span class="c-radio-card__body">Book chapter</span>
         </label>
         <label class="c-radio-card">
           <input type="radio" name="pub-type" value="dataset">
-          <span class="c-radio-card-body">Dataset</span>
+          <span class="c-radio-card__body">Dataset</span>
         </label>
         <label class="c-radio-card">
           <input type="radio" name="pub-type" value="software">
-          <span class="c-radio-card-body">Software</span>
+          <span class="c-radio-card__body">Software</span>
         </label>
         <label class="c-radio-card">
           <input type="radio" name="pub-type" value="thesis">
-          <span class="c-radio-card-body">Thesis</span>
+          <span class="c-radio-card__body">Thesis</span>
         </label>
       </div>
     </section>
 
     <!-- Section: Description (active) -->
-    <section id="description" class="deposit-section" aria-labelledby="desc-heading">
-      <h2 id="desc-heading" class="deposit-section-title">
-        Description <span>Required</span>
-      </h2>
+    <section id="description" aria-labelledby="desc-heading" class="mb-6">
+      <h2 id="desc-heading" class="bc-toolbar__title mb-4">Description</h2>
 
       <div class="mb-4">
         <label for="title" class="form-label">Title <span class="text-danger" aria-label="required">*</span></label>
         <input type="text" class="form-control" id="title" required autocomplete="off"
           value="Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers">
-        <div class="form-text">Use the title exactly as published. Do not correct capitalisation — that is the researcher's choice.</div>
+        <div class="form-text">Use the title exactly as published. Do not correct capitalisation.</div>
       </div>
 
       <div class="row g-3 mb-4">
@@ -97,11 +119,11 @@
 
       <div class="mb-4">
         <label for="abstract" class="form-label">Abstract</label>
-        <textarea class="form-control" id="abstract" rows="5">Urban areas are facing increasing risks from climate change, including heatwaves, flooding, wildfires, and growing social inequality, which challenges urban planning and design. Urban forests form the backbone of green infrastructure supporting resilient, equitable, and sustainable cities.</textarea>
+        <textarea class="form-control" id="abstract" rows="5">Urban areas are facing increasing risks from climate change, including heatwaves, flooding, wildfires, and growing social inequality. Urban forests form the backbone of green infrastructure supporting resilient, equitable, and sustainable cities.</textarea>
       </div>
 
       <div class="mb-4">
-        <label class="form-label d-block">Open access status</label>
+        <span class="form-label d-block">Open access status</span>
         <div class="d-flex flex-column gap-2">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="oa-status" id="oa-open" value="open" checked>
@@ -128,69 +150,77 @@
       </div>
     </section>
 
-    <!-- Section: People (stub) -->
-    <section id="people" class="deposit-section" aria-labelledby="people-heading">
-      <h2 id="people-heading" class="deposit-section-title">
-        People &amp; affiliations <span>Required</span>
-      </h2>
+    <!-- Section: People -->
+    <section id="people" aria-labelledby="people-heading" class="mb-6">
+      <h2 id="people-heading" class="bc-toolbar__title mb-4">People &amp; affiliations</h2>
 
       <div class="d-flex flex-column gap-2 mb-3">
-        <div class="d-flex align-items-center gap-2 p-3 bg-white rounded-3">
-          <div class="avatar">ER</div>
+        <div class="d-flex align-items-center gap-2 p-3 bg-white border rounded">
+          <span class="bc-avatar bc-avatar--small">ER</span>
           <div class="flex-grow-1">
             <div>Esperon-Rodriguez, Manuel</div>
-            <div>Author · External</div>
+            <div class="text-muted">Author · External</div>
           </div>
           <button type="button" class="btn btn-ghost btn-sm">Edit</button>
-          <button type="button" class="btn btn-ghost btn-sm"><i class="ri-delete-bin-line" aria-label="Remove"></i></button>
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove Esperon-Rodriguez">
+            <i class="if if-delete" aria-hidden="true"></i>
+          </button>
         </div>
-        <div class="d-flex align-items-center gap-2 p-3 bg-white rounded-3">
-          <div class="avatar">KD</div>
+        <div class="d-flex align-items-center gap-2 p-3 bg-white border rounded">
+          <span class="bc-avatar bc-avatar--small">KD</span>
           <div class="flex-grow-1">
             <div>De Pauw, Karen</div>
-            <div>Author · <strong>UGent</strong> — Department of Environment</div>
+            <div class="text-muted">Author · <strong>UGent</strong> — Department of Environment</div>
           </div>
           <button type="button" class="btn btn-ghost btn-sm">Edit</button>
-          <button type="button" class="btn btn-ghost btn-sm"><i class="ri-delete-bin-line" aria-label="Remove"></i></button>
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove De Pauw">
+            <i class="if if-delete" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <button type="button" class="btn btn-secondary btn-sm"
         hx-get="/partials/add-author-form"
         hx-target="#author-form-area"
         hx-swap="innerHTML">
-        <i class="ri-add-line me-1" aria-hidden="true"></i>Add author
+        <i class="if if-add" aria-hidden="true"></i>
+        Add author
       </button>
       <div id="author-form-area"></div>
     </section>
 
-    <!-- Section: Files (stub) -->
-    <section id="files" class="deposit-section" aria-labelledby="files-heading">
-      <h2 id="files-heading" class="deposit-section-title">Full text &amp; files</h2>
-      <div class="d-flex align-items-center gap-3 p-3 bg-ok-pale rounded-3 mb-3">
-        <i class="ri-file-pdf-line" aria-hidden="true"></i>
+    <!-- Section: Files -->
+    <section id="files" aria-labelledby="files-heading" class="mb-6">
+      <h2 id="files-heading" class="bc-toolbar__title mb-4">Full text &amp; files</h2>
+
+      <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded mb-3">
+        <i class="if if-file-pdf" aria-hidden="true"></i>
         <div class="flex-grow-1">
           <div>publisher-version.pdf</div>
-          <div>Full text · Published version · Open access · 158.71 KB</div>
+          <div class="text-muted">Full text · Published version · Open access · 158.71 KB</div>
         </div>
         <button type="button" class="btn btn-ghost btn-sm">View</button>
         <button type="button" class="btn btn-ghost btn-sm text-danger">Remove</button>
       </div>
-      <div class="p-4 text-center rounded-3"
-        id="drop-zone"
-        ondragover="event.preventDefault();this.style.borderColor='#2e6a9e'"
-        ondragleave="this.style.borderColor='#dddad5'"
-        ondrop="event.preventDefault();this.style.borderColor='#dddad5'">
-        <i class="ri-upload-cloud-line" aria-hidden="true"></i>
-        <p>Drag a file here, or <label for="file-upload">browse</label></p>
-        <p>PDF, DOCX, EPUB, XML — max 500 MB</p>
+
+      <label class="c-file-drop d-block"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="event.preventDefault();this.classList.remove('drag-over')"
+        for="file-upload">
+        <i class="if if-upload c-file-drop__icon" aria-hidden="true"></i>
+        <p class="c-file-drop__text">Drag a file here, or <strong>browse</strong></p>
+        <p class="c-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
         <input type="file" id="file-upload" class="visually-hidden" accept=".pdf,.docx,.epub,.xml">
-      </div>
+      </label>
     </section>
 
     <!-- Action bar -->
-    <div class="d-flex justify-content-between align-items-center pt-4 mt-4">
-      <button type="button" class="btn btn-ghost">← Previous section</button>
-      <div class="d-flex gap-2">
+    <div class="d-flex justify-content-between align-items-center pt-4 mt-4 border-top">
+      <button type="button" class="btn btn-ghost">
+        <i class="if if-arrow-left" aria-hidden="true"></i>
+        Previous section
+      </button>
+      <div class="d-flex align-items-center gap-2">
         <button type="button" class="btn btn-secondary"
           hx-post="/deposit/save"
           hx-target="#save-status"
@@ -202,7 +232,10 @@
           </span>
         </button>
         <span id="save-status" role="status" aria-live="polite"></span>
-        <button type="button" class="btn btn-primary">Next section →</button>
+        <button type="button" class="btn btn-primary">
+          Next section
+          <i class="if if-arrow-right" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
 

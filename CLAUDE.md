@@ -325,7 +325,9 @@ Every rule must live in exactly one place. Before writing any CSS, check whether
 Known boundaries:
 - **Reset** (`box-sizing`, `html`, `body`, `ul`/`ol`) — `assets/scss/base/_reset.scss` only
 - **Fonts** (`@import url(...)`) — `assets/scss/_header.scss` only. Sass requires `@use` rules to come before any other statements, so the CSS `@import` must live in a partial (`_header.scss`) that is itself `@use`d first.
-- **Tokens** (CSS custom properties) — `assets/scss/foundation/_tokens.scss` and `_colors.scss` only
+- **Colour tokens** — `assets/scss/foundation/_colors.scss` only. Two layers: raw palette (`--bt-gray-*`, `--bt-blue-*` etc.) then semantic aliases (`--bt-text`, `--bt-danger`, `--bt-bg` etc.). Component code references only semantic aliases, never palette steps directly. No hex values anywhere else in the system.
+- **Non-colour tokens** (type, spacing, borders, shadows, focus rings, motion) — `assets/scss/foundation/_tokens.scss` only
+- **SVG ink-alpha tokens** (`--i02` through `--i40`) — `assets/scss/patterns/_svg-animations.scss` only. Nothing outside SVG uses them.
 - **Accessibility** (focus ring, `.visually-hidden`, reduced motion) — `assets/scss/base/_accessibility.scss` only
 - **Component overrides** (`.form-label`, `.btn`, etc.) — their respective SCSS partials only, never in `_typography.scss` or the shell
 - **Shell chrome** — `shell/shell.css` only, and only for `bt-shell`, `bt-nav`, `bt-content`, `ds-page`, `ds-demo`, `ds-code`
@@ -344,7 +346,7 @@ The established patterns from reading the existing pages:
 <!-- Page header -->
 <header class="ds-page-header col-6" data-surface="public">
   <p class="ds-eyebrow">Foundations</p>
-  <h1 class="display-2">Page title</h1>
+  <h1 class="display-1">Page title</h1>
   <p class="lead">Introduction.</p>
 </header>
 
@@ -364,7 +366,7 @@ The established patterns from reading the existing pages:
 
 Key rules:
 - Page header uses `<header>`, not `<div>`
-- Sections use `<section>`, not `<div>`  
+- Sections use `<section>`, not `<div>`
 - Section headings are `<h2 class="h4 mb-3">`, not plain `<h2>`
 - Demo labels use `<h3 class="ds-demo-label">`, not `<div class="ds-demo-label">`
 - No `<style>` blocks in HTML files — styles go in the correct SCSS partial

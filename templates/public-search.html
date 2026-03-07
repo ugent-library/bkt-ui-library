@@ -1,54 +1,24 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
 
-<!-- @include: templates/partials/backoffice-header.html -->
-
-<header class="bc-navbar bc-navbar--large bc-navbar--white bc-navbar--bordered-bottom" role="banner">
-  <div class="bc-toolbar h-auto">
-    <div class="bc-toolbar__left">
-      <h1 class="h6 ff-sans">
-        <a href="/">
-          <i class="if if-ghent-university if-md" aria-hidden="true"></i>
-          Ghent University Academic Repository & Bibliography
-        </a>
-      </h1>
-    </div>
-    <nav aria-label="Site navigation" class="bc-toolbar__middle">
-      <div class="c-button-toolbar">
-        <a href="#" class="bt-topbar-link active" aria-current="page">Search</a>
-        <a href="#" class="bt-topbar-link">Authors</a>
-        <a href="#" class="bt-topbar-link">Projects</a>
-        <a href="#" class="bt-topbar-link">How it works</a>
-      </div>
-    </nav>
-    <div class="bc-toolbar__right">
-      <div class="bc-toolbar__item">
-        <a href="#" class="bt-topbar-link">My lists</a>
-      </div>
-      <div class="bc-toolbar__item">
-        <a href="#" class="btn btn-secondary btn-sm">
-          <i class="if if-add if-sm" aria-hidden="true"></i>
-          Add research
-        </a>
-      </div>
-    </div>
-  </div>
-</header>
+<!-- @include: templates/partials/public-header.html -->
 
 <main id="main-content">
 
   <!-- Search hero -->
-  <div class="public-search-hero">
-    <div class="public-search-hero-inner">
+  <div class="bg-white border-bottom py-6">
+    <div class="container">
       <form role="search" aria-label="Search research output">
         <label for="q" class="visually-hidden">Search research output</label>
-        <div class="public-search-bar">
-          <i class="if if-search public-search-icon" aria-hidden="true"></i>
+        <div class="input-group input-group-lg mb-3">
+          <span class="input-group-text">
+            <i class="if if-search" aria-hidden="true"></i>
+          </span>
           <input
             type="search"
             id="q"
             name="q"
-            class="public-search-input"
+            class="form-control"
             value="Quantum computing"
             autocomplete="off"
             hx-get="/search"
@@ -56,39 +26,38 @@
             hx-target="#search-results"
             hx-swap="innerHTML"
             hx-indicator="#search-indicator">
-          <button type="submit" class="btn btn-primary public-search-submit">Search</button>
+          <button type="submit" class="btn btn-primary">Search</button>
         </div>
       </form>
-      <p class="public-search-results-count" aria-live="polite">
+      <p class="text-muted mb-0" aria-live="polite">
         179 results for <strong>"Quantum computing"</strong>
       </p>
     </div>
   </div>
 
   <!-- Filter bar -->
-  <div class="public-filter-bar" role="group" aria-label="Active filters">
+  <div class="container py-3 d-flex align-items-center gap-2 flex-wrap" role="group" aria-label="Active filters">
     <button type="button" class="filter-tag">
       <i class="if if-lock-unlock if-xs" aria-hidden="true"></i>
       Open access research
-      <span class="filter-tag-remove" aria-hidden="true">×</span>
+      <span class="filter-tag__remove" aria-hidden="true">×</span>
     </button>
     <button type="button" class="filter-tag">
       Year: 1700–today
-      <span class="filter-tag-remove" aria-hidden="true">×</span>
+      <span class="filter-tag__remove" aria-hidden="true">×</span>
     </button>
     <button type="button" class="filter-tag">
       Research type: Everything
-      <span class="filter-tag-remove" aria-hidden="true">×</span>
+      <span class="filter-tag__remove" aria-hidden="true">×</span>
     </button>
     <a href="#" class="btn btn-ghost btn-sm">Advanced search</a>
   </div>
 
   <!-- Body: facets + results -->
-  <div class="public-search-body">
+  <div class="container d-flex gap-6 py-5">
 
     <!-- Facets -->
-    <aside class="public-facets" aria-label="Filter results">
-
+    <aside style="width:220px;flex-shrink:0" aria-label="Filter results">
       <div class="c-facets">
         <div class="c-facet-title">Access</div>
         <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-oa" checked aria-label="Open access (142 results)"></div>
@@ -129,18 +98,17 @@
         <div class="c-facet-name"><label for="f-2022">2022</label></div>
         <div class="c-facet-count" aria-hidden="true">19</div>
       </div>
-
     </aside>
 
     <!-- Results -->
-    <div class="public-results" id="search-results">
+    <div class="flex-grow-1 min-width-0" id="search-results">
 
-      <!-- Toolbar: sort + count -->
-      <div class="public-results-toolbar">
-        <span class="public-results-count" aria-live="polite">179 results</span>
+      <!-- Toolbar: count + sort -->
+      <div class="c-results-toolbar">
+        <span aria-live="polite">179 results</span>
         <div class="d-flex align-items-center gap-3 ms-auto">
           <label for="sort-by" class="visually-hidden">Sort by</label>
-          <select id="sort-by" class="form-select form-select-sm" style="width: auto;">
+          <select id="sort-by" class="form-select form-select-sm" style="width:auto">
             <option>Year (new to old)</option>
             <option>Year (old to new)</option>
             <option>Relevance</option>
@@ -294,7 +262,7 @@
       </article>
 
       <!-- Pagination -->
-      <nav class="public-pagination" aria-label="Results pagination">
+      <nav class="d-flex align-items-center gap-1 py-4" aria-label="Results pagination">
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Previous page" disabled>‹</button>
         <button type="button" class="btn btn-primary btn-sm" aria-current="page" aria-label="Page 1, current">1</button>
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Page 2">2</button>
@@ -304,9 +272,9 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Next page">›</button>
       </nav>
 
-    </div><!-- /public-results -->
+    </div><!-- /results -->
 
-  </div><!-- /public-search-body -->
+  </div><!-- /body -->
 </main>
 
 <!-- @include: templates/partials/public-footer.html -->

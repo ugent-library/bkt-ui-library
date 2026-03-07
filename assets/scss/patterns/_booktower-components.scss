@@ -1,6 +1,41 @@
-// /* ═══════════════════════════════════════════════════════════════════════════════
-//    7. COMPONENTS — existing system class names preserved exactly
-//    ═══════════════════════════════════════════════════════════════════════════════ */
+/* ── c-hero ─────────────────────────────────────────────────────────────────── */
+/*
+  Full-bleed hero section with an absolute SVG background layer.
+  Used on public-index and research-detail.
+
+  Structure:
+    <section class="c-hero">
+      <div class="c-hero__bg"><!-- SVG --></div>
+      <div class="c-hero__content container"><!-- page content --></div>
+    </section>
+*/
+.c-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: var(--bt-gray-25);
+  border-bottom: var(--bt-border);
+  padding: 10vh 0;
+}
+
+.c-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.c-hero__bg svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.c-hero__content {
+  position: relative;
+  z-index: 1;
+}
+
 
 /* ── bc-navbar ──────────────────────────────────────────────────────────────── */
 .bc-navbar {
@@ -15,28 +50,9 @@
   top: 0;
   z-index: 50;
 }
-// .bc-navbar__brand {
-//   font-family: var(--bt-font-serif);
-//   font-size: var(--bt-text-base);
-//   font-weight: 400;
-//   color: var(--bt-blue-900);
-//   text-decoration: none;
-//   display: flex;
-//   align-items: center;
-//   gap: var(--bt-sp-2);
-//   flex-shrink: 0;
-// }
-// .bc-navbar__brand:hover {
-//   color: var(--bt-blue-900);
-// }
-// .bc-navbar__mark {
-//   font-size: var(--bt-text-md);
-//   line-height: 1;
-//   opacity: .75;
-// }
 .bc-navbar__sep {
   width: 1px;
-  height: var(--bt-sp-5);    /* 20px — sits comfortably inside 52px bar */
+  height: var(--bt-sp-5);
   background: var(--bt-border-color);
   flex-shrink: 0;
   display: block;
@@ -72,8 +88,38 @@
 }
 
 
-/* ── card-research ─────────────────────────────────────────────────────────── */
+/* ── bc-avatar ──────────────────────────────────────────────────────────────── */
+/* Used in backoffice-header.html as the account menu trigger */
+.bc-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-900);
+  font-size: var(--bt-text-sm);
+  font-weight: 600;
+  flex-shrink: 0;
+  line-height: 1;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+.bc-avatar--small {
+  width: 28px;
+  height: 28px;
+  font-size: var(--bt-text-xs);
+}
+.bc-avatar--large {
+  width: 48px;
+  height: 48px;
+  font-size: 1rem;
+}
 
+
+/* ── card-research ──────────────────────────────────────────────────────────── */
 .card-research {
   background: var(--bt-white);
   border-bottom: 1px solid var(--bt-border-color);
@@ -83,7 +129,6 @@
   grid-template-rows: auto auto;
   gap: 0 var(--bt-sp-6);
 }
-
 .card-research .card-meta {
   grid-column: 1;
   grid-row: 1;
@@ -93,7 +138,6 @@
   gap: var(--bt-sp-2);
   margin-bottom: var(--bt-sp-3);
 }
-
 .card-research .card-actions {
   grid-column: 2;
   grid-row: 1;
@@ -102,13 +146,11 @@
   gap: var(--bt-sp-1);
   flex-shrink: 0;
 }
-
 .card-research .card-body {
   grid-column: 1;
   grid-row: 2;
   padding: 0;
 }
-
 .card-research .card-title {
   font-family: var(--bt-font-serif);
   font-size: var(--bt-text-md);
@@ -117,33 +159,27 @@
   margin-bottom: var(--bt-sp-2);
   color: var(--bt-gray-1000);
 }
-
 .card-research .card-title a {
   color: inherit;
   text-decoration: none;
 }
-
 .card-research .card-title a:hover {
   color: var(--bt-blue);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-
 .card-research .card-authors {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   margin-bottom: var(--bt-sp-1);
   line-height: 1.5;
 }
-
 .card-research .card-authors a {
   color: var(--bt-gray-700);
 }
-
 .card-research .card-authors a:hover {
   color: var(--bt-blue);
 }
-
 .card-research .card-publication {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-500);
@@ -151,17 +187,13 @@
   flex-wrap: wrap;
   gap: 0 var(--bt-sp-2);
 }
-
 .card-research .card-publication a {
   color: var(--bt-gray-500);
   text-underline-offset: 2px;
 }
-
 .card-research .card-publication a:hover {
   color: var(--bt-blue);
 }
-
-/* First card in a list — no top padding */
 .card-research:first-child {
   padding-top: 0;
 }
@@ -171,7 +203,6 @@
 .s-backoffice .card-research {
   padding: var(--bt-sp-4) 0;
 }
-
 [data-surface="backoffice"] .card-research .card-title,
 .s-backoffice .card-research .card-title {
   font-family: var(--bt-font-sans);
@@ -179,13 +210,11 @@
   font-weight: 500;
   margin-bottom: var(--bt-sp-1);
 }
-
 [data-surface="backoffice"] .card-research .card-authors,
 .s-backoffice .card-research .card-authors {
   font-size: var(--bt-text-xs);
   margin-bottom: var(--bt-sp-1);
 }
-
 [data-surface="backoffice"] .card-research .card-publication,
 .s-backoffice .card-research .card-publication {
   font-size: var(--bt-text-xs);
@@ -262,12 +291,11 @@
 
 .view-toggle {
   display: flex;
-  gap: var(--bt-sp-1);               /* 4px — tightest token, keeps pill compact */
+  gap: var(--bt-sp-1);
   background: var(--bt-gray-100);
   border-radius: var(--bt-radius);
-  padding: var(--bt-sp-1);           /* 4px inset */
+  padding: var(--bt-sp-1);
 }
-
 .view-toggle-btn {
   background: transparent;
   border: none;
@@ -278,23 +306,19 @@
   line-height: 1;
   transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
 }
-
 .view-toggle-btn.is-active {
   background: var(--bt-white);
   color: var(--bt-gray-1000);
   box-shadow: var(--bt-shadow-xs);
 }
-
 .view-toggle-btn:focus-visible {
   outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
 
-/* ── Footers ──────────────────────────────────────────────────────────────── */
-
-/* Public footer — no component classes needed.
-   Uses Bootstrap grid + utilities directly, same as the production footer.
+/* ── Public footer ──────────────────────────────────────────────────────────── */
+/* Uses Bootstrap grid + utilities directly.
    Only .nav-title needs a definition (used on <h2> in footer nav columns). */
 .nav-title {
   font-size: var(--bt-text-xs);
@@ -305,60 +329,8 @@
 }
 
 
-// /* ── bc-avatar ──────────────────────────────────────────────────────────────── */
-// .bc-avatar {
-//   display: inline-flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: 36px;
-//   height: 36px;
-//   border-radius: 50%;
-//   background: var(--bt-blue-200);
-//   color: var(--bt-blue-900);
-//   font-size: var(--bt-text-sm);
-//   font-weight: 600;
-//   flex-shrink: 0;
-//   line-height: 1;
-// }
-// .bc-avatar--small {
-//   width: 28px;
-//   height: 28px;
-//   font-size: var(--bt-text-xs);
-// }
-// .bc-avatar--large {
-//   width: 48px;
-//   height: 48px;
-//   font-size: 1rem;
-// }
-
-
-// /* ── c-blank-slate ──────────────────────────────────────────────────────────── */
-// .c-blank-slate {
-//   text-align: center;
-//   padding: 1.75rem 1.5rem;
-//   color: var(--bt-gray-700);
-//   font-size: var(--bt-text-sm);
-// }
-// .c-blank-slate p {
-//   margin: .5rem 0 0;
-// }
-// .c-blank-slate--default {
-//   background: var(--bt-bg);
-//   border: var(--bt-border);
-//   border-radius: var(--bt-radius-lg);
-// }
-// .c-blank-slate--muted {
-//   background: var(--bt-bg-alt);
-//   border-radius: var(--bt-radius-lg);
-// }
-// .c-blank-slate--primary {
-//   background: var(--bt-blue-100);
-//   border-radius: var(--bt-radius-lg);
-//   color: var(--bt-blue-900);
-// }
-
-
-// /* ── c-facets ───────────────────────────────────────────────────────────────── */
+/* ── c-facets ───────────────────────────────────────────────────────────────── */
+/* Used in public-search.html and deposit-flow.html */
 .c-facets {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -384,7 +356,7 @@
   line-height: 1.4;
 }
 .c-facet-count {
-  font-size: .75rem;
+  font-size: var(--bt-text-xs);
   color: var(--bt-gray-300);
   font-family: var(--bt-font-mono);
   text-align: right;
@@ -398,7 +370,7 @@
 }
 
 
-// /* ── c-sub-sidebar ──────────────────────────────────────────────────────────── */
+/* ── c-sub-sidebar ──────────────────────────────────────────────────────────── */
 .c-sub-sidebar {
   padding-right: 1rem;
 }
@@ -407,189 +379,196 @@
 }
 
 
-// /* ── Metadata / definition list ─────────────────────────────────────────────── */
-// .bt-dl {
-//   display: grid;
-//   grid-template-columns: max-content 1fr;
-//   gap: .3125rem 1.25rem;
-//   font-size: var(--bt-text-sm);
-// }
-// .bt-dl dt {
-//   font-size: var(--bt-text-xs);
-//   font-weight: 500;
-//   text-transform: uppercase;
-//   color: var(--bt-gray-700);
-//   padding-top: .1rem;
-// }
-// .bt-dl dd {
-//   margin: 0;
-//   color: var(--bt-gray-1000);
-// }
+/* ── bt-dl — metadata definition list ──────────────────────────────────────── */
+/* Used in research-detail.html sidebar */
+.bt-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: .3125rem 1.25rem;
+  font-size: var(--bt-text-sm);
+}
+.bt-dl dt {
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--bt-gray-700);
+  padding-top: .1rem;
+}
+.bt-dl dd {
+  margin: 0;
+  color: var(--bt-gray-1000);
+}
 
 
-// /* ── c-stepper ──────────────────────────────────────────────────────────────── */
-// .c-stepper {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 0;
-// }
-// .c-stepper__item {
-//   display: flex;
-//   align-items: flex-start;
-//   gap: .625rem;
-//   padding: .4375rem .5rem;
-//   border-radius: var(--bt-radius);
-//   text-decoration: none;
-//   color: var(--bt-gray-700);
-//   font-size: var(--bt-text-sm);
-//   line-height: 1.4;
-//   transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
-// }
-// .c-stepper__item:hover {
-//   background: var(--bt-bg-alt);
-//   color: var(--bt-gray-1000);
-// }
-// .c-stepper__item[aria-current="step"] {
-//   background: var(--bt-white);
-//   color: var(--bt-blue-900);
-//   font-weight: 500;
-//   box-shadow: var(--bt-shadow-xs);
-// }
-// .c-stepper__item--done {
-//   color: var(--bt-green);
-// }
-// .c-stepper__num {
-//   width: 20px;
-//   height: 20px;
-//   border-radius: 50%;
-//   border: 1.5px solid currentColor;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   font-size: var(--bt-text-xs);
-//   font-weight: 600;
-//   flex-shrink: 0;
-//   margin-top: .05rem;
-// }
-// .c-stepper__item--done .c-stepper__num {
-//   background: var(--bt-green);
-//   border-color: var(--bt-green);
-//   color: white;
-// }
-// .c-stepper__item[aria-current="step"] .c-stepper__num {
-//   background: var(--bt-blue-900);
-//   border-color: var(--bt-blue-900);
-//   color: white;
-// }
-// .c-stepper__label {
-//   flex: 1;
-// }
-// .c-stepper__required {
-//   color: var(--bt-red-500);
-//   font-size: var(--bt-text-xs);
-//   font-weight: 400;
-//   display: block;
-// }
+/* ── c-stepper ──────────────────────────────────────────────────────────────── */
+/* Used in u-layout--deposit (deposit-flow.html) */
+.c-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.c-stepper__item {
+  display: flex;
+  align-items: flex-start;
+  gap: .625rem;
+  padding: .4375rem .5rem;
+  border-radius: var(--bt-radius);
+  text-decoration: none;
+  color: var(--bt-gray-700);
+  font-size: var(--bt-text-sm);
+  line-height: 1.4;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+.c-stepper__item:hover {
+  background: var(--bt-bg-alt);
+  color: var(--bt-gray-1000);
+}
+.c-stepper__item[aria-current="step"] {
+  background: var(--bt-white);
+  color: var(--bt-blue-900);
+  font-weight: 500;
+  box-shadow: var(--bt-shadow-xs);
+}
+.c-stepper__item--done {
+  color: var(--bt-green);
+}
+.c-stepper__num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: .05rem;
+}
+.c-stepper__item--done .c-stepper__num {
+  background: var(--bt-green);
+  border-color: var(--bt-green);
+  color: white;
+}
+.c-stepper__item[aria-current="step"] .c-stepper__num {
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
+  color: white;
+}
+.c-stepper__label {
+  flex: 1;
+}
+.c-stepper__required {
+  color: var(--bt-danger);
+  font-size: var(--bt-text-xs);
+  font-weight: 400;
+  display: block;
+}
 
 
-// /* ── c-radio-card ───────────────────────────────────────────────────────────── */
-// .c-radio-card__group {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-//   gap: .5rem;
-// }
-// .c-radio-card {
-//   position: relative;
-//   cursor: pointer;
-//   display: block;
-// }
-// .c-radio-card input[type="radio"] {
-//   position: absolute;
-//   opacity: 0;
-//   width: 0;
-//   height: 0;
-// }
-// .c-radio-card__body {
-//   border: 1.5px solid #dddad5;
-//   border-radius: var(--bt-radius-md);
-//   padding: .75rem .875rem;
-//   background: var(--bt-white);
-//   transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
-//   font-size: var(--bt-text-sm);
-//   font-weight: 500;
-//   color: var(--bt-gray-700);
-//   line-height: 1.35;
-//   user-select: none;
-// }
-// .c-radio-card:hover .c-radio-card__body {
-//   border-color: var(--bt-blue-700);
-// }
-// .c-radio-card input:checked + .c-radio-card__body {
-//   border-color: var(--bt-blue-900);
-//   background: var(--bt-blue-200);
-//   color: var(--bt-blue-900);
-// }
-// .c-radio-card input:focus-visible + .c-radio-card__body {
-//   outline: 3px solid rgba(46,106,158,.35);
-//   outline-offset: 2px;
-// }
+/* ── c-radio-card ───────────────────────────────────────────────────────────── */
+/* Used in deposit-flow.html publication type picker */
+.c-radio-card__group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--bt-sp-2);
+}
+.c-radio-card {
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+.c-radio-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.c-radio-card__body {
+  border: 1.5px solid var(--bt-gray-150);
+  border-radius: var(--bt-radius-md);
+  padding: .75rem .875rem;
+  background: var(--bt-white);
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-700);
+  line-height: 1.35;
+  user-select: none;
+}
+.c-radio-card:hover .c-radio-card__body {
+  border-color: var(--bt-blue-700);
+}
+.c-radio-card input:checked + .c-radio-card__body {
+  border-color: var(--bt-blue-900);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-900);
+}
+.c-radio-card input:focus-visible + .c-radio-card__body {
+  outline: 3px solid var(--bt-focus-ring-sm);
+  outline-offset: 2px;
+}
 
 
-// /* ── c-file-drop ────────────────────────────────────────────────────────────── */
-// .c-file-drop {
-//   border: 2px dashed #dddad5;
-//   border-radius: var(--bt-radius-lg);
-//   padding: 2rem 1.5rem;
-//   text-align: center;
-//   cursor: pointer;
-//   transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
-// }
-// .c-file-drop:hover, .c-file-drop.drag-over {
-//   border-color: var(--bt-blue-700);
-//   background: var(--bt-blue-100);
-// }
-// .c-file-drop__icon {
-//   font-size: 1.75rem;
-//   color: var(--bt-gray-300);
-//   display: block;
-//   margin-bottom: .5rem;
-// }
-// .c-file-drop__text {
-//   font-size: var(--bt-text-sm);
-//   color: var(--bt-gray-700);
-//   margin: 0;
-// }
-// .c-file-drop__hint {
-//   font-size: .8125rem;
-//   color: var(--bt-gray-300);
-//   margin: .2rem 0 0;
-// }
+/* ── c-file-drop ────────────────────────────────────────────────────────────── */
+/* Used in deposit-flow.html file upload area */
+.c-file-drop {
+  border: 2px dashed var(--bt-gray-150);
+  border-radius: var(--bt-radius-lg);
+  padding: var(--bt-sp-8) var(--bt-sp-6);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
+}
+.c-file-drop:hover,
+.c-file-drop.drag-over {
+  border-color: var(--bt-blue-700);
+  background: var(--bt-blue-50);
+}
+.c-file-drop__icon {
+  font-size: 1.75rem;
+  color: var(--bt-gray-300);
+  display: block;
+  margin-bottom: var(--bt-sp-2);
+}
+.c-file-drop__text {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-700);
+  margin: 0;
+}
+.c-file-drop__hint {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-400);
+  margin: var(--bt-sp-1) 0 0;
+}
 
 
-// /* ── HTMX states ────────────────────────────────────────────────────────────── */
-// .htmx-indicator {
-//   display: none;
-// }
-// .htmx-request .htmx-indicator,
-// .htmx-request.htmx-indicator {
-//   display: inline-flex;
-//   align-items: center;
-// }
-// .htmx-swapping {
-//   opacity: .5;
-//   transition: opacity var(--bt-dur-base);
-// }
-// .htmx-settling {
-//   transition: opacity var(--bt-dur-base);
-// }
-// .htmx-request.btn {
-//   opacity: .7;
-//   pointer-events: none;
-//   cursor: wait;
-// }
+/* ── HTMX states ────────────────────────────────────────────────────────────── */
+/* Used in research-detail.html, deposit-flow.html, backoffice-search.html */
+.htmx-indicator {
+  display: none;
+}
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+  display: inline-flex;
+  align-items: center;
+}
+.htmx-swapping {
+  opacity: .5;
+  transition: opacity var(--bt-dur-base);
+}
+.htmx-settling {
+  transition: opacity var(--bt-dur-base);
+}
+.htmx-request.btn {
+  opacity: .7;
+  pointer-events: none;
+  cursor: wait;
+}
 
 
-// /* ── Filter tag ─────────────────────────────────────────────────────────────── */
+/* ── filter-tag ─────────────────────────────────────────────────────────────── */
+/* Used in public-search.html active-filter pills */
 .filter-tag {
   display: inline-flex;
   align-items: center;
@@ -605,7 +584,7 @@
   transition: background var(--bt-dur-fast);
 }
 .filter-tag:hover {
-  background: var(--bt-blue-200); /* was #ccdfe8 — bt-blue-200 (#a8c7f0) is the nearest token */
+  background: var(--bt-blue-300);
 }
 .filter-tag__remove {
   opacity: .6;

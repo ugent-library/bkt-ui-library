@@ -78,7 +78,7 @@ Minimal page template:
 <div class="ds-page">
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
-    <h1 class="display-2">My Component</h1>
+    <h1 class="display-1">My Component</h1>
     <p class="lead">Short description.</p>
   </header>
 
