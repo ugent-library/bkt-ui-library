@@ -41,70 +41,370 @@ The full icon list is documented at `/foundations/icons.html` and defined in `as
 
 ---
 
-## Accessibility: what I get right and what I get wrong
+## Accessibility rules
 
-### What I get right
-- `role`, `aria-label`, `aria-live`, `aria-current` attribute syntax
-- `fieldset`/`legend` for grouped controls
-- `visually-hidden` for screen-reader-only text
-- Skip links
-- Keyboard focus order (in static HTML — not in dynamic HTMX swaps)
+Target: **WCAG 2.1 AA** minimum on every template. WCAG 2.2 and stable WCAG 3 guidance applied where noted.
 
-### What I get wrong or must always verify
+We build two things: a **public research repository** (anonymous users, read-heavy, search + discovery, must work for screen reader users who cannot see the visual layout) and a **backoffice data management app** (authenticated library staff, task-heavy, CRUD + bulk operations + multi-step deposit forms, used repeatedly all day — efficiency matters as much as correctness).
 
-**1. aria-label on the wrong element**
+**I produce correct static HTML. I cannot test runtime behaviour after HTMX swaps. Screen reader testing with VoiceOver or NVDA is a human responsibility.**
 
-The label belongs on the interactive element, never on the icon.
+---
+
+### A. Page-level structure
+
+**A1. One `<h1>` per page.** It names the current view. Heading hierarchy flows beneath it without skipping levels. In the backoffice, `<h1>Research output</h1>` is correct; `<h1>Biblio</h1>` is not — that names the application, not the view.
+
+**A2. `<main id="main-content">` on every page.** This is the skip-link target and the primary landmark. There is exactly one `<main>` per page.
+
+**A3. Skip link is the first focusable element inside the layout wrapper.** It targets `#main-content`. The current `.skip-link` implementation in `_accessibility.scss` uses `transform: translateY(-100%)` and reveals on `:focus` — this is correct. Do not replace it with `top: -999px` (breaks at high zoom).
 
 ```html
-<!-- ✓ Correct: label on the button -->
+<!-- ✓ Inside u-layout--app, before bc-navbar -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+```
+
+**A4. `lang` attribute on `<html>`.** Always `<html lang="en">` for English content. For Dutch fragments: `<span lang="nl">…</span>`.
+
+**A5. Every `<nav>` has a distinct `aria-label`.** When multiple navigation landmarks exist on one page, each must be uniquely named so a screen reader user can distinguish them.
+
+```
+Application navigation   ← bc-navbar primary nav
+Section navigation       ← c-sub-sidebar
+Breadcrumb               ← breadcrumb nav
+Filter by                ← c-facets-col aside (use aria-label on <aside>)
+Results pagination       ← pagination nav
+```
+
+**A6. Landmark regions used correctly.**
+- `<header>` for the topbar (`bc-navbar`)
+- `<main>` for primary content
+- `<nav>` for navigation (with label — see A5)
+- `<aside>` for facets and supplementary sidebars (with label)
+- `<section aria-labelledby="…">` for named content sections on detail pages
+- `<article>` for self-contained records (search result cards)
+- Never use `<div>` where a semantic element applies
+
+---
+
+### B. Interactive elements — accessible names
+
+**B1. Every interactive element has an accessible name.** The name comes from (in priority order): visible text content → `aria-labelledby` → `aria-label`. An element without any of these fails WCAG 4.1.2.
+
+**B2. Icon-only buttons: label on the button, `aria-hidden` on the icon.**
+
+```html
+<!-- ✓ Correct -->
 <button type="button" aria-label="Close dialog">
   <i class="if if-close" aria-hidden="true"></i>
 </button>
 
-<!-- ✗ Wrong: label on the <i> — unreliable across screen readers -->
+<!-- ✗ Wrong — label is on the icon, not the interactive element -->
 <button type="button">
   <i class="if if-close" aria-label="Close"></i>
 </button>
 ```
 
-**2. Row action labels — include the record context**
+**B3. Buttons with visible text: do not add `aria-label`.** `aria-label` replaces visible text in the accessibility tree — it does not supplement it. If visible text says "Export" and `aria-label` says "Download CSV file", screen readers announce the label only, creating a mismatch with what sighted users see.
 
-An icon button inside a table row must name the record it acts on, not just the action. A screen reader user navigating by button hears only the label, with no visual row context.
+```html
+<!-- ✓ Correct — visible text is sufficient -->
+<button type="button">
+  <i class="if if-download" aria-hidden="true"></i>
+  Export
+</button>
+```
+
+**B4. Row actions must include the record name in their label.** A keyboard or screen reader user navigating by button has no visual row context. This applies to every action button inside `card-research`, table rows, and list items.
 
 ```html
 <!-- ✓ Correct -->
-<a href="#" aria-label="Edit record: Urban forests as essential infrastructure">
+<a href="#" class="btn btn-ghost btn-sm p-1"
+   aria-label="Edit: Urban forests as essential infrastructure">
   <i class="if if-edit" aria-hidden="true"></i>
 </a>
 
-<!-- ✗ Wrong — which record? -->
+<!-- ✗ Wrong -->
 <a href="#" aria-label="Edit">
   <i class="if if-edit" aria-hidden="true"></i>
 </a>
 ```
 
-**3. Facet counts — decorative, not informative**
+**B5. Links vs buttons.** `<a href>` navigates (changes the URL or goes somewhere). `<button>` acts (triggers behaviour without navigation). Never use `<a>` without `href`. Never use `<div>` or `<span>` as a clickable element.
 
-The counts in `.c-facets` are supplementary. The label (e.g. "Journal article") is sufficient. Counts should carry `aria-hidden="true"` unless the screen reader context would be improved by hearing them. The `aria-label` on the checkbox input is the right place to include the count when needed:
+**B6. `aria-current` for active state.** Use `aria-current="page"` on the active link in navigation. Do not rely on `class="active"` alone — it is invisible to assistive technology.
 
 ```html
+<!-- ✓ Correct -->
+<a href="/research" class="nav-link" aria-current="page">Research output</a>
+```
+
+---
+
+### C. Forms
+
+**C1. Every `<input>`, `<select>`, and `<textarea>` has a visible `<label>`.** `placeholder` is not a label — it vanishes on focus, has insufficient contrast, and is not announced reliably by all screen readers. Use `<label for="id">` always.
+
+The only acceptable exception: a search input inside `<form role="search">` may use a visually-hidden label if a visible one would be redundant given surrounding context — but the label must still exist in the DOM.
+
+```html
+<!-- ✓ Correct — visually-hidden label for search -->
+<form role="search" aria-label="Search research output">
+  <label for="q" class="visually-hidden">Search by title, author, or DOI</label>
+  <input type="search" id="q" name="q" placeholder="Search…">
+  <button type="submit">Search</button>
+</form>
+```
+
+**C2. Required fields: `required` attribute + visible indicator + screen reader announcement.**
+
+```html
+<!-- ✓ Correct -->
+<label for="title" class="form-label">
+  Title <span class="text-danger" aria-label="required">*</span>
+</label>
+<input type="text" id="title" class="form-control" required autocomplete="off">
+```
+
+**C3. Validation errors: `aria-describedby` + `aria-invalid` + focus management.** After a failed submit, move focus to the first invalid field or to an error summary at the top of the form.
+
+```html
+<!-- ✓ Correct -->
+<label for="year" class="form-label">Year</label>
+<input type="number" id="year" class="form-control is-invalid"
+  aria-describedby="year-error" aria-invalid="true" required>
+<div id="year-error" class="invalid-feedback" role="alert">
+  Year is required and must be a 4-digit number.
+</div>
+```
+
+**C4. Grouped controls use `<fieldset>` and `<legend>`.** This applies to:
+- The open access status radio group (deposit flow)
+- Every checkbox filter group in `c-facets-col`
+- Any set of related checkboxes or radio buttons anywhere
+
+```html
+<!-- ✓ Correct -->
+<fieldset>
+  <legend class="form-label">Open access status</legend>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="oa" id="oa-open" value="open" checked>
+    <label class="form-check-label" for="oa-open">Open access</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="oa" id="oa-restricted" value="restricted">
+    <label class="form-check-label" for="oa-restricted">Restricted</label>
+  </div>
+</fieldset>
+```
+
+**C5. Autocomplete on personal data fields.** Any field that collects user-identifiable data must carry `autocomplete`. Minimum: `name`, `email`, `organization`. This is a WCAG 1.3.5 requirement.
+
+**C6. `<button type="submit">` inside every form.** Progressive enhancement: the form must be submittable without JavaScript and without HTMX. A real `action` attribute on `<form>` and a real submit button.
+
+---
+
+### D. Dynamic content and HTMX
+
+**D1. Every `hx-get` / `hx-post` has `hx-indicator`.** No silent loading states. The indicator element uses `aria-live="polite"`.
+
+```html
+<!-- ✓ Correct -->
+<input hx-get="/search" hx-trigger="keyup changed delay:300ms"
+  hx-target="#results" hx-indicator="#search-indicator">
+<span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching…</span>
+```
+
+**D2. Live regions must be in the DOM before the swap.** HTMX cannot inject an `aria-live` region and have it work immediately — screen readers only observe regions that existed at page load. The result count, status messages, and error regions must be present (even if empty) in the initial HTML.
+
+```html
+<!-- ✓ Correct — empty on load, populated by HTMX -->
+<span aria-live="polite" id="result-count">4,831 records</span>
+<span id="save-status" role="status" aria-live="polite"></span>
+```
+
+**D3. `role="status"` vs `role="alert"`.** Use `role="status"` (polite) for confirmations: saved, copied, updated. Use `role="alert"` (assertive) only for errors that block the user. Never use `role="alert"` for success messages — it interrupts whatever the screen reader was doing.
+
+**D4. Focus management after swaps.**
+- Search results swap → focus stays on the search input. Do not move it.
+- Deposit step advance → move focus to the new step's `<h2>` (add `tabindex="-1"` to the heading, call `.focus()`).
+- Modal close → return focus to the element that opened the modal.
+- HTMX partial that replaces a section the user was interacting with → move focus to the replaced region's first meaningful element.
+
+**D5. `hx-target` selectors must exist in the DOM at request time**, not just at page load. If the target is conditionally rendered, use `hx-swap="outerHTML"` on the element itself or ensure the container is always present.
+
+---
+
+### E. Keyboard navigation
+
+**E1. Tab order follows visual reading order.** Never use `tabindex` values above 0.
+
+**E2. `tabindex="-1"` for programmatic focus targets only.** Section headings that receive focus after an HTMX swap, error summaries, modal containers. Not for anything that should be in the natural tab flow.
+
+**E3. Modal focus trap.** When a Bootstrap modal opens: focus moves to the first focusable element inside the modal. Tab cycles within the modal. Escape closes it and returns focus to the trigger. Bootstrap handles this — do not override it.
+
+**E4. Dropdowns.** Bootstrap dropdown keyboard handling is correct (Enter/Space open, Arrow keys navigate items, Escape closes). Do not replace Bootstrap dropdowns with custom implementations.
+
+**E5. Toggle buttons use `aria-pressed`, not `role="tab"`.** The view toggle (card/table view) is a pair of toggle buttons, not a tab panel. `role="tab"` requires an associated `role="tabpanel"` and Arrow-key navigation — that is not what this component does.
+
+```html
+<!-- ✓ Correct -->
+<div class="view-toggle" role="group" aria-label="Switch view">
+  <button type="button" class="view-toggle-btn is-active"
+    aria-pressed="true" aria-label="Card view">
+    <i class="if if-list-bullets" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="view-toggle-btn"
+    aria-pressed="false" aria-label="Table view">
+    <i class="if if-table" aria-hidden="true"></i>
+  </button>
+</div>
+```
+
+**E6. Stepper links.** The deposit flow `c-stepper__item` elements are links (`<a href>`) pointing to named sections on the same page. They navigate — `<a>` is correct. `aria-current="step"` on the active one.
+
+---
+
+### F. Tables
+
+**F1. `<th scope="col">` on every column header.** Never `<td>` for a header cell.
+
+**F2. Table has an accessible name.** Use `aria-label` on `<table>`. A `<caption>` is the semantic alternative but renders visually and requires hiding — `aria-label` is cleaner here.
+
+**F3. Sortable columns announce sort state** using `aria-sort` on the `<th>`. Valid values: `ascending`, `descending`, `none`. The button inside the `<th>` handles the click — `aria-sort` lives on the `<th>`, not the button.
+
+```html
+<!-- ✓ Correct -->
+<th scope="col" aria-sort="descending">
+  <button type="button" class="btn btn-ghost btn-sm p-0"
+    aria-label="Sort by year, currently descending">
+    Year <i class="if if-caret-down if-xs" aria-hidden="true"></i>
+  </button>
+</th>
+```
+
+**F4. Select-all checkbox communicates indeterminate state to AT.**
+
+```javascript
+// ✓ Correct — update both the property and the label
+selectAll.indeterminate = true;
+selectAll.setAttribute('aria-label', 'Some records selected — click to select all');
+```
+
+**F5. Bulk action bar uses `hidden` attribute**, not CSS `display:none` or `visibility:hidden`. `hidden` is what AT uses to determine whether content is available. Toggle it with `element.hidden = true/false`.
+
+```html
+<!-- ✓ Correct — hidden attribute; role=toolbar because arrow-key nav is appropriate for bulk actions -->
+<div class="bc-toolbar" id="bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
+```
+
+---
+
+### G. Colour and contrast
+
+**G1. Contrast ratios (WCAG 2.1 AA).**
+- Normal text (< 18px regular, < 14px bold): **4.5:1**
+- Large text (≥ 18px regular, ≥ 14px bold): **3:1**
+- UI component boundaries (input borders, button outlines, focus rings): **3:1** against adjacent colour
+
+**G2. Focus ring must be visible against both the element and the page background.** `--bt-focus-ring` must meet 3:1 in both contexts. Verify when adding new surface colours.
+
+**G3. Never convey information by colour alone.** Status badges (`Published`, `Draft`, `Locked`) use colour + text label — correct. `badge-oa` and `badge-restricted` use colour + text — correct. A purely colour-coded dot or border with no text equivalent fails WCAG 1.4.1.
+
+**G4. `text-muted` (`--bt-gray-500`) on white is borderline.** Only use it for supplementary, non-critical content: publication year, secondary author lines, helper text. Never for primary information the user needs to complete a task.
+
+**G5. WCAG 2.2 — focus appearance (AA, new in 2.2).** The focus indicator must have a minimum area and contrast. The current `outline: 3px solid var(--bt-focus-ring)` satisfies this for most elements — do not reduce outline width or offset below these values.
+
+---
+
+### H. Public surface specifics
+
+The public site is read by researchers, students, and automated agents (crawlers, citation managers, accessibility overlays). Semantic correctness here is both an accessibility and an interoperability concern.
+
+**H1. Research output cards are `<article>` elements.** Give each an accessible name via `aria-labelledby` pointing to its `card-title` heading. When dynamic IDs are impractical, `aria-label` with the title string is acceptable.
+
+```html
+<!-- ✓ Preferred -->
+<article aria-labelledby="card-title-01k9">
+  <h2 id="card-title-01k9" class="card-title"><a href="…">Urban forests…</a></h2>
+</article>
+```
+
+**H2. Detail page sections use `<section aria-labelledby="…">`.** The heading `id` must exactly match the `aria-labelledby` value. This lets screen reader users navigate by region.
+
+**H3. Breadcrumb: `<nav aria-label="Breadcrumb">` + `<ol>` + `aria-current="page"` on the last item.** `<ol>` because position in the hierarchy is meaningful.
+
+**H4. Structured data (`<script type="application/ld+json">`) on every public record page.** This is how reference managers and accessibility overlays read metadata when the HTML rendering is not available. Minimum: `@type`, `headline`, `author[]`, `datePublished`, `identifier` (DOI), `license` (when OA).
+
+**H5. Tab panel pattern for citation formats.** The cite modal uses Bootstrap tabs. Each `<button role="tab">` must have `aria-controls` pointing to its panel, and each panel must have `role="tabpanel"` and `aria-labelledby` pointing back to its tab. Bootstrap handles this — do not strip the data attributes.
+
+---
+
+### I. Backoffice surface specifics
+
+Staff use this all day. Every extra announcement or unnecessary focus jump costs time at scale. Correctness and efficiency are equally important.
+
+**I1. `bc-toolbar` is not a landmark and does not need `role`.** It is a styled div, not a navigation or toolbar in the ARIA sense. Only add `role="toolbar"` when all children are navigable with Arrow keys — the regular page toolbar is not, so it gets no role. The bulk action bar gets `role="toolbar"` because it is a grouped set of actions on the current selection.
+
+**I2. Filter tags: label describes the action and the value.**
+
+```html
+<!-- ✓ Correct -->
+<button type="button" class="filter-tag"
+  aria-label="Remove filter: Type is Journal article">
+  Type: Journal article <i class="if if-close" aria-hidden="true"></i>
+</button>
+```
+
+**I3. Facet checkboxes include the count in their `aria-label`.** The visible count has `aria-hidden="true"`. The label carries both name and count so screen reader users get the same information as sighted users.
+
+```html
+<!-- ✓ Correct -->
 <input type="checkbox" id="f-journal"
+  class="form-check-input" checked
   aria-label="Journal article (1,234 records)">
 <label for="f-journal">Journal article</label>
 <div class="c-facet-count" aria-hidden="true">1,234</div>
 ```
 
-**4. Dynamic content — HTMX swaps**
+**I4. Deposit flow: `aria-current="step"` on the active stepper item.** Not `aria-current="page"` — the URL does not change between steps.
 
-After an HTMX swap, screen readers may not announce the change. I produce the HTML correctly but cannot test the runtime behaviour. Always verify:
-- `aria-live` regions receive the updated content (not just a parent container)
-- Form validation errors after a failed HTMX POST move focus to the error or error summary
-- Loading indicators use `aria-live="polite"` and the class `.htmx-indicator`
+---
 
-**5. I have never run a screen reader on this code**
+### J. Motion
 
-Everything above is written-correctly-in-HTML. None of it has been tested with VoiceOver or NVDA in a real browser. Testing with a screen reader is a human responsibility. Flagging this is an AI responsibility.
+**J1. All transitions and animations use token durations** (`--bt-dur-fast`, `--bt-dur-base`). The reduced-motion rule in `_accessibility.scss` sets all durations to `.01ms` for users who have `prefers-reduced-motion: reduce` enabled. Custom `transition` or `animation` values set outside these tokens bypass this.
+
+**J2. SVG ink animations** in `_svg-animations.scss` are suppressed correctly by the global reduced-motion rule — no extra work needed there. Do not add `@keyframes` that are not caught by the universal selector override.
+
+---
+
+### Pre-flight checklist — run before finalising any template
+
+```
+□ <html lang="en"> present
+□ Exactly one <h1>, logical heading hierarchy, no skipped levels
+□ <main id="main-content"> present
+□ Skip link is first focusable element in layout wrapper
+□ Every <nav> has a distinct aria-label
+□ Every icon-only button: aria-label on button, aria-hidden on icon
+□ Every row action label includes the record name
+□ No aria-label that duplicates or overrides visible button text
+□ aria-current="page" (or "step") on all active nav links
+□ Every <input>/<select>/<textarea> has a <label for>
+□ No placeholder used as the sole label
+□ Required fields have required attribute + visible marker + aria-label="required"
+□ Grouped radio/checkbox controls wrapped in <fieldset> + <legend>
+□ Personal data fields have autocomplete attributes
+□ Every hx-get/hx-post has hx-indicator with aria-live="polite"
+□ All aria-live regions exist in DOM at page load (not injected by HTMX)
+□ role="status" for confirmations, role="alert" for errors only
+□ bulk-bar uses hidden attribute (not CSS display:none)
+□ Table: aria-label on <table>, scope="col" on all <th>
+□ Sortable columns: aria-sort on <th>
+□ No information conveyed by colour alone
+□ text-muted used only for supplementary, non-critical content
+```
 
 ---
 

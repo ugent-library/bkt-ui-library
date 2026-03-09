@@ -343,6 +343,11 @@ body {
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -513,13 +518,9 @@ code, kbd, pre, samp {
   outline: none;
 }
 
-/* Skip link — held for review.
- * top: -999px has known issues at high zoom and in RTL layouts.
- * Modern approach uses translate(-100%) instead. Revisit before shipping.
- */
 .skip-link {
   position: absolute;
-  top: -999px;
+  transform: translateY(-100%);
   left: 0;
   background: var(--bt-blue-900);
   color: white;
@@ -532,7 +533,7 @@ code, kbd, pre, samp {
 }
 
 .skip-link:focus {
-  top: 0;
+  transform: translateY(0);
   outline: none;
 }
 

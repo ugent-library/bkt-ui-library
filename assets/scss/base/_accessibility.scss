@@ -11,13 +11,9 @@
   outline: none;
 }
 
-/* Skip link — held for review.
- * top: -999px has known issues at high zoom and in RTL layouts.
- * Modern approach uses translate(-100%) instead. Revisit before shipping.
- */
 .skip-link {
   position: absolute;
-  top: -999px;
+  transform: translateY(-100%);
   left: 0;
   background: var(--bt-blue-900);
   color: white;
@@ -29,7 +25,7 @@
   text-decoration: none;
 }
 .skip-link:focus {
-  top: 0;
+  transform: translateY(0);
   outline: none;
 }
 
