@@ -301,10 +301,11 @@ const server = http.createServer((req, res) => {
   const isFullDocument = /<\s*html\b/i.test(html);
   const parsedTemplate = isFullDocument ? null : renderBodyTemplate(html, filePath);
 
-  // ?view=html — show source
+  // ?view=html — show source with includes resolved
   if (params.view === 'html') {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-    res.end(sourceView(filePath, html));
+    const resolvedHtml = parsedTemplate ? parsedTemplate.html : html;
+    res.end(sourceView(filePath, resolvedHtml));
     return;
   }
 
