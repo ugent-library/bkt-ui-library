@@ -1,0 +1,75 @@
+<!-- @title: File Drop — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-1">File Drop</h1>
+    <p class="lead">Accessible drag-and-drop file upload zones. The entire area is a clickable label that activates a hidden file input. Drag-over states are managed via JavaScript by toggling the <code>drag-over</code> class.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Basic file drop zone</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Default — idle state</div>
+      <div class="ds-demo-body">
+        <label class="c-file-drop d-block" for="file-upload-demo">
+          <i class="if if-upload c-file-drop__icon" aria-hidden="true"></i>
+          <p class="c-file-drop__text">Drag a file here, or <strong>browse</strong></p>
+          <p class="c-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
+          <input type="file" id="file-upload-demo" class="visually-hidden" accept=".pdf,.docx,.epub,.xml">
+        </label>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Drag-over state — <code>.drag-over</code> class applied</div>
+      <div class="ds-demo-body">
+        <label class="c-file-drop d-block drag-over" for="file-upload-demo-2">
+          <i class="if if-upload c-file-drop__icon" aria-hidden="true"></i>
+          <p class="c-file-drop__text">Drop to upload</p>
+          <p class="c-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
+          <input type="file" id="file-upload-demo-2" class="visually-hidden" accept=".pdf,.docx,.epub,.xml">
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">JavaScript integration</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Drag and drop handlers</div>
+      <div class="ds-demo-body">
+        <div class="ds-code">
+          <div class="ds-code-bar"><span class="ds-code-lang">javascript</span><button class="ds-code-copy">Copy</button></div>
+<pre>// Add drag-over class on dragenter/dragover
+ondragover="event.preventDefault(); this.classList.add('drag-over')"
+
+// Remove drag-over class on dragleave/dragend
+ondragleave="this.classList.remove('drag-over')"
+
+// Handle drop and remove drag-over class
+ondrop="event.preventDefault(); this.classList.remove('drag-over'); handleFiles(event.dataTransfer.files)"</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>The entire drop zone is a <code>&lt;label&gt;</code> that activates the hidden file input</li>
+          <li>Screen readers can navigate to and activate the file input directly</li>
+          <li>Include <code>accept</code> attribute to filter file types for better UX</li>
+          <li>Drag and drop is an enhancement — keyboard file selection always works</li>
+          <li>Provide clear instructions about accepted file types and size limits</li>
+          <li>Handle upload errors gracefully with appropriate feedback</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div></content>
+<parameter name="filePath">/Users/mietclaes/Sites/booktower-ui-library/elements/file-drop.html

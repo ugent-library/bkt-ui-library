@@ -252,7 +252,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 <div class="view-toggle" role="group" aria-label="Switch view">
   <button type="button" class="view-toggle-btn is-active"
     aria-pressed="true" aria-label="Card view">
-    <i class="if if-list-bullets" aria-hidden="true"></i>
+    <i class="if if-list" aria-hidden="true"></i>
   </button>
   <button type="button" class="view-toggle-btn"
     aria-pressed="false" aria-label="Table view">
@@ -455,11 +455,10 @@ Note: `bc-navbar__brand` is used (backoffice logo link). `bc-navbar__mark` does 
 **Toolbar & button groups**
 ```
 bc-toolbar              bc-toolbar--bordered
-bc-toolbar__left        bc-toolbar__right       bc-toolbar__item
-bc-toolbar__title
-c-button-toolbar        c-button-toolbar--wide-spacing  c-button-toolbar--vertical
+bc-toolbar__left        bc-toolbar__right       bc-toolbar__middle
+bc-toolbar__item        bc-toolbar__title
 ```
-`bc-toolbar__item` is a flex child that takes `flex:1` — use it (with `w-100` if needed) instead of reaching for utility class hacks on `__left`.
+`bc-toolbar__item` elements are siblings within `bc-toolbar__left`/`bc-toolbar__right`/`bc-toolbar__middle` and get automatic padding between them.
 
 **Avatar**
 ```

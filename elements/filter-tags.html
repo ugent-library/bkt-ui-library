@@ -1,0 +1,88 @@
+<!-- @title: Filter Tags — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-1">Filter Tags</h1>
+    <p class="lead">Removable filter indicators. Show active search filters and allow users to remove them. Used in search interfaces to display current filter state.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Basic filter tag</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Single filter tag</div>
+      <div class="ds-demo-body">
+        <button type="button" class="filter-tag">
+          Type: Journal article
+          <i class="if if-close" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Multiple filter tags</div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <button type="button" class="filter-tag">
+            <i class="if if-lock-unlock if-xs" aria-hidden="true"></i>
+            Open access research
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="filter-tag">
+            Year: 2024
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="filter-tag">
+            Type: Journal article
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">With icons</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Filter tags with leading icons</div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <button type="button" class="filter-tag">
+            <i class="if if-lock-unlock if-xs" aria-hidden="true"></i>
+            Open access research
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="filter-tag">
+            <i class="if if-calendar if-xs" aria-hidden="true"></i>
+            Year: 2024
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="filter-tag">
+            <i class="if if-file if-xs" aria-hidden="true"></i>
+            Type: Dataset
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Each filter tag is a <code>&lt;button&gt;</code> for keyboard accessibility</li>
+          <li>Include the filter name and value in the button text</li>
+          <li>The close icon is decorative (<code>aria-hidden="true"</code>)</li>
+          <li>Consider adding <code>aria-label</code> for complex filters: <code>aria-label="Remove filter: Type is Journal article"</code></li>
+          <li>Screen readers announce the full button text when focused</li>
+          <li>Filter removal is confirmed immediately — no confirmation dialogs needed</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div></content>
+<parameter name="filePath">/Users/mietclaes/Sites/booktower-ui-library/elements/filter-tags.html

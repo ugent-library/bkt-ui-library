@@ -1,0 +1,88 @@
+<!-- @title: Radio Cards — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-1">Radio Cards</h1>
+    <p class="lead">Large, touch-friendly radio button alternatives. Used for publication type selection in deposit flows. The hidden radio input drives state; the visible card responds via CSS adjacent sibling selectors.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Basic radio card</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Single card — unselected</div>
+      <div class="ds-demo-body">
+        <label class="c-radio-card">
+          <input type="radio" name="demo-type" value="journal-article">
+          <span class="c-radio-card__body">Journal article</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Single card — selected</div>
+      <div class="ds-demo-body">
+        <label class="c-radio-card">
+          <input type="radio" name="demo-type" value="journal-article" checked>
+          <span class="c-radio-card__body">Journal article</span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Radio card group</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Publication type selection</div>
+      <div class="ds-demo-body">
+        <fieldset>
+          <legend class="visually-hidden">Select publication type</legend>
+          <div class="c-radio-card__group">
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="journal-article" checked>
+              <span class="c-radio-card__body">Journal article</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="book">
+              <span class="c-radio-card__body">Book</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="book-chapter">
+              <span class="c-radio-card__body">Book chapter</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="dataset">
+              <span class="c-radio-card__body">Dataset</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="software">
+              <span class="c-radio-card__body">Software</span>
+            </label>
+            <label class="c-radio-card">
+              <input type="radio" name="pub-type-demo" value="thesis">
+              <span class="c-radio-card__body">Thesis</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Always wrap radio card groups in <code>&lt;fieldset&gt;</code> with <code>&lt;legend&gt;</code></li>
+          <li>The legend can be visually hidden with <code>visually-hidden</code> if the context is clear</li>
+          <li>Radio inputs remain focusable and keyboard navigable</li>
+          <li>Screen readers announce the selected state and group context</li>
+          <li>Touch targets are large (minimum 44px) for mobile accessibility</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div></content>
+<parameter name="filePath">/Users/mietclaes/Sites/booktower-ui-library/elements/radio-cards.html

@@ -1,0 +1,144 @@
+<!-- @title: Toolbar — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-1">Toolbar</h1>
+    <p class="lead">Flexible layout containers for action bars, search bars, and pagination. Use <code>bc-toolbar__left</code>, <code>bc-toolbar__right</code>, and <code>bc-toolbar__item</code> for consistent spacing and alignment.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Basic toolbar</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Page header toolbar</div>
+      <div class="ds-demo-body">
+        <div class="bc-toolbar">
+          <div class="bc-toolbar__left">
+            <h1 class="bc-toolbar__title">Research output</h1>
+          </div>
+          <div class="bc-toolbar__right">
+            <button type="button" class="btn btn-primary">Add publication</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Search toolbar</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Search and filter bar</div>
+      <div class="ds-demo-body">
+        <div class="bc-toolbar" role="search" aria-label="Search and filter research output">
+          <div class="bc-toolbar__left">
+            <div class="bc-toolbar__item">
+              <div class="input-group input-group-lg mb-4">
+                <span class="input-group-text">
+                  <i class="if if-search" aria-hidden="true"></i>
+                </span>
+                <input type="search" class="form-control" placeholder="Search by title, author, DOI…">
+                <button class="btn btn-primary" type="button">Search</button>
+              </div>
+              <div class="d-flex align-items-center gap-2 flex-wrap">
+                <button type="button" class="filter-tag">
+                  Type: Journal article
+                  <i class="if if-close" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="filter-tag">
+                  Year: 2024
+                  <i class="if if-close" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="bc-toolbar__right">
+            <div class="bc-toolbar__item">
+              <div class="view-toggle" role="group" aria-label="Switch view">
+                <button type="button" class="view-toggle-btn is-active" aria-pressed="true" aria-label="Card view">
+                  <i class="if if-list-unordered" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="view-toggle-btn" aria-pressed="false" aria-label="Table view">
+                  <i class="if if-table" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Bordered toolbar</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Results toolbar with border — <code>bc-toolbar--bordered</code></div>
+      <div class="ds-demo-body">
+        <div class="bc-toolbar bc-toolbar--bordered">
+          <div class="bc-toolbar__left">
+            <div class="bc-toolbar__item">
+              <span>179 results</span>
+            </div>
+          </div>
+          <div class="bc-toolbar__right">
+            <div class="bc-toolbar__item">
+              <select class="form-select form-select-sm w-auto">
+                <option>Sort by relevance</option>
+                <option>Sort by date</option>
+                <option>Sort by title</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Toolbar with middle section</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Navigation toolbar with middle content</div>
+      <div class="ds-demo-body">
+        <div class="bc-toolbar">
+          <div class="bc-toolbar__left">
+            <a href="/" class="navbar-brand">Biblio UGent</a>
+          </div>
+          <nav aria-label="Site navigation" class="bc-toolbar__middle">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a href="/research" class="nav-link" aria-current="page">Research</a></li>
+              <li class="nav-item"><a href="/authors" class="nav-link">Authors</a></li>
+              <li class="nav-item"><a href="/departments" class="nav-link">Departments</a></li>
+            </ul>
+          </nav>
+          <div class="bc-toolbar__right">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-search" aria-hidden="true"></i>
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Add <code>role="search"</code> to search toolbars with <code>aria-label="Search and filter research output"</code></li>
+          <li>Use semantic headings (<code>&lt;h1&gt;</code>) in <code>bc-toolbar__title</code> when appropriate</li>
+          <li><code>bc-toolbar__item</code> elements are flex items within <code>bc-toolbar__left</code>/<code>bc-toolbar__right</code>/<code>bc-toolbar__middle</code> containers</li>
+          <li>Navigation toolbars should use <code>&lt;nav&gt;</code> in the middle section</li>
+          <li>Screen readers navigate toolbar content as part of the page flow</li>
+          <li>Interactive elements within toolbars remain fully keyboard accessible</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div></content>
+<parameter name="filePath">/Users/mietclaes/Sites/booktower-ui-library/elements/toolbar.html
