@@ -261,6 +261,23 @@ const server = http.createServer((req, res) => {
   const [urlPath, queryString = ''] = req.url.split('?');
   const params = Object.fromEntries(new URLSearchParams(queryString));
 
+  // Demo delay — HTMX partial requests to /elements/partials/ get a 1.5 s artificial delay
+  // so the spinner is visible in the design system demos.
+  if (req.headers['hx-request'] && urlPath.startsWith('/elements/partials/')) {
+    const partialPath = path.join(ROOT, urlPath);
+    if (!fs.existsSync(partialPath)) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end(`404 — Not found: ${urlPath}`);
+      return;
+    }
+    setTimeout(() => {
+      const content = fs.readFileSync(partialPath, 'utf8');
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(content);
+    }, 1000);
+    return;
+  }
+
   // Nav JSON — consumed by shell search
   if (urlPath === '/__nav') {
     res.writeHead(200, { 'Content-Type': 'application/json' });

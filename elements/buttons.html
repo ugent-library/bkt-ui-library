@@ -200,6 +200,95 @@
   </section>
 
 
+  <!-- ── Loading state ──────────────────────────────────────────────────────── -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Loading state</h2>
+    <p class="text-muted mb-4">After a click, the button replaces its label with a spinner and becomes <code>aria-disabled</code>. The spinner is Bootstrap's <code>spinner-border-sm</code> — no custom classes. In HTMX, the spinner lives inside <code>.htmx-indicator</code> and is shown automatically during the request; the static demo below shows what each state looks like.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Three states — idle · loading · done</h3>
+      <div class="ds-demo-body d-flex flex-wrap gap-3 align-items-center">
+
+        <!-- Idle -->
+        <div class="d-flex flex-column align-items-center gap-2">
+          <span class="form-text text-uppercase mb-0">Idle</span>
+          <button type="button" class="btn btn-primary">
+            <i class="if if-download" aria-hidden="true"></i>
+            Download PDF
+          </button>
+        </div>
+
+        <!-- Loading -->
+        <div class="d-flex flex-column align-items-center gap-2">
+          <span class="form-text text-uppercase mb-0">Loading</span>
+          <button type="button" class="btn btn-primary" aria-disabled="true" aria-label="Downloading, please wait">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Downloading…
+          </button>
+        </div>
+
+        <!-- Done -->
+        <div class="d-flex flex-column align-items-center gap-2">
+          <span class="form-text text-uppercase mb-0">Done</span>
+          <button type="button" class="btn btn-primary" disabled>
+            <i class="if if-check" aria-hidden="true"></i>
+            Downloaded
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Secondary and ghost — same pattern scales across variants</h3>
+      <div class="ds-demo-body d-flex flex-wrap gap-3 align-items-center">
+
+        <button type="button" class="btn btn-secondary" aria-disabled="true" aria-label="Saving, please wait">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Saving…
+        </button>
+
+        <button type="button" class="btn btn-ghost" aria-disabled="true" aria-label="Loading, please wait">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading…
+        </button>
+
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Live — click to trigger a real HTMX request with spinner</h3>
+      <div class="ds-demo-body d-flex flex-column gap-3">
+
+        <p class="text-muted mb-0">The button below fires a real <code>hx-get</code> against the dev server. The server adds a 1 s delay so the spinner is visible. After the done state appears it resets automatically after 2.5 s.</p>
+
+        <div>
+          <button type="button"
+            class="btn btn-primary"
+            hx-get="/elements/partials/button-done.html"
+            hx-swap="outerHTML"
+            hx-trigger="click">
+            <span class="htmx-indicator">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Downloading…
+            </span>
+            <i class="if if-download" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </button>
+        </div>
+
+        <div class="alert alert-secondary mb-0 d-flex gap-2 align-items-start">
+          <i class="if if-info-circle" aria-hidden="true"></i>
+          <div>
+            The server strips the shell on any request carrying the <code>HX-Request</code> header that HTMX sends automatically. The partial at <code>/elements/partials/button-done.html</code> is a plain HTML file — just the button markup, nothing else.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
   <!-- ── Usage rules ───────────────────────────────────────────────────────── -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Usage rules</h2>

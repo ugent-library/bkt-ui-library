@@ -111,6 +111,21 @@
   color: var(--bt-dark-red);
 }
 
+/* ── Loading state ─────────────────────────────────────────────────────────── */
+/*
+  During an HTMX request, .htmx-request is added to the triggering button.
+  Show the .htmx-indicator (spinner + loading text), hide the idle icon and label.
+  The idle label is wrapped in a plain <span> so CSS can target it.
+*/
+.btn.htmx-request > i,
+.btn.htmx-request > span:not(.htmx-indicator) {
+  display: none;
+}
+
+.btn .htmx-indicator {
+  gap: var(--bt-sp-2);   /* space between spinner and loading text */
+}
+
 /* ── Button group ───────────────────────────────────────────────────────────── */
 /*
   Bootstrap .btn-group handles radius clipping and border collapse.
