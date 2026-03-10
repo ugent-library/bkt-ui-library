@@ -827,18 +827,18 @@ code, kbd, pre, samp {
   border: 1px solid var(--bt-orange-200);
 }
 
-/* ── c-hero ─────────────────────────────────────────────────────────────────── */
+/* ── bt-hero ─────────────────────────────────────────────────────────────────── */
 /*
   Full-bleed hero section with an absolute SVG background layer.
   Used on public-index and research-detail.
 
   Structure:
-    <section class="c-hero">
-      <div class="c-hero__bg"><!-- SVG --></div>
-      <div class="c-hero__content container"><!-- page content --></div>
+    <section class="bt-hero">
+      <div class="bt-hero__bg"><!-- SVG --></div>
+      <div class="bt-hero__content container"><!-- page content --></div>
     </section>
 */
-.c-hero {
+.bt-hero {
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -847,26 +847,26 @@ code, kbd, pre, samp {
   padding: 10vh 0;
 }
 
-.c-hero__bg {
+.bt-hero__bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 }
 
-.c-hero__bg svg {
+.bt-hero__bg svg {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-.c-hero__content {
+.bt-hero__content {
   position: relative;
   z-index: 1;
 }
 
-/* ── bc-navbar ──────────────────────────────────────────────────────────────── */
-.bc-navbar {
+/* ── bt-navbar ──────────────────────────────────────────────────────────────── */
+.bt-navbar {
   height: var(--s-topbar-height, 52px);
   background: var(--bt-white);
   border-bottom: var(--bt-border);
@@ -879,7 +879,7 @@ code, kbd, pre, samp {
   z-index: 50;
 }
 
-.bc-navbar__sep {
+.bt-navbar__sep {
   width: 1px;
   height: var(--bt-sp-5);
   background: var(--bt-border-color);
@@ -887,14 +887,24 @@ code, kbd, pre, samp {
   display: block;
 }
 
-.bc-navbar__nav {
+.bt-navbar__nav {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-1);
   flex: 1;
 }
 
-.bc-navbar__link {
+.bt-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  text-decoration: none;
+  color: var(--bt-gray-1000);
+  font-weight: 500;
+  font-size: var(--bt-text-sm);
+}
+
+.bt-navbar__link {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   text-decoration: none;
@@ -904,56 +914,56 @@ code, kbd, pre, samp {
   white-space: nowrap;
 }
 
-.bc-navbar__link:hover {
+.bt-navbar__link:hover {
   color: var(--bt-gray-1000);
   background: var(--bt-gray-50);
 }
 
-.bc-navbar__link.active,
-.bc-navbar__link[aria-current=page] {
+.bt-navbar__link.active,
+.bt-navbar__link[aria-current=page] {
   color: var(--bt-blue-900);
   background: var(--bt-blue-200);
   font-weight: 500;
 }
 
-.bc-navbar__link:focus-visible {
+.bt-navbar__link:focus-visible {
   outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
 
-/* ── c-blank-slate ─────────────────────────────────────────────────────────── */
+/* ── bt-blank-slate ─────────────────────────────────────────────────────────── */
 /* Used in toolbar-blank-slate.html and any empty-state screen */
-.c-blank-slate {
+.bt-blank-slate {
   text-align: center;
   padding: var(--bt-sp-8) var(--bt-sp-6);
   color: var(--bt-gray-700);
   font-size: var(--bt-text-sm);
 }
 
-.c-blank-slate p {
+.bt-blank-slate p {
   margin: var(--bt-sp-2) 0 0;
 }
 
-.c-blank-slate--default {
+.bt-blank-slate--default {
   background: var(--bt-bg);
   border: var(--bt-border);
   border-radius: var(--bt-radius-lg);
 }
 
-.c-blank-slate--muted {
+.bt-blank-slate--muted {
   background: var(--bt-bg-alt);
   border-radius: var(--bt-radius-lg);
 }
 
-.c-blank-slate--primary {
+.bt-blank-slate--primary {
   background: var(--bt-blue-100);
   border-radius: var(--bt-radius-lg);
   color: var(--bt-blue-900);
 }
 
-/* ── bc-avatar ──────────────────────────────────────────────────────────────── */
+/* ── bt-avatar ──────────────────────────────────────────────────────────────── */
 /* Used in backoffice-header.html as the account menu trigger */
-.bc-avatar {
+.bt-avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -971,13 +981,13 @@ code, kbd, pre, samp {
   cursor: pointer;
 }
 
-.bc-avatar--small {
+.bt-avatar--small {
   width: 28px;
   height: 28px;
   font-size: var(--bt-text-xs);
 }
 
-.bc-avatar--large {
+.bt-avatar--large {
   width: 48px;
   height: 48px;
   font-size: 1rem;
@@ -1100,8 +1110,8 @@ code, kbd, pre, samp {
   font-size: var(--bt-text-xs);
 }
 
-/* ── bc-toolbar ─────────────────────────────────────────────────────────────── */
-.bc-toolbar {
+/* ── bt-toolbar ─────────────────────────────────────────────────────────────── */
+.bt-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1111,11 +1121,11 @@ code, kbd, pre, samp {
   width: 100%;
 }
 
-.bc-toolbar.h-auto {
+.bt-toolbar.h-auto {
   align-items: flex-start;
 }
 
-.bc-toolbar__left {
+.bt-toolbar__left {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-3);
@@ -1123,15 +1133,15 @@ code, kbd, pre, samp {
   min-width: 0;
 }
 
-.bc-toolbar__left .bc-toolbar__item {
+.bt-toolbar__left .bt-toolbar__item {
   flex: 0 0 auto;
 }
 
-.bc-toolbar__item {
+.bt-toolbar__item {
   min-width: 0;
 }
 
-.bc-toolbar__right {
+.bt-toolbar__right {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
@@ -1139,13 +1149,13 @@ code, kbd, pre, samp {
   margin-left: auto;
 }
 
-.bc-toolbar__middle {
+.bt-toolbar__middle {
   flex: 1;
   display: flex;
   justify-content: center;
 }
 
-.bc-toolbar__title {
+.bt-toolbar__title {
   font-family: var(--s-heading-font, var(--bt-font-serif));
   font-size: var(--bt-text-lg);
   font-weight: var(--s-heading-weight, 300);
@@ -1156,30 +1166,30 @@ code, kbd, pre, samp {
   text-overflow: ellipsis;
 }
 
-[data-surface=backoffice] .bc-toolbar__title,
-.s-backoffice .bc-toolbar__title {
+[data-surface=backoffice] .bt-toolbar__title,
+.s-backoffice .bt-toolbar__title {
   font-family: var(--bt-font-sans);
   font-size: var(--bt-text-md);
   font-weight: 500;
 }
 
-.c-button-toolbar {
+.bt-button-toolbar {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
 }
 
-.c-button-toolbar--wide-spacing {
+.bt-button-toolbar--wide-spacing {
   gap: var(--bt-sp-4);
 }
 
-.c-button-toolbar--vertical {
+.bt-button-toolbar--vertical {
   flex-direction: column;
   align-items: flex-end;
 }
 
-/* ── bc-toolbar modifier ────────────────────────────────────────────────────── */
-.bc-toolbar--bordered {
+/* ── bt-toolbar modifier ────────────────────────────────────────────────────── */
+.bt-toolbar--bordered {
   border-bottom: var(--bt-border);
 }
 
@@ -1225,16 +1235,16 @@ code, kbd, pre, samp {
   color: var(--bt-gray-700);
 }
 
-/* ── c-facets ───────────────────────────────────────────────────────────────── */
+/* ── bt-facets ───────────────────────────────────────────────────────────────── */
 /* Used in public-search.html and deposit-flow.html */
-.c-facets {
+.bt-facets {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 0.2rem 0.5rem;
 }
 
-.c-facet-title {
+.bt-facet-title {
   grid-column: 1/-1;
   font-size: var(--bt-text-xs);
   font-weight: 500;
@@ -1243,11 +1253,11 @@ code, kbd, pre, samp {
   padding: 0.625rem 0 0.2rem;
 }
 
-.c-facet-title:first-child {
+.bt-facet-title:first-child {
   padding-top: 0;
 }
 
-.c-facet-name label {
+.bt-facet-name label {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   cursor: pointer;
@@ -1255,7 +1265,7 @@ code, kbd, pre, samp {
   line-height: 1.4;
 }
 
-.c-facet-count {
+.bt-facet-count {
   font-size: var(--bt-text-xs);
   color: var(--bt-gray-300);
   font-family: var(--bt-font-mono);
@@ -1263,19 +1273,19 @@ code, kbd, pre, samp {
   white-space: nowrap;
 }
 
-.c-facet-separator {
+.bt-facet-separator {
   grid-column: 1/-1;
   height: 1px;
   background: var(--bt-gray-50);
   margin: 0.3rem 0;
 }
 
-/* ── c-sub-sidebar ──────────────────────────────────────────────────────────── */
-.c-sub-sidebar {
+/* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
+.bt-sub-sidebar {
   padding-right: 1rem;
 }
 
-.c-sub-sidebar--bordered {
+.bt-sub-sidebar--bordered {
   border-right: var(--bt-border);
 }
 
@@ -1301,15 +1311,15 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
 }
 
-/* ── c-stepper ──────────────────────────────────────────────────────────────── */
+/* ── bt-stepper ──────────────────────────────────────────────────────────────── */
 /* Used in u-layout--deposit (deposit-flow.html) */
-.c-stepper {
+.bt-stepper {
   display: flex;
   flex-direction: column;
   gap: 0;
 }
 
-.c-stepper__item {
+.bt-stepper__item {
   display: flex;
   align-items: flex-start;
   gap: 0.625rem;
@@ -1322,23 +1332,23 @@ code, kbd, pre, samp {
   transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
 }
 
-.c-stepper__item:hover {
+.bt-stepper__item:hover {
   background: var(--bt-bg-alt);
   color: var(--bt-gray-1000);
 }
 
-.c-stepper__item[aria-current=step] {
+.bt-stepper__item[aria-current=step] {
   background: var(--bt-white);
   color: var(--bt-blue-900);
   font-weight: 500;
   box-shadow: var(--bt-shadow-xs);
 }
 
-.c-stepper__item--done {
+.bt-stepper__item--done {
   color: var(--bt-green);
 }
 
-.c-stepper__num {
+.bt-stepper__num {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -1352,51 +1362,51 @@ code, kbd, pre, samp {
   margin-top: 0.05rem;
 }
 
-.c-stepper__item--done .c-stepper__num {
+.bt-stepper__item--done .bt-stepper__num {
   background: var(--bt-green);
   border-color: var(--bt-green);
   color: white;
 }
 
-.c-stepper__item[aria-current=step] .c-stepper__num {
+.bt-stepper__item[aria-current=step] .bt-stepper__num {
   background: var(--bt-blue-900);
   border-color: var(--bt-blue-900);
   color: white;
 }
 
-.c-stepper__label {
+.bt-stepper__label {
   flex: 1;
 }
 
-.c-stepper__required {
+.bt-stepper__required {
   color: var(--bt-danger);
   font-size: var(--bt-text-xs);
   font-weight: 400;
   display: block;
 }
 
-/* ── c-radio-card ───────────────────────────────────────────────────────────── */
+/* ── bt-radio-card ───────────────────────────────────────────────────────────── */
 /* Used in deposit-flow.html publication type picker */
-.c-radio-card__group {
+.bt-radio-card__group {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--bt-sp-2);
 }
 
-.c-radio-card {
+.bt-radio-card {
   position: relative;
   cursor: pointer;
   display: block;
 }
 
-.c-radio-card input[type=radio] {
+.bt-radio-card input[type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.c-radio-card__body {
+.bt-radio-card__body {
   border: 1.5px solid var(--bt-gray-150);
   border-radius: var(--bt-radius-md);
   padding: 0.75rem 0.875rem;
@@ -1409,24 +1419,24 @@ code, kbd, pre, samp {
   user-select: none;
 }
 
-.c-radio-card:hover .c-radio-card__body {
+.bt-radio-card:hover .bt-radio-card__body {
   border-color: var(--bt-blue-700);
 }
 
-.c-radio-card input:checked + .c-radio-card__body {
+.bt-radio-card input:checked + .bt-radio-card__body {
   border-color: var(--bt-blue-900);
   background: var(--bt-blue-100);
   color: var(--bt-blue-900);
 }
 
-.c-radio-card input:focus-visible + .c-radio-card__body {
+.bt-radio-card input:focus-visible + .bt-radio-card__body {
   outline: 3px solid var(--bt-focus-ring-sm);
   outline-offset: 2px;
 }
 
-/* ── c-file-drop ────────────────────────────────────────────────────────────── */
+/* ── bt-file-drop ────────────────────────────────────────────────────────────── */
 /* Used in deposit-flow.html file upload area */
-.c-file-drop {
+.bt-file-drop {
   border: 2px dashed var(--bt-gray-150);
   border-radius: var(--bt-radius-lg);
   padding: var(--bt-sp-8) var(--bt-sp-6);
@@ -1435,26 +1445,26 @@ code, kbd, pre, samp {
   transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
 }
 
-.c-file-drop:hover,
-.c-file-drop.drag-over {
+.bt-file-drop:hover,
+.bt-file-drop.drag-over {
   border-color: var(--bt-blue-700);
   background: var(--bt-blue-50);
 }
 
-.c-file-drop__icon {
+.bt-file-drop__icon {
   font-size: 1.75rem;
   color: var(--bt-gray-300);
   display: block;
   margin-bottom: var(--bt-sp-2);
 }
 
-.c-file-drop__text {
+.bt-file-drop__text {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   margin: 0;
 }
 
-.c-file-drop__hint {
+.bt-file-drop__hint {
   font-size: var(--bt-text-xs);
   color: var(--bt-gray-400);
   margin: var(--bt-sp-1) 0 0;
@@ -1532,7 +1542,7 @@ code, kbd, pre, samp {
    3. u-layout--public      topbar + constrained centred content
                             Used by: public research detail, public search
 
-   All three share .bc-navbar as their topbar component.
+   All three share .bt-navbar as their topbar component.
    Surface is set on the layout root: data-surface="backoffice" or "public".
    ═══════════════════════════════════════════════════════════════════════════════ */
 /* ── 1. u-layout--app ───────────────────────────────────────────────────────── */
@@ -1545,11 +1555,11 @@ code, kbd, pre, samp {
   overflow: hidden;
 }
 
-.u-layout--app > .bc-navbar {
+.u-layout--app > .bt-navbar {
   grid-area: navbar;
 }
 
-.u-layout--app > .c-sub-sidebar {
+.u-layout--app > .bt-sub-sidebar {
   grid-area: sidebar;
   position: sticky;
   top: var(--s-topbar-height);
@@ -1571,7 +1581,7 @@ code, kbd, pre, samp {
   grid-template-areas: "navbar  navbar  navbar" "sidebar main    panel";
 }
 
-/* .c-side-panel--inline — not yet implemented in any template. Add CSS here when needed. */
+/* .bt-side-panel--inline — not yet implemented in any template. Add CSS here when needed. */
 /* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
 .u-layout--deposit {
   display: grid;
@@ -1581,22 +1591,22 @@ code, kbd, pre, samp {
   min-height: 100vh;
 }
 
-.u-layout--deposit > .bc-navbar {
+.u-layout--deposit > .bt-navbar {
   grid-area: navbar;
 }
 
 /* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
 /*
-  Use bc-toolbar for filter/search bars and bulk action bars.
-  c-content-area, c-facets-col, c-results-col handle the facets+results split.
+  Use bt-toolbar for filter/search bars and bulk action bars.
+  bt-content-area, bt-facets-col, bt-results-col handle the facets+results split.
 */
-.c-content-area {
+.bt-content-area {
   display: flex;
   flex: 1;
   min-height: 0;
 }
 
-.c-facets-col {
+.bt-facets-col {
   width: 220px;
   flex-shrink: 0;
   border-right: var(--bt-border);
@@ -1604,7 +1614,7 @@ code, kbd, pre, samp {
   overflow-y: auto;
 }
 
-.c-results-col {
+.bt-results-col {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -1620,7 +1630,7 @@ code, kbd, pre, samp {
   --bs-table-hover-bg: var(--bt-gray-50);
 }
 
-.u-layout--deposit > .c-stepper {
+.u-layout--deposit > .bt-stepper {
   grid-area: stepper;
   position: sticky;
   top: var(--s-topbar-height);
@@ -1646,7 +1656,7 @@ code, kbd, pre, samp {
   min-height: 100vh;
 }
 
-.u-layout--public > .bc-navbar {
+.u-layout--public > .bt-navbar {
   flex-shrink: 0;
 }
 
@@ -1662,7 +1672,7 @@ code, kbd, pre, samp {
    ═══════════════════════════════════════════════════════════════════════════════
 
    These classes are applied directly to SVG elements (<path>, <circle>, etc.)
-   inside .c-hero__bg on the landing page and research detail page.
+   inside .bt-hero__bg on the landing page and research detail page.
 
    camelCase class names are intentional — SVG presentation classes only,
    never applied to HTML elements.
@@ -2643,20 +2653,20 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   Inside .btn, don't set a size — the button's font-size drives it naturally.
   Inside .btn-sm and .btn-lg, same rule applies.
 */
-.if-xs {
+.if--xs {
   font-size: var(--bt-text-xs);
 } /* 11px — tight metadata, table cells */
-.if-sm {
+.if--sm {
   font-size: var(--bt-text-sm);
 } /* 14px — inline with body text      */
 /* .if (no modifier) — inherits from parent, matches surrounding text            */
-.if-lg {
+.if--lg {
   font-size: var(--bt-text-lg);
 } /* 22px — section icons              */
-.if-xl {
+.if--xl {
   font-size: var(--bt-text-xl);
 } /* 28px — feature icons              */
-.if-2xl {
+.if--xxl {
   font-size: var(--bt-text-2xl);
 } /* 36px — hero / illustration icons  */
 /*

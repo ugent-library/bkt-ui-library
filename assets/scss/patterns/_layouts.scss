@@ -22,7 +22,7 @@
    3. u-layout--public      topbar + constrained centred content
                             Used by: public research detail, public search
 
-   All three share .bc-navbar as their topbar component.
+   All three share .bt-navbar as their topbar component.
    Surface is set on the layout root: data-surface="backoffice" or "public".
    ═══════════════════════════════════════════════════════════════════════════════ */
 
@@ -40,11 +40,11 @@
   overflow: hidden;
 }
 
-.u-layout--app > .bc-navbar {
+.u-layout--app > .bt-navbar {
   grid-area: navbar;
 }
 
-.u-layout--app > .c-sub-sidebar {
+.u-layout--app > .bt-sub-sidebar {
   grid-area: sidebar;
   position: sticky;
   top: var(--s-topbar-height);
@@ -68,7 +68,7 @@
     "sidebar main    panel";
 }
 
-/* .c-side-panel--inline — not yet implemented in any template. Add CSS here when needed. */
+/* .bt-side-panel--inline — not yet implemented in any template. Add CSS here when needed. */
 
 
 /* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
@@ -83,23 +83,23 @@
   min-height: 100vh;
 }
 
-.u-layout--deposit > .bc-navbar {
+.u-layout--deposit > .bt-navbar {
   grid-area: navbar;
 }
 
 /* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
 /*
-  Use bc-toolbar for filter/search bars and bulk action bars.
-  c-content-area, c-facets-col, c-results-col handle the facets+results split.
+  Use bt-toolbar for filter/search bars and bulk action bars.
+  bt-content-area, bt-facets-col, bt-results-col handle the facets+results split.
 */
 
-.c-content-area {
+.bt-content-area {
   display: flex;
   flex: 1;
   min-height: 0;
 }
 
-.c-facets-col {
+.bt-facets-col {
   width: 220px;
   flex-shrink: 0;
   border-right: var(--bt-border);
@@ -107,7 +107,7 @@
   overflow-y: auto;
 }
 
-.c-results-col {
+.bt-results-col {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -125,7 +125,7 @@
 }
 
 
-.u-layout--deposit > .c-stepper {
+.u-layout--deposit > .bt-stepper {
   grid-area: stepper;
   position: sticky;
   top: var(--s-topbar-height);
@@ -153,7 +153,7 @@
   min-height: 100vh;
 }
 
-.u-layout--public > .bc-navbar {
+.u-layout--public > .bt-navbar {
   flex-shrink: 0;
 }
 

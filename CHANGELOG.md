@@ -61,12 +61,12 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-navbar` | `bc-navbar` | ⏳ Planned | Exists in OLD, not yet written in v2 SCSS. Class name is confirmed — do not invent alternatives. |
-| `bc-navbar--fixed` | `bc-navbar--fixed` | ⏳ Planned | Sticky variant. |
-| `bc-navbar--white` | `bc-navbar--white` | ⏳ Planned | |
+| `bc-navbar` | `bt-navbar` | ⏳ Planned | Exists in OLD, not yet written in v2 SCSS. Class name is confirmed — do not invent alternatives. |
+| `bc-navbar--fixed` | `bt-navbar--fixed` | ⏳ Planned | Sticky variant. |
+| `bc-navbar--white` | `bt-navbar--white` | ⏳ Planned | |
 | `bc-navbar--large`, `--small` | ⏳ | ⏳ Planned | Size variants — review whether all are needed. |
 | `nav.nav-main` | ⏳ | ⏳ Planned | Top-level navigation links inside navbar. |
-| `bc-navbar__brand`, `__sep`, `__nav`, `__link`, `__mark` | Same | ⏳ Planned | BEM elements of `bc-navbar`. Not yet written in v2. |
+| `bt-navbar__brand`, `__sep`, `__nav`, `__link`, `__mark` | Same | ⏳ Planned | BEM elements of `bt-navbar`. Not yet written in v2. |
 | `nav.nav-sidebar` | ⏳ | ⏳ Planned | Sidebar nav pills. |
 | `nav.nav-tabs` | `nav.nav-tabs` | ✅ Carried over | Bootstrap nav-tabs with booktower overrides. Defined in `_bootstrap-components.scss` (currently commented). |
 | `nav.nav-pills` | Bootstrap `nav-pills` | ✅ Carried over | Use Bootstrap directly. |
@@ -77,18 +77,18 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-toolbar` | `bc-toolbar` | ✅ Carried over | Active in `_booktower-components.scss`. |
-| `bc-toolbar-left` | `bc-toolbar__left` | 🔧 Revised | Corrected to BEM `__element` syntax. |
-| `bc-toolbar-right` | `bc-toolbar__right` | 🔧 Revised | |
-| `bc-toolbar-title` | `bc-toolbar__title` | 🔧 Revised | Surface-aware: serif weight in public, sans 500 in backoffice. |
-| `bc-toolbar-item` | `bc-toolbar__item` | ⏳ Planned | Spacing unit within toolbar halves. Not yet written in v2. |
+| `bc-toolbar` | `bt-toolbar` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `bc-toolbar-left` | `bt-toolbar__left` | 🔧 Revised | Corrected to BEM `__element` syntax. |
+| `bc-toolbar-right` | `bt-toolbar__right` | 🔧 Revised | |
+| `bc-toolbar-title` | `bt-toolbar__title` | 🔧 Revised | Surface-aware: serif weight in public, sans 500 in backoffice. |
+| `bc-toolbar-item` | `bt-toolbar__item` | ⏳ Planned | Spacing unit within toolbar halves. Not yet written in v2. |
 | `bc-toolbar-sm` | ⏳ | ⏳ Planned | Compact height variant. |
 | `bc-toolbar--auto` | Bootstrap `h-auto` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar--top` | Bootstrap `align-items-start` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar-lg-responsive` etc. | ⏳ | ⏳ Planned | Responsive stack variants — may be handled differently in v2. |
-| `c-button-toolbar` | `c-button-toolbar` | ✅ Carried over | Active. |
-| `c-button-toolbar--wide-spacing` | `c-button-toolbar--wide-spacing` | ✅ Carried over | |
-| `c-button-toolbar--vertical` | `c-button-toolbar--vertical` | ✅ Carried over | |
+| `c-button-toolbar` | `bt-button-toolbar` | ✅ Carried over | Active. |
+| `c-button-toolbar--wide-spacing` | `bt-button-toolbar--wide-spacing` | ✅ Carried over | |
+| `c-button-toolbar--vertical` | `bt-button-toolbar--vertical` | ✅ Carried over | |
 
 ---
 
@@ -103,7 +103,7 @@ system, or do I reach for something new?"
 | `c-sub-sidebar--bordered` | ⏳ | ⏳ Planned | |
 | `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge` | ⏳ | ⏳ Planned | Width variants. Review whether a token-based approach is cleaner. |
 | `c-sub-sidebar--small`, `--icons` | ⏳ | ⏳ Planned | Collapsed / icon-only variants. |
-| `c-sub-sidebar__menu`, `c-sub-sidebar__item`, `c-sub-sidebar__item--active` | ⏳ | ⏳ Planned | |
+| `c-sub-sidebar__menu`, `bt-sub-sidebar__item`, `bt-sub-sidebar__item--active` | ⏳ | ⏳ Planned | |
 | `c-sub-sidebar-responsive-wrapper` | ⏳ | ⏳ Planned | Mobile overlay wrapper. |
 
 ---
@@ -112,14 +112,14 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-stepper` | `c-stepper` | ⏳ Planned | Class name confirmed. Not yet written in v2. |
-| `c-stepper__item` | `c-stepper__item` | ⏳ Planned | |
-| `c-stepper__item--done` | `c-stepper__item--done` | ⏳ Planned | Was `.done` class in OLD — corrected to BEM modifier. |
-| `c-stepper__item--active` | `c-stepper__item--active` | ⏳ Planned | |
-| `c-stepper__item--sub` | `c-stepper__item--sub` | ⏳ Planned | Sub-step indented link. |
-| `c-stepper__num` | `c-stepper__num` | ⏳ Planned | |
-| `c-stepper__label` | `c-stepper__label` | ⏳ Planned | |
-| `c-stepper__required` | `c-stepper__required` | ⏳ Planned | |
+| `c-stepper` | `bt-stepper` | ⏳ Planned | Class name confirmed. Not yet written in v2. |
+| `c-stepper__item` | `bt-stepper__item` | ⏳ Planned | |
+| `c-stepper__item--done` | `bt-stepper__item--done` | ⏳ Planned | Was `.done` class in OLD — corrected to BEM modifier. |
+| `c-stepper__item--active` | `bt-stepper__item--active` | ⏳ Planned | |
+| `c-stepper__item--sub` | `bt-stepper__item--sub` | ⏳ Planned | Sub-step indented link. |
+| `c-stepper__num` | `bt-stepper__num` | ⏳ Planned | |
+| `c-stepper__label` | `bt-stepper__label` | ⏳ Planned | |
+| `c-stepper__required` | `bt-stepper__required` | ⏳ Planned | |
 
 ---
 
@@ -127,12 +127,12 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-facets` | `c-facets` | ⏳ Planned | CSS grid, 3-column structure confirmed. Not yet written in v2. |
-| `c-facet-title` | `c-facet-title` | ⏳ Planned | |
-| `c-facet-check` | `c-facet-check` | ⏳ Planned | |
-| `c-facet-name` | `c-facet-name` | ⏳ Planned | |
-| `c-facet-count` | `c-facet-count` | ⏳ Planned | |
-| `c-facet-separator` | `c-facet-separator` | ⏳ Planned | |
+| `c-facets` | `bt-facets` | ⏳ Planned | CSS grid, 3-column structure confirmed. Not yet written in v2. |
+| `c-facet-title` | `bt-facet-title` | ⏳ Planned | |
+| `c-facet-check` | `bt-facet-check` | ⏳ Planned | |
+| `c-facet-name` | `bt-facet-name` | ⏳ Planned | |
+| `c-facet-count` | `bt-facet-count` | ⏳ Planned | |
+| `c-facet-separator` | `bt-facet-separator` | ⏳ Planned | |
 
 ---
 
@@ -163,10 +163,10 @@ system, or do I reach for something new?"
 | `.is-valid`, `.is-invalid` | Same | ✅ Carried over | Active. |
 | `.form-check-input` | `.form-check-input` | ✅ Carried over | Active. `accent-color` on v2. |
 | `.form-control-search` | `.form-control-search` | ✅ Carried over | Active. Pill shape with embedded search icon. |
-| `c-radio-card` | `c-radio-card` | ⏳ Planned | Large radio option cards. Child elements: `c-radio-card__group`, `c-radio-card__body`. |
-| `c-file-upload` / `c-file-drop` | ⏳ | ⏳ Planned | File drop zone. |
-| `c-tagify` | ⏳ | ⏳ Planned | Tag input (third-party lib integration). |
-| `c-flatpickr` | ⏳ | ⏳ Planned | Date picker (third-party lib integration). |
+| `c-radio-card` | `bt-radio-card` | ⏳ Planned | Large radio option cards. Child elements: `bt-radio-card__group`, `bt-radio-card__body`. |
+| `c-file-upload` / `bt-file-drop` | ⏳ | ⏳ Planned | File drop zone. |
+| `tagify` | ⏳ | ⏳ Planned | Tag input (third-party lib integration). |
+| `flatpickr` | ⏳ | ⏳ Planned | Date picker (third-party lib integration). |
 
 ---
 
@@ -220,7 +220,7 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-avatar` | `bc-avatar` | ⏳ Planned | Initials avatar. Not yet active in v2 (commented). |
+| `bc-avatar` | `bt-avatar` | ⏳ Planned | Initials avatar. Not yet active in v2 (commented). |
 | `bc-avatar--small`, `--large` | Same | ⏳ Planned | |
 
 ---
@@ -229,8 +229,8 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-blank-slate` | `c-blank-slate` | ⏳ Planned | Not yet active in v2 (commented). |
-| `c-blank-slate-default`, `-muted`, `-primary` | `c-blank-slate--default`, `--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
+| `c-blank-slate` | `bt-blank-slate` | ⏳ Planned | Not yet active in v2 (commented). |
+| `c-blank-slate-default`, `-muted`, `-primary` | `bt-blank-slate--default`, `--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
 
 ---
 
@@ -249,7 +249,7 @@ system, or do I reach for something new?"
 | `c-meta-list` | ⏳ | ⏳ Planned | Compact metadata key-value list. |
 | `c-or` | ⏳ | ⏳ Planned | "— or —" divider between form options. |
 | `c-progress-bar` | ⏳ | ⏳ Planned | Custom progress bar. |
-| `c-spinner-card-backdrop` | ⏳ | ⏳ Planned | Loading overlay on a card. |
+| `spinner-card-backdrop` | ⏳ | ⏳ Planned | Loading overlay on a card. |
 | `c-thumbnail` | ⏳ | ⏳ Planned | File/image thumbnail. |
 | `c-content` | ⏳ | ⏳ Planned | Prose content container (long-form text). |
 | `c-abbr` | ⏳ | ⏳ Planned | Styled abbreviation with tooltip. |
@@ -293,8 +293,8 @@ These were Bootstrap overrides in the OLD system. In v2 they either use Bootstra
 
 | OLD class | v2 approach | Status |
 |-----------|------------|--------|
-| `nav.nav-main` | ⏳ Planned as `bc-navbar` nav area | ⏳ Planned |
-| `nav.nav-sidebar` | Part of `c-sub-sidebar` | ⏳ Planned |
+| `nav.nav-main` | ⏳ Planned as `bt-navbar` nav area | ⏳ Planned |
+| `nav.nav-sidebar` | Part of `bt-sub-sidebar` | ⏳ Planned |
 | `nav.nav-tabs` | Bootstrap + override in `_bootstrap-components.scss` | ⏳ Planned |
 | `nav.nav-pills` | Bootstrap directly | ✅ Carried over |
 | `nav-tabs-scrollable` | ⏳ | ⏳ Planned |
@@ -310,6 +310,6 @@ Things that did not exist at all in the OLD system:
 - **CSS custom property token stack** — runtime theming, no Sass recompile needed
 - **`u-layout`** — CSS grid layout shell (replaces flex stacking)
 - **Full colour scale utilities** — `bt-bg-*`, `bt-text-*` for every token
-- **`bc-toolbar` surface awareness** — title font changes with surface context
+- **`bt-toolbar` surface awareness** — title font changes with surface context
 - **HTMX patterns** — documented and built into the system, not bolted on
 - **`ds-page`, `ds-demo`, `ds-code`** — design system documentation chrome (shell only)

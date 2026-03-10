@@ -4,20 +4,20 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Toolbar &amp; Blank Slate</h1>
-    <p class="lead">The toolbar (<code>bc-toolbar</code>) is the page header pattern used consistently across every backoffice screen. The blank slate (<code>c-blank-slate</code>) handles empty states. Both are existing components — documented here with their real class names.</p>
+    <p class="lead">The toolbar (<code>bt-toolbar</code>) is the page header pattern used consistently across every backoffice screen. The blank slate (<code>bt-blank-slate</code>) handles empty states. Both are existing components — documented here with their real class names.</p>
   </header>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">bc-toolbar — standard</h2>
+    <h2 class="h4 mb-3">bt-toolbar — standard</h2>
     <div class="ds-demo">
       <div class="ds-demo-label">Title left, actions right — the most common pattern</div>
       <div class="ds-demo-body">
-        <div class="bc-toolbar">
-          <div class="bc-toolbar__left">
-            <h1 class="bc-toolbar__title">Research output</h1>
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <h1 class="bt-toolbar__title">Research output</h1>
           </div>
-          <div class="bc-toolbar__right">
-            <div class="c-button-toolbar">
+          <div class="bt-toolbar__right">
+            <div class="bt-button-toolbar">
               <button class="btn btn-secondary">Import</button>
               <button class="btn btn-primary" type="button">Add research output</button>
             </div>
@@ -27,12 +27,12 @@
     </div>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="bc-toolbar"&gt;
-  &lt;div class="bc-toolbar__left"&gt;
-    &lt;h1 class="bc-toolbar__title"&gt;Research output&lt;/h1&gt;
+<pre>&lt;div class="bt-toolbar"&gt;
+  &lt;div class="bt-toolbar__left"&gt;
+    &lt;h1 class="bt-toolbar__title"&gt;Research output&lt;/h1&gt;
   &lt;/div&gt;
-  &lt;div class="bc-toolbar__right"&gt;
-    &lt;div class="c-button-toolbar"&gt;
+  &lt;div class="bt-toolbar__right"&gt;
+    &lt;div class="bt-button-toolbar"&gt;
       &lt;button class="btn btn-secondary"&gt;Import&lt;/button&gt;
       &lt;button class="btn btn-primary"&gt;Add research output&lt;/button&gt;
     &lt;/div&gt;
@@ -42,7 +42,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">bc-toolbar — with record context</h2>
+    <h2 class="h4 mb-3">bt-toolbar — with record context</h2>
     <div class="ds-demo">
       <div class="ds-demo-label">Used on detail pages — title truncates, status badge included</div>
       <div class="ds-demo-body">
@@ -53,13 +53,13 @@
             <li class="breadcrumb-item active">Detail</li>
           </ol>
         </nav>
-        <div class="bc-toolbar">
-          <div class="bc-toolbar__left">
-            <h1 class="bc-toolbar__title">Cooper, Jane, et al. Neuropsychiatric aspects of COVID-19 pandemic…</h1>
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <h1 class="bt-toolbar__title">Cooper, Jane, et al. Neuropsychiatric aspects of COVID-19 pandemic…</h1>
             <span class="badge bg-warning ms-2">Draft</span>
           </div>
-          <div class="bc-toolbar__right">
-            <div class="c-button-toolbar">
+          <div class="bt-toolbar__right">
+            <div class="bt-button-toolbar">
               <div class="dropdown">
                 <button class="btn btn-ghost dropdown-toggle" data-bs-toggle="dropdown">More</button>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -73,24 +73,24 @@
           </div>
         </div>
         <div class="gap-note">
-          <strong>Reality gap:</strong> In the actual backoffice the breadcrumb lives <em>above</em> the bc-toolbar and the title is truncated with ellipsis. The record status badge (Draft / Published / Locked) appears inline with the title. This combination isn't in the styleguide but is consistent across all detail pages.
+          <strong>Reality gap:</strong> In the actual backoffice the breadcrumb lives <em>above</em> the bt-toolbar and the title is truncated with ellipsis. The record status badge (Draft / Published / Locked) appears inline with the title. This combination isn't in the styleguide but is consistent across all detail pages.
         </div>
       </div>
     </div>
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">bc-toolbar — with result count</h2>
+    <h2 class="h4 mb-3">bt-toolbar — with result count</h2>
     <div class="ds-demo">
       <div class="ds-demo-label">Used on list/overview pages — count gives orientation</div>
       <div class="ds-demo-body">
-        <div class="bc-toolbar">
-          <div class="bc-toolbar__left">
-            <h1 class="bc-toolbar__title">Research output</h1>
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <h1 class="bt-toolbar__title">Research output</h1>
             <span>4,831 records</span>
           </div>
-          <div class="bc-toolbar__right">
-            <div class="c-button-toolbar">
+          <div class="bt-toolbar__right">
+            <div class="bt-button-toolbar">
               <button class="btn btn-secondary btn-sm">Export</button>
               <button class="btn btn-primary btn-sm">Add</button>
             </div>
@@ -101,12 +101,12 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">c-blank-slate — variants</h2>
+    <h2 class="h4 mb-3">bt-blank-slate — variants</h2>
 
     <div class="ds-demo">
       <div class="ds-demo-label">Subtle — default, inside cards and list areas</div>
       <div class="ds-demo-body">
-        <div class="c-blank-slate">
+        <div class="bt-blank-slate">
           <p>No research output added yet.</p>
         </div>
       </div>
@@ -115,8 +115,8 @@
     <div class="ds-demo">
       <div class="ds-demo-label">Default — standalone empty state with avatar</div>
       <div class="ds-demo-body">
-        <div class="c-blank-slate c-blank-slate--default">
-          <div class="bc-avatar bc-avatar--small">
+        <div class="bt-blank-slate bt-blank-slate--default">
+          <div class="bt-avatar bt-avatar--small">
             <i class="if if-file-text" aria-hidden="true"></i>
           </div>
           <p>No research output added yet.</p>
@@ -130,8 +130,8 @@
     <div class="ds-demo">
       <div class="ds-demo-label">Muted — inside a section that hasn't been filled in yet</div>
       <div class="ds-demo-body">
-        <div class="c-blank-slate c-blank-slate--muted">
-          <div class="bc-avatar bc-avatar--small">
+        <div class="bt-blank-slate bt-blank-slate--muted">
+          <div class="bt-avatar bt-avatar--small">
             <i class="if if-info-circle" aria-hidden="true"></i>
           </div>
           <p>No files attached to this record.</p>
@@ -142,7 +142,7 @@
     <div class="ds-demo">
       <div class="ds-demo-label">Primary — calls for action, the ◎ moment</div>
       <div class="ds-demo-body">
-        <div class="c-blank-slate c-blank-slate-primary">
+        <div class="bt-blank-slate bt-blank-slate-primary">
           <div>◎</div>
           <p>No research output yet.</p>
           <p>Add your first record and make your work discoverable.</p>
@@ -154,13 +154,13 @@
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;!-- Subtle (inside cards) --&gt;
-&lt;div class="c-blank-slate"&gt;
+&lt;div class="bt-blank-slate"&gt;
   &lt;p&gt;No items yet.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;!-- Default (standalone) --&gt;
-&lt;div class="c-blank-slate c-blank-slate--default"&gt;
-  &lt;div class="bc-avatar bc-avatar--small"&gt;
+&lt;div class="bt-blank-slate bt-blank-slate--default"&gt;
+  &lt;div class="bt-avatar bt-avatar--small"&gt;
     &lt;i class="if if-file-text" aria-hidden="true"&gt;&lt;/i&gt;
   &lt;/div&gt;
   &lt;p&gt;No items yet.&lt;/p&gt;
@@ -169,12 +169,12 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">c-facets — filter sidebar</h2>
+    <h2 class="h4 mb-3">bt-facets — filter sidebar</h2>
     <div class="ds-demo">
       <div class="ds-demo-label">Grid-based layout — real component structure from the existing system</div>
       <div class="ds-demo-body">
         <div>
-          <div class="c-facets">
+          <div class="bt-facets">
             <div>Type</div>
             <input class="form-check-input mt-0" type="checkbox" id="f-journal" checked>
             <label for="f-journal" class="mb-0">Journal article</label>
@@ -196,32 +196,32 @@
           </div>
         </div>
         <div class="gap-note mt-3">
-          <strong>Reality note:</strong> The existing <code>c-facets</code> component uses a CSS grid with three columns: <code>c-facet-check</code>, <code>c-facet-name</code>, <code>c-facet-count</code> as sibling divs inside <code>c-facets</code>. This differs from what you'd expect from a standard nested list. The grid is defined in your existing CSS. The above demo replicates the visual output using inline styles for portability.
+          <strong>Reality note:</strong> The existing <code>bt-facets</code> component uses a CSS grid with three columns: <code>bt-facet-check</code>, <code>bt-facet-name</code>, <code>bt-facet-count</code> as sibling divs inside <code>bt-facets</code>. This differs from what you'd expect from a standard nested list. The grid is defined in your existing CSS. The above demo replicates the visual output using inline styles for portability.
         </div>
       </div>
     </div>
     <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html — existing c-facets structure</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="c-facets"&gt;
-  &lt;div class="c-facet-title"&gt;Type&lt;/div&gt;
+      <div class="ds-code-bar"><span class="ds-code-lang">html — existing bt-facets structure</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="bt-facets"&gt;
+  &lt;div class="bt-facet-title"&gt;Type&lt;/div&gt;
 
-  &lt;div class="c-facet-check"&gt;
+  &lt;div class="bt-facet-check"&gt;
     &lt;input class="form-check-input" id="f-journal" type="checkbox" checked&gt;
   &lt;/div&gt;
-  &lt;div class="c-facet-name"&gt;
+  &lt;div class="bt-facet-name"&gt;
     &lt;label for="f-journal"&gt;Journal article&lt;/label&gt;
   &lt;/div&gt;
-  &lt;div class="c-facet-count"&gt;1.234&lt;/div&gt;
+  &lt;div class="bt-facet-count"&gt;1.234&lt;/div&gt;
 
-  &lt;div class="c-facet-separator"&gt;&lt;/div&gt;
-  &lt;div class="c-facet-title"&gt;Year&lt;/div&gt;
+  &lt;div class="bt-facet-separator"&gt;&lt;/div&gt;
+  &lt;div class="bt-facet-title"&gt;Year&lt;/div&gt;
   &lt;!-- repeat pattern --&gt;
 &lt;/div&gt;
 
 &lt;!-- HTMX — update facet counts without full page reload --&gt;
-&lt;div class="c-facets"
+&lt;div class="bt-facets"
   hx-get="/research/facets"
-  hx-trigger="change from:.c-facet-check input"
+  hx-trigger="change from:.bt-facet-check input"
   hx-target="this"
   hx-swap="outerHTML"&gt;
   &lt;!-- facet content --&gt;

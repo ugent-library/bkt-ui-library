@@ -5,7 +5,7 @@
 
 <!-- @include: templates/partials/backoffice-header.html -->
 
-  <nav class="c-sub-sidebar" aria-label="Section navigation">
+  <nav class="bt-sub-sidebar" aria-label="Section navigation">
     <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">My work</p>
     <a href="#" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-current="page">
       <i class="if if-article" aria-hidden="true"></i>
@@ -32,17 +32,17 @@
     <!-- Toolbar + Search -->
     <div class="border-bottom px-4 flex-shrink-0">
       <!-- Toolbar -->
-      <div class="bc-toolbar">
-        <div class="bc-toolbar__left">
-          <h1 class="bc-toolbar__title">Research output</h1>
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <h1 class="bt-toolbar__title">Research output</h1>
           <span class="text-muted" aria-live="polite" id="result-count">4,831 records</span>
         </div>
-        <div class="bc-toolbar__right">
-          <div class="c-button-toolbar">
+        <div class="bt-toolbar__right">
+          <div class="bt-button-toolbar">
             <div class="dropdown">
               <button class="btn btn-secondary btn-sm dropdown-toggle" type="button"
                 data-bs-toggle="dropdown">
-                <i class="if if-download if-sm" aria-hidden="true"></i> Export
+                <i class="if if-download if--sm" aria-hidden="true"></i> Export
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="#">CSV</a></li>
@@ -51,10 +51,10 @@
               </ul>
             </div>
             <button class="btn btn-secondary btn-sm" type="button">
-              <i class="if if-upload if-sm" aria-hidden="true"></i> Import
+              <i class="if if-upload if--sm" aria-hidden="true"></i> Import
             </button>
             <a href="/templates/deposit-flow.html" class="btn btn-primary btn-sm">
-              <i class="if if-add if-sm" aria-hidden="true"></i>
+              <i class="if if-add if--sm" aria-hidden="true"></i>
               Add research output
             </a>
           </div>
@@ -62,8 +62,8 @@
       </div>
 
       <!-- Search + filters -->
-      <div class="bc-toolbar" role="search" aria-label="Search and filter research output">
-        <div class="bc-toolbar__left">
+      <div class="bt-toolbar" role="search" aria-label="Search and filter research output">
+        <div class="bt-toolbar__left">
           <label for="bo-search" class="visually-hidden">Search by title, author, DOI</label>
           <input type="search"
             class="form-control form-control-search"
@@ -89,57 +89,57 @@
     </div>
 
     <!-- Content -->
-    <div class="c-content-area">
+    <div class="bt-content-area">
 
       <!-- Facets -->
-      <aside class="c-facets-col" aria-label="Filter by">
-        <div class="c-facets">
-          <div class="c-facet-title">Status</div>
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-published" checked aria-label="Published (3 results)"></div>
-          <div class="c-facet-name"><label for="f-published">Published</label></div>
-          <div class="c-facet-count" aria-hidden="true">3</div>
+      <aside class="bt-facets-col" aria-label="Filter by">
+        <div class="bt-facets">
+          <div class="bt-facet-title">Status</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-published" checked aria-label="Published (3 results)"></div>
+          <div class="bt-facet-name"><label for="f-published">Published</label></div>
+          <div class="bt-facet-count" aria-hidden="true">3</div>
 
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-draft" aria-label="Draft (1 result)"></div>
-          <div class="c-facet-name"><label for="f-draft">Draft</label></div>
-          <div class="c-facet-count" aria-hidden="true">1</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-draft" aria-label="Draft (1 result)"></div>
+          <div class="bt-facet-name"><label for="f-draft">Draft</label></div>
+          <div class="bt-facet-count" aria-hidden="true">1</div>
 
-          <div class="c-facet-separator" role="separator"></div>
-          <div class="c-facet-title">Type</div>
+          <div class="bt-facet-separator" role="separator"></div>
+          <div class="bt-facet-title">Type</div>
 
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-journal" checked aria-label="Journal article (2 results)"></div>
-          <div class="c-facet-name"><label for="f-journal">Journal article</label></div>
-          <div class="c-facet-count" aria-hidden="true">2</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-journal" checked aria-label="Journal article (2 results)"></div>
+          <div class="bt-facet-name"><label for="f-journal">Journal article</label></div>
+          <div class="bt-facet-count" aria-hidden="true">2</div>
 
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-dataset" aria-label="Dataset (1 result)"></div>
-          <div class="c-facet-name"><label for="f-dataset">Dataset</label></div>
-          <div class="c-facet-count" aria-hidden="true">1</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-dataset" aria-label="Dataset (1 result)"></div>
+          <div class="bt-facet-name"><label for="f-dataset">Dataset</label></div>
+          <div class="bt-facet-count" aria-hidden="true">1</div>
 
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-chapter" aria-label="Book chapter (1 result)"></div>
-          <div class="c-facet-name"><label for="f-chapter">Book chapter</label></div>
-          <div class="c-facet-count" aria-hidden="true">1</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-chapter" aria-label="Book chapter (1 result)"></div>
+          <div class="bt-facet-name"><label for="f-chapter">Book chapter</label></div>
+          <div class="bt-facet-count" aria-hidden="true">1</div>
 
-          <div class="c-facet-separator" role="separator"></div>
-          <div class="c-facet-title">Access</div>
+          <div class="bt-facet-separator" role="separator"></div>
+          <div class="bt-facet-title">Access</div>
 
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-oa" checked aria-label="Open access (3 results)"></div>
-          <div class="c-facet-name"><label for="f-oa">Open access</label></div>
-          <div class="c-facet-count" aria-hidden="true">3</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-oa" checked aria-label="Open access (3 results)"></div>
+          <div class="bt-facet-name"><label for="f-oa">Open access</label></div>
+          <div class="bt-facet-count" aria-hidden="true">3</div>
 
-          <div class="c-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-restricted" aria-label="Restricted (1 result)"></div>
-          <div class="c-facet-name"><label for="f-restricted">Restricted</label></div>
-          <div class="c-facet-count" aria-hidden="true">1</div>
+          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-restricted" aria-label="Restricted (1 result)"></div>
+          <div class="bt-facet-name"><label for="f-restricted">Restricted</label></div>
+          <div class="bt-facet-count" aria-hidden="true">1</div>
         </div>
       </aside>
 
       <!-- Results -->
-      <div class="c-results-col" id="results-body">
+      <div class="bt-results-col" id="results-body">
 
         <!-- Results toolbar: count + view toggle -->
-        <div class="bc-toolbar bc-toolbar--bordered">
-          <div class="bc-toolbar__left">
+        <div class="bt-toolbar bt-toolbar--bordered">
+          <div class="bt-toolbar__left">
             <span class="text-muted" aria-live="polite">4 results for "Quantum computing"</span>
           </div>
-          <div class="bc-toolbar__right">
+          <div class="bt-toolbar__right">
             <div class="view-toggle" role="group" aria-label="Switch view">
               <button type="button" class="view-toggle-btn is-active" id="btn-card-view"
                 aria-pressed="true" aria-label="Card view">
@@ -292,7 +292,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">
                   <button type="button" class="btn btn-ghost btn-sm p-0" aria-label="Sort by year">
-                    Year <i class="if if-caret-down if-xs ms-1" aria-hidden="true"></i>
+                    Year <i class="if if-caret-down if--xs ms-1" aria-hidden="true"></i>
                   </button>
                 </th>
                 <th scope="col">Status</th>
@@ -374,7 +374,7 @@
         </div><!-- /table-view -->
 
         <!-- Pagination -->
-        <div class="bc-toolbar border-top mt-auto">
+        <div class="bt-toolbar border-top mt-auto">
           <span class="text-muted small" aria-live="polite">Showing 1–25 of 4,831 records</span>
           <nav aria-label="Results pagination">
             <ul class="pagination mb-0">

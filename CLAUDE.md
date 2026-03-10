@@ -60,7 +60,7 @@ We build two things: a **public research repository** (anonymous users, read-hea
 **A3. Skip link is the first focusable element inside the layout wrapper.** It targets `#main-content`. The current `.skip-link` implementation in `_accessibility.scss` uses `transform: translateY(-100%)` and reveals on `:focus` — this is correct. Do not replace it with `top: -999px` (breaks at high zoom).
 
 ```html
-<!-- ✓ Inside u-layout--app, before bc-navbar -->
+<!-- ✓ Inside u-layout--app, before bt-navbar -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 ```
 
@@ -69,15 +69,15 @@ We build two things: a **public research repository** (anonymous users, read-hea
 **A5. Every `<nav>` has a distinct `aria-label`.** When multiple navigation landmarks exist on one page, each must be uniquely named so a screen reader user can distinguish them.
 
 ```
-Application navigation   ← bc-navbar primary nav
-Section navigation       ← c-sub-sidebar
+Application navigation   ← bt-navbar primary nav
+Section navigation       ← bt-sub-sidebar
 Breadcrumb               ← breadcrumb nav
-Filter by                ← c-facets-col aside (use aria-label on <aside>)
+Filter by                ← bt-facets-col aside (use aria-label on <aside>)
 Results pagination       ← pagination nav
 ```
 
 **A6. Landmark regions used correctly.**
-- `<header>` for the topbar (`bc-navbar`)
+- `<header>` for the topbar (`bt-navbar`)
 - `<main>` for primary content
 - `<nav>` for navigation (with label — see A5)
 - `<aside>` for facets and supplementary sidebars (with label)
@@ -180,7 +180,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 
 **C4. Grouped controls use `<fieldset>` and `<legend>`.** This applies to:
 - The open access status radio group (deposit flow)
-- Every checkbox filter group in `c-facets-col`
+- Every checkbox filter group in `bt-facets-col`
 - Any set of related checkboxes or radio buttons anywhere
 
 ```html
@@ -261,7 +261,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 </div>
 ```
 
-**E6. Stepper links.** The deposit flow `c-stepper__item` elements are links (`<a href>`) pointing to named sections on the same page. They navigate — `<a>` is correct. `aria-current="step"` on the active one.
+**E6. Stepper links.** The deposit flow `bt-stepper__item` elements are links (`<a href>`) pointing to named sections on the same page. They navigate — `<a>` is correct. `aria-current="step"` on the active one.
 
 ---
 
@@ -278,7 +278,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 <th scope="col" aria-sort="descending">
   <button type="button" class="btn btn-ghost btn-sm p-0"
     aria-label="Sort by year, currently descending">
-    Year <i class="if if-caret-down if-xs" aria-hidden="true"></i>
+    Year <i class="if if-caret-down if--xs" aria-hidden="true"></i>
   </button>
 </th>
 ```
@@ -295,7 +295,7 @@ selectAll.setAttribute('aria-label', 'Some records selected — click to select 
 
 ```html
 <!-- ✓ Correct — hidden attribute; role=toolbar because arrow-key nav is appropriate for bulk actions -->
-<div class="bc-toolbar" id="bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
+<div class="bt-toolbar" id="bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
 ```
 
 ---
@@ -344,7 +344,7 @@ The public site is read by researchers, students, and automated agents (crawlers
 
 Staff use this all day. Every extra announcement or unnecessary focus jump costs time at scale. Correctness and efficiency are equally important.
 
-**I1. `bc-toolbar` is not a landmark and does not need `role`.** It is a styled div, not a navigation or toolbar in the ARIA sense. Only add `role="toolbar"` when all children are navigable with Arrow keys — the regular page toolbar is not, so it gets no role. The bulk action bar gets `role="toolbar"` because it is a grouped set of actions on the current selection.
+**I1. `bt-toolbar` is not a landmark and does not need `role`.** It is a styled div, not a navigation or toolbar in the ARIA sense. Only add `role="toolbar"` when all children are navigable with Arrow keys — the regular page toolbar is not, so it gets no role. The bulk action bar gets `role="toolbar"` because it is a grouped set of actions on the current selection.
 
 **I2. Filter tags: label describes the action and the value.**
 
@@ -364,7 +364,7 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
   class="form-check-input" checked
   aria-label="Journal article (1,234 records)">
 <label for="f-journal">Journal article</label>
-<div class="c-facet-count" aria-hidden="true">1,234</div>
+<div class="bt-facet-count" aria-hidden="true">1,234</div>
 ```
 
 **I4. Deposit flow: `aria-current="step"` on the active stepper item.** Not `aria-current="page"` — the URL does not change between steps.
@@ -447,27 +447,27 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 **Navigation & topbar**
 ```
-bc-navbar               bc-navbar__brand        bc-navbar__nav
-bc-navbar__link         bc-navbar__sep
+bt-navbar               bt-navbar__brand        bt-navbar__nav
+bt-navbar__link         bt-navbar__sep
 ```
-Note: `bc-navbar__brand` is used (backoffice logo link). `bc-navbar__mark` does NOT exist — do not use it.
+Note: `bt-navbar__brand` is used (backoffice logo link). `bt-navbar__mark` does NOT exist — do not use it.
 
 **Toolbar & button groups**
 ```
-bc-toolbar              bc-toolbar--bordered
-bc-toolbar__left        bc-toolbar__right       bc-toolbar__middle
-bc-toolbar__item        bc-toolbar__title
+bt-toolbar              bt-toolbar--bordered
+bt-toolbar__left        bt-toolbar__right       bt-toolbar__middle
+bt-toolbar__item        bt-toolbar__title
 ```
-`bc-toolbar__item` elements are siblings within `bc-toolbar__left`/`bc-toolbar__right`/`bc-toolbar__middle` and get automatic padding between them.
+`bt-toolbar__item` elements are siblings within `bt-toolbar__left`/`bt-toolbar__right`/`bt-toolbar__middle` and get automatic padding between them.
 
 **Avatar**
 ```
-bc-avatar               bc-avatar--small        bc-avatar--large
+bt-avatar               bt-avatar--small        bt-avatar--large
 ```
 
 **Hero (public surface)**
 ```
-c-hero                  c-hero__bg              c-hero__content
+bt-hero                  bt-hero__bg              bt-hero__content
 ```
 
 **Research card**
@@ -479,20 +479,20 @@ card-publication
 
 **Facets sidebar**
 ```
-c-facets                c-facet-title           c-facet-check
-c-facet-name            c-facet-count           c-facet-separator
+bt-facets                bt-facet-title           bt-facet-check
+bt-facet-name            bt-facet-count           bt-facet-separator
 ```
 
 **Sub-sidebar navigation**
 ```
-c-sub-sidebar           c-sub-sidebar--bordered
+bt-sub-sidebar           bt-sub-sidebar--bordered
 ```
 
 **Backoffice list layout**
 ```
-c-content-area          c-facets-col            c-results-col
+bt-content-area          bt-facets-col            bt-results-col
 ```
-Use `bc-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
+Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
 
 **View toggle**
 ```
@@ -509,18 +509,18 @@ Row selection state: Bootstrap's `.table-active` on `<tr>`. The CSS tokens `--bs
 
 **Empty states**
 ```
-c-blank-slate           c-blank-slate--default  c-blank-slate--muted
-c-blank-slate--primary
+bt-blank-slate           bt-blank-slate--default  bt-blank-slate--muted
+bt-blank-slate--primary
 ```
 Note: BEM modifier double-dash (`--`). The old styleguide used single-dash — that was wrong.
 
 **Deposit flow components**
 ```
-c-stepper               c-stepper__item         c-stepper__item--done
-c-stepper__num          c-stepper__label        c-stepper__required
-c-radio-card            c-radio-card__body      c-radio-card__group
-c-file-drop             c-file-drop__icon       c-file-drop__text
-c-file-drop__hint
+bt-stepper               bt-stepper__item         bt-stepper__item--done
+bt-stepper__num          bt-stepper__label        bt-stepper__required
+bt-radio-card            bt-radio-card__body      bt-radio-card__group
+bt-file-drop             bt-file-drop__icon       bt-file-drop__text
+bt-file-drop__hint
 ```
 
 **Filter tags**
@@ -557,19 +557,19 @@ u-layout--app           u-layout--deposit       u-layout--public
 
 ```
 app-sidebar             app-sidebar-link        app-sidebar-label
-bc-navbar__mark
-c-blank-slate-default   (replaced by c-blank-slate--default)
-c-blank-slate-muted     (replaced by c-blank-slate--muted)
-c-blank-slate-primary   (replaced by c-blank-slate--primary)
-c-table                 (use Bootstrap .table .table-hover .align-middle)
-c-filter-bar            (use bc-toolbar)
-c-bulk-bar              (use bc-toolbar)
-c-pagination-bar        (use bc-toolbar)
-c-results-toolbar       (use bc-toolbar bc-toolbar--bordered)
+bt-navbar__mark
+bt-blank-slate-default   (replaced by bt-blank-slate--default)
+bt-blank-slate-muted     (replaced by bt-blank-slate--muted)
+bt-blank-slate-primary   (replaced by bt-blank-slate--primary)
+bt-table                 (use Bootstrap .table .table-hover .align-middle)
+bt-filter-bar            (use bt-toolbar)
+bt-bulk-bar              (use bt-toolbar)
+bt-pagination-bar        (use bt-toolbar)
+bt-results-toolbar       (use bt-toolbar bt-toolbar--bordered)
 is-selected on <tr>     (use Bootstrap .table-active)
 td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
-c-sidebar               (OLD narrow icon rail — removed in v2)
+bt-sidebar               (OLD narrow icon rail — removed in v2)
 u-maximize-height       (OLD layout utility — removed in v2)
 ```
 
@@ -648,16 +648,16 @@ Three CSS grid shells live in `patterns/_layouts.scss`. All use `--s-topbar-heig
 
 | Shell | Used for | Children |
 |-------|----------|----------|
-| `u-layout--app` | Backoffice list/detail pages | `.bc-navbar` + `.c-sub-sidebar` + `<main>` |
-| `u-layout--deposit` | Deposit flow | `.bc-navbar` + `.c-stepper` + `<main>` |
-| `u-layout--public` | Public search/detail | `.bc-navbar` + `<main>` |
+| `u-layout--app` | Backoffice list/detail pages | `.bt-navbar` + `.bt-sub-sidebar` + `<main>` |
+| `u-layout--deposit` | Deposit flow | `.bt-navbar` + `.bt-stepper` + `<main>` |
+| `u-layout--public` | Public search/detail | `.bt-navbar` + `<main>` |
 
 Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell itself has no `max-width` or padding.
 
 `u-layout--app` supports an optional right panel with `.has-panel` on the shell.
 
 **Deprecated layout classes (OLD system — do not use):**
-`u-scroll-wrapper`, `u-scroll-wrapper__body`, `c-sidebar`, `u-maximize-height`
+`u-scroll-wrapper`, `u-scroll-wrapper__body`, `bt-sidebar`, `u-maximize-height`
 
 ---
 
@@ -665,8 +665,8 @@ Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell 
 
 | Prefix | Meaning | Examples |
 |--------|---------|----------|
-| `bc-` | Bootstrap Custom — extends/wraps Bootstrap | `bc-navbar`, `bc-toolbar`, `bc-avatar` |
-| `c-` | Component — no Bootstrap base | `c-facets`, `c-stepper`, `c-blank-slate` |
+| `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar` |
+| `bt-` | Component — no Bootstrap base | `bt-facets`, `bt-stepper`, `bt-blank-slate` |
 | `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--deposit` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.

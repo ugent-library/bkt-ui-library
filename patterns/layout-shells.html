@@ -18,13 +18,13 @@
             <i class="if if-ghent-university" aria-hidden="true"></i>
             Biblio
             <span style="flex:1"></span>
-            <span class="text-muted">bc-navbar</span>
+            <span class="text-muted">bt-navbar</span>
           </div>
           <div style="width:180px;border-right:var(--bt-border);padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            c-sub-sidebar
+            bt-sub-sidebar
           </div>
           <div style="padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            &lt;main&gt; — bc-toolbar, c-filter-bar, c-content-area…
+            &lt;main&gt; — bt-toolbar, bt-filter-bar, bt-content-area…
           </div>
         </div>
       </div>
@@ -32,17 +32,17 @@
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
-  &lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
-  &lt;nav class="c-sub-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
+  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
+  &lt;nav class="bt-sub-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
   &lt;main id="main-content"&gt;
-    &lt;!-- bc-toolbar → c-filter-bar → c-bulk-bar → c-content-area --&gt;
+    &lt;!-- bt-toolbar → bt-filter-bar → bt-bulk-bar → bt-content-area --&gt;
   &lt;/main&gt;
 &lt;/div&gt;
 
 &lt;!-- Optional right panel --&gt;
 &lt;div class="u-layout--app has-panel" data-surface="backoffice"&gt;
-  &lt;header class="bc-navbar"&gt;…&lt;/header&gt;
-  &lt;nav class="c-sub-sidebar"&gt;…&lt;/nav&gt;
+  &lt;header class="bt-navbar"&gt;…&lt;/header&gt;
+  &lt;nav class="bt-sub-sidebar"&gt;…&lt;/nav&gt;
   &lt;main id="main-content"&gt;…&lt;/main&gt;
   &lt;aside aria-label="Detail panel"&gt;…&lt;/aside&gt;
 &lt;/div&gt;</pre>
@@ -56,10 +56,10 @@
             <i class="if if-ghent-university" aria-hidden="true"></i>
             Biblio
             <span style="flex:1"></span>
-            <span class="text-muted">bc-navbar</span>
+            <span class="text-muted">bt-navbar</span>
           </div>
           <div style="width:200px;border-right:var(--bt-border);padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            c-stepper
+            bt-stepper
           </div>
           <div style="padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
             &lt;main&gt; — form sections, action bar
@@ -70,8 +70,8 @@
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--deposit" data-surface="backoffice"&gt;
-  &lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
-  &lt;nav class="c-stepper" aria-label="Deposit steps"&gt;…&lt;/nav&gt;
+  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
+  &lt;nav class="bt-stepper" aria-label="Deposit steps"&gt;…&lt;/nav&gt;
   &lt;main id="main-content"&gt;
     &lt;!-- form sections → action bar --&gt;
   &lt;/main&gt;
@@ -85,10 +85,10 @@
           <div style="background:var(--bt-white);border-bottom:var(--bt-border);height:52px;display:flex;align-items:center;padding:0 var(--bt-sp-6);font-size:var(--bt-text-sm);font-weight:500">
             Biblio UGent
             <span style="flex:1"></span>
-            <span class="text-muted">bc-navbar</span>
+            <span class="text-muted">bt-navbar</span>
           </div>
           <div style="flex:1;padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            &lt;main&gt; — .container inside provides gutters. c-hero, search bar, results…
+            &lt;main&gt; — .container inside provides gutters. bt-hero, search bar, results…
           </div>
         </div>
       </div>
@@ -96,9 +96,9 @@
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--public" data-surface="public"&gt;
-  &lt;header class="bc-navbar" role="banner"&gt;…&lt;/header&gt;
+  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
   &lt;main id="main-content"&gt;
-    &lt;!-- .container or c-hero provides internal layout --&gt;
+    &lt;!-- .container or bt-hero provides internal layout --&gt;
   &lt;/main&gt;
 &lt;/div&gt;</pre>
     </div>
@@ -114,7 +114,7 @@
 }
 
 /* In _layouts.scss — no fallback needed, token is always defined */
-.u-layout--app > .c-sub-sidebar {
+.u-layout--app > .bt-sub-sidebar {
   top: var(--s-topbar-height);
   height: calc(100vh - var(--s-topbar-height));
 }</pre>
@@ -128,20 +128,20 @@
       <h3 class="ds-demo-label">Stacking order</h3>
       <div class="ds-demo-body" style="display:flex;flex-direction:column;gap:2px;font-size:var(--bt-text-sm)">
         <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius)">
-          <code>bc-toolbar</code> — page title + primary actions
+          <code>bt-toolbar</code> — page title + primary actions
         </div>
         <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius)">
-          <code>c-filter-bar</code> — search input + active filter tags
+          <code>bt-filter-bar</code> — search input + active filter tags
         </div>
         <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-blue-100);border:var(--bt-border);border-radius:var(--bt-radius)">
-          <code>c-bulk-bar</code> — bulk actions (hidden unless rows selected)
+          <code>bt-bulk-bar</code> — bulk actions (hidden unless rows selected)
         </div>
         <div style="display:flex;gap:2px">
           <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius);width:220px;flex-shrink:0">
-            <code>c-facets-col</code>
+            <code>bt-facets-col</code>
           </div>
           <div style="flex:1;padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius)">
-            <code>c-results-col</code> → <code>c-results-toolbar</code> + results + <code>c-pagination-bar</code>
+            <code>bt-results-col</code> → <code>bt-results-toolbar</code> + results + <code>bt-pagination-bar</code>
           </div>
         </div>
       </div>
@@ -150,25 +150,25 @@
       <div class="ds-code-bar"><span class="ds-code-lang">html — inside u-layout--app main</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;main id="main-content"&gt;
 
-  &lt;div class="bc-toolbar"&gt;
-    &lt;div class="bc-toolbar__left"&gt;&lt;h1 class="bc-toolbar__title"&gt;…&lt;/h1&gt;&lt;/div&gt;
-    &lt;div class="bc-toolbar__right"&gt;&lt;!-- actions --&gt;&lt;/div&gt;
+  &lt;div class="bt-toolbar"&gt;
+    &lt;div class="bt-toolbar__left"&gt;&lt;h1 class="bt-toolbar__title"&gt;…&lt;/h1&gt;&lt;/div&gt;
+    &lt;div class="bt-toolbar__right"&gt;&lt;!-- actions --&gt;&lt;/div&gt;
   &lt;/div&gt;
 
-  &lt;div class="c-filter-bar" role="search" aria-label="Search and filter"&gt;
+  &lt;div class="bt-filter-bar" role="search" aria-label="Search and filter"&gt;
     &lt;!-- search input + filter tags + htmx-indicator --&gt;
   &lt;/div&gt;
 
-  &lt;div class="c-bulk-bar" hidden&gt;
+  &lt;div class="bt-bulk-bar" hidden&gt;
     &lt;!-- bulk action buttons, shown when rows selected --&gt;
   &lt;/div&gt;
 
-  &lt;div class="c-content-area"&gt;
-    &lt;aside class="c-facets-col" aria-label="Filter by"&gt;
-      &lt;div class="c-facets"&gt;…&lt;/div&gt;
+  &lt;div class="bt-content-area"&gt;
+    &lt;aside class="bt-facets-col" aria-label="Filter by"&gt;
+      &lt;div class="bt-facets"&gt;…&lt;/div&gt;
     &lt;/aside&gt;
-    &lt;div class="c-results-col"&gt;
-      &lt;div class="c-results-toolbar"&gt;…&lt;/div&gt;
+    &lt;div class="bt-results-col"&gt;
+      &lt;div class="bt-results-toolbar"&gt;…&lt;/div&gt;
       &lt;!-- results: cards or table --&gt;
     &lt;/div&gt;
   &lt;/div&gt;
@@ -184,13 +184,13 @@
       <div class="ds-code-bar"><span class="ds-code-lang">deprecated — do not use</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;!-- OLD — caused sticky to break inside overflow:hidden --&gt;
 &lt;div class="u-scroll-wrapper"&gt;
-  &lt;div class="c-sidebar"&gt;…&lt;/div&gt;
+  &lt;div class="bt-sidebar"&gt;…&lt;/div&gt;
   &lt;div class="u-scroll-wrapper__body"&gt;…&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- These classes no longer exist: --&gt;
 u-scroll-wrapper    u-scroll-wrapper__body
-c-sidebar           u-maximize-height</pre>
+bt-sidebar           u-maximize-height</pre>
     </div>
   </section>
 

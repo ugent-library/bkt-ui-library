@@ -4,28 +4,28 @@
 <!-- @include: templates/partials/backoffice-header.html -->
 
 <div class="u-layout--deposit" data-surface="backoffice">
-  <nav class="c-stepper" aria-label="Deposit steps">
-    <a href="#type" class="c-stepper__item c-stepper__item--done" aria-current="false">
-      <span class="c-stepper__num"><i class="if if-check" aria-hidden="true"></i></span>
-      <span class="c-stepper__label">Type</span>
+  <nav class="bt-stepper" aria-label="Deposit steps">
+    <a href="#type" class="bt-stepper__item bt-stepper__item--done" aria-current="false">
+      <span class="bt-stepper__num"><i class="if if-check" aria-hidden="true"></i></span>
+      <span class="bt-stepper__label">Type</span>
     </a>
-    <a href="#description" class="c-stepper__item" aria-current="step">
-      <span class="c-stepper__num">2</span>
-      <span class="c-stepper__label">
+    <a href="#description" class="bt-stepper__item" aria-current="step">
+      <span class="bt-stepper__num">2</span>
+      <span class="bt-stepper__label">
         Description
-        <span class="c-stepper__required">Required</span>
+        <span class="bt-stepper__required">Required</span>
       </span>
     </a>
-    <a href="#people" class="c-stepper__item">
-      <span class="c-stepper__num">3</span>
-      <span class="c-stepper__label">
+    <a href="#people" class="bt-stepper__item">
+      <span class="bt-stepper__num">3</span>
+      <span class="bt-stepper__label">
         People &amp; affiliations
-        <span class="c-stepper__required">Required</span>
+        <span class="bt-stepper__required">Required</span>
       </span>
     </a>
-    <a href="#files" class="c-stepper__item">
-      <span class="c-stepper__num">4</span>
-      <span class="c-stepper__label">Full text &amp; files</span>
+    <a href="#files" class="bt-stepper__item">
+      <span class="bt-stepper__num">4</span>
+      <span class="bt-stepper__label">Full text &amp; files</span>
     </a>
   </nav>
 
@@ -39,41 +39,41 @@
 
     <!-- Section: Type (completed) -->
     <section id="type" aria-labelledby="type-heading" class="mb-6">
-      <h2 id="type-heading" class="bc-toolbar__title d-flex align-items-center gap-2 mb-4">
+      <h2 id="type-heading" class="bt-toolbar__title d-flex align-items-center gap-2 mb-4">
         Type
         <span class="badge bg-success ms-auto">Completed</span>
       </h2>
-      <div class="c-radio-card__group">
-        <label class="c-radio-card">
+      <div class="bt-radio-card__group">
+        <label class="bt-radio-card">
           <input type="radio" name="pub-type" value="journal-article" checked>
-          <span class="c-radio-card__body">Journal article</span>
+          <span class="bt-radio-card__body">Journal article</span>
         </label>
-        <label class="c-radio-card">
+        <label class="bt-radio-card">
           <input type="radio" name="pub-type" value="book">
-          <span class="c-radio-card__body">Book</span>
+          <span class="bt-radio-card__body">Book</span>
         </label>
-        <label class="c-radio-card">
+        <label class="bt-radio-card">
           <input type="radio" name="pub-type" value="book-chapter">
-          <span class="c-radio-card__body">Book chapter</span>
+          <span class="bt-radio-card__body">Book chapter</span>
         </label>
-        <label class="c-radio-card">
+        <label class="bt-radio-card">
           <input type="radio" name="pub-type" value="dataset">
-          <span class="c-radio-card__body">Dataset</span>
+          <span class="bt-radio-card__body">Dataset</span>
         </label>
-        <label class="c-radio-card">
+        <label class="bt-radio-card">
           <input type="radio" name="pub-type" value="software">
-          <span class="c-radio-card__body">Software</span>
+          <span class="bt-radio-card__body">Software</span>
         </label>
-        <label class="c-radio-card">
+        <label class="bt-radio-card">
           <input type="radio" name="pub-type" value="thesis">
-          <span class="c-radio-card__body">Thesis</span>
+          <span class="bt-radio-card__body">Thesis</span>
         </label>
       </div>
     </section>
 
     <!-- Section: Description (active) -->
-    <section id="description" aria-labelledby="desc-heading" class="mb-6">
-      <h2 id="desc-heading" class="bc-toolbar__title mb-4">Description</h2>
+    <section id="description" aria-labelledby="desbt-heading" class="mb-6">
+      <h2 id="desbt-heading" class="bt-toolbar__title mb-4">Description</h2>
 
       <div class="mb-4">
         <label for="title" class="form-label">Title <span class="text-danger" aria-label="required">*</span></label>
@@ -152,11 +152,11 @@
 
     <!-- Section: People -->
     <section id="people" aria-labelledby="people-heading" class="mb-6">
-      <h2 id="people-heading" class="bc-toolbar__title mb-4">People &amp; affiliations</h2>
+      <h2 id="people-heading" class="bt-toolbar__title mb-4">People &amp; affiliations</h2>
 
       <div class="d-flex flex-column gap-2 mb-3">
         <div class="d-flex align-items-center gap-2 p-3 bg-white border rounded">
-          <span class="bc-avatar bc-avatar--small">ER</span>
+          <span class="bbt-avatar bbt-avatar--small">ER</span>
           <div class="flex-grow-1">
             <div>Esperon-Rodriguez, Manuel</div>
             <div class="text-muted">Author · External</div>
@@ -167,7 +167,7 @@
           </button>
         </div>
         <div class="d-flex align-items-center gap-2 p-3 bg-white border rounded">
-          <span class="bc-avatar bc-avatar--small">KD</span>
+          <span class="bbt-avatar bbt-avatar--small">KD</span>
           <div class="flex-grow-1">
             <div>De Pauw, Karen</div>
             <div class="text-muted">Author · <strong>UGent</strong> — Department of Environment</div>
@@ -190,7 +190,7 @@
 
     <!-- Section: Files -->
     <section id="files" aria-labelledby="files-heading" class="mb-6">
-      <h2 id="files-heading" class="bc-toolbar__title mb-4">Full text &amp; files</h2>
+      <h2 id="files-heading" class="bt-toolbar__title mb-4">Full text &amp; files</h2>
 
       <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded mb-3">
         <i class="if if-file-pdf" aria-hidden="true"></i>
@@ -202,14 +202,14 @@
         <button type="button" class="btn btn-ghost btn-sm text-danger">Remove</button>
       </div>
 
-      <label class="c-file-drop d-block"
+      <label class="bt-file-drop d-block"
         ondragover="event.preventDefault();this.classList.add('drag-over')"
         ondragleave="this.classList.remove('drag-over')"
         ondrop="event.preventDefault();this.classList.remove('drag-over')"
         for="file-upload">
-        <i class="if if-upload c-file-drop__icon" aria-hidden="true"></i>
-        <p class="c-file-drop__text">Drag a file here, or <strong>browse</strong></p>
-        <p class="c-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
+        <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
+        <p class="bt-file-drop__text">Drag a file here, or <strong>browse</strong></p>
+        <p class="bt-file-drop__hint">PDF, DOCX, EPUB, XML — max 500 MB</p>
         <input type="file" id="file-upload" class="visually-hidden" accept=".pdf,.docx,.epub,.xml">
       </label>
     </section>
