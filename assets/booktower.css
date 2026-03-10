@@ -210,8 +210,8 @@
   --bt-dark-green: var(--bt-green-700);
   --bt-light-green: var(--bt-green-200);
   --bt-red: var(--bt-red-500);
-  --bt-dark-red: var(--bt-red-600);
-  --bt-light-red: var(--bt-red-200);
+  --bt-dark-red: var(--bt-red-700);
+  --bt-light-red: var(--bt-red-50);
   --bt-orange: var(--bt-orange-600);
   --bt-dark-orange: var(--bt-orange-700);
   --bt-light-orange: var(--bt-orange-200);
@@ -706,9 +706,23 @@ code, kbd, pre, samp {
 
 .btn:disabled,
 .btn[aria-disabled=true] {
-  opacity: 0.45;
+  opacity: 0.6;
   pointer-events: none;
   cursor: not-allowed;
+  filter: saturate(0.4);
+}
+
+/* Dark surface — reverse variants for use on dark backgrounds */
+.btn-outline-white {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: white;
+}
+
+.btn-outline-white:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: white;
 }
 
 /* ── Variants ───────────────────────────────────────────────────────────────── */
@@ -731,7 +745,9 @@ code, kbd, pre, samp {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-100);
+  background: var(--bt-blue-50); /* #e9f0fa — light tint */
+  border-color: var(--bt-blue-800);
+  color: var(--bt-blue-900); /* Bootstrap overrides this to white — lock it explicitly */
 }
 
 .btn-ghost {
@@ -753,6 +769,19 @@ code, kbd, pre, samp {
 
 .btn-danger:hover:not(:disabled) {
   background: var(--bt-light-red);
+  border-color: var(--bt-dark-red);
+  color: var(--bt-dark-red);
+}
+
+/* ── Button group ───────────────────────────────────────────────────────────── */
+/*
+  Bootstrap .btn-group handles radius clipping and border collapse.
+  We only need to ensure the focus ring isn't clipped by overflow:hidden.
+  Fix: use outline-offset so the ring sits outside the group border.
+*/
+.btn-group > .btn:focus-visible {
+  outline-offset: 0;
+  z-index: 1;
 }
 
 /* ── Badges ─────────────────────────────────────────────────────────────────── */

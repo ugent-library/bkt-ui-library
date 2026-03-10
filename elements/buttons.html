@@ -3,40 +3,204 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Buttons</h1>
-    <p class="lead">Four variants, three sizes. Primary is a commitment — one per view. Ghost for reversible secondary actions. Danger only for irreversible consequences. The interface has already made most decisions; buttons confirm the ones that are genuinely the user's to make.</p>
+    <p class="lead">Five variants, three sizes. Primary is a commitment — one per view. Ghost for reversible secondary actions. Danger only for irreversible consequences. The interface has already made most decisions; buttons confirm the ones that are genuinely the user's to make.</p>
   </header>
 
+
+  <!-- ── Variants ─────────────────────────────────────────────────────────── -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Variants</h2>
+
     <div class="ds-demo">
-      <div class="ds-demo-label">Core variants</div>
-      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
-        <button type="button" class="btn btn-primary">Download PDF</button>
-        <button type="button" class="btn btn-secondary">Add to list</button>
-        <button type="button" class="btn btn-ghost">Cancel</button>
-        <button type="button" class="btn btn-danger">Delete record</button>
-        <button type="button" class="btn btn-primary" disabled>Disabled</button>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Primary — one per view, confirms the main action</h3></div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-primary">Submit deposit</button>
       </div>
     </div>
+
     <div class="ds-demo">
-      <div class="ds-demo-body dark d-flex flex-wrap gap-2 align-items-center">
-        <button type="button" class="btn">Download</button>
-        <button type="button" class="btn">Learn more</button>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Secondary — outlined, supports the primary</h3></div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-secondary">Add to list</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Ghost — low-emphasis, cancel or navigate back</h3></div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-ghost">Cancel</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Danger — only for irreversible destructive actions</h3></div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-danger">Delete record</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">On dark surfaces — <code>btn-primary</code> and <code>btn-outline-white</code></h3></div>
+      <div class="ds-demo-body p-4" style="background: var(--bt-gray-1000);">
+        <div class="d-flex gap-2 align-items-center">
+          <button type="button" class="btn btn-primary">Download PDF</button>
+          <button type="button" class="btn btn-outline-white">Learn more</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Link — inline action that reads as text</h3></div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-link">View all publications</button>
       </div>
     </div>
   </section>
 
+
+  <!-- ── Sizes ─────────────────────────────────────────────────────────────── -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Sizes</h2>
+
     <div class="ds-demo">
-      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Large — <code>btn-lg</code> — 44px — confirmation dialogs, hero CTAs</h3></div>
+      <div class="ds-demo-body">
         <button type="button" class="btn btn-primary btn-lg">Submit deposit</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Default — 38px — standard toolbar and form actions</h3></div>
+      <div class="ds-demo-body">
         <button type="button" class="btn btn-primary">Save draft</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Small — <code>btn-sm</code> — 32px — inline row actions, compact toolbars</h3></div>
+      <div class="ds-demo-body">
         <button type="button" class="btn btn-primary btn-sm">Edit</button>
       </div>
     </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">All three side by side — size comparison</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-secondary btn-lg">Large</button>
+        <button type="button" class="btn btn-secondary">Default</button>
+        <button type="button" class="btn btn-secondary btn-sm">Small</button>
+      </div>
+    </div>
   </section>
 
+
+  <!-- ── With icons ────────────────────────────────────────────────────────── -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">With icons</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Icon + label — icon precedes the label, always <code>aria-hidden</code></h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-primary">
+          <i class="if if-download" aria-hidden="true"></i>
+          Download PDF
+        </button>
+        <button type="button" class="btn btn-secondary">
+          <i class="if if-add" aria-hidden="true"></i>
+          Add to list
+        </button>
+        <button type="button" class="btn btn-ghost">
+          <i class="if if-arrow-left" aria-hidden="true"></i>
+          Back
+        </button>
+        <button type="button" class="btn btn-danger">
+          <i class="if if-delete" aria-hidden="true"></i>
+          Delete record
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Icon only — <code>aria-label</code> required on the button, no text inside</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Edit record">
+          <i class="if if-edit" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Download PDF">
+          <i class="if if-download" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Delete record">
+          <i class="if if-delete" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="More options">
+          <i class="if if-more" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Disabled ──────────────────────────────────────────────────────────── -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Disabled</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Disabled — <code>disabled</code> attribute, all variants</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-primary" disabled>Submit deposit</button>
+        <button type="button" class="btn btn-secondary" disabled>Add to list</button>
+        <button type="button" class="btn btn-ghost" disabled>Cancel</button>
+        <button type="button" class="btn btn-danger" disabled>Delete record</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title"><code>aria-disabled="true"</code> — stays in tab order, can carry a tooltip explaining why</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-primary" aria-disabled="true"
+          title="Complete all required fields before submitting">
+          Submit deposit
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Button group ──────────────────────────────────────────────────────── -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Button group</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Segmented control — related actions collapsed into a joined row</h3></div>
+      <div class="ds-demo-body">
+        <div class="btn-group" role="group" aria-label="Export format">
+          <button type="button" class="btn btn-secondary">CSV</button>
+          <button type="button" class="btn btn-secondary">XLSX</button>
+          <button type="button" class="btn btn-secondary">RIS</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Small group — as used in table row toolbars</h3></div>
+      <div class="ds-demo-body">
+        <div class="btn-group btn-group-sm" role="group" aria-label="Record actions">
+          <button type="button" class="btn btn-ghost" aria-label="Edit: Urban forests paper">
+            <i class="if if-edit" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-ghost" aria-label="Download: Urban forests paper">
+            <i class="if if-download" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-ghost" aria-label="Delete: Urban forests paper">
+            <i class="if if-delete" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Usage rules ───────────────────────────────────────────────────────── -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Usage rules</h2>
     <div class="ds-demo">
@@ -47,21 +211,26 @@
             <ul>
               <li>One primary button per view</li>
               <li>Use ghost for cancel / go back</li>
-              <li>Use danger only when action cannot be undone</li>
-              <li>Button labels are verbs: <em>Download</em>, <em>Save</em>, <em>Submit</em></li>
+              <li>Use danger only when the action cannot be undone</li>
+              <li>Button labels are verbs: <em>Download</em>, <em>Save</em>, <em>Delete</em></li>
+              <li>Icon-only buttons carry an <code>aria-label</code> that includes the record name</li>
+              <li>Prefer <code>aria-disabled</code> + tooltip over hiding unavailable actions</li>
             </ul>
           </div>
           <div class="col-6">
             <p class="form-label text-danger mb-2">✗ Don't</p>
             <ul>
               <li>Two primary buttons side by side</li>
-              <li>Use danger for "Delete" if it's recoverable</li>
+              <li>Use danger for recoverable deletes</li>
               <li>Vague labels: <em>Click here</em>, <em>OK</em>, <em>Submit</em></li>
-              <li>Disabled buttons without explanation</li>
+              <li>Silently disable without explaining why</li>
+              <li>Put <code>aria-label</code> on a button that already has visible text</li>
+              <li>Use <code>btn-link</code> for navigation — use <code>&lt;a&gt;</code> instead</li>
             </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
+
 </div>

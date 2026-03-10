@@ -48,9 +48,22 @@
 
 .btn:disabled,
 .btn[aria-disabled="true"] {
-  opacity: .45;
+  opacity: .6;
   pointer-events: none;
   cursor: not-allowed;
+  filter: saturate(0.4);
+}
+
+/* Dark surface — reverse variants for use on dark backgrounds */
+.btn-outline-white {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.45);
+  color: white;
+}
+.btn-outline-white:hover:not(:disabled) {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.7);
+  color: white;
 }
 
 /* ── Variants ───────────────────────────────────────────────────────────────── */
@@ -72,7 +85,9 @@
   color: var(--bt-blue-900);
 }
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-100);
+  background: var(--bt-blue-50);   /* #e9f0fa — light tint */
+  border-color: var(--bt-blue-800);
+  color: var(--bt-blue-900);       /* Bootstrap overrides this to white — lock it explicitly */
 }
 
 .btn-ghost {
@@ -92,4 +107,17 @@
 }
 .btn-danger:hover:not(:disabled) {
   background: var(--bt-light-red);
+  border-color: var(--bt-dark-red);
+  color: var(--bt-dark-red);
+}
+
+/* ── Button group ───────────────────────────────────────────────────────────── */
+/*
+  Bootstrap .btn-group handles radius clipping and border collapse.
+  We only need to ensure the focus ring isn't clipped by overflow:hidden.
+  Fix: use outline-offset so the ring sits outside the group border.
+*/
+.btn-group > .btn:focus-visible {
+  outline-offset: 0;
+  z-index: 1;
 }
