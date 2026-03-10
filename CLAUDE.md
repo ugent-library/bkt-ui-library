@@ -7,6 +7,31 @@ Add it to the root of any project where I'm a regular collaborator.
 
 ---
 
+## Session start — do this first, every time
+
+When a new session begins on this project, execute these steps before writing any code or HTML:
+
+1. **Read the docs folder** — read all three files in order:
+   - `docs/DOMAIN.md` — entity vocabulary, status values, badge mappings, profile system, review workflow
+   - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `bbl` backend, data flow, what is out of scope
+   - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
+
+2. **Check the verified class list** — the complete class list in this file (CLAUDE.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
+
+3. **Identify the surface** — before writing the first line of HTML, confirm whether this is a `public` or `backoffice` page. If uncertain, ask.
+
+4. **Run the pre-flight checklist** — before finalising any template, run the accessibility checklist at the bottom of this file.
+
+### Recommended session-start prompt (paste this at the start of a new conversation)
+
+```
+Read /Users/mietclaes/Sites/booktower-ui-library/CLAUDE.md and follow
+the session start instructions. Then read the three files in docs/.
+You're working on the booktower-ui-library.
+```
+
+---
+
 ## What this project is
 
 A design system and prototype environment for **biblio.ugent.be** — Ghent University's research output repository. It serves two distinct user contexts that must never be conflated:
