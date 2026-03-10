@@ -1,0 +1,143 @@
+<!-- @title: Search Bar — Booktower Design System -->
+<!-- @surface: public -->
+<div class="ds-page" data-surface="public">
+  <header class="ds-page-header col-6">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-1">Search bar</h1>
+    <p class="lead">A pill-shaped search field with an inset submit button. Built as a modifier on Bootstrap's <code>.input-group</code> — Bootstrap handles the flex layout, border joining, and sizing scale; the modifier adds the pill shape, the whole-bar focus ring, and search-cancel suppression.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Default</h2>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Default — <code>.input-group.input-group--search</code></h3>
+      <div class="ds-demo-body">
+        <form role="search" class="input-group input-group--search" aria-label="Search research output" action="/search">
+          <label class="visually-hidden" for="search-default">Search research output</label>
+          <input class="form-control" type="search" id="search-default" name="q"
+            placeholder="Search by title, author, or DOI…" autocomplete="off">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;form role="search" class="input-group input-group--search"
+  aria-label="Search research output" action="/search"&gt;
+  &lt;label class="visually-hidden" for="q"&gt;Search research output&lt;/label&gt;
+  &lt;input class="form-control" type="search" id="q" name="q"
+    placeholder="Search by title, author, or DOI…" autocomplete="off"&gt;
+  &lt;button class="btn btn-primary" type="submit"&gt;Search&lt;/button&gt;
+&lt;/form&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Large — hero placement</h2>
+    <p class="mb-4">Add Bootstrap's own <code>.input-group-lg</code> for the hero variant. No extra modifier needed — Bootstrap scales the input and button; the modifier adjusts only the button inset margin.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Large — <code>.input-group.input-group--search.input-group-lg</code></h3>
+      <div class="ds-demo-body">
+        <form role="search" class="input-group input-group--search input-group-lg" aria-label="Search research output" action="/search">
+          <label class="visually-hidden" for="search-lg">Search research output</label>
+          <input class="form-control" type="search" id="search-lg" name="q"
+            placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;form role="search" class="input-group input-group--search input-group-lg"
+  aria-label="Search research output" action="/search"&gt;
+  &lt;label class="visually-hidden" for="q"&gt;Search research output&lt;/label&gt;
+  &lt;input class="form-control" type="search" id="q" name="q"
+    placeholder='Try "climate change" or "quantum computing"' autocomplete="off"&gt;
+  &lt;button class="btn btn-primary" type="submit"&gt;Search&lt;/button&gt;
+&lt;/form&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">In-hero context</h2>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Hero placement</h3>
+      <div class="ds-demo-body" style="padding:0;overflow:hidden;border-radius:var(--bt-radius-lg)">
+        <section class="bt-hero">
+          <div class="bt-hero__bg">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 300" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" aria-hidden="true">
+              <rect x="0" y="0" width="1400" height="300" fill="var(--bg)"></rect>
+              <path class="gridLine" d="M0 40H1400 M0 80H1400 M0 120H1400 M0 160H1400 M0 200H1400 M0 240H1400 M0 280H1400"></path>
+              <path class="gridLine" d="M60 0V300 M120 0V300 M180 0V300 M240 0V300 M300 0V300 M360 0V300 M420 0V300 M480 0V300 M540 0V300 M600 0V300 M660 0V300 M720 0V300 M780 0V300 M840 0V300 M900 0V300 M960 0V300 M1020 0V300 M1080 0V300 M1140 0V300 M1200 0V300 M1260 0V300 M1320 0V300 M1380 0V300"></path>
+              <path class="stroke noFill edge muted" d="M-100 200 C 200 180, 400 140, 700 120 C 900 100, 1100 130, 1500 120"></path>
+              <circle class="fillFaint pulse" cx="300" cy="160" r="3"></circle>
+              <circle class="fillMuted pulse p2" cx="520" cy="130" r="2.8"></circle>
+              <circle class="fillFaint pulse p3" cx="700" cy="120" r="3.2"></circle>
+              <circle class="fillMuted pulse p4" cx="900" cy="110" r="2.6"></circle>
+              <circle class="fillFaint pulse" cx="1100" cy="125" r="2.8"></circle>
+            </svg>
+          </div>
+          <div class="bt-hero__content container py-8">
+            <div class="col-lg-8">
+              <h1 class="display-3 fw-semibold mb-4">Search, use &amp; cite trusted&nbsp;research</h1>
+              <form role="search" class="input-group input-group--search input-group-lg mb-4"
+                aria-label="Search research output" action="/search">
+                <label class="visually-hidden" for="search-hero">Search research output</label>
+                <input class="form-control" type="search" id="search-hero" name="q"
+                  placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
+                <button class="btn btn-primary" type="submit">Search</button>
+              </form>
+              <div class="d-flex gap-3">
+                <a class="btn btn-sm btn-outline-dark" href="#">Open access research</a>
+                <a class="btn btn-sm btn-outline-dark" href="#">Student theses</a>
+                <a class="btn btn-sm btn-outline-dark" href="#">Research heritage</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">What the modifier does — and what it leaves alone</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p>Bootstrap's <code>.input-group</code> provides: flex layout, border joining between input and button, and the <code>.input-group-lg</code> / <code>.input-group-sm</code> sizing scale.</p>
+        <p class="mb-0"><code>.input-group--search</code> adds only three things on top: the pill border-radius on the outer wrapper and the input's leading edge; a <code>:focus-within</code> ring on the whole bar as one unit (individual element focus shadows are suppressed); and the native browser search-cancel button is hidden.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility notes</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Wrap in <code>&lt;form role="search"&gt;</code> with a distinct <code>aria-label</code> so screen reader users can jump to the search landmark directly.</li>
+          <li>The <code>&lt;label&gt;</code> must exist in the DOM even if visually hidden. <code>placeholder</code> alone is not a label.</li>
+          <li>Use <code>type="search"</code> so mobile browsers show the correct keyboard and voice-search affordances.</li>
+          <li>The <code>:focus-within</code> ring surrounds the entire pill — individual element outlines are suppressed to avoid a double ring. The ring meets WCAG 2.2 AA contrast requirements.</li>
+          <li>The button must be <code>type="submit"</code> so the form submits without JavaScript. <code>action</code> on the <code>&lt;form&gt;</code> is the no-JS fallback.</li>
+          <li>When wiring to HTMX live search, add <code>hx-get</code> on the input and a paired <code>hx-indicator</code> with <code>aria-live="polite"</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">When to use this vs the toolbar search</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p>Use <code>.input-group--search</code> when search is the primary action on the page and deserves visual prominence — homepage hero, a dedicated search landing page, or above a full-width result list.</p>
+        <p class="mb-0">Use the compact <code>.form-control-search</code> inside a <code>.bt-toolbar</code> for inline filtering in the backoffice — filtering a list, searching within a deposit, live-filtering a dropdown. That pattern is documented in <a href="/elements/forms.html">Forms &amp; Inputs → Search input</a>.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
