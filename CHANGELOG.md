@@ -6,6 +6,76 @@ system, or do I reach for something new?"
 
 ---
 
+## Breaking change — unified `bt-` prefix (v2.1)
+
+All component classes now use a single `bt-` prefix. The old `bc-` and `c-`
+prefixes are retired. Find-and-replace the following across every template,
+partial, and stylesheet:
+
+| Old class | New class |
+|-----------|-----------|
+| `bc-navbar` | `bt-navbar` |
+| `bc-navbar__brand` | `bt-navbar__brand` |
+| `bc-navbar__sep` | `bt-navbar__sep` |
+| `bc-navbar__nav` | `bt-navbar__nav` |
+| `bc-navbar__link` | `bt-navbar__link` |
+| `bc-toolbar` | `bt-toolbar` |
+| `bc-toolbar__left` | `bt-toolbar__left` |
+| `bc-toolbar__right` | `bt-toolbar__right` |
+| `bc-toolbar__middle` | `bt-toolbar__middle` |
+| `bc-toolbar__title` | `bt-toolbar__title` |
+| `bc-toolbar__item` | `bt-toolbar__item` |
+| `bc-toolbar--bordered` | `bt-toolbar--bordered` |
+| `bc-avatar` | `bt-avatar` |
+| `bc-avatar--small` | `bt-avatar--small` |
+| `bc-avatar--large` | `bt-avatar--large` |
+| `c-sub-sidebar` | `bt-sub-sidebar` |
+| `c-sub-sidebar--bordered` | `bt-sub-sidebar--bordered` |
+| `c-stepper` | `bt-stepper` |
+| `c-stepper__item` | `bt-stepper__item` |
+| `c-stepper__item--done` | `bt-stepper__item--done` |
+| `c-stepper__item--active` | `aria-current="step"` (attribute, not class) |
+| `c-stepper__num` | `bt-stepper__num` |
+| `c-stepper__label` | `bt-stepper__label` |
+| `c-stepper__required` | `bt-stepper__required` |
+| `c-blank-slate` | `bt-blank-slate` |
+| `c-blank-slate-default` | `bt-blank-slate--default` |
+| `c-blank-slate-muted` | `bt-blank-slate--muted` |
+| `c-blank-slate-primary` | `bt-blank-slate--primary` |
+| `c-radio-card` | `bt-radio-card` |
+| `c-radio-card__group` | `bt-radio-card__group` |
+| `c-radio-card__body` | `bt-radio-card__body` |
+| `c-file-drop` | `bt-file-drop` |
+| `c-file-drop__icon` | `bt-file-drop__icon` |
+| `c-file-drop__text` | `bt-file-drop__text` |
+| `c-file-drop__hint` | `bt-file-drop__hint` |
+| `c-hero` | `bt-hero` |
+| `c-hero__bg` | `bt-hero__bg` |
+| `c-hero__content` | `bt-hero__content` |
+| `c-facets` | `bt-facets` |
+| `c-facet-title` | `bt-facet-title` |
+| `c-facet-check` | `bt-facet-check` |
+| `c-facet-name` | `bt-facet-name` |
+| `c-facet-count` | `bt-facet-count` |
+| `c-facet-separator` | `bt-facet-separator` |
+| `c-facets-col` | `bt-facets-col` |
+| `c-results-col` | `bt-results-col` |
+| `c-content-area` | `bt-content-area` |
+| `c-button-toolbar` | `bt-button-toolbar` |
+| `c-button-toolbar--wide-spacing` | `bt-button-toolbar--wide-spacing` |
+| `c-button-toolbar--vertical` | `bt-button-toolbar--vertical` |
+| `c-filter-bar` | `bt-filter-bar` |
+| `c-bulk-bar` | `bt-bulk-bar` |
+| `c-pagination-bar` | `bt-pagination-bar` |
+| `c-results-toolbar` | `bt-results-toolbar` |
+
+**Rationale:** The split between `bc-` (Bootstrap Custom) and `c-` (Component)
+was never meaningful in practice and caused constant confusion. Every Booktower
+component class now uses `bt-`. The `u-` prefix for utilities and layout shells
+is unchanged.
+
+---
+
 ## Status key
 
 | Symbol | Meaning |
@@ -61,12 +131,12 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-navbar` | `bt-navbar` | ⏳ Planned | Exists in OLD, not yet written in v2 SCSS. Class name is confirmed — do not invent alternatives. |
+| `bc-navbar` | `bt-navbar` | ✅ Carried over | Active in `_booktower-components.scss`. |
 | `bc-navbar--fixed` | `bt-navbar--fixed` | ⏳ Planned | Sticky variant. |
 | `bc-navbar--white` | `bt-navbar--white` | ⏳ Planned | |
 | `bc-navbar--large`, `--small` | ⏳ | ⏳ Planned | Size variants — review whether all are needed. |
 | `nav.nav-main` | ⏳ | ⏳ Planned | Top-level navigation links inside navbar. |
-| `bt-navbar__brand`, `__sep`, `__nav`, `__link`, `__mark` | Same | ⏳ Planned | BEM elements of `bt-navbar`. Not yet written in v2. |
+| `bt-navbar__brand`, `__sep`, `__nav`, `__link` | Same | ✅ Carried over | BEM elements — all active. `__mark` does not exist; do not use. |
 | `nav.nav-sidebar` | ⏳ | ⏳ Planned | Sidebar nav pills. |
 | `nav.nav-tabs` | `nav.nav-tabs` | ✅ Carried over | Bootstrap nav-tabs with booktower overrides. Defined in `_bootstrap-components.scss` (currently commented). |
 | `nav.nav-pills` | Bootstrap `nav-pills` | ✅ Carried over | Use Bootstrap directly. |
@@ -99,11 +169,10 @@ system, or do I reach for something new?"
 | `c-sidebar` (narrow icon rail, blue bg) | ⏳ | ⏳ Planned | The narrow icon-based sidebar. Not yet written in v2. |
 | `c-sidebar--bordered` | ⏳ | ⏳ Planned | |
 | `c-sidebar--dark-gray`, `--green` | ⏳ | ⏳ Planned | Colour variants — review whether all are needed in v2. |
-| `c-sub-sidebar` (wide text nav) | ⏳ | ⏳ Planned | The standard application navigation sidebar. |
-| `c-sub-sidebar--bordered` | ⏳ | ⏳ Planned | |
+| `c-sub-sidebar` (wide text nav) | `bt-sub-sidebar` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `c-sub-sidebar--bordered` | `bt-sub-sidebar--bordered` | ✅ Carried over | |
 | `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge` | ⏳ | ⏳ Planned | Width variants. Review whether a token-based approach is cleaner. |
 | `c-sub-sidebar--small`, `--icons` | ⏳ | ⏳ Planned | Collapsed / icon-only variants. |
-| `c-sub-sidebar__menu`, `bt-sub-sidebar__item`, `bt-sub-sidebar__item--active` | ⏳ | ⏳ Planned | |
 | `c-sub-sidebar-responsive-wrapper` | ⏳ | ⏳ Planned | Mobile overlay wrapper. |
 
 ---
@@ -112,14 +181,14 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-stepper` | `bt-stepper` | ⏳ Planned | Class name confirmed. Not yet written in v2. |
-| `c-stepper__item` | `bt-stepper__item` | ⏳ Planned | |
-| `c-stepper__item--done` | `bt-stepper__item--done` | ⏳ Planned | Was `.done` class in OLD — corrected to BEM modifier. |
-| `c-stepper__item--active` | `bt-stepper__item--active` | ⏳ Planned | |
+| `c-stepper` | `bt-stepper` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `c-stepper__item` | `bt-stepper__item` | ✅ Carried over | |
+| `c-stepper__item--done` | `bt-stepper__item--done` | ✅ Carried over | Was `.done` class in OLD — corrected to BEM modifier. |
+| `c-stepper__item--active` | use `aria-current="step"` | 🔄 Renamed | State is now driven by the ARIA attribute, not a class. |
 | `c-stepper__item--sub` | `bt-stepper__item--sub` | ⏳ Planned | Sub-step indented link. |
-| `c-stepper__num` | `bt-stepper__num` | ⏳ Planned | |
-| `c-stepper__label` | `bt-stepper__label` | ⏳ Planned | |
-| `c-stepper__required` | `bt-stepper__required` | ⏳ Planned | |
+| `c-stepper__num` | `bt-stepper__num` | ✅ Carried over | |
+| `c-stepper__label` | `bt-stepper__label` | ✅ Carried over | |
+| `c-stepper__required` | `bt-stepper__required` | ✅ Carried over | |
 
 ---
 
@@ -127,12 +196,12 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-facets` | `bt-facets` | ⏳ Planned | CSS grid, 3-column structure confirmed. Not yet written in v2. |
-| `c-facet-title` | `bt-facet-title` | ⏳ Planned | |
-| `c-facet-check` | `bt-facet-check` | ⏳ Planned | |
-| `c-facet-name` | `bt-facet-name` | ⏳ Planned | |
-| `c-facet-count` | `bt-facet-count` | ⏳ Planned | |
-| `c-facet-separator` | `bt-facet-separator` | ⏳ Planned | |
+| `c-facets` | `bt-facets` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `c-facet-title` | `bt-facet-title` | ✅ Carried over | |
+| `c-facet-check` | `bt-facet-check` | ✅ Carried over | |
+| `c-facet-name` | `bt-facet-name` | ✅ Carried over | |
+| `c-facet-count` | `bt-facet-count` | ✅ Carried over | |
+| `c-facet-separator` | `bt-facet-separator` | ✅ Carried over | |
 
 ---
 
@@ -163,8 +232,8 @@ system, or do I reach for something new?"
 | `.is-valid`, `.is-invalid` | Same | ✅ Carried over | Active. |
 | `.form-check-input` | `.form-check-input` | ✅ Carried over | Active. `accent-color` on v2. |
 | `.form-control-search` | `.form-control-search` | ✅ Carried over | Active. Pill shape with embedded search icon. |
-| `c-radio-card` | `bt-radio-card` | ⏳ Planned | Large radio option cards. Child elements: `bt-radio-card__group`, `bt-radio-card__body`. |
-| `c-file-upload` / `bt-file-drop` | ⏳ | ⏳ Planned | File drop zone. |
+| `c-radio-card` | `bt-radio-card` | ✅ Carried over | Active. Child elements: `bt-radio-card__group`, `bt-radio-card__body`. |
+| `c-file-upload` / `c-file-drop` | `bt-file-drop` | ✅ Carried over | Active. Child elements: `bt-file-drop__icon`, `__text`, `__hint`. |
 | `tagify` | ⏳ | ⏳ Planned | Tag input (third-party lib integration). |
 | `flatpickr` | ⏳ | ⏳ Planned | Date picker (third-party lib integration). |
 
@@ -220,8 +289,8 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-avatar` | `bt-avatar` | ⏳ Planned | Initials avatar. Not yet active in v2 (commented). |
-| `bc-avatar--small`, `--large` | Same | ⏳ Planned | |
+| `bc-avatar` | `bt-avatar` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `bc-avatar--small`, `--large` | `bt-avatar--small`, `bt-avatar--large` | ✅ Carried over | |
 
 ---
 
@@ -229,7 +298,7 @@ system, or do I reach for something new?"
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-blank-slate` | `bt-blank-slate` | ⏳ Planned | Not yet active in v2 (commented). |
+| `c-blank-slate` | `bt-blank-slate` | ✅ Carried over | Active in `_booktower-components.scss`. |
 | `c-blank-slate-default`, `-muted`, `-primary` | `bt-blank-slate--default`, `--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
 
 ---
@@ -293,8 +362,8 @@ These were Bootstrap overrides in the OLD system. In v2 they either use Bootstra
 
 | OLD class | v2 approach | Status |
 |-----------|------------|--------|
-| `nav.nav-main` | ⏳ Planned as `bt-navbar` nav area | ⏳ Planned |
-| `nav.nav-sidebar` | Part of `bt-sub-sidebar` | ⏳ Planned |
+| `nav.nav-main` | Part of `bt-navbar__nav` | ✅ Carried over |
+| `nav.nav-sidebar` | Part of `bt-sub-sidebar` | ✅ Carried over |
 | `nav.nav-tabs` | Bootstrap + override in `_bootstrap-components.scss` | ⏳ Planned |
 | `nav.nav-pills` | Bootstrap directly | ✅ Carried over |
 | `nav-tabs-scrollable` | ⏳ | ⏳ Planned |
