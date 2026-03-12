@@ -39,7 +39,6 @@
 
 /* ── bt-navbar ──────────────────────────────────────────────────────────────── */
 .bt-navbar {
-  height: var(--s-topbar-height, 52px);
   background: var(--bt-white);
   border-bottom: var(--bt-border);
   display: flex;
@@ -49,6 +48,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  min-height: var(--s-topbar-height);
 }
 .bt-navbar__sep {
   width: 1px;
@@ -74,6 +74,7 @@
 }
 .bt-navbar__link {
   font-size: var(--bt-text-sm);
+  font-weight: 500;
   color: var(--bt-gray-700);
   text-decoration: none;
   padding: var(--bt-sp-1) var(--bt-sp-3);
@@ -262,7 +263,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
+  min-height: --s-topbar-height;
   padding: var(--bt-sp-2) 0;
   gap: var(--bt-sp-4);
   width: 100%;

@@ -272,16 +272,6 @@
      --s-btn-pad-y/x       button padding
      --s-topbar-height     application topbar height
 */
-/* ── Layout geometry — shared across both surfaces ─────────────────────────── */
-/*
-  --s-topbar-height is the single source of truth for the sticky topbar height.
-  It is used by _layouts.scss to calculate sticky sidebar offsets.
-  Override per surface if the topbar height ever differs between public and backoffice.
-*/
-:root {
-  --s-topbar-height: 52px;
-}
-
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 body {
   --s-heading-font: var(--bt-font-sans);
@@ -294,6 +284,7 @@ body {
   --s-lead-font: var(--bt-font-sans);
   --s-display-weight: 600;
   --s-display-leading: 1.2;
+  --s-topbar-height: var(--bt-sp-12);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
@@ -303,6 +294,7 @@ body {
   --s-heading-weight: 400;
   --s-body-leading: 1.7;
   --s-lead-font: var(--bt-font-serif);
+  --s-topbar-height: var(--bt-sp-16);
 }
 
 /* ── Backoffice — explicit alias, no overrides needed ───────────────────────── */
@@ -1036,44 +1028,19 @@ code, kbd, pre, samp {
 }
 
 /* ── bt-navbar ──────────────────────────────────────────────────────────────── */
-/*
-  Responsive behaviour:
-  - Mobile (< lg): fixed-height bar with brand + toggler only.
-    Nav links and actions collapse into a full-width panel below the bar.
-  - Desktop (>= lg): single-row bar, all items visible.
-
-  HTML structure:
-    <header class="bt-navbar">
-      <brand or h1>
-      <div class="bt-navbar__sep">          ← hidden on mobile via d-none d-lg-block
-      <button class="bt-navbar__toggler">  ← visible on mobile only, d-lg-none
-      <div class="bt-navbar__collapse">    ← collapses on mobile
-        <nav class="bt-navbar__nav">
-        <div class="bt-navbar__actions">
-    </header>
-*/
 .bt-navbar {
   background: var(--bt-white);
   border-bottom: var(--bt-border);
   display: flex;
   align-items: center;
-  flex-wrap: wrap; /* allows collapse panel to break to next line */
   padding: 0 var(--bt-sp-6);
   gap: var(--bt-sp-4);
   position: sticky;
   top: 0;
   z-index: 50;
-  /* Mobile: enough height for brand + toggler row */
-  min-height: var(--s-topbar-height, 52px);
+  min-height: var(--s-topbar-height);
 }
 
-/* On desktop the bar is a fixed single-row height */
-@media (min-width: 992px) {
-  .bt-navbar {
-    height: var(--s-topbar-height, 52px);
-    flex-wrap: nowrap;
-  }
-}
 .bt-navbar__sep {
   width: 1px;
   height: var(--bt-sp-5);
@@ -1082,57 +1049,6 @@ code, kbd, pre, samp {
   display: block;
 }
 
-/* Hamburger toggle — visible below lg breakpoint only */
-.bt-navbar__toggler {
-  margin-left: auto;
-  background: none;
-  border: none;
-  padding: var(--bt-sp-1) var(--bt-sp-2);
-  border-radius: var(--bt-radius);
-  color: var(--bt-gray-700);
-  cursor: pointer;
-  line-height: 1;
-  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
-}
-
-.bt-navbar__toggler:hover {
-  background: var(--bt-gray-50);
-  color: var(--bt-gray-1000);
-}
-
-.bt-navbar__toggler:focus-visible {
-  outline: 3px solid var(--bt-focus-ring);
-  outline-offset: 2px;
-}
-
-@media (min-width: 992px) {
-  .bt-navbar__toggler {
-    display: none;
-  }
-}
-/*
-  Collapse panel — wraps nav links + actions.
-  On mobile: hidden by default, shown when .show is toggled by Bootstrap collapse.
-  On desktop: always visible, flows inline with the rest of the bar.
-*/
-.bt-navbar__collapse {
-  /* Mobile: full-width panel below the brand row */
-  width: 100%;
-  overflow: hidden;
-  /* Bootstrap collapse handles display:none / height animation via .collapse/.show */
-}
-
-@media (min-width: 992px) {
-  .bt-navbar__collapse {
-    /* Desktop: join the single row, not full-width */
-    width: auto;
-    flex: 1;
-    display: flex !important; /* override Bootstrap collapse hidden state */
-    align-items: center;
-    overflow: visible;
-  }
-}
-/* Mobile nav: stacked links with border separators */
 .bt-navbar__nav {
   display: flex;
   align-items: center;
@@ -1140,41 +1056,6 @@ code, kbd, pre, samp {
   flex: 1;
 }
 
-@media (max-width: 991.98px) {
-  .bt-navbar__nav {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    padding: var(--bt-sp-2) 0;
-    border-top: var(--bt-border);
-  }
-}
-/* Mobile actions: stacked below nav, with top border */
-.bt-navbar__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-}
-
-@media (max-width: 991.98px) {
-  .bt-navbar__actions {
-    flex-direction: column;
-    align-items: stretch;
-    padding: var(--bt-sp-2) 0 var(--bt-sp-3);
-    border-top: var(--bt-border);
-    gap: var(--bt-sp-1);
-  }
-  /* Buttons in mobile actions go full-width */
-  .bt-navbar__actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-  /* Dropdowns in mobile actions go full-width */
-  .bt-navbar__actions .dropdown,
-  .bt-navbar__actions .dropdown > button {
-    width: 100%;
-  }
-}
 .bt-navbar__brand {
   display: flex;
   align-items: center;
@@ -1183,11 +1064,11 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
   font-weight: 500;
   font-size: var(--bt-text-sm);
-  flex-shrink: 0;
 }
 
 .bt-navbar__link {
   font-size: var(--bt-text-sm);
+  font-weight: 500;
   color: var(--bt-gray-700);
   text-decoration: none;
   padding: var(--bt-sp-1) var(--bt-sp-3);
@@ -1213,15 +1094,6 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* Mobile nav links: full-width tap targets */
-@media (max-width: 991.98px) {
-  .bt-navbar__link {
-    display: block;
-    padding: var(--bt-sp-2) var(--bt-sp-3);
-    border-radius: 0;
-    white-space: normal;
-  }
-}
 /* ── bt-blank-slate ─────────────────────────────────────────────────────────── */
 /* Used in toolbar-blank-slate.html and any empty-state screen */
 .bt-blank-slate {
@@ -1406,7 +1278,7 @@ code, kbd, pre, samp {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 52px;
+  min-height: --s-topbar-height;
   padding: var(--bt-sp-2) 0;
   gap: var(--bt-sp-4);
   width: 100%;

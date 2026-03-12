@@ -12,21 +12,8 @@
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--app — backoffice list/detail pages</h3></div>
-      <div class="ds-demo-body" style="background:var(--bt-gray-50);padding:var(--bt-sp-4);border-radius:var(--bt-radius-lg)">
-        <div style="display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;min-height:300px;border:var(--bt-border);border-radius:var(--bt-radius-lg);overflow:hidden;background:var(--bt-white)">
-          <div style="grid-column:1/-1;background:var(--bt-white);border-bottom:var(--bt-border);height:52px;display:flex;align-items:center;padding:0 var(--bt-sp-6);gap:var(--bt-sp-4);font-size:var(--bt-text-sm);font-weight:500">
-            <i class="if if-ghent-university" aria-hidden="true"></i>
-            Biblio
-            <span style="flex:1"></span>
-            <span class="text-muted">bt-navbar</span>
-          </div>
-          <div style="width:180px;border-right:var(--bt-border);padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            bt-sub-sidebar
-          </div>
-          <div style="padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            &lt;main&gt; — bt-toolbar, bt-filter-bar, bt-content-area…
-          </div>
-        </div>
+      <div class="ds-demo-body bg-light p-3">
+       TODO without inline styling
       </div>
     </div>
     <div class="ds-code">
@@ -35,7 +22,7 @@
   &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
   &lt;nav class="bt-sub-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
   &lt;main id="main-content"&gt;
-    &lt;!-- bt-toolbar → bt-filter-bar → bt-bulk-bar → bt-content-area --&gt;
+    &lt;!-- bt-toolbar → bt-content-area --&gt;
   &lt;/main&gt;
 &lt;/div&gt;
 
@@ -50,21 +37,8 @@
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--deposit — deposit/add publication flow</h3></div>
-      <div class="ds-demo-body" style="background:var(--bt-gray-50);padding:var(--bt-sp-4);border-radius:var(--bt-radius-lg)">
-        <div style="display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;min-height:240px;border:var(--bt-border);border-radius:var(--bt-radius-lg);overflow:hidden;background:var(--bt-white)">
-          <div style="grid-column:1/-1;background:var(--bt-white);border-bottom:var(--bt-border);height:52px;display:flex;align-items:center;padding:0 var(--bt-sp-6);font-size:var(--bt-text-sm);font-weight:500">
-            <i class="if if-ghent-university" aria-hidden="true"></i>
-            Biblio
-            <span style="flex:1"></span>
-            <span class="text-muted">bt-navbar</span>
-          </div>
-          <div style="width:200px;border-right:var(--bt-border);padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            bt-stepper
-          </div>
-          <div style="padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            &lt;main&gt; — form sections, action bar
-          </div>
-        </div>
+      <div class="ds-demo-body bg-light p-3">
+        REDO
       </div>
     </div>
     <div class="ds-code">
@@ -80,17 +54,8 @@
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--public — public search and record pages</h3></div>
-      <div class="ds-demo-body" style="background:var(--bt-gray-50);padding:var(--bt-sp-4);border-radius:var(--bt-radius-lg)">
-        <div style="display:flex;flex-direction:column;min-height:240px;border:var(--bt-border);border-radius:var(--bt-radius-lg);overflow:hidden;background:var(--bt-white)">
-          <div style="background:var(--bt-white);border-bottom:var(--bt-border);height:52px;display:flex;align-items:center;padding:0 var(--bt-sp-6);font-size:var(--bt-text-sm);font-weight:500">
-            Biblio UGent
-            <span style="flex:1"></span>
-            <span class="text-muted">bt-navbar</span>
-          </div>
-          <div style="flex:1;padding:var(--bt-sp-4);font-size:var(--bt-text-sm);color:var(--bt-gray-500)">
-            &lt;main&gt; — .container inside provides gutters. bt-hero, search bar, results…
-          </div>
-        </div>
+      <div class="ds-demo-body bg-light p-3">
+        REDO
       </div>
     </div>
     <div class="ds-code">
@@ -106,13 +71,10 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Topbar height token</h2>
-    <p class="mb-3"><code>--s-topbar-height</code> is set to <code>52px</code> in <code>_surfaces.scss</code>. The layout shells use it directly — no fallback. If the topbar height ever changes, update the token in one place.</p>
+    <p class="mb-3"><code>--s-topbar-height</code> is set in <code>_surfaces.scss</code>. If the topbar height ever changes, update the token in one place.</p>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">scss — _surfaces.scss</span><button class="ds-code-copy">Copy</button></div>
-<pre>:root {
-  --s-topbar-height: 52px;
-}
-
+<pre>
 /* In _layouts.scss — no fallback needed, token is always defined */
 .u-layout--app > .bt-sub-sidebar {
   top: var(--s-topbar-height);
@@ -126,54 +88,12 @@
     <p class="mb-4">Inside <code>u-layout--app &gt; main</code>, backoffice list pages follow a consistent vertical stacking order. Each piece is a separate component class.</p>
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Stacking order</h3></div>
-      <div class="ds-demo-body" style="display:flex;flex-direction:column;gap:2px;font-size:var(--bt-text-sm)">
-        <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius)">
-          <code>bt-toolbar</code> — page title + primary actions
-        </div>
-        <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius)">
-          <code>bt-filter-bar</code> — search input + active filter tags
-        </div>
-        <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-blue-100);border:var(--bt-border);border-radius:var(--bt-radius)">
-          <code>bt-bulk-bar</code> — bulk actions (hidden unless rows selected)
-        </div>
-        <div style="display:flex;gap:2px">
-          <div style="padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius);width:220px;flex-shrink:0">
-            <code>bt-facets-col</code>
-          </div>
-          <div style="flex:1;padding:var(--bt-sp-2) var(--bt-sp-4);background:var(--bt-gray-50);border:var(--bt-border);border-radius:var(--bt-radius)">
-            <code>bt-results-col</code> → <code>bt-results-toolbar</code> + results + <code>bt-pagination-bar</code>
-          </div>
-        </div>
+      <div class="ds-demo-body">
+        REDO
       </div>
     </div>
     <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html — inside u-layout--app main</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;main id="main-content"&gt;
-
-  &lt;div class="bt-toolbar"&gt;
-    &lt;div class="bt-toolbar__left"&gt;&lt;h1 class="bt-toolbar__title"&gt;…&lt;/h1&gt;&lt;/div&gt;
-    &lt;div class="bt-toolbar__right"&gt;&lt;!-- actions --&gt;&lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;div class="bt-filter-bar" role="search" aria-label="Search and filter"&gt;
-    &lt;!-- search input + filter tags + htmx-indicator --&gt;
-  &lt;/div&gt;
-
-  &lt;div class="bt-bulk-bar" hidden&gt;
-    &lt;!-- bulk action buttons, shown when rows selected --&gt;
-  &lt;/div&gt;
-
-  &lt;div class="bt-content-area"&gt;
-    &lt;aside class="bt-facets-col" aria-label="Filter by"&gt;
-      &lt;div class="bt-facets"&gt;…&lt;/div&gt;
-    &lt;/aside&gt;
-    &lt;div class="bt-results-col"&gt;
-      &lt;div class="bt-results-toolbar"&gt;…&lt;/div&gt;
-      &lt;!-- results: cards or table --&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-&lt;/main&gt;</pre>
+      <div class="ds-code-bar"><span class="ds-code-lang">html — inside u-layout--app main</span><button class="ds-code-copy">Copy</button></div><pre></pre>REDO</pre>
     </div>
   </section>
 

@@ -64,10 +64,6 @@ partial, and stylesheet:
 | `c-button-toolbar` | `bt-button-toolbar` |
 | `c-button-toolbar--wide-spacing` | `bt-button-toolbar--wide-spacing` |
 | `c-button-toolbar--vertical` | `bt-button-toolbar--vertical` |
-| `c-filter-bar` | `bt-filter-bar` |
-| `c-bulk-bar` | `bt-bulk-bar` |
-| `c-pagination-bar` | `bt-pagination-bar` |
-| `c-results-toolbar` | `bt-results-toolbar` |
 
 **Rationale:** The split between `bc-` (Bootstrap Custom) and `c-` (Component)
 was never meaningful in practice and caused constant confusion. Every Booktower
