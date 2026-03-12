@@ -1,0 +1,492 @@
+<!-- @title: Organisation — Faculty of Bioscience Engineering — Biblio UGent -->
+<!-- @surface: public -->
+
+<!--
+  Organisation page (public surface)
+  Entity: Organisation (bbl_organizations + bbl_organization_rels + bbl_organization_identifiers)
+  Shows: name, hierarchy, child units, linked research output, projects, people
+  Audience: researchers browsing by unit, external readers, citation managers
+  Vocabulary: "research output" for all Work kinds — not "publications" or "datasets"
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Faculty of Bioscience Engineering",
+  "alternateName": "FBW",
+  "parentOrganization": {
+    "@type": "CollegeOrUniversity",
+    "name": "Ghent University",
+    "url": "https://ugent.be"
+  },
+  "url": "https://biblio.ugent.be/organisation/01H8BXJKD5XZ",
+  "sameAs": [
+    "https://www.ugent.be/bw/en",
+    "https://ror.org/00cv9y106"
+  ]
+}
+</script>
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+<main id="main-content">
+
+  <!-- Organisation header -->
+  <div class="border-bottom">
+    <div class="container py-5">
+
+      <nav aria-label="Breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
+          <li class="breadcrumb-item"><a href="/organisations">Organisations</a></li>
+          <li class="breadcrumb-item"><a href="/organisations/ugent">Ghent University</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Faculty of Bioscience Engineering</li>
+        </ol>
+      </nav>
+
+      <div class="row g-4 align-items-start">
+        <div class="col">
+
+          <p class="text-muted small text-uppercase fw-semibold mb-1" aria-label="Organisation type">Faculty</p>
+
+          <h1 class="mb-1">Faculty of Bioscience Engineering</h1>
+
+          <p class="lead text-muted mb-3">
+            Part of
+            <a href="/organisations/ugent">Ghent University</a>
+          </p>
+
+          <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4" aria-label="Organisation identifiers">
+            <li>
+              <span class="text-muted">ROR:</span>
+              <a href="https://ror.org/00cv9y106" rel="noopener noreferrer">00cv9y106</a>
+            </li>
+            <li>
+              <span class="text-muted">UGent code:</span>
+              <span>FBW</span>
+            </li>
+          </ul>
+
+          <!-- Quick stats — "research output" not "publications", no separate dataset count -->
+          <ul class="list-unstyled d-flex flex-wrap gap-4 mb-0" aria-label="Output summary">
+            <li>
+              <span class="fw-semibold">13,189</span>
+              <span class="text-muted">research output</span>
+            </li>
+            <li>
+              <span class="fw-semibold">8,541</span>
+              <span class="text-muted">open access</span>
+            </li>
+            <li>
+              <span class="fw-semibold">89</span>
+              <span class="text-muted">active projects</span>
+            </li>
+            <li>
+              <span class="fw-semibold">214</span>
+              <span class="text-muted">researchers</span>
+            </li>
+          </ul>
+
+        </div>
+
+        <div class="col-auto d-flex flex-column gap-2 align-items-end">
+          <a href="/organisations/01H8BXJKD5XZ/export" class="btn btn-secondary btn-sm">
+            <i class="if if-download" aria-hidden="true"></i>
+            Export research output
+          </a>
+          <a href="https://www.ugent.be/bw/en" class="btn btn-ghost btn-sm" rel="noopener noreferrer">
+            <i class="if if-external-link" aria-hidden="true"></i>
+            Faculty website
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tabs + content -->
+  <div class="container py-5">
+    <div class="row g-5">
+
+      <!-- Left: tabbed content -->
+      <div class="col-lg-8">
+
+        <!--
+          Three tabs: Research output / Researchers / Projects
+          No separate "Datasets" tab — datasets are research output with kind=dataset,
+          filtered via the type dropdown within the Research output tab.
+          Bootstrap tab pattern: aria-controls and aria-selected required.
+          Keyboard: Arrow keys between tabs, Tab into panel content.
+        -->
+        <div class="mb-4">
+          <ul class="nav nav-tabs" role="tablist" aria-label="Organisation content">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="tab-output"
+                type="button" role="tab"
+                data-bs-toggle="tab" data-bs-target="#panel-output"
+                aria-controls="panel-output" aria-selected="true">
+                Research output
+                <span class="badge bg-secondary ms-1 fw-normal">13,189</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-people"
+                type="button" role="tab"
+                data-bs-toggle="tab" data-bs-target="#panel-people"
+                aria-controls="panel-people" aria-selected="false">
+                Researchers
+                <span class="badge bg-secondary ms-1 fw-normal">214</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="tab-projects"
+                type="button" role="tab"
+                data-bs-toggle="tab" data-bs-target="#panel-projects"
+                aria-controls="panel-projects" aria-selected="false">
+                Projects
+                <span class="badge bg-secondary ms-1 fw-normal">89</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-content">
+
+          <!-- Research output panel -->
+          <div class="tab-pane fade show active" id="panel-output"
+            role="tabpanel" aria-labelledby="tab-output" tabindex="0">
+
+            <div class="bt-toolbar mb-4">
+              <div class="bt-toolbar__left">
+                <span class="text-muted" aria-live="polite" id="output-count">13,189 research output</span>
+              </div>
+              <div class="bt-toolbar__right">
+                <!-- Type filter — includes all kinds, no privileged "publications" group -->
+                <div class="dropdown">
+                  <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    All types
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">All types</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Journal articles <span class="text-muted">(8,921)</span></a></li>
+                    <li><a class="dropdown-item" href="#">Book chapters <span class="text-muted">(1,432)</span></a></li>
+                    <li><a class="dropdown-item" href="#">Conference papers <span class="text-muted">(1,104)</span></a></li>
+                    <li><a class="dropdown-item" href="#">Books <span class="text-muted">(390)</span></a></li>
+                    <li><a class="dropdown-item" href="#">Datasets <span class="text-muted">(342)</span></a></li>
+                    <li><a class="dropdown-item" href="#">Software <span class="text-muted">(61)</span></a></li>
+                    <li><a class="dropdown-item" href="#">Other <span class="text-muted">(939)</span></a></li>
+                  </ul>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    All access
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">All access</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"><span class="badge-oa me-1">OA</span> Open access only</a></li>
+                  </ul>
+                </div>
+                <div class="dropdown">
+                  <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Newest first
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Newest first</a></li>
+                    <li><a class="dropdown-item" href="#">Oldest first</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <span id="output-loading" class="htmx-indicator" aria-live="polite">Loading research output…</span>
+
+            <div id="output-list"
+              hx-get="/organisations/01H8BXJKD5XZ/works"
+              hx-trigger="load"
+              hx-target="#output-list"
+              hx-indicator="#output-loading">
+
+              <div class="mb-5">
+                <h2 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2026</h2>
+
+                <article class="card-research" aria-labelledby="card-title-org-01">
+                  <div class="card-meta">
+                    <span class="badge-oa">Open access</span>
+                    <span class="badge bg-primary">Journal article</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="/research/01KXQB4Y2M3N" class="btn btn-ghost btn-sm"
+                       aria-label="View: Urban forests as essential infrastructure for climate resilience">
+                      <i class="if if-eye" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h3 id="card-title-org-01" class="card-title">
+                      <a href="/research/01KXQB4Y2M3N">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+                    </h3>
+                    <p class="card-authors">
+                      Esperon‑Rodriguez, M., Arndt, S., De Pauw, K.
+                      <span class="text-muted">et al.</span>
+                    </p>
+                    <p class="card-publication">
+                      <span>2026</span> ·
+                      <a href="#">Plants People Planet</a> ·
+                      <span>8(1) · pp. 14–19</span>
+                    </p>
+                  </div>
+                </article>
+
+                <article class="card-research" aria-labelledby="card-title-org-02">
+                  <div class="card-meta">
+                    <span class="badge bg-primary">Dataset</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="/research/01KXQB4Y2P9R" class="btn btn-ghost btn-sm"
+                       aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
+                      <i class="if if-eye" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h3 id="card-title-org-02" class="card-title">
+                      <a href="/research/01KXQB4Y2P9R">Urban tree canopy cover measurements Belgium 2020–2025</a>
+                    </h3>
+                    <p class="card-authors">
+                      De Pauw, K., Maes, J.
+                    </p>
+                    <p class="card-publication">
+                      <span>2026</span> ·
+                      <a href="#">Zenodo</a>
+                    </p>
+                  </div>
+                </article>
+
+              </div>
+
+            </div><!-- /#output-list -->
+
+            <nav aria-label="Research output pagination" class="mt-4">
+              <ul class="pagination">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#" aria-current="page">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item" aria-hidden="true">
+                  <span class="page-link">…</span>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">264</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next page">›</a>
+                </li>
+              </ul>
+            </nav>
+
+          </div><!-- /research output panel -->
+
+          <!-- Researchers panel -->
+          <div class="tab-pane fade" id="panel-people"
+            role="tabpanel" aria-labelledby="tab-people" tabindex="0">
+
+            <span id="people-loading" class="htmx-indicator" aria-live="polite">Loading researchers…</span>
+
+            <div id="people-list"
+              hx-get="/organisations/01H8BXJKD5XZ/persons"
+              hx-trigger="intersect once"
+              hx-target="#people-list"
+              hx-indicator="#people-loading">
+
+              <div class="mb-4">
+                <h2 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">D</h2>
+                <ul class="list-unstyled d-flex flex-column gap-2">
+                  <li class="d-flex align-items-center gap-3 py-2 border-bottom">
+                    <span class="bt-avatar bt-avatar--small" aria-hidden="true">KD</span>
+                    <div>
+                      <a href="/persons/01K9XTVXD41Z" class="fw-semibold">De Pauw, Karen</a>
+                      <div class="small text-muted">Associate Professor · Department of Environment</div>
+                    </div>
+                  </li>
+                  <li class="d-flex align-items-center gap-3 py-2 border-bottom">
+                    <span class="bt-avatar bt-avatar--small" aria-hidden="true">LD</span>
+                    <div>
+                      <a href="/persons/01K9XTVXD42A" class="fw-semibold">Desmet, Lore</a>
+                      <div class="small text-muted">PhD researcher · Department of Food Technology</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="mb-4">
+                <h2 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">R</h2>
+                <ul class="list-unstyled d-flex flex-column gap-2">
+                  <li class="d-flex align-items-center gap-3 py-2 border-bottom">
+                    <span class="bt-avatar bt-avatar--small" aria-hidden="true">KR</span>
+                    <div>
+                      <a href="/persons/01K9XTVXD43B" class="fw-semibold">Raes, Katleen</a>
+                      <div class="small text-muted">Professor · Department of Food Technology, Safety and Health</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div><!-- /#people-list -->
+
+          </div>
+
+          <!-- Projects panel -->
+          <div class="tab-pane fade" id="panel-projects"
+            role="tabpanel" aria-labelledby="tab-projects" tabindex="0">
+
+            <span id="projects-loading" class="htmx-indicator" aria-live="polite">Loading projects…</span>
+
+            <div id="projects-list"
+              hx-get="/organisations/01H8BXJKD5XZ/projects"
+              hx-trigger="intersect once"
+              hx-target="#projects-list"
+              hx-indicator="#projects-loading">
+
+              <ul class="list-unstyled d-flex flex-column gap-3">
+                <li class="p-3 border rounded">
+                  <div class="d-flex align-items-start gap-3">
+                    <div class="flex-grow-1">
+                      <a href="/projects/fwo-g001234n" class="fw-semibold text-decoration-none d-block mb-1">
+                        Urban green infrastructure and climate adaptation in Flemish cities
+                      </a>
+                      <div class="small text-muted">FWO · G001234N · 2023–2027</div>
+                      <div class="small text-muted mt-1">PI: De Pauw, Karen</div>
+                    </div>
+                    <span class="badge bg-success flex-shrink-0">Active</span>
+                  </div>
+                </li>
+                <li class="p-3 border rounded">
+                  <div class="d-flex align-items-start gap-3">
+                    <div class="flex-grow-1">
+                      <a href="/projects/h2020-101012345" class="fw-semibold text-decoration-none d-block mb-1">
+                        Sustainable biorefinery valorisation of agricultural side streams
+                      </a>
+                      <div class="small text-muted">Horizon 2020 · 101012345 · 2021–2025</div>
+                      <div class="small text-muted mt-1">PI: Raes, Katleen</div>
+                    </div>
+                    <span class="badge bg-secondary flex-shrink-0">Ended</span>
+                  </div>
+                </li>
+              </ul>
+
+            </div><!-- /#projects-list -->
+
+          </div>
+
+        </div><!-- /tab-content -->
+
+      </div><!-- /col-lg-8 -->
+
+      <!-- Right sidebar -->
+      <div class="col-lg-4">
+
+        <!-- Child units -->
+        <section aria-labelledby="units-heading" class="mb-5">
+          <h2 id="units-heading" class="h5 mb-3">Departments &amp; units</h2>
+          <ul class="list-unstyled d-flex flex-column gap-1">
+            <li>
+              <a href="/organisations/dept-environment" class="d-flex align-items-center gap-2 py-2 border-bottom text-decoration-none">
+                <i class="if if-building" aria-hidden="true"></i>
+                <span>Department of Environment</span>
+              </a>
+            </li>
+            <li>
+              <a href="/organisations/dept-food-tech" class="d-flex align-items-center gap-2 py-2 border-bottom text-decoration-none">
+                <i class="if if-building" aria-hidden="true"></i>
+                <span>Department of Food Technology, Safety and Health</span>
+              </a>
+            </li>
+            <li>
+              <a href="/organisations/dept-plants-crops" class="d-flex align-items-center gap-2 py-2 border-bottom text-decoration-none">
+                <i class="if if-building" aria-hidden="true"></i>
+                <span>Department of Plants and Crops</span>
+              </a>
+            </li>
+            <li>
+              <a href="/organisations/dept-animal-sciences" class="d-flex align-items-center gap-2 py-2 border-bottom text-decoration-none">
+                <i class="if if-building" aria-hidden="true"></i>
+                <span>Department of Animal Sciences and Aquatic Ecology</span>
+              </a>
+            </li>
+            <li>
+              <a href="/organisations/dept-biosystems" class="d-flex align-items-center gap-2 py-2 text-decoration-none">
+                <i class="if if-building" aria-hidden="true"></i>
+                <span>Department of Biosystems Engineering</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Open access stats -->
+        <section aria-labelledby="oa-heading" class="mb-5">
+          <h2 id="oa-heading" class="h5 mb-3">Open access</h2>
+          <p class="text-muted small mb-2">
+            <span class="fw-semibold text-body">65%</span> of research output is openly accessible
+          </p>
+          <div class="progress mb-3" style="height: 8px;" aria-hidden="true">
+            <div class="progress-bar bg-success" style="width: 65%"></div>
+          </div>
+          <ul class="list-unstyled small text-muted d-flex flex-column gap-1">
+            <li><span class="badge-oa me-1">OA</span> 8,541 open access</li>
+            <li><span class="badge-restricted me-1">R</span> 2,641 restricted</li>
+            <li>2,007 closed</li>
+          </ul>
+        </section>
+
+        <!-- Persistent link -->
+        <div class="p-3 bg-white border rounded mb-4">
+          <span class="form-label d-block mb-2">Persistent link</span>
+          <div class="d-flex gap-2 align-items-start">
+            <code class="small">https://biblio.ugent.be/organisation/01H8BXJKD5XZ</code>
+            <button type="button" class="btn btn-ghost btn-sm px-2 flex-shrink-0"
+              aria-label="Copy persistent link to organisation page">
+              <i class="if if-copy" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Data & API -->
+        <div class="p-3 bg-white border rounded">
+          <h2 class="h6 mb-3">Data &amp; API</h2>
+          <ul class="list-unstyled small d-flex flex-column gap-2">
+            <li>
+              <a href="/organisations/01H8BXJKD5XZ.json">
+                <i class="if if-code" aria-hidden="true"></i>
+                JSON export
+              </a>
+            </li>
+            <li>
+              <a href="/oai?verb=ListRecords&metadataPrefix=oai_dc&set=org:01H8BXJKD5XZ">
+                <i class="if if-code" aria-hidden="true"></i>
+                OAI-PMH set
+              </a>
+            </li>
+            <li>
+              <a href="/api/v1/organisations/01H8BXJKD5XZ/works">
+                <i class="if if-code" aria-hidden="true"></i>
+                REST API
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div><!-- /sidebar -->
+
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- @include: templates/partials/public-footer.html -->

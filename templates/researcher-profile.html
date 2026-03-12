@@ -1,0 +1,390 @@
+<!-- @title: Researcher profile — Karen De Pauw — Biblio UGent -->
+<!-- @surface: public -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Karen De Pauw",
+  "givenName": "Karen",
+  "familyName": "De Pauw",
+  "affiliation": [
+    {
+      "@type": "Organization",
+      "name": "Ghent University",
+      "url": "https://ugent.be"
+    },
+    {
+      "@type": "Organization",
+      "name": "Department of Environment"
+    }
+  ],
+  "sameAs": [
+    "https://orcid.org/0000-0002-1234-5678",
+    "https://biblio.ugent.be/person/01K9XTVXD41Z"
+  ],
+  "url": "https://biblio.ugent.be/person/01K9XTVXD41Z"
+}
+</script>
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+<main id="main-content">
+
+  <!-- Profile hero -->
+  <div class="border-bottom">
+    <div class="container py-5">
+
+      <nav aria-label="Breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
+          <li class="breadcrumb-item"><a href="/persons">Researchers</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Karen De Pauw</li>
+        </ol>
+      </nav>
+
+      <article aria-labelledby="person-name">
+        <div class="row g-4 align-items-start">
+
+          <!-- Avatar + identity -->
+          <div class="col-auto">
+            <div class="bt-avatar bt-avatar--large" aria-hidden="true">KD</div>
+          </div>
+
+          <div class="col">
+            <h1 id="person-name" class="mb-1">Karen De Pauw</h1>
+
+            <!-- Affiliation -->
+            <p class="lead text-muted mb-3">
+              Associate Professor ·
+              <a href="/organisations/faculty-bioscience-engineering">Faculty of Bioscience Engineering</a> ·
+              <a href="/organisations/dept-environment">Department of Environment</a>
+            </p>
+
+            <!-- Identifiers — trust signals, show prominently -->
+            <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4" aria-label="Researcher identifiers">
+              <li>
+                <a href="https://orcid.org/0000-0002-1234-5678"
+                   class="d-flex align-items-center gap-1 text-decoration-none"
+                   rel="noopener noreferrer"
+                   aria-label="ORCID profile: 0000-0002-1234-5678">
+                  <i class="if if-orcid" aria-hidden="true"></i>
+                  <span>0000-0002-1234-5678</span>
+                </a>
+              </li>
+              <li>
+                <span class="text-muted">UGent ID:</span>
+                <span>802001234567</span>
+              </li>
+            </ul>
+
+            <!-- Quick stats — scannable summary before the list -->
+            <ul class="list-unstyled d-flex flex-wrap gap-4 mb-0" aria-label="Research output summary">
+              <li>
+                <span class="fw-semibold">147</span>
+                <span class="text-muted">research output</span>
+              </li>
+              <li>
+                <span class="fw-semibold">89</span>
+                <span class="text-muted">open access</span>
+              </li>
+              <li>
+                <span class="fw-semibold">4</span>
+                <span class="text-muted">active projects</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Actions -->
+          <div class="col-auto d-flex flex-column gap-2 align-items-end">
+            <button type="button" class="btn btn-secondary btn-sm"
+              hx-post="/lists/add-person"
+              hx-vals='{"id":"01K9XTVXD41Z"}'
+              hx-swap="none"
+              hx-indicator="#list-indicator">
+              <i class="if if-list-check" aria-hidden="true"></i>
+              Follow
+              <span id="list-indicator" class="htmx-indicator ms-1" aria-live="polite">Saving…</span>
+            </button>
+            <a href="#" class="btn btn-ghost btn-sm">
+              <i class="if if-download" aria-hidden="true"></i>
+              Export publications
+            </a>
+          </div>
+
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container py-5">
+    <div class="row g-5">
+
+      <!-- Left: publications list -->
+      <div class="col-lg-8">
+
+        <section aria-labelledby="publications-heading">
+          <div class="bt-toolbar mb-4">
+            <div class="bt-toolbar__left">
+              <h2 id="publications-heading" class="h4 mb-0">Research output</h2>
+              <span class="text-muted" aria-live="polite" id="pub-result-count">147 research output</span>
+            </div>
+            <div class="bt-toolbar__right">
+              <!-- Type filter — all kinds in one list, no privileged groups -->
+              <div class="dropdown">
+                <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  All types
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="#">All types</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Journal articles <span class="text-muted">(98)</span></a></li>
+                  <li><a class="dropdown-item" href="#">Book chapters <span class="text-muted">(21)</span></a></li>
+                  <li><a class="dropdown-item" href="#">Conference papers <span class="text-muted">(11)</span></a></li>
+                  <li><a class="dropdown-item" href="#">Books <span class="text-muted">(5)</span></a></li>
+                  <li><a class="dropdown-item" href="#">Datasets <span class="text-muted">(12)</span></a></li>
+                </ul>
+              </div>
+              <!-- Filter by OA -->
+              <div class="dropdown">
+                <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  All access
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="#">All access</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#"><span class="badge-oa me-1">OA</span> Open access only</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Year grouping — standard in academic profile pages (Scopus, Google Scholar, ORCID all use it) -->
+          <div
+            hx-get="/persons/01K9XTVXD41Z/works"
+            hx-trigger="load"
+            hx-target="#pub-list"
+            hx-indicator="#pub-loading">
+          </div>
+          <span id="pub-loading" class="htmx-indicator" aria-live="polite">Loading research output…</span>
+
+          <div id="pub-list">
+
+            <!-- Year group: 2026 -->
+            <div class="mb-5">
+              <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2026</h3>
+
+              <article class="card-research" aria-labelledby="card-title-kd-01">
+                <div class="card-meta">
+                  <span class="badge-oa">Open access</span>
+                  <span class="badge bg-primary">Journal article</span>
+                </div>
+                <div class="card-actions">
+                  <a href="/research/01K9XTVXD41Z" class="btn btn-ghost btn-sm"
+                     aria-label="View: Urban forests as essential infrastructure">
+                    <i class="if if-eye" aria-hidden="true"></i> View
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h4 id="card-title-kd-01" class="card-title">
+                    <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
+                  </h4>
+                  <p class="card-authors">
+                    Esperon‑Rodriguez, M., Arndt, S., <strong>De Pauw, K.</strong>
+                    <span class="text-muted">et al.</span>
+                  </p>
+                  <p class="card-publication">
+                    <span>2026</span> ·
+                    <a href="#">Plants People Planet</a> ·
+                    <span>8(1) · pp. 14–19</span>
+                  </p>
+                </div>
+              </article>
+
+            </div>
+
+            <!-- Year group: 2025 -->
+            <div class="mb-5">
+              <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2025</h3>
+
+              <article class="card-research" aria-labelledby="card-title-kd-02">
+                <div class="card-meta">
+                  <span class="badge-oa">Open access</span>
+                  <span class="badge bg-primary">Journal article</span>
+                </div>
+                <div class="card-actions">
+                  <a href="#" class="btn btn-ghost btn-sm"
+                     aria-label="View: Green infrastructure planning in urban heat islands">
+                    <i class="if if-eye" aria-hidden="true"></i> View
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h4 id="card-title-kd-02" class="card-title">
+                    <a href="#">Green infrastructure planning in urban heat islands: lessons from Belgian cities</a>
+                  </h4>
+                  <p class="card-authors">
+                    <strong>De Pauw, K.</strong>, Vanderhaegen, S.
+                  </p>
+                  <p class="card-publication">
+                    <span>2025</span> ·
+                    <a href="#">Urban Forestry &amp; Urban Greening</a> ·
+                    <span>89 · p.128421</span>
+                  </p>
+                </div>
+              </article>
+
+              <article class="card-research" aria-labelledby="card-title-kd-03">
+                <div class="card-meta">
+                  <span class="badge-restricted">Restricted</span>
+                  <span class="badge bg-primary">Dataset</span>
+                </div>
+                <div class="card-actions">
+                  <a href="#" class="btn btn-ghost btn-sm"
+                     aria-label="View: Urban tree canopy cover measurements Belgium 2019–2024">
+                    <i class="if if-eye" aria-hidden="true"></i> View
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h4 id="card-title-kd-03" class="card-title">
+                    <a href="#">Urban tree canopy cover measurements Belgium 2019–2024</a>
+                  </h4>
+                  <p class="card-authors">
+                    <strong>De Pauw, K.</strong>, Maes, J.
+                  </p>
+                  <p class="card-publication">
+                    <span>2025</span> ·
+                    <a href="#">Zenodo</a>
+                  </p>
+                </div>
+              </article>
+
+            </div>
+
+          </div><!-- /pub-list -->
+
+          <!-- Pagination -->
+          <nav aria-label="Publications pagination" class="mt-4">
+            <ul class="pagination">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#" aria-current="page">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item" aria-hidden="true">
+                <span class="page-link">…</span>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">6</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next page">›</a>
+              </li>
+            </ul>
+          </nav>
+
+        </section>
+      </div>
+
+      <!-- Right: sidebar -->
+      <div class="col-lg-4">
+
+        <!-- Active projects -->
+        <section aria-labelledby="projects-heading" class="mb-5">
+          <h2 id="projects-heading" class="h5 mb-3">Active projects</h2>
+          <ul class="list-unstyled d-flex flex-column gap-3">
+            <li class="p-3 bg-white border rounded">
+              <a href="/projects/fwo-g001234n" class="fw-semibold text-decoration-none d-block mb-1">
+                Urban green infrastructure and climate adaptation in Flemish cities
+              </a>
+              <div class="small text-muted">FWO · G001234N · 2023–2027 · PI</div>
+            </li>
+            <li class="p-3 bg-white border rounded">
+              <a href="/projects/bof-01d04124" class="fw-semibold text-decoration-none d-block mb-1">
+                Tree species diversity and urban ecosystem services
+              </a>
+              <div class="small text-muted">BOF · 01D04124 · 2024–2026 · Researcher</div>
+            </li>
+          </ul>
+          <a href="/persons/01K9XTVXD41Z/projects" class="btn btn-ghost btn-sm mt-2">
+            All projects <i class="if if-arrow-right" aria-hidden="true"></i>
+          </a>
+        </section>
+
+        <!-- Co-authors — useful for network discovery -->
+        <section aria-labelledby="coauthors-heading" class="mb-5">
+          <h2 id="coauthors-heading" class="h5 mb-3">Frequent co-authors</h2>
+          <ul class="list-unstyled d-flex flex-column gap-2">
+            <li class="d-flex align-items-center gap-2">
+              <span class="bt-avatar bt-avatar--small" aria-hidden="true">SA</span>
+              <a href="/persons/stefan-arndt">Arndt, Stefan</a>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="bt-avatar bt-avatar--small" aria-hidden="true">JM</span>
+              <a href="/persons/jonas-maes">Maes, Jonas</a>
+            </li>
+            <li class="d-flex align-items-center gap-2">
+              <span class="bt-avatar bt-avatar--small" aria-hidden="true">SV</span>
+              <a href="/persons/sander-vanderhaegen">Vanderhaegen, Sander</a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Keywords — helps readers understand research focus -->
+        <section aria-labelledby="keywords-heading" class="mb-5">
+          <h2 id="keywords-heading" class="h5 mb-3">Research topics</h2>
+          <div class="d-flex flex-wrap gap-1">
+            <a href="/search?q=urban+forests" class="badge bg-primary text-decoration-none">Urban forests</a>
+            <a href="/search?q=climate+resilience" class="badge bg-primary text-decoration-none">Climate resilience</a>
+            <a href="/search?q=green+infrastructure" class="badge bg-primary text-decoration-none">Green infrastructure</a>
+            <a href="/search?q=urban+heat+island" class="badge bg-primary text-decoration-none">Urban heat island</a>
+            <a href="/search?q=biodiversity" class="badge bg-primary text-decoration-none">Biodiversity</a>
+            <a href="/search?q=ecosystem+services" class="badge bg-primary text-decoration-none">Ecosystem services</a>
+          </div>
+        </section>
+
+        <!-- Affiliation history — temporal, as per the domain model -->
+        <section aria-labelledby="affiliations-heading" class="mb-5">
+          <h2 id="affiliations-heading" class="h5 mb-3">Affiliations</h2>
+          <dl class="bt-dl">
+            <dt>Current</dt>
+            <dd>
+              <a href="/organisations/dept-environment">Department of Environment</a><br>
+              <span class="text-muted small">Faculty of Bioscience Engineering · Ghent University</span>
+            </dd>
+            <dt>Previous</dt>
+            <dd>
+              <a href="/organisations/dept-applied-ecology">Department of Applied Ecology and Environmental Biology</a><br>
+              <span class="text-muted small">2012–2018</span>
+            </dd>
+          </dl>
+        </section>
+
+        <!-- Persistent link -->
+        <div class="p-3 bg-white border rounded">
+          <span class="form-label d-block mb-2">Persistent link</span>
+          <div class="d-flex gap-2 align-items-start">
+            <code class="small">https://biblio.ugent.be/person/01K9XTVXD41Z</code>
+            <button type="button" class="btn btn-ghost btn-sm px-2 flex-shrink-0"
+              aria-label="Copy persistent link"
+              onclick="navigator.clipboard.writeText('https://biblio.ugent.be/person/01K9XTVXD41Z');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+              <i class="if if-copy" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /sidebar -->
+
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- @include: templates/partials/public-footer.html -->

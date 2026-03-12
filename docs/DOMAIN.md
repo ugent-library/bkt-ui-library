@@ -20,6 +20,8 @@ The publication type. Determines which fields are active in the deposit form (pr
 
 Known kinds: `journal_article`, `book`, `book_chapter`, `dataset`, `software`, `conference_paper`, `dissertation`, `report`, `preprint`
 
+All kinds are collectively referred to as **research output** — not "publications" or "publications and datasets". The term "publications" is not used in the UI. This is intentional: new kinds (e.g. `educational_material`, `patent`) may be added in the future without requiring a UI redesign.
+
 In the UI: shown as a `badge bg-primary` badge (`Journal article`, `Dataset`, etc.) and controls which form fields appear.
 
 ### Work status
@@ -206,15 +208,19 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 
 All research output is modelled as a `Work` with a `kind`, but some categories have meaningfully different display needs:
 
-| Category | Work kinds | Display specifics |
-|----------|-----------|------------------|
-| Journal articles | `journal_article` | Journal title, volume, issue, pages, DOI prominent |
-| Books | `book`, `book_chapter` | ISBN, publisher, edition; chapter shows parent book |
-| Datasets | `dataset` | Repository link, data format, licence, reuse instructions |
-| Software | `software` | Repository URL (GitHub etc.), version, language |
-| Theses | `dissertation` | Degree, supervisor, institution, embargo common |
-| Heritage objects | varies | Physical location, digitisation status, image viewer, loan request |
-| OA journal articles | `journal_article` | Diamond OA badge when published via openjournals.ugent.be |
+| Work kind | Display specifics |
+|-----------|------------------|
+| `journal_article` | Journal title, volume, issue, pages, DOI prominent |
+| `book`, `book_chapter` | ISBN, publisher, edition; chapter shows parent book |
+| `dataset` | Repository link, data format, licence, reuse instructions |
+| `software` | Repository URL (GitHub etc.), version, language |
+| `dissertation` | Degree, supervisor, institution, embargo common |
+| `conference_paper` | Conference name, location, proceedings |
+| `report` | Issuing body, report number |
+| `preprint` | Server (arXiv, bioRxiv), version number |
+| Heritage object kinds | Physical location, digitisation status, image viewer, loan request |
+
+All of the above are **research output**. The table shows display differences within a single unified entity — not separate categories with separate UI sections.
 
 Heritage objects in particular may need a distinct template — the Boekentoren erfgoedcollectie includes manuscripts, maps, and archival items where the primary experience is visual and physical provenance matters more than bibliographic metadata.
 
@@ -232,6 +238,8 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `patterns/research-card.html` | Work card component | Both |
 | `patterns/deposit-components.html` | Deposit form components | Backoffice |
 | `patterns/sidebar.html` | Sub-sidebar nav | Backoffice |
+
+**Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge (`Dataset`, `Journal article`, etc.) is how type is communicated, not separate nav sections.
 
 ---
 
