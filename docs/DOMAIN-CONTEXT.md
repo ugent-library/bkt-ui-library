@@ -117,6 +117,34 @@ When "Under embargo" is selected, a date picker must appear for the embargo lift
 
 ---
 
+## The public surface is strategically primary
+
+The UB2030 plan makes clear that making research output open and discoverable to the world — not just to UGent staff — is a core institutional mission. The public surface of biblio.ugent.be is the primary interface for that mission.
+
+This has practical consequences for UI work:
+- The public search and detail pages deserve the same design rigour as the backoffice, not less
+- Public pages are read by automated agents (crawlers, citation managers, reference tools) as well as humans — semantic correctness and structured data (`application/ld+json`) are interoperability requirements, not optional polish
+- Performance and mobile usability matter on the public surface in a way they do not for the backoffice (staff use desktop, the open web does not)
+- The public surface should be functional and meaningful without a login — anonymous access is the norm, not an edge case
+
+---
+
+## The heritage context
+
+The Boekentoren is an officially recognised Erfgoedbibliotheek (heritage library) in Flanders. A significant portion of its public mission is making digitised heritage collections — manuscripts, maps, rare books, archival items — discoverable and reusable.
+
+Heritage objects may share the `Work` data model but have distinct UI needs:
+- High-resolution image viewing (IIIF or equivalent)
+- Physical location and shelf mark
+- Digitisation status (fully digitised, partial, not digitised)
+- Loan request for museum exhibitions
+- Provenance and ownership history
+- Link to the Google Books digitisation where applicable
+
+The Boekentoren has approximately 187,000 digitised items and 225,000 Google-digitised books. This is not a minor feature — it is a primary public collection. When designing public detail pages, do not assume all Works are journal articles. The heritage object display case may require its own template.
+
+---
+
 ## What is not in scope for this repo
 
 - Go templ template implementation (lives in `bbl/app/views/`)

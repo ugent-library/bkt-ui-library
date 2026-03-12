@@ -159,6 +159,67 @@ Two distinct user contexts. Must never be conflated. Determined by `data-surface
 
 ---
 
+## Page types not yet prototyped
+
+These are first-class UI destinations implied by the domain model and the UB2030 strategic plan. They do not exist as templates yet but must be treated as real pages when designing.
+
+### Researcher profile page (public)
+A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked works, ORCID and other identifiers. Distinct from the backoffice person edit view. Strategic priority — open science means making researchers and their output discoverable, not just searchable.
+
+### Organisation page (public)
+A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. Supports the cluster model in UB2030 where library services are organised by campus cluster, not individual faculty.
+
+### Project page (public)
+A page for a funded research project. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. Important for grant reporting and societal impact visibility.
+
+### Curated list / collection page (public)
+A named set of Works, editable by curators. Used for OAI-PMH sets, open access subsets, faculty publication feeds, heritage object collections, and reading lists. Backed by `bbl_lists` (user-curated) and `bbl_work_collections` (administratively defined).
+
+### Heritage / erfgoed object page (public)
+Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
+
+### Candidate review (backoffice)
+The inbox for harvested Work candidates. Filtering by source (WoS, ORCID), confidence, person, and organisation. Accept/reject actions with a reason. Reducing manual registration burden for researchers is an explicit UB2030 goal — this interface is doing strategic work.
+
+### Curator review queue (backoffice)
+The curator-side view of the `submitted → public` workflow. Shows submitted works awaiting review, with approve/return actions and the review message thread. Not yet prototyped. Distinct from the researcher deposit flow.
+
+---
+
+## Open access as a design principle
+
+The UB2030 plan takes a strong position: open access is the institutional default, not an option. Diamond OA (no cost to author or reader) is preferred over pay-to-publish. The UI must reflect this.
+
+**In the deposit form:**
+- Open access should be the pre-selected default, not one of three equal options
+- The embargo path should be clearly available but not equal in visual weight to open access
+- Restricted access should require a reason or at minimum feel like a deliberate choice, not the easy path
+
+**In search and discovery:**
+- OA status should be a prominent, early filter — not buried
+- `badge-oa` should be visually distinct and positive, not neutral
+- Works without full-text access should not look broken — restricted access is sometimes correct, but the UI should make open access feel like the norm
+
+---
+
+## Content categories and their display differences
+
+All research output is modelled as a `Work` with a `kind`, but some categories have meaningfully different display needs:
+
+| Category | Work kinds | Display specifics |
+|----------|-----------|------------------|
+| Journal articles | `journal_article` | Journal title, volume, issue, pages, DOI prominent |
+| Books | `book`, `book_chapter` | ISBN, publisher, edition; chapter shows parent book |
+| Datasets | `dataset` | Repository link, data format, licence, reuse instructions |
+| Software | `software` | Repository URL (GitHub etc.), version, language |
+| Theses | `dissertation` | Degree, supervisor, institution, embargo common |
+| Heritage objects | varies | Physical location, digitisation status, image viewer, loan request |
+| OA journal articles | `journal_article` | Diamond OA badge when published via openjournals.ugent.be |
+
+Heritage objects in particular may need a distinct template — the Boekentoren erfgoedcollectie includes manuscripts, maps, and archival items where the primary experience is visual and physical provenance matters more than bibliographic metadata.
+
+---
+
 ## Template-to-entity map
 
 | Template | Entity / concept | Surface |
@@ -190,3 +251,11 @@ Two distinct user contexts. Must never be conflated. Determined by `data-surface
 | `closed` | no badge |
 
 Work kind is always `badge bg-primary` (blue).
+
+### Heritage / diamond OA badges
+
+No verified badge classes exist yet for:
+- Diamond OA (published via openjournals.ugent.be) — needs design
+- Heritage object type — needs design
+
+Do not invent class names for these. Flag as needing addition to SCSS when a template requires them.
