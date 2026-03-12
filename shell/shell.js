@@ -167,7 +167,7 @@
   // ─── Active nav item scroll into view ────────────────────────────────────────
   const activeLink = navBody?.querySelector('.bt-nav-link.active');
   if (activeLink) {
-    activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    activeLink.scrollIntoView({ block: 'nearest' });
   }
 
 })();
