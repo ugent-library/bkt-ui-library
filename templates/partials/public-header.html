@@ -4,27 +4,56 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <header class="bt-navbar" role="banner">
-  <h1 class="h6 ff-sans mb-0">
-    <a href="/" aria-label="Biblio — go to homepage">
-      <i class="if if-ghent-university if-md" aria-hidden="true"></i>
-      Ghent University Academic Repository & Bibliography
-    </a>
-  </h1>
+  <div class="bt-toolbar container">
+    <div class="bt-toolbar__left">
+      <h1 class="h6 ff-sans mb-0 flex-shrink-0">
+        <a href="/templates/public-index.html" aria-label="Biblio — go to homepage">
+          <i class="if if-ghent-university if-md" aria-hidden="true"></i>
+          <span class="d-md-none">Biblio</span>
+          <span class="d-none d-md-inline-block">Ghent University Academic Repository &amp; Bibliography</span>
+        </a>
+      </h1>
 
-  <div class="bt-navbar__sep ms-3" aria-hidden="true"></div>
+      <div class="bt-navbar__sep d-none d-xxl-block" aria-hidden="true"></div>
 
-  <nav class="bt-navbar__nav" aria-label="Site navigation">
-    <a href="#" class="bt-navbar__link" aria-current="page">Search</a>
-    <a href="#" class="bt-navbar__link">Authors</a>
-    <a href="#" class="bt-navbar__link">Projects</a>
-    <a href="#" class="bt-navbar__link">How it works</a>
-  </nav>
+      <div class="bt-navbar__collapse d-none d-xxl-block" id="public-nav-collapse">
+        <nav class="bt-navbar__nav" aria-label="Site navigation">
+          <a href="/templates/public-search.html" class="bt-navbar__link" aria-current="page">Search</a>
+          <a href="/templates/public-researcher.html" class="bt-navbar__link">Researchers</a>
+          <a href="/templates/public-organisation.html" class="bt-navbar__link">Organisations</a>
+          <a href="/templates/public-project.html" class="bt-navbar__link">Projects</a>
+        </nav>
+      </div>
+    </div>
 
-  <div class="ms-auto d-flex align-items-center gap-2">
-    <a href="#" class="bt-navbar__link">My lists</a>
-    <a href="#" class="btn btn-secondary btn-sm">
-      <i class="if if-add" aria-hidden="true"></i>
-      Add research
-    </a>
+    <div class="bt-toolbar__right">
+      <div class="bt-navbar__actions ms-auto d-flex align-items-center gap-2">
+        <a href="#" class="bt-navbar__link">
+          <i class="if if-global"></i>
+          <span>EN</span>
+        </a>
+        <a href="#" class="bt-navbar__link d-none d-lg-inline-block">My lists</a>
+        <a href="#" class="bt-navbar__link btn btn-secondary btn-sm d-none d-md-inline-block ms-1">
+          <i class="if if-add" aria-hidden="true"></i>
+          Add research
+        </a>
+        <div class="dropdown ms-2">
+          <button class="bt-avatar btn" type="button"
+            data-bs-toggle="dropdown"
+            aria-label="Account menu for Wouter Bosmans">
+            WB
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><span class="dropdown-item-text">
+              <strong>Wouter Bosmans</strong><br>
+              <span class="text-muted">Wouter.Bosmans@UGent.be</span>
+            </span></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Log out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </header>

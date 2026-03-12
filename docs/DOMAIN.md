@@ -171,7 +171,7 @@ A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked
 ### Organisation page (public)
 A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. Supports the cluster model in UB2030 where library services are organised by campus cluster, not individual faculty.
 
-### Project page (public)
+### ~~Project page (public)~~ ✓ `templates/project.html`
 A page for a funded research project. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. Important for grant reporting and societal impact visibility.
 
 ### Curated list / collection page (public)
@@ -237,6 +237,7 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `templates/public-index.html` | Public homepage | Public |
 | `patterns/research-card.html` | Work card component | Both |
 | `patterns/deposit-components.html` | Deposit form components | Backoffice |
+| `templates/project.html` | Project detail page | Public |
 | `patterns/sidebar.html` | Sub-sidebar nav | Backoffice |
 
 **Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge (`Dataset`, `Journal article`, etc.) is how type is communicated, not separate nav sections.
