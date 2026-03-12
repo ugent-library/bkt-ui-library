@@ -200,28 +200,28 @@
   */
   /* Brand blues */
   --bt-blue: var(--bt-blue-600);
-  --bt-dark-blue: var(--bt-blue-700);
+  --bt-dark-blue: var(--bt-blue-800);
   --bt-light-blue: var(--bt-blue-50);
   /* Grays */
   --bt-gray: var(--bt-gray-800);
   --bt-dark-gray: var(--bt-gray-1000);
   /* Status */
   --bt-green: var(--bt-green-500);
-  --bt-dark-green: var(--bt-green-700);
-  --bt-light-green: var(--bt-green-200);
+  --bt-dark-green: var(--bt-green-800);
+  --bt-light-green: var(--bt-green-50);
   --bt-red: var(--bt-red-500);
-  --bt-dark-red: var(--bt-red-700);
+  --bt-dark-red: var(--bt-red-800);
   --bt-light-red: var(--bt-red-50);
   --bt-orange: var(--bt-orange-600);
-  --bt-dark-orange: var(--bt-orange-700);
-  --bt-light-orange: var(--bt-orange-200);
+  --bt-dark-orange: var(--bt-orange-800);
+  --bt-light-orange: var(--bt-orange-50);
   /* Semantic status tokens */
   --bt-success: var(--bt-green);
   --bt-light-success: var(--bt-light-green);
   --bt-dark-success: var(--bt-dark-green);
   --bt-warning: var(--bt-orange);
   --bt-light-warning: var(--bt-light-orange);
-  --bt-dark-warning: var(--bt-orange);
+  --bt-dark-warning: var(--bt-dark-orange);
   --bt-danger: var(--bt-red);
   --bt-light-danger: var(--bt-light-red);
   --bt-dark-danger: var(--bt-dark-red);
@@ -662,6 +662,132 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
+/* ── Alerts ───────────────────────────────────────────────────────────────── */
+.alert {
+  padding: var(--bt-sp-4) var(--bt-sp-4);
+  border: 1px solid transparent;
+  border-radius: var(--bt-radius);
+  margin-bottom: var(--bt-sp-4);
+  font-size: var(--bt-text-base);
+  line-height: 1.6;
+}
+.alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
+  margin: 0 0 var(--bt-sp-2) 0;
+  color: var(--bt-gray-1000);
+}
+
+/* Alert variants — semantic colors + light backgrounds + borders */
+.alert-success {
+  background-color: var(--bt-light-success);
+  border-color: var(--bt-green-200);
+  color: var(--bt-dark-success);
+}
+.alert-success h2, .alert-success h3, .alert-success h4, .alert-success h5, .alert-success h6 {
+  color: var(--bt-dark-success);
+}
+.alert-success i {
+  color: var(--bt-dark-success);
+}
+.alert-success a {
+  color: var(--bt-dark-success);
+}
+.alert-success a:hover {
+  text-decoration: underline;
+}
+.alert-success .alert-dismissible .btn-close {
+  color: var(--bt-dark-success);
+}
+
+.alert-danger {
+  background-color: var(--bt-light-danger);
+  border-color: var(--bt-red-200);
+  color: var(--bt-dark-danger);
+}
+.alert-danger h2, .alert-danger h3, .alert-danger h4, .alert-danger h5, .alert-danger h6 {
+  color: var(--bt-dark-danger);
+}
+.alert-danger i {
+  color: var(--bt-dark-danger);
+}
+.alert-danger a {
+  color: var(--bt-dark-danger);
+}
+.alert-danger a:hover {
+  text-decoration: underline;
+}
+
+.alert-warning {
+  background-color: var(--bt-light-warning);
+  border-color: var(--bt-orange-200);
+  color: var(--bt-dark-warning);
+}
+.alert-warning h2, .alert-warning h3, .alert-warning h4, .alert-warning h5, .alert-warning h6 {
+  color: var(--bt-dark-warning);
+}
+.alert-warning i {
+  color: var(--bt-dark-warning);
+}
+.alert-warning a {
+  color: var(--bt-dark-warning);
+  font-weight: 500;
+}
+.alert-warning a:hover {
+  text-decoration: underline;
+}
+
+.alert-primary,
+.alert-info {
+  background-color: var(--bt-light-blue);
+  border-color: var(--bt-blue-200);
+  color: var(--bt-dark-blue);
+}
+.alert-primary h2, .alert-primary h3, .alert-primary h4, .alert-primary h5, .alert-primary h6,
+.alert-info h2,
+.alert-info h3,
+.alert-info h4,
+.alert-info h5,
+.alert-info h6 {
+  color: var(--bt-blue-800);
+}
+.alert-primary i,
+.alert-info i {
+  color: var(--bt-dark-blue);
+}
+.alert-primary a,
+.alert-info a {
+  color: var(--bt-dark-blue);
+}
+.alert-primary a:hover,
+.alert-info a:hover {
+  text-decoration: underline;
+}
+
+.alert-secondary {
+  background-color: var(--bt-bg-alt);
+  border-color: var(--bt-gray-200);
+  color: var(--bt-gray-1000);
+}
+.alert-secondary i {
+  color: var(--bt-gray-600);
+}
+.alert-secondary a {
+  color: var(--bt-blue-700);
+}
+.alert-secondary a:hover {
+  text-decoration: underline;
+}
+
+.alert-light {
+  border-color: var(--bt-gray-100);
+}
+
+.alert-dark {
+  background-color: var(--bt-gray-900);
+  border-color: var(--bt-gray-1000);
+  color: var(--bt-white);
+}
+
+/* Dismissible alerts */
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
 /*
   Padding uses --bt-btn-pad-* tokens, not the layout spacing scale.
@@ -910,19 +1036,44 @@ code, kbd, pre, samp {
 }
 
 /* ── bt-navbar ──────────────────────────────────────────────────────────────── */
+/*
+  Responsive behaviour:
+  - Mobile (< lg): fixed-height bar with brand + toggler only.
+    Nav links and actions collapse into a full-width panel below the bar.
+  - Desktop (>= lg): single-row bar, all items visible.
+
+  HTML structure:
+    <header class="bt-navbar">
+      <brand or h1>
+      <div class="bt-navbar__sep">          ← hidden on mobile via d-none d-lg-block
+      <button class="bt-navbar__toggler">  ← visible on mobile only, d-lg-none
+      <div class="bt-navbar__collapse">    ← collapses on mobile
+        <nav class="bt-navbar__nav">
+        <div class="bt-navbar__actions">
+    </header>
+*/
 .bt-navbar {
-  height: var(--s-topbar-height, 52px);
   background: var(--bt-white);
   border-bottom: var(--bt-border);
   display: flex;
   align-items: center;
+  flex-wrap: wrap; /* allows collapse panel to break to next line */
   padding: 0 var(--bt-sp-6);
   gap: var(--bt-sp-4);
   position: sticky;
   top: 0;
   z-index: 50;
+  /* Mobile: enough height for brand + toggler row */
+  min-height: var(--s-topbar-height, 52px);
 }
 
+/* On desktop the bar is a fixed single-row height */
+@media (min-width: 992px) {
+  .bt-navbar {
+    height: var(--s-topbar-height, 52px);
+    flex-wrap: nowrap;
+  }
+}
 .bt-navbar__sep {
   width: 1px;
   height: var(--bt-sp-5);
@@ -931,6 +1082,57 @@ code, kbd, pre, samp {
   display: block;
 }
 
+/* Hamburger toggle — visible below lg breakpoint only */
+.bt-navbar__toggler {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  border-radius: var(--bt-radius);
+  color: var(--bt-gray-700);
+  cursor: pointer;
+  line-height: 1;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+
+.bt-navbar__toggler:hover {
+  background: var(--bt-gray-50);
+  color: var(--bt-gray-1000);
+}
+
+.bt-navbar__toggler:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (min-width: 992px) {
+  .bt-navbar__toggler {
+    display: none;
+  }
+}
+/*
+  Collapse panel — wraps nav links + actions.
+  On mobile: hidden by default, shown when .show is toggled by Bootstrap collapse.
+  On desktop: always visible, flows inline with the rest of the bar.
+*/
+.bt-navbar__collapse {
+  /* Mobile: full-width panel below the brand row */
+  width: 100%;
+  overflow: hidden;
+  /* Bootstrap collapse handles display:none / height animation via .collapse/.show */
+}
+
+@media (min-width: 992px) {
+  .bt-navbar__collapse {
+    /* Desktop: join the single row, not full-width */
+    width: auto;
+    flex: 1;
+    display: flex !important; /* override Bootstrap collapse hidden state */
+    align-items: center;
+    overflow: visible;
+  }
+}
+/* Mobile nav: stacked links with border separators */
 .bt-navbar__nav {
   display: flex;
   align-items: center;
@@ -938,6 +1140,41 @@ code, kbd, pre, samp {
   flex: 1;
 }
 
+@media (max-width: 991.98px) {
+  .bt-navbar__nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--bt-sp-2) 0;
+    border-top: var(--bt-border);
+  }
+}
+/* Mobile actions: stacked below nav, with top border */
+.bt-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+}
+
+@media (max-width: 991.98px) {
+  .bt-navbar__actions {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--bt-sp-2) 0 var(--bt-sp-3);
+    border-top: var(--bt-border);
+    gap: var(--bt-sp-1);
+  }
+  /* Buttons in mobile actions go full-width */
+  .bt-navbar__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  /* Dropdowns in mobile actions go full-width */
+  .bt-navbar__actions .dropdown,
+  .bt-navbar__actions .dropdown > button {
+    width: 100%;
+  }
+}
 .bt-navbar__brand {
   display: flex;
   align-items: center;
@@ -946,6 +1183,7 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
   font-weight: 500;
   font-size: var(--bt-text-sm);
+  flex-shrink: 0;
 }
 
 .bt-navbar__link {
@@ -975,6 +1213,15 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
+/* Mobile nav links: full-width tap targets */
+@media (max-width: 991.98px) {
+  .bt-navbar__link {
+    display: block;
+    padding: var(--bt-sp-2) var(--bt-sp-3);
+    border-radius: 0;
+    white-space: normal;
+  }
+}
 /* ── bt-blank-slate ─────────────────────────────────────────────────────────── */
 /* Used in toolbar-blank-slate.html and any empty-state screen */
 .bt-blank-slate {
@@ -2162,7 +2409,7 @@ code, kbd, pre, samp {
 }
 @font-face {
   font-family: "icon-font";
-  src: url("/assets/fonts/icon-font.woff?017bebead425bee80679fe9e57a20f7b") format("woff"), url("/assets/fonts/icon-font.woff2?017bebead425bee80679fe9e57a20f7b") format("woff2");
+  src: url("/assets/fonts/icon-font.woff?8ba7725297a6daf31736e5d7ca2e667e") format("woff"), url("/assets/fonts/icon-font.woff2?8ba7725297a6daf31736e5d7ca2e667e") format("woff2");
 }
 i[class^=if-]:before, i[class*=" if-"]:before {
   font-family: icon-font !important;
@@ -2259,384 +2506,392 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   content: "\f115";
 }
 
-.if-notification:before {
+.if-open-access:before {
   content: "\f116";
 }
 
-.if-no-edit:before {
+.if-open-access-circle:before {
   content: "\f117";
 }
 
-.if-move-top:before {
+.if-notification:before {
   content: "\f118";
 }
 
-.if-move-right:before {
+.if-no-edit:before {
   content: "\f119";
 }
 
-.if-move-left:before {
+.if-move-top:before {
   content: "\f11a";
 }
 
-.if-move-bottom:before {
+.if-move-right:before {
   content: "\f11b";
 }
 
-.if-more:before {
+.if-move-left:before {
   content: "\f11c";
 }
 
-.if-messages:before {
+.if-move-bottom:before {
   content: "\f11d";
 }
 
-.if-message:before {
+.if-more:before {
   content: "\f11e";
 }
 
-.if-menu:before {
+.if-messages:before {
   content: "\f11f";
 }
 
-.if-map-pin-line:before {
+.if-message:before {
   content: "\f120";
 }
 
-.if-mail:before {
+.if-menu:before {
   content: "\f121";
 }
 
-.if-log-out:before {
+.if-map-pin-line:before {
   content: "\f122";
 }
 
-.if-lock:before {
+.if-mail:before {
   content: "\f123";
 }
 
-.if-lock-unlock:before {
+.if-log-out:before {
   content: "\f124";
 }
 
-.if-list-unordered:before {
+.if-lock:before {
   content: "\f125";
 }
 
-.if-list-check:before {
+.if-lock-unlock:before {
   content: "\f126";
 }
 
-.if-info-circle:before {
+.if-list-unordered:before {
   content: "\f127";
 }
 
-.if-info-circle-filled:before {
+.if-list-check:before {
   content: "\f128";
 }
 
-.if-home:before {
+.if-info-circle:before {
   content: "\f129";
 }
 
-.if-grid:before {
+.if-info-circle-filled:before {
   content: "\f12a";
 }
 
-.if-global:before {
+.if-home:before {
   content: "\f12b";
 }
 
-.if-ghent-university:before {
+.if-grid:before {
   content: "\f12c";
 }
 
-.if-forbid:before {
+.if-global:before {
   content: "\f12d";
 }
 
-.if-file:before {
+.if-ghent-university:before {
   content: "\f12e";
 }
 
-.if-file-word:before {
+.if-forbid:before {
   content: "\f12f";
 }
 
-.if-file-text:before {
+.if-file:before {
   content: "\f130";
 }
 
-.if-file-pdf:before {
+.if-file-word:before {
   content: "\f131";
 }
 
-.if-feedback-fill:before {
+.if-file-text:before {
   content: "\f132";
 }
 
-.if-eye:before {
+.if-file-pdf:before {
   content: "\f133";
 }
 
-.if-eye-off:before {
+.if-feedback-fill:before {
   content: "\f134";
 }
 
-.if-eye-fill:before {
+.if-eye:before {
   content: "\f135";
 }
 
-.if-external-link:before {
+.if-eye-off:before {
   content: "\f136";
 }
 
-.if-expand-width-line:before {
+.if-eye-fill:before {
   content: "\f137";
 }
 
-.if-expand-up-down-line:before {
+.if-external-link:before {
   content: "\f138";
 }
 
-.if-expand-right-line:before {
+.if-expand-width-line:before {
   content: "\f139";
 }
 
-.if-expand-left-right-line:before {
+.if-expand-up-down-line:before {
   content: "\f13a";
 }
 
-.if-expand-left-line:before {
+.if-expand-right-line:before {
   content: "\f13b";
 }
 
-.if-expand-height-line:before {
+.if-expand-left-right-line:before {
   content: "\f13c";
 }
 
-.if-error-circle:before {
+.if-expand-left-line:before {
   content: "\f13d";
 }
 
-.if-error-circle-fill:before {
+.if-expand-height-line:before {
   content: "\f13e";
 }
 
-.if-empty:before {
+.if-error-circle:before {
   content: "\f13f";
 }
 
-.if-edit:before {
+.if-error-circle-fill:before {
   content: "\f140";
 }
 
-.if-drag:before {
+.if-empty:before {
   content: "\f141";
 }
 
-.if-draft:before {
+.if-edit:before {
   content: "\f142";
 }
 
-.if-draft-fill:before {
+.if-drag:before {
   content: "\f143";
 }
 
-.if-download:before {
+.if-draft:before {
   content: "\f144";
 }
 
-.if-double-quotes:before {
+.if-draft-fill:before {
   content: "\f145";
 }
 
-.if-delete:before {
+.if-download:before {
   content: "\f146";
 }
 
-.if-database:before {
+.if-double-quotes:before {
   content: "\f147";
 }
 
-.if-corner-right-up-line:before {
+.if-delete:before {
   content: "\f148";
 }
 
-.if-copy:before {
+.if-database:before {
   content: "\f149";
 }
 
-.if-contract-up-down-line:before {
+.if-corner-right-up-line:before {
   content: "\f14a";
 }
 
-.if-contract-right-line:before {
+.if-copy:before {
   content: "\f14b";
 }
 
-.if-contract-left-right-line:before {
+.if-contract-up-down-line:before {
   content: "\f14c";
 }
 
-.if-contract-left-line:before {
+.if-contract-right-line:before {
   content: "\f14d";
 }
 
-.if-close:before {
+.if-contract-left-right-line:before {
   content: "\f14e";
 }
 
-.if-close-circle-fill:before {
+.if-contract-left-line:before {
   content: "\f14f";
 }
 
-.if-chevron-up:before {
+.if-close:before {
   content: "\f150";
 }
 
-.if-chevron-right:before {
+.if-close-circle-fill:before {
   content: "\f151";
 }
 
-.if-chevron-left:before {
+.if-chevron-up:before {
   content: "\f152";
 }
 
-.if-chevron-down:before {
+.if-chevron-right:before {
   content: "\f153";
 }
 
-.if-check:before {
+.if-chevron-left:before {
   content: "\f154";
 }
 
-.if-check-double:before {
+.if-chevron-down:before {
   content: "\f155";
 }
 
-.if-check-circle:before {
+.if-check:before {
   content: "\f156";
 }
 
-.if-check-circle-fill:before {
+.if-check-double:before {
   content: "\f157";
 }
 
-.if-cc-zero-line:before {
+.if-check-circle:before {
   content: "\f158";
 }
 
-.if-cc-sa-line:before {
+.if-check-circle-fill:before {
   content: "\f159";
 }
 
-.if-cc-nd-line:before {
+.if-cc-zero-line:before {
   content: "\f15a";
 }
 
-.if-cc-nc-line:before {
+.if-cc-sa-line:before {
   content: "\f15b";
 }
 
-.if-cc-line:before {
+.if-cc-nd-line:before {
   content: "\f15c";
 }
 
-.if-cc-by-line:before {
+.if-cc-nc-line:before {
   content: "\f15d";
 }
 
-.if-caret-up:before {
+.if-cc-line:before {
   content: "\f15e";
 }
 
-.if-caret-right:before {
+.if-cc-by-line:before {
   content: "\f15f";
 }
 
-.if-caret-left:before {
+.if-caret-up:before {
   content: "\f160";
 }
 
-.if-caret-down:before {
+.if-caret-right:before {
   content: "\f161";
 }
 
-.if-calendar:before {
+.if-caret-left:before {
   content: "\f162";
 }
 
-.if-calendar-1:before {
+.if-caret-down:before {
   content: "\f163";
 }
 
-.if-building:before {
+.if-calendar:before {
   content: "\f164";
 }
 
-.if-briefcase:before {
+.if-calendar-1:before {
   content: "\f165";
 }
 
-.if-book:before {
+.if-building:before {
   content: "\f166";
 }
 
-.if-bar-chart:before {
+.if-briefcase:before {
   content: "\f167";
 }
 
-.if-asterisk:before {
+.if-book:before {
   content: "\f168";
 }
 
-.if-article:before {
+.if-bar-chart:before {
   content: "\f169";
 }
 
-.if-arrow-up:before {
+.if-asterisk:before {
   content: "\f16a";
 }
 
-.if-arrow-right:before {
+.if-article:before {
   content: "\f16b";
 }
 
-.if-arrow-right-double-line:before {
+.if-arrow-up:before {
   content: "\f16c";
 }
 
-.if-arrow-left:before {
+.if-arrow-right:before {
   content: "\f16d";
 }
 
-.if-arrow-go-back:before {
+.if-arrow-right-double-line:before {
   content: "\f16e";
 }
 
-.if-arrow-down:before {
+.if-arrow-left:before {
   content: "\f16f";
 }
 
-.if-arrow-double-up:before {
+.if-arrow-go-back:before {
   content: "\f170";
 }
 
-.if-arrow-double-down:before {
+.if-arrow-down:before {
   content: "\f171";
 }
 
-.if-alert:before {
+.if-arrow-double-up:before {
   content: "\f172";
 }
 
-.if-alert-fill:before {
+.if-arrow-double-down:before {
   content: "\f173";
 }
 
-.if-add:before {
+.if-alert:before {
   content: "\f174";
+}
+
+.if-alert-fill:before {
+  content: "\f175";
+}
+
+.if-add:before {
+  content: "\f176";
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

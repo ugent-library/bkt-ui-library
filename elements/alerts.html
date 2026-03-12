@@ -12,21 +12,21 @@
     <div class="ds-demo">
       <div class="ds-demo-label">Alert types</div>
       <div class="ds-demo-body">
-        <div class="alert alert-info">
+        <div class="alert alert-info d-flex align-items-center gap-2">
           <i class="if if-info-circle-filled"></i>
-          <p>This is some information.</p>
+          <p>Info or primary. This is some information.</p>
         </div>
-        <div class="alert alert-warning">
+        <div class="alert alert-warning d-flex align-items-center gap-2">
           <i class="if if-alert-fill"></i>
-          <p>This is a warning message</p>
+          <p>Warning. This is a warning message.</p>
         </div>
-        <div class="alert alert-danger">
+        <div class="alert alert-danger d-flex align-items-center gap-2">
           <i class="if if-error-circle-fill"></i>
-          <p>This is an error message.</p>
+          <p>Error. This is an error message.</p>
         </div>
-        <div class="alert alert-success">
+        <div class="alert alert-success d-flex align-items-center gap-2">
           <i class="if if-check-circle-fill"></i>
-          <p>This is a success message!</p>
+          <p>Success. This is a success message.</p>
         </div>
       </div>
     </div>
@@ -35,9 +35,9 @@
       <div class="ds-demo-label">Info — system action, context, prefilled data</div>
       <div class="ds-demo-body">
         <div class="alert alert-info" role="alert">
-          <p class="alert-heading mb-1">
+          <h2 class="h6 mb-1">
             Metadata prefilled from Crossref
-          </p>
+          </h2>
           We found your research output by DOI. Please review the fields below — you only need to correct what's wrong.
         </div>
       </div>
@@ -47,8 +47,8 @@
       <div class="ds-demo-label">Success — action completed</div>
       <div class="ds-demo-body">
         <div class="alert alert-success" role="alert">
-          <p class="alert-heading mb-1">
-            Deposit submitted successfully</p>
+          <h2 class="h6 mb-1">
+            Deposit submitted successfully</h2>
           Your research output has been received and is now in the curation queue. You will receive an email when it is published.
         </div>
       </div>
@@ -58,8 +58,8 @@
       <div class="ds-demo-label">Warning — attention required, not blocking</div>
       <div class="ds-demo-body">
         <div class="alert alert-warning" role="alert">
-          <p class="alert-heading mb-1">
-            Embargo period active</p>
+          <h2 class="h6 mb-1">
+            Embargo period active</h2>
           This research output is under embargo until March 2025. Full text will become openly available automatically on that date.
         </div>
       </div>
@@ -69,18 +69,24 @@
       <div class="ds-demo-label">Danger — blocking error, action failed</div>
       <div class="ds-demo-body">
         <div class="alert alert-danger" role="alert">
-          <p class="alert-heading mb-1">
-            File upload failed</p>
+          <h2 class="h6 mb-1">
+            File upload failed</h2>
           The file exceeds the 500 MB limit, or the format is not supported. Accepted formats: PDF, DOCX, EPUB, XML.
         </div>
       </div>
     </div>
 
     <div class="ds-demo">
-      <div class="ds-demo-label">Secondary — neutral system message, no action required</div>
+      <div class="ds-demo-label">Secondary, light, dark — neutral system message, no action required. Use sparingly</div>
       <div class="ds-demo-body">
         <div class="alert alert-secondary" role="alert">
-          This record was last updated 3 days ago by a curator.
+          Secondary. This record was last updated 3 days ago by a curator.
+        </div>
+        <div class="alert alert-light" role="alert">
+          Light. This record was last updated 3 days ago by a curator.
+        </div>
+        <div class="alert alert-dark" role="alert">
+          Dark. This record was last updated 3 days ago by a curator.
         </div>
       </div>
     </div>
@@ -89,10 +95,11 @@
   <section class="ds-section">
     <h2 class="h4 mb-3">Dismissible</h2>
     <div class="ds-demo">
+      <div class="ds-demo-label">Dismissable with closing button</div>
       <div class="ds-demo-body">
-        <div class="alert alert-primary alert-dismissible" role="alert">
-          <p class="alert-heading mb-1">
-            New curation guidelines available</p>
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <h2 class="h6 mb-1">
+            New curation guidelines available</h2>
           The metadata standards for datasets have been updated. <a href="#">Read the changes</a>.
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
