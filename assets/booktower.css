@@ -306,7 +306,6 @@ body {
   --bs-font-monospace: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-color: var(--bt-text);
-  --bs-body-bg: var(--bt-bg);
   --bs-border-color: var(--bt-border-color);
   --bs-border-radius: var(--bt-radius);
   --bs-border-radius-sm: var(--bt-radius-sm);
@@ -347,7 +346,6 @@ body {
   font-size: var(--s-body-size);
   line-height: var(--s-body-leading);
   color: var(--s-body-color);
-  background: var(--bt-bg);
 }
 
 ul, ol {
@@ -1403,15 +1401,6 @@ code, kbd, pre, samp {
   color: var(--bt-gray-700);
 }
 
-/* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
-.bt-sub-sidebar {
-  padding: var(--bt-sp-3) var(--bt-sp-3) var(--bt-sp-3) var(--bt-sp-1);
-}
-
-.bt-sub-sidebar--bordered {
-  border-right: var(--bt-border);
-}
-
 /* ── bt-dl — metadata definition list ──────────────────────────────────────── */
 /* Used in research-detail.html sidebar */
 .bt-dl {
@@ -1721,12 +1710,26 @@ code, kbd, pre, samp {
 /* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
 /*
   Use bt-toolbar for filter/search bars and bulk action bars.
-  bt-content-area handle the facets+results split.
+  bt-content-area wraps the facets aside + results column.
+  bt-sub-sidebar is the sticky <aside> containing filter fieldsets.
+  The results column uses flex-grow-1 + overflow-y: auto directly (Bootstrap utilities).
 */
 .bt-content-area {
   display: flex;
   flex: 1;
   min-height: 0;
+}
+
+/* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
+.bt-sub-sidebar {
+  width: 16rem;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-5);
+}
+
+.bt-sub-sidebar--bordered {
+  border-right: var(--bt-border);
 }
 
 /* ── Backoffice table ──────────────────────────────────────────────────────────────── */

@@ -90,7 +90,9 @@
 /* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
 /*
   Use bt-toolbar for filter/search bars and bulk action bars.
-  bt-content-area, bt-results-col handle the facets+results split.
+  bt-content-area wraps the facets aside + results column.
+  bt-sub-sidebar is the sticky <aside> containing filter fieldsets.
+  The results column uses flex-grow-1 + overflow-y: auto directly (Bootstrap utilities).
 */
 
 .bt-content-area {
@@ -99,13 +101,15 @@
   min-height: 0;
 }
 
-.bt-results-col {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--bt-sp-6);
+/* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
+.bt-sub-sidebar {
+  width: 16rem;
+  flex-shrink: 0;
   overflow-y: auto;
+  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-5);
+}
+.bt-sub-sidebar--bordered {
+  border-right: var(--bt-border);
 }
 
 

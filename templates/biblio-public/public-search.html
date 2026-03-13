@@ -4,13 +4,13 @@
 <!-- @include: templates/partials/public-header.html -->
 
 <div class="u-layout--public" data-surface="public">
-<main id="main-content">
+<main class="bg-white" id="main-content">
 
   <!-- ── Search bar ──────────────────────────────────────────────────────────
        Always visible in the results view. The query stays editable in-context
        so users can refine without navigating back.
   ─────────────────────────────────────────────────────────────────────────── -->
-  <div class="bg-white border-bottom py-4">
+  <div class="bg-white pb-4 pt-5">
     <div class="container">
 
       <form role="search" aria-label="Search research output" action="/search">
@@ -63,10 +63,10 @@
   </div>
 
   <!-- ── Body: facets + results ─────────────────────────────────────────────── -->
-  <div class="container d-flex gap-6 py-5">
+  <div class="container d-flex gap-6 pt-3">
 
     <!-- Facets sidebar -->
-    <aside class="bt-sub-sidebar bt-sub-sidebar--bordered" aria-label="Filter results">
+    <aside class="bt-sub-sidebar" aria-label="Filter results">
 
       <!-- Access -->
       <fieldset>
@@ -304,12 +304,12 @@
     </aside>
 
     <!-- Results column -->
-    <div class="flex-grow-1 overflow-hidden" id="search-results">
+    <div class="flex-grow-1 overflow-hidden ps-5" id="search-results">
 
       <!-- Results toolbar: count + sort + actions -->
-      <div class="bt-toolbar bt-toolbar--bordered">
+      <div class="bt-toolbar mb-4">
         <div class="bt-toolbar__left">
-          <span class="text-muted" aria-live="polite" id="result-count">179 results for <strong>"Quantum computing"</strong></span>
+          <small class="text-muted" aria-live="polite" id="result-count">179 results for <strong>"Quantum computing"</strong></small>
         </div>
         <div class="bt-toolbar__right">
           <label for="sort-by" class="visually-hidden">Sort by</label>
