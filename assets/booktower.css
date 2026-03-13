@@ -1609,6 +1609,25 @@ code, kbd, pre, samp {
   cursor: wait;
 }
 
+/* ── Facet expand/collapse toggle labels ───────────────────────────────────── */
+/* Bootstrap adds .collapsed to the trigger button when the panel is closed.
+   Use that to swap visible label text — no extra state needed. */
+.btn[data-bs-toggle=collapse] .when-expanded {
+  display: block;
+}
+
+.btn[data-bs-toggle=collapse] .when-collapsed {
+  display: none;
+}
+
+.btn.collapsed[data-bs-toggle=collapse] .when-expanded {
+  display: none;
+}
+
+.btn.collapsed[data-bs-toggle=collapse] .when-collapsed {
+  display: block;
+}
+
 /* ── filter-tag ─────────────────────────────────────────────────────────────── */
 /* Used in public-search.html active-filter pills */
 .filter-tag {
