@@ -1,0 +1,140 @@
+<!-- @title: Blank Slate — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Blank Slate</h1>
+    <p class="lead">The blank slate (<code>bt-blank-slate</code>) handles empty states.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">bt-blank-slate — variants</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Subtle — default, inside cards and list areas</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate">
+          <p>No research output added yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Default — standalone empty state with avatar</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate bt-blank-slate--default">
+          <div class="bt-avatar bt-avatar--small">
+            <i class="if if-file-text" aria-hidden="true"></i>
+          </div>
+          <p>No research output added yet.</p>
+          <div class="mt-3">
+            <a href="#" class="btn btn-primary btn-sm">Add your first record</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Muted — inside a section that hasn't been filled in yet</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate bt-blank-slate--muted">
+          <div class="bt-avatar bt-avatar--small">
+            <i class="if if-info-circle" aria-hidden="true"></i>
+          </div>
+          <p>No files attached to this record.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Primary — calls for action, the ◎ moment</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate bt-blank-slate-primary">
+          <div>◎</div>
+          <p>No research output yet.</p>
+          <p>Add your first record and make your work discoverable.</p>
+          <a href="#" class="btn btn-primary">Add research output</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Subtle (inside cards) --&gt;
+&lt;div class="bt-blank-slate"&gt;
+  &lt;p&gt;No items yet.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Default (standalone) --&gt;
+&lt;div class="bt-blank-slate bt-blank-slate--default"&gt;
+  &lt;div class="bt-avatar bt-avatar--small"&gt;
+    &lt;i class="if if-file-text" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;p&gt;No items yet.&lt;/p&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">bt-sub-sidebar — filter sidebar</h2>
+    <p class="mb-4">Facet groups use Bootstrap's collapse component and standard <code>form-check</code> inputs inside <code>fieldset</code>/<code>legend</code> groups. The old custom CSS grid (<code>bt-facets</code>, <code>bt-facet-check</code>, <code>bt-facet-name</code>, <code>bt-facet-separator</code>) is removed. See <code>templates/biblio-public/public-search.html</code> for the full live example.</p>
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Single facet group</h3></div>
+      <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7"">
+
+        <fieldset>
+          <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#demo-facet-type"
+            aria-expanded="true" aria-controls="demo-facet-type">
+            <button class="btn btn-link p-0">
+              <legend class="form-label flex-grow-1">Type</legend>
+            </button>
+            <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </div>
+          <div class="collapse show" id="demo-facet-type">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="df-journal" checked>
+              <label class="form-check-label flex-grow-1" for="df-journal">Journal article</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">88</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="df-dataset">
+              <label class="form-check-label flex-grow-1" for="df-dataset">Dataset</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">24</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="df-book">
+              <label class="form-check-label flex-grow-1" for="df-book">Book</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">6</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;aside class="bt-sub-sidebar" aria-label="Filter results"&gt;
+
+  &lt;fieldset&gt;
+    &lt;button class="btn btn-link p-0" type="button"
+      data-bs-toggle="collapse" data-bs-target="#facet-type"
+      aria-expanded="true" aria-controls="facet-type"&gt;
+      &lt;legend class="bt-facet-title"&gt;Type&lt;/legend&gt;
+      &lt;i class="if if-chevron-down if--xs" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse show" id="facet-type"&gt;
+      &lt;div class="d-flex form-check"&gt;
+        &lt;input class="form-check-input me-2" type="checkbox" id="f-journal" checked&gt;
+        &lt;label class="form-check-label" for="f-journal"&gt;Journal article&lt;/label&gt;
+        &lt;span class="badge bg-transparent pe-1" aria-hidden="true"&gt;88&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+
+  &lt;hr class="bt-facet-sep"&gt;
+
+  &lt;!-- next group --&gt;
+
+&lt;/aside&gt;</pre>
+    </div>
+  </section>
+</div>

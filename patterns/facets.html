@@ -1,0 +1,72 @@
+<!-- @title: Facets — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Facets</h1>
+    <p class="lead">Sidebar with Facets</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">bt-sub-sidebar + facets</h2>
+    <p class="mb-4">Facet groups use Bootstrap's collapse component and standard <code>form-check</code> inputs inside <code>fieldset</code>/<code>legend</code> groups. The old custom CSS grid (<code>bt-facets</code>, <code>bt-facet-check</code>, <code>bt-facet-name</code>, <code>bt-facet-separator</code>) is removed. See <code><a href="/templates/biblio-public/public-search.html">templates/biblio-public/public-search.html</a></code> for the full live example.</p>
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Single facet group</h3></div>
+      <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7"">
+
+        <fieldset>
+          <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#demo-facet-type"
+            aria-expanded="true" aria-controls="demo-facet-type">
+            <button class="btn btn-link p-0">
+              <legend class="form-label flex-grow-1">Type</legend>
+            </button>
+            <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </div>
+          <div class="collapse show" id="demo-facet-type">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="df-journal" checked>
+              <label class="form-check-label flex-grow-1" for="df-journal">Journal article</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">88</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="df-dataset">
+              <label class="form-check-label flex-grow-1" for="df-dataset">Dataset</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">24</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="df-book">
+              <label class="form-check-label flex-grow-1" for="df-book">Book</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">6</span>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;aside class="bt-sub-sidebar" aria-label="Filter results"&gt;
+
+  &lt;fieldset&gt;
+    &lt;button class="btn btn-link p-0" type="button"
+      data-bs-toggle="collapse" data-bs-target="#facet-type"
+      aria-expanded="true" aria-controls="facet-type"&gt;
+      &lt;legend class="bt-facet-title"&gt;Type&lt;/legend&gt;
+      &lt;i class="if if-chevron-down if--xs" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse show" id="facet-type"&gt;
+      &lt;div class="d-flex form-check"&gt;
+        &lt;input class="form-check-input me-2" type="checkbox" id="f-journal" checked&gt;
+        &lt;label class="form-check-label" for="f-journal"&gt;Journal article&lt;/label&gt;
+        &lt;span class="badge bg-transparent pe-1" aria-hidden="true"&gt;88&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+
+  &lt;hr class="bt-facet-sep"&gt;
+
+  &lt;!-- next group --&gt;
+
+&lt;/aside&gt;</pre>
+    </div>
+  </section>
+</div>
