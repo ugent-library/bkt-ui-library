@@ -413,6 +413,11 @@
   background: var(--bt-gray-50);
   margin: .3rem 0;
 }
+/* Any direct child div that isn't a named facet cell spans all columns.
+   Covers year-range inputs, "more" links, and similar span-all wrappers. */
+.bt-facets > div:not(.bt-facet-check):not(.bt-facet-name):not(.bt-facet-count):not(.bt-facet-separator):not(.bt-facet-title) {
+  // grid-column: 1 / -1;
+}
 
 
 /* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
