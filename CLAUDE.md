@@ -504,9 +504,11 @@ card-publication
 
 **Facets sidebar**
 ```
-bt-facets                bt-facet-title           bt-facet-check
-bt-facet-name            bt-facet-count           bt-facet-separator
+bt-facets-col           bt-facet-group           bt-facet-toggle
+bt-facet-title          bt-facet-check           bt-facet-count
+bt-facet-sep
 ```
+Note: Facet groups use Bootstrap `fieldset`/`legend` + `collapse` component + `form-check`. The old custom CSS grid (`bt-facets`, `bt-facet-name`, `bt-facet-separator`) is removed.
 
 **Sub-sidebar navigation**
 ```
@@ -515,8 +517,9 @@ bt-sub-sidebar           bt-sub-sidebar--bordered
 
 **Backoffice list layout**
 ```
-bt-content-area          bt-facets-col            bt-results-col
+bt-content-area
 ```
+Note: `bt-sub-sidebar` is the sticky `<aside>` wrapping the facet groups. Results column uses Bootstrap flex utilities directly (`flex-grow-1`, `overflow-y-auto`, `p-4`).
 Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
 
 **View toggle**
@@ -591,11 +594,15 @@ bt-filter-bar            (use bt-toolbar)
 bt-bulk-bar              (use bt-toolbar)
 bt-pagination-bar        (use bt-toolbar)
 bt-results-toolbar       (use bt-toolbar bt-toolbar--bordered)
+bt-results-col           (removed — use Bootstrap flex utilities on the results column directly)
 is-selected on <tr>     (use Bootstrap .table-active)
 td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
 bt-sidebar               (OLD narrow icon rail — removed in v2)
 u-maximize-height       (OLD layout utility — removed in v2)
+bt-facets                (removed — old custom CSS grid, replaced by Bootstrap fieldset/collapse)
+bt-facet-name            (removed — label now associates directly via form-check)
+bt-facet-separator       (removed — replaced by bt-facet-sep, an <hr> element)
 ```
 
 ### Icon names — verified source of truth
@@ -691,7 +698,7 @@ Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell 
 | Prefix | Meaning | Examples |
 |--------|---------|----------|
 | `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar` |
-| `bt-` | Component — no Bootstrap base | `bt-facets`, `bt-stepper`, `bt-blank-slate` |
+| `bt-` | Component — no Bootstrap base | `bt-facets-col`, `bt-stepper`, `bt-blank-slate` |
 | `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--deposit` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.
