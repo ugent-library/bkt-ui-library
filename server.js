@@ -16,7 +16,7 @@ const fs      = require('fs');
 const path    = require('path');
 const crypto  = require('crypto');
 
-const PORT    = 3000;
+const PORT    = 3111;
 const WS_PORT = 3001;
 const ROOT    = __dirname;
 const DEFAULT_CSS = [
