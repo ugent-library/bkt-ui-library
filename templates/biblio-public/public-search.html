@@ -66,249 +66,241 @@
   <div class="container d-flex gap-6 py-5">
 
     <!-- Facets sidebar -->
-    <aside class="bt-facets-col" aria-label="Filter results">
-      <div class="bt-facets">
+    <aside class="bt-sub-sidebar bt-sub-sidebar--bordered" aria-label="Filter results">
 
-        <!-- Access — OA first, the institutional default -->
-        <div class="bt-facet-title">Access</div>
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-oa" checked
-            aria-label="Open access (142 results)">
+      <!-- Access -->
+      <fieldset>
+        <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-access"
+          aria-expanded="true" aria-controls="bo-facet-access">
+          <button class="btn btn-link text-muted p-0">
+            <legend class="form-label flex-grow-1">Access</legend>
+          </button>
+          <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
         </div>
-        <div class="bt-facet-name"><label for="f-oa">Open access</label></div>
-        <div class="bt-facet-count" aria-hidden="true">142</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-restricted"
-            aria-label="Restricted — requires login (37 results)">
+        <div class="collapse show" id="facet-access">
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-oa" checked>
+            <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">142</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-restricted">
+            <label class="form-check-label flex-grow-1" for="f-restricted">
+              Restricted
+              <span class="text-muted small d-block">requires login</span>
+            </label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">37</span>
+          </div>
         </div>
-        <div class="bt-facet-name">
-          <label for="f-restricted">
-            Restricted
-            <span class="text-muted small d-block">requires login</span>
-          </label>
+      </fieldset>
+
+      <hr>
+
+      <!-- Type -->
+      <fieldset>
+        <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-type"
+          aria-expanded="true" aria-controls="facet-type">
+          <button class="btn btn-link text-muted p-0">
+            <legend class="form-label flex-grow-1">Type</legend>
+          </button>
+          <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
         </div>
-        <div class="bt-facet-count" aria-hidden="true">37</div>
-
-        <div class="bt-facet-separator" role="separator"></div>
-
-        <!-- Type — flat list, all kinds equal -->
-        <div class="bt-facet-title">Type</div>
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-journal" checked
-            aria-label="Journal article (88 results)">
+        <div class="collapse show" id="facet-type">
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-journal" checked>
+            <label class="form-check-label flex-grow-1" for="f-journal">Journal article</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">88</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-conference">
+            <label class="form-check-label flex-grow-1" for="f-conference">Conference paper</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">31</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-book-chapter">
+            <label class="form-check-label flex-grow-1" for="f-book-chapter">Book chapter</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">12</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-dataset">
+            <label class="form-check-label flex-grow-1" for="f-dataset">Dataset</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">24</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-dissertation">
+            <label class="form-check-label flex-grow-1" for="f-dissertation">Dissertation</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">8</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-book">
+            <label class="form-check-label flex-grow-1" for="f-book">Book</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">6</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-software">
+            <label class="form-check-label flex-grow-1" for="f-software">Software</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">4</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-preprint">
+            <label class="form-check-label flex-grow-1" for="f-preprint">Preprint</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-report">
+            <label class="form-check-label flex-grow-1" for="f-report">Report</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+          </div>
         </div>
-        <div class="bt-facet-name"><label for="f-journal">Journal article</label></div>
-        <div class="bt-facet-count" aria-hidden="true">88</div>
+      </fieldset>
 
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-conference"
-            aria-label="Conference paper (31 results)">
+      <hr>
+
+      <!-- Year — checkboxes + custom range -->
+      <fieldset>
+        <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-year"
+          aria-expanded="true" aria-controls="facet-year">
+          <button class="btn btn-link text-muted p-0">
+            <legend class="form-label flex-grow-1">Year</legend>
+          </button>
+          <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
         </div>
-        <div class="bt-facet-name"><label for="f-conference">Conference paper</label></div>
-        <div class="bt-facet-count" aria-hidden="true">31</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-book-chapter"
-            aria-label="Book chapter (12 results)">
+        <div class="collapse show" id="facet-year">
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2025">
+            <label class="form-check-label flex-grow-1" for="f-2025">2025</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">38</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2024" checked>
+            <label class="form-check-label flex-grow-1" for="f-2024">2024</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">31</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2023">
+            <label class="form-check-label flex-grow-1" for="f-2023">2023</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">28</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2022">
+            <label class="form-check-label flex-grow-1" for="f-2022">2022</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">19</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2021">
+            <label class="form-check-label flex-grow-1" for="f-2021">2021</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">14</span>
+          </div>
+          <!-- Custom range — sits outside the checkbox pattern, full width -->
+          <div class="mt-2" id="year-range-label">
+            <p class="text-muted small mb-1">Custom range</p>
+            <div class="d-flex flex-column gap-2">
+              <label for="year-from" class="visually-hidden">From year</label>
+              <input type="number" id="year-from" class="form-control form-control-sm"
+                placeholder="From" min="1800" max="2030"
+                aria-labelledby="year-range-label"
+                hx-get="/search" hx-trigger="change"
+                hx-target="#search-results" hx-include="[name='q']"
+                hx-indicator="#search-indicator">
+              <label for="year-to" class="visually-hidden">To year</label>
+              <input type="number" id="year-to" class="form-control form-control-sm"
+                placeholder="To" min="1800" max="2030"
+                aria-labelledby="year-range-label"
+                hx-get="/search" hx-trigger="change"
+                hx-target="#search-results" hx-include="[name='q']"
+                hx-indicator="#search-indicator">
+            </div>
+          </div>
         </div>
-        <div class="bt-facet-name"><label for="f-book-chapter">Book chapter</label></div>
-        <div class="bt-facet-count" aria-hidden="true">12</div>
+      </fieldset>
 
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-dataset"
-            aria-label="Dataset (24 results)">
+      <hr>
+
+      <!-- Subject -->
+      <fieldset>
+        <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-subject"
+          aria-expanded="true" aria-controls="facet-subject">
+          <button class="btn btn-link text-muted p-0">
+            <legend class="form-label flex-grow-1">Subject</legend>
+          </button>
+          <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
         </div>
-        <div class="bt-facet-name"><label for="f-dataset">Dataset</label></div>
-        <div class="bt-facet-count" aria-hidden="true">24</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-dissertation"
-            aria-label="Dissertation (8 results)">
+        <div class="collapse show" id="facet-subject">
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-physics">
+            <label class="form-check-label flex-grow-1" for="f-physics">Physics &amp; Astronomy</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">54</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-engineering">
+            <label class="form-check-label flex-grow-1" for="f-engineering">Technology &amp; Engineering</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">41</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-maths">
+            <label class="form-check-label flex-grow-1" for="f-maths">Mathematics &amp; Statistics</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">28</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-chemistry">
+            <label class="form-check-label flex-grow-1" for="f-chemistry">Chemistry</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">19</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-medicine">
+            <label class="form-check-label flex-grow-1" for="f-medicine">Medicine &amp; Health</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">12</span>
+          </div>
+          <div class="mt-1">
+            <a href="/advanced-search?facet=subject" class="btn btn-ghost btn-sm py-0 px-0">
+              More subjects
+              <i class="if if-chevron-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
-        <div class="bt-facet-name"><label for="f-dissertation">Dissertation</label></div>
-        <div class="bt-facet-count" aria-hidden="true">8</div>
+      </fieldset>
 
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-book"
-            aria-label="Book (6 results)">
+      <hr>
+
+      <!-- Language -->
+      <fieldset>
+        <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-language"
+          aria-expanded="true" aria-controls="facet-language">
+          <button class="btn btn-link text-muted p-0">
+            <legend class="form-label flex-grow-1">Language</legend>
+          </button>
+          <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
         </div>
-        <div class="bt-facet-name"><label for="f-book">Book</label></div>
-        <div class="bt-facet-count" aria-hidden="true">6</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-software"
-            aria-label="Software (4 results)">
+        <div class="collapse show" id="facet-language">
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-en" checked>
+            <label class="form-check-label flex-grow-1" for="f-en">English</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">161</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-nl">
+            <label class="form-check-label flex-grow-1" for="f-nl">Dutch</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">9</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-de">
+            <label class="form-check-label flex-grow-1" for="f-de">German</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">4</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-fr">
+            <label class="form-check-label flex-grow-1" for="f-fr">French</label>
+            <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+          </div>
+          <div class="mt-1">
+            <a href="/advanced-search?facet=language" class="btn btn-ghost btn-sm py-0 px-0">
+              More languages
+              <i class="if if-chevron-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
-        <div class="bt-facet-name"><label for="f-software">Software</label></div>
-        <div class="bt-facet-count" aria-hidden="true">4</div>
+      </fieldset>
 
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-preprint"
-            aria-label="Preprint (3 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-preprint">Preprint</label></div>
-        <div class="bt-facet-count" aria-hidden="true">3</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-report"
-            aria-label="Report (3 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-report">Report</label></div>
-        <div class="bt-facet-count" aria-hidden="true">3</div>
-
-        <div class="bt-facet-separator" role="separator"></div>
-
-        <!-- Year — individual years, most recent first -->
-        <div class="bt-facet-title">Year</div>
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-2025"
-            aria-label="2025 (38 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-2025">2025</label></div>
-        <div class="bt-facet-count" aria-hidden="true">38</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-2024" checked
-            aria-label="2024 (31 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-2024">2024</label></div>
-        <div class="bt-facet-count" aria-hidden="true">31</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-2023"
-            aria-label="2023 (28 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-2023">2023</label></div>
-        <div class="bt-facet-count" aria-hidden="true">28</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-2022"
-            aria-label="2022 (19 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-2022">2022</label></div>
-        <div class="bt-facet-count" aria-hidden="true">19</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-2021"
-            aria-label="2021 (14 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-2021">2021</label></div>
-        <div class="bt-facet-count" aria-hidden="true">14</div>
-
-        <!-- Year range entry — for precise filtering without listing every year -->
-        <div class="bt-facet-separator" role="separator"></div>
-        <div class="bt-facet-title" id="year-range-label">Custom range</div>
-        <div class="pb-1 d-flex flex-column gap-2">
-          <label for="year-from" class="visually-hidden">From year</label>
-          <input type="number" id="year-from" class="form-control form-control-sm"
-            placeholder="From" min="1800" max="2030"
-            aria-labelledby="year-range-label"
-            hx-get="/search"
-            hx-trigger="change"
-            hx-target="#search-results"
-            hx-include="[name='q']"
-            hx-indicator="#search-indicator">
-          <label for="year-to" class="visually-hidden">To year</label>
-          <input type="number" id="year-to" class="form-control form-control-sm"
-            placeholder="To" min="1800" max="2030"
-            aria-labelledby="year-range-label"
-            hx-get="/search"
-            hx-trigger="change"
-            hx-target="#search-results"
-            hx-include="[name='q']"
-            hx-indicator="#search-indicator">
-        </div>
-
-        <div class="bt-facet-separator" role="separator"></div>
-
-        <!-- Subject — broad discipline labels, not internal classification codes.
-             Top 8 by result count for this query. Full list via advanced search. -->
-        <div class="bt-facet-title">Subject</div>
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-physics"
-            aria-label="Physics and Astronomy (54 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-physics">Physics &amp; Astronomy</label></div>
-        <div class="bt-facet-count" aria-hidden="true">54</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-engineering"
-            aria-label="Technology and Engineering (41 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-engineering">Technology &amp; Engineering</label></div>
-        <div class="bt-facet-count" aria-hidden="true">41</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-maths"
-            aria-label="Mathematics and Statistics (28 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-maths">Mathematics &amp; Statistics</label></div>
-        <div class="bt-facet-count" aria-hidden="true">28</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-chemistry"
-            aria-label="Chemistry (19 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-chemistry">Chemistry</label></div>
-        <div class="bt-facet-count" aria-hidden="true">19</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-medicine"
-            aria-label="Medicine and Health Sciences (12 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-medicine">Medicine &amp; Health</label></div>
-        <div class="bt-facet-count" aria-hidden="true">12</div>
-
-        <!-- "More subjects" — links to advanced search with subject pre-selected -->
-        <div class="pt-1">
-          <a href="/advanced-search?facet=subject" class="btn btn-ghost btn-sm py-0 px-0">
-            More subjects
-            <i class="if if-chevron-right if--xs" aria-hidden="true"></i>
-          </a>
-        </div>
-
-        <div class="bt-facet-separator" role="separator"></div>
-
-        <!-- Language — top 5 by result count; full list via advanced search.
-             Avoids the "Achinese, Akkadian, Aleut" problem of the live system. -->
-        <div class="bt-facet-title">Language</div>
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-en" checked
-            aria-label="English (161 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-en">English</label></div>
-        <div class="bt-facet-count" aria-hidden="true">161</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-nl"
-            aria-label="Dutch (9 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-nl">Dutch</label></div>
-        <div class="bt-facet-count" aria-hidden="true">9</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-de"
-            aria-label="German (4 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-de">German</label></div>
-        <div class="bt-facet-count" aria-hidden="true">4</div>
-
-        <div class="bt-facet-check">
-          <input class="form-check-input mt-0" type="checkbox" id="f-fr"
-            aria-label="French (3 results)">
-        </div>
-        <div class="bt-facet-name"><label for="f-fr">French</label></div>
-        <div class="bt-facet-count" aria-hidden="true">3</div>
-
-        <div class="pt-1">
-          <a href="/advanced-search?facet=language" class="btn btn-ghost btn-sm py-0 px-0">
-            More languages
-            <i class="if if-chevron-right if--xs" aria-hidden="true"></i>
-          </a>
-        </div>
-
-      </div>
     </aside>
 
     <!-- Results column -->

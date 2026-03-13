@@ -60,10 +60,10 @@
       <!-- Search + filters -->
       <div class="bt-toolbar" role="search" aria-label="Search and filter research output">
         <div class="bt-toolbar__left">
-          <label for="bo-search" class="visually-hidden">Search by title, author, DOI</label>
+          <label for="search" class="visually-hidden">Search by title, author, DOI</label>
           <input type="search"
             class="form-control form-control-search"
-            id="bo-search"
+            id="search"
             value="Quantum computing"
             placeholder="Search by title, author, DOI…"
             hx-get="/search"
@@ -88,47 +88,87 @@
     <div class="bt-content-area">
 
       <!-- Facets -->
-      <aside class="bt-facets-col" aria-label="Filter by">
-        <div class="bt-facets">
-          <div class="bt-facet-title">Status</div>
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-published" checked aria-label="Published (3 results)"></div>
-          <div class="bt-facet-name"><label for="f-published">Published</label></div>
-          <div class="bt-facet-count" aria-hidden="true">3</div>
+      <aside class="bt-sub-sidebar bt-sub-sidebar--bordered" aria-label="Filter by">
 
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-draft" aria-label="Draft (1 result)"></div>
-          <div class="bt-facet-name"><label for="f-draft">Draft</label></div>
-          <div class="bt-facet-count" aria-hidden="true">1</div>
+        <fieldset>
+          <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-status"
+            aria-expanded="true" aria-controls="facet-status">
+            <button class="btn btn-link text-muted p-0">
+              <legend class="form-label flex-grow-1">Status</legend>
+            </button>
+            <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </div>
+          <div class="collapse show" id="facet-status">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-published" checked>
+              <label class="form-check-label flex-grow-1" for="f-published">Published</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-draft">
+              <label class="form-check-label flex-grow-1" for="f-draft">Draft</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </div>
+        </fieldset>
 
-          <div class="bt-facet-separator" role="separator"></div>
-          <div class="bt-facet-title">Type</div>
+        <hr>
 
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-journal" checked aria-label="Journal article (2 results)"></div>
-          <div class="bt-facet-name"><label for="f-journal">Journal article</label></div>
-          <div class="bt-facet-count" aria-hidden="true">2</div>
+        <fieldset>
+          <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-type"
+            aria-expanded="true" aria-controls="facet-type">
+            <button class="btn btn-link text-muted p-0">
+              <legend class="form-label flex-grow-1">Type</legend>
+            </button>
+            <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </div>
+          <div class="collapse show" id="facet-type">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-journal" checked>
+              <label class="form-check-label flex-grow-1" for="f-journal">Journal article</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-dataset">
+              <label class="form-check-label flex-grow-1" for="f-dataset">Dataset</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-chapter">
+              <label class="form-check-label flex-grow-1" for="f-chapter">Book chapter</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </div>
+        </fieldset>
 
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-dataset" aria-label="Dataset (1 result)"></div>
-          <div class="bt-facet-name"><label for="f-dataset">Dataset</label></div>
-          <div class="bt-facet-count" aria-hidden="true">1</div>
+        <hr>
 
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-chapter" aria-label="Book chapter (1 result)"></div>
-          <div class="bt-facet-name"><label for="f-chapter">Book chapter</label></div>
-          <div class="bt-facet-count" aria-hidden="true">1</div>
+        <fieldset>
+          <div type="button" class="d-flex justify-content-between" data-bs-toggle="collapse" data-bs-target="#facet-access"
+            aria-expanded="true" aria-controls="facet-access">
+            <button class="btn btn-link text-muted p-0">
+              <legend class="form-label flex-grow-1">Access</legend>
+            </button>
+            <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </div>
+          <div class="collapse show" id="facet-access">
+            <div class="d-flex">
+              <input class="form-check-input me-2" type="checkbox" id="f-oa" checked>
+              <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex">
+              <input class="form-check-input me-2" type="checkbox" id="f-restricted">
+              <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </div>
+        </fieldset>
 
-          <div class="bt-facet-separator" role="separator"></div>
-          <div class="bt-facet-title">Access</div>
-
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-oa" checked aria-label="Open access (3 results)"></div>
-          <div class="bt-facet-name"><label for="f-oa">Open access</label></div>
-          <div class="bt-facet-count" aria-hidden="true">3</div>
-
-          <div class="bt-facet-check"><input class="form-check-input mt-0" type="checkbox" id="f-restricted" aria-label="Restricted (1 result)"></div>
-          <div class="bt-facet-name"><label for="f-restricted">Restricted</label></div>
-          <div class="bt-facet-count" aria-hidden="true">1</div>
-        </div>
       </aside>
 
       <!-- Results -->
-      <div class="bt-results-col" id="results-body">
+      <div id="results-body">
 
         <!-- Results toolbar: count + view toggle -->
         <div class="bt-toolbar bt-toolbar--bordered">
@@ -404,14 +444,14 @@
     btnTable.classList.toggle('is-active', !isCard);
     btnCard.setAttribute('aria-pressed',  String(isCard));
     btnTable.setAttribute('aria-pressed', String(!isCard));
-    try { localStorage.setItem('bo-results-view', view); } catch(e) {}
+    try { localStorage.setItem('results-view', view); } catch(e) {}
   }
 
   btnCard.addEventListener('click',  () => setView('card'));
   btnTable.addEventListener('click', () => setView('table'));
 
   try {
-    const saved = localStorage.getItem('bo-results-view');
+    const saved = localStorage.getItem('results-view');
     if (saved === 'table') setView('table');
   } catch(e) {}
 </script>

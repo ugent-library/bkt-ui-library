@@ -373,56 +373,9 @@
   color: var(--bt-gray-700);
 }
 
-
-/* ── bt-facets ───────────────────────────────────────────────────────────────── */
-/* Used in public-search.html and deposit-flow.html */
-.bt-facets {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: .2rem .5rem;
-}
-.bt-facet-title {
-  grid-column: 1/-1;
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  color: var(--bt-gray-300);
-  padding: .625rem 0 .2rem;
-}
-.bt-facet-title:first-child {
-  padding-top: 0;
-}
-.bt-facet-name label {
-  font-size: var(--bt-text-sm);
-  color: var(--bt-gray-700);
-  cursor: pointer;
-  margin: 0;
-  line-height: 1.4;
-}
-.bt-facet-count {
-  font-size: var(--bt-text-xs);
-  color: var(--bt-gray-300);
-  font-family: var(--bt-font-mono);
-  text-align: right;
-  white-space: nowrap;
-}
-.bt-facet-separator {
-  grid-column: 1/-1;
-  height: 1px;
-  background: var(--bt-gray-50);
-  margin: .3rem 0;
-}
-/* Any direct child div that isn't a named facet cell spans all columns.
-   Covers year-range inputs, "more" links, and similar span-all wrappers. */
-.bt-facets > div:not(.bt-facet-check):not(.bt-facet-name):not(.bt-facet-count):not(.bt-facet-separator):not(.bt-facet-title) {
-  // grid-column: 1 / -1;
-}
-
-
 /* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
 .bt-sub-sidebar {
-  padding-right: 1rem;
+  padding: var(--bt-sp-3) var(--bt-sp-3) var(--bt-sp-3) var(--bt-sp-1);
 }
 .bt-sub-sidebar--bordered {
   border-right: var(--bt-border);
