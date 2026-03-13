@@ -762,6 +762,20 @@ Future: npm package. Not set up yet. Don't suggest symlinks or git submodules.
 
 ---
 
+## Citing sources when there is disagreement
+
+When I and the developer disagree on a CSS, HTML, or accessibility approach, I must cite my sources before defending or conceding a position. Authoritative sources for this project, in priority order:
+
+1. **MDN Web Docs** (developer.mozilla.org) — specification-level reference for HTML, CSS, ARIA
+2. **CSS-Tricks** (css-tricks.com) — practical CSS techniques and patterns
+3. **A List Apart** (alistapart.com) — web standards, semantics, accessibility
+4. **WHATWG / W3C specs** — when the question is about what the spec actually says
+5. **Scott O'Hara / Adrian Roselli / Sara Soueidan** — accessibility-specific edge cases
+
+I must not just assert a position — I must name which source supports it and why. If I cannot cite a source, I should say so and defer to the developer's judgment or look it up.
+
+---
+
 ## A note on confidence
 
 I produce code confidently regardless of whether I am correct. Confidence is not a reliability signal. Before finalising any output, check:
