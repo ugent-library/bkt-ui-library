@@ -1,0 +1,536 @@
+<!-- @title: Search — Biblio UGent -->
+<!-- @surface: public -->
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+<main id="main-content">
+
+  <!-- ── Search bar ──────────────────────────────────────────────────────────
+       Always visible in the results view. The query stays editable in-context
+       so users can refine without navigating back.
+  ─────────────────────────────────────────────────────────────────────────── -->
+  <div class="bg-white border-bottom py-4">
+    <div class="container">
+
+      <form role="search" aria-label="Search research output" action="/search">
+        <label for="q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
+        <div class="input-group input-group-lg mb-3">
+          <span class="input-group-text" aria-hidden="true">
+            <i class="if if-search"></i>
+          </span>
+          <input
+            type="search"
+            id="q"
+            name="q"
+            class="form-control"
+            value="Quantum computing"
+            autocomplete="off"
+            hx-get="/search"
+            hx-trigger="keyup changed delay:400ms"
+            hx-target="#search-results"
+            hx-swap="innerHTML"
+            hx-indicator="#search-indicator">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+
+        <!-- Active filters — shown as removable tags below the search bar -->
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <span class="text-muted small" id="active-filters-label">Active filters:</span>
+          <div role="group" aria-labelledby="active-filters-label" class="d-flex align-items-center gap-2 flex-wrap">
+            <button type="button" class="filter-tag"
+              aria-label="Remove filter: Open access only">
+              <i class="if if-open-access if--xs" aria-hidden="true"></i>
+              Open access
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="filter-tag"
+              aria-label="Remove filter: Year 2020 to today">
+              Year: 2020–today
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+          <span id="search-indicator" class="htmx-indicator text-muted small ms-1" aria-live="polite">
+            Searching…
+          </span>
+          <a href="/advanced-search" class="btn btn-ghost btn-sm ms-auto">
+            Advanced search
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ── Body: facets + results ─────────────────────────────────────────────── -->
+  <div class="container d-flex gap-6 py-5">
+
+    <!-- Facets sidebar -->
+    <aside class="bt-facets-col" aria-label="Filter results">
+      <div class="bt-facets">
+
+        <!-- Access — OA first, the institutional default -->
+        <div class="bt-facet-title">Access</div>
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-oa" checked
+            aria-label="Open access (142 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-oa">Open access</label></div>
+        <div class="bt-facet-count" aria-hidden="true">142</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-restricted"
+            aria-label="Restricted — requires login (37 results)">
+        </div>
+        <div class="bt-facet-name">
+          <label for="f-restricted">
+            Restricted
+            <span class="text-muted small d-block" style="">requires login</span>
+          </label>
+        </div>
+        <div class="bt-facet-count" aria-hidden="true">37</div>
+
+        <div class="bt-facet-separator" role="separator"></div>
+
+        <!-- Type — flat list, all kinds equal -->
+        <div class="bt-facet-title">Type</div>
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-journal" checked
+            aria-label="Journal article (88 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-journal">Journal article</label></div>
+        <div class="bt-facet-count" aria-hidden="true">88</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-conference"
+            aria-label="Conference paper (31 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-conference">Conference paper</label></div>
+        <div class="bt-facet-count" aria-hidden="true">31</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-book-chapter"
+            aria-label="Book chapter (12 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-book-chapter">Book chapter</label></div>
+        <div class="bt-facet-count" aria-hidden="true">12</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-dataset"
+            aria-label="Dataset (24 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-dataset">Dataset</label></div>
+        <div class="bt-facet-count" aria-hidden="true">24</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-dissertation"
+            aria-label="Dissertation (8 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-dissertation">Dissertation</label></div>
+        <div class="bt-facet-count" aria-hidden="true">8</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-book"
+            aria-label="Book (6 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-book">Book</label></div>
+        <div class="bt-facet-count" aria-hidden="true">6</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-software"
+            aria-label="Software (4 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-software">Software</label></div>
+        <div class="bt-facet-count" aria-hidden="true">4</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-preprint"
+            aria-label="Preprint (3 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-preprint">Preprint</label></div>
+        <div class="bt-facet-count" aria-hidden="true">3</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-report"
+            aria-label="Report (3 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-report">Report</label></div>
+        <div class="bt-facet-count" aria-hidden="true">3</div>
+
+        <div class="bt-facet-separator" role="separator"></div>
+
+        <!-- Year — individual years, most recent first -->
+        <div class="bt-facet-title">Year</div>
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-2025"
+            aria-label="2025 (38 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-2025">2025</label></div>
+        <div class="bt-facet-count" aria-hidden="true">38</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-2024" checked
+            aria-label="2024 (31 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-2024">2024</label></div>
+        <div class="bt-facet-count" aria-hidden="true">31</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-2023"
+            aria-label="2023 (28 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-2023">2023</label></div>
+        <div class="bt-facet-count" aria-hidden="true">28</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-2022"
+            aria-label="2022 (19 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-2022">2022</label></div>
+        <div class="bt-facet-count" aria-hidden="true">19</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-2021"
+            aria-label="2021 (14 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-2021">2021</label></div>
+        <div class="bt-facet-count" aria-hidden="true">14</div>
+
+        <!-- Year range entry — for precise filtering without listing every year -->
+        <div class="bt-facet-separator" role="separator"></div>
+        <div class="bt-facet-title" id="year-range-label">Custom range</div>
+        <div class="col-span-3 px-0 pb-1" style="grid-column: 1 / -1;">
+          <div class="d-flex align-items-center gap-2">
+            <label for="year-from" class="visually-hidden">From year</label>
+            <input type="number" id="year-from" class="form-control form-control-sm"
+              placeholder="From" min="1800" max="2030" style="width: 4.5rem;"
+              aria-labelledby="year-range-label"
+              hx-get="/search"
+              hx-trigger="change"
+              hx-target="#search-results"
+              hx-include="[name='q']"
+              hx-indicator="#search-indicator">
+            <span class="text-muted small" aria-hidden="true">–</span>
+            <label for="year-to" class="visually-hidden">To year</label>
+            <input type="number" id="year-to" class="form-control form-control-sm"
+              placeholder="To" min="1800" max="2030" style="width: 4.5rem;"
+              aria-labelledby="year-range-label"
+              hx-get="/search"
+              hx-trigger="change"
+              hx-target="#search-results"
+              hx-include="[name='q']"
+              hx-indicator="#search-indicator">
+          </div>
+        </div>
+
+        <div class="bt-facet-separator" role="separator"></div>
+
+        <!-- Subject — broad discipline labels, not internal classification codes.
+             Top 8 by result count for this query. Full list via advanced search. -->
+        <div class="bt-facet-title">Subject</div>
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-physics"
+            aria-label="Physics and Astronomy (54 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-physics">Physics &amp; Astronomy</label></div>
+        <div class="bt-facet-count" aria-hidden="true">54</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-engineering"
+            aria-label="Technology and Engineering (41 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-engineering">Technology &amp; Engineering</label></div>
+        <div class="bt-facet-count" aria-hidden="true">41</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-maths"
+            aria-label="Mathematics and Statistics (28 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-maths">Mathematics &amp; Statistics</label></div>
+        <div class="bt-facet-count" aria-hidden="true">28</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-chemistry"
+            aria-label="Chemistry (19 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-chemistry">Chemistry</label></div>
+        <div class="bt-facet-count" aria-hidden="true">19</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-medicine"
+            aria-label="Medicine and Health Sciences (12 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-medicine">Medicine &amp; Health</label></div>
+        <div class="bt-facet-count" aria-hidden="true">12</div>
+
+        <!-- "More subjects" — links to advanced search with subject pre-selected -->
+        <div style="grid-column: 1 / -1; padding-top: .25rem;">
+          <a href="/advanced-search?facet=subject" class="btn btn-ghost btn-sm py-0 px-0">
+            More subjects
+            <i class="if if-chevron-right if--xs" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <div class="bt-facet-separator" role="separator"></div>
+
+        <!-- Language — top 5 by result count; full list via advanced search.
+             Avoids the "Achinese, Akkadian, Aleut" problem of the live system. -->
+        <div class="bt-facet-title">Language</div>
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-en" checked
+            aria-label="English (161 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-en">English</label></div>
+        <div class="bt-facet-count" aria-hidden="true">161</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-nl"
+            aria-label="Dutch (9 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-nl">Dutch</label></div>
+        <div class="bt-facet-count" aria-hidden="true">9</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-de"
+            aria-label="German (4 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-de">German</label></div>
+        <div class="bt-facet-count" aria-hidden="true">4</div>
+
+        <div class="bt-facet-check">
+          <input class="form-check-input mt-0" type="checkbox" id="f-fr"
+            aria-label="French (3 results)">
+        </div>
+        <div class="bt-facet-name"><label for="f-fr">French</label></div>
+        <div class="bt-facet-count" aria-hidden="true">3</div>
+
+        <div style="grid-column: 1 / -1; padding-top: .25rem;">
+          <a href="/advanced-search?facet=language" class="btn btn-ghost btn-sm py-0 px-0">
+            More languages
+            <i class="if if-chevron-right if--xs" aria-hidden="true"></i>
+          </a>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Results column -->
+    <div class="flex-grow-1 overflow-hidden" id="search-results">
+
+      <!-- Results toolbar: count + sort + actions -->
+      <div class="bt-toolbar bt-toolbar--bordered">
+        <div class="bt-toolbar__left">
+          <span class="text-muted" aria-live="polite" id="result-count">179 results for <strong>"Quantum computing"</strong></span>
+        </div>
+        <div class="bt-toolbar__right">
+          <label for="sort-by" class="visually-hidden">Sort by</label>
+          <select id="sort-by" class="form-select form-select-sm w-auto"
+            hx-get="/search"
+            hx-trigger="change"
+            hx-target="#search-results"
+            hx-include="[name='q']"
+            hx-indicator="#search-indicator">
+            <option value="relevance">Relevance</option>
+            <option value="year-desc" selected>Year (new to old)</option>
+            <option value="year-asc">Year (old to new)</option>
+            <option value="title-asc">Title (A–Z)</option>
+          </select>
+          <div class="dropdown">
+            <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+              data-bs-toggle="dropdown"
+              aria-label="More actions for search results">
+              <i class="if if-more" aria-hidden="true"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">
+                <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
+                Save search
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                Export results (BibTeX, RIS, CSV…)
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <i class="if if-notification if--sm me-2" aria-hidden="true"></i>
+                Subscribe to new results
+              </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards -->
+
+      <article class="card-research" aria-labelledby="card-title-s01">
+        <div class="card-meta">
+          <span class="badge-oa">Open access</span>
+          <span class="badge bg-primary">Journal article</span>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Cite: The role of the parameter landscape…">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Add to list: The role of the parameter landscape…">
+            <i class="if if-list-check" aria-hidden="true"></i> Save
+          </button>
+          <a href="/templates/research-detail.html" class="btn btn-primary btn-sm">
+            <i class="if if-download" aria-hidden="true"></i> Read
+          </a>
+        </div>
+        <div class="card-body">
+          <h2 id="card-title-s01" class="card-title">
+            <a href="/templates/research-detail.html">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
+          </h2>
+          <p class="card-authors">
+            <a href="#">Kiewiet, M.</a>,
+            <a href="#">Cuyvers, S.</a>,
+            <a href="#">Billet, M.</a>,
+            <a href="#">Akritidis, K.</a>
+            <span class="text-muted">et al.</span>
+          </p>
+          <p class="card-publication">
+            <span>2025</span> ·
+            <a href="#">Laser &amp; Photonics Reviews</a> ·
+            <span>33(2) · pp. 2227–2246</span>
+          </p>
+        </div>
+      </article>
+
+      <article class="card-research" aria-labelledby="card-title-s02">
+        <div class="card-meta">
+          <span class="badge-restricted">Restricted</span>
+          <span class="badge bg-primary">Book chapter</span>
+          <span class="badge bg-warning">Embargo until Jan 2026</span>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Cite: Quantum error correction in near-term devices">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Add to list: Quantum error correction in near-term devices">
+            <i class="if if-list-check" aria-hidden="true"></i> Save
+          </button>
+          <button type="button" class="btn btn-secondary btn-sm"
+            aria-label="Request access to: Quantum error correction in near-term devices">
+            <i class="if if-mail" aria-hidden="true"></i> Request access
+          </button>
+        </div>
+        <div class="card-body">
+          <h2 id="card-title-s02" class="card-title">
+            <a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a>
+          </h2>
+          <p class="card-authors">
+            <a href="#">Verstraeten, D.</a>,
+            <a href="#">De Wolf, K.</a>
+          </p>
+          <p class="card-publication">
+            <span>2024</span> ·
+            <a href="#">Advances in Quantum Computing</a> ·
+            <span>pp. 78–112</span>
+          </p>
+        </div>
+      </article>
+
+      <article class="card-research" aria-labelledby="card-title-s03">
+        <div class="card-meta">
+          <span class="badge-oa">Open access</span>
+          <span class="badge bg-primary">Dataset</span>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Cite: Benchmark results for variational quantum eigensolver">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Add to list: Benchmark results for variational quantum eigensolver">
+            <i class="if if-list-check" aria-hidden="true"></i> Save
+          </button>
+          <a href="#" class="btn btn-primary btn-sm"
+            aria-label="Download dataset: Benchmark results for variational quantum eigensolver">
+            <i class="if if-download" aria-hidden="true"></i> Download
+          </a>
+        </div>
+        <div class="card-body">
+          <h2 id="card-title-s03" class="card-title">
+            <a href="#">Benchmark results for variational quantum eigensolver across 14 molecular systems</a>
+          </h2>
+          <p class="card-authors">
+            <a href="#">Maes, J.</a>,
+            <a href="#">Billet, M.</a>
+          </p>
+          <p class="card-publication">
+            <span>2024</span> ·
+            <a href="#">Zenodo</a>
+          </p>
+        </div>
+      </article>
+
+      <article class="card-research" aria-labelledby="card-title-s04">
+        <div class="card-meta">
+          <span class="badge-oa">Open access</span>
+          <span class="badge bg-primary">Journal article</span>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Cite: Hybrid classical–quantum algorithms for combinatorial optimisation">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Add to list: Hybrid classical–quantum algorithms for combinatorial optimisation">
+            <i class="if if-list-check" aria-hidden="true"></i> Save
+          </button>
+          <a href="#" class="btn btn-primary btn-sm">
+            <i class="if if-download" aria-hidden="true"></i> Read
+          </a>
+        </div>
+        <div class="card-body">
+          <h2 id="card-title-s04" class="card-title">
+            <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
+          </h2>
+          <p class="card-authors">
+            <a href="#">Van Damme, T.</a>,
+            <a href="#">Esperon-Rodriguez, M.</a>,
+            <a href="#">Akritidis, K.</a>
+            <span class="text-muted">et al.</span>
+          </p>
+          <p class="card-publication">
+            <span>2023</span> ·
+            <a href="#">npj Quantum Information</a> ·
+            <span>9(1) · p.44</span>
+          </p>
+        </div>
+      </article>
+
+      <!-- Pagination -->
+      <nav class="bt-toolbar" aria-label="Results pagination">
+        <span class="text-muted small">Showing 1–10 of 179 results</span>
+        <ul class="pagination mb-0 ms-auto">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+          </li>
+          <li class="page-item active">
+            <a class="page-link" href="#" aria-current="page">1</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item" aria-hidden="true">
+            <span class="page-link">…</span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">18</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next page">›</a>
+          </li>
+        </ul>
+      </nav>
+
+    </div><!-- /results -->
+
+  </div><!-- /body -->
+
+</main>
+</div>
+
+<!-- @include: templates/partials/public-footer.html -->

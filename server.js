@@ -4,6 +4,7 @@
  *
  * - Serves static files from project root
  * - Scans folder structure → builds nav automatically
+ * - Templates are grouped by subdirectory (one subdir = one app), collapsible
  * - Injects shell chrome into every HTML page
  * - Live reload via minimal WebSocket implementation
  * - HTMX partial responses: ?partial=true strips shell
@@ -51,7 +52,7 @@ const SECTIONS = [
   { dir: 'elements',    label: 'Elements'    },
   { dir: 'patterns',    label: 'Patterns'    },
   { dir: 'templates',   label: 'Templates'   },
-  { dir: 'base',        label: 'base'},
+  { dir: 'base',        label: 'base'        },
 ];
 
 // ─── Build nav from filesystem ────────────────────────────────────────────────
@@ -59,13 +60,53 @@ function buildNav() {
   return SECTIONS.reduce((acc, section) => {
     const dirPath = path.join(ROOT, section.dir);
     if (!fs.existsSync(dirPath)) return acc;
+
+    if (section.dir === 'templates') {
+      // Each subdirectory (excluding partials) becomes a named collapsible group (one group = one app).
+      // Top-level .html files in templates/ are listed before any groups.
+      const entries = fs.readdirSync(dirPath, { withFileTypes: true });
+
+      const topFiles = entries
+        .filter(e => !e.isDirectory() && e.name.endsWith('.html'))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(e => ({
+          name:       slugToLabel(e.name.replace('.html', '')),
+          path:       `/templates/${e.name}`,
+          isTemplate: true,
+        }));
+
+      const groups = entries
+        .filter(e => e.isDirectory() && e.name !== 'partials')
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(subDir => ({
+          class:      'bt-nav-group',
+          id:    `btn-nav-group-${subDir.name}`,
+          label: slugToLabel(subDir.name),
+          files: fs.readdirSync(path.join(dirPath, subDir.name))
+            .filter(f => f.endsWith('.html'))
+            .sort()
+            .map(f => ({
+              name:       slugToLabel(f.replace('.html', '')),
+              path:       `/templates/${subDir.name}/${f}`,
+              isTemplate: true,
+            })),
+        }))
+        .filter(g => g.files.length);
+
+      if (topFiles.length || groups.length) {
+        acc.push({ ...section, files: topFiles, groups });
+      }
+      return acc;
+    }
+
+    // All other sections: flat file list
     const files = fs.readdirSync(dirPath)
       .filter(f => f.endsWith('.html'))
       .sort()
       .map(f => ({
         name:       slugToLabel(f.replace('.html', '')),
         path:       `/${section.dir}/${f}`,
-        isTemplate: section.dir === 'templates',
+        isTemplate: false,
       }));
     if (files.length) acc.push({ ...section, files });
     return acc;
@@ -141,6 +182,22 @@ ${footerScripts}
   };
 }
 
+// ─── Nav link renderer ────────────────────────────────────────────────────────
+function renderNavLink(f, currentPath) {
+  const active = currentPath === f.path;
+  if (f.isTemplate) {
+    return `
+          <div class="bt-nav-template-item${active ? ' active' : ''}">
+            <a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>
+            <span class="bt-nav-template-actions">
+              <a href="${f.path}" class="bt-nav-action" title="View template">⊙</a>
+              <a href="${f.path}?view=html" class="bt-nav-action" title="Show HTML">&lt;/&gt;</a>
+            </span>
+          </div>`;
+  }
+  return `<a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>`;
+}
+
 // ─── Shell injection ──────────────────────────────────────────────────────────
 function injectShell(filePath, html, currentPath) {
   if (html.includes('data-bare')) return html; // opt-out for templates in prototype mode
@@ -149,19 +206,21 @@ function injectShell(filePath, html, currentPath) {
   const navHtml = nav.map(section => `
     <div class="bt-nav-section">
       <p class="bt-nav-section-label">${section.label}</p>
-      ${section.files.map(f => {
-        const active = currentPath === f.path;
-        if (f.isTemplate) {
-          return `
-          <div class="bt-nav-template-item${active ? ' active' : ''}">
-            <a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>
-            <span class="bt-nav-template-actions">
-              <a href="${f.path}" class="bt-nav-action" title="View template">⊙</a>
-              <a href="${f.path}?view=html" class="bt-nav-action" title="Show HTML">&lt;/&gt;</a>
-            </span>
-          </div>`;
-        }
-        return `<a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>`;
+      ${(section.files || []).map(f => renderNavLink(f, currentPath)).join('\n')}
+      ${(section.groups || []).map(group => {
+        const hasActive = group.files.some(f => f.path === currentPath);
+        return `
+      <div class="bt-nav-group${hasActive ? ' has-active' : ''}" data-group="${group.id}">
+        <button type="button" class="bt-nav-group-toggle" aria-expanded="false" aria-controls="${group.id}-items">
+          <span>${group.label}</span>
+          <svg class="bt-nav-group-chevron" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+            <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="bt-nav-group-items" id="${group.id}-items">
+          ${group.files.map(f => renderNavLink(f, currentPath)).join('\n')}
+        </div>
+      </div>`;
       }).join('\n')}
     </div>`).join('\n');
 
@@ -347,7 +406,7 @@ server.listen(PORT, () => {
   console.log('  ──────────────────────────────────────');
   console.log(`  http://localhost:${PORT}`);
   console.log('\n  Drop .html files into:');
-  console.log('    foundations/  elements/  patterns/  templates/');
+  console.log('    foundations/  elements/  patterns/  templates/<app-name>/');
   console.log('  Sidebar rebuilds automatically.\n');
 });
 

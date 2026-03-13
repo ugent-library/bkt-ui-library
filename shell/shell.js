@@ -24,19 +24,100 @@
     shell.classList.add('prototype-mode');
   }
 
+  // ─── Collapsible template groups ────────────────────────────────────────────
+  const GROUPS_KEY = 'bt-nav-groups';
+
+  function getGroupState() {
+    try { return JSON.parse(sessionStorage.getItem(GROUPS_KEY)) || {}; } catch { return {}; }
+  }
+
+  function saveGroupState(state) {
+    sessionStorage.setItem(GROUPS_KEY, JSON.stringify(state));
+  }
+
+  function setGroupOpen(group, open) {
+    const id      = group.dataset.group;
+    const btn     = group.querySelector('.bt-nav-group-toggle');
+    const items   = group.querySelector('.bt-nav-group-items');
+    const state   = getGroupState();
+
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    items.hidden = !open;
+    state[id] = open;
+    saveGroupState(state);
+  }
+
+  function setupGroups() {
+    const state = getGroupState();
+
+    navBody.querySelectorAll('.bt-nav-group').forEach(group => {
+      const id    = group.dataset.group;
+      const btn   = group.querySelector('.bt-nav-group-toggle');
+      const items = group.querySelector('.bt-nav-group-items');
+      if (!btn || !items) return;
+
+      // Open if: has active page inside, or was previously open, or no saved state yet
+      const hasActive  = group.classList.contains('has-active');
+      const savedOpen  = state[id];
+      const open       = hasActive || savedOpen === true || savedOpen === undefined;
+
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      items.hidden = !open;
+
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        setGroupOpen(group, !isOpen);
+      });
+    });
+  }
+
+  setupGroups();
+
   // ─── Search (Cmd/Ctrl + K) ──────────────────────────────────────────────────
   function filterNav(query) {
     const q = query.trim().toLowerCase();
     navBody.querySelectorAll('.bt-nav-section').forEach(section => {
       let anyVisible = false;
-      section.querySelectorAll('.bt-nav-link, .bt-nav-template-item').forEach(item => {
-        const link = item.classList.contains('bt-nav-link') ? item
-          : item.querySelector('.bt-nav-link');
-        const text  = link?.textContent.toLowerCase() || '';
-        const match = !q || text.includes(q);
+
+      // Flat links (non-grouped)
+      section.querySelectorAll(':scope > .bt-nav-link, :scope > .bt-nav-template-item').forEach(item => {
+        const link  = item.classList.contains('bt-nav-link') ? item : item.querySelector('.bt-nav-link');
+        const match = !q || link?.textContent.toLowerCase().includes(q);
         item.classList.toggle('hidden', !match);
         if (match) anyVisible = true;
       });
+
+      // Grouped links — expand groups that have matches, hide empty ones
+      section.querySelectorAll('.bt-nav-group').forEach(group => {
+        const items   = group.querySelector('.bt-nav-group-items');
+        let groupHits = false;
+
+        group.querySelectorAll('.bt-nav-link, .bt-nav-template-item').forEach(item => {
+          const link  = item.classList.contains('bt-nav-link') ? item : item.querySelector('.bt-nav-link');
+          const match = !q || link?.textContent.toLowerCase().includes(q);
+          item.classList.toggle('hidden', !match);
+          if (match) groupHits = true;
+        });
+
+        group.classList.toggle('hidden', !groupHits);
+        if (groupHits) anyVisible = true;
+
+        // Expand group while searching so results are visible; restore on clear
+        if (items) {
+          if (q) {
+            items.hidden = !groupHits;
+            group.querySelector('.bt-nav-group-toggle')?.setAttribute('aria-expanded', groupHits ? 'true' : 'false');
+          } else {
+            // Restore persisted open/closed state
+            const id     = group.dataset.group;
+            const saved  = getGroupState()[id];
+            const open   = group.classList.contains('has-active') || saved === true || saved === undefined;
+            items.hidden = !open;
+            group.querySelector('.bt-nav-group-toggle')?.setAttribute('aria-expanded', open ? 'true' : 'false');
+          }
+        }
+      });
+
       section.classList.toggle('hidden', !anyVisible);
     });
   }
@@ -167,7 +248,7 @@
   // ─── Active nav item scroll into view ────────────────────────────────────────
   const activeLink = navBody?.querySelector('.bt-nav-link.active');
   if (activeLink) {
-    activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    activeLink.scrollIntoView({ block: 'nearest' });
   }
 
 })();
