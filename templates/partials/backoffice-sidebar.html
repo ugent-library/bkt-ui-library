@@ -1,0 +1,55 @@
+<!-- @title: Backoffice sidebar partial -->
+<!-- @surface: backoffice -->
+<!--
+  bt-sub-sidebar — researcher/submitter navigation
+
+  Active state: set aria-current="page" on the matching link server-side.
+  Badge count:  render the <span class="badge …"> only when count > 0.
+  Slim toggle:  the toggle button adds/removes bt-sub-sidebar--slim on the <nav>.
+
+  In Go templ, pass `currentPage string` and `suggestionCount int` as parameters.
+-->
+
+<nav class="bt-sub-sidebar bt-sub-sidebar--bordered" aria-label="Section navigation" id="bt-sub-sidebar">
+  <div class="d-flex justify-content-end pb-3 pe-1">
+    <button type="button"
+      class="btn btn-ghost btn-sm p-1 bt-sub-sidebar__toggle"
+      aria-controls="bt-sub-sidebar"
+      aria-expanded="true"
+      aria-label="Collapse sidebar"
+      onclick="
+        const nav = document.getElementById('bt-sub-sidebar');
+        const slim = nav.classList.toggle('bt-sub-sidebar--slim');
+        this.setAttribute('aria-expanded', !slim);
+        this.setAttribute('aria-label', slim ? 'Expand sidebar' : 'Collapse sidebar');
+      ">
+      <i class="if if-arrow-left" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <p class="bt-sub-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pb-1">My work</p>
+
+  <a href="/dashboard" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Dashboard">
+    <i class="if if-home" aria-hidden="true"></i>
+    <span class="bt-sub-sidebar__label">Dashboard</span>
+  </a>
+
+  <a href="/research-output" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Research output">
+    <i class="if if-article" aria-hidden="true"></i>
+    <span class="bt-sub-sidebar__label">Research output</span>
+  </a>
+
+  <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
+  <a href="/suggestions" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Suggestions, 3 new">
+    <i class="if if-notification" aria-hidden="true"></i>
+    <span class="bt-sub-sidebar__label">Suggestions</span>
+    <span class="badge bg-warning ms-auto" aria-hidden="true">3</span>
+  </a>
+
+  <p class="bt-sub-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
+
+  <a href="/proxies" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Manage proxies">
+    <i class="if if-user-add" aria-hidden="true"></i>
+    <span class="bt-sub-sidebar__label">Manage proxies</span>
+  </a>
+</nav>

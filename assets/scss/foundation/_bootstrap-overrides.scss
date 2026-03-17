@@ -4,19 +4,27 @@
   //  TODO: Make this actually work
 
 
+/* Remap bold to semibold — IBM Plex 700 is not loaded; this prevents fake bold synthesis */
+strong, b,
+th,
+.fw-bold,
+.fw-bolder { font-weight: 600 !important; }
+
 :root {
+  --bs-font-weight-bold: 600;
   --bs-font-sans-serif:  'IBM Plex Sans', system-ui, sans-serif;
   --bs-font-monospace:   'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-color:       var(--bt-text);
 
-  // --bs-body-bg:          var(--bt-bg);
+  --bs-body-bg:          var(--bt-white);
   --bs-border-color:     var(--bt-border-color);
 
   --bs-border-radius:    var(--bt-radius);
   --bs-border-radius-sm: var(--bt-radius-sm);
   --bs-border-radius-lg: var(--bt-radius-lg);
   --bs-border-radius-xl: var(--bt-radius-xl);
+  --text-muted:           var(--bt-gray-700);
 
   --bs-primary:          var(--bt-gray-1000);
   // --bs-primary-rgb:      28, 61, 90;

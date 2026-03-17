@@ -107,9 +107,31 @@
   flex-shrink: 0;
   overflow-y: auto;
   padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-5);
+  transition: width var(--bt-dur-base);
+  overflow-x: hidden;
 }
 .bt-sub-sidebar--bordered {
   border-right: var(--bt-border);
+}
+
+/* Slim (icon-only) state — toggled via JS by adding this modifier */
+.bt-sub-sidebar--slim {
+  width: 3.5rem;
+  padding: var(--bt-sp-4) var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-1);
+  overflow: visible;
+
+  /* Hide group headings and text labels, no need to show for screen readers */
+  /* Hide badges — their info is in aria-label on the nav link when slim */
+  .bt-sub-sidebar__group-label,
+  .bt-sub-sidebar__label,
+  .badge {
+    display: none;
+  }
+
+  /* Rotate the toggle icon to indicate direction */
+  .bt-sub-sidebar__toggle .if {
+    rotate: 180deg;
+  }
 }
 
 
