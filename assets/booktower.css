@@ -5,7 +5,7 @@
    Sans  300,400,500,600 + italic 400  — UI text, labels, italic journal names
    Serif 300,400 + italic 400          — public headings, display text
    Weights 700 and italic 300/500/600/700 are unused — removed to save ~14 variant downloads */
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,400&display=swap");
 /*
  * booktower.css — v2
  * Bootstrap override layer + Booktower component system
@@ -292,6 +292,7 @@ body {
 .s-public {
   --s-heading-font: var(--bt-font-serif);
   --s-heading-weight: 400;
+  --s-display-weight: 600;
   --s-body-leading: 1.7;
   --s-lead-font: var(--bt-font-serif);
   --s-topbar-height: var(--bt-sp-16);
@@ -301,16 +302,27 @@ body {
 /* ═══════════════════════════════════════════════════════════════════════════════
    3. BOOTSTRAP VARIABLE OVERRIDES
    ═══════════════════════════════════════════════════════════════════════════════ */
+/* Remap bold to semibold — IBM Plex 700 is not loaded; this prevents fake bold synthesis */
+strong, b,
+th,
+.fw-bold,
+.fw-bolder {
+  font-weight: 600 !important;
+}
+
 :root {
+  --bs-font-weight-bold: 600;
   --bs-font-sans-serif: 'IBM Plex Sans', system-ui, sans-serif;
   --bs-font-monospace: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-color: var(--bt-text);
+  --bs-body-bg: var(--bt-white);
   --bs-border-color: var(--bt-border-color);
   --bs-border-radius: var(--bt-radius);
   --bs-border-radius-sm: var(--bt-radius-sm);
   --bs-border-radius-lg: var(--bt-radius-lg);
   --bs-border-radius-xl: var(--bt-radius-xl);
+  --text-muted: var(--bt-gray-700);
   --bs-primary: var(--bt-gray-1000);
   --bs-danger: var(--bt-danger);
   --bs-success: var(--bt-green);
@@ -452,6 +464,14 @@ a {
 
 a:hover {
   color: var(--bt-blue);
+}
+
+.bt-text-sm {
+  font-size: var(--bt-text-sm);
+}
+
+.bt-text-xs {
+  font-size: var(--bt-text-xs);
 }
 
 /*
@@ -659,6 +679,14 @@ code, kbd, pre, samp {
 .alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
   margin: 0 0 var(--bt-sp-2) 0;
   color: var(--bt-gray-1000);
+}
+
+.alert--sticky {
+  border-radius: 0;
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+  margin-bottom: 0;
 }
 
 /* Alert variants — semantic colors + light backgrounds + borders */
@@ -1030,6 +1058,35 @@ code, kbd, pre, samp {
   z-index: 1;
 }
 
+.input-group--hero.input-group-lg input.form-control {
+  border-radius: var(--bt-radius-lg) !important;
+  width: 100%;
+  position: relative;
+  height: 3.6rem;
+  font-size: var(--bt-text-md);
+}
+.input-group--hero.input-group-lg button.btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  border-radius: var(--bt-radius-md) !important;
+  height: 2.8rem;
+  font-size: var(--bt-text-md);
+}
+
+/* ── bt-section ──────────────────────────────────────────────────────────────── */
+.bt-section-landing {
+  padding: calc(var(--bt-sp-12) * 3) 0;
+}
+
+.bt-section-landing--border {
+  border-bottom: var(--bt-border);
+}
+
+.bt-section-landing--light {
+  background-color: var(--bt-bg);
+}
+
 /* ── bt-navbar ──────────────────────────────────────────────────────────────── */
 .bt-navbar {
   background: var(--bt-white);
@@ -1067,6 +1124,10 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
   font-weight: 500;
   font-size: var(--bt-text-sm);
+}
+
+.bt-navbar__logo {
+  max-width: 2.5rem;
 }
 
 .bt-navbar__link {
@@ -1745,10 +1806,32 @@ code, kbd, pre, samp {
   flex-shrink: 0;
   overflow-y: auto;
   padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-5);
+  transition: width var(--bt-dur-base);
+  overflow-x: hidden;
 }
 
 .bt-sub-sidebar--bordered {
   border-right: var(--bt-border);
+}
+
+/* Slim (icon-only) state — toggled via JS by adding this modifier */
+.bt-sub-sidebar--slim {
+  width: 3.5rem;
+  padding: var(--bt-sp-4) var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-1);
+  overflow: visible;
+  /* Hide group headings and text labels, no need to show for screen readers */
+  /* Hide badges — their info is in aria-label on the nav link when slim */
+}
+.bt-sub-sidebar--slim .bt-sub-sidebar__group-label,
+.bt-sub-sidebar--slim .bt-sub-sidebar__label,
+.bt-sub-sidebar--slim .badge {
+  display: none;
+}
+.bt-sub-sidebar--slim {
+  /* Rotate the toggle icon to indicate direction */
+}
+.bt-sub-sidebar--slim .bt-sub-sidebar__toggle .if {
+  rotate: 180deg;
 }
 
 /* ── Backoffice table ──────────────────────────────────────────────────────────────── */
@@ -2246,7 +2329,7 @@ code, kbd, pre, samp {
 }
 @font-face {
   font-family: "icon-font";
-  src: url("/assets/fonts/icon-font.woff?8ba7725297a6daf31736e5d7ca2e667e") format("woff"), url("/assets/fonts/icon-font.woff2?8ba7725297a6daf31736e5d7ca2e667e") format("woff2");
+  src: url("/assets/fonts/icon-font.woff?16a4ee66411eba9a1676165f84079669") format("woff"), url("/assets/fonts/icon-font.woff2?16a4ee66411eba9a1676165f84079669") format("woff2");
 }
 i[class^=if-]:before, i[class*=" if-"]:before {
   font-family: icon-font !important;
@@ -2671,64 +2754,68 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   content: "\f167";
 }
 
-.if-book:before {
+.if-booktower:before {
   content: "\f168";
 }
 
-.if-bar-chart:before {
+.if-book:before {
   content: "\f169";
 }
 
-.if-asterisk:before {
+.if-bar-chart:before {
   content: "\f16a";
 }
 
-.if-article:before {
+.if-asterisk:before {
   content: "\f16b";
 }
 
-.if-arrow-up:before {
+.if-article:before {
   content: "\f16c";
 }
 
-.if-arrow-right:before {
+.if-arrow-up:before {
   content: "\f16d";
 }
 
-.if-arrow-right-double-line:before {
+.if-arrow-right:before {
   content: "\f16e";
 }
 
-.if-arrow-left:before {
+.if-arrow-right-double-line:before {
   content: "\f16f";
 }
 
-.if-arrow-go-back:before {
+.if-arrow-left:before {
   content: "\f170";
 }
 
-.if-arrow-down:before {
+.if-arrow-go-back:before {
   content: "\f171";
 }
 
-.if-arrow-double-up:before {
+.if-arrow-down:before {
   content: "\f172";
 }
 
-.if-arrow-double-down:before {
+.if-arrow-double-up:before {
   content: "\f173";
 }
 
-.if-alert:before {
+.if-arrow-double-down:before {
   content: "\f174";
 }
 
-.if-alert-fill:before {
+.if-alert:before {
   content: "\f175";
 }
 
-.if-add:before {
+.if-alert-fill:before {
   content: "\f176";
+}
+
+.if-add:before {
+  content: "\f177";
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

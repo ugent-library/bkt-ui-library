@@ -1,0 +1,311 @@
+<!-- @title: Dashboard — Biblio -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/backoffice-sidebar.html -->
+
+  <main id="main-content" class="overflow-y-auto bt-bg">
+
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
+    <!-- Page header — white, sits above the grey canvas -->
+    <span class="alert alert-success alert--small py-2 alert--sticky">
+      <i class="if if-service me-2"></i>
+      <small><strong>12 items</strong> auto-resolved this week</small>
+    </span>
+    <div class="bg-white border-bottom px-5 py-4">
+      <div class="d-flex align-items-center justify-content-between">
+        <div>
+          <h1 class="h5 fw-semibold mb-0">Inbox</h1>
+          <p class="small text-muted mb-0 mt-1">Registration and deposit office for the Academic Bibliography of Ghent University.</p>
+        </div>
+        <a href="#" class="btn btn-primary btn-sm">
+          <i class="if if-add if--sm" aria-hidden="true"></i>
+          Add research output
+        </a>
+      </div>
+    </div>
+
+
+    <!-- Canvas -->
+    <div class="px-5 py-5">
+
+      <!-- ============================================================
+           ROW 1 — Inbox + Added on your behalf, side by side
+           ============================================================ -->
+      <div class="row g-4 mb-4 justify-content-between">
+
+        <!-- Inbox -->
+        <div class="col-6">
+          <section aria-labelledby="inbox-heading" class="h-100">
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h2 id="inbox-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
+                Inbox
+                <span class="badge bg-warning" aria-label="5 items need your attention">5</span>
+              </h2>
+              <a href="#" class="small text-muted text-decoration-none">View all</a>
+            </div>
+
+            <!-- Returned for revision -->
+            <div class="bg-white rounded-3 mb-3 bt-border">
+
+              <div class="px-4 py-3 border-bottom d-flex align-items-center gap-2">
+                <i class="if if-arrow-left" aria-hidden="true"></i>
+                <span class="small fw-semibold">Returned for revision</span>
+              </div>
+
+              <div class="px-4 py-3 border-bottom">
+                <div class="d-flex align-items-start justify-content-between gap-4">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Contrastive learning for cross-lingual biomedical text mining</a>
+                    <small class="mb-1 text-muted fst-italic d-block">"Please add the DOI and confirm the open access licence."</small>
+                    <span class="badge bg-primary">Journal article</span>
+                  </div>
+                  <a href="#" class="btn btn-secondary btn-sm flex-shrink-0"
+                    aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
+                    Edit &amp; resubmit
+                  </a>
+                </div>
+              </div>
+
+              <div class="px-4 py-3">
+                <div class="d-flex align-items-start justify-content-between gap-4">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Annotated corpus for biomedical relation extraction — v2</a>
+                    <small class="mb-1 text-muted fst-italic d-block">"Data licence is missing. Please specify a Creative Commons licence."</small>
+                    <span class="badge bg-primary">Dataset</span>
+                  </div>
+                  <a href="#" class="btn btn-secondary btn-sm flex-shrink-0"
+                    aria-label="Edit and resubmit: Annotated corpus for biomedical relation extraction">
+                    Edit &amp; resubmit
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Suggestions -->
+            <div class="bg-white rounded-3 bt-border">
+
+              <div class="px-4 py-3 border-bottom d-flex align-items-center gap-2">
+                <i class="if if-notification" aria-hidden="true"></i>
+                <span class="small fw-semibold">Suggestions</span>
+              </div>
+
+              <div class="px-4 py-3 border-bottom">
+                <div class="d-flex align-items-center justify-content-between gap-4">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Deep learning approaches for protein structure prediction in low-data regimes</a>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <span class="badge bg-secondary">Web of Science</span>
+                      <span class="badge bg-primary">Journal article</span>
+                      <small class="text-muted">Nature Methods · 2024</small>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2 flex-shrink-0">
+                    <button type="button" class="btn btn-ghost btn-sm"
+                      aria-label="Not mine: Deep learning approaches for protein structure prediction"
+                      hx-post="/suggestions/sug-001/reject"
+                      hx-target="closest .py-3"
+                      hx-swap="outerHTML"
+                      hx-indicator="#action-status">
+                      Not mine
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm"
+                      aria-label="Confirm: Deep learning approaches for protein structure prediction"
+                      hx-post="/suggestions/sug-001/confirm"
+                      hx-target="closest .py-3"
+                      hx-swap="outerHTML"
+                      hx-indicator="#action-status">
+                      <i class="if if-check if--sm" aria-hidden="true"></i> Confirm
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-4 py-3 border-bottom">
+                <div class="d-flex align-items-center justify-content-between gap-4">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Benchmarking transformer architectures for genomic sequence classification</a>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <span class="badge bg-secondary">ORCID</span>
+                      <span class="badge bg-primary">Preprint</span>
+                      <small class="text-muted">bioRxiv · 2025</small>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2 flex-shrink-0">
+                    <button type="button" class="btn btn-ghost btn-sm"
+                      aria-label="Not mine: Benchmarking transformer architectures"
+                      hx-post="/suggestions/sug-002/reject"
+                      hx-target="closest .py-3"
+                      hx-swap="outerHTML"
+                      hx-indicator="#action-status">
+                      Not mine
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm"
+                      aria-label="Confirm: Benchmarking transformer architectures"
+                      hx-post="/suggestions/sug-002/confirm"
+                      hx-target="closest .py-3"
+                      hx-swap="outerHTML"
+                      hx-indicator="#action-status">
+                      <i class="if if-check if--sm" aria-hidden="true"></i> Confirm
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-4 py-3">
+                <div class="d-flex align-items-center justify-content-between gap-4">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Efficient fine-tuning of large language models for biomedical NER</a>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <span class="badge bg-secondary">arXiv</span>
+                      <span class="badge bg-primary">Conference paper</span>
+                      <small class="text-muted">ACL 2024</small>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2 flex-shrink-0">
+                    <button type="button" class="btn btn-ghost btn-sm"
+                      aria-label="Not mine: Efficient fine-tuning of large language models"
+                      hx-post="/suggestions/sug-003/reject"
+                      hx-target="closest .py-3"
+                      hx-swap="outerHTML"
+                      hx-indicator="#action-status">
+                      Not mine
+                    </button>
+                    <button type="button" class="btn btn-success btn-sm"
+                      aria-label="Confirm: Efficient fine-tuning of large language models"
+                      hx-post="/suggestions/sug-003/confirm"
+                      hx-target="closest .py-3"
+                      hx-swap="outerHTML"
+                      hx-indicator="#action-status">
+                      <i class="if if-check if--sm" aria-hidden="true"></i> Confirm
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </section>
+        </div>
+
+        <!-- Added on your behalf + Recent activity -->
+        <div class="col-5 d-flex flex-column gap-4">
+
+          <!-- Added on your behalf -->
+          <section aria-labelledby="added-heading">
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h2 id="added-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
+                Added on your behalf
+                <span class="badge bg-warning" aria-label="2 items added recently">2</span>
+              </h2>
+              <a href="#" class="small text-muted text-decoration-none">View all</a>
+            </div>
+
+            <div class="d-flex flex-column">
+
+              <div class="py-3 border-bottom">
+                <div class="d-flex align-items-start justify-content-between gap-3">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Multimodal representations of scientific knowledge graphs</a>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <span class="badge bg-secondary">Librarian</span>
+                      <span class="badge-oa">Open access</span>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2 flex-shrink-0">
+                    <a href="#" class="btn btn-ghost btn-sm"
+                      aria-label="View: Multimodal representations of scientific knowledge graphs">View</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="py-3">
+                <div class="d-flex align-items-start justify-content-between gap-3">
+                  <div>
+                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Graph neural networks for drug–target interaction prediction at scale</a>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                      <span class="badge bg-secondary">Proxy</span>
+                      <span class="badge-oa">Open access</span>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-2 flex-shrink-0">
+                    <a href="#" class="btn btn-ghost btn-sm"
+                      aria-label="View: Graph neural networks for drug–target interaction prediction">View</a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </section>
+
+          <!-- Recent activity -->
+          <section class="mt-3" aria-labelledby="activity-heading">
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h2 id="activity-heading" class="small fw-bold text-uppercase text-muted mb-0">Recent activity</h2>
+              <a href="#" class="small text-muted text-decoration-none">View all</a>
+            </div>
+
+            <div class="d-flex d-flex-column">
+
+              <ol class="list-unstyled mb-0 w-100" aria-label="Recent changes to your research output">
+
+                <li class="py-3 border-bottom">
+                  <div class="d-flex align-items-baseline gap-2">
+                    <span class="badge bg-success flex-shrink-0">Published</span>
+                    <a href="#" class="small text-reset text-decoration-none">Deep learning approaches for protein structure prediction</a>
+                  </div>
+                  <p class="mb-0 mt-1 text-muted bt-text-sm">By librarian · 2 hours ago</p>
+                </li>
+
+                <li class="py-3 border-bottom">
+                  <div class="d-flex align-items-baseline gap-2">
+                    <span class="badge bg-warning flex-shrink-0">Revision</span>
+                    <a href="#" class="small text-reset text-decoration-none">Contrastive learning for cross-lingual biomedical text mining</a>
+                  </div>
+                  <p class="mb-0 mt-1 text-muted bt-text-xs">By librarian · Yesterday</p>
+                </li>
+
+                <li class="py-3 border-bottom">
+                  <div class="d-flex align-items-baseline gap-2">
+                    <span class="badge bg-secondary flex-shrink-0">Added</span>
+                    <a href="#" class="small text-reset text-decoration-none">Multimodal representations of scientific knowledge graphs</a>
+                  </div>
+                  <p class="mb-0 mt-1 text-muted bt-text-xs">By librarian · Yesterday</p>
+                </li>
+
+                <li class="py-3 border-bottom">
+                  <div class="d-flex align-items-baseline gap-2">
+                    <span class="badge bg-secondary flex-shrink-0">Edited</span>
+                    <a href="#" class="small text-reset text-decoration-none">Benchmark results for variational quantum eigensolver</a>
+                  </div>
+                  <p class="mb-0 mt-1 text-muted bt-text-xs">By you · 3 days ago</p>
+                </li>
+
+                <li class="py-3">
+                  <div class="d-flex align-items-baseline gap-2">
+                    <span class="badge bg-info flex-shrink-0">Submitted</span>
+                    <a href="#" class="small text-reset text-decoration-none">Annotated corpus for biomedical relation extraction — v2</a>
+                  </div>
+                  <p class="mb-0 mt-1 text-muted bt-text-xs">By you · 4 days ago</p>
+                </li>
+
+              </ol>
+
+            </div>
+
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
