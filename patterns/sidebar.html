@@ -13,25 +13,40 @@
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Standard — with active item and badge</h3></div>
       <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
-        <nav class="bt-sub-sidebar" aria-label="Section navigation">
-          <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">My work</p>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-current="page">
+        <nav class="bt-sub-sidebar" aria-label="Section navigation" id="sidebar-demo">
+          <div class="d-flex justify-content-end pb-3 pe-1">
+            <button type="button"
+              class="btn btn-ghost btn-sm p-1 bt-sub-sidebar__toggle"
+              aria-controls="sidebar-demo"
+              aria-expanded="true"
+              aria-label="Collapse sidebar"
+              onclick="
+                const nav = document.getElementById('sidebar-demo');
+                const slim = nav.classList.toggle('bt-sub-sidebar--slim');
+                this.setAttribute('aria-expanded', !slim);
+                this.setAttribute('aria-label', slim ? 'Expand sidebar' : 'Collapse sidebar');
+              ">
+              <i class="if if-arrow-left" aria-hidden="true"></i>
+            </button>
+          </div>
+          <p class="bt-sub-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pb-1">My work</p>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-current="page" aria-label="Research output">
             <i class="if if-article" aria-hidden="true"></i>
-            Research output
+            <span class="bt-sub-sidebar__label">Research output</span>
           </a>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-label="Datasets">
             <i class="if if-database" aria-hidden="true"></i>
-            Datasets
+            <span class="bt-sub-sidebar__label">Datasets</span>
           </a>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-label="Suggestions, 3 new">
             <i class="if if-notification" aria-hidden="true"></i>
-            Suggestions
-            <span class="badge bg-warning ms-auto" aria-label="3 new suggestions">3</span>
+            <span class="bt-sub-sidebar__label">Suggestions</span>
+            <span class="badge bg-warning ms-auto" aria-hidden="true">3</span>
           </a>
-          <p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+          <p class="bt-sub-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
+          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-label="Manage proxies">
             <i class="if if-user-add" aria-hidden="true"></i>
-            Manage proxies
+            <span class="bt-sub-sidebar__label">Manage proxies</span>
           </a>
         </nav>
       </div>

@@ -11,9 +11,9 @@
     <h2 class="h4 mb-3">Default</h2>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Default — <code>.input-group.input-group--search</code></h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Default — <code>.input-group.input-group--hero</code></h3></div>
       <div class="ds-demo-body">
-        <form role="search" class="input-group input-group--search" aria-label="Search research output" action="/search">
+        <form role="search" class="input-group input-group--hero" aria-label="Search research output" action="/search">
           <label class="visually-hidden" for="search-default">Search research output</label>
           <input class="form-control" type="search" id="search-default" name="q"
             placeholder="Search by title, author, or DOI…" autocomplete="off">
@@ -24,7 +24,7 @@
 
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;form role="search" class="input-group input-group--search"
+<pre>&lt;form role="search" class="input-group input-group--hero"
   aria-label="Search research output" action="/search"&gt;
   &lt;label class="visually-hidden" for="q"&gt;Search research output&lt;/label&gt;
   &lt;input class="form-control" type="search" id="q" name="q"
@@ -36,12 +36,12 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Large — hero placement</h2>
-    <p class="mb-4">Add Bootstrap's own <code>.input-group-lg</code> for the hero variant. No extra modifier needed — Bootstrap scales the input and button; the modifier adjusts only the button inset margin.</p>
+    <p class="mb-4">Add Bootstrap's own <code>.input-group-lg</code> and <code>input-group--hero</code> for the hero variant. Bootstrap scales the input and button; the modifier adjusts only the button inset margin.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Large — <code>.input-group.input-group--search.input-group-lg</code></h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Large — <code>.input-group.input-group--hero.input-group-lg</code></h3></div>
       <div class="ds-demo-body">
-        <form role="search" class="input-group input-group--search input-group-lg" aria-label="Search research output" action="/search">
+        <form role="search" class="input-group input-group--hero input-group-lg" aria-label="Search research output" action="/search">
           <label class="visually-hidden" for="search-lg">Search research output</label>
           <input class="form-control" type="search" id="search-lg" name="q"
             placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
@@ -52,7 +52,7 @@
 
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;form role="search" class="input-group input-group--search input-group-lg"
+<pre>&lt;form role="search" class="input-group input-group--hero input-group-lg"
   aria-label="Search research output" action="/search"&gt;
   &lt;label class="visually-hidden" for="q"&gt;Search research output&lt;/label&gt;
   &lt;input class="form-control" type="search" id="q" name="q"
@@ -85,7 +85,7 @@
           <div class="bt-hero__content container py-8">
             <div class="col-lg-8">
               <h1 class="display-3 fw-semibold mb-4">Search, use &amp; cite trusted&nbsp;research</h1>
-              <form role="search" class="input-group input-group--search input-group-lg mb-4"
+              <form role="search" class="input-group input-group--hero input-group-lg mb-4"
                 aria-label="Search research output" action="/search">
                 <label class="visually-hidden" for="search-hero">Search research output</label>
                 <input class="form-control" type="search" id="search-hero" name="q"
@@ -93,8 +93,10 @@
                 <button class="btn btn-primary" type="submit">Search</button>
               </form>
               <div class="d-flex gap-3">
-                <a class="btn btn-sm btn-outline-dark" href="#">Open access research</a>
-                <a class="btn btn-sm btn-outline-dark" href="#">Research heritage</a>
+                <a class="btn btn-sm btn-outline-dark" href="#">
+                  <i class="if if-arrow-right" aria-hidden="true"></i> Open access research</a>
+                <a class="btn btn-sm btn-outline-dark" href="#">
+                  <i class="if if-arrow-right" aria-hidden="true"></i> Research heritage</a>
               </div>
             </div>
           </div>
@@ -108,7 +110,7 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <p>Bootstrap's <code>.input-group</code> provides: flex layout, border joining between input and button, and the <code>.input-group-lg</code> / <code>.input-group-sm</code> sizing scale.</p>
-        <p class="mb-0"><code>.input-group--search</code> adds only three things on top: the pill border-radius on the outer wrapper and the input's leading edge; a <code>:focus-within</code> ring on the whole bar as one unit (individual element focus shadows are suppressed); and the native browser search-cancel button is hidden.</p>
+        <p class="mb-0"><code>.input-group--hero</code> adds only three things on top: the pill border-radius on the outer wrapper and the input's leading edge; a <code>:focus-within</code> ring on the whole bar as one unit (individual element focus shadows are suppressed); and the native browser search-cancel button is hidden.</p>
       </div>
     </div>
   </section>
@@ -133,7 +135,7 @@
     <h2 class="h4 mb-3">When to use this vs the toolbar search</h2>
     <div class="ds-demo">
       <div class="ds-demo-body">
-        <p>Use <code>.input-group--search</code> when search is the primary action on the page and deserves visual prominence — homepage hero, a dedicated search landing page, or above a full-width result list.</p>
+        <p>Use <code>.input-group--hero</code> when search is the primary action on the page and deserves visual prominence — homepage hero, a dedicated search landing page, or above a full-width result list.</p>
         <p class="mb-0">Use the compact <code>.form-control-search</code> inside a <code>.bt-toolbar</code> for inline filtering in the backoffice — filtering a list, searching within a deposit, live-filtering a dropdown. That pattern is documented in <a href="/elements/forms.html">Forms &amp; Inputs → Search input</a>.</p>
       </div>
     </div>
