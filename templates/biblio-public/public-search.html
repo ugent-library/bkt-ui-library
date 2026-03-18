@@ -73,8 +73,7 @@
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add filter
             </button>
-            <div class="dropdown-menu p-3" aria-labelledby="add-filter-menu"
-              style="min-width: 280px;">
+            <div class="dropdown-menu p-3" aria-labelledby="add-filter-menu">
 
               <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Type &amp; identity</p>
               <button class="dropdown-item rounded" type="button">Type</button>
@@ -121,7 +120,8 @@
   </div>
 
   <!-- ── Body: facets sidebar + results ────────────────────────────────────── -->
-  <div class="container d-flex gap-6 pt-4">
+  <div class="container">
+  <div class="bt-content-area pt-4">
 
     <!-- ── Facets sidebar ─────────────────────────────────────────────────────
          Browsing only — quick narrowing for exploratory users.
@@ -300,13 +300,12 @@
     </aside>
 
     <!-- ── Results column ──────────────────────────────────────────────────── -->
-    <div class="flex-grow-1 overflow-hidden" id="search-results">
+    <div class="flex-grow-1 overflow-hidden ps-5" id="search-results">
 
       <!-- Results toolbar -->
       <div class="bt-toolbar mb-4">
         <div class="bt-toolbar__left">
           <nav aria-label="Results pagination" class="d-flex align-items-center gap-3">
-            <span class="text-muted small" aria-live="polite" id="result-count">179 results</span>
             <ul class="pagination pagination-sm mb-0">
               <li class="page-item disabled">
                 <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
@@ -320,11 +319,12 @@
                 <a class="page-link" href="#" aria-label="Next page">›</a>
               </li>
             </ul>
+            <span class="text-muted small" aria-live="polite" id="result-count">Showing 1–10 of 179 results</span>
           </nav>
         </div>
         <div class="bt-toolbar__right">
           <label for="sort-by" class="visually-hidden">Sort by</label>
-          <select id="sort-by" class="form-select form-select-sm"
+          <select id="sort-by" class="form-select"
             hx-get="/search" hx-trigger="change"
             hx-target="#search-results" hx-include="[name='q']"
             hx-indicator="#search-indicator">
@@ -503,7 +503,7 @@
       </article>
 
       <!-- Bottom pagination -->
-      <nav class="bt-toolbar border-top mt-2 pt-3" aria-label="Results pagination">
+      <nav class="bt-toolbar mt-2 pt-3" aria-label="Results pagination">
         <div class="bt-toolbar__left">
           <ul class="pagination pagination-sm mb-0">
             <li class="page-item disabled">
@@ -523,7 +523,8 @@
       </nav>
 
     </div><!-- /results -->
-  </div><!-- /body -->
+  </div><!-- /bt-content-area -->
+  </div><!-- /container -->
 
 </main>
 </div>
