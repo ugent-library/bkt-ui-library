@@ -1,0 +1,196 @@
+<!--
+  HTMX partial: add-author form
+  Endpoint: GET /partials/add-author-form
+  Target: #author-form-area in backoffice-deposit-flow.html
+
+  Renders inline below the author list when "Add author" is clicked.
+  The people-search input fires hx-get="/people/search?q=" on keyup.
+  Selecting a person fills the hidden fields and shows confirmation.
+  "Add as external" bypasses the search for unlinked contributors.
+
+  Production notes:
+  - hx-get="/people/search?q=" returns templates/partials/people-search-results.html
+  - On selection, POST to /deposit/authors adds the contributor and returns
+    an updated author list partial (hx-target="#author-list-area")
+  - The form is progressively enhanced: submittable without JS via fallback
+    text inputs for name + role
+-->
+
+<div class="border rounded p-3 bg-white mt-2" id="add-author-form"
+  aria-label="Add author" role="region">
+
+  <p class="filter-editor__title mb-3">Add author</p>
+
+  <!-- ── Search for a known person ──────────────────────────────────────── -->
+  <div class="mb-3">
+    <label for="author-search" class="form-label form-label-sm">
+      Search by name or ORCID
+    </label>
+    <input
+      type="search"
+      id="author-search"
+      class="form-control form-control-sm"
+      placeholder="e.g. De Pauw or 0000-0002-1234-5678"
+      autocomplete="off"
+      hx-get="/people/search"
+      hx-trigger="keyup changed delay:300ms"
+      hx-target="#author-people-results"
+      hx-include="[name='author_q']"
+      hx-indicator="#author-search-indicator">
+    <input type="hidden" name="author_q" id="author-q-hidden">
+
+    <span id="author-search-indicator" class="htmx-indicator text-muted small mt-1 d-block" aria-live="polite">
+      Searching…
+    </span>
+
+    <!-- People results — same component as filter-editor author search -->
+    <div id="author-people-results" class="people-results" hidden
+      role="listbox"
+      aria-label="People matching your search"
+      hx-on:htmx-after-swap="this.hidden = this.children.length === 0">
+      <!--
+        Populated by hx-get="/people/search?q=" → people-search-results.html
+        Each .people-result has data-id, data-name, data-affiliation
+        Click → fills #selected-author-id, #selected-author-name, shows confirmation
+      -->
+    </div>
+  </div>
+
+  <!-- ── Selected person confirmation ───────────────────────────────────── -->
+  <div id="author-selected" hidden class="d-flex align-items-start gap-3 p-2 bg-light border rounded mb-3">
+    <span class="people-result__icon" aria-hidden="true">
+      <i class="if if-person if--sm"></i>
+    </span>
+    <div class="flex-grow-1">
+      <div class="people-result__name" id="selected-author-display-name"></div>
+      <div class="people-result__meta" id="selected-author-display-affiliation"></div>
+    </div>
+    <button type="button" class="btn btn-ghost btn-sm" id="author-clear-selection"
+      aria-label="Clear selection">
+      <i class="if if-close if--xs" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <!-- Hidden fields — populated on person selection -->
+  <input type="hidden" id="selected-author-id"   name="author_id"          value="">
+  <input type="hidden" id="selected-author-name"  name="author_display_name" value="">
+
+  <!-- ── Role ────────────────────────────────────────────────────────────── -->
+  <div class="mb-3">
+    <label for="author-role" class="form-label form-label-sm">Role</label>
+    <select id="author-role" name="author_role" class="form-select">
+      <option value="author" selected>Author</option>
+      <option value="editor">Editor</option>
+      <option value="supervisor">Supervisor</option>
+      <option value="translator">Translator</option>
+    </select>
+  </div>
+
+  <!-- ── External author fallback ────────────────────────────────────────── -->
+  <!--
+    Shown when the person is not in the system.
+    An unlinked author is a valid state — not an error.
+    See DOMAIN.md: "An unlinked author is not an error state."
+  -->
+  <details id="author-external-toggle" class="mb-3">
+    <summary class="btn btn-ghost btn-sm px-0 text-muted">
+      Not in the system? Add as external author
+    </summary>
+    <div class="pt-3 d-flex flex-column gap-3">
+      <div>
+        <label for="external-first-name" class="form-label form-label-sm">First name</label>
+        <input type="text" id="external-first-name" name="external_first_name"
+          class="form-control form-control-sm" autocomplete="off">
+      </div>
+      <div>
+        <label for="external-last-name" class="form-label form-label-sm">Last name <span class="text-danger" aria-label="required">*</span></label>
+        <input type="text" id="external-last-name" name="external_last_name"
+          class="form-control form-control-sm" autocomplete="family-name">
+      </div>
+      <div>
+        <label for="external-orcid" class="form-label form-label-sm">ORCID <span class="text-muted">(optional)</span></label>
+        <input type="text" id="external-orcid" name="external_orcid"
+          class="form-control form-control-sm"
+          placeholder="0000-0000-0000-0000"
+          pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]">
+      </div>
+    </div>
+  </details>
+
+  <!-- ── Actions ─────────────────────────────────────────────────────────── -->
+  <div class="d-flex gap-2">
+    <button type="button" class="btn btn-primary btn-sm" id="author-add-confirm"
+      hx-post="/deposit/authors"
+      hx-include="#add-author-form"
+      hx-target="#author-list-area"
+      hx-swap="innerHTML">
+      <i class="if if-check if--sm" aria-hidden="true"></i>
+      Add author
+    </button>
+    <button type="button" class="btn btn-ghost btn-sm"
+      hx-delete="/partials/add-author-form"
+      hx-target="#author-form-area"
+      hx-swap="innerHTML">
+      Cancel
+    </button>
+  </div>
+
+</div>
+
+<script>
+// ── Author search — people-result selection ───────────────────────────────────
+// In production the results come from the server (HTMX swap).
+// This script handles client-side selection behaviour regardless of source.
+(function () {
+  const formArea    = document.getElementById('add-author-form');
+  const resultsList = document.getElementById('author-people-results');
+  const selected    = document.getElementById('author-selected');
+  const displayName = document.getElementById('selected-author-display-name');
+  const displayAff  = document.getElementById('selected-author-display-affiliation');
+  const hiddenId    = document.getElementById('selected-author-id');
+  const hiddenName  = document.getElementById('selected-author-name');
+  const clearBtn    = document.getElementById('author-clear-selection');
+  const searchInput = document.getElementById('author-search');
+  const hiddenQ     = document.getElementById('author-q-hidden');
+
+  // Keep hidden q field in sync for hx-include
+  searchInput.addEventListener('input', () => {
+    hiddenQ.value = searchInput.value;
+  });
+
+  // Delegate clicks on people-result rows (works after HTMX swap)
+  resultsList.addEventListener('click', e => {
+    const row = e.target.closest('.people-result');
+    if (!row) return;
+    selectPerson(row.dataset.id, row.dataset.name, row.dataset.affiliation);
+  });
+
+  resultsList.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const row = e.target.closest('.people-result');
+    if (!row) return;
+    e.preventDefault();
+    selectPerson(row.dataset.id, row.dataset.name, row.dataset.affiliation);
+  });
+
+  function selectPerson(id, name, affiliation) {
+    hiddenId.value   = id   || '';
+    hiddenName.value = name || '';
+    searchInput.value = name || '';
+    displayName.textContent = name || '';
+    displayAff.textContent  = affiliation || 'External';
+    selected.hidden     = false;
+    resultsList.hidden  = true;
+    // Focus the role selector as next logical step
+    document.getElementById('author-role')?.focus();
+  }
+
+  clearBtn.addEventListener('click', () => {
+    hiddenId.value   = '';
+    hiddenName.value = '';
+    searchInput.value = '';
+    searchInput.focus();
+    selected.hidden = true;
+  });
+})();
+</script>

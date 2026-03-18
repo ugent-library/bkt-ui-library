@@ -55,7 +55,9 @@
 .u-layout--app > main {
   grid-area: main;
   min-width: 0;
-  overflow: hidden;
+  /* overflow: hidden here would clip content — use overflow-y: auto so the
+     main column scrolls as a unit while the navbar and sidebar stay sticky. */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -99,6 +101,16 @@
   display: flex;
   flex: 1;
   min-height: 0;
+  overflow: hidden; /* prevents children from blowing out the flex container */
+}
+
+/* Results column inside bt-content-area — scrolls independently */
+.bt-content-area > div,
+.bt-content-area > [id$="-body"],
+.bt-content-area > [id$="-results"] {
+  overflow-y: auto;
+  min-width: 0;
+  flex: 1;
 }
 
 /* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
@@ -134,6 +146,8 @@
   }
 }
 
+/* ── Advanced search content column ─────────────────────────────────────────── */
+.bt-advanced-search-content { max-width: 900px; }
 
 /* ── Backoffice table ──────────────────────────────────────────────────────────────── */
 /* Use .table .table-hover .align-middle. Color tokens for Bootstrap's own vars. */
@@ -166,18 +180,19 @@
 /* ── 3. u-layout--public ────────────────────────────────────────────────────── */
 
 .u-layout--public {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .u-layout--public > .bt-navbar {
-  flex-shrink: 0;
+  /* navbar row: auto height, no shrink */
 }
 
 .u-layout--public > main {
-  flex: 1;
-  width: 100%;
+  min-width: 0;
+  overflow-y: auto; /* main column scrolls; sticky elements inside use position:sticky */
   /* No max-width or padding here — public templates use Bootstrap .container
      inside main for consistent responsive gutters. */
 }

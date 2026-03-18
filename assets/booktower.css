@@ -1356,15 +1356,14 @@ code, kbd, pre, samp {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-3);
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
-}
-
-.bt-toolbar__left .bt-toolbar__item {
-  flex: 0 0 auto;
+  flex-wrap: wrap;
 }
 
 .bt-toolbar__item {
+  display: flex;
+  flex-wrap: wrap;
   min-width: 0;
 }
 
@@ -1690,11 +1689,24 @@ code, kbd, pre, samp {
 }
 
 /* ── filter-tag ─────────────────────────────────────────────────────────────── */
-/* Used in public-search.html active-filter pills */
+/*
+  Three variants:
+    .filter-tag               — simple removable chip (× inside the button)
+    .filter-tag--editable     — left half of a split chip; click opens editor
+    .filter-tag--static       — display-only, used in saved search previews
+
+  Split chip pattern:
+    <div class="filter-tag-group">
+      <button class="filter-tag filter-tag--editable">Type: Journal article</button>
+      <button class="filter-tag__remove" aria-label="Remove filter…">
+        <i class="if if-close if--xs" aria-hidden="true"></i>
+      </button>
+    </div>
+*/
 .filter-tag {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--bt-sp-1);
   background: var(--bt-blue-200);
   color: var(--bt-blue-900);
   font-size: var(--bt-text-xs);
@@ -1704,10 +1716,413 @@ code, kbd, pre, samp {
   cursor: pointer;
   border: none;
   transition: background var(--bt-dur-fast);
+  white-space: nowrap;
+  height: 24px;
 }
 
 .filter-tag:hover {
   background: var(--bt-blue-300);
+}
+
+.filter-tag:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Editable variant — right radius flattened to join remove button */
+.filter-tag--editable {
+  border-radius: var(--bt-radius-pill) 0 0 var(--bt-radius-pill);
+  padding-right: var(--bt-sp-2);
+}
+
+/* Remove button — right half of split chip */
+.filter-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-700);
+  border: none;
+  border-radius: 0 var(--bt-radius-pill) var(--bt-radius-pill) 0;
+  padding: 0.2em var(--bt-sp-2) 0.2em var(--bt-sp-1);
+  cursor: pointer;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+  line-height: 1;
+  height: 24px;
+}
+
+.filter-tag__remove:hover {
+  background: var(--bt-blue-300);
+  color: var(--bt-blue-900);
+}
+
+.filter-tag__remove:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Wrapper keeping editable + remove visually joined */
+.filter-tag-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Static/display-only variant */
+.filter-tag--static {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-800);
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  padding: 0.2em 0.625em;
+  border-radius: var(--bt-radius-pill);
+  border: none;
+  cursor: default;
+}
+
+/* ── bt-filter-picker — scrollable filter list ───────────────────────────────── */
+.bt-filter-picker__list {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ── Filter editor panel ─────────────────────────────────────────────────────── */
+.filter-editor {
+  background: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
+  box-shadow: var(--bt-shadow-md);
+  padding: var(--bt-sp-4);
+  max-width: 480px;
+}
+
+.filter-editor__title {
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  color: var(--bt-gray-600);
+  margin: 0 0 var(--bt-sp-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.filter-editor__actions {
+  display: flex;
+  gap: var(--bt-sp-2);
+  margin-top: var(--bt-sp-3);
+  padding-top: var(--bt-sp-3);
+  border-top: var(--bt-border);
+}
+
+/* ── Filter editor — checklist ───────────────────────────────────────────────── */
+.filter-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-1);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.filter-checklist .form-check {
+  margin: 0;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  border-radius: var(--bt-radius-sm);
+}
+
+.filter-checklist .form-check:hover {
+  background: var(--bt-gray-50);
+}
+
+.filter-checklist .form-check-label {
+  font-size: var(--bt-text-sm);
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ── Filter editor — boolean toggle ─────────────────────────────────────────── */
+.filter-boolean {
+  display: flex;
+  gap: var(--bt-sp-2);
+}
+
+.filter-boolean__option {
+  flex: 1;
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  border: 1.5px solid var(--bt-gray-150);
+  border-radius: var(--bt-radius-md);
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-700);
+  background: var(--bt-white);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+
+.filter-boolean__option:hover {
+  border-color: var(--bt-blue-500);
+}
+
+.filter-boolean__option.is-selected {
+  border-color: var(--bt-blue-700);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-900);
+}
+
+.filter-boolean__option:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Filter editor — year range ──────────────────────────────────────────────── */
+.filter-year {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-3);
+}
+
+.filter-year__input {
+  width: 120px;
+}
+
+/* ── People search (author filter editor) ────────────────────────────────────── */
+/* TODO: simplify, has too many specifics */
+.people-results {
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-md);
+  overflow: hidden;
+  margin-top: var(--bt-sp-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.people-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  cursor: pointer;
+  border-bottom: var(--bt-border);
+  transition: background var(--bt-dur-fast);
+}
+
+.people-result:last-child {
+  border-bottom: none;
+}
+
+.people-result:hover,
+.people-result:focus {
+  background: var(--bt-blue-50);
+  outline: none;
+}
+
+.people-result.is-selected {
+  background: var(--bt-blue-100);
+}
+
+.people-result__icon {
+  color: var(--bt-gray-400);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.people-result__name {
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-1000);
+}
+
+.people-result__name mark {
+  background: none;
+  color: var(--bt-blue-700);
+  font-weight: 700;
+}
+
+.people-result__meta {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-500);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+  margin-top: 2px;
+}
+
+.people-result__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ── Token bar ───────────────────────────────────────────────────────────────── */
+/* TODO: simplify, has too many specifics */
+.token-bar {
+  position: relative;
+  border: 1px solid var(--bt-border-color);
+  border-radius: var(--bt-radius);
+  background: var(--bt-white);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--bt-sp-3);
+  gap: var(--bt-sp-2);
+  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
+}
+
+.token-bar:focus-within {
+  border-color: var(--bt-blue-700);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring);
+}
+
+.token-bar__display {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--bt-sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  flex-wrap: wrap;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.token-bar__token {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bt-blue-100);
+  border: 1px solid var(--bt-blue-200);
+  border-radius: var(--bt-radius-sm);
+  font-family: var(--bt-font-mono);
+  font-size: var(--bt-text-sm);
+  line-height: 1.6;
+  white-space: nowrap;
+  padding: 0 var(--bt-sp-1);
+}
+
+.token-bar__field {
+  color: var(--bt-blue-900);
+  font-weight: 600;
+}
+
+.token-bar__sep {
+  color: var(--bt-blue-500);
+}
+
+.token-bar__value {
+  color: var(--bt-blue-800);
+}
+
+.token-bar__token--negated {
+  background: var(--bt-red-50);
+  border-color: var(--bt-red-200);
+}
+
+.token-bar__token--negated .token-bar__field {
+  color: var(--bt-red-500);
+}
+
+.token-bar__input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--bt-font-mono);
+  font-size: var(--bt-text-sm);
+  color: transparent;
+  caret-color: var(--bt-gray-1000);
+  padding: 0;
+  min-width: 0;
+}
+
+.token-bar__input.no-tokens {
+  color: var(--bt-gray-1000);
+}
+
+.token-bar__clear {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--bt-gray-400);
+  cursor: pointer;
+  padding: var(--bt-sp-1);
+  line-height: 1;
+  border-radius: var(--bt-radius-sm);
+  transition: color var(--bt-dur-fast);
+}
+
+.token-bar__clear:hover {
+  color: var(--bt-gray-700);
+}
+
+.token-bar__indicator {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  color: var(--bt-gray-400);
+}
+
+/* ── Token suggestions panel ─────────────────────────────────────────────────── */
+.token-suggestions {
+  position: absolute;
+  z-index: 200;
+  background: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-md);
+  box-shadow: var(--bt-shadow-md);
+  width: 100%;
+  max-height: 380px;
+  overflow-y: auto;
+  margin-top: var(--bt-sp-1);
+}
+
+.token-suggestions__group {
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bt-gray-500);
+  padding: var(--bt-sp-2) var(--bt-sp-3) var(--bt-sp-1);
+}
+
+.token-suggestions__group:not(:first-child) {
+  border-top: var(--bt-border);
+  margin-top: var(--bt-sp-1);
+  padding-top: var(--bt-sp-3);
+}
+
+.token-suggestions__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  cursor: pointer;
+}
+
+.token-suggestions__item:hover,
+.token-suggestions__item[aria-selected=true] {
+  background: var(--bt-blue-50);
+}
+
+.token-suggestions__hint {
+  color: var(--bt-gray-500);
+  font-size: var(--bt-text-xs);
+}
+
+.token-suggestions__footer {
+  border-top: var(--bt-border);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+}
+
+.token-suggestions__syntax-link {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-500);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -1762,7 +2177,9 @@ code, kbd, pre, samp {
 .u-layout--app > main {
   grid-area: main;
   min-width: 0;
-  overflow: hidden;
+  /* overflow: hidden here would clip content — use overflow-y: auto so the
+     main column scrolls as a unit while the navbar and sidebar stay sticky. */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -1798,6 +2215,16 @@ code, kbd, pre, samp {
   display: flex;
   flex: 1;
   min-height: 0;
+  overflow: hidden; /* prevents children from blowing out the flex container */
+}
+
+/* Results column inside bt-content-area — scrolls independently */
+.bt-content-area > div,
+.bt-content-area > [id$=-body],
+.bt-content-area > [id$=-results] {
+  overflow-y: auto;
+  min-width: 0;
+  flex: 1;
 }
 
 /* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
@@ -1834,6 +2261,11 @@ code, kbd, pre, samp {
   rotate: 180deg;
 }
 
+/* ── Advanced search content column ─────────────────────────────────────────── */
+.bt-advanced-search-content {
+  max-width: 900px;
+}
+
 /* ── Backoffice table ──────────────────────────────────────────────────────────────── */
 /* Use .table .table-hover .align-middle. Color tokens for Bootstrap's own vars. */
 .table {
@@ -1862,18 +2294,19 @@ code, kbd, pre, samp {
 
 /* ── 3. u-layout--public ────────────────────────────────────────────────────── */
 .u-layout--public {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .u-layout--public > .bt-navbar {
-  flex-shrink: 0;
+  /* navbar row: auto height, no shrink */
 }
 
 .u-layout--public > main {
-  flex: 1;
-  width: 100%;
+  min-width: 0;
+  overflow-y: auto; /* main column scrolls; sticky elements inside use position:sticky */
   /* No max-width or padding here — public templates use Bootstrap .container
      inside main for consistent responsive gutters. */
 }

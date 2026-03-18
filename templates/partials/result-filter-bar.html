@@ -1,0 +1,447 @@
+<!--
+  HTMX partial: contextual result filter bar
+  Used on: public-researcher.html, public-organisation.html, public-project.html
+
+  @include: templates/partials/result-filter-bar.html
+
+  Provides the same chip + Add filter interaction as the main search pages,
+  scoped to a specific entity's result list. The sidebar facets on the main
+  search pages are not present here — users are already scoped to one entity,
+  so browsing facets are less useful than targeted filters.
+
+  Parameters (set via hx-vals or template variables in production):
+    context   — "researcher" | "organisation" | "project"
+    entity_id — the entity ID for HTMX URLs
+    target    — the results div ID to update (e.g. #pub-list)
+
+  In this prototype the values are hardcoded for the researcher context.
+  Production: server renders this partial with entity-specific values.
+-->
+
+<!-- ── Active chips + Add filter ──────────────────────────────────────────── -->
+<div class="d-flex gap-2 flex-wrap align-items-center" id="entity-filter-bar">
+
+  <!-- Active chips — populated as filters are applied -->
+  <div role="group" aria-label="Active filters"
+    class="d-flex gap-2 flex-wrap align-items-center"
+    id="entity-active-chips">
+    <!-- empty on load — chips injected by JS -->
+  </div>
+
+  <!-- Add filter -->
+  <div class="dropdown" id="entity-add-filter-dropdown">
+    <button class="btn btn-ghost btn-sm" type="button"
+      id="entity-add-filter-btn"
+      data-bs-toggle="dropdown"
+      data-bs-auto-close="outside"
+      aria-expanded="false">
+      <i class="if if-add if--xs" aria-hidden="true"></i>
+      Add filter
+    </button>
+
+    <div class="dropdown-menu p-0" aria-labelledby="entity-add-filter-btn">
+
+      <div class="p-2">
+        <label for="entity-filter-search" class="visually-hidden">Search filters</label>
+        <input type="search" id="entity-filter-search" class="form-control form-control-sm"
+          placeholder="Find a filter…" autocomplete="off">
+      </div>
+
+      <div class="bt-filter-picker__list" id="entity-filter-picker-list">
+
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
+        <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
+        <button class="dropdown-item py-2" type="button" data-filter="identifier">Identifier (DOI, handle…)</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
+        <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
+        <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
+        <button class="dropdown-item py-2" type="button" data-filter="year">Publication year</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
+        <button class="dropdown-item py-2" type="button" data-filter="open_access">Open access</button>
+        <button class="dropdown-item py-2" type="button" data-filter="has_file">Has file</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">More</p>
+        <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
+        <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear all — hidden until at least one chip is active -->
+  <button type="button" class="btn btn-ghost btn-sm text-muted"
+    id="entity-clear-all" hidden>
+    <i class="if if-close" aria-hidden="true"></i>
+    Clear all
+  </button>
+
+  <span id="entity-search-indicator" class="htmx-indicator text-muted small" aria-live="polite">
+    Updating…
+  </span>
+
+</div><!-- /filter-bar -->
+
+<!-- ── Filter editor panel ────────────────────────────────────────────────── -->
+<div id="entity-filter-editor" hidden
+  class="filter-editor mt-2"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="entity-filter-editor-title">
+</div>
+
+<script>
+// ── Entity result filter bar ──────────────────────────────────────────────────
+// Shares the same filter definitions and editor types as filter-editor.html.
+// Scoped to a single entity's result list — not the full search index.
+// HTMX target is the result list on the host page.
+
+(function () {
+
+  // Resolve the result list target from the closest ancestor that has one,
+  // or fall back to the nearest #pub-list / #output-list / #project-output-list.
+  const RESULT_TARGETS = ['#pub-list', '#output-list', '#project-output-list'];
+  function getResultTarget() {
+    for (const sel of RESULT_TARGETS) {
+      if (document.querySelector(sel)) return sel;
+    }
+    return null;
+  }
+
+  const activeChips   = document.getElementById('entity-active-chips');
+  const filterEditor  = document.getElementById('entity-filter-editor');
+  const clearAllBtn   = document.getElementById('entity-clear-all');
+  const filterSearch  = document.getElementById('entity-filter-search');
+
+  let activeFilters   = {};
+  let editingFilter   = null;
+  let pendingValue    = null;
+
+  // ── Filter definitions (subset — public-relevant only) ─────────────────────
+  const FILTERS = {
+    type: {
+      label: 'Type', type: 'checklist',
+      values: [
+        { value: 'journal_article', label: 'Journal article' },
+        { value: 'book',            label: 'Book' },
+        { value: 'book_chapter',    label: 'Book chapter' },
+        { value: 'dataset',         label: 'Dataset' },
+        { value: 'dissertation',    label: 'Dissertation' },
+        { value: 'conference',      label: 'Conference' },
+        { value: 'miscellaneous',   label: 'Miscellaneous' },
+      ]
+    },
+    identifier: { label: 'Identifier', type: 'text', placeholder: 'DOI, handle, ISBN…' },
+    author:     { label: 'Author',     type: 'people-search' },
+    affiliation:{ label: 'Affiliation / faculty', type: 'text', placeholder: 'Faculty or organisation name…' },
+    year:       { label: 'Publication year', type: 'year-range' },
+    open_access:{ label: 'Open access', type: 'boolean', yesLabel: 'Yes — open access only', noLabel: 'No — restricted only' },
+    has_file:   { label: 'Has file',    type: 'boolean', yesLabel: 'Yes — has file', noLabel: 'No — no file' },
+    venue:      { label: 'Journal / venue', type: 'text', placeholder: 'Journal title, publisher, or conference…' },
+    keywords:   { label: 'Keywords',   type: 'text', placeholder: 'Keyword or subject term…' },
+  };
+
+  // ── People dataset (same as filter-editor.html) ─────────────────────────────
+  const PEOPLE = [
+    { id: 'p1',    name: 'Marianne Testarosso',  affiliation: 'Sciences',                 dept: 'TW09',  years: '2020–current', orcid: '0000-0001-6123-2992', ugentId: '000161232992' },
+    { id: 'p2',    name: 'Pietro Testa',           affiliation: 'UGent Memorialis',         years: '1902–1910' },
+    { id: 'p3',    name: 'Lea Testut',              affiliation: 'UGent Alumni',             years: '2020–2024', orcid: '0000-0002-6384-8725' },
+    { id: 'p5',    name: 'Jan Kiewiet',             affiliation: 'Sciences',                 dept: 'FW12',  years: '2018–current', orcid: '0000-0003-1234-5678', ugentId: '000234561234' },
+    { id: 'p6',    name: 'Sarah De Wolf',           affiliation: 'Engineering',              dept: 'ENG03', years: '2015–current', ugentId: '000112233445' },
+    { id: 'p7',    name: 'Thomas Van Damme',        affiliation: 'Sciences',                 dept: 'FW12',  years: '2019–current', orcid: '0000-0001-9876-5432' },
+    { id: 'p-jd1', name: 'John Doe',               affiliation: 'Faculty of Performing Arts', dept: 'Burlesque & Variety Studies', years: '2019–current', orcid: '0000-0002-1234-5678', ugentId: '000198274651' },
+    { id: 'p-jd2', name: 'Jane Doe',               affiliation: 'Faculty of Performing Arts', dept: 'Stagecraft & Neo-Burlesque',  years: '2021–current', orcid: '0000-0003-8765-4321' },
+    { id: 'p-jb1', name: 'Josephine Baker',        affiliation: 'External', years: 'Folies Bergère, 1925–1956',        orcid: '0000-0001-9876-0001' },
+    { id: 'p-gr1', name: 'Gypsy Rose Lee',          affiliation: 'External', years: "Minsky's Burlesque, 1929–1937" },
+    { id: 'p-dv1', name: 'Dita Von Teese',          affiliation: 'External', years: 'Neo-Burlesque Revival, 1992–current', orcid: '0000-0004-5555-9999' },
+  ];
+
+  // ── Filter picker search ────────────────────────────────────────────────────
+  filterSearch.addEventListener('input', () => {
+    const q = filterSearch.value.toLowerCase();
+    document.querySelectorAll('#entity-filter-picker-list button[data-filter]').forEach(btn => {
+      btn.hidden = q && !btn.textContent.toLowerCase().includes(q);
+    });
+  });
+
+  // ── Filter picker: select ───────────────────────────────────────────────────
+  document.querySelectorAll('#entity-filter-picker-list button[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filterId = btn.dataset.filter;
+      bootstrap.Dropdown.getInstance(document.getElementById('entity-add-filter-btn'))?.hide();
+      filterSearch.value = '';
+      openEditor(filterId, null);
+    });
+  });
+
+  // ── Render editor ───────────────────────────────────────────────────────────
+  function openEditor(filterId, existing) {
+    editingFilter = filterId;
+    pendingValue  = existing ? { ...existing } : null;
+    const def = FILTERS[filterId];
+    if (!def) return;
+    filterEditor.hidden = false;
+    filterEditor.innerHTML = renderEditor(filterId, def, existing);
+    filterEditor.querySelector('input, button.filter-boolean__option')?.focus();
+    attachEditorEvents(filterId, def);
+  }
+
+  function renderEditor(filterId, def, existing) {
+    const title = `<p class="filter-editor__title" id="entity-filter-editor-title">${def.label}</p>`;
+    let body = '';
+    switch (def.type) {
+      case 'checklist': {
+        const checked = existing?.rawValue || [];
+        body = `<div class="filter-checklist" role="group" aria-label="Select ${def.label}">` +
+          def.values.map(v => `
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="efv-${v.value}" name="efv" value="${v.value}" ${checked.includes(v.value) ? 'checked' : ''}>
+              <label class="form-check-label" for="efv-${v.value}">${v.label}</label>
+            </div>`).join('') + `</div>`;
+        break;
+      }
+      case 'boolean': {
+        const cur = existing?.rawValue;
+        body = `<div class="filter-boolean" role="group" aria-label="${def.label}">
+          <button type="button" class="filter-boolean__option ${cur === 'true' ? 'is-selected' : ''}" data-bool="true">${def.yesLabel}</button>
+          <button type="button" class="filter-boolean__option ${cur === 'false' ? 'is-selected' : ''}" data-bool="false">${def.noLabel}</button>
+        </div>`;
+        break;
+      }
+      case 'year-range': {
+        const from = existing?.rawValue?.from || '';
+        const to   = existing?.rawValue?.to   || '';
+        body = `<div class="filter-year">
+          <label for="e-year-from" class="visually-hidden">From year</label>
+          <input type="number" id="e-year-from" class="form-control form-control-sm filter-year__input" placeholder="From" min="1800" max="2030" value="${from}">
+          <span class="text-muted small">to</span>
+          <label for="e-year-to" class="visually-hidden">To year</label>
+          <input type="number" id="e-year-to" class="form-control form-control-sm filter-year__input" placeholder="To" min="1800" max="2030" value="${to}">
+        </div>`;
+        break;
+      }
+      case 'text': {
+        const val = existing?.rawValue || '';
+        body = `<div>
+          <label for="e-text-val" class="visually-hidden">${def.label}</label>
+          <input type="text" id="e-text-val" class="form-control form-control-sm" placeholder="${def.placeholder || ''}" value="${val}" autocomplete="off">
+        </div>`;
+        break;
+      }
+      case 'people-search': {
+        const sel = existing?.rawValue;
+        body = `
+          <div>
+            <label for="e-people-search" class="visually-hidden">Search for a person</label>
+            <input type="search" id="e-people-search" class="form-control form-control-sm"
+              placeholder="Search by name or ORCID…" autocomplete="off" value="${sel?.name || ''}">
+          </div>
+          <div id="e-people-results" class="people-results" ${sel ? '' : 'hidden'}
+            role="listbox" aria-label="People matching your search">
+            ${sel ? renderPersonSelected(sel) : ''}
+          </div>
+          <p class="text-muted small mt-2 mb-0" id="e-people-hint">Type a name to search.</p>`;
+        break;
+      }
+    }
+    const removeBtn = editingFilter && activeFilters[editingFilter]
+      ? `<button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" id="e-editor-remove">Remove filter</button>`
+      : '';
+    return title + body + `<div class="filter-editor__actions">
+      <button type="button" class="btn btn-primary btn-sm" id="e-editor-apply">Apply</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="e-editor-cancel">Cancel</button>
+      ${removeBtn}
+    </div>`;
+  }
+
+  function attachEditorEvents(filterId, def) {
+    document.getElementById('e-editor-apply')?.addEventListener('click', () => applyEditor(filterId, def));
+    document.getElementById('e-editor-cancel')?.addEventListener('click', closeEditor);
+    document.getElementById('e-editor-remove')?.addEventListener('click', () => { removeFilter(filterId); closeEditor(); });
+
+    filterEditor.querySelectorAll('.filter-boolean__option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterEditor.querySelectorAll('.filter-boolean__option').forEach(b => b.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+      });
+    });
+
+    filterEditor.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditor(); });
+
+    if (def.type === 'people-search') {
+      const si  = document.getElementById('e-people-search');
+      const rl  = document.getElementById('e-people-results');
+      const hi  = document.getElementById('e-people-hint');
+      let timer;
+      si.addEventListener('input', () => {
+        clearTimeout(timer);
+        const q = si.value.trim().toLowerCase();
+        if (q.length < 2) { rl.hidden = true; hi.textContent = 'Type a name to search.'; return; }
+        timer = setTimeout(() => {
+          const matches = PEOPLE.filter(p => p.name.toLowerCase().includes(q) || (p.orcid && p.orcid.includes(q)));
+          rl.innerHTML = matches.length
+            ? matches.map(p => renderPersonResult(p, q)).join('')
+            : `<div class="p-3 text-muted small">No people found for "${si.value}"</div>`;
+          rl.hidden = false;
+          hi.textContent = matches.length ? `${matches.length} result${matches.length !== 1 ? 's' : ''}` : '';
+          rl.querySelectorAll('.people-result').forEach(row => {
+            row.addEventListener('click', () => selectPerson(row.dataset));
+            row.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') selectPerson(row.dataset); });
+          });
+        }, 200);
+      });
+    }
+  }
+
+  function renderPersonResult(p, q) {
+    const hl = p.name.replace(new RegExp(`(${q})`, 'gi'), '<mark>$1</mark>');
+    const meta = [
+      p.affiliation && `<span class="people-result__meta-item"><i class="if if-building if--xs" aria-hidden="true"></i>${p.affiliation}</span>`,
+      p.dept        && `<span class="people-result__meta-item">${p.dept}</span>`,
+      p.years       && `<span class="people-result__meta-item">${p.years}</span>`,
+      p.orcid       && `<span class="people-result__meta-item"><i class="if if-orcid if--xs" aria-hidden="true"></i>${p.orcid}</span>`,
+    ].filter(Boolean).join('');
+    return `<div class="people-result" role="option" tabindex="0"
+      data-id="${p.id}" data-name="${p.name}" data-affiliation="${p.affiliation || ''}"
+      aria-label="${p.name}${p.affiliation ? ', ' + p.affiliation : ''}">
+      <span class="people-result__icon" aria-hidden="true"><i class="if if-person if--sm"></i></span>
+      <div><div class="people-result__name">${hl}</div>${meta ? `<div class="people-result__meta">${meta}</div>` : ''}</div>
+    </div>`;
+  }
+
+  function renderPersonSelected(person) {
+    return `<div class="people-result is-selected" role="option" tabindex="0"
+      data-id="${person.id}" data-name="${person.name}">
+      <span class="people-result__icon" aria-hidden="true"><i class="if if-person if--sm"></i></span>
+      <div><div class="people-result__name">${person.name}</div>
+      ${person.affiliation ? `<div class="people-result__meta"><span>${person.affiliation}</span></div>` : ''}</div>
+      <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
+    </div>`;
+  }
+
+  function selectPerson(data) {
+    pendingValue = { id: data.id, name: data.name, affiliation: data.affiliation };
+    const si = document.getElementById('e-people-search');
+    if (si) si.value = data.name;
+    const rl = document.getElementById('e-people-results');
+    if (rl) { rl.innerHTML = renderPersonSelected(pendingValue); rl.hidden = false; }
+  }
+
+  // ── Apply ────────────────────────────────────────────────────────────────────
+  function applyEditor(filterId, def) {
+    let displayValue, rawValue;
+    switch (def.type) {
+      case 'checklist': {
+        const checked = [...filterEditor.querySelectorAll('input[name="efv"]:checked')]
+          .map(cb => ({ value: cb.value, label: filterEditor.querySelector(`label[for="efv-${cb.value}"]`).textContent.trim() }));
+        if (!checked.length) { closeEditor(); return; }
+        rawValue     = checked.map(c => c.value);
+        displayValue = checked.length === 1 ? checked[0].label : `${checked[0].label} +${checked.length - 1}`;
+        break;
+      }
+      case 'boolean': {
+        const sel = filterEditor.querySelector('.filter-boolean__option.is-selected');
+        if (!sel) { closeEditor(); return; }
+        rawValue = sel.dataset.bool; displayValue = rawValue === 'true' ? 'Yes' : 'No'; break;
+      }
+      case 'year-range': {
+        const from = document.getElementById('e-year-from')?.value;
+        const to   = document.getElementById('e-year-to')?.value;
+        if (!from && !to) { closeEditor(); return; }
+        rawValue = { from, to };
+        displayValue = from && to ? `${from}–${to}` : from ? `from ${from}` : `to ${to}`; break;
+      }
+      case 'text': {
+        const val = document.getElementById('e-text-val')?.value.trim();
+        if (!val) { closeEditor(); return; }
+        rawValue = val; displayValue = val; break;
+      }
+      case 'people-search': {
+        if (!pendingValue) { closeEditor(); return; }
+        rawValue = pendingValue; displayValue = pendingValue.name; break;
+      }
+    }
+    activeFilters[filterId] = { label: def.label, displayValue, rawValue };
+    renderChips();
+    closeEditor();
+    triggerResultUpdate();
+  }
+
+  function removeFilter(filterId) {
+    delete activeFilters[filterId];
+    renderChips();
+    triggerResultUpdate();
+  }
+
+  function renderChips() {
+    activeChips.innerHTML = Object.entries(activeFilters).map(([id, f]) => `
+      <div class="filter-tag-group">
+        <button type="button" class="filter-tag filter-tag--editable"
+          aria-label="Edit filter: ${f.label} is ${f.displayValue}"
+          data-filter-id="${id}">
+          <span class="text-muted me-1">${f.label}:</span>${f.displayValue}
+        </button>
+        <button type="button" class="filter-tag__remove"
+          aria-label="Remove filter: ${f.label} is ${f.displayValue}"
+          data-remove-id="${id}">
+          <i class="if if-close if--xs" aria-hidden="true"></i>
+        </button>
+      </div>`).join('');
+
+    activeChips.querySelectorAll('[data-filter-id]').forEach(btn => {
+      btn.addEventListener('click', () => openEditor(btn.dataset.filterId, activeFilters[btn.dataset.filterId]));
+    });
+    activeChips.querySelectorAll('[data-remove-id]').forEach(btn => {
+      btn.addEventListener('click', () => { removeFilter(btn.dataset.removeId); if (editingFilter === btn.dataset.removeId) closeEditor(); });
+    });
+    clearAllBtn.hidden = Object.keys(activeFilters).length === 0;
+  }
+
+  function closeEditor() {
+    filterEditor.hidden = true;
+    filterEditor.innerHTML = '';
+    editingFilter = null;
+    pendingValue  = null;
+  }
+
+  // ── Trigger HTMX result update ────────────────────────────────────────────
+  function triggerResultUpdate() {
+    const target = getResultTarget();
+    if (!target) return;
+    const el = document.querySelector(target);
+    if (!el) return;
+    // Build query params from active filters and fire htmx GET
+    const params = new URLSearchParams();
+    Object.entries(activeFilters).forEach(([key, f]) => {
+      if (Array.isArray(f.rawValue)) {
+        f.rawValue.forEach(v => params.append(key, v));
+      } else if (f.rawValue && typeof f.rawValue === 'object') {
+        if (f.rawValue.from) params.append(`${key}_from`, f.rawValue.from);
+        if (f.rawValue.to)   params.append(`${key}_to`,   f.rawValue.to);
+      } else {
+        params.append(key, f.rawValue);
+      }
+    });
+    htmx.ajax('GET', `/search?${params.toString()}`, { target: el, indicator: '#entity-search-indicator' });
+  }
+
+  clearAllBtn.addEventListener('click', () => { activeFilters = {}; renderChips(); closeEditor(); triggerResultUpdate(); });
+
+  document.addEventListener('click', e => {
+    if (!filterEditor.hidden &&
+        !filterEditor.contains(e.target) &&
+        !e.target.closest('[data-filter-id]') &&
+        !e.target.closest('#entity-add-filter-dropdown')) {
+      closeEditor();
+    }
+  });
+
+})();
+</script>

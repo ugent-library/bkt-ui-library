@@ -1,0 +1,908 @@
+<!-- @title: Filter editor — interaction prototype -->
+<!-- @surface: backoffice -->
+
+<!--
+  FILTER EDITOR — focused interaction prototype
+  Demonstrates the full flow:
+    1. Click "+ Add filter" → grouped picker opens
+    2. Click a filter → editor panel appears inline
+    3. Set value → chip appears in active filters
+    4. Click chip → editor reopens for editing
+    5. Click × on chip → filter removed
+
+  Filter editors vary by type:
+    - Enumerated   → checkbox list (Type, Status, Access)
+    - Text search  → inline search with live results (Author, Venue, Project)
+    - Boolean      → yes/no toggle (Has file, Open access)
+    - Year range   → from/to number inputs
+
+  The author editor uses the federated people-search pattern from the
+  existing Biblio global search (People results with affiliation + ORCID).
+
+  NOTE: All HTMX URLs are stubs. Interaction is JavaScript-driven for the
+  prototype so the flow can be reviewed without a running server.
+-->
+
+<div class="u-layout--app">
+<!-- @include: templates/partials/backoffice-header.html -->
+<!-- @include: templates/partials/backoffice-sidebar.html -->
+
+<main id="main-content">
+
+  <div class="border-bottom px-4 flex-shrink-0">
+    <div class="bt-toolbar">
+      <div class="bt-toolbar__left">
+        <h1 class="bt-toolbar__title">Filter editor</h1>
+        <span class="badge bg-secondary fw-normal small">Interaction prototype</span>
+      </div>
+      <div class="bt-toolbar__right">
+        <a href="backoffice-search.html" class="btn btn-ghost btn-sm">
+          <i class="if if-arrow-left if--sm" aria-hidden="true"></i>
+          Back to search
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="px-4 py-4">
+
+    <!-- ════════════════════════════════════════════════════════════════════════
+         SEARCH + FILTER BAR
+         This is the same bar as backoffice-search.html.
+         Here it's the focus — we're demonstrating what clicking filters does.
+    ════════════════════════════════════════════════════════════════════════ -->
+    <div class="mb-0 pb-3 border-bottom" role="search" aria-label="Search and filter research output">
+
+      <!-- Search input -->
+      <div class="d-flex gap-2 align-items-center mb-2">
+        <label for="search" class="visually-hidden">Search by title, author, DOI</label>
+        <input type="search" class="form-control" id="search" name="q"
+          placeholder="Search by title, author, DOI…"
+          autocomplete="off">
+      </div>
+
+      <!-- ── Active chips + Add filter ──────────────────────────────────────── -->
+      <div class="d-flex gap-2 flex-wrap align-items-center" id="filter-bar">
+
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <!-- Active filter chips — populated by JS as filters are added -->
+              <div role="group" aria-label="Active filters"
+                class="d-flex gap-2 flex-wrap align-items-center"
+                id="active-chips">
+                <!-- chips rendered here by addChip() -->
+              </div>
+            </div>
+            <div class="bt-toolbar__item">
+              <!-- Add filter button + picker -->
+              <div class="dropdown" id="add-filter-dropdown">
+                <button class="btn btn-ghost btn-sm" type="button"
+                  id="add-filter-btn"
+                  data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside"
+                  aria-expanded="false">
+                  <i class="if if-add if--xs" aria-hidden="true"></i>
+                  Add filter
+                </button>
+
+                <!-- ── Filter picker ──────────────────────────────────────────────── -->
+                <div class="dropdown-menu p-0" id="filter-picker"
+                  aria-labelledby="add-filter-btn">
+
+                  <div class="p-2">
+                    <label for="filter-search" class="visually-hidden">Search filters</label>
+                    <input type="search" id="filter-search" class="form-control form-control-sm"
+                      placeholder="Find a filter…"
+                      autocomplete="off">
+                  </div>
+
+                  <div class="bt-filter-picker__list" id="filter-picker-list">
+
+                    <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
+                    <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="subtype">Subtype</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="identifier">Identifier</button>
+
+                    <hr class="dropdown-divider my-1">
+                    <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
+                    <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="research_group">Research group</button>
+
+                    <hr class="dropdown-divider my-1">
+                    <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
+                    <button class="dropdown-item py-2" type="button" data-filter="year">Publication year</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="created_since">Created since</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="updated_since">Updated since</button>
+
+                    <hr class="dropdown-divider my-1">
+                    <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
+                    <button class="dropdown-item py-2" type="button" data-filter="open_access">Open access</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="has_file">Has file</button>
+
+                    <hr class="dropdown-divider my-1">
+                    <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Status &amp; workflow</p>
+                    <button class="dropdown-item py-2" type="button" data-filter="status">Biblio status</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="pub_status">Publication status</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="tags">Tags</button>
+
+                    <hr class="dropdown-divider my-1">
+                    <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
+                    <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
+                    <button class="dropdown-item py-2" type="button" data-filter="project">Project / funding</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <!-- Clear all — only shown when chips are present -->
+            <button type="button" class="btn btn-ghost btn-sm text-muted" id="clear-all-btn" hidden>
+              <i class="if if-close" aria-hidden="true"></i>
+              Clear all
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /filter-bar -->
+
+      <!-- ── Filter editor panel ────────────────────────────────────────────── -->
+      <!--
+        Appears directly below the filter bar when a filter is selected.
+        Anchors to the filter bar — not a modal, not a floating tooltip.
+        Dismissed by: confirming value, pressing Escape, clicking elsewhere.
+      -->
+      <div id="filter-editor" hidden
+        class="filter-editor mt-2"
+        role="dialog"
+        aria-modal="false"
+        aria-labelledby="filter-editor-title">
+        <!-- content rendered by openEditor() -->
+      </div>
+
+    </div><!-- /search+filter bar -->
+
+    <!-- ════════════════════════════════════════════════════════════════════════
+         STUB RESULTS — to give context, not the focus here
+    ════════════════════════════════════════════════════════════════════════ -->
+    <div class="bt-toolbar bt-toolbar--bordered mt-0 mb-0">
+      <span class="text-muted small" aria-live="polite" id="result-summary">4,831 records</span>
+    </div>
+
+    <article class="card-research" aria-labelledby="rc-1">
+      <div class="card-meta">
+        <span class="badge-oa">Open access</span>
+        <span class="badge bg-primary">Journal article</span>
+        <span class="badge bg-success">Published</span>
+      </div>
+      <div class="card-actions">
+        <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: The role of the parameter landscape…"><i class="if if-edit" aria-hidden="true"></i> Edit</a>
+        <a href="#" class="btn btn-ghost btn-sm" aria-label="View: The role of the parameter landscape…"><i class="if if-eye" aria-hidden="true"></i> View</a>
+      </div>
+      <div class="card-body">
+        <h2 id="rc-1" class="card-title"><a href="#">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a></h2>
+        <p class="card-authors">Kiewiet, M., Cuyvers, S., Billet, M. <span class="text-muted">et al.</span></p>
+        <p class="card-publication"><span>2025</span> · <a href="#">Laser &amp; Photonics Reviews</a> · <span>33(2)</span></p>
+      </div>
+    </article>
+
+    <article class="card-research" aria-labelledby="rc-2">
+      <div class="card-meta">
+        <span class="badge-restricted">Restricted</span>
+        <span class="badge bg-primary">Book chapter</span>
+        <span class="badge bg-warning text-dark">Draft</span>
+      </div>
+      <div class="card-actions">
+        <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Quantum error correction…"><i class="if if-edit" aria-hidden="true"></i> Edit</a>
+        <a href="#" class="btn btn-ghost btn-sm" aria-label="View: Quantum error correction…"><i class="if if-eye" aria-hidden="true"></i> View</a>
+      </div>
+      <div class="card-body">
+        <h2 id="rc-2" class="card-title"><a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a></h2>
+        <p class="card-authors">Verstraeten, D., De Wolf, K.</p>
+        <p class="card-publication"><span>2024</span> · <a href="#">Advances in Quantum Computing</a></p>
+      </div>
+    </article>
+
+  </div><!-- /content -->
+</main>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     STYLES
+     These belong in _booktower-components.scss once validated.
+     Inline here for prototype review only.
+════════════════════════════════════════════════════════════════════════════ -->
+<style>
+/* ── Filter editor panel ──────────────────────────────────────────────────── */
+.filter-editor {
+  background: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
+  box-shadow: var(--bt-shadow-md);
+  padding: var(--bt-sp-4);
+  max-width: 480px;
+  position: relative;
+}
+.filter-editor__title {
+  font-size: var(--bt-text-sm);
+  font-weight: 600;
+  color: var(--bt-gray-700);
+  margin: 0 0 var(--bt-sp-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.filter-editor__actions {
+  display: flex;
+  gap: var(--bt-sp-2);
+  margin-top: var(--bt-sp-3);
+  padding-top: var(--bt-sp-3);
+  border-top: var(--bt-border);
+}
+
+/* ── People search results (author editor) ────────────────────────────────── */
+.people-results {
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-md);
+  overflow: hidden;
+  margin-top: var(--bt-sp-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.people-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  cursor: pointer;
+  border-bottom: var(--bt-border);
+  transition: background var(--bt-dur-fast);
+}
+.people-result:last-child { border-bottom: none; }
+.people-result:hover,
+.people-result:focus {
+  background: var(--bt-blue-50);
+  outline: none;
+}
+.people-result.is-selected {
+  background: var(--bt-blue-100);
+}
+.people-result__icon {
+  color: var(--bt-gray-400);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.people-result__name {
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-1000);
+}
+.people-result__name mark {
+  background: none;
+  color: var(--bt-blue-700);
+  font-weight: 700;
+}
+.people-result__meta {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-500);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+  margin-top: 2px;
+}
+.people-result__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ── Checkbox list (Type, Status) ─────────────────────────────────────────── */
+.filter-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-1);
+  max-height: 240px;
+  overflow-y: auto;
+}
+.filter-checklist .form-check {
+  margin: 0;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  border-radius: var(--bt-radius-sm);
+}
+.filter-checklist .form-check:hover {
+  background: var(--bt-gray-50);
+}
+.filter-checklist .form-check-label {
+  font-size: var(--bt-text-sm);
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ── Boolean toggle (Has file, Open access) ───────────────────────────────── */
+.filter-boolean {
+  display: flex;
+  gap: var(--bt-sp-2);
+}
+.filter-boolean__option {
+  flex: 1;
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  border: 1.5px solid var(--bt-gray-150);
+  border-radius: var(--bt-radius-md);
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-700);
+  background: var(--bt-white);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+.filter-boolean__option:hover {
+  border-color: var(--bt-blue-500);
+}
+.filter-boolean__option.is-selected {
+  border-color: var(--bt-blue-700);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-900);
+}
+
+/* ── Year range ───────────────────────────────────────────────────────────── */
+.filter-year {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+}
+.filter-year input {
+  width: 90px;
+}
+
+/* ── Filter picker search ─────────────────────────────────────────────────── */
+#filter-picker { min-width: 240px; }
+</style>
+
+
+<!-- ════════════════════════════════════════════════════════════════════════════
+     INTERACTION SCRIPT
+════════════════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Filter definitions ────────────────────────────────────────────────────────
+// In production these come from the server-side filter config.
+// Each filter has: label, editor type, and optional values for enumerated types.
+
+const FILTERS = {
+  type: {
+    label: 'Type',
+    type: 'checklist',
+    values: [
+      { value: 'journal_article', label: 'Journal article' },
+      { value: 'book',            label: 'Book' },
+      { value: 'book_chapter',    label: 'Book chapter' },
+      { value: 'dataset',         label: 'Dataset' },
+      { value: 'dissertation',    label: 'Dissertation' },
+      { value: 'conference',      label: 'Conference' },
+      { value: 'miscellaneous',   label: 'Miscellaneous' },
+    ]
+  },
+  subtype: {
+    label: 'Subtype',
+    type: 'checklist',
+    values: [
+      { value: 'original',      label: 'Original article' },
+      { value: 'review',        label: 'Review article' },
+      { value: 'letterNote',    label: 'Letter / note' },
+      { value: 'proceedings',   label: 'Proceedings paper' },
+    ]
+  },
+  author: {
+    label: 'Author',
+    type: 'people-search',
+  },
+  affiliation: {
+    label: 'Affiliation / faculty',
+    type: 'text',
+    placeholder: 'Faculty or organisation name…',
+  },
+  research_group: {
+    label: 'Research group',
+    type: 'text',
+    placeholder: 'Research group or department…',
+  },
+  year: {
+    label: 'Publication year',
+    type: 'year-range',
+  },
+  created_since: {
+    label: 'Created since',
+    type: 'date',
+  },
+  updated_since: {
+    label: 'Updated since',
+    type: 'date',
+  },
+  open_access: {
+    label: 'Open access',
+    type: 'boolean',
+    yesLabel: 'Yes — open access only',
+    noLabel: 'No — restricted only',
+  },
+  has_file: {
+    label: 'Has file',
+    type: 'boolean',
+    yesLabel: 'Yes — has attached file',
+    noLabel: 'No — no file attached',
+  },
+  status: {
+    label: 'Biblio status',
+    type: 'checklist',
+    values: [
+      { value: 'public',    label: 'Published' },
+      { value: 'submitted', label: 'Submitted' },
+      { value: 'draft',     label: 'Draft' },
+    ]
+  },
+  pub_status: {
+    label: 'Publication status',
+    type: 'checklist',
+    values: [
+      { value: 'published',  label: 'Published' },
+      { value: 'accepted',   label: 'Accepted / in press' },
+      { value: 'epub',       label: 'Online first' },
+      { value: 'inprep',     label: 'In preparation' },
+    ]
+  },
+  tags: {
+    label: 'Tags',
+    type: 'text',
+    placeholder: 'Librarian tag…',
+  },
+  venue: {
+    label: 'Journal / venue',
+    type: 'text',
+    placeholder: 'Journal title, publisher, or conference…',
+  },
+  project: {
+    label: 'Project / funding',
+    type: 'text',
+    placeholder: 'Project name or grant ID…',
+  },
+  identifier: {
+    label: 'Identifier',
+    type: 'text',
+    placeholder: 'DOI, handle, ISBN, record ID…',
+  },
+};
+
+// ── People dataset (prototype) ────────────────────────────────────────────────
+// In production this is replaced by HTMX: hx-get="/people/search?q={value}"
+// returning templates/partials/people-search-results.html.
+// The partial is server-rendered from the PersonIdentity OpenSearch index.
+const PEOPLE = [
+  // UGent staff
+  { id: 'p1', name: 'Marianne Testarosso',  affiliation: 'Sciences',                dept: 'TW09',  years: '2020–current', orcid: '0000-0001-6123-2992', ugentId: '000161232992' },
+  { id: 'p2', name: 'Pietro Testa',          affiliation: 'UGent Memorialis',        years: '1902–1910' },
+  { id: 'p3', name: 'Lea Testut',             affiliation: 'UGent Alumni',            years: '2020–2024', orcid: '0000-0002-6384-8725' },
+  { id: 'p5', name: 'Jan Kiewiet',            affiliation: 'Sciences',                dept: 'FW12',  years: '2018–current', orcid: '0000-0003-1234-5678', ugentId: '000234561234' },
+  { id: 'p6', name: 'Sarah De Wolf',          affiliation: 'Engineering',             dept: 'ENG03', years: '2015–current', ugentId: '000112233445' },
+  { id: 'p7', name: 'Thomas Van Damme',       affiliation: 'Sciences',                dept: 'FW12',  years: '2019–current', orcid: '0000-0001-9876-5432' },
+  // Faculty of Performing Arts — Burlesque & Variety Studies
+  { id: 'p-jd1', name: 'John Doe',            affiliation: 'Faculty of Performing Arts', dept: 'Burlesque & Variety Studies', years: '2019–current', orcid: '0000-0002-1234-5678', ugentId: '000198274651' },
+  { id: 'p-jd2', name: 'Jane Doe',            affiliation: 'Faculty of Performing Arts', dept: 'Stagecraft & Neo-Burlesque',  years: '2021–current', orcid: '0000-0003-8765-4321' },
+  // External — historical burlesque performers
+  { id: 'p-jb1', name: 'Josephine Baker',     affiliation: 'External', years: 'Folies Bergère, 1925–1956',        orcid: '0000-0001-9876-0001' },
+  { id: 'p-gr1', name: 'Gypsy Rose Lee',       affiliation: 'External', years: "Minsky's Burlesque, 1929–1937" },
+  { id: 'p-dv1', name: 'Dita Von Teese',       affiliation: 'External', years: 'Neo-Burlesque Revival, 1992–current', orcid: '0000-0004-5555-9999' },
+];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let activeFilters = {};   // { filterId: { label, displayValue, rawValue } }
+let editingFilter = null; // currently open filter key
+let editorPendingValue = null; // value being built in the editor
+
+// ── DOM refs ──────────────────────────────────────────────────────────────────
+const activeChips  = document.getElementById('active-chips');
+const filterEditor = document.getElementById('filter-editor');
+const clearAllBtn  = document.getElementById('clear-all-btn');
+const filterSearch = document.getElementById('filter-search');
+
+// ── Filter picker: search ─────────────────────────────────────────────────────
+filterSearch.addEventListener('input', () => {
+  const q = filterSearch.value.toLowerCase();
+  document.querySelectorAll('#filter-picker-list button[data-filter]').forEach(btn => {
+    btn.hidden = q && !btn.textContent.toLowerCase().includes(q);
+  });
+  // Hide group labels when all items in group are hidden
+  document.querySelectorAll('#filter-picker-list p').forEach(p => {
+    let next = p.nextElementSibling;
+    let allHidden = true;
+    while (next && next.tagName !== 'P' && !next.classList.contains('dropdown-divider')) {
+      if (next.tagName === 'BUTTON' && !next.hidden) allHidden = false;
+      next = next.nextElementSibling;
+    }
+    p.hidden = allHidden;
+  });
+});
+
+// ── Filter picker: select a filter ───────────────────────────────────────────
+document.querySelectorAll('#filter-picker-list button[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filterId = btn.dataset.filter;
+    // Close the Bootstrap dropdown
+    bootstrap.Dropdown.getInstance(document.getElementById('add-filter-btn'))?.hide();
+    // Reset picker search
+    filterSearch.value = '';
+    document.querySelectorAll('#filter-picker-list button[data-filter]').forEach(b => b.hidden = false);
+    // Open the editor
+    openEditor(filterId, null);
+  });
+});
+
+// ── Open editor ───────────────────────────────────────────────────────────────
+function openEditor(filterId, existingValue) {
+  editingFilter = filterId;
+  editorPendingValue = existingValue ? { ...existingValue } : null;
+
+  const def = FILTERS[filterId];
+  if (!def) return;
+
+  filterEditor.hidden = false;
+  filterEditor.innerHTML = renderEditor(filterId, def, existingValue);
+  filterEditor.removeAttribute('hidden');
+
+  // Focus first interactive element
+  const firstInput = filterEditor.querySelector('input, button.filter-boolean__option, .people-result');
+  if (firstInput) firstInput.focus();
+
+  // Attach editor-specific events
+  attachEditorEvents(filterId, def);
+}
+
+// ── Render editor ─────────────────────────────────────────────────────────────
+function renderEditor(filterId, def, existing) {
+  const title = `<p class="filter-editor__title" id="filter-editor-title">${def.label}</p>`;
+  let body = '';
+
+  switch (def.type) {
+
+    case 'checklist': {
+      const checked = existing?.rawValue || [];
+      body = `<div class="filter-checklist" role="group" aria-label="Select ${def.label}">` +
+        def.values.map(v => `
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox"
+              id="fv-${v.value}" name="fv" value="${v.value}"
+              ${checked.includes(v.value) ? 'checked' : ''}>
+            <label class="form-check-label" for="fv-${v.value}">${v.label}</label>
+          </div>`).join('') +
+        `</div>`;
+      break;
+    }
+
+    case 'boolean': {
+      const current = existing?.rawValue;
+      body = `<div class="filter-boolean" role="group" aria-label="${def.label}">
+        <button type="button" class="filter-boolean__option ${current === 'true' ? 'is-selected' : ''}"
+          data-bool="true">${def.yesLabel}</button>
+        <button type="button" class="filter-boolean__option ${current === 'false' ? 'is-selected' : ''}"
+          data-bool="false">${def.noLabel}</button>
+      </div>`;
+      break;
+    }
+
+    case 'year-range': {
+      const from = existing?.rawValue?.from || '';
+      const to   = existing?.rawValue?.to   || '';
+      body = `<div class="filter-year">
+        <label for="year-from" class="visually-hidden">From year</label>
+        <input type="number" id="year-from" class="form-control filter-year__input"
+          placeholder="From" value="${from}">
+        <span class="text-muted small">to</span>
+        <label for="year-to" class="visually-hidden">To year</label>
+        <input type="number" id="year-to" class="form-control filter-year__input"
+          placeholder="To" value="${to}">
+      </div>`;
+      break;
+    }
+
+    case 'date': {
+      const val = existing?.rawValue || '';
+      body = `<div>
+        <label for="date-val" class="visually-hidden">${def.label}</label>
+        <input type="date" id="date-val" class="form-control form-control-sm" value="${val}">
+      </div>`;
+      break;
+    }
+
+    case 'text': {
+      const val = existing?.rawValue || '';
+      body = `<div>
+        <label for="text-val" class="visually-hidden">${def.label}</label>
+        <input type="text" id="text-val" class="form-control form-control-sm"
+          placeholder="${def.placeholder || ''}" value="${val}" autocomplete="off">
+      </div>`;
+      break;
+    }
+
+    case 'people-search': {
+      const selected = existing?.rawValue;
+      body = `
+        <div>
+          <label for="people-search-input" class="visually-hidden">Search for a person</label>
+          <input type="search" id="people-search-input" class="form-control form-control-sm"
+            placeholder="Search by name or ORCID…"
+            autocomplete="off"
+            value="${selected?.name || ''}">
+        </div>
+        <div id="people-results-list" class="people-results" role="listbox"
+          aria-label="People matching your search" ${selected ? '' : 'hidden'}>
+          ${selected ? renderPersonSelected(selected) : ''}
+        </div>
+        <p class="text-muted small mt-2 mb-0" id="people-hint">
+          Type a name to search across UGent people and external authors.
+        </p>`;
+      break;
+    }
+  }
+
+  const actions = `<div class="filter-editor__actions">
+    <button type="button" class="btn btn-primary btn-sm" id="editor-apply">Apply</button>
+    <button type="button" class="btn btn-ghost btn-sm" id="editor-cancel">Cancel</button>
+    ${editingFilter && activeFilters[editingFilter]
+      ? `<button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" id="editor-remove">
+           Remove filter
+         </button>`
+      : ''}
+  </div>`;
+
+  return title + body + actions;
+}
+
+// ── Attach editor-specific events ─────────────────────────────────────────────
+function attachEditorEvents(filterId, def) {
+
+  document.getElementById('editor-apply')?.addEventListener('click', () => applyEditor(filterId, def));
+  document.getElementById('editor-cancel')?.addEventListener('click', closeEditor);
+  document.getElementById('editor-remove')?.addEventListener('click', () => {
+    removeFilter(filterId);
+    closeEditor();
+  });
+
+  // Boolean toggle
+  filterEditor.querySelectorAll('.filter-boolean__option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterEditor.querySelectorAll('.filter-boolean__option').forEach(b => b.classList.remove('is-selected'));
+      btn.classList.add('is-selected');
+    });
+  });
+
+  // People search
+  if (def.type === 'people-search') {
+    const searchInput = document.getElementById('people-search-input');
+    const resultsList = document.getElementById('people-results-list');
+    const hint        = document.getElementById('people-hint');
+
+    let searchTimer;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimer);
+      const q = searchInput.value.trim().toLowerCase();
+      if (q.length < 2) {
+        resultsList.hidden = true;
+        hint.textContent = 'Type a name to search across UGent people and external authors.';
+        return;
+      }
+      hint.textContent = 'Searching…';
+      searchTimer = setTimeout(() => {
+        const matches = PEOPLE.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          (p.orcid && p.orcid.includes(q))
+        );
+        resultsList.innerHTML = matches.length
+          ? matches.map(p => renderPersonResult(p, q)).join('')
+          : `<div class="p-3 text-muted small">No people found for "${searchInput.value}"</div>`;
+        resultsList.hidden = false;
+        hint.textContent = matches.length
+          ? `${matches.length} result${matches.length !== 1 ? 's' : ''}`
+          : '';
+
+        // Attach click on each result
+        resultsList.querySelectorAll('.people-result').forEach(row => {
+          row.addEventListener('click', () => selectPerson(row.dataset));
+          row.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') selectPerson(row.dataset);
+          });
+        });
+      }, 200);
+    });
+  }
+
+  // Close on Escape
+  filterEditor.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeEditor();
+  });
+}
+
+// ── Render people result row ──────────────────────────────────────────────────
+function renderPersonResult(p, q) {
+  const highlightedName = p.name.replace(
+    new RegExp(`(${q})`, 'gi'),
+    '<mark>$1</mark>'
+  );
+  const meta = [
+    p.affiliation && `<span class="people-result__meta-item"><i class="if if-building if--xs" aria-hidden="true"></i>${p.affiliation}</span>`,
+    p.dept        && `<span class="people-result__meta-item"><i class="if if-group if--xs" aria-hidden="true"></i>${p.dept}</span>`,
+    p.years       && `<span class="people-result__meta-item">${p.years}</span>`,
+    p.orcid       && `<span class="people-result__meta-item"><i class="if if-orcid if--xs" aria-hidden="true"></i>${p.orcid}</span>`,
+    p.ugentId     && `<span class="people-result__meta-item"><i class="if if-ugent if--xs" aria-hidden="true"></i>${p.ugentId}</span>`,
+  ].filter(Boolean).join('');
+
+  return `<div class="people-result" role="option" tabindex="0"
+    data-id="${p.id}" data-name="${p.name}"
+    data-affiliation="${p.affiliation || ''}"
+    aria-label="${p.name}${p.affiliation ? ', ' + p.affiliation : ''}">
+    <span class="people-result__icon" aria-hidden="true">
+      <i class="if if-person if--sm"></i>
+    </span>
+    <div>
+      <div class="people-result__name">${highlightedName}</div>
+      ${meta ? `<div class="people-result__meta">${meta}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderPersonSelected(person) {
+  return `<div class="people-result is-selected" role="option"
+    data-id="${person.id}" data-name="${person.name}" tabindex="0">
+    <span class="people-result__icon" aria-hidden="true">
+      <i class="if if-person if--sm"></i>
+    </span>
+    <div>
+      <div class="people-result__name">${person.name}</div>
+      ${person.affiliation ? `<div class="people-result__meta"><span>${person.affiliation}</span></div>` : ''}
+    </div>
+    <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
+  </div>`;
+}
+
+function selectPerson(data) {
+  editorPendingValue = { id: data.id, name: data.name, affiliation: data.affiliation };
+  const input = document.getElementById('people-search-input');
+  if (input) input.value = data.name;
+  const list = document.getElementById('people-results-list');
+  if (list) {
+    list.innerHTML = renderPersonSelected(editorPendingValue);
+    list.hidden = false;
+  }
+}
+
+// ── Apply editor — build chip ─────────────────────────────────────────────────
+function applyEditor(filterId, def) {
+  let displayValue, rawValue;
+
+  switch (def.type) {
+
+    case 'checklist': {
+      const checked = [...filterEditor.querySelectorAll('input[name="fv"]:checked')]
+        .map(cb => ({ value: cb.value, label: filterEditor.querySelector(`label[for="fv-${cb.value}"]`).textContent.trim() }));
+      if (!checked.length) { closeEditor(); return; }
+      rawValue     = checked.map(c => c.value);
+      displayValue = checked.length === 1
+        ? checked[0].label
+        : `${checked[0].label} +${checked.length - 1}`;
+      break;
+    }
+
+    case 'boolean': {
+      const sel = filterEditor.querySelector('.filter-boolean__option.is-selected');
+      if (!sel) { closeEditor(); return; }
+      rawValue     = sel.dataset.bool;
+      displayValue = rawValue === 'true' ? 'Yes' : 'No';
+      break;
+    }
+
+    case 'year-range': {
+      const from = document.getElementById('year-from')?.value;
+      const to   = document.getElementById('year-to')?.value;
+      if (!from && !to) { closeEditor(); return; }
+      rawValue     = { from, to };
+      displayValue = from && to ? `${from}–${to}` : from ? `from ${from}` : `to ${to}`;
+      break;
+    }
+
+    case 'date': {
+      const val = document.getElementById('date-val')?.value;
+      if (!val) { closeEditor(); return; }
+      rawValue     = val;
+      displayValue = val;
+      break;
+    }
+
+    case 'text': {
+      const val = document.getElementById('text-val')?.value.trim();
+      if (!val) { closeEditor(); return; }
+      rawValue     = val;
+      displayValue = val;
+      break;
+    }
+
+    case 'people-search': {
+      if (!editorPendingValue) { closeEditor(); return; }
+      rawValue     = editorPendingValue;
+      displayValue = editorPendingValue.name;
+      break;
+    }
+  }
+
+  addFilter(filterId, { label: def.label, displayValue, rawValue });
+  closeEditor();
+}
+
+// ── Filter state management ───────────────────────────────────────────────────
+function addFilter(filterId, value) {
+  activeFilters[filterId] = value;
+  renderChips();
+}
+
+function removeFilter(filterId) {
+  delete activeFilters[filterId];
+  renderChips();
+}
+
+function renderChips() {
+  activeChips.innerHTML = Object.entries(activeFilters).map(([id, f]) => `
+    <div class="d-inline-flex align-items-center">
+      <button type="button" class="filter-tag filter-tag--editable"
+        aria-label="Edit filter: ${f.label} is ${f.displayValue}"
+        data-filter-id="${id}">
+        <span class="text-muted small me-1">${f.label}:</span>
+        ${f.displayValue}
+      </button>
+      <button type="button"
+        class="filter-tag__remove"
+        aria-label="Remove filter: ${f.label} is ${f.displayValue}"
+        data-remove-id="${id}">
+        <i class="if if-close if--xs" aria-hidden="true"></i>
+      </button>
+    </div>
+  `).join('');
+
+  // Attach events
+  activeChips.querySelectorAll('[data-filter-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.filterId;
+      openEditor(id, activeFilters[id]);
+    });
+  });
+  activeChips.querySelectorAll('[data-remove-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      removeFilter(btn.dataset.removeId);
+      if (editingFilter === btn.dataset.removeId) closeEditor();
+    });
+  });
+
+  clearAllBtn.hidden = Object.keys(activeFilters).length === 0;
+}
+
+// ── Close editor ──────────────────────────────────────────────────────────────
+function closeEditor() {
+  filterEditor.hidden = true;
+  filterEditor.innerHTML = '';
+  editingFilter = null;
+  editorPendingValue = null;
+}
+
+// Clear all
+clearAllBtn.addEventListener('click', () => {
+  activeFilters = {};
+  renderChips();
+  closeEditor();
+});
+
+// Close editor on outside click
+document.addEventListener('click', e => {
+  if (!filterEditor.hidden &&
+      !filterEditor.contains(e.target) &&
+      !e.target.closest('[data-filter-id]') &&
+      !e.target.closest('#add-filter-dropdown')) {
+    closeEditor();
+  }
+});
+</script>
