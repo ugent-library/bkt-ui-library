@@ -158,49 +158,10 @@
           <div class="tab-pane fade show active" id="panel-output"
             role="tabpanel" aria-labelledby="tab-output" tabindex="0">
 
-            <div class="bt-toolbar mb-4">
-              <div class="bt-toolbar__left">
-                <span class="text-muted" aria-live="polite" id="output-count">13,189 research output</span>
-              </div>
+            <div class="bt-toolbar">
               <div class="bt-toolbar__right">
-                <!-- Type filter — includes all kinds, no privileged "publications" group -->
-                <div class="dropdown">
-                  <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    All types
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">All types</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Journal articles <span class="text-muted">(8,921)</span></a></li>
-                    <li><a class="dropdown-item" href="#">Book chapters <span class="text-muted">(1,432)</span></a></li>
-                    <li><a class="dropdown-item" href="#">Conference papers <span class="text-muted">(1,104)</span></a></li>
-                    <li><a class="dropdown-item" href="#">Books <span class="text-muted">(390)</span></a></li>
-                    <li><a class="dropdown-item" href="#">Datasets <span class="text-muted">(342)</span></a></li>
-                    <li><a class="dropdown-item" href="#">Software <span class="text-muted">(61)</span></a></li>
-                    <li><a class="dropdown-item" href="#">Other <span class="text-muted">(939)</span></a></li>
-                  </ul>
-                </div>
-                <div class="dropdown">
-                  <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    All access
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">All access</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#"><span class="badge-oa me-1">OA</span> Open access only</a></li>
-                  </ul>
-                </div>
-                <div class="dropdown">
-                  <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    Newest first
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Newest first</a></li>
-                    <li><a class="dropdown-item" href="#">Oldest first</a></li>
-                  </ul>
+                <div class="bt-toolbar__item">
+                  <!-- @include: templates/partials/result-filter-bar.html -->
                 </div>
               </div>
             </div>
@@ -213,7 +174,7 @@
               hx-target="#output-list"
               hx-indicator="#output-loading">
 
-              <div class="mb-5">
+              <div class="my-5">
                 <h2 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2026</h2>
 
                 <article class="card-research" aria-labelledby="card-title-org-01">

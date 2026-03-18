@@ -1,0 +1,139 @@
+<!--
+  HTMX partial: people search results
+  Endpoint: GET /people/search?q={query}
+  Target: #people-results-list
+
+  Returns a list of .people-result rows matching the query.
+  Empty results return the no-results state.
+  The query term {q} is highlighted in each name using <mark>.
+
+  People dataset — burlesque performers & colleagues at the Faculty of
+  Performing Arts, UGent (entirely fictional, for prototype purposes).
+
+  In production: this partial is rendered server-side from the PersonIdentity
+  index in OpenSearch, filtered by the q parameter.
+-->
+
+<!-- Simulate: q=doe → returns Doe family -->
+<!-- Simulate: q=baker or q=jos → returns Josephine Baker -->
+<!-- Simulate: q=j → returns all three + extras -->
+
+<div class="people-result" role="option" tabindex="0"
+  data-id="p-jd1"
+  data-name="John Doe"
+  data-affiliation="Faculty of Performing Arts"
+  aria-label="John Doe, Faculty of Performing Arts">
+  <span class="people-result__icon" aria-hidden="true">
+    <i class="if if-person if--sm"></i>
+  </span>
+  <div>
+    <div class="people-result__name"><mark>J</mark>ohn <mark>Doe</mark></div>
+    <div class="people-result__meta">
+      <span class="people-result__meta-item">
+        <i class="if if-building if--xs" aria-hidden="true"></i>
+        Faculty of Performing Arts
+      </span>
+      <span class="people-result__meta-item">Burlesque &amp; Variety Studies · 2019–current</span>
+      <span class="people-result__meta-item">
+        <i class="if if-orcid if--xs" aria-hidden="true"></i>
+        0000-0002-1234-5678
+      </span>
+      <span class="people-result__meta-item">
+        <i class="if if-ugent if--xs" aria-hidden="true"></i>
+        000198274651
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="people-result" role="option" tabindex="0"
+  data-id="p-jd2"
+  data-name="Jane Doe"
+  data-affiliation="Faculty of Performing Arts"
+  aria-label="Jane Doe, Faculty of Performing Arts">
+  <span class="people-result__icon" aria-hidden="true">
+    <i class="if if-person if--sm"></i>
+  </span>
+  <div>
+    <div class="people-result__name"><mark>J</mark>ane <mark>Doe</mark></div>
+    <div class="people-result__meta">
+      <span class="people-result__meta-item">
+        <i class="if if-building if--xs" aria-hidden="true"></i>
+        Faculty of Performing Arts
+      </span>
+      <span class="people-result__meta-item">Stagecraft &amp; Neo-Burlesque · 2021–current</span>
+      <span class="people-result__meta-item">
+        <i class="if if-orcid if--xs" aria-hidden="true"></i>
+        0000-0003-8765-4321
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="people-result" role="option" tabindex="0"
+  data-id="p-jb1"
+  data-name="Josephine Baker"
+  data-affiliation="External"
+  aria-label="Josephine Baker, External">
+  <span class="people-result__icon" aria-hidden="true">
+    <i class="if if-person if--sm"></i>
+  </span>
+  <div>
+    <div class="people-result__name"><mark>Jo</mark>sephine Baker</div>
+    <div class="people-result__meta">
+      <span class="people-result__meta-item">
+        <i class="if if-external-link if--xs" aria-hidden="true"></i>
+        External
+      </span>
+      <span class="people-result__meta-item">Folies Bergère · 1925–1956</span>
+      <span class="people-result__meta-item">
+        <i class="if if-orcid if--xs" aria-hidden="true"></i>
+        0000-0001-9876-0001
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="people-result" role="option" tabindex="0"
+  data-id="p-gv1"
+  data-name="Gypsy Rose Lee"
+  data-affiliation="External"
+  aria-label="Gypsy Rose Lee, External">
+  <span class="people-result__icon" aria-hidden="true">
+    <i class="if if-person if--sm"></i>
+  </span>
+  <div>
+    <div class="people-result__name">Gypsy Rose Lee</div>
+    <div class="people-result__meta">
+      <span class="people-result__meta-item">
+        <i class="if if-external-link if--xs" aria-hidden="true"></i>
+        External
+      </span>
+      <span class="people-result__meta-item">Minsky's Burlesque · 1929–1937</span>
+    </div>
+  </div>
+</div>
+
+<div class="people-result" role="option" tabindex="0"
+  data-id="p-dd1"
+  data-name="Dita Von Teese"
+  data-affiliation="External"
+  aria-label="Dita Von Teese, External">
+  <span class="people-result__icon" aria-hidden="true">
+    <i class="if if-person if--sm"></i>
+  </span>
+  <div>
+    <div class="people-result__name">Dita Von Teese</div>
+    <div class="people-result__meta">
+      <span class="people-result__meta-item">
+        <i class="if if-external-link if--xs" aria-hidden="true"></i>
+        External
+      </span>
+      <span class="people-result__meta-item">Neo-Burlesque Revival · 1992–current</span>
+      <span class="people-result__meta-item">
+        <i class="if if-orcid if--xs" aria-hidden="true"></i>
+        0000-0004-5555-9999
+      </span>
+    </div>
+  </div>
+</div>

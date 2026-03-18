@@ -1,0 +1,675 @@
+<!-- @title: Advanced search (token bar) — Biblio -->
+<!-- @surface: backoffice -->
+
+<!--
+  EXPERT SEARCH — token bar variant
+  Compare with advanced-search.html (condition builder variant).
+
+  Mental model: type tokens directly in the search bar.
+  Tokens are highlighted inline. Autocomplete suggests field:value pairs.
+  Same canonical filter taxonomy. Same query URL output.
+  No forms, no dropdowns, no rows.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+<!-- @include: templates/partials/backoffice-sidebar.html -->
+
+  <main id="main-content">
+
+    <div> <!-- content -->
+      <div class="border-bottom px-4 flex-shrink-0">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <h1 class="bt-toolbar__title">Advanced search</h1>
+            <span class="text-muted small">Token mode</span>
+          </div>
+          <div class="bt-toolbar__right">
+            <a href="advanced-search.html" class="btn btn-ghost btn-sm">
+              <i class="if if-settings if--sm" aria-hidden="true"></i>
+              Switch to builder
+            </a>
+            <a href="backoffice-search.html" class="btn btn-ghost btn-sm">
+              <i class="if if-arrow-left if--sm" aria-hidden="true"></i>
+              Back to search
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 py-4">
+
+        <!-- ══════════════════════════════════════════════════════════════════════
+            TOKEN SEARCH BAR
+            Contenteditable div renders coloured tokens inline.
+            Real input hidden underneath carries the plain-text value for forms.
+            Autocomplete panel appears on : — shows field suggestions.
+            After field: — shows value suggestions for that field.
+        ═══════════════════════════════════════════════════════════════════════ -->
+        <div class="mb-1">
+          <label id="token-bar-label" class="visually-hidden">
+            Search query. Type field:value pairs separated by spaces. For example: type:journal_article year:2024 faculty:sciences
+          </label>
+
+          <div class="token-bar" id="token-bar-wrapper"
+            role="combobox"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-owns="token-suggestions"
+            aria-labelledby="token-bar-label">
+
+            <!-- Token display layer — tokens rendered as coloured spans -->
+            <div class="token-bar__display" id="token-display" aria-hidden="true">
+              <span class="token-bar__token" data-field="type">
+                <span class="token-bar__field">type</span><span class="token-bar__sep">:</span><span class="token-bar__value">journal_article</span>
+              </span>
+              <span class="token-bar__token" data-field="affiliation">
+                <span class="token-bar__field">affiliation</span><span class="token-bar__sep">:</span><span class="token-bar__value">sciences</span>
+              </span>
+              <span class="token-bar__token" data-field="has_file">
+                <span class="token-bar__field">has_file</span><span class="token-bar__sep">:</span><span class="token-bar__value">true</span>
+              </span>
+              <!-- cursor placeholder — real input continues here -->
+            </div>
+
+            <!-- Actual editable input — overlaid, transparent text so tokens show through -->
+            <input
+              type="search"
+              id="token-input"
+              name="q"
+              class="token-bar__input"
+              value="type:journal_article affiliation:sciences has_file:true "
+              autocomplete="off"
+              spellcheck="false"
+              aria-autocomplete="list"
+              aria-controls="token-suggestions"
+              aria-activedescendant=""
+              hx-get="/search"
+              hx-trigger="keyup changed delay:400ms"
+              hx-target="#token-results"
+              hx-swap="innerHTML"
+              hx-indicator="#token-indicator">
+
+            <span id="token-indicator" class="htmx-indicator token-bar__indicator" aria-live="polite">
+              <i class="if if-loader" aria-hidden="true"></i>
+            </span>
+
+            <button type="button" class="token-bar__clear" id="token-clear"
+              aria-label="Clear search query">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <!-- Autocomplete suggestions panel -->
+          <div class="token-suggestions" id="token-suggestions"
+            role="listbox"
+            aria-label="Search suggestions"
+            hidden>
+
+            <!-- State A: no colon yet — suggest fields -->
+            <div id="suggest-fields">
+              <div class="token-suggestions__group">Type &amp; identity</div>
+              <div class="token-suggestions__item" role="option" id="sug-type" data-token="type:">
+                <span class="token-bar__field">type</span>
+                <span class="token-suggestions__hint">journal_article · book · dataset · dissertation…</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-subtype" data-token="subtype:">
+                <span class="token-bar__field">subtype</span>
+                <span class="token-suggestions__hint">original · review · letterNote…</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-identifier" data-token="identifier:">
+                <span class="token-bar__field">identifier</span>
+                <span class="token-suggestions__hint">DOI, handle, ISBN…</span>
+              </div>
+
+              <div class="token-suggestions__group">People</div>
+              <div class="token-suggestions__item" role="option" id="sug-author" data-token="author:">
+                <span class="token-bar__field">author</span>
+                <span class="token-suggestions__hint">family name or full name</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-affiliation" data-token="affiliation:">
+                <span class="token-bar__field">affiliation</span>
+                <span class="token-suggestions__hint">faculty or organisation</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-group" data-token="research_group:">
+                <span class="token-bar__field">research_group</span>
+                <span class="token-suggestions__hint">research group or department</span>
+              </div>
+
+              <div class="token-suggestions__group">Time</div>
+              <div class="token-suggestions__item" role="option" id="sug-year" data-token="year:">
+                <span class="token-bar__field">year</span>
+                <span class="token-suggestions__hint">2024 · 2020..2024 · &gt;2020</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-created" data-token="created_since:">
+                <span class="token-bar__field">created_since</span>
+                <span class="token-suggestions__hint">ISO date, e.g. 2024-01-01</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-updated" data-token="updated_since:">
+                <span class="token-bar__field">updated_since</span>
+                <span class="token-suggestions__hint">ISO date, e.g. 2024-01-01</span>
+              </div>
+
+              <div class="token-suggestions__group">Context</div>
+              <div class="token-suggestions__item" role="option" id="sug-venue" data-token="venue:">
+                <span class="token-bar__field">venue</span>
+                <span class="token-suggestions__hint">journal, publisher or conference</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-project" data-token="project:">
+                <span class="token-bar__field">project</span>
+                <span class="token-suggestions__hint">project name or grant ID</span>
+              </div>
+
+              <div class="token-suggestions__group">Access &amp; files</div>
+              <div class="token-suggestions__item" role="option" id="sug-oa" data-token="open_access:">
+                <span class="token-bar__field">open_access</span>
+                <span class="token-suggestions__hint">true · false</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-hasfile" data-token="has_file:">
+                <span class="token-bar__field">has_file</span>
+                <span class="token-suggestions__hint">true · false</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-filetype" data-token="file_type:">
+                <span class="token-bar__field">file_type</span>
+                <span class="token-suggestions__hint">pdf · docx · zip…</span>
+              </div>
+
+              <div class="token-suggestions__group">Status &amp; workflow</div>
+              <div class="token-suggestions__item" role="option" id="sug-status" data-token="status:">
+                <span class="token-bar__field">status</span>
+                <span class="token-suggestions__hint">draft · submitted · public</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-pubstatus" data-token="pub_status:">
+                <span class="token-bar__field">pub_status</span>
+                <span class="token-suggestions__hint">accepted · inpress · published…</span>
+              </div>
+              <div class="token-suggestions__item" role="option" id="sug-tags" data-token="tags:">
+                <span class="token-bar__field">tags</span>
+                <span class="token-suggestions__hint">librarian tags</span>
+              </div>
+
+              <div class="token-suggestions__footer">
+                <a href="#syntax-reference" class="token-suggestions__syntax-link">Syntax reference</a>
+              </div>
+            </div>
+
+          </div><!-- /token-suggestions -->
+        </div>
+
+        <!-- Hint row -->
+        <p class="text-muted small mb-4">
+          Type <kbd>field:</kbd> to filter — e.g. <code>type:journal_article</code> <code>year:2020..2024</code> <code>has_file:true</code>.
+          Multiple tokens are combined with AND.
+          <a href="#syntax-reference">Syntax reference ↓</a>
+        </p>
+
+        <!-- Run button -->
+        <div class="d-flex gap-2 align-items-center mb-5">
+          <button type="button" class="btn btn-primary"
+            hx-get="/search"
+            hx-include="#token-input"
+            hx-target="#token-results"
+            hx-indicator="#token-indicator">
+            <i class="if if-search if--sm" aria-hidden="true"></i>
+            Search
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm text-muted" id="token-clear-btn">
+            Clear
+          </button>
+        </div>
+
+        <!-- ── Results ─────────────────────────────────────────────────────────── -->
+        <div id="token-results">
+
+          <div class="bt-toolbar bt-toolbar--bordered mb-0">
+            <span class="text-muted small" aria-live="polite">142 results</span>
+            <div class="bt-toolbar__right">
+              <label for="token-sort" class="visually-hidden">Sort by</label>
+              <select id="token-sort" class="form-select"
+                hx-get="/search" hx-trigger="change"
+                hx-target="#token-results" hx-include="#token-input"
+                hx-indicator="#token-indicator">
+                <option value="relevance">Relevance</option>
+                <option value="year-desc" selected>Year (new to old)</option>
+                <option value="year-asc">Year (old to new)</option>
+                <option value="title-asc">Title (A–Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <article class="card-research" aria-labelledby="tr-card-1">
+            <div class="card-meta">
+              <span class="badge-oa">Open access</span>
+              <span class="badge bg-primary">Journal article</span>
+              <span class="badge bg-success">Published</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: The role of the parameter landscape…">
+                <i class="if if-edit" aria-hidden="true"></i> Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="View: The role of the parameter landscape…">
+                <i class="if if-eye" aria-hidden="true"></i> View
+              </a>
+            </div>
+            <div class="card-body">
+              <h2 id="tr-card-1" class="card-title">
+                <a href="#">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
+              </h2>
+              <p class="card-authors">Kiewiet, M., Cuyvers, S., Billet, M. <span class="text-muted">et al.</span></p>
+              <p class="card-publication"><span>2025</span> · <a href="#">Laser &amp; Photonics Reviews</a> · <span>33(2)</span></p>
+            </div>
+          </article>
+
+          <article class="card-research" aria-labelledby="tr-card-2">
+            <div class="card-meta">
+              <span class="badge-oa">Open access</span>
+              <span class="badge bg-primary">Journal article</span>
+              <span class="badge bg-success">Published</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Hybrid classical–quantum algorithms…">
+                <i class="if if-edit" aria-hidden="true"></i> Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-sm" aria-label="View: Hybrid classical–quantum algorithms…">
+                <i class="if if-eye" aria-hidden="true"></i> View
+              </a>
+            </div>
+            <div class="card-body">
+              <h2 id="tr-card-2" class="card-title">
+                <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
+              </h2>
+              <p class="card-authors">Van Damme, T., Esperon-Rodriguez, M., Akritidis, K. <span class="text-muted">et al.</span></p>
+              <p class="card-publication"><span>2023</span> · <a href="#">npj Quantum Information</a> · <span>9(1)</span></p>
+            </div>
+          </article>
+
+        </div><!-- /token-results -->
+
+        <hr class="my-5" id="syntax-reference">
+
+        <!-- ══════════════════════════════════════════════════════════════════════
+            SYNTAX REFERENCE
+            Always visible below results — no modal, no separate page.
+            Expert users can read it while composing queries.
+        ═══════════════════════════════════════════════════════════════════════ -->
+        <section aria-labelledby="syntax-heading">
+          <h2 id="syntax-heading" class="h6 fw-semibold mb-3">Syntax reference</h2>
+
+          <div class="d-flex flex-column gap-4">
+
+            <div>
+              <h3 class="text-muted small fw-semibold text-uppercase mb-2">Basic tokens</h3>
+              <table class="table table-sm align-middle" aria-label="Basic token syntax">
+                <thead class="text-uppercase text-muted small">
+                  <tr>
+                    <th scope="col">Token</th>
+                    <th scope="col">Example</th>
+                    <th scope="col">Matches</th>
+                  </tr>
+                </thead>
+                <tbody class="small">
+                  <tr>
+                    <td><code>type:</code></td>
+                    <td><code>type:journal_article</code></td>
+                    <td>Works of that type</td>
+                  </tr>
+                  <tr>
+                    <td><code>author:</code></td>
+                    <td><code>author:smith</code></td>
+                    <td>Works by an author with that family name</td>
+                  </tr>
+                  <tr>
+                    <td><code>affiliation:</code></td>
+                    <td><code>affiliation:sciences</code></td>
+                    <td>Works from that faculty</td>
+                  </tr>
+                  <tr>
+                    <td><code>year:</code></td>
+                    <td><code>year:2024</code></td>
+                    <td>Works published that year</td>
+                  </tr>
+                  <tr>
+                    <td><code>status:</code></td>
+                    <td><code>status:submitted</code></td>
+                    <td>Works in that Biblio lifecycle status</td>
+                  </tr>
+                  <tr>
+                    <td><code>has_file:</code></td>
+                    <td><code>has_file:true</code></td>
+                    <td>Works with (or without) a file attached</td>
+                  </tr>
+                  <tr>
+                    <td><code>open_access:</code></td>
+                    <td><code>open_access:true</code></td>
+                    <td>Works with open access full text</td>
+                  </tr>
+                  <tr>
+                    <td><code>identifier:</code></td>
+                    <td><code>identifier:10.1002/lpor.202401234</code></td>
+                    <td>Exact DOI, handle, or ISBN</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h3 class="text-muted small fw-semibold text-uppercase mb-2">Range and comparison operators</h3>
+              <table class="table table-sm align-middle" aria-label="Range and comparison operators">
+                <thead class="text-uppercase text-muted small">
+                  <tr>
+                    <th scope="col">Syntax</th>
+                    <th scope="col">Example</th>
+                    <th scope="col">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody class="small">
+                  <tr>
+                    <td><code>field:a..b</code></td>
+                    <td><code>year:2020..2024</code></td>
+                    <td>Value between a and b (inclusive)</td>
+                  </tr>
+                  <tr>
+                    <td><code>field:&gt;value</code></td>
+                    <td><code>year:&gt;2020</code></td>
+                    <td>Value greater than</td>
+                  </tr>
+                  <tr>
+                    <td><code>field:&lt;value</code></td>
+                    <td><code>year:&lt;2024</code></td>
+                    <td>Value less than</td>
+                  </tr>
+                  <tr>
+                    <td><code>field:&gt;=value</code></td>
+                    <td><code>year:&gt;=2020</code></td>
+                    <td>Value greater than or equal</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h3 class="text-muted small fw-semibold text-uppercase mb-2">Negation and multiple values</h3>
+              <table class="table table-sm align-middle" aria-label="Negation and multiple values">
+                <thead class="text-uppercase text-muted small">
+                  <tr>
+                    <th scope="col">Syntax</th>
+                    <th scope="col">Example</th>
+                    <th scope="col">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody class="small">
+                  <tr>
+                    <td><code>-field:value</code></td>
+                    <td><code>-type:dataset</code></td>
+                    <td>Exclude works matching this token</td>
+                  </tr>
+                  <tr>
+                    <td><code>field:a,b</code></td>
+                    <td><code>type:journal_article,book</code></td>
+                    <td>Match any of these values (OR)</td>
+                  </tr>
+                  <tr>
+                    <td><code>"quoted text"</code></td>
+                    <td><code>"quantum computing"</code></td>
+                    <td>Exact phrase in title or abstract</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h3 class="text-muted small fw-semibold text-uppercase mb-2">Example queries</h3>
+              <div class="d-flex flex-column gap-2">
+
+                <div class="d-flex align-items-start gap-3 border rounded p-3">
+                  <div class="flex-grow-1">
+                    <code class="small">type:journal_article affiliation:sciences open_access:true year:2020..2025</code>
+                    <p class="text-muted small mb-0 mt-1">Open access journal articles from Sciences, 2020–2025</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm flex-shrink-0"
+                    aria-label="Load example: open access journal articles from Sciences"
+                    onclick="loadExample('type:journal_article affiliation:sciences open_access:true year:2020..2025')">
+                    <i class="if if-arrow-up if--xs" aria-hidden="true"></i>
+                    Use
+                  </button>
+                </div>
+
+                <div class="d-flex align-items-start gap-3 border rounded p-3">
+                  <div class="flex-grow-1">
+                    <code class="small">status:submitted -type:dataset updated_since:2024-01-01</code>
+                    <p class="text-muted small mb-0 mt-1">Submitted works (excluding datasets) updated since January 2024</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm flex-shrink-0"
+                    aria-label="Load example: submitted works excluding datasets"
+                    onclick="loadExample('status:submitted -type:dataset updated_since:2024-01-01')">
+                    <i class="if if-arrow-up if--xs" aria-hidden="true"></i>
+                    Use
+                  </button>
+                </div>
+
+                <div class="d-flex align-items-start gap-3 border rounded p-3">
+                  <div class="flex-grow-1">
+                    <code class="small">identifier:10.1002/lpor.202401234</code>
+                    <p class="text-muted small mb-0 mt-1">Look up a record by DOI</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm flex-shrink-0"
+                    aria-label="Load example: look up by DOI"
+                    onclick="loadExample('identifier:10.1002/lpor.202401234')">
+                    <i class="if if-arrow-up if--xs" aria-hidden="true"></i>
+                    Use
+                  </button>
+                </div>
+
+                <div class="d-flex align-items-start gap-3 border rounded p-3">
+                  <div class="flex-grow-1">
+                    <code class="small">affiliation:engineering type:dataset,software has_file:true</code>
+                    <p class="text-muted small mb-0 mt-1">Datasets and software from Engineering with files attached</p>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm flex-shrink-0"
+                    aria-label="Load example: Engineering datasets and software"
+                    onclick="loadExample('affiliation:engineering type:dataset,software has_file:true')">
+                    <i class="if if-arrow-up if--xs" aria-hidden="true"></i>
+                    Use
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div><!-- /content -->
+  </main>
+</div>
+
+<script>
+// ── Token bar — prototype interaction ────────────────────────────────────────
+// In production: server parses the query string and returns highlighted
+// token HTML as an HTMX partial. Here we do client-side parsing for the demo.
+
+const input      = document.getElementById('token-input');
+const display    = document.getElementById('token-display');
+const suggestions = document.getElementById('token-suggestions');
+const wrapper    = document.getElementById('token-bar-wrapper');
+const clearBtn   = document.getElementById('token-clear');
+const clearBtn2  = document.getElementById('token-clear-btn');
+
+// Known fields — in production sourced from the canonical filter config
+const FIELDS = [
+  'type','subtype','identifier','author','affiliation','research_group',
+  'year','created_since','updated_since','venue','project','collection',
+  'open_access','has_file','file_type','embargo',
+  'status','pub_status','locked','tags',
+  'keywords','external_index','source_system'
+];
+
+// Token regex: optional leading -, then field:value (value may be quoted)
+const TOKEN_RE = /(-?)(\w+):("(?:[^"]+)"|\S+)/g;
+
+function renderTokens(raw) {
+  const tokens = [];
+  let lastIndex = 0;
+  let match;
+  TOKEN_RE.lastIndex = 0;
+
+  // Reset display
+  display.innerHTML = '';
+
+  while ((match = TOKEN_RE.exec(raw)) !== null) {
+    const [full, neg, field, value] = match;
+
+    // Plain text before this token
+    if (match.index > lastIndex) {
+      const text = raw.slice(lastIndex, match.index);
+      if (text.trim()) {
+        const span = document.createElement('span');
+        span.className = 'font-monospace small text-muted';
+        span.textContent = text;
+        display.appendChild(span);
+      }
+    }
+
+    if (FIELDS.includes(field)) {
+      const token = document.createElement('span');
+      token.className = 'token-bar__token';
+      if (neg) token.dataset.negated = 'true';
+      token.innerHTML =
+        (neg ? '<span class="token-bar__field" style="color:var(--bt-danger)">-' + field + '</span>' :
+               '<span class="token-bar__field">' + field + '</span>') +
+        '<span class="token-bar__sep">:</span>' +
+        '<span class="token-bar__value">' + value + '</span>';
+      display.appendChild(token);
+    } else {
+      // Unknown field — render as plain mono
+      const span = document.createElement('span');
+      span.className = 'font-monospace small';
+      span.textContent = full;
+      display.appendChild(span);
+    }
+
+    lastIndex = match.index + full.length;
+    tokens.push({ neg, field, value });
+  }
+
+  // Trailing text
+  if (lastIndex < raw.length) {
+    const trailing = raw.slice(lastIndex);
+    if (trailing) {
+      const span = document.createElement('span');
+      span.className = 'font-monospace small text-muted';
+      span.textContent = trailing;
+      display.appendChild(span);
+    }
+  }
+
+  input.classList.toggle('no-tokens', tokens.length === 0);
+  return tokens;
+}
+
+// ── Autocomplete ─────────────────────────────────────────────────────────────
+function showSuggestions() {
+  const val   = input.value;
+  const pos   = input.selectionStart;
+  const chunk = val.slice(0, pos).split(/\s+/).pop(); // word at cursor
+
+  if (!chunk) {
+    hideSuggestions();
+    return;
+  }
+
+  // Show field suggestions when user is typing a field name (no colon yet)
+  if (!chunk.includes(':')) {
+    const partial = chunk.replace(/^-/, '').toLowerCase();
+    const items   = suggestions.querySelectorAll('.token-suggestions__item');
+    let anyVisible = false;
+    items.forEach(item => {
+      const field = item.querySelector('.token-bar__field')?.textContent || '';
+      const show  = partial === '' || field.includes(partial);
+      item.hidden = !show;
+      if (show) anyVisible = true;
+    });
+    suggestions.hidden = !anyVisible;
+    wrapper.setAttribute('aria-expanded', String(!suggestions.hidden));
+  } else {
+    hideSuggestions();
+  }
+}
+
+function hideSuggestions() {
+  suggestions.hidden = true;
+  wrapper.setAttribute('aria-expanded', 'false');
+}
+
+// ── Suggestion click ──────────────────────────────────────────────────────────
+suggestions.querySelectorAll('.token-suggestions__item').forEach(item => {
+  item.addEventListener('mousedown', e => {
+    e.preventDefault(); // don't blur input
+    const token = item.dataset.token;
+    if (!token) return;
+
+    const val = input.value;
+    const pos = input.selectionStart;
+    // Replace the partial word at cursor with the token
+    const before = val.slice(0, pos);
+    const after  = val.slice(pos);
+    const partial = before.split(/\s+/).pop();
+    const start   = before.lastIndexOf(partial);
+    input.value   = val.slice(0, start) + token + after;
+    // Place cursor after the token
+    const newPos  = start + token.length;
+    input.setSelectionRange(newPos, newPos);
+    input.focus();
+    renderTokens(input.value);
+    hideSuggestions();
+  });
+});
+
+// ── Events ────────────────────────────────────────────────────────────────────
+input.addEventListener('input',   () => { renderTokens(input.value); showSuggestions(); });
+input.addEventListener('keyup',   () => showSuggestions());
+input.addEventListener('focus',   () => { if (input.value) showSuggestions(); });
+input.addEventListener('blur',    () => setTimeout(hideSuggestions, 150));
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { hideSuggestions(); return; }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    const visible = [...suggestions.querySelectorAll('.token-suggestions__item:not([hidden])')];
+    if (visible.length) visible[0].focus();
+  }
+});
+
+// Keyboard nav within suggestions
+suggestions.addEventListener('keydown', e => {
+  const items  = [...suggestions.querySelectorAll('.token-suggestions__item:not([hidden])')];
+  const idx    = items.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' && idx < items.length - 1) { e.preventDefault(); items[idx+1].focus(); }
+  if (e.key === 'ArrowUp')   { e.preventDefault(); idx > 0 ? items[idx-1].focus() : input.focus(); }
+  if (e.key === 'Escape')    { hideSuggestions(); input.focus(); }
+  if (e.key === 'Enter' && idx >= 0) { items[idx].dispatchEvent(new MouseEvent('mousedown')); }
+});
+
+function clearQuery() {
+  input.value = '';
+  display.innerHTML = '';
+  input.classList.add('no-tokens');
+  hideSuggestions();
+  input.focus();
+}
+
+clearBtn.addEventListener('click',  clearQuery);
+clearBtn2.addEventListener('click', clearQuery);
+
+// ── Load example ──────────────────────────────────────────────────────────────
+function loadExample(query) {
+  input.value = query + ' ';
+  renderTokens(input.value);
+  input.focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Initial render ────────────────────────────────────────────────────────────
+renderTokens(input.value);
+</script>

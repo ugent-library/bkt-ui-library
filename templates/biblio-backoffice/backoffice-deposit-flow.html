@@ -150,15 +150,18 @@
     <section id="people" aria-labelledby="people-heading" class="mb-6">
       <h2 id="people-heading" class="bt-toolbar__title mb-4">People &amp; affiliations</h2>
 
-      <div class="d-flex flex-column gap-2 mb-3">
+      <!-- Author list — replaced by HTMX after add/remove -->
+      <div id="author-list-area" class="d-flex flex-column gap-2 mb-3">
         <div class="d-flex align-items-center gap-2 p-3 bg-white border rounded">
           <span class="bt-avatar bt-avatar--small">ER</span>
           <div class="flex-grow-1">
             <div>Esperon-Rodriguez, Manuel</div>
-            <div class="text-muted">Author · External</div>
+            <div class="text-muted small">Author · External</div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm">Edit</button>
-          <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove Esperon-Rodriguez">
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Edit author: Esperon-Rodriguez, Manuel">Edit</button>
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Remove Esperon-Rodriguez, Manuel">
             <i class="if if-delete" aria-hidden="true"></i>
           </button>
         </div>
@@ -166,21 +169,29 @@
           <span class="bt-avatar bt-avatar--small">KD</span>
           <div class="flex-grow-1">
             <div>De Pauw, Karen</div>
-            <div class="text-muted">Author · <strong>UGent</strong> — Department of Environment</div>
+            <div class="text-muted small">Author · <strong>UGent</strong> — Department of Environment</div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm">Edit</button>
-          <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove De Pauw">
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Edit author: De Pauw, Karen">Edit</button>
+          <button type="button" class="btn btn-ghost btn-sm"
+            aria-label="Remove De Pauw, Karen">
             <i class="if if-delete" aria-hidden="true"></i>
           </button>
         </div>
       </div>
+
+      <!-- Add author — loads people search partial inline -->
       <button type="button" class="btn btn-secondary btn-sm"
         hx-get="/partials/add-author-form"
         hx-target="#author-form-area"
-        hx-swap="innerHTML">
+        hx-swap="innerHTML"
+        hx-indicator="#author-load-indicator">
         <i class="if if-add" aria-hidden="true"></i>
         Add author
+        <span id="author-load-indicator" class="htmx-indicator ms-1" aria-live="polite">Loading…</span>
       </button>
+
+      <!-- Author form appears here, collapses when submitted or cancelled -->
       <div id="author-form-area"></div>
     </section>
 

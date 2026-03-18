@@ -1,0 +1,788 @@
+<!-- @title: Advanced search (token bar) — Biblio -->
+<!-- @surface: backoffice -->
+
+<!--
+  EXPERT SEARCH — token bar variant
+  Compare with advanced-search.html (condition builder variant).
+
+  Mental model: type tokens directly in the search bar.
+  Tokens are highlighted inline. Autocomplete suggests field:value pairs.
+  Same canonical filter taxonomy. Same query URL output.
+  No forms, no dropdowns, no rows.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+<!-- @include: templates/partials/backoffice-sidebar.html -->
+
+  <main id="main-content">
+
+    <div>
+      <div class="border-bottom px-4 flex-shrink-0">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <h1 class="bt-toolbar__title">Advanced search</h1>
+          </div>
+          <div class="bt-toolbar__right">
+            <a href="backoffice-search.html" class="btn btn-ghost btn-sm">
+              <i class="if if-arrow-left if--sm" aria-hidden="true"></i>
+              Back to search
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 py-4">
+
+        <!-- ── Intro ───────────────────────────────────────────────────────────── -->
+        <p class="text-muted mb-4">Build a precise query using the condition builder below. Each condition becomes a filter. The resulting query URL can be shared, saved, or used in an embed.</p>
+
+        <!-- ═══════════════════════════════════════════════════════════════════════
+            QUERY BUILDER
+            Each row = one condition: [field] [operator] [value] [remove]
+            Adding a row fires hx-get to update the live query preview.
+            The same filter taxonomy as normal search — no separate system.
+        ════════════════════════════════════════════════════════════════════════ -->
+        <section aria-labelledby="builder-heading">
+          <div class="bt-toolbar align-items-center mb-2">
+            <div class="bt-toolbar__left">
+              <h2 id="builder-heading" class="h6 mb-0">Conditions</h2>
+            </div>
+            <div class="bt-toolbar__right">
+            <button type="button" class="btn btn-secondary btn-xs"
+              hx-post="/search/saved"
+              hx-include="#condition-list, #save-name"
+              hx-target="#saved-search-list"
+              hx-swap="beforeend">
+              <i class="if if-pin if--sm" aria-hidden="true"></i>
+              Save search
+            </button>
+            </div>
+          </div>
+
+          <div id="condition-list"
+            hx-get="/search/query-preview"
+            hx-trigger="change from:#condition-list"
+            hx-target="#query-preview"
+            hx-swap="innerHTML"
+            hx-indicator="#preview-indicator">
+
+            <!-- ── Condition row ─────────────────────────────────────────────────
+                Prototype shows three pre-filled rows.
+                In production: server renders this list; adding/removing rows
+                is a POST that returns an updated partial.
+            ──────────────────────────────────────────────────────────────────── -->
+
+            <!-- Row 1 -->
+            <div class="d-flex gap-2 align-items-center mb-2" id="cond-1">
+              <label for="field-1" class="visually-hidden">Filter field, condition 1</label>
+              <select id="field-1" name="field[1]" class="form-select w-50">
+                <optgroup label="Type &amp; identity">
+                  <option value="type" selected>Type</option>
+                  <option value="subtype">Subtype</option>
+                  <option value="identifier">Identifier</option>
+                </optgroup>
+                <optgroup label="People">
+                  <option value="author">Author</option>
+                  <option value="affiliation">Affiliation / faculty</option>
+                  <option value="research_group">Research group</option>
+                </optgroup>
+                <optgroup label="Time">
+                  <option value="year">Publication year</option>
+                  <option value="created_since">Created since</option>
+                  <option value="updated_since">Updated since</option>
+                </optgroup>
+                <optgroup label="Context">
+                  <option value="venue">Journal / venue</option>
+                  <option value="project">Project / funding</option>
+                  <option value="collection">Collection</option>
+                </optgroup>
+                <optgroup label="Access &amp; files">
+                  <option value="open_access">Open access</option>
+                  <option value="has_file">Has file</option>
+                  <option value="file_type">File type</option>
+                  <option value="embargo">Embargo</option>
+                </optgroup>
+                <optgroup label="Status &amp; workflow">
+                  <option value="biblio_status">Biblio status</option>
+                  <option value="pub_status">Publication status</option>
+                  <option value="locked">Locked / needs review</option>
+                  <option value="tags">Tags</option>
+                </optgroup>
+                <optgroup label="Classification">
+                  <option value="keywords">Keywords</option>
+                  <option value="external_index">External index type</option>
+                </optgroup>
+                <optgroup label="System">
+                  <option value="source_system">Source system</option>
+                </optgroup>
+              </select>
+
+              <label for="op-1" class="visually-hidden">Operator, condition 1</label>
+              <select id="op-1" name="op[1]" class="form-select w-25">
+                <option value="is" selected>is</option>
+                <option value="is_not">is not</option>
+                <option value="contains">contains</option>
+                <option value="starts_with">starts with</option>
+              </select>
+
+              <label for="val-1" class="visually-hidden">Value, condition 1</label>
+              <select id="val-1" name="val[1]" class="form-select flex-grow-1">
+                <option value="">Select a type…</option>
+                <option value="journal_article" selected>Journal article</option>
+                <option value="book">Book</option>
+                <option value="book_chapter">Book chapter</option>
+                <option value="dataset">Dataset</option>
+                <option value="dissertation">Dissertation</option>
+                <option value="conference">Conference</option>
+                <option value="miscellaneous">Miscellaneous</option>
+              </select>
+
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Remove condition 1"
+                hx-delete="/search/conditions/1"
+                hx-target="#cond-1"
+                hx-swap="outerHTML">
+                <i class="if if-close if--xs" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="d-flex gap-2 align-items-center mb-2" id="cond-2">
+              <label for="field-2" class="visually-hidden">Filter field, condition 2</label>
+              <select id="field-2" name="field[2]" class="form-select w-50">
+                <optgroup label="Type &amp; identity">
+                  <option value="type">Type</option>
+                  <option value="subtype">Subtype</option>
+                  <option value="identifier">Identifier</option>
+                </optgroup>
+                <optgroup label="People">
+                  <option value="author">Author</option>
+                  <option value="affiliation" selected>Affiliation / faculty</option>
+                  <option value="research_group">Research group</option>
+                </optgroup>
+                <optgroup label="Time">
+                  <option value="year">Publication year</option>
+                  <option value="created_since">Created since</option>
+                  <option value="updated_since">Updated since</option>
+                </optgroup>
+                <optgroup label="Context">
+                  <option value="venue">Journal / venue</option>
+                  <option value="project">Project / funding</option>
+                  <option value="collection">Collection</option>
+                </optgroup>
+                <optgroup label="Access &amp; files">
+                  <option value="open_access">Open access</option>
+                  <option value="has_file">Has file</option>
+                  <option value="file_type">File type</option>
+                  <option value="embargo">Embargo</option>
+                </optgroup>
+                <optgroup label="Status &amp; workflow">
+                  <option value="biblio_status">Biblio status</option>
+                  <option value="pub_status">Publication status</option>
+                  <option value="locked">Locked / needs review</option>
+                  <option value="tags">Tags</option>
+                </optgroup>
+                <optgroup label="Classification">
+                  <option value="keywords">Keywords</option>
+                  <option value="external_index">External index type</option>
+                </optgroup>
+                <optgroup label="System">
+                  <option value="source_system">Source system</option>
+                </optgroup>
+              </select>
+
+              <label for="op-2" class="visually-hidden">Operator, condition 2</label>
+              <select id="op-2" name="op[2]" class="form-select w-25">
+                <option value="is" selected>is</option>
+                <option value="is_not">is not</option>
+                <option value="contains">contains</option>
+                <option value="starts_with">starts with</option>
+              </select>
+
+              <label for="val-2" class="visually-hidden">Value, condition 2</label>
+              <input type="text" id="val-2" name="val[2]" class="form-control form-control-sm flex-grow-1"
+                value="Sciences"
+                placeholder="Faculty name…">
+
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Remove condition 2"
+                hx-delete="/search/conditions/2"
+                hx-target="#cond-2"
+                hx-swap="outerHTML">
+                <i class="if if-close if--xs" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="d-flex gap-2 align-items-center mb-2" id="cond-3">
+              <label for="field-3" class="visually-hidden">Filter field, condition 3</label>
+              <select id="field-3" name="field[3]" class="form-select w-50">
+                <optgroup label="Type &amp; identity">
+                  <option value="type">Type</option>
+                  <option value="subtype">Subtype</option>
+                  <option value="identifier">Identifier</option>
+                </optgroup>
+                <optgroup label="People">
+                  <option value="author">Author</option>
+                  <option value="affiliation">Affiliation / faculty</option>
+                  <option value="research_group">Research group</option>
+                </optgroup>
+                <optgroup label="Time">
+                  <option value="year">Publication year</option>
+                  <option value="created_since">Created since</option>
+                  <option value="updated_since">Updated since</option>
+                </optgroup>
+                <optgroup label="Context">
+                  <option value="venue">Journal / venue</option>
+                  <option value="project">Project / funding</option>
+                  <option value="collection">Collection</option>
+                </optgroup>
+                <optgroup label="Access &amp; files">
+                  <option value="open_access">Open access</option>
+                  <option value="has_file" selected>Has file</option>
+                  <option value="file_type">File type</option>
+                  <option value="embargo">Embargo</option>
+                </optgroup>
+                <optgroup label="Status &amp; workflow">
+                  <option value="biblio_status">Biblio status</option>
+                  <option value="pub_status">Publication status</option>
+                  <option value="locked">Locked / needs review</option>
+                  <option value="tags">Tags</option>
+                </optgroup>
+                <optgroup label="Classification">
+                  <option value="keywords">Keywords</option>
+                  <option value="external_index">External index type</option>
+                </optgroup>
+                <optgroup label="System">
+                  <option value="source_system">Source system</option>
+                </optgroup>
+              </select>
+
+              <label for="op-3" class="visually-hidden">Operator, condition 3</label>
+              <select id="op-3" name="op[3]" class="form-select w-25">
+                <option value="is" selected>is</option>
+                <option value="is_not">is not</option>
+              </select>
+
+              <label for="val-3" class="visually-hidden">Value, condition 3</label>
+              <select id="val-3" name="val[3]" class="form-select flex-grow-1">
+                <option value="yes" selected>yes</option>
+                <option value="no">no</option>
+              </select>
+
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Remove condition 3"
+                hx-delete="/search/conditions/3"
+                hx-target="#cond-3"
+                hx-swap="outerHTML">
+                <i class="if if-close if--xs" aria-hidden="true"></i>
+              </button>
+            </div>
+
+          </div><!-- /condition-list -->
+
+          <!-- Add condition -->
+          <div class="mt-2">
+            <button type="button" class="btn btn-ghost btn-sm"
+              hx-post="/search/conditions"
+              hx-target="#condition-list"
+              hx-swap="beforeend">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add condition
+            </button>
+          </div>
+        </section>
+
+        <hr class="my-4">
+
+        <!-- ═══════════════════════════════════════════════════════════════════════
+            QUERY PREVIEW
+            Live-updating as conditions change.
+            Shows: human-readable summary, URL, embed snippet.
+        ════════════════════════════════════════════════════════════════════════ -->
+        <section aria-labelledby="preview-heading">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <h2 id="preview-heading" class="h6">Query</h2>
+            <span id="preview-indicator" class="htmx-indicator text-muted small" aria-live="polite">Updating…</span>
+          </div>
+
+          <div id="query-preview">
+
+            <!-- ── Human-readable summary ──────────────────────────────────────── -->
+            <div class="bg-light border rounded p-3 mb-3 font-monospace small" id="query-summary" aria-label="Current query conditions">
+              <span class="text-muted">type</span>
+              <span class="fw-semibold text-dark ms-1 me-1">is</span>
+              <span class="badge bg-primary fw-normal">Journal article</span>
+              <span class="text-muted ms-2 me-2">AND</span>
+              <span class="text-muted">affiliation</span>
+              <span class="fw-semibold text-dark ms-1 me-1">is</span>
+              <span class="badge bg-primary fw-normal">Sciences</span>
+              <span class="text-muted ms-2 me-2">AND</span>
+              <span class="text-muted">has_file</span>
+              <span class="fw-semibold text-dark ms-1 me-1">is</span>
+              <span class="badge bg-success fw-normal">yes</span>
+            </div>
+
+            <!-- ── Tabs: URL / Embed ───────────────────────────────────────────── -->
+            <ul class="nav nav-tabs mb-0" role="tablist" id="query-output-tabs">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-url" type="button"
+                  role="tab" aria-controls="panel-url" aria-selected="true"
+                  data-bs-toggle="tab" data-bs-target="#panel-url">
+                  Search URL
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-embed" type="button"
+                  role="tab" aria-controls="panel-embed" aria-selected="false"
+                  data-bs-toggle="tab" data-bs-target="#panel-embed">
+                  Embed
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-api" type="button"
+                  role="tab" aria-controls="panel-api" aria-selected="false"
+                  data-bs-toggle="tab" data-bs-target="#panel-api">
+                  API
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white" id="query-output-content">
+
+              <!-- Search URL -->
+              <div class="tab-pane fade show active" id="panel-url"
+                role="tabpanel" aria-labelledby="tab-url">
+                <p class="text-muted small mb-2">Share or bookmark this search. The URL encodes all current conditions.</p>
+                <div class="d-flex gap-2 align-items-start">
+                  <code class="d-block bg-light border rounded px-3 py-2 small flex-grow-1 text-break" id="url-output">
+                    https://biblio.ugent.be/search?type=journal_article&amp;affiliation=sciences&amp;has_file=true
+                  </code>
+                  <button type="button" class="btn btn-secondary btn-sm flex-shrink-0"
+                    id="copy-url-btn"
+                    onclick="copyToClipboard('url-output', this)"
+                    aria-label="Copy search URL to clipboard">
+                    <i class="if if-copy if--sm" aria-hidden="true"></i>
+                    Copy
+                  </button>
+                </div>
+                <div class="mt-3">
+                  <a href="backoffice-search.html" class="btn btn-primary btn-sm">
+                    <i class="if if-search if--sm" aria-hidden="true"></i>
+                    Run this search
+                  </a>
+                </div>
+              </div>
+
+              <!-- Embed -->
+              <div class="tab-pane fade" id="panel-embed"
+                role="tabpanel" aria-labelledby="tab-embed">
+                <p class="text-muted small mb-2">Embed a live result list on any website. The iframe respects the same access rules as the public site.</p>
+
+                <!-- Embed options -->
+                <div class="d-flex gap-4 mb-3 flex-wrap">
+                  <div>
+                    <label for="embed-limit" class="form-label small fw-semibold">Max results</label>
+                    <select id="embed-limit" class="form-select"
+                      onchange="updateEmbed()">
+                      <option value="5">5</option>
+                      <option value="10" selected>10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="embed-sort" class="form-label small fw-semibold">Sort by</label>
+                    <select id="embed-sort" class="form-select"
+                      onchange="updateEmbed()">
+                      <option value="year-desc" selected>Year (new to old)</option>
+                      <option value="year-asc">Year (old to new)</option>
+                      <option value="relevance">Relevance</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="form-label small fw-semibold d-block">Show</label>
+                    <div class="d-flex gap-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="embed-show-badges" checked onchange="updateEmbed()">
+                        <label class="form-check-label small" for="embed-show-badges">Badges</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="embed-show-actions" onchange="updateEmbed()">
+                        <label class="form-check-label small" for="embed-show-actions">Actions</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Embed preview -->
+                <div class="border rounded mb-3" style="max-height: 280px; overflow-y: auto;">
+                  <div class="bg-light border-bottom px-3 py-2 d-flex align-items-center gap-2">
+                    <span class="text-muted small">Preview</span>
+                    <span class="badge bg-secondary fw-normal small">Live iframe would show here</span>
+                  </div>
+                  <!-- Simulated embed output — in production this is the real iframe -->
+                  <div class="p-3" data-surface="public">
+                    <article class="card-research" aria-labelledby="embed-card-1" style="padding-top: 0;">
+                      <div class="card-meta">
+                        <span class="badge-oa">Open access</span>
+                        <span class="badge bg-primary">Journal article</span>
+                      </div>
+                      <div class="card-body">
+                        <h3 id="embed-card-1" class="card-title">
+                          <a href="#">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
+                        </h3>
+                        <p class="card-authors">Kiewiet, M., Cuyvers, S., Billet, M. <span class="text-muted">et al.</span></p>
+                        <p class="card-publication"><span>2025</span> · <a href="#">Laser &amp; Photonics Reviews</a></p>
+                      </div>
+                    </article>
+                    <article class="card-research" aria-labelledby="embed-card-2">
+                      <div class="card-meta">
+                        <span class="badge-oa">Open access</span>
+                        <span class="badge bg-primary">Journal article</span>
+                      </div>
+                      <div class="card-body">
+                        <h3 id="embed-card-2" class="card-title">
+                          <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
+                        </h3>
+                        <p class="card-authors">Van Damme, T., Esperon-Rodriguez, M., Akritidis, K. <span class="text-muted">et al.</span></p>
+                        <p class="card-publication"><span>2023</span> · <a href="#">npj Quantum Information</a></p>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <!-- Embed code -->
+                <div class="d-flex gap-2 align-items-start">
+                  <code class="d-block bg-light border rounded px-3 py-2 small flex-grow-1 text-break" id="embed-output">
+                    &lt;iframe src="https://biblio.ugent.be/embed?type=journal_article&amp;affiliation=sciences&amp;has_file=true&amp;limit=10&amp;sort=year-desc" width="100%" height="400" frameborder="0" title="Research output — Sciences, Journal articles"&gt;&lt;/iframe&gt;
+                  </code>
+                  <button type="button" class="btn btn-secondary btn-sm flex-shrink-0"
+                    onclick="copyToClipboard('embed-output', this)"
+                    aria-label="Copy embed code to clipboard">
+                    <i class="if if-copy if--sm" aria-hidden="true"></i>
+                    Copy
+                  </button>
+                </div>
+              </div>
+
+              <!-- API -->
+              <div class="tab-pane fade" id="panel-api"
+                role="tabpanel" aria-labelledby="tab-api">
+                <p class="text-muted small mb-2">Use the Biblio API to consume this query in your own application. Returns JSON.</p>
+                <div class="d-flex gap-2 align-items-start mb-3">
+                  <code class="d-block bg-light border rounded px-3 py-2 small flex-grow-1 text-break" id="api-output">
+                    GET https://biblio.ugent.be/api/search?type=journal_article&amp;affiliation=sciences&amp;has_file=true&amp;format=json
+                  </code>
+                  <button type="button" class="btn btn-secondary btn-sm flex-shrink-0"
+                    onclick="copyToClipboard('api-output', this)"
+                    aria-label="Copy API URL to clipboard">
+                    <i class="if if-copy if--sm" aria-hidden="true"></i>
+                    Copy
+                  </button>
+                </div>
+                <!-- Sample response -->
+                <details>
+                  <summary class="btn btn-ghost btn-sm px-0">Show sample response</summary>
+                  <pre class="bg-light border rounded p-3 small mt-2 overflow-auto" style="max-height: 220px;"><code>{
+    "total": 142,
+    "offset": 0,
+    "limit": 10,
+    "results": [
+      {
+        "id": "01hx2k...",
+        "type": "journal_article",
+        "title": "The role of the parameter landscape…",
+        "year": 2025,
+        "authors": ["Kiewiet, M.", "Cuyvers, S."],
+        "open_access": true,
+        "doi": "10.1002/lpor.202401234",
+        "url": "https://biblio.ugent.be/publication/01hx2k"
+      }
+    ]
+  }</code></pre>
+                </details>
+              </div>
+
+            </div><!-- /tab-content -->
+
+          </div><!-- /query-preview -->
+
+        </section>
+
+        <hr class="my-4">
+
+        <!-- ═══════════════════════════════════════════════════════════════════════
+            SAVED SEARCHES
+            Named queries the user has saved from normal search or here.
+        ════════════════════════════════════════════════════════════════════════ -->
+        <section aria-labelledby="saved-heading">
+          <h2 id="saved-heading" class="h6 fw-semibold mb-3">Saved searches</h2>
+
+          <div class="d-flex flex-column gap-2" id="saved-search-list">
+
+            <div class="d-flex align-items-start gap-3 border rounded p-3">
+              <div class="flex-grow-1">
+                <p class="fw-semibold mb-1 small">Sciences — open access journal articles 2020–2025</p>
+                <p class="text-muted small mb-1">
+                  <span class="filter-tag--static">Type: Journal article</span>
+                  <span class="filter-tag--static ms-1">Affiliation: Sciences</span>
+                  <span class="filter-tag--static ms-1">Open access: yes</span>
+                  <span class="filter-tag--static ms-1">Year: 2020–2025</span>
+                </p>
+              </div>
+              <div class="d-flex gap-2 flex-shrink-0">
+                <a href="backoffice-search.html" class="btn btn-ghost btn-sm"
+                  aria-label="Run saved search: Sciences open access journal articles">
+                  <i class="if if-search if--sm" aria-hidden="true"></i> Run
+                </a>
+                <button type="button" class="btn btn-ghost btn-sm"
+                  aria-label="Load saved search into builder: Sciences open access journal articles"
+                  hx-get="/search/saved/1/load"
+                  hx-target="#condition-list"
+                  hx-swap="innerHTML">
+                  <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                </button>
+                <button type="button" class="btn btn-ghost btn-sm text-danger"
+                  aria-label="Delete saved search: Sciences open access journal articles"
+                  hx-delete="/search/saved/1"
+                  hx-target="closest div.border"
+                  hx-swap="outerHTML"
+                  hx-confirm="Delete this saved search?">
+                  <i class="if if-delete if--sm" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-start gap-3 border rounded p-3">
+              <div class="flex-grow-1">
+                <p class="fw-semibold mb-1 small">Engineering — datasets needing review</p>
+                <p class="text-muted small mb-1">
+                  <span class="filter-tag--static">Type: Dataset</span>
+                  <span class="filter-tag--static ms-1">Affiliation: Engineering</span>
+                  <span class="filter-tag--static ms-1">Status: Submitted</span>
+                </p>
+              </div>
+              <div class="d-flex gap-2 flex-shrink-0">
+                <a href="backoffice-search.html" class="btn btn-ghost btn-sm"
+                  aria-label="Run saved search: Engineering datasets needing review">
+                  <i class="if if-search if--sm" aria-hidden="true"></i> Run
+                </a>
+                <button type="button" class="btn btn-ghost btn-sm"
+                  aria-label="Load saved search into builder: Engineering datasets needing review"
+                  hx-get="/search/saved/2/load"
+                  hx-target="#condition-list"
+                  hx-swap="innerHTML">
+                  <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                </button>
+                <button type="button" class="btn btn-ghost btn-sm text-danger"
+                  aria-label="Delete saved search: Engineering datasets needing review"
+                  hx-delete="/search/saved/2"
+                  hx-target="closest div.border"
+                  hx-swap="outerHTML"
+                  hx-confirm="Delete this saved search?">
+                  <i class="if if-delete if--sm" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div>
+
+<script>
+// ── Token bar — prototype interaction ────────────────────────────────────────
+// In production: server parses the query string and returns highlighted
+// token HTML as an HTMX partial. Here we do client-side parsing for the demo.
+
+const input      = document.getElementById('token-input');
+const display    = document.getElementById('token-display');
+const suggestions = document.getElementById('token-suggestions');
+const wrapper    = document.getElementById('token-bar-wrapper');
+const clearBtn   = document.getElementById('token-clear');
+const clearBtn2  = document.getElementById('token-clear-btn');
+
+// Known fields — in production sourced from the canonical filter config
+const FIELDS = [
+  'type','subtype','identifier','author','affiliation','research_group',
+  'year','created_since','updated_since','venue','project','collection',
+  'open_access','has_file','file_type','embargo',
+  'status','pub_status','locked','tags',
+  'keywords','external_index','source_system'
+];
+
+// Token regex: optional leading -, then field:value (value may be quoted)
+const TOKEN_RE = /(-?)(\w+):("(?:[^"]+)"|\S+)/g;
+
+function renderTokens(raw) {
+  const tokens = [];
+  let lastIndex = 0;
+  let match;
+  TOKEN_RE.lastIndex = 0;
+
+  // Reset display
+  display.innerHTML = '';
+
+  while ((match = TOKEN_RE.exec(raw)) !== null) {
+    const [full, neg, field, value] = match;
+
+    // Plain text before this token
+    if (match.index > lastIndex) {
+      const text = raw.slice(lastIndex, match.index);
+      if (text.trim()) {
+        const span = document.createElement('span');
+        span.className = 'font-monospace small text-muted';
+        span.textContent = text;
+        display.appendChild(span);
+      }
+    }
+
+    if (FIELDS.includes(field)) {
+      const token = document.createElement('span');
+      token.className = 'token-bar__token';
+      if (neg) token.dataset.negated = 'true';
+      token.innerHTML =
+        (neg ? '<span class="token-bar__field" style="color:var(--bt-danger)">-' + field + '</span>' :
+               '<span class="token-bar__field">' + field + '</span>') +
+        '<span class="token-bar__sep">:</span>' +
+        '<span class="token-bar__value">' + value + '</span>';
+      display.appendChild(token);
+    } else {
+      // Unknown field — render as plain mono
+      const span = document.createElement('span');
+      span.className = 'font-monospace small';
+      span.textContent = full;
+      display.appendChild(span);
+    }
+
+    lastIndex = match.index + full.length;
+    tokens.push({ neg, field, value });
+  }
+
+  // Trailing text
+  if (lastIndex < raw.length) {
+    const trailing = raw.slice(lastIndex);
+    if (trailing) {
+      const span = document.createElement('span');
+      span.className = 'font-monospace small text-muted';
+      span.textContent = trailing;
+      display.appendChild(span);
+    }
+  }
+
+  input.classList.toggle('no-tokens', tokens.length === 0);
+  return tokens;
+}
+
+// ── Autocomplete ─────────────────────────────────────────────────────────────
+function showSuggestions() {
+  const val   = input.value;
+  const pos   = input.selectionStart;
+  const chunk = val.slice(0, pos).split(/\s+/).pop(); // word at cursor
+
+  if (!chunk) {
+    hideSuggestions();
+    return;
+  }
+
+  // Show field suggestions when user is typing a field name (no colon yet)
+  if (!chunk.includes(':')) {
+    const partial = chunk.replace(/^-/, '').toLowerCase();
+    const items   = suggestions.querySelectorAll('.token-suggestions__item');
+    let anyVisible = false;
+    items.forEach(item => {
+      const field = item.querySelector('.token-bar__field')?.textContent || '';
+      const show  = partial === '' || field.includes(partial);
+      item.hidden = !show;
+      if (show) anyVisible = true;
+    });
+    suggestions.hidden = !anyVisible;
+    wrapper.setAttribute('aria-expanded', String(!suggestions.hidden));
+  } else {
+    hideSuggestions();
+  }
+}
+
+function hideSuggestions() {
+  suggestions.hidden = true;
+  wrapper.setAttribute('aria-expanded', 'false');
+}
+
+// ── Suggestion click ──────────────────────────────────────────────────────────
+suggestions.querySelectorAll('.token-suggestions__item').forEach(item => {
+  item.addEventListener('mousedown', e => {
+    e.preventDefault(); // don't blur input
+    const token = item.dataset.token;
+    if (!token) return;
+
+    const val = input.value;
+    const pos = input.selectionStart;
+    // Replace the partial word at cursor with the token
+    const before = val.slice(0, pos);
+    const after  = val.slice(pos);
+    const partial = before.split(/\s+/).pop();
+    const start   = before.lastIndexOf(partial);
+    input.value   = val.slice(0, start) + token + after;
+    // Place cursor after the token
+    const newPos  = start + token.length;
+    input.setSelectionRange(newPos, newPos);
+    input.focus();
+    renderTokens(input.value);
+    hideSuggestions();
+  });
+});
+
+// ── Events ────────────────────────────────────────────────────────────────────
+input.addEventListener('input',   () => { renderTokens(input.value); showSuggestions(); });
+input.addEventListener('keyup',   () => showSuggestions());
+input.addEventListener('focus',   () => { if (input.value) showSuggestions(); });
+input.addEventListener('blur',    () => setTimeout(hideSuggestions, 150));
+
+input.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { hideSuggestions(); return; }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    const visible = [...suggestions.querySelectorAll('.token-suggestions__item:not([hidden])')];
+    if (visible.length) visible[0].focus();
+  }
+});
+
+// Keyboard nav within suggestions
+suggestions.addEventListener('keydown', e => {
+  const items  = [...suggestions.querySelectorAll('.token-suggestions__item:not([hidden])')];
+  const idx    = items.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' && idx < items.length - 1) { e.preventDefault(); items[idx+1].focus(); }
+  if (e.key === 'ArrowUp')   { e.preventDefault(); idx > 0 ? items[idx-1].focus() : input.focus(); }
+  if (e.key === 'Escape')    { hideSuggestions(); input.focus(); }
+  if (e.key === 'Enter' && idx >= 0) { items[idx].dispatchEvent(new MouseEvent('mousedown')); }
+});
+
+function clearQuery() {
+  input.value = '';
+  display.innerHTML = '';
+  input.classList.add('no-tokens');
+  hideSuggestions();
+  input.focus();
+}
+
+clearBtn.addEventListener('click',  clearQuery);
+clearBtn2.addEventListener('click', clearQuery);
+
+// ── Load example ──────────────────────────────────────────────────────────────
+function loadExample(query) {
+  input.value = query + ' ';
+  renderTokens(input.value);
+  input.focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Initial render ────────────────────────────────────────────────────────────
+renderTokens(input.value);
+</script>
