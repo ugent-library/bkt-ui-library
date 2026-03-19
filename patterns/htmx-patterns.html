@@ -8,26 +8,26 @@
   </header>
 
   <!-- Architecture statement -->
-  <div class="arch-note mb-12">
+  <div class="lead">
     <strong>The architecture in one sentence:</strong> the server renders HTML, HTMX swaps fragments of it, and progressive enhancement means every form and link works without JavaScript first. A page should be <em>functional without HTMX</em> and <em>better with it</em> — not broken without it.
   </div>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Core principles for this stack</h2>
-    <div class="principle-row">
-      <div class="principle-box">
+    <h2 class="h2 mb-3">Core principles for this stack</h2>
+    <div class="row gap-3">
+      <div class="col-12">
         <h3>HTML first</h3>
         Every form posts to a real URL. Every link navigates. HTMX intercepts and upgrades — it never replaces the underlying semantic behaviour. Test with JavaScript disabled regularly.
       </div>
-      <div class="principle-box">
+      <div class="col-12">
         <h3>Server owns state</h3>
         The server returns HTML fragments, not JSON for the client to render. HTMX swaps them in. This means your templates stay on the server, close to your data.
       </div>
-      <div class="principle-box">
+      <div class="col-12">
         <h3>Stable URLs</h3>
         Every significant view has a URL. Detail pages, search results with filters, paginated lists — all bookmarkable and shareable. Use <code>hx-push-url</code> when a user would want to bookmark the current state.
       </div>
-      <div class="principle-box">
+      <div class="col-12">
         <h3>Accessible by default</h3>
         HTMX swaps don't automatically notify screen readers. You must use <code>aria-live</code> regions for dynamic updates, and manage focus explicitly when content changes. See the a11y section below.
       </div>
@@ -35,7 +35,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Pattern 1 — Live search</h2>
+    <h2 class="h2 mb-3">Pattern 1 — Live search</h2>
     <p>Used in: backoffice overview, public search, people lookup. Debounced keyup, targets a results container, shows a loading indicator.</p>
 
     <div class="ds-demo">
@@ -103,7 +103,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Pattern 2 — Inline form save (draft autosave)</h2>
+    <h2 class="h2 mb-3">Pattern 2 — Inline form save (draft autosave)</h2>
     <p>Used in: deposit flow. The form posts on blur or button click. The server returns a success fragment or validation errors. No page reload.</p>
 
     <div class="ds-demo">
@@ -166,7 +166,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Pattern 3 — Inline confirm (destructive actions)</h2>
+    <h2 class="h2 mb-3">Pattern 3 — Inline confirm (destructive actions)</h2>
     <p>Used in: delete record, remove author, archive item. Show a confirmation in-place before the irreversible action. Never use a modal for a single-field confirmation.</p>
 
     <div class="ds-demo">
@@ -229,7 +229,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Pattern 4 — Load more / infinite scroll</h2>
+    <h2 class="h2 mb-3">Pattern 4 — Load more / infinite scroll</h2>
     <p>Used in: public research overview. The server returns the next page of cards. The "Load more" button replaces itself with the next page's button.</p>
 
     <div class="ds-code">
@@ -280,7 +280,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Pattern 5 — Lazy-loaded detail sections</h2>
+    <h2 class="h2 mb-3">Pattern 5 — Lazy-loaded detail sections</h2>
     <p>Used in: research detail page — related output, citation metrics. Load expensive sections only when the user scrolls to them.</p>
 
     <div class="ds-code">
@@ -304,7 +304,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Pattern 6 — Filter facets with URL persistence</h2>
+    <h2 class="h2 mb-3">Pattern 6 — Filter facets with URL persistence</h2>
     <p>Toggling a facet updates the results AND the URL, so the filtered view is bookmarkable.</p>
 
     <div class="ds-code">
@@ -339,7 +339,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Accessibility rules for HTMX</h2>
+    <h2 class="h2 mb-3">Accessibility rules for HTMX</h2>
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="d-flex flex-column gap-3">
@@ -384,7 +384,7 @@ document.body.addEventListener('htmx:afterSwap', function(evt) {
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">What HTMX is not for</h2>
+    <h2 class="h2 mb-3">What HTMX is not for</h2>
     <div class="ds-demo">
       <div class="ds-demo-body">
         <p>HTMX handles server-driven interactions well. It is not the right tool for:</p>

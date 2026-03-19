@@ -1,0 +1,49 @@
+<!--
+  Partial: people-search-widget.html
+  The reusable HTML shell for a people search field.
+
+  Include this wherever a person lookup is needed:
+    - Author filter editor (filter-editor.html)
+    - Add author form (add-author-form.html)
+    - Any future context that resolves a PersonIdentity
+
+  The widget is initialised automatically by people-search.js via the
+  data-people-search attribute. No per-page JS needed for the widget itself.
+
+  Parameters passed via the surrounding context:
+    - The input's hx-get points to /people/search — no change needed per use.
+    - The unique IDs (data-ps-input, data-ps-results, etc.) are scoped to the
+      container via data-* attributes, so multiple widgets on one page work.
+
+  In production: remove the people-search-stub.js script tag. The hx-get
+  on the input will call the real endpoint instead.
+-->
+
+<div data-people-search>
+
+  <label for="ps-input" class="visually-hidden">Search by name or ORCID</label>
+  <input
+    type="search"
+    id="ps-input"
+    data-ps-input
+    class="form-control form-control-sm"
+    placeholder="Search by name or ORCID…"
+    autocomplete="off"
+    hx-get="/people/search"
+    hx-trigger="keyup changed delay:300ms"
+    hx-target="next [data-ps-results]"
+    hx-indicator="next [data-ps-hint]">
+
+  <div
+    data-ps-results
+    class="people-results"
+    role="listbox"
+    aria-label="People matching your search"
+    hidden>
+  </div>
+
+  <p data-ps-hint class="text-muted small mt-2 mb-0">
+    Type a name to search across UGent people and external authors.
+  </p>
+
+</div>

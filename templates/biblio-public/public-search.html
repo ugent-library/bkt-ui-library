@@ -43,66 +43,53 @@
         <div class="d-flex align-items-center gap-2 flex-wrap">
 
           <!-- Active filter chips -->
-          <div role="group" aria-label="Active filters" class="d-flex align-items-center gap-2 flex-wrap">
-            <button type="button" class="filter-tag"
-              aria-label="Remove filter: Open access only">
-              <i class="if if-open-access if--xs" aria-hidden="true"></i>
-              Open access
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="filter-tag"
-              aria-label="Remove filter: Type is Journal article">
-              Type: Journal article
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="filter-tag"
-              aria-label="Remove filter: Year 2020 to today">
-              Year: 2020–today
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
+          <div role="group" aria-label="Active filters"
+            class="d-flex align-items-center gap-2 flex-wrap"
+            id="active-chips">
+            <!-- chips rendered by filter-editor.js -->
           </div>
 
           <!-- Add filter -->
-          <div class="dropdown">
+          <div class="dropdown" id="add-filter-dropdown">
             <button class="btn btn-ghost btn-sm" type="button"
-              id="add-filter-menu"
+              id="add-filter-btn"
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
-              aria-expanded="false"
-              aria-haspopup="true">
+              aria-expanded="false">
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add filter
             </button>
-            <div class="dropdown-menu p-3" aria-labelledby="add-filter-menu">
-
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Type &amp; identity</p>
-              <button class="dropdown-item rounded" type="button">Type</button>
-              <button class="dropdown-item rounded" type="button">Identifier (DOI, handle…)</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">People</p>
-              <button class="dropdown-item rounded" type="button">Author</button>
-              <button class="dropdown-item rounded" type="button">Affiliation / faculty</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Time</p>
-              <button class="dropdown-item rounded" type="button">Publication year</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Access</p>
-              <button class="dropdown-item rounded" type="button">Open access</button>
-              <button class="dropdown-item rounded" type="button">File available</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">More</p>
-              <button class="dropdown-item rounded" type="button">Subject / keyword</button>
-              <button class="dropdown-item rounded" type="button">Language</button>
-
+            <div class="dropdown-menu p-0" aria-labelledby="add-filter-btn">
+              <div class="p-2">
+                <label for="filter-search" class="visually-hidden">Search filters</label>
+                <input type="search" id="filter-search" class="form-control form-control-sm"
+                  placeholder="Find a filter…" autocomplete="off">
+              </div>
+              <div class="bt-filter-picker__list" id="filter-picker-list">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
+                <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
+                <button class="dropdown-item py-2" type="button" data-filter="identifier">Identifier (DOI, handle…)</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
+                <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
+                <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
+                <button class="dropdown-item py-2" type="button" data-filter="year">Publication year</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access</p>
+                <button class="dropdown-item py-2" type="button" data-filter="open_access">Open access</button>
+                <button class="dropdown-item py-2" type="button" data-filter="has_file">File available</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">More</p>
+                <button class="dropdown-item py-2" type="button" data-filter="keywords">Subject / keyword</button>
+                <button class="dropdown-item py-2" type="button" data-filter="language">Language</button>
+              </div>
             </div>
           </div>
 
           <!-- Clear all — only visible when filters are active -->
-          <button type="button" class="btn btn-ghost btn-sm text-muted">
+          <button type="button" class="btn btn-ghost btn-sm text-muted" id="clear-all-btn" hidden>
             <i class="if if-close" aria-hidden="true"></i>
             Clear all
           </button>
@@ -117,6 +104,15 @@
             Advanced search
           </a>
         </div>
+
+        <!-- Filter editor panel — rendered by filter-editor.js -->
+        <div id="filter-editor" hidden
+          class="filter-editor mt-2"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="filter-editor-title">
+        </div>
+
       </form>
 
     </div>
@@ -531,5 +527,10 @@
 
 </main>
 </div>
+
+<script src="/assets/js/people-search.js"></script>
+<script src="/assets/js/people-search-stub.js"></script>
+<script src="/assets/js/filter-editor.js"></script>
+<!-- Remove people-search-stub.js when wiring the real /people/search endpoint -->
 
 <!-- @include: templates/partials/public-footer.html -->

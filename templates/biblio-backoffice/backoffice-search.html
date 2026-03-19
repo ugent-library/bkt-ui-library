@@ -62,87 +62,66 @@
         <!-- Active chips + Add filter + Clear all -->
         <div class="d-flex gap-2 flex-wrap align-items-center">
 
-          <div role="group" aria-label="Active filters" class="d-flex gap-2 flex-wrap align-items-center">
-            <button type="button" class="filter-tag"
-              aria-label="Remove filter: Type is Journal article">
-              Type: Journal article
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="filter-tag"
-              aria-label="Remove filter: Status is Submitted">
-              Status: Submitted
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="filter-tag"
-              aria-label="Remove filter: Has file">
-              Has file
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
+          <div role="group" aria-label="Active filters"
+            class="d-flex gap-2 flex-wrap align-items-center"
+            id="active-chips">
+            <!-- chips rendered by filter-editor.js -->
           </div>
 
-          <div class="dropdown">
+          <div class="dropdown" id="add-filter-dropdown">
             <button class="btn btn-ghost btn-sm" type="button"
-              id="bo-add-filter-menu"
+              id="add-filter-btn"
               data-bs-toggle="dropdown"
               data-bs-auto-close="outside"
-              aria-expanded="false"
-              aria-haspopup="true">
+              aria-expanded="false">
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add filter
             </button>
-            <div class="dropdown-menu p-3" aria-labelledby="bo-add-filter-menu"
-              style="min-width: 300px;">
-
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Type &amp; identity</p>
-              <button class="dropdown-item rounded" type="button">Type</button>
-              <button class="dropdown-item rounded" type="button">Subtype</button>
-              <button class="dropdown-item rounded" type="button">Identifier (DOI, handle…)</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">People</p>
-              <button class="dropdown-item rounded" type="button">Author</button>
-              <button class="dropdown-item rounded" type="button">Affiliation / faculty</button>
-              <button class="dropdown-item rounded" type="button">Research group</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Time</p>
-              <button class="dropdown-item rounded" type="button">Publication year</button>
-              <button class="dropdown-item rounded" type="button">Created since</button>
-              <button class="dropdown-item rounded" type="button">Updated since</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Context</p>
-              <button class="dropdown-item rounded" type="button">Project / funding</button>
-              <button class="dropdown-item rounded" type="button">Journal / venue</button>
-              <button class="dropdown-item rounded" type="button">Collection</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Access &amp; files</p>
-              <button class="dropdown-item rounded" type="button">Open access</button>
-              <button class="dropdown-item rounded" type="button">Has file</button>
-              <button class="dropdown-item rounded" type="button">File type</button>
-              <button class="dropdown-item rounded" type="button">Embargo</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Status &amp; workflow</p>
-              <button class="dropdown-item rounded" type="button">Biblio status</button>
-              <button class="dropdown-item rounded" type="button">Publication status</button>
-              <button class="dropdown-item rounded" type="button">Locked / needs review</button>
-              <button class="dropdown-item rounded" type="button">Tags</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">Classification</p>
-              <button class="dropdown-item rounded" type="button">Keywords</button>
-              <button class="dropdown-item rounded" type="button">External index type</button>
-
-              <hr class="dropdown-divider my-2">
-              <p class="text-muted small fw-semibold text-uppercase mb-2" aria-hidden="true">System</p>
-              <button class="dropdown-item rounded" type="button">Source system / legacy</button>
-
+            <div class="dropdown-menu p-0" aria-labelledby="add-filter-btn">
+              <div class="p-2">
+                <label for="filter-search" class="visually-hidden">Search filters</label>
+                <input type="search" id="filter-search" class="form-control form-control-sm"
+                  placeholder="Find a filter…" autocomplete="off">
+              </div>
+              <div class="bt-filter-picker__list" id="filter-picker-list">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
+                <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
+                <button class="dropdown-item py-2" type="button" data-filter="subtype">Subtype</button>
+                <button class="dropdown-item py-2" type="button" data-filter="identifier">Identifier (DOI, handle…)</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
+                <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
+                <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
+                <button class="dropdown-item py-2" type="button" data-filter="research_group">Research group</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
+                <button class="dropdown-item py-2" type="button" data-filter="year">Publication year</button>
+                <button class="dropdown-item py-2" type="button" data-filter="created_since">Created since</button>
+                <button class="dropdown-item py-2" type="button" data-filter="updated_since">Updated since</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
+                <button class="dropdown-item py-2" type="button" data-filter="project">Project / funding</button>
+                <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
+                <button class="dropdown-item py-2" type="button" data-filter="open_access">Open access</button>
+                <button class="dropdown-item py-2" type="button" data-filter="has_file">Has file</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Status &amp; workflow</p>
+                <button class="dropdown-item py-2" type="button" data-filter="status">Biblio status</button>
+                <button class="dropdown-item py-2" type="button" data-filter="pub_status">Publication status</button>
+                <button class="dropdown-item py-2" type="button" data-filter="tags">Tags</button>
+                <hr class="dropdown-divider my-1">
+                <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Classification</p>
+                <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
+              </div>
             </div>
           </div>
 
-          <button type="button" class="btn btn-ghost btn-sm text-muted">Clear all</button>
+          <button type="button" class="btn btn-ghost btn-sm text-muted" id="clear-all-btn" hidden>
+            <i class="if if-close" aria-hidden="true"></i>
+            Clear all
+          </button>
 
           <span id="search-indicator" class="htmx-indicator text-muted small" aria-live="polite">
             Searching…
@@ -604,3 +583,8 @@
     });
   }
 </script>
+
+<script src="/assets/js/people-search.js"></script>
+<script src="/assets/js/people-search-stub.js"></script>
+<script src="/assets/js/filter-editor.js"></script>
+<!-- Remove people-search-stub.js when wiring the real /people/search endpoint -->
