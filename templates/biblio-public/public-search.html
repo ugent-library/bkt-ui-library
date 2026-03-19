@@ -1,75 +1,102 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
+<!--
+  Public search page — search-first with multi-entity autocomplete.
+
+  Partials:
+    @include: templates/partials/public-header.html
+    @include: templates/partials/search-suggest-panel.html  ← swappable panel content
+    @include: templates/partials/search-filter-bar.html     ← chips + add filter
+
+  Scripts (load order matters):
+    people-search.js    — people widget (used inside filter editor)
+    people-search-stub.js — prototype data, remove when real endpoint exists
+    filter-editor.js    — chip management, biblio:filter-add listener
+    suggest-panel.js    — panel show/hide, keyboard nav, biblio:filter-add dispatch
+-->
 
 <!-- @include: templates/partials/public-header.html -->
 
 <div class="u-layout--public" data-surface="public">
 <main class="bg-white" id="main-content">
 
-  <!-- ── Search bar ──────────────────────────────────────────────────────────
-       Persistent across results. Query always editable in context.
-       Active filters shown as removable chips below.
-       "+ Add filter" scales to any number of filter dimensions.
-  ─────────────────────────────────────────────────────────────────────────── -->
+  <!-- ── Search bar ──────────────────────────────────────────────────────── -->
   <div class="bg-white border-bottom pb-3 pt-5">
     <div class="container">
 
-      <form role="search" aria-label="Search research output" action="/search">
-        <label for="q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
-        <div class="input-group input-group-lg mb-3">
-          <span class="input-group-text" aria-hidden="true">
-            <i class="if if-search"></i>
-          </span>
-          <input
-            type="search"
-            id="q"
-            name="q"
-            class="form-control"
-            value="Quantum computing"
-            autocomplete="off"
-            hx-get="/search"
-            hx-trigger="keyup changed delay:400ms"
-            hx-target="#search-results"
-            hx-swap="innerHTML"
-            hx-indicator="#search-indicator">
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
+      <form role="search"
+        aria-label="Search research output, people, organisations, and projects"
+        action="/search">
 
-        <!-- ── Active filter chips + Add filter ────────────────────────────
-             Filter chips show the full query state at a glance.
-             "+ Add filter" reveals the grouped filter menu.
-             No facet sidebar is needed to get to any filter dimension.
-        ─────────────────────────────────────────────────────────────────── -->
-        <div class="d-flex align-items-center gap-2 flex-wrap">
+        <!-- ── Search input + suggest panel shell ───────────────────────── -->
+        <div class="position-relative mb-3" id="suggest-wrapper">
 
-          <!-- Active filter chips -->
-          <div role="group" aria-label="Active filters"
-            class="d-flex align-items-center gap-2 flex-wrap"
-            id="active-chips">
-            <!-- chips rendered by filter-editor.js -->
+          <label for="q" class="visually-hidden">
+            Search by title, author, keyword, DOI, or organisation
+          </label>
+
+          <div class="input-group input-group-lg">
+            <span class="input-group-text bg-white border-end-0" aria-hidden="true">
+              <i class="if if-search text-muted"></i>
+            </span>
+            <input
+              type="search"
+              id="q"
+              name="q"
+              class="form-control border-start-0 ps-0"
+              value="Quantum computing"
+              placeholder="Search by title, author, DOI, or topic…"
+              autocomplete="off"
+              aria-autocomplete="list"
+              aria-controls="suggest-panel"
+              aria-expanded="false"
+              hx-get="/search/suggest"
+              hx-trigger="keyup changed delay:200ms, focus"
+              hx-target="#suggest-panel"
+              hx-swap="innerHTML"
+              hx-indicator="#suggest-indicator">
+            <button type="submit" class="btn btn-primary">Search</button>
           </div>
 
-          <!-- @include: templates/partials/search-filter-bar.html -->
+          <!--
+            Autocomplete panel shell — must stay in DOM at page load.
+            Only the inner content is swapped by HTMX.
+            suggest-panel.js controls visibility.
+          -->
+          <div
+            id="suggest-panel"
+            class="bt-suggest-panel position-absolute start-0 end-0 top-100 bg-white border rounded-3 shadow mt-1 overflow-hidden"
+            role="listbox"
+            aria-label="Search suggestions"
+            hidden>
 
-          <!-- Advanced search — appended after the partial in the chips row -->
-          <a href="/advanced-search" class="btn btn-ghost btn-sm ms-auto text-muted">
-            Advanced search
-          </a>
+            <div id="suggest-indicator"
+              class="htmx-indicator p-3 text-muted small text-center"
+              aria-live="polite">
+              Searching…
+            </div>
+
+            <!-- @include: templates/partials/search-suggest-panel.html -->
+
+          </div>
+
+        </div><!-- /#suggest-wrapper -->
+
+        <!-- ── Filter chips + Add filter ────────────────────────────────── -->
+        <!-- @include: templates/partials/search-filter-bar.html -->
+
+        <a href="/advanced-search" class="btn btn-ghost btn-sm ms-auto text-muted d-block text-end mt-1">
+          Advanced search
+        </a>
 
       </form>
-
     </div>
   </div>
 
-  <!-- ── Body: facets sidebar + results ────────────────────────────────────── -->
+  <!-- ── Body: facets sidebar + results ─────────────────────────────────── -->
   <div class="container">
   <div class="bt-content-area pt-4">
 
-    <!-- ── Facets sidebar ─────────────────────────────────────────────────────
-         Browsing only — quick narrowing for exploratory users.
-         Every facet here is also reachable via "+ Add filter".
-         No special logic; checkboxes map to the same filter params.
-    ──────────────────────────────────────────────────────────────────────── -->
     <aside class="bt-sub-sidebar p-0" aria-label="Filter results">
 
       <!-- Access -->
@@ -79,13 +106,13 @@
           <input class="form-check-input me-2" type="checkbox" id="f-oa" checked
             aria-label="Open access (142 results)">
           <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">142</span>
+          <span class="text-muted small" aria-hidden="true">142</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-restricted"
             aria-label="Restricted (37 results)">
           <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">37</span>
+          <span class="text-muted small" aria-hidden="true">37</span>
         </div>
       </fieldset>
 
@@ -98,61 +125,51 @@
           <input class="form-check-input me-2" type="checkbox" id="f-journal" checked
             aria-label="Journal article (88 results)">
           <label class="form-check-label flex-grow-1" for="f-journal">Journal article</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">88</span>
+          <span class="text-muted small" aria-hidden="true">88</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-conference"
             aria-label="Conference paper (31 results)">
           <label class="form-check-label flex-grow-1" for="f-conference">Conference paper</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">31</span>
+          <span class="text-muted small" aria-hidden="true">31</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-dataset"
             aria-label="Dataset (24 results)">
           <label class="form-check-label flex-grow-1" for="f-dataset">Dataset</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">24</span>
+          <span class="text-muted small" aria-hidden="true">24</span>
         </div>
-        <div class="d-flex form-check">
-          <input class="form-check-input me-2" type="checkbox" id="f-book-chapter"
-            aria-label="Book chapter (12 results)">
-          <label class="form-check-label flex-grow-1" for="f-book-chapter">Book chapter</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">12</span>
-        </div>
-        <div class="d-flex form-check">
-          <input class="form-check-input me-2" type="checkbox" id="f-dissertation"
-            aria-label="Dissertation (8 results)">
-          <label class="form-check-label flex-grow-1" for="f-dissertation">Dissertation</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">8</span>
-        </div>
-        <!-- More types hidden by default -->
         <div class="collapse" id="type-more">
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-book-chapter"
+              aria-label="Book chapter (12 results)">
+            <label class="form-check-label flex-grow-1" for="f-book-chapter">Book chapter</label>
+            <span class="text-muted small" aria-hidden="true">12</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-dissertation"
+              aria-label="Dissertation (8 results)">
+            <label class="form-check-label flex-grow-1" for="f-dissertation">Dissertation</label>
+            <span class="text-muted small" aria-hidden="true">8</span>
+          </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-book"
               aria-label="Book (6 results)">
             <label class="form-check-label flex-grow-1" for="f-book">Book</label>
-            <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">6</span>
+            <span class="text-muted small" aria-hidden="true">6</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-software"
               aria-label="Software (4 results)">
             <label class="form-check-label flex-grow-1" for="f-software">Software</label>
-            <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">4</span>
-          </div>
-          <div class="d-flex form-check">
-            <input class="form-check-input me-2" type="checkbox" id="f-preprint"
-              aria-label="Preprint (3 results)">
-            <label class="form-check-label flex-grow-1" for="f-preprint">Preprint</label>
-            <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">3</span>
+            <span class="text-muted small" aria-hidden="true">4</span>
           </div>
         </div>
-        <div class="mt-1">
-          <button type="button" class="btn btn-ghost btn-sm py-0 px-0 collapsed"
-            data-bs-toggle="collapse" data-bs-target="#type-more"
-            aria-expanded="false" aria-controls="type-more">
-            <span class="when-collapsed">More types <i class="if if-chevron-down if--xs" aria-hidden="true"></i></span>
-            <span class="when-expanded">Fewer types <i class="if if-chevron-up if--xs" aria-hidden="true"></i></span>
-          </button>
-        </div>
+        <button type="button" class="btn btn-ghost btn-sm py-0 px-0 mt-1"
+          data-bs-toggle="collapse" data-bs-target="#type-more"
+          aria-expanded="false" aria-controls="type-more">
+          More types <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+        </button>
       </fieldset>
 
       <hr>
@@ -164,45 +181,38 @@
           <input class="form-check-input me-2" type="checkbox" id="f-2025"
             aria-label="2025 (38 results)">
           <label class="form-check-label flex-grow-1" for="f-2025">2025</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">38</span>
+          <span class="text-muted small" aria-hidden="true">38</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-2024" checked
             aria-label="2024 (31 results)">
           <label class="form-check-label flex-grow-1" for="f-2024">2024</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">31</span>
+          <span class="text-muted small" aria-hidden="true">31</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-2023"
             aria-label="2023 (28 results)">
           <label class="form-check-label flex-grow-1" for="f-2023">2023</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">28</span>
+          <span class="text-muted small" aria-hidden="true">28</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-2022"
             aria-label="2022 (19 results)">
           <label class="form-check-label flex-grow-1" for="f-2022">2022</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">19</span>
+          <span class="text-muted small" aria-hidden="true">19</span>
         </div>
-        <!-- Custom range -->
         <div class="mt-2">
-          <p class="text-muted small mb-1" id="year-range-label">Custom range</p>
+          <p class="text-muted small mb-1">Custom range</p>
           <div class="d-flex gap-2">
             <div>
               <label for="year-from" class="visually-hidden">From year</label>
-              <input type="number" id="year-from" name="year_from" class="form-control form-control-sm"
-                placeholder="From" min="1800" max="2030"
-                hx-get="/search" hx-trigger="change"
-                hx-target="#search-results" hx-include="[name='q']"
-                hx-indicator="#search-indicator">
+              <input type="number" id="year-from" name="year_from"
+                class="form-control form-control-sm" placeholder="From" min="1800" max="2030">
             </div>
             <div>
               <label for="year-to" class="visually-hidden">To year</label>
-              <input type="number" id="year-to" name="year_to" class="form-control form-control-sm"
-                placeholder="To" min="1800" max="2030"
-                hx-get="/search" hx-trigger="change"
-                hx-target="#search-results" hx-include="[name='q']"
-                hx-indicator="#search-indicator">
+              <input type="number" id="year-to" name="year_to"
+                class="form-control form-control-sm" placeholder="To" min="1800" max="2030">
             </div>
           </div>
         </div>
@@ -210,41 +220,40 @@
 
       <hr>
 
-      <!-- Language (capped at 4) -->
+      <!-- Language -->
       <fieldset>
         <legend class="form-label h6 mb-2">Language</legend>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-en" checked
             aria-label="English (161 results)">
           <label class="form-check-label flex-grow-1" for="f-en">English</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">161</span>
+          <span class="text-muted small" aria-hidden="true">161</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-nl"
             aria-label="Dutch (9 results)">
           <label class="form-check-label flex-grow-1" for="f-nl">Dutch</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">9</span>
+          <span class="text-muted small" aria-hidden="true">9</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-de"
             aria-label="German (4 results)">
           <label class="form-check-label flex-grow-1" for="f-de">German</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">4</span>
+          <span class="text-muted small" aria-hidden="true">4</span>
         </div>
         <div class="d-flex form-check">
           <input class="form-check-input me-2" type="checkbox" id="f-fr"
             aria-label="French (3 results)">
           <label class="form-check-label flex-grow-1" for="f-fr">French</label>
-          <span class="badge bg-transparent pe-1 text-muted small" aria-hidden="true">3</span>
+          <span class="text-muted small" aria-hidden="true">3</span>
         </div>
       </fieldset>
 
     </aside>
 
-    <!-- ── Results column ──────────────────────────────────────────────────── -->
+    <!-- ── Results ─────────────────────────────────────────────────────── -->
     <div class="flex-grow-1 overflow-hidden ps-5" id="search-results">
 
-      <!-- Results toolbar -->
       <div class="bt-toolbar mb-4">
         <div class="bt-toolbar__left">
           <nav aria-label="Results pagination" class="d-flex align-items-center gap-3">
@@ -266,10 +275,7 @@
         </div>
         <div class="bt-toolbar__right">
           <label for="sort-by" class="visually-hidden">Sort by</label>
-          <select id="sort-by" class="form-select"
-            hx-get="/search" hx-trigger="change"
-            hx-target="#search-results" hx-include="[name='q']"
-            hx-indicator="#search-indicator">
+          <select id="sort-by" class="form-select">
             <option value="relevance">Relevance</option>
             <option value="year-desc" selected>Year (new to old)</option>
             <option value="year-asc">Year (old to new)</option>
@@ -298,8 +304,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Cards -->
 
       <article class="card-research" aria-labelledby="card-title-s01">
         <div class="card-meta">
@@ -444,7 +448,6 @@
         </div>
       </article>
 
-      <!-- Bottom pagination -->
       <nav class="bt-toolbar mt-2 pt-3" aria-label="Results pagination">
         <div class="bt-toolbar__left">
           <ul class="pagination pagination-sm mb-0">
@@ -474,6 +477,9 @@
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>
 <script src="/assets/js/filter-editor.js"></script>
-<!-- Remove people-search-stub.js when wiring the real /people/search endpoint -->
+<script src="/assets/js/filter-stubs.js"></script>
+<script src="/assets/js/suggest-panel.js"></script>
+<!-- suggest-panel.js must load after filter-editor.js -->
+<!-- Remove people-search-stub.js and filter-stubs.js when wiring real endpoints -->
 
 <!-- @include: templates/partials/public-footer.html -->

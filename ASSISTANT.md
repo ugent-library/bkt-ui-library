@@ -277,7 +277,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 <div class="view-toggle" role="group" aria-label="Switch view">
   <button type="button" class="view-toggle-btn is-active"
     aria-pressed="true" aria-label="Card view">
-    <i class="if if-list" aria-hidden="true"></i>
+    <i class="if if-list-unordered" aria-hidden="true"></i>
   </button>
   <button type="button" class="view-toggle-btn"
     aria-pressed="false" aria-label="Table view">
@@ -580,6 +580,11 @@ nav-title
 ```
 u-layout--app           u-layout--deposit       u-layout--public
 ```
+
+**Search pages inside `u-layout--app`** must add `u-main--search` to `<main>`.
+This switches from the default single-scroll model to the three-region model:
+toolbar sticks, facet sidebar scrolls its filters, results column scrolls independently.
+Without this class, `main` scrolls as a unit (correct for dashboard, settings, etc.).
 
 ### Classes that no longer exist — do not use
 

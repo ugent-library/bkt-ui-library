@@ -349,6 +349,10 @@ body {
   height: 100%;
 }
 
+body[data-surface=backoffice] {
+  overflow: hidden;
+}
+
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -2135,30 +2139,32 @@ code, kbd, pre, samp {
 
 /* ═══════════════════════════════════════════════════════════════════════════════
    u-layout — Application layout shells
-   CSS grid replacement for the OLD flex + u-scroll-wrapper stacking approach.
 
-   The OLD system used:
-     d-flex + u-scroll-wrapper + u-scroll-wrapper__body + overflow: hidden on main
-   This caused sticky positioning to break inside overflow:hidden ancestors.
+   Three shells:
 
-   v2 uses CSS grid on the outermost shell so sidebars can be position:sticky
-   without fighting overflow constraints.
+   1. u-layout--app      topbar + left nav sidebar + main
+                         Backoffice pages of all types
 
-   Three shells are defined:
+   2. u-layout--deposit  topbar + step navigator + content column
+                         Deposit (work create/edit) flow
 
-   1. u-layout--app         topbar + left sidebar + main
-                            Used by: reviewer overview, researcher detail,
-                            depot management, design system shell
-                            Optional: right panel via u-layout--app.has-panel
+   3. u-layout--public   topbar + full-width document
+                         Public search, detail, researcher, organisation pages
 
-   2. u-layout--deposit     topbar + step navigator + wide content column
-                            Used by: add publication, deposit flow
+   ── Two main modes inside u-layout--app ─────────────────────────────────────
 
-   3. u-layout--public      topbar + constrained centred content
-                            Used by: public research detail, public search
+   Default main (simple pages: dashboard, settings, deposit detail):
+     main scrolls as a single unit — overflow-y: auto.
+     Content flows naturally to any height.
+     The page header sticks at the top via position:sticky on the border-bottom div.
 
-   All three share .bt-navbar as their topbar component.
-   Surface is set on the layout root: data-surface="backoffice" or "public".
+   u-main--search (search pages: backoffice-search, filter-first):
+     main does NOT scroll — overflow: hidden.
+     main is a flex column: sticky toolbar at top, bt-content-area fills the rest.
+     bt-content-area is a flex row:
+       - facet aside: fixed height, scrolls independently (overflow-y: auto)
+       - results column: fills width, scrolls independently (overflow-y: auto)
+
    ═══════════════════════════════════════════════════════════════════════════════ */
 /* ── 1. u-layout--app ───────────────────────────────────────────────────────── */
 .u-layout--app {
@@ -2174,68 +2180,70 @@ code, kbd, pre, samp {
   grid-area: navbar;
 }
 
+/* Left nav sidebar — scrolls independently within its grid area */
 .u-layout--app > .bt-sub-sidebar {
   grid-area: sidebar;
-  position: sticky;
-  top: var(--s-topbar-height);
   height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
 }
 
+/* ── Default main: scrolls as a unit (dashboard, settings, advanced search) ─── */
 .u-layout--app > main {
   grid-area: main;
   min-width: 0;
-  /* overflow: hidden here would clip content — use overflow-y: auto so the
-     main column scrolls as a unit while the navbar and sidebar stay sticky. */
   overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
-/* Optional right panel — section stepper, activity log, metadata */
-.u-layout--app.has-panel {
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas: "navbar  navbar  navbar" "sidebar main    panel";
+/* ── Search main: toolbar fixed, columns scroll independently ────────────────
+   Apply class="u-main--search" on <main> for search pages.
+   Structure expected inside:
+     div.border-bottom.flex-shrink-0   ← sticky toolbar, never scrolls
+     div.bt-content-area               ← fills remaining height, flex row
+       aside.bt-sub-sidebar            ← fixed, scrolls independently
+       div#results-body                ← fills width, scrolls independently
+────────────────────────────────────────────────────────────────────────────── */
+.u-layout--app > main.u-main--search {
+  overflow: hidden; /* main itself does not scroll */
+  display: flex;
+  flex-direction: column;
 }
 
-/* .bt-side-panel--inline — not yet implemented in any template. Add CSS here when needed. */
-/* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
-.u-layout--deposit {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas: "navbar  navbar" "stepper content";
-  min-height: 100vh;
+.u-main--search > .border-bottom {
+  flex-shrink: 0; /* toolbar never compresses */
 }
 
-.u-layout--deposit > .bt-navbar {
-  grid-area: navbar;
+.u-main--search > .bt-content-area {
+  flex: 1;
+  min-height: 0; /* allows flex children to shrink below content size */
+  overflow: hidden; /* clips columns to their allotted space */
 }
 
-/* ── Backoffice inner layout ───────────────────────────────────────────────────────── */
-/*
-  Use bt-toolbar for filter/search bars and bulk action bars.
-  bt-content-area wraps the facets aside + results column.
-  bt-sub-sidebar is the sticky <aside> containing filter fieldsets.
-  The results column uses flex-grow-1 + overflow-y: auto directly (Bootstrap utilities).
-*/
+/* ── bt-content-area ─────────────────────────────────────────────────────────
+   Flex row: facet sidebar + results column.
+   Used on search pages inside u-main--search.
+────────────────────────────────────────────────────────────────────────────── */
 .bt-content-area {
   display: flex;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden; /* prevents children from blowing out the flex container */
 }
 
-/* Results column inside bt-content-area — scrolls independently */
+/* Facet sidebar: fixed height, scrolls independently */
+.bt-content-area > .bt-sub-sidebar {
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Results column: fills available width, scrolls independently */
 .bt-content-area > div,
 .bt-content-area > [id$=-body],
 .bt-content-area > [id$=-results] {
-  overflow-y: auto;
-  min-width: 0;
   flex: 1;
+  min-width: 0;
+  overflow-y: auto;
 }
 
-/* ── bt-sub-sidebar ──────────────────────────────────────────────────────────── */
+/* ── bt-sub-sidebar ─────────────────────────────────────────────────────────── */
 .bt-sub-sidebar {
   width: 16rem;
   flex-shrink: 0;
@@ -2249,36 +2257,37 @@ code, kbd, pre, samp {
   border-right: var(--bt-border);
 }
 
-/* Slim (icon-only) state — toggled via JS by adding this modifier */
 .bt-sub-sidebar--slim {
   width: 3.5rem;
   padding: var(--bt-sp-4) var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-1);
   overflow: visible;
-  /* Hide group headings and text labels, no need to show for screen readers */
-  /* Hide badges — their info is in aria-label on the nav link when slim */
 }
 .bt-sub-sidebar--slim .bt-sub-sidebar__group-label,
 .bt-sub-sidebar--slim .bt-sub-sidebar__label,
 .bt-sub-sidebar--slim .badge {
   display: none;
 }
-.bt-sub-sidebar--slim {
-  /* Rotate the toggle icon to indicate direction */
-}
 .bt-sub-sidebar--slim .bt-sub-sidebar__toggle .if {
   rotate: 180deg;
 }
 
-/* ── Advanced search content column ─────────────────────────────────────────── */
-.bt-advanced-search-content {
-  max-width: 900px;
+/* Optional right panel */
+.u-layout--app.has-panel {
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "navbar  navbar  navbar" "sidebar main    panel";
 }
 
-/* ── Backoffice table ──────────────────────────────────────────────────────────────── */
-/* Use .table .table-hover .align-middle. Color tokens for Bootstrap's own vars. */
-.table {
-  --bs-table-active-bg: var(--bt-blue-100);
-  --bs-table-hover-bg: var(--bt-gray-50);
+/* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
+.u-layout--deposit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "navbar  navbar" "stepper content";
+  min-height: 100vh;
+}
+
+.u-layout--deposit > .bt-navbar {
+  grid-area: navbar;
 }
 
 .u-layout--deposit > .bt-stepper {
@@ -2304,13 +2313,25 @@ code, kbd, pre, samp {
 .u-layout--public {
   display: grid;
   grid-template-rows: auto 1fr;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  /* No height constraint or overflow:hidden — public pages scroll as documents */
 }
 
 .u-layout--public > main {
-  flex: 1;
   width: 100%;
+}
+
+/* ── Misc backoffice ────────────────────────────────────────────────────────── */
+.bt-advanced-search-content {
+  max-width: 900px;
+}
+
+.bt-content-narrow {
+  max-width: 680px;
+} /* settings pages, narrow forms */
+.table {
+  --bs-table-active-bg: var(--bt-blue-100);
+  --bs-table-hover-bg: var(--bt-gray-50);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -3684,4 +3705,17 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 
 .bt-icon-muted {
   color: var(--bt-icon-muted);
+}
+
+/* Background utilities */
+.bt-bg {
+  background-color: var(--bt-bg);
+}
+
+.bt-bg-alt {
+  background-color: var(--bt-bg-alt);
+}
+
+.bt-bg-dark {
+  background-color: var(--bt-bg-dark);
 }

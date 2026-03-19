@@ -245,9 +245,20 @@
     });
 
     if (def.type === 'people-search') {
-      filterEditor.addEventListener('people-search:select', e => {
-        editorPendingValue = e.detail;
-      });
+      // Use a named handler so it can be removed on close (prevents accumulation)
+      const onPersonSelect = e => { editorPendingValue = e.detail; };
+      filterEditor.addEventListener('people-search:select', onPersonSelect);
+      // Also listen on document as a fallback — the event bubbles from the
+      // [data-people-search] container inside filterEditor, but the container
+      // is replaced on each openEditor() call so bubbling may miss the listener
+      // if the event fires during the same tick as initWidget.
+      const onPersonSelectDoc = e => { editorPendingValue = e.detail; };
+      document.addEventListener('people-search:select', onPersonSelectDoc);
+      // Store cleanup on the editor element for closeEditor()
+      filterEditor._cleanupPeopleSelect = () => {
+        filterEditor.removeEventListener('people-search:select', onPersonSelect);
+        document.removeEventListener('people-search:select', onPersonSelectDoc);
+      };
     }
 
     filterEditor.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditor(); });
@@ -349,6 +360,10 @@
 
   // ── Close editor ──────────────────────────────────────────────────────────
   function closeEditor() {
+    if (filterEditor._cleanupPeopleSelect) {
+      filterEditor._cleanupPeopleSelect();
+      delete filterEditor._cleanupPeopleSelect;
+    }
     filterEditor.hidden    = true;
     filterEditor.innerHTML = '';
     editingFilter          = null;

@@ -1,0 +1,297 @@
+<!--
+  search-suggest-panel.html
+  ─────────────────────────
+  The INNER CONTENT of the autocomplete suggestion panel.
+  This is what the server renders and HTMX swaps into #suggest-panel.
+
+  @include: templates/partials/search-suggest-panel.html
+
+  ── What goes where ────────────────────────────────────────────────────────
+  The HOST PAGE owns the outer shell — #suggest-panel, suggest-wrapper,
+  the search input, and the show/hide JS. Those must exist in the DOM at
+  page load and cannot be injected by HTMX.
+
+  This partial is ONLY the swappable inner content:
+    - Tab bar (entity type tabs + counts)
+    - Recent searches section
+    - Grouped suggestion rows (People, Works, Orgs, Projects, Keywords)
+    - Keyboard hints footer
+
+  In production: GET /search/suggest?q={query}&surface={public|backoffice}
+  returns this partial with real data. The server renders only the tabs and
+  rows that have results; empty groups are omitted.
+
+  ── Entity routing ─────────────────────────────────────────────────────────
+  Person     → navigate to profile page  /researchers/{id}
+  Work       → navigate to detail page   /works/{id}
+  Org        → filtered search           /search?org={id}
+  Project    → filtered search           /search?project={id}
+  Keyword    → filtered search           /search?keyword={value}
+  Lib tag    → filtered search           /search?tag={value}  (backoffice only)
+
+  Org/Project/Keyword rows also dispatch biblio:filter-add so the chip bar
+  reflects the selection without a page reload:
+
+    document.dispatchEvent(new CustomEvent('biblio:filter-add', {
+      detail: { filterId: 'affiliation', displayValue: 'Sciences', rawValue: 'fw' }
+    }));
+
+  ── Prototype state ────────────────────────────────────────────────────────
+  This file shows the "populated" state for query "Test".
+  The loading state is handled by #suggest-indicator in the host page.
+  To prototype an empty state, replace the content below with:
+    <p class="p-4 text-muted small text-center">No results for "…"</p>
+-->
+
+<!-- Tab bar — counts come from the server in production -->
+<div class="border-bottom px-3 pt-2" role="tablist" aria-label="Filter suggestions by type">
+  <ul class="nav nav-tabs border-0 gap-1" id="suggest-tabs">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active px-3 py-2" type="button"
+        id="stab-all" role="tab" aria-selected="true" aria-controls="suggest-all">
+        All
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-3 py-2" type="button"
+        id="stab-people" role="tab" aria-selected="false" aria-controls="suggest-people">
+        People
+        <span class="badge bg-secondary ms-1" aria-label="12 people results">12</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-3 py-2" type="button"
+        id="stab-works" role="tab" aria-selected="false" aria-controls="suggest-works">
+        Works
+        <span class="badge bg-secondary ms-1" aria-label="1 work result">1</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-3 py-2" type="button"
+        id="stab-orgs" role="tab" aria-selected="false" aria-controls="suggest-orgs">
+        Organisations
+        <span class="badge bg-secondary ms-1" aria-label="10 organisation results">10</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-3 py-2" type="button"
+        id="stab-projects" role="tab" aria-selected="false" aria-controls="suggest-projects">
+        Projects
+        <span class="badge bg-secondary ms-1" aria-label="9 project results">9</span>
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-3 py-2" type="button"
+        id="stab-keywords" role="tab" aria-selected="false" aria-controls="suggest-keywords">
+        Keywords
+        <span class="badge bg-secondary ms-1" aria-label="8 keyword results">8</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<!-- All panel: recent + grouped rows -->
+<div id="suggest-all" role="tabpanel" aria-labelledby="stab-all"
+  class="overflow-y-auto" style="max-height: 480px">
+
+  <!-- Recent searches — populated from localStorage by suggest-panel.js -->
+  <div class="px-3 pt-3 pb-1" id="suggest-recent">
+    <p class="text-muted small fw-semibold text-uppercase mb-2">Recent</p>
+    <ul class="list-unstyled mb-0">
+      <li>
+        <a href="/search?q=Test"
+          class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+          <span>Test <span class="text-muted small">(542)</span></span>
+        </a>
+      </li>
+      <li>
+        <a href="/researchers/leo-testut"
+          class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-user if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+          <span>Leo Testut <span class="text-muted small">(53)</span></span>
+          <i class="if if-arrow-right if--xs ms-auto text-muted" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <hr class="my-1">
+
+  <!-- People -->
+  <div class="px-3 pt-2 pb-1">
+    <p class="text-muted small fw-semibold text-uppercase mb-1">
+      People <span class="fw-normal ms-1" aria-hidden="true">4</span>
+    </p>
+    <ul class="list-unstyled mb-0">
+
+      <li>
+        <a href="/researchers/pietro-testa"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div>Pietro <mark class="bg-warning px-0">Testa</mark> <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">UGent Memorialis · 1902–1910</div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="/researchers/marianne-testarosso"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div>Marianne <mark class="bg-warning px-0">Testa</mark>rosso <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">000161232992 · TW09 · 2020–current</div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="/researchers/lea-testut"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div>Lea <mark class="bg-warning px-0">Test</mark>ut <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">UGent Alumni · 2020–2024 · 0000-0002-6384-8725</div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="/researchers/maurice-tests"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div>Maurice <mark class="bg-warning px-0">Tests</mark> <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">External · 0000-0002-6384-8725</div>
+          </div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <hr class="my-1">
+
+  <!-- Works -->
+  <div class="px-3 pt-2 pb-1">
+    <p class="text-muted small fw-semibold text-uppercase mb-1">
+      Works <span class="fw-normal ms-1" aria-hidden="true">2</span>
+    </p>
+    <ul class="list-unstyled mb-0">
+
+      <li>
+        <a href="/works/01k9"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-article if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div class="d-flex gap-2 align-items-start mb-1">
+              <span class="badge-oa flex-shrink-0">Open access</span>
+              <span class="badge bg-primary flex-shrink-0">Dissertation</span>
+            </div>
+            <div>Validated <mark class="bg-warning px-0">tests</mark> for language research with university students…</div>
+            <div class="small text-muted">(2024) Scribes and language use · Vermeiren, Hanke, et al</div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="/works/02k9"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option">
+          <i class="if if-article if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div class="badge bg-primary mb-1">Journal article</div>
+            <div>Documentary papyri as 'multimodal' texts: aspects of variation in the Nepheros archive (IV CE)</div>
+            <div class="small text-muted">(2024) Scribes and language use · Vermeiren, Hanke, et al</div>
+            <div class="small text-muted mt-1">Found in description: …As a <mark class="bg-warning px-0">test</mark> case, I focus on one…</div>
+          </div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <hr class="my-1">
+
+  <!-- Organisations — clicking dispatches biblio:filter-add -->
+  <div class="px-3 pt-2 pb-1">
+    <p class="text-muted small fw-semibold text-uppercase mb-1">
+      Organisations <span class="fw-normal ms-1" aria-hidden="true">2</span>
+    </p>
+    <ul class="list-unstyled mb-0">
+
+      <li>
+        <a href="/search?org=faculty-testing"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option"
+          data-filter-id="affiliation"
+          data-filter-value="faculty-testing"
+          data-filter-label="Faculty of Testing">
+          <i class="if if-building if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div>Faculty of <mark class="bg-warning px-0">Test</mark>ing <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">TEST01 · 1902–1910</div>
+          </div>
+        </a>
+      </li>
+
+      <li>
+        <a href="/search?org=test-company"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option"
+          data-filter-id="affiliation"
+          data-filter-value="test-company"
+          data-filter-label="Test company">
+          <i class="if if-building if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div><mark class="bg-warning px-0">Test</mark> company <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">1902–1910</div>
+          </div>
+        </a>
+      </li>
+
+    </ul>
+  </div>
+
+  <hr class="my-1">
+
+  <!-- Projects — clicking dispatches biblio:filter-add -->
+  <div class="px-3 pt-2 pb-1">
+    <p class="text-muted small fw-semibold text-uppercase mb-1">
+      Projects <span class="fw-normal ms-1" aria-hidden="true">1</span>
+    </p>
+    <ul class="list-unstyled mb-0">
+      <li>
+        <a href="/search?project=13lkjr0922"
+          class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+          role="option"
+          data-filter-id="project"
+          data-filter-value="13lkjr0922"
+          data-filter-label="Project Test">
+          <i class="if if-briefcase if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <div>Project <mark class="bg-warning px-0">Test</mark> <span class="text-muted small">(53)</span></div>
+            <div class="small text-muted">13lkjr0922</div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</div><!-- /suggest-all -->
+
+<!-- Keyboard hints footer -->
+<div class="border-top px-3 py-2 d-flex gap-4 text-muted small bg-light">
+  <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+  <span><kbd>↵</kbd> Open</span>
+  <span><kbd>Esc</kbd> Close</span>
+</div>

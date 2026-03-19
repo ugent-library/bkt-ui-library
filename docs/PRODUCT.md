@@ -110,9 +110,9 @@ See `docs/PARTIALS.md` for the full spec.
 
 | Partial | Status |
 |---------|--------|
-| `backoffice-facet-sidebar.html` — filter sidebar with scope indicator + saved views | ⚠ Not yet extracted |
+| `backoffice-facet-sidebar.html` — filter sidebar with scope indicator + saved views | ✓ Extracted — used by backoffice-search.html and backoffice-search-filter-first.html |
 | `search-filter-bar.html` — chips + add filter + filter editor | ✓ Extracted — used by backoffice-search.html and public-search.html |
-| Autocomplete panel (`suggest-panel`) | ⚠ Currently inline in `public-search-suggest.html`; needs extracting as HTMX partial |
+| `search-suggest-panel.html` + `suggest-panel.js` | ✓ Extracted — panel content partial + JS in assets/js/suggest-panel.js |
 
 ---
 
@@ -127,7 +127,7 @@ See `docs/PARTIALS.md` for the full spec.
 | `backoffice-settings-scope.html` | ✓ exploration | ✗ |
 | `backoffice-deposit-flow.html` | ✓ | ✓ (partial) |
 | `public-search.html` | ✓ | ✓ (partial) |
-| `public-search-suggest.html` | ✓ exploration | ✗ |
+| `public-search.html` (merged with suggest variant) | ✓ | ✗ |
 | `public-index.html` | ✓ | ✗ |
 | `research-detail.html` | ✓ | ✓ (partial) |
 | `project.html` | ✓ | ✗ |
@@ -135,6 +135,7 @@ See `docs/PARTIALS.md` for the full spec.
 | Organisation page | ✗ not prototyped | ✗ |
 | Curator review queue | ✗ not prototyped | ✗ |
 | Candidate review | ✗ not prototyped | ✗ |
+| Duplicate review | ✗ not prototyped | ✗ |
 | Heritage object page | ✗ not prototyped | ✗ |
 
 ---
