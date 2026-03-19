@@ -31,6 +31,25 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 
 ---
 
+## Documentation
+
+- [Server API](docs/SERVER.md) — Development server documentation
+- [Domain](docs/DOMAIN.md) — Research repository domain knowledge
+- [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
+- [Integration](base/integration.html) — Using the design system in apps
+- [AI-assistent guidelines](ASSISTANT.md) — Working guidelines for AI-assisted development on this project
+
+## Browser Support
+
+The design system supports modern browsers that Bootstrap 5 supports:
+
+- Chrome 60+
+- Firefox 60+
+- Safari 12+
+- Edge 79+
+
+---
+
 ## Project structure
 
 | Path | What it contains |

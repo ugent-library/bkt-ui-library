@@ -44,7 +44,7 @@ Backoffice: IBM Plex Sans headings  · 15px body · 1.5 leading · compact paddi
 
 ## CSS class names
 
-The class list in `booktower-ui-library/CLAUDE.md` is the authoritative ground truth. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
+The class list in `booktower-ui-library/ASSISTANT.md` is the authoritative ground truth. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
 
 When in doubt, check `assets/booktower.css` or the SCSS source in `assets/scss/`.
 
@@ -113,7 +113,7 @@ The most critical rules for Go templ work:
 - Every `<input>` has an associated `<label for>` — `placeholder` is not a label
 - `aria-current="page"` on the active nav link; `aria-current="step"` in the deposit stepper
 
-The full accessibility reference is in `booktower-ui-library/CLAUDE.md`.
+The full accessibility reference is in `booktower-ui-library/ASSISTANT.md`.
 
 ---
 

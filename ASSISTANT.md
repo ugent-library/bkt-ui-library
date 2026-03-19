@@ -1,7 +1,7 @@
-# CLAUDE.md
+# ASSISTANT.md
 # Working guidelines for AI-assisted development on this project
 
-This file is written by Claude, for Claude.
+This file is written by AI, for AI.
 It documents what this project is, what I tend to get wrong, and what I must verify before producing code.
 Add it to the root of any project where I'm a regular collaborator.
 
@@ -16,7 +16,7 @@ When a new session begins on this project, execute these steps before writing an
    - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `bbl` backend, data flow, what is out of scope
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
 
-2. **Check the verified class list** — the complete class list in this file (CLAUDE.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
+2. **Check the verified class list** — the complete class list in this file (ASSISTANT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
 
 3. **Identify the surface** — before writing the first line of HTML, confirm whether this is a `public` or `backoffice` page. If uncertain, ask.
 
@@ -25,7 +25,7 @@ When a new session begins on this project, execute these steps before writing an
 ### Recommended session-start prompt (paste this at the start of a new conversation)
 
 ```
-Read /Users/mietclaes/Sites/booktower-ui-library/CLAUDE.md and follow
+Read /Users/mietclaes/Sites/booktower-ui-library/ASSISTANT.md and follow
 the session start instructions. Then read the three files in docs/.
 You're working on the booktower-ui-library.
 ```
