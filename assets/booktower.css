@@ -2063,6 +2063,11 @@ code, kbd, pre, samp {
   color: var(--bt-gray-400);
 }
 
+/* ── Suggestions panel ─────────────────────────────────────────────────── */
+.bt-suggest-panel {
+  z-index: 999;
+}
+
 /* ── Token suggestions panel ─────────────────────────────────────────────────── */
 .token-suggestions {
   position: absolute;
@@ -2118,6 +2123,14 @@ code, kbd, pre, samp {
 .token-suggestions__syntax-link {
   font-size: var(--bt-text-xs);
   color: var(--bt-gray-500);
+}
+
+[data-surface=public] .filter-group--backoffice-only {
+  display: none;
+}
+
+[data-surface=backoffice] .filter-group--public-only {
+  display: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

@@ -895,7 +895,15 @@
 .token-bar__clear:hover { color: var(--bt-gray-700); }
 .token-bar__indicator { position: relative; z-index: 1; flex-shrink: 0; color: var(--bt-gray-400); }
 
+/* ── Suggestions panel ─────────────────────────────────────────────────── */
+// TODO: turn this into an actual semantic component instead of using helper classes.
+
+.bt-suggest-panel {
+    z-index: 999;
+}
+
 /* ── Token suggestions panel ─────────────────────────────────────────────────── */
+
 .token-suggestions {
   position: absolute;
   z-index: 200;
@@ -933,3 +941,11 @@
 .token-suggestions__hint { color: var(--bt-gray-500); font-size: var(--bt-text-xs); }
 .token-suggestions__footer { border-top: var(--bt-border); padding: var(--bt-sp-2) var(--bt-sp-3); }
 .token-suggestions__syntax-link { font-size: var(--bt-text-xs); color: var(--bt-gray-500); }
+
+// ── Filter bar: surface-aware filter picker ───────────────────────────────
+// Controls which filter groups appear in the Add filter dropdown.
+// The partial (search-filter-bar.html) includes both sets; these rules hide
+// the surface-irrelevant ones based on the data-surface ancestor.
+// Applied to: .filter-group--backoffice-only and .filter-group--public-only
+[data-surface="public"]     .filter-group--backoffice-only { display: none; }
+[data-surface="backoffice"] .filter-group--public-only     { display: none; }

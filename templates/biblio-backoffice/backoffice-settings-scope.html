@@ -1,0 +1,357 @@
+<!-- @title: Settings — Work scope — Biblio -->
+<!-- @surface: backoffice -->
+<!--
+  EXPLORATION: Curator / proxy scope configuration
+  ─────────────────────────────────────────────────
+  Available to: Librarian role (curators) and proxies.
+  Not available to: Researcher role (their view is already naturally scoped
+  to their own work).
+
+  Scope = a named, persistent constraint on what you work with.
+  It narrows default views across search, dashboard, and candidate queue —
+  within the limits of your Grants.
+
+  A user can have MULTIPLE org scopes simultaneously.
+  Examples:
+  - "Faculty of Sciences + Faculty of Engineering" (cross-faculty curator)
+  - "Department of Physics + Department of Biology" (two departments)
+  - "Faculty of Sciences · Datasets + Dissertations" (org + type filter)
+
+  Scope is NOT:
+  - A permission system (that's Grants — scope cannot exceed grants)
+  - A session filter (those are cleared per query)
+  - A role (Librarian vs. Researcher is a separate concern)
+
+  Backend implications:
+  - Stored as user_settings.scope_orgs[] and user_settings.scope_types[]
+  - Applied server-side as default query params on: search, dashboard, candidate queue
+  - Scope can always be overridden by a filter in-session
+  - Org picker shows only orgs covered by the user's Grants
+  - Proxies see only orgs they've been granted proxy rights for
+
+  UI patterns:
+  - Sidebar scope indicator: "Sciences, Engineering +1 · Datasets"
+    → first two org names truncated, overflow shown as "+N", link to settings
+  - Empty scope = no default constraint; sees everything grants allow
+  - Removing all scope returns user to full-grant view
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/backoffice-sidebar.html -->
+
+  <main id="main-content" class="overflow-y-auto bt-bg">
+
+    <!-- Page header -->
+    <div class="bg-white border-bottom px-5 py-4">
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb small mb-2">
+          <li class="breadcrumb-item"><a href="#">Settings</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Work scope</li>
+        </ol>
+      </nav>
+      <h1 class="h5 fw-semibold mb-1">Work scope</h1>
+      <p class="small text-muted mb-0">
+        Narrow your default view to the research output you're responsible for.
+        Scope applies to search, your dashboard, and the candidate queue.
+        You can always override it with a filter.
+      </p>
+    </div>
+
+    <div class="px-5 py-5" style="max-width: 680px">
+      <form method="post" action="/settings/scope" id="scope-form">
+
+        <!-- ── Current scope summary ───────────────────────────────────────
+             Server renders this based on saved settings.
+             Three states:
+             (a) No scope set — muted, prompt to configure below
+             (b) Partial scope — orgs only, or types only
+             (c) Full scope — orgs + types
+        ──────────────────────────────────────────────────────────────────── -->
+
+        <!-- State (c): orgs + types active — shown in prototype -->
+        <div class="bg-white rounded-3 bt-border mb-4 p-4 d-flex align-items-start gap-3">
+          <i class="if if-check-circle text-success mt-1 flex-shrink-0" aria-hidden="true"></i>
+          <div class="min-w-0">
+            <p class="fw-semibold mb-2 small">Your current scope</p>
+            <div class="d-flex flex-wrap gap-1 align-items-center">
+              <!-- Org pills — all shown in summary, truncated in sidebar indicator -->
+              <span class="badge bg-light text-dark border fw-normal">Faculty of Sciences</span>
+              <span class="badge bg-light text-dark border fw-normal">Faculty of Engineering</span>
+              <span class="text-muted small px-1" aria-hidden="true">·</span>
+              <span class="badge bg-primary">Dataset</span>
+              <span class="badge bg-primary">Dissertation</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm ms-auto text-muted flex-shrink-0"
+            aria-label="Clear all scope settings"
+            hx-delete="/settings/scope"
+            hx-target="#scope-form"
+            hx-swap="outerHTML"
+            hx-confirm="Remove your scope? You'll see all records your grants allow.">
+            Clear scope
+          </button>
+        </div>
+
+        <!-- State (a): no scope set — uncomment to prototype empty state
+        <div class="bg-white rounded-3 bt-border mb-4 p-4 d-flex align-items-start gap-3">
+          <i class="if if-info-circle text-muted mt-1 flex-shrink-0" aria-hidden="true"></i>
+          <div>
+            <p class="fw-semibold mb-1 small">No scope set</p>
+            <p class="text-muted small mb-0">
+              You're currently seeing everything your access rights allow.
+              Configure scope below to narrow your default view.
+            </p>
+          </div>
+        </div>
+        -->
+
+        <!-- ── Organisations ──────────────────────────────────────────────
+             Multiple orgs allowed. Each added as a pill.
+             Org picker uses /orgs/suggest — same endpoint as deposit form.
+             Only orgs covered by this user's Grants are returned.
+        ──────────────────────────────────────────────────────────────────── -->
+        <section aria-labelledby="org-scope-heading" class="bg-white rounded-3 bt-border mb-4">
+
+          <div class="px-4 py-3 border-bottom">
+            <h2 id="org-scope-heading" class="h6 fw-semibold mb-0">Organisations</h2>
+            <p class="text-muted small mb-0 mt-1">
+              Add one or more faculties, departments, or research groups.
+            </p>
+          </div>
+
+          <!-- Active org pills — server-rendered, swapped by HTMX on add/remove -->
+          <div class="px-4 py-3 border-bottom" id="org-scope-list"
+            aria-label="Selected organisations" aria-live="polite">
+            <div class="d-flex flex-wrap gap-2">
+
+              <span class="d-inline-flex align-items-center gap-1 badge bg-light text-dark border fw-normal py-2 px-3">
+                Faculty of Sciences
+                <button type="button"
+                  class="btn-close btn-close-sm ms-1"
+                  aria-label="Remove Faculty of Sciences from scope"
+                  hx-delete="/settings/scope/org/sciences"
+                  hx-target="#org-scope-list"
+                  hx-swap="outerHTML">
+                </button>
+              </span>
+
+              <span class="d-inline-flex align-items-center gap-1 badge bg-light text-dark border fw-normal py-2 px-3">
+                Faculty of Engineering
+                <button type="button"
+                  class="btn-close btn-close-sm ms-1"
+                  aria-label="Remove Faculty of Engineering from scope"
+                  hx-delete="/settings/scope/org/engineering"
+                  hx-target="#org-scope-list"
+                  hx-swap="outerHTML">
+                </button>
+              </span>
+
+            </div>
+          </div>
+
+          <!-- Org search input -->
+          <div class="px-4 py-3">
+            <label for="org-search" class="form-label small">Add an organisation</label>
+            <div class="position-relative">
+              <input
+                type="search"
+                id="org-search"
+                class="form-control"
+                placeholder="Search by faculty, department, or research group…"
+                autocomplete="off"
+                aria-autocomplete="list"
+                aria-controls="org-suggest"
+                aria-expanded="false"
+                hx-get="/orgs/suggest"
+                hx-trigger="keyup changed delay:200ms"
+                hx-target="#org-suggest"
+                hx-swap="innerHTML"
+                hx-indicator="#org-suggest-indicator">
+              <div id="org-suggest"
+                class="position-absolute start-0 end-0 top-100 bg-white border rounded-3 shadow mt-1 overflow-hidden"
+                role="listbox"
+                aria-label="Organisation suggestions"
+                hidden>
+                <ul class="list-unstyled mb-0 py-1">
+                  <li>
+                    <a href="#"
+                      class="d-flex align-items-start gap-3 py-2 px-3 text-decoration-none text-body"
+                      role="option"
+                      hx-post="/settings/scope/org"
+                      hx-vals='{"org_id": "fw", "org_name": "Faculty of Sciences"}'
+                      hx-target="#org-scope-list"
+                      hx-swap="outerHTML">
+                      <i class="if if-building if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                      <div>
+                        <div class="fw-semibold">Faculty of Sciences</div>
+                        <div class="small text-muted">FW · 3,201 works</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      class="d-flex align-items-start gap-3 py-2 px-3 text-decoration-none text-body"
+                      role="option"
+                      hx-post="/settings/scope/org"
+                      hx-vals='{"org_id": "fw-physics", "org_name": "Department of Physics and Astronomy"}'
+                      hx-target="#org-scope-list"
+                      hx-swap="outerHTML">
+                      <i class="if if-building if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                      <div>
+                        <div class="fw-semibold">Department of Physics and Astronomy</div>
+                        <div class="small text-muted">FW · 842 works</div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#"
+                      class="d-flex align-items-start gap-3 py-2 px-3 text-decoration-none text-body"
+                      role="option"
+                      hx-post="/settings/scope/org"
+                      hx-vals='{"org_id": "ing", "org_name": "Faculty of Engineering"}'
+                      hx-target="#org-scope-list"
+                      hx-swap="outerHTML">
+                      <i class="if if-building if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                      <div>
+                        <div class="fw-semibold">Faculty of Engineering</div>
+                        <div class="small text-muted">ING · 2,840 works</div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <span id="org-suggest-indicator" class="htmx-indicator text-muted small mt-1 d-block"
+                aria-live="polite">Searching…</span>
+            </div>
+            <p class="form-text">
+              Only organisations covered by your access rights are shown.
+            </p>
+          </div>
+
+        </section>
+
+        <!-- ── Output types ───────────────────────────────────────────────
+             Optional. Empty = all types within org scope.
+             Useful for institution-wide type specialists (e.g. a data
+             librarian who handles all datasets regardless of faculty).
+        ──────────────────────────────────────────────────────────────────── -->
+        <section aria-labelledby="type-scope-heading" class="bg-white rounded-3 bt-border mb-4">
+
+          <div class="px-4 py-3 border-bottom">
+            <h2 id="type-scope-heading" class="h6 fw-semibold mb-0">Output types</h2>
+            <p class="text-muted small mb-0 mt-1">
+              Focus on specific kinds of research output.
+              Leave all unchecked to see every type within your org scope.
+            </p>
+          </div>
+
+          <div class="px-4 py-3">
+            <div class="row g-2">
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-journal" name="scope_type[]" value="journal_article">
+                  <label class="form-check-label" for="scope-journal">Journal article</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-dataset" name="scope_type[]" value="dataset" checked>
+                  <label class="form-check-label" for="scope-dataset">Dataset</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-dissertation" name="scope_type[]" value="dissertation" checked>
+                  <label class="form-check-label" for="scope-dissertation">Dissertation</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-conference" name="scope_type[]" value="conference_paper">
+                  <label class="form-check-label" for="scope-conference">Conference paper</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-book" name="scope_type[]" value="book">
+                  <label class="form-check-label" for="scope-book">Book</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-chapter" name="scope_type[]" value="book_chapter">
+                  <label class="form-check-label" for="scope-chapter">Book chapter</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-software" name="scope_type[]" value="software">
+                  <label class="form-check-label" for="scope-software">Software</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="scope-misc" name="scope_type[]" value="miscellaneous">
+                  <label class="form-check-label" for="scope-misc">Miscellaneous</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ── Where scope applies ────────────────────────────────────────
+             Transparency panel. Helps users understand why they see
+             fewer results than expected.
+        ──────────────────────────────────────────────────────────────────── -->
+        <section aria-labelledby="scope-affects-heading" class="bg-white rounded-3 bt-border mb-4">
+          <div class="px-4 py-3 border-bottom">
+            <h2 id="scope-affects-heading" class="h6 fw-semibold mb-0">Where scope applies</h2>
+          </div>
+          <ul class="list-unstyled mb-0">
+            <li class="px-4 py-3 border-bottom d-flex align-items-start gap-3">
+              <i class="if if-check text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div>
+                <div class="small fw-semibold">Search</div>
+                <div class="small text-muted">Opens with scope applied by default. Override with any filter.</div>
+              </div>
+            </li>
+            <li class="px-4 py-3 border-bottom d-flex align-items-start gap-3">
+              <i class="if if-check text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div>
+                <div class="small fw-semibold">Dashboard inbox</div>
+                <div class="small text-muted">Suggestions, returned items, and review queue filtered to your scope.</div>
+              </div>
+            </li>
+            <li class="px-4 py-3 border-bottom d-flex align-items-start gap-3">
+              <i class="if if-check text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div>
+                <div class="small fw-semibold">Candidate queue</div>
+                <div class="small text-muted">Harvested candidates matched to your scoped organisations and types.</div>
+              </div>
+            </li>
+            <li class="px-4 py-3 d-flex align-items-start gap-3">
+              <i class="if if-close text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div>
+                <div class="small fw-semibold">Bulk exports and API</div>
+                <div class="small text-muted">Scope does not apply — use query parameters explicitly.</div>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <div class="d-flex gap-3 align-items-center">
+          <button type="submit" class="btn btn-primary">Save scope</button>
+          <a href="/settings" class="btn btn-ghost btn-sm text-muted">Cancel</a>
+          <span id="scope-save-status" role="status" aria-live="polite"
+            class="text-muted small ms-auto visually-hidden">Saved</span>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+</div>

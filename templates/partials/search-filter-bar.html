@@ -1,0 +1,131 @@
+<!--
+  search-filter-bar.html
+  ──────────────────────
+  Reusable filter bar: chips + Add filter dropdown + filter editor panel.
+  Used on all search pages (public + backoffice) and entity result pages.
+
+  @include: templates/partials/search-filter-bar.html
+
+  ── How it works in the prototype ──────────────────────────────────────────
+  filter-editor.js manages all chip state in JS — no network calls needed.
+  Applying a filter adds a chip. Clicking a chip re-opens the editor.
+  Clear all removes all chips. This is sufficient for user testing.
+
+  The HTMX attributes on the search input (hx-get, hx-target etc.) are stubs
+  that document intended production behaviour — they do nothing without a
+  real endpoint.
+
+  ── Surface-aware filter list ──────────────────────────────────────────────
+  Both surface filter groups live in the DOM. CSS hides the irrelevant ones
+  based on data-surface on the layout ancestor:
+
+    [data-surface="public"]     .filter-group--backoffice-only { display: none }
+    [data-surface="backoffice"] .filter-group--public-only     { display: none }
+
+  These rules are in assets/scss/patterns/_booktower-components.scss.
+
+  ── biblio:filter-add ──────────────────────────────────────────────────────
+  Autocomplete suggest rows (Org, Project, Keyword) can add a chip directly
+  by dispatching this event — no editor panel opens:
+
+    document.dispatchEvent(new CustomEvent('biblio:filter-add', {
+      detail: { filterId: 'affiliation', displayValue: 'Sciences', rawValue: 'fw' }
+    }));
+-->
+
+<!-- ── Chips row ───────────────────────────────────────────────────────────── -->
+<div class="d-flex gap-2 flex-wrap align-items-center">
+
+  <!-- Active filter chips — managed by filter-editor.js -->
+  <div role="group"
+    aria-label="Active filters"
+    class="d-flex gap-2 flex-wrap align-items-center"
+    id="active-chips">
+  </div>
+
+  <!-- Add filter dropdown ─────────────────────────────────────────────────── -->
+  <div class="dropdown" id="add-filter-dropdown">
+    <button class="btn btn-ghost btn-sm" type="button"
+      id="add-filter-btn"
+      data-bs-toggle="dropdown"
+      data-bs-auto-close="outside"
+      aria-expanded="false">
+      <i class="if if-add if--xs" aria-hidden="true"></i>
+      Add filter
+    </button>
+
+    <div class="dropdown-menu p-0" aria-labelledby="add-filter-btn" style="min-width: 260px">
+
+      <div class="p-2 border-bottom">
+        <label for="filter-search" class="visually-hidden">Search filters</label>
+        <input type="search" id="filter-search" class="form-control form-control-sm"
+          placeholder="Find a filter…" autocomplete="off">
+      </div>
+
+      <div id="filter-picker-list" class="overflow-y-auto" style="max-height: 320px">
+
+        <!-- Shared: both surfaces -->
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type</p>
+        <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="subtype">Subtype</button>
+        <button class="dropdown-item py-2" type="button" data-filter="identifier">Identifier (DOI, handle…)</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
+        <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
+        <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="research_group">Research group</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
+        <button class="dropdown-item py-2" type="button" data-filter="year">Publication year</button>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="created_since">Created since</button>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="updated_since">Updated since</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="project">Project / funding</button>
+        <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
+        <button class="dropdown-item py-2" type="button" data-filter="open_access">Open access</button>
+        <button class="dropdown-item py-2" type="button" data-filter="has_file">Has file</button>
+
+        <!-- Backoffice only -->
+        <hr class="dropdown-divider my-1 filter-group--backoffice-only">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1 filter-group--backoffice-only">Status &amp; workflow</p>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="status">Biblio status</button>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="pub_status">Publication status</button>
+        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="tags">Librarian tags</button>
+
+        <hr class="dropdown-divider my-1">
+        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Classification</p>
+        <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
+        <button class="dropdown-item py-2 filter-group--public-only" type="button" data-filter="language">Language</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear all — hidden until chips are present -->
+  <button type="button" class="btn btn-ghost btn-sm text-muted" id="clear-all-btn" hidden>
+    <i class="if if-close if--xs" aria-hidden="true"></i>
+    Clear all
+  </button>
+
+  <!-- HTMX indicator — must exist in DOM at page load for aria-live -->
+  <span id="search-indicator" class="htmx-indicator text-muted small" aria-live="polite">
+    Searching…
+  </span>
+
+</div><!-- /chips row -->
+
+<!-- Filter editor panel — must exist in DOM at page load, never HTMX-injected -->
+<div id="filter-editor"
+  class="filter-editor mt-2"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="filter-editor-title"
+  hidden>
+</div>

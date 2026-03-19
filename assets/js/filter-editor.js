@@ -366,4 +366,18 @@
     }
   });
 
+  // ── biblio:filter-add — autocomplete → chip, no editor ───────────────────
+  // Fired by: suggest panel rows (Org, Project, Keyword, Librarian tag).
+  // In production this would also trigger a search update.
+  // In the prototype it just adds the chip — no network call.
+  document.addEventListener('biblio:filter-add', e => {
+    const { filterId, displayValue, rawValue } = e.detail || {};
+    if (!filterId || !FILTERS[filterId]) return;
+    addFilter(filterId, {
+      label: FILTERS[filterId].label,
+      displayValue,
+      rawValue,
+    });
+  });
+
 }());
