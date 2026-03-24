@@ -15,12 +15,15 @@ When a new session begins on this project, execute these steps before writing an
    - `docs/DOMAIN.md` — entity vocabulary, status values, badge mappings, profile system, review workflow
    - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `bbl` backend, data flow, what is out of scope
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
+   - `docs/CONSUMING-BOOKTOWER.md` — how to use this UI library correctly inside another project
 
 2. **Check the verified class list** — the complete class list in this file (ASSISTANT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
 
 3. **Identify the surface** — before writing the first line of HTML, confirm whether this is a `public` or `backoffice` page. If uncertain, ask.
 
-4. **Run the pre-flight checklist** — before finalising any template, run the accessibility checklist at the bottom of this file.
+4. **Answer the plain-language layout questions** — before choosing layout classes, read the “Questions to answer before writing layout HTML” section in `docs/CONSUMING-BOOKTOWER.md`.
+
+5. **Run the pre-flight checklist** — before finalising any template, run the accessibility checklist at the bottom of this file.
 
 ### Recommended session-start prompt (paste this at the start of a new conversation)
 

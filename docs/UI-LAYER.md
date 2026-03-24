@@ -3,6 +3,7 @@
 This document describes the design system and HTML prototype environment that produces the CSS and component patterns consumed by the `bbl` Go application.
 
 For entity definitions and shared vocabulary, see `DOMAIN.md` in `booktower-ui-library`.
+For cross-project consumption rules, read `docs/CONSUMING-BOOKTOWER.md` before copying layouts or classes into another repo.
 
 ---
 
@@ -45,6 +46,8 @@ Backoffice: IBM Plex Sans headings  · 15px body · 1.5 leading · compact paddi
 ## CSS class names
 
 The class list in `booktower-ui-library/ASSISTANT.md` is the authoritative ground truth. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
+
+If this library is being consumed from another project, also follow `docs/CONSUMING-BOOKTOWER.md`. That file defines the shell contract, Bootstrap vs Booktower responsibilities, and the scroll rules that are easiest to get wrong.
 
 When in doubt, check `assets/booktower.css` or the SCSS source in `assets/scss/`.
 
