@@ -8,64 +8,140 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The two shells</h2>
-    <p class="mb-4">All shells use <code>--s-topbar-height</code> (52px, defined in <code>_surfaces.scss</code>) for sticky sidebar offsets. Public <code>&lt;main&gt;</code> uses Bootstrap <code>.container</code> inside it — the shell itself has no <code>max-width</code>. The app shell can also host an optional right-side <code>u-main__panel</code> for contextual actions.</p>
+    <p class="mb-4">All shells use <code>--s-topbar-height</code> (52px, defined in <code>_surfaces.scss</code>) for sticky sidebar offsets. Public pages use normal document flow with Bootstrap containers inside <code>main</code>. App pages use a fixed shell with independent scrolling regions and can optionally host a shell-level <code>u-main__panel</code>.</p>
 
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--app — backoffice list/detail pages</h3></div>
-      <div class="ds-demo-body bg-light p-3">
-        <div class="border rounded bg-white p-3">
-          <p class="small text-uppercase text-muted fw-semibold mb-2">Structure</p>
-          <p class="mb-2"><code>bt-navbar</code> and <code>bt-sidebar</code> are shell regions. Inside <code>main</code>, use <code>u-main__header</code>, <code>u-main__body</code>, and optional <code>u-main__footer</code>.</p>
-          <p class="mb-2">When the body splits, <code>u-main__sidebar</code> scrolls on the left, while <code>u-main__content-body</code> scrolls inside the right pane between an optional pane header and pane footer.</p>
-          <p class="mb-0">If you need contextual actions next to the page, add an optional shell-level <code>u-main__panel</code> as a sibling of <code>main</code>.</p>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">u-layout--public</p>
+          <p class="mb-2">Use this for public search, detail and landing pages.</p>
+          <p class="mb-2">The shell is intentionally light: topbar plus normal flowing <code>main</code>.</p>
+          <p class="mb-0">Width and spacing come from Bootstrap <code>.container</code>, <code>.row</code>, and utility classes inside the layout regions.</p>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">u-layout--app</p>
+          <p class="mb-2">Use this for backoffice list, detail and workflow pages.</p>
+          <p class="mb-2">The shell owns sticky regions and scroll behavior.</p>
+          <p class="mb-0">Keep <code>u-main__body</code> plain by default. Add <code>u-main__body--split</code> only when the body contains a left <code>u-main__sidebar</code>.</p>
         </div>
       </div>
     </div>
-    <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
-  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
-  &lt;nav class="bt-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
-  &lt;main id="main-content"&gt;
-    &lt;div class="u-main__header"&gt;…&lt;/div&gt;
-    &lt;div class="u-main__body"&gt;
-      &lt;aside class="u-main__sidebar"&gt;…&lt;/aside&gt;
-      &lt;section class="u-main__content"&gt;
-        &lt;div class="u-main__content-header"&gt;…&lt;/div&gt;
-        &lt;div class="u-main__content-body"&gt;…&lt;/div&gt;
-        &lt;div class="u-main__content-footer"&gt;…&lt;/div&gt;
-      &lt;/section&gt;
-    &lt;/div&gt;
-    &lt;div class="u-main__footer"&gt;…&lt;/div&gt;
-  &lt;/main&gt;
-  &lt;aside class="u-main__panel" aria-label="Actions"&gt;…&lt;/aside&gt;
-&lt;/div&gt;
-</pre>
-    </div>
+  </section>
 
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--public — public search and record pages</h3></div>
-      <div class="ds-demo-body bg-light p-3">
-        <div class="border rounded bg-white p-3">
-          <p class="small text-uppercase text-muted fw-semibold mb-2">Structure</p>
-          <p class="mb-2">Public pages use the same <code>u-main__header</code>, <code>u-main__body</code>, and optional <code>u-main__footer</code> blocks inside <code>main</code>.</p>
-          <p class="mb-0">The difference is behavioral: public layouts use normal document scrolling, and content width comes from Bootstrap <code>.container</code> elements inside those blocks.</p>
-        </div>
-      </div>
-    </div>
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Public Layout</h2>
+    <p class="mb-3">Public pages reuse the same region names, but the page scrolls normally and content width comes from Bootstrap containers inside those regions.</p>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--public" data-surface="public"&gt;
-  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
+  &lt;header class="bt-navbar" role="banner"&gt;...&lt;/header&gt;
+
   &lt;main id="main-content"&gt;
     &lt;div class="u-main__header"&gt;
-      &lt;div class="container"&gt;…&lt;/div&gt;
+      &lt;div class="container"&gt;...&lt;/div&gt;
     &lt;/div&gt;
+
     &lt;div class="u-main__body"&gt;
-      &lt;div class="container"&gt;…&lt;/div&gt;
+      &lt;div class="container"&gt;...&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="u-main__footer"&gt;
+      &lt;div class="container"&gt;...&lt;/div&gt;
     &lt;/div&gt;
   &lt;/main&gt;
 &lt;/div&gt;</pre>
+    </div>
+    <div class="border rounded overflow-hidden bg-white mt-3">
+      <div class="border-bottom px-3 py-2 small text-uppercase text-muted fw-semibold">Simple Example</div>
+      <div class="border-bottom px-3 py-2 bg-light"><code>.bt-navbar</code></div>
+      <div class="px-4 py-4 bg-white">
+        <div class="container px-0">
+          <div class="border rounded overflow-hidden">
+            <div class="border-bottom px-3 py-3 bg-white">
+              <p class="small text-uppercase text-muted fw-semibold mb-1"><code>.u-main__header</code></p>
+              <h3 class="h5 mb-0">Public search</h3>
+            </div>
+            <div class="px-3 py-4 bg-light">
+              <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.u-main__body</code></p>
+              <div class="row g-3">
+                <div class="col-lg-8">
+                  <div class="border rounded bg-white p-3 h-100">
+                    <h4 class="h6 mb-1">Search results</h4>
+                    <p class="small text-muted mb-0">Use Bootstrap containers, rows and cards inside the body.</p>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="border rounded bg-white p-3 h-100">
+                    <h4 class="h6 mb-1">Supporting content</h4>
+                    <p class="small text-muted mb-0">Optional side content can live in the normal document flow.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="border-top px-3 py-3 bg-white">
+              <p class="small text-uppercase text-muted fw-semibold mb-1"><code>.u-main__footer</code></p>
+              <p class="small text-muted mb-0">Optional footer content, still in normal page flow.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="border rounded bg-white p-3">
+      <p class="small text-uppercase text-muted fw-semibold mb-2">Public Rules</p>
+      <p class="mb-2">Do not use <code>u-main__body--split</code> unless the page truly has an internal pane layout.</p>
+      <p class="mb-0">Prefer Bootstrap layout primitives inside <code>u-main__header</code>, <code>u-main__body</code>, and <code>u-main__footer</code>.</p>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">App Layout</h2>
+    <p class="mb-3">This is the canonical app-shell markup for split backoffice pages. Remove optional blocks rather than inventing parallel variants.</p>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
+  &lt;header class="bt-navbar" role="banner"&gt;...&lt;/header&gt;
+  &lt;nav class="bt-sidebar" aria-label="Section navigation"&gt;...&lt;/nav&gt;
+
+  &lt;main id="main-content"&gt;
+    &lt;div class="u-main__header"&gt;...&lt;/div&gt;
+
+    &lt;div class="u-main__body u-main__body--split"&gt;
+      &lt;aside class="u-main__sidebar u-main__sidebar--border-right"&gt;...&lt;/aside&gt;
+
+      &lt;section class="u-main__content"&gt;
+        &lt;div class="u-main__content-header"&gt;...&lt;/div&gt;
+        &lt;div class="u-main__content-body"&gt;...&lt;/div&gt;
+        &lt;div class="u-main__content-footer"&gt;...&lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+
+    &lt;div class="u-main__footer"&gt;...&lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;aside class="u-main__panel" aria-label="Contextual actions"&gt;...&lt;/aside&gt;
+&lt;/div&gt;</pre>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Page Regions</p>
+          <p class="mb-0"><code>u-main__header</code>, <code>u-main__body</code>, and <code>u-main__footer</code> are the page-level regions inside <code>main</code>.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Split Body</p>
+          <p class="mb-0"><code>u-main__sidebar</code> and <code>u-main__content</code> belong inside <code>u-main__body u-main__body--split</code>.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Right Pane</p>
+          <p class="mb-0"><code>u-main__content-body</code> is the scrolling pane. <code>u-main__content-header</code> and <code>u-main__content-footer</code> stay fixed around it.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -84,8 +160,8 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Internal layout — backoffice list pages</h2>
-    <p class="mb-4">Inside <code>u-layout--app &gt; main</code>, backoffice list pages follow a consistent vertical stacking order. Each piece is a separate component class.</p>
+    <h2 class="h4 mb-3">App Anatomy</h2>
+    <p class="mb-4">Inside <code>u-layout--app &gt; main</code>, backoffice pages follow a consistent vertical stacking order. Use this to reason about what scrolls and what stays fixed.</p>
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Stacking order</h3></div>
       <div class="ds-demo-body">
@@ -107,7 +183,7 @@
       <div class="ds-code-bar"><span class="ds-code-lang">html — inside u-layout--app main</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;main id="main-content"&gt;
   &lt;div class="u-main__header"&gt;...&lt;/div&gt;
-  &lt;div class="u-main__body"&gt;
+  &lt;div class="u-main__body u-main__body--split"&gt;
     &lt;aside class="u-main__sidebar"&gt;...&lt;/aside&gt;
     &lt;section class="u-main__content"&gt;
       &lt;div class="u-main__content-header"&gt;...&lt;/div&gt;
@@ -117,6 +193,131 @@
   &lt;/div&gt;
   &lt;div class="u-main__footer"&gt;...&lt;/div&gt;
 &lt;/main&gt;</pre>
+    </div>
+    <div class="border rounded overflow-hidden bg-white mt-3">
+      <div class="border-bottom px-3 py-2 small text-uppercase text-muted fw-semibold">Live Example</div>
+      <div class="border-bottom px-3 py-2 bg-light"><code>.bt-navbar</code></div>
+      <div class="d-grid" style="grid-template-columns: 13rem 1fr 16rem; min-height: 26rem;">
+        <aside class="border-end px-3 py-3 bg-white">
+          <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.bt-sidebar</code></p>
+          <ul class="nav flex-column gap-2 small">
+            <li><a class="nav-link px-0 active" href="#">Research output</a></li>
+            <li><a class="nav-link px-0" href="#">People</a></li>
+            <li><a class="nav-link px-0" href="#">Projects</a></li>
+            <li><a class="nav-link px-0" href="#">Settings</a></li>
+          </ul>
+        </aside>
+
+        <div class="d-grid" style="grid-template-rows: auto 1fr auto; min-width: 0;">
+          <div class="border-bottom px-3 py-3 bg-white">
+            <div class="d-flex justify-content-between align-items-center gap-3">
+              <div>
+                <p class="small text-uppercase text-muted fw-semibold mb-1"><code>.u-main__header</code></p>
+                <h3 class="h5 mb-0">Research output</h3>
+              </div>
+              <button class="btn btn-primary btn-sm">Primary action</button>
+            </div>
+          </div>
+
+          <div class="d-grid" style="grid-template-columns: 15rem 1fr; min-height: 0;">
+            <aside class="border-end px-3 py-3 bg-white">
+              <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.u-main__sidebar</code></p>
+              <p class="small text-muted mb-3">Saved views, scope and filters live here.</p>
+              <div class="d-grid gap-2">
+                <span class="badge text-bg-light text-start">Scope: Sciences</span>
+                <span class="badge text-bg-light text-start">Status: Submitted</span>
+                <span class="badge text-bg-light text-start">Year: 2025</span>
+              </div>
+            </aside>
+
+            <section class="d-grid" style="grid-template-rows: auto 1fr auto; min-width: 0;">
+              <div class="border-bottom px-3 py-3 bg-white">
+                <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.u-main__content-header</code></p>
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                  <input class="form-control form-control-sm" style="max-width: 18rem;" type="search" placeholder="Search within results">
+                  <span class="badge text-bg-light">Submitted</span>
+                  <span class="badge text-bg-light">Open access</span>
+                </div>
+              </div>
+
+              <div class="px-3 py-3 bg-light">
+                <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.u-main__content-body</code></p>
+                <div class="d-grid gap-3">
+                  <article class="border rounded bg-white p-3">
+                    <h4 class="h6 mb-1">Entanglement entropy in quantum spin chains</h4>
+                    <p class="small text-muted mb-0">The scrollable right-pane content lives here.</p>
+                  </article>
+                  <article class="border rounded bg-white p-3">
+                    <h4 class="h6 mb-1">Machine learning approaches to protein folding</h4>
+                    <p class="small text-muted mb-0">Headers and footers stay outside this scrolling area.</p>
+                  </article>
+                </div>
+              </div>
+
+              <div class="border-top px-3 py-3 bg-white">
+                <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.u-main__content-footer</code></p>
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <span class="small text-muted">Showing 1-20 of 248 results</span>
+                  <nav aria-label="Pagination">
+                    <ul class="pagination pagination-sm mb-0">
+                      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                      <li class="page-item active"><span class="page-link">1</span></li>
+                      <li class="page-item"><span class="page-link">2</span></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <div class="border-top px-3 py-3 bg-white">
+            <p class="small text-uppercase text-muted fw-semibold mb-1"><code>.u-main__footer</code></p>
+            <p class="small text-muted mb-0">Use for page-level pagination, batch actions or submit controls.</p>
+          </div>
+        </div>
+
+        <aside class="border-start px-3 py-3 bg-white">
+          <p class="small text-uppercase text-muted fw-semibold mb-2"><code>.u-main__panel</code></p>
+          <p class="small text-muted mb-3">Optional shell-level side task.</p>
+          <div class="border rounded bg-light p-3 small">
+            Edit metadata
+            <hr class="my-2">
+            <div class="d-grid gap-2">
+              <button class="btn btn-sm btn-primary">Save</button>
+              <button class="btn btn-sm btn-secondary">Cancel</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Variants</h2>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Single-Column Body</p>
+          <p class="mb-2">Use a plain <code>u-main__body</code> when the page does not need an internal left pane.</p>
+          <pre class="mb-0 p-3 bg-light"><code>&lt;div class="u-main__body"&gt;
+  &lt;section class="u-main__content"&gt;
+    &lt;div class="u-main__content-body"&gt;...&lt;/div&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded bg-white p-3 h-100">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Split Body</p>
+          <p class="mb-2">Use <code>u-main__body--split</code> only when a left body sidebar is present.</p>
+          <pre class="mb-0 p-3 bg-light"><code>&lt;div class="u-main__body u-main__body--split"&gt;
+  &lt;aside class="u-main__sidebar"&gt;...&lt;/aside&gt;
+  &lt;section class="u-main__content"&gt;
+    &lt;div class="u-main__content-body"&gt;...&lt;/div&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </div>
     </div>
   </section>
 

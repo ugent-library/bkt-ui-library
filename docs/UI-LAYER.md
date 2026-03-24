@@ -60,7 +60,7 @@ Backoffice pages use this main-area contract inside `u-layout--app`:
 ```html
 <main id="main-content">
   <div class="u-main__header">...</div>
-  <div class="u-main__body">
+  <div class="u-main__body u-main__body--split">
     <aside class="u-main__sidebar">...</aside>
     <section class="u-main__content">
       <div class="u-main__content-header">...</div>
@@ -73,7 +73,7 @@ Backoffice pages use this main-area contract inside `u-layout--app`:
 <aside class="u-main__panel">...</aside>
 ```
 
-Use `u-main__header`, `u-main__sidebar`, `u-main__content-header`, `u-main__content-footer`, `u-main__footer`, and `u-main__panel` only when needed. `u-main__body` is the required middle row, and `u-main__content-body` is the right-pane scroll container when the body is split.
+Use `u-main__header`, `u-main__sidebar`, `u-main__content-header`, `u-main__content-footer`, `u-main__footer`, and `u-main__panel` only when needed. `u-main__body` is the required middle row. Add `u-main__body--split` only when that row contains a left `u-main__sidebar`; `u-main__content-body` is then the right-pane scroll container.
 
 ---
 

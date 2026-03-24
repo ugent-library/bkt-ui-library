@@ -2097,54 +2097,34 @@ code, kbd, pre, samp {
    ── 2. u-layout--app ─────────────────────────────────────────────────────────
    Backoffice shell. Sticky navbar + sticky left sidebar + flexible main area.
 
-   THE MAIN AREA IS GRID-BASED — automatically adapts to content structure:
+   THE MAIN AREA USES SIMPLE REGION CLASSES:
 
-   Add/remove these blocks as needed — NO CSS classes to toggle:
+   Add/remove these blocks as needed:
      u-main__header      (optional)  ← sticky at top (never scrolls)
      u-main__body                    ← middle layout row, fills available height
      u-main__footer      (optional)  ← sticky at bottom (never scrolls)
 
    If the body needs a left sidebar (filters, facets):
-     .u-main__body                 ← grid row, auto-splits into columns
+     .u-main__body.u-main__body--split
        └─ .u-main__sidebar         ← left column (scrolls)
        └─ .u-main__content         ← right column shell
             ├─ .u-main__content-header  ← optional fixed pane header
-            └─ .u-main__content-body    ← scrollable pane body
-
-   NO FLEX UTILITIES IN HTML. NO CLASS SWITCHING.
-   Just add/remove the blocks you need — CSS handles spacing automatically.
+            ├─ .u-main__content-body    ← scrollable pane body
+            └─ .u-main__content-footer  ← optional fixed pane footer
 
    ═══════════════════════════════════════════════════════════════════════════════ */
 /* ── 1. u-layout--public ─────────────────────────────────────────────────────── */
 .u-layout--public {
-  display: grid;
-  grid-template-rows: auto 1fr;
   min-height: 100vh;
 }
 
-.u-layout--public > main {
-  width: 100%;
-}
-
+.u-layout--public > main,
 .u-layout--public > main > .u-main__header,
 .u-layout--public > main > .u-main__body,
-.u-layout--public > main > .u-main__footer {
-  width: 100%;
-}
-
-.u-layout--public > main > .u-main__header {
-  overflow: visible;
-}
-
-.u-layout--public > main > .u-main__body {
-  display: block;
-  min-height: auto;
-  overflow: visible;
-}
-
+.u-layout--public > main > .u-main__footer,
 .u-layout--public .u-main__content,
 .u-layout--public .u-main__content-body {
-  display: block;
+  width: 100%;
   min-width: 0;
   min-height: auto;
   overflow: visible;
@@ -2152,6 +2132,12 @@ code, kbd, pre, samp {
 
 /* ── 2. u-layout--app ────────────────────────────────────────────────────────── */
 .u-layout--app {
+  --u-main-pad-x: var(--bt-sp-6);
+  --u-main-pad-y: var(--bt-sp-4);
+  --u-nav-sidebar-width: 14rem;
+  --u-nav-sidebar-width-slim: 3.5rem;
+  --u-main-panel-width: 21rem;
+  --u-main-split-sidebar-width: 15.625rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr;
@@ -2183,7 +2169,7 @@ code, kbd, pre, samp {
 .u-layout--app > .u-main__panel {
   grid-area: panel;
   min-width: 0;
-  width: 21rem;
+  width: var(--u-main-panel-width);
   max-width: min(24rem, 100vw);
   overflow-y: auto;
   border-left: var(--bt-border);
@@ -2197,7 +2183,7 @@ code, kbd, pre, samp {
   overflow-y: visible;
   overflow-x: hidden;
   border-bottom: var(--bt-border);
-  padding: var(--bt-sp-4) var(--bt-sp-6);
+  padding: var(--u-main-pad-y) var(--u-main-pad-x);
   background: var(--bt-bg-white);
 }
 
@@ -2205,9 +2191,14 @@ code, kbd, pre, samp {
 .u-main__body {
   grid-row: 2;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
   min-height: 0;
+}
+
+.u-main__body--split {
+  display: grid;
+  grid-template-columns: minmax(0, var(--u-main-split-sidebar-width)) minmax(0, 1fr);
 }
 
 /* Optional sticky footer — pagination, action bar, bulk actions, etc. */
@@ -2220,12 +2211,11 @@ code, kbd, pre, samp {
 }
 
 /* Left sidebar inside body (filters, facets, etc.) */
-.u-main__body > .u-main__sidebar {
+.u-main__body--split > .u-main__sidebar {
   grid-column: 1;
   overflow-y: auto;
   min-height: 0;
-  padding: var(--bt-sp-4) var(--bt-sp-6);
-  max-width: 250px;
+  padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
 
 .u-main__sidebar--border-right {
@@ -2238,19 +2228,27 @@ code, kbd, pre, samp {
 
 /* Right area inside body (results, etc.) */
 .u-main__content {
-  grid-column: 2;
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-width: 0;
   min-height: 0;
+  height: 100%;
   overflow: hidden;
+}
+
+.u-main__body > .u-main__content {
+  min-height: 100%;
+}
+
+.u-main__body--split > .u-main__content {
+  grid-column: 2;
 }
 
 .u-main__content-header {
   min-width: 0;
   background: var(--bt-bg-white);
   border-bottom: var(--bt-border);
-  padding: var(--bt-sp-4) var(--bt-sp-6);
+  padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
 
 .u-main__content-body {
@@ -2258,19 +2256,19 @@ code, kbd, pre, samp {
   min-height: 0;
   height: 100%;
   overflow-y: auto;
-  padding: var(--bt-sp-4) var(--bt-sp-6);
+  padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
 
 .u-main__content-footer {
   min-width: 0;
   background: var(--bt-bg-white);
   border-top: var(--bt-border);
-  padding: var(--bt-sp-4) var(--bt-sp-6);
+  padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
 
 /* ── bt-sidebar ───────────────────────────────────────────────────────────────── */
 .bt-sidebar {
-  width: 14rem;
+  width: var(--u-nav-sidebar-width);
   flex-shrink: 0;
   overflow-y: auto;
   padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-5);
@@ -2283,7 +2281,7 @@ code, kbd, pre, samp {
 }
 
 .bt-sidebar--slim {
-  width: 3.5rem;
+  width: var(--u-nav-sidebar-width-slim);
   padding: var(--bt-sp-4) var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-1);
   overflow: visible;
 }
