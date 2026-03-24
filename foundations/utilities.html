@@ -1,0 +1,225 @@
+<!-- @title: Utilities — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-7">
+    <p class="ds-eyebrow">Foundations</p>
+    <h1 class="display-1">Utilities</h1>
+    <p class="lead">Bootstrap is the primary utility system. Booktower keeps only a very small helper layer for a few repeated semantic tokens used across the prototypes.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Rule Of Thumb</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <h3 class="h6 mb-2">Use Bootstrap for</h3>
+            <ul class="mb-0">
+              <li>spacing and gaps</li>
+              <li>flex and grid layout</li>
+              <li>sizing and widths</li>
+              <li>text alignment and display</li>
+              <li>standard `border`, `rounded`, `text-*`, `bg-*` helpers where Bootstrap already expresses the intent</li>
+            </ul>
+          </div>
+          <div class="col-lg-6">
+            <h3 class="h6 mb-2">Use Booktower utilities for</h3>
+            <ul class="mb-0">
+              <li>the app/body surface background</li>
+              <li>the dark surface background</li>
+              <li>the white card background when it maps to the token</li>
+              <li>the shared design-system border token</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Supported Booktower Utilities</h2>
+    <p class="mb-4">These are the only custom utilities that should be relied on in page markup.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Backgrounds</h3></div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-4">
+            <div class="p-4 rounded-3 bt-bg bt-border">
+              <code>.bt-bg</code>
+            </div>
+            <p class="small text-muted mt-2 mb-0">Uses <code>--bt-bg</code>. Good for page sections and neutral app surfaces.</p>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="p-4 rounded-3 bt-bg-alt bt-border">
+              <code>.bt-bg-alt</code>
+            </div>
+            <p class="small text-muted mt-2 mb-0">Uses <code>--bt-bg-alt</code>. Good for subtle chrome and secondary blocks.</p>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="p-4 rounded-3 bt-bg-dark text-white">
+              <code>.bt-bg-dark</code>
+            </div>
+            <p class="small text-muted mt-2 mb-0">Uses <code>--bt-bg-dark</code>. Good for dark token-backed avatars and dark panels.</p>
+          </div>
+          <div class="col-md-6 col-xl-4">
+            <div class="p-4 rounded-3 bt-bg-white bt-border">
+              <code>.bt-bg-white</code>
+            </div>
+            <p class="small text-muted mt-2 mb-0">Uses <code>--bt-white</code>. Good when a token-backed white surface is needed explicitly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo mt-4">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Borders</h3></div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-4">
+            <div class="p-4 rounded-3 bt-border">
+              <code>.bt-border</code>
+            </div>
+            <p class="small text-muted mt-2 mb-0">Uses the shared token-backed border value <code>--bt-border</code>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Use Bootstrap Instead</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <h3 class="h6 mb-2">Preferred</h3>
+            <div class="ds-code">
+              <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="d-flex align-items-center gap-3 p-4 rounded-3 border bg-white"&gt;
+  ...
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <h3 class="h6 mb-2">Avoid inventing</h3>
+            <div class="ds-code">
+              <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="bt-gap bt-bg-blue bt-text-green bt-border-right"&gt;
+  ...
+&lt;/div&gt;</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Bootstrap Color, Text, And Border Utilities</h2>
+    <p class="mb-4">These are the Bootstrap utilities you should reach for first. In this library they inherit Booktower tokens where Bootstrap has been overridden, so they stay visually aligned with the system.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Text Utilities</h3></div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="p-4 rounded-3 border bg-white d-flex flex-column gap-2">
+              <p class="mb-0 text-primary">.text-primary</p>
+              <p class="mb-0 text-success">.text-success</p>
+              <p class="mb-0 text-warning">.text-warning</p>
+              <p class="mb-0 text-danger">.text-danger</p>
+              <p class="mb-0 text-muted">.text-muted</p>
+              <p class="mb-0 text-body">.text-body</p>
+              <p class="mb-0 text-black">.text-black</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="ds-code">
+              <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;p class="text-success"&gt;Saved successfully&lt;/p&gt;
+&lt;p class="text-muted small"&gt;Updated 2 hours ago&lt;/p&gt;</pre>
+            </div>
+            <p class="small text-muted mt-3 mb-0">Use these for state text, secondary copy, and standard semantic emphasis. Do not create `bt-text-*` equivalents.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo mt-4">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Background Utilities</h3></div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-4 rounded-3 bg-primary text-white">.bg-primary</div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-4 rounded-3 bg-success">.bg-success</div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-4 rounded-3 bg-warning">.bg-warning</div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-4 rounded-3 bg-danger">.bg-danger</div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-4 rounded-3 bg-secondary">.bg-secondary</div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-4 rounded-3 bg-white border">.bg-white</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="ds-code">
+              <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;span class="badge bg-success"&gt;Published&lt;/span&gt;
+&lt;div class="bg-white border rounded-3 p-4"&gt;...&lt;/div&gt;</pre>
+            </div>
+            <p class="small text-muted mt-3 mb-0">These are especially appropriate for badges, alerts, and small semantic surfaces. For page chrome and shell backgrounds, prefer the smaller Booktower helper set above.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo mt-4">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Border Utilities</h3></div>
+      <div class="ds-demo-body">
+        <div class="row g-4">
+          <div class="col-lg-6">
+            <div class="d-flex flex-column gap-3">
+              <div class="p-3 rounded-3 border">.border</div>
+              <div class="p-3 rounded-3 border-top border-bottom">.border-top .border-bottom</div>
+              <div class="p-3 rounded-3 border-start ps-4">.border-start</div>
+              <div class="p-3 rounded-3 border-end pe-4">.border-end</div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="ds-code">
+              <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;section class="bg-white rounded-3 border p-4"&gt;...&lt;/section&gt;
+&lt;div class="border-top pt-3 mt-3"&gt;...&lt;/div&gt;</pre>
+            </div>
+            <p class="small text-muted mt-3 mb-0">Prefer Bootstrap directional border helpers over custom `bt-border-*` utilities. Keep `bt-border` only for the shared token-backed shorthand.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">What Does Not Exist</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p class="mb-3">Do not assume there is a Booktower utility for every token. These are intentionally not part of the runtime utility surface:</p>
+        <ul class="mb-0">
+          <li><code>bt-text-blue</code>, <code>bt-text-green</code>, <code>bt-text-danger</code></li>
+          <li><code>bt-bg-blue</code>, <code>bt-bg-success</code>, <code>bt-bg-warning</code></li>
+          <li><code>bt-border-top</code>, <code>bt-border-right</code>, <code>bt-border-bottom</code>, <code>bt-border-left</code></li>
+          <li>one-off width, spacing, display, or alignment helpers</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
