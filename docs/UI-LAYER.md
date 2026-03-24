@@ -130,7 +130,7 @@ The most critical rules for Go templ work:
 - Icon-only buttons: `aria-label` on the `<button>`, `aria-hidden="true"` on the `<i>`
 - Row action buttons must include the record name in their label
 - Every `<input>` has an associated `<label for>` — `placeholder` is not a label
-- `aria-current="page"` on the active nav link; `aria-current="step"` in the deposit stepper
+- `aria-current="page"` on the active nav link
 
 The full accessibility reference is in `booktower-ui-library/ASSISTANT.md`.
 

@@ -97,7 +97,7 @@ We build two things: a **public research repository** (anonymous users, read-hea
 Application navigation   ← bt-navbar primary nav
 Section navigation       ← bt-sidebar
 Breadcrumb               ← breadcrumb nav
-Filter by                ← bt-facets-col aside (use aria-label on <aside>)
+Filter by                ← facet/filter aside (use aria-label on <aside>)
 Results pagination       ← pagination nav
 ```
 
@@ -205,7 +205,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 
 **C4. Grouped controls use `<fieldset>` and `<legend>`.** This applies to:
 - The open access status radio group (deposit flow)
-- Every checkbox filter group in `bt-facets-col`
+- Every checkbox filter group in a filter `<aside>`
 - Any set of related checkboxes or radio buttons anywhere
 
 ```html
@@ -285,8 +285,6 @@ The only acceptable exception: a search input inside `<form role="search">` may 
   </button>
 </div>
 ```
-
-**E6. Stepper links.** The deposit flow `bt-stepper__item` elements are links (`<a href>`) pointing to named sections on the same page. They navigate — `<a>` is correct. `aria-current="step"` on the active one.
 
 ---
 
@@ -389,10 +387,8 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
   class="form-check-input" checked
   aria-label="Journal article (1,234 records)">
 <label for="f-journal">Journal article</label>
-<div class="bt-facet-count" aria-hidden="true">1,234</div>
+<span class="text-muted small" aria-hidden="true">1,234</span>
 ```
-
-**I4. Deposit flow: `aria-current="step"` on the active stepper item.** Not `aria-current="page"` — the URL does not change between steps.
 
 ---
 
@@ -503,12 +499,8 @@ card-publication
 ```
 
 **Facets sidebar**
-```
-bt-facets-col           bt-facet-group           bt-facet-toggle
-bt-facet-title          bt-facet-check           bt-facet-count
-bt-facet-sep
-```
-Note: Facet groups use Bootstrap `fieldset`/`legend` + `collapse` component + `form-check`. The old custom CSS grid (`bt-facets`, `bt-facet-name`, `bt-facet-separator`) is removed.
+Use Bootstrap structure directly: `fieldset`, `legend`, `form-check`, `form-check-input`, `form-check-label`, spacing utilities, and Collapse where needed.
+Note: the old custom facet classes (`bt-facets`, `bt-facet-name`, `bt-facet-separator`, `bt-results-col`) do not exist in this system.
 
 **Sub-sidebar navigation**
 ```
@@ -541,7 +533,6 @@ Note: BEM modifier double-dash (`--`). The old styleguide used single-dash — t
 
 **Deposit flow components**
 ```
-bt-stepper__num          bt-stepper__label        bt-stepper__required
 bt-radio-card            bt-radio-card__body      bt-radio-card__group
 bt-file-drop             bt-file-drop__icon       bt-file-drop__text
 bt-file-drop__hint
@@ -591,13 +582,14 @@ bt-bulk-bar              (use bt-toolbar)
 bt-pagination-bar        (use bt-toolbar)
 bt-results-toolbar       (use bt-toolbar bt-toolbar--bordered)
 bt-results-col           (removed — use Bootstrap flex utilities on the results column directly)
+bt-stepper__num          bt-stepper__label        bt-stepper__required  (removed — stepper is not part of this library)
 is-selected on <tr>     (use Bootstrap .table-active)
 td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
 u-maximize-height       (OLD layout utility — removed in v2)
 bt-facets                (removed — old custom CSS grid, replaced by Bootstrap fieldset/collapse)
 bt-facet-name            (removed — label now associates directly via form-check)
-bt-facet-separator       (removed — replaced by bt-facet-sep, an <hr> element)
+bt-facet-separator       (removed — use a plain <hr> and spacing utilities)
 ```
 
 ### Icon names — verified source of truth
@@ -671,7 +663,7 @@ Component code references only semantic aliases (`--bt-text`, `--bt-danger`, `--
 
 ## Layout shells
 
-Three CSS grid shells live in `patterns/_layouts.scss`. All use `--s-topbar-height` (defined in `foundation/_surfaces.scss`) for sticky sidebar calculations.
+Two CSS grid shells live in `patterns/_layouts.scss`. Both use `--s-topbar-height` (defined in `foundation/_surfaces.scss`) for sticky sidebar calculations.
 
 | Shell | Used for | Children |
 |-------|----------|----------|
@@ -690,7 +682,7 @@ Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell 
 | Prefix | Meaning | Examples |
 |--------|---------|----------|
 | `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar` |
-| `bt-` | Component — no Bootstrap base | `bt-facets-col`, `bt-blank-slate` |
+| `bt-` | Component — no Bootstrap base | `bt-blank-slate`, `bt-radio-card` |
 | `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--public` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.

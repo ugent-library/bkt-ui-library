@@ -31,12 +31,6 @@ partial, and stylesheet:
 | `bc-avatar--large` | `bt-avatar--large` |
 | `c-sub-sidebar` | `bt-sidebar` |
 | `c-sub-sidebar--bordered` | `bt-sidebar--bordered` |
-| `c-stepper__item` | `bt-stepper__item` |
-| `c-stepper__item--done` | `bt-stepper__item--done` |
-| `c-stepper__item--active` | `aria-current="step"` (attribute, not class) |
-| `c-stepper__num` | `bt-stepper__num` |
-| `c-stepper__label` | `bt-stepper__label` |
-| `c-stepper__required` | `bt-stepper__required` |
 | `c-blank-slate` | `bt-blank-slate` |
 | `c-blank-slate-default` | `bt-blank-slate--default` |
 | `c-blank-slate-muted` | `bt-blank-slate--muted` |
@@ -51,15 +45,6 @@ partial, and stylesheet:
 | `c-hero` | `bt-hero` |
 | `c-hero__bg` | `bt-hero__bg` |
 | `c-hero__content` | `bt-hero__content` |
-| `c-facets` | `bt-facets` |
-| `c-facet-title` | `bt-facet-title` |
-| `c-facet-check` | `bt-facet-check` |
-| `c-facet-name` | `bt-facet-name` |
-| `c-facet-count` | `bt-facet-count` |
-| `c-facet-separator` | `bt-facet-separator` |
-| `c-facets-col` | `bt-facets-col` |
-| `c-results-col` | `bt-results-col` |
-| `c-content-area` | `bt-content-area` |
 | `c-button-toolbar` | `bt-button-toolbar` |
 | `c-button-toolbar--wide-spacing` | `bt-button-toolbar--wide-spacing` |
 | `c-button-toolbar--vertical` | `bt-button-toolbar--vertical` |
@@ -114,9 +99,9 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `d-flex` + `u-scroll-wrapper` + `u-scroll-wrapper__body` (flex-stacked, `overflow: hidden` on `main`) | `u-layout` (CSS grid shell) | 🔄 Renamed | Grid replaces the fragile flex approach. Sticky sidebars now work correctly. |
-| `u-scroll-wrapper` | ⏳ | ⏳ Planned | May be retained for inner scroll regions (e.g. long sidebars). |
-| `u-scroll-wrapper__body` | ⏳ | ⏳ Planned | See above. |
+| `d-flex` + `u-scroll-wrapper` + `u-scroll-wrapper__body` (flex-stacked, `overflow: hidden` on `main`) | `u-layout--app` / `u-layout--public` | 🔄 Renamed | Grid shells replace the fragile flex approach. Sticky sidebars and split panes now work correctly. |
+| `u-scroll-wrapper` | — | ❌ Retired | Not carried into v2. Use the layout shells and explicit scroll regions instead. |
+| `u-scroll-wrapper__body` | — | ❌ Retired | Same as above. |
 | `u-maximize-height` | Bootstrap `h-100` | ❌ Retired | Bootstrap utility covers this. |
 | `u-inner-content` (`height: calc(100% - 3.2rem)`) | Not needed | ❌ Retired | Grid layout makes this unnecessary. |
 
@@ -132,7 +117,7 @@ is unchanged.
 | `bc-navbar--large`, `--small` | ⏳ | ⏳ Planned | Size variants — review whether all are needed. |
 | `nav.nav-main` | ⏳ | ⏳ Planned | Top-level navigation links inside navbar. |
 | `bt-navbar__brand`, `__sep`, `__nav`, `__link` | Same | ✅ Carried over | BEM elements — all active. `__mark` does not exist; do not use. |
-| `nav.nav-sidebar` | ⏳ | ⏳ Planned | Sidebar nav pills. |
+| `nav.nav-sidebar` | `bt-sidebar` | 🔄 Renamed | The old sidebar nav addon is replaced by the shell-level `bt-sidebar` component. |
 | `nav.nav-tabs` | `nav.nav-tabs` | ✅ Carried over | Bootstrap nav-tabs with booktower overrides. Defined in `_bootstrap-components.scss` (currently commented). |
 | `nav.nav-pills` | Bootstrap `nav-pills` | ✅ Carried over | Use Bootstrap directly. |
 
@@ -161,14 +146,14 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-sidebar` (narrow icon rail, blue bg) | ⏳ | ⏳ Planned | The narrow icon-based sidebar. Not yet written in v2. |
-| `c-sidebar--bordered` | ⏳ | ⏳ Planned | |
-| `c-sidebar--dark-gray`, `--green` | ⏳ | ⏳ Planned | Colour variants — review whether all are needed in v2. |
-| `c-sub-sidebar` (wide text nav) | `bt-sidebar` | ✅ Carried over | Active in `_booktower-components.scss`. |
-| `c-sub-sidebar--bordered` | `bt-sidebar--bordered` | ✅ Carried over | |
-| `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge` | ⏳ | ⏳ Planned | Width variants. Review whether a token-based approach is cleaner. |
-| `c-sub-sidebar--small`, `--icons` | ⏳ | ⏳ Planned | Collapsed / icon-only variants. |
-| `c-sub-sidebar-responsive-wrapper` | ⏳ | ⏳ Planned | Mobile overlay wrapper. |
+| `c-sidebar` (narrow icon rail, blue bg) | — | ❌ Retired | Not used in the old prototype pages we are carrying forward, and not implemented in v2. |
+| `c-sidebar--bordered` | — | ❌ Retired | |
+| `c-sidebar--dark-gray`, `--green` | — | ❌ Retired | |
+| `c-sub-sidebar` (wide text nav) | `bt-sidebar` | 🔄 Renamed | This is the sidebar pattern retained in v2. |
+| `c-sub-sidebar--bordered` | `bt-sidebar--bordered` | 🔄 Renamed | |
+| `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge` | — | ❌ Retired | Width variants are not being carried into v2. |
+| `c-sub-sidebar--small`, `--icons` | `bt-sidebar--slim` | 🔧 Revised | v2 keeps a single collapsed variant rather than multiple width/icon variants. |
+| `c-sub-sidebar-responsive-wrapper` | — | ❌ Retired | Responsive behavior is handled by the layout shell, not a wrapper class. |
 
 ---
 
@@ -176,13 +161,7 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-stepper__item` | `bt-stepper__item` | ✅ Carried over | |
-| `c-stepper__item--done` | `bt-stepper__item--done` | ✅ Carried over | Was `.done` class in OLD — corrected to BEM modifier. |
-| `c-stepper__item--active` | use `aria-current="step"` | 🔄 Renamed | State is now driven by the ARIA attribute, not a class. |
-| `c-stepper__item--sub` | `bt-stepper__item--sub` | ⏳ Planned | Sub-step indented link. |
-| `c-stepper__num` | `bt-stepper__num` | ✅ Carried over | |
-| `c-stepper__label` | `bt-stepper__label` | ✅ Carried over | |
-| `c-stepper__required` | `bt-stepper__required` | ✅ Carried over | |
+| `c-stepper`, `c-stepper__*` | — | ❌ Retired | The stepper is intentionally not part of this UI library. Deposit flows now use the shared app shell and page-local structure only. |
 
 ---
 
@@ -190,12 +169,7 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-facets` | `bt-facets` | ✅ Carried over | Active in `_booktower-components.scss`. |
-| `c-facet-title` | `bt-facet-title` | ✅ Carried over | |
-| `c-facet-check` | `bt-facet-check` | ✅ Carried over | |
-| `c-facet-name` | `bt-facet-name` | ✅ Carried over | |
-| `c-facet-count` | `bt-facet-count` | ✅ Carried over | |
-| `c-facet-separator` | `bt-facet-separator` | ✅ Carried over | |
+| `c-facets`, `c-facet-title`, `c-facet-check`, `c-facet-name`, `c-facet-count`, `c-facet-separator`, `c-facets-col`, `c-results-col`, `c-content-area` | — | ❌ Retired | The old facet grid and results column classes are not carried into v2. Use Bootstrap `fieldset`, `legend`, `form-check`, spacing utilities, and the `u-main__*` layout contract instead. |
 
 ---
 
@@ -209,7 +183,7 @@ is unchanged.
 | `.btn-danger` | `.btn-danger` | ✅ Carried over | Outlined danger. |
 | `.btn-link` | `.btn-link` | ✅ Carried over | |
 | `.btn-sm`, `.btn-lg` | `.btn-sm`, `.btn-lg` | ✅ Carried over | |
-| `.btn-ghost` | `.btn-ghost` | ⏳ Planned | Used extensively in templates but not yet in SCSS. |
+| `.btn-ghost` | `.btn-ghost` | ✅ Carried over | Active in `_buttons.scss`. |
 | `.btn-outline-primary` | Bootstrap `btn-outline-primary` | 🔧 Revised | Use Bootstrap directly — v2 overrides to match token colours. Currently commented. |
 
 ---
@@ -237,10 +211,10 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.badge` | `.badge` | ⏳ Planned | Not yet active in v2. Defined in `_bootstrap-components.scss` (commented). |
-| `.badge.bg-primary`, `.bg-success`, etc. | Same | ⏳ Planned | Remapped to token colours. |
-| `.badge-oa` | `.badge-oa` | ⏳ Planned | Domain-specific open access badge. |
-| `.badge-restricted` | `.badge-restricted` | ⏳ Planned | |
+| `.badge` | `.badge` | ✅ Carried over | Active in `elements/_badges.scss`. |
+| `.badge.bg-primary`, `.bg-success`, etc. | Same | 🔧 Revised | Token colours are remapped in `elements/_badges.scss`. |
+| `.badge-oa` | `.badge-oa` | ✅ Carried over | Domain-specific open access badge. |
+| `.badge-restricted` | `.badge-restricted` | ✅ Carried over | |
 
 ---
 
@@ -248,8 +222,8 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.alert`, `.alert-primary`, `.alert-success`, `.alert-warning`, `.alert-danger`, `.alert-secondary` | Same | ⏳ Planned | Not yet active in v2 (commented in `_bootstrap-components.scss`). |
-| `.alert-dismissible` + `.btn-close` | Same | ⏳ Planned | Bootstrap pattern, unchanged. |
+| `.alert`, `.alert-primary`, `.alert-success`, `.alert-warning`, `.alert-danger`, `.alert-secondary` | Same | ✅ Carried over | Active in `components/_bootstrap-components.scss`. |
+| `.alert-dismissible` + `.btn-close` | Same | ✅ Carried over | Bootstrap pattern, unchanged. |
 
 ---
 
@@ -257,7 +231,7 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.card`, `.card-body`, `.card-title`, `.card-footer` | Same | ⏳ Planned | Not yet active in v2 (commented). Surface-aware: shadow on public, flat on backoffice. |
+| `.card`, `.card-body`, `.card-title`, `.card-footer` | Same | ✅ Carried over | Bootstrap cards remain available. Domain-specific research cards use the separate `card-research` pattern. |
 | `c-publication-card` | ⏳ | ⏳ Planned | Domain-specific research output card. |
 
 ---
@@ -266,7 +240,7 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.table`, `.table-hover` | Same | ⏳ Planned | Not yet active in v2 (commented). |
+| `.table`, `.table-hover` | Same | ✅ Carried over | Bootstrap tables remain available and get Booktower token overrides. |
 | `.table-wrap` | ⏳ | ⏳ Planned | Bordered container with overflow handling. |
 
 ---
@@ -323,8 +297,8 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `u-scroll-wrapper` | ⏳ | ⏳ Planned | May be retained for inner scroll regions. |
-| `u-scroll-wrapper__body` | ⏳ | ⏳ Planned | |
+| `u-scroll-wrapper` | — | ❌ Retired | |
+| `u-scroll-wrapper__body` | — | ❌ Retired | |
 | `u-maximize-height` | Bootstrap `h-100` | ❌ Retired | |
 | `u-inner-content` | — | ❌ Retired | Grid layout makes this unnecessary. |
 | `u-hidden` | Bootstrap `d-none` | ❌ Retired | |
@@ -357,7 +331,7 @@ These were Bootstrap overrides in the OLD system. In v2 they either use Bootstra
 | OLD class | v2 approach | Status |
 |-----------|------------|--------|
 | `nav.nav-main` | Part of `bt-navbar__nav` | ✅ Carried over |
-| `nav.nav-sidebar` | Part of `bt-sidebar` | ✅ Carried over |
+| `nav.nav-sidebar` | Folded into `bt-sidebar` | 🔄 Renamed |
 | `nav.nav-tabs` | Bootstrap + override in `_bootstrap-components.scss` | ⏳ Planned |
 | `nav.nav-pills` | Bootstrap directly | ✅ Carried over |
 | `nav-tabs-scrollable` | ⏳ | ⏳ Planned |
@@ -371,7 +345,7 @@ Things that did not exist at all in the OLD system:
 - **Surface system** — `data-surface="public"` / `data-surface="backoffice"` switching behaviour and density via CSS variables
 - **IBM Plex type family** — Serif for editorial, Sans for interface, Mono for identifiers
 - **CSS custom property token stack** — runtime theming, no Sass recompile needed
-- **`u-layout`** — CSS grid layout shell (replaces flex stacking)
+- **`u-layout--app` / `u-layout--public`** — CSS grid layout shells (replace flex stacking)
 - **Full colour scale utilities** — `bt-bg-*`, `bt-text-*` for every token
 - **`bt-toolbar` surface awareness** — title font changes with surface context
 - **HTMX patterns** — documented and built into the system, not bolted on
