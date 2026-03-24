@@ -29,9 +29,8 @@ partial, and stylesheet:
 | `bc-avatar` | `bt-avatar` |
 | `bc-avatar--small` | `bt-avatar--small` |
 | `bc-avatar--large` | `bt-avatar--large` |
-| `c-sub-sidebar` | `bt-sub-sidebar` |
-| `c-sub-sidebar--bordered` | `bt-sub-sidebar--bordered` |
-| `c-stepper` | `bt-stepper` |
+| `c-sub-sidebar` | `bt-sidebar` |
+| `c-sub-sidebar--bordered` | `bt-sidebar--bordered` |
 | `c-stepper__item` | `bt-stepper__item` |
 | `c-stepper__item--done` | `bt-stepper__item--done` |
 | `c-stepper__item--active` | `aria-current="step"` (attribute, not class) |
@@ -165,8 +164,8 @@ is unchanged.
 | `c-sidebar` (narrow icon rail, blue bg) | ⏳ | ⏳ Planned | The narrow icon-based sidebar. Not yet written in v2. |
 | `c-sidebar--bordered` | ⏳ | ⏳ Planned | |
 | `c-sidebar--dark-gray`, `--green` | ⏳ | ⏳ Planned | Colour variants — review whether all are needed in v2. |
-| `c-sub-sidebar` (wide text nav) | `bt-sub-sidebar` | ✅ Carried over | Active in `_booktower-components.scss`. |
-| `c-sub-sidebar--bordered` | `bt-sub-sidebar--bordered` | ✅ Carried over | |
+| `c-sub-sidebar` (wide text nav) | `bt-sidebar` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `c-sub-sidebar--bordered` | `bt-sidebar--bordered` | ✅ Carried over | |
 | `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge` | ⏳ | ⏳ Planned | Width variants. Review whether a token-based approach is cleaner. |
 | `c-sub-sidebar--small`, `--icons` | ⏳ | ⏳ Planned | Collapsed / icon-only variants. |
 | `c-sub-sidebar-responsive-wrapper` | ⏳ | ⏳ Planned | Mobile overlay wrapper. |
@@ -177,7 +176,6 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-stepper` | `bt-stepper` | ✅ Carried over | Active in `_booktower-components.scss`. |
 | `c-stepper__item` | `bt-stepper__item` | ✅ Carried over | |
 | `c-stepper__item--done` | `bt-stepper__item--done` | ✅ Carried over | Was `.done` class in OLD — corrected to BEM modifier. |
 | `c-stepper__item--active` | use `aria-current="step"` | 🔄 Renamed | State is now driven by the ARIA attribute, not a class. |
@@ -359,7 +357,7 @@ These were Bootstrap overrides in the OLD system. In v2 they either use Bootstra
 | OLD class | v2 approach | Status |
 |-----------|------------|--------|
 | `nav.nav-main` | Part of `bt-navbar__nav` | ✅ Carried over |
-| `nav.nav-sidebar` | Part of `bt-sub-sidebar` | ✅ Carried over |
+| `nav.nav-sidebar` | Part of `bt-sidebar` | ✅ Carried over |
 | `nav.nav-tabs` | Bootstrap + override in `_bootstrap-components.scss` | ⏳ Planned |
 | `nav.nav-pills` | Bootstrap directly | ✅ Carried over |
 | `nav-tabs-scrollable` | ⏳ | ⏳ Planned |

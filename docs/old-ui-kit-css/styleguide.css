@@ -1,0 +1,271 @@
+/* ==========================================================================
+  Colors
+  Only define colors here. Don't use sass color functions, stick to hex values,
+  or the color component in styleguide won't regenerate automatically anymore.
+ ========================================================================== */
+/* Grays
+ ========================================================================== */
+/* Blue
+ ========================================================================== */
+/* Green
+ ========================================================================== */
+/* Red
+ ========================================================================== */
+/* Orange
+ ========================================================================== */
+/* Primary
+ ========================================================================== */
+/* Secondary
+ ========================================================================== */
+/* Semantic
+ ========================================================================== */
+/* ==========================================================================
+  Variables override
+  Overide variables set in core/scss/prototype.scss with your own
+   ========================================================================== */
+/**
+ * Bootstrap settings
+ * overrides bootstrap's default variables
+ */
+/* ==========================================================================
+  Style guide styles
+   ========================================================================== */
+/*
+
+  In the "real world" (e.g. the app itself) some HTML elements are hidden by default,
+  or positioned in specific ways. In the styleguide sometimes we want to undo some of
+  that for demonstrational purposes. This is the location where would you write such code.
+
+  The idea is that the code that you write here never makes it to the final app. It's only
+  purpose is to make the style guide look good.
+
+  You can target a component with #component-{component-name} e.g. when a component
+  folder is called 01-my-component you can target it with #component-01-my-component.
+
+  It's interesting to know that the box that contains the component is called .br-sample-content.
+
+  Sometimes you want to set a height on this or targets its children etc.
+*/
+.br-styleguide-brand-heading {
+  margin: 0;
+}
+
+.br-styleguide-content-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.c-styleguide-list {
+  padding-left: 1.6rem !important;
+}
+.c-styleguide-list li {
+  padding: 0.8rem 0;
+}
+
+/* Code button
+   We use a separate style to have a subtle button
+   ========================================================================== */
+.br-sample-show-code-btn {
+  font-size: 1.3rem;
+  color: #646464;
+  background: #fff;
+  border: 1px solid #dedede;
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  height: 2.4rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+.br-sample-show-code-btn:focus, .br-sample-show-code-btn:hover {
+  color: #1e64c8;
+  background: #f2f2f2;
+}
+
+.br-styleguide-header,
+.br-styleguide-search,
+.br-styleguide-navigation-holder {
+  background: #f2f2f2;
+}
+
+.br-styleguide-header img {
+  width: 70%;
+}
+
+.br-styleguide-search input {
+  border-radius: 4px;
+  border: 1px solid #dedede;
+  padding: 8px;
+}
+
+.br-styleguide-navigation-holder a {
+  color: #4d4d4d;
+}
+
+.br-docs-category-name {
+  font-size: 18px;
+}
+
+.br-docs-category-list-wrapper ul {
+  list-style: none;
+  padding-left: 24px;
+}
+
+.br-styleguide-navigation-holder {
+  background: #f5f5f5;
+}
+
+/* Taller samples
+   ========================================================================== */
+.c-sample-content-tall {
+  min-height: 500px;
+}
+
+/* Make tooltips visible in styleguide
+   ========================================================================== */
+#component-b-tooltip .br-sample-content {
+  min-height: 100px;
+}
+#component-b-tooltip .br-sample-content .tooltip {
+  position: relative;
+  display: inline-block;
+  margin: 10px 20px;
+  opacity: 1;
+}
+#component-b-tooltip .br-sample-content .arrow {
+  left: 50%;
+}
+
+/* Make popovers visible
+   ========================================================================== */
+#component-01-popover .br-sample-content {
+  height: 40rem;
+  padding-top: 18rem;
+}
+
+#component-02-popover-with-heading .br-sample-content {
+  height: 20rem;
+  padding-top: 8rem;
+}
+
+/* Make modals visible in styleguide
+   ========================================================================== */
+div[id^=component-] .modal {
+  display: block;
+  opacity: 1;
+  position: static;
+  display: block;
+  top: auto;
+  left: auto;
+  right: auto;
+  margin: 20px;
+  padding: 20px;
+  z-index: 1;
+  max-width: 100%;
+}
+
+.br-sample-content.c-sample-overflow {
+  overflow: initial;
+}
+
+.br-prototype-nav-is-open .modal .modal-fullscreen {
+  left: 0;
+  padding-left: 25rem;
+}
+
+/* Fix floating alert
+   ========================================================================== */
+.br-styleguide-content .alert-floating-container {
+  position: absolute;
+  opacity: 1;
+}
+
+/* Expand dropdowns in some component examples
+   ========================================================================== */
+#component-01-dropdown .br-sample-content,
+#component-02-dropdown-divider .br-sample-content {
+  height: 32rem;
+}
+
+/*
+#component-01-dropdown,
+#component-02-dropdown-divider,
+#component-03-dropdown-checkboxes,
+#component-04-dropdown-radio,
+#component-05-dropdown-text,
+#component-06-dropdown-range {
+  .dropdown {
+    > .dropdown-menu {
+      position: static;
+      display: block;
+      margin-bottom: 5px;
+      clear: left;
+    }
+    .btn {
+      float: left;
+    }
+  }
+}*/
+/* Tables
+   ========================================================================== */
+.br-sample-documentation > table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.br-sample-documentation > table td,
+.br-sample-documentation > table th {
+  text-align: left;
+  padding: 0.5rem;
+  font-size: 0.8125rem;
+  border-bottom: 1px solid #dedede;
+}
+.br-sample-documentation > table code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px;
+}
+.br-sample-documentation > table th {
+  font-weight: 600;
+}
+.br-sample-documentation > table tr:nth-child(2n) td {
+  background: #f5f5f5;
+}
+
+/* Improve icon font display
+   ========================================================================== */
+#component-01-svg-icons .br-sample-content {
+  -moz-columns: 15em;
+       columns: 15em;
+}
+#component-01-svg-icons .br-sample-content .svg-icon {
+  display: flex;
+}
+#component-01-svg-icons .br-sample-content .svg-icon p {
+  margin-left: 1rem;
+}
+
+/* Colors
+   ========================================================================== */
+.br-color-swatch-item {
+  display: inline-block;
+  margin-right: 0.625rem;
+  padding: 0.625rem;
+  padding-left: 0;
+  text-align: left;
+}
+.br-color-swatch-item .br-color-swatch-preview {
+  border-radius: 4px;
+  width: 250px;
+  height: 6.25rem;
+}
+
+/* Code samples
+   ========================================================================== */
+.br-sample-markup code[class*=language-],
+.br-sample-markup pre[class*=language-] {
+  font-size: 1.2rem;
+}
+
+.br-sample-markup {
+  padding: 1.6rem;
+}
+/*# sourceMappingURL=styleguide.css.map */

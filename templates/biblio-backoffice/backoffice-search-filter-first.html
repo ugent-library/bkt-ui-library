@@ -25,13 +25,13 @@
 
 <!-- @include: templates/partials/backoffice-sidebar.html -->
 
-  <main id="main-content" class="u-main--search">
+  <main id="main-content">
 
-    <!-- ── Top bar ─────────────────────────────────────────────────────────── -->
-    <div class="border-bottom px-4 flex-shrink-0">
+    <!-- ══ Header: title + export button (sticky at top) ══ -->
+    <div class="u-main__header">
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
-          <h1 class="bt-toolbar__title">Research output</h1>
+          <h1 class="bt-toolbar__title">Research output under construction</h1>
           <span class="text-muted small" aria-live="polite" id="result-count">4,831 records</span>
         </div>
         <div class="bt-toolbar__right">
@@ -56,22 +56,17 @@
       </div>
     </div>
 
-    <!-- ── Content area: filter sidebar + results ─────────────────────────── -->
-    <div class="bt-content-area">
+    <!-- ══ Body: filter sidebar + results (scrollable) ══ -->
+    <div class="u-main__body">
 
-      <!-- @include: templates/partials/backoffice-facet-sidebar.html -->
-
-      <!-- ── Results ─────────────────────────────────────────────────────── -->
-      <div id="results-body" class="d-flex flex-column">
-
-        <!-- Results toolbar: search box lives here, not at the page top -->
-        <div class="bt-toolbar bt-toolbar--bordered px-4 flex-shrink-0">
-          <div class="bt-toolbar__left flex-grow-1">
-
+        <!-- Left: Filter sidebar -->
+        <!-- @include: templates/partials/backoffice-facet-sidebar.html -->
+        <section class="u-main__content">
+          <section class="u-main__content-header">
             <!-- Search as refinement, not entry point -->
             <div role="search" aria-label="Refine results by keyword">
               <label for="search-refine" class="visually-hidden">Search by title, author, DOI</label>
-              <div class="d-flex align-items-center gap-2">
+              <div class="border-bottom d-flex align-items-center gap-2 mb-3">
                 <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
                 <input type="search"
                   class="form-control form-control-sm border-0 bg-transparent shadow-none"
@@ -82,12 +77,36 @@
                   hx-trigger="keyup changed delay:300ms"
                   hx-target="#results-list"
                   hx-indicator="#search-indicator">
+            </div>
+            <div class="bt-toolbar m-0">
+              <div class="bt-toolbar__left" id="active-chips-bar">
+                <span class="text-muted small">Filtered by:</span>
+                <button type="button" class="filter-tag"
+                  aria-label="Remove filter: Scope is Faculty of Sciences">
+                  Scope: Sciences <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="filter-tag"
+                  aria-label="Remove filter: Status is Submitted">
+                  Status: Submitted <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                </button>
+                <span class="text-muted small ms-auto" aria-live="polite" id="result-count-inline">12 records</span>
+                <button type="button" class="btn btn-ghost btn-sm text-muted py-0">
+                  Clear all
+                </button>
+              </div>
+              <div class="bt-toolbar__right">
+                <div class="view-toggle" role="group" aria-label="Switch view">
+                  <button type="button" class="view-toggle-btn is-active" id="btn-card-view"
+                    aria-pressed="true" aria-label="Card view">
+                    <i class="if if-list-unordered" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="view-toggle-btn" id="btn-table-view"
+                    aria-pressed="false" aria-label="Table view">
+                    <i class="if if-table" aria-hidden="true"></i>
+                  </button>
+                </div>
               </div>
             </div>
-
-          </div>
-          <div class="bt-toolbar__right">
-
             <!-- Bulk actions (hidden until rows selected) -->
             <div id="bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
               <button type="button" class="btn btn-ghost btn-sm">
@@ -97,235 +116,207 @@
                 <i class="if if-delete if--sm" aria-hidden="true"></i> Delete selected
               </button>
             </div>
-
+          </section>
+          <section id="results-list" class="u-main__content-body">
             <span id="search-indicator" class="htmx-indicator text-muted small" aria-live="polite">
               Searching…
             </span>
 
-            <div class="view-toggle" role="group" aria-label="Switch view">
-              <button type="button" class="view-toggle-btn is-active" id="btn-card-view"
-                aria-pressed="true" aria-label="Card view">
-                <i class="if if-list-unordered" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="view-toggle-btn" id="btn-table-view"
-                aria-pressed="false" aria-label="Table view">
-                <i class="if if-table" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+            <!-- Card view -->
+            <div id="view-cards">
 
-        <!-- Active filter chips — secondary, not primary chrome -->
-        <div class="px-4 py-2 border-bottom d-flex gap-2 flex-wrap align-items-center" id="active-chips-bar">
-          <span class="text-muted small">Filtered by:</span>
-          <button type="button" class="filter-tag"
-            aria-label="Remove filter: Scope is Faculty of Sciences">
-            Scope: Sciences <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
-          </button>
-          <button type="button" class="filter-tag"
-            aria-label="Remove filter: Status is Submitted">
-            Status: Submitted <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
-          </button>
-          <span class="text-muted small ms-auto" aria-live="polite" id="result-count-inline">12 records</span>
-          <button type="button" class="btn btn-ghost btn-sm text-muted py-0">
-            Clear all
-          </button>
-        </div>
+              <article class="card-research" aria-labelledby="card-title-ff01">
+                <div class="card-meta">
+                  <span class="badge-restricted">Restricted</span>
+                  <span class="badge bg-primary">Journal article</span>
+                  <span class="badge bg-info">Submitted</span>
+                </div>
+                <div class="card-actions">
+                  <a href="#" class="btn btn-primary btn-sm"
+                    aria-label="Review: Entanglement entropy in quantum spin chains">
+                    <i class="if if-check if--sm" aria-hidden="true"></i> Review
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Entanglement entropy in quantum spin chains">
+                    <i class="if if-edit" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h2 id="card-title-ff01" class="card-title">
+                    <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
+                  </h2>
+                  <p class="card-authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
+                  <p class="card-publication">
+                    <span>2025</span> ·
+                    <a href="#">Physical Review B</a>
+                  </p>
+                </div>
+              </article>
 
-        <!-- Results list (swapped by HTMX) -->
-        <div id="results-list" class="px-5 py-3 overflow-y-auto flex-grow-1">
+              <article class="card-research" aria-labelledby="card-title-ff02">
+                <div class="card-meta">
+                  <span class="badge-oa">Open access</span>
+                  <span class="badge bg-primary">Journal article</span>
+                  <span class="badge bg-info">Submitted</span>
+                </div>
+                <div class="card-actions">
+                  <a href="#" class="btn btn-primary btn-sm"
+                    aria-label="Review: Machine learning approaches to protein folding">
+                    <i class="if if-check if--sm" aria-hidden="true"></i> Review
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Machine learning approaches to protein folding">
+                    <i class="if if-edit" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h2 id="card-title-ff02" class="card-title">
+                    <a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
+                  </h2>
+                  <p class="card-authors">Hendrickx, E., Verhasselt, A.</p>
+                  <p class="card-publication">
+                    <span>2025</span> ·
+                    <a href="#">Nature Computational Science</a>
+                  </p>
+                </div>
+              </article>
 
-          <!-- Card view -->
-          <div id="view-cards">
+              <article class="card-research" aria-labelledby="card-title-ff03">
+                <div class="card-meta">
+                  <span class="badge-restricted">Restricted</span>
+                  <span class="badge bg-primary">Dataset</span>
+                  <span class="badge bg-info">Submitted</span>
+                </div>
+                <div class="card-actions">
+                  <a href="#" class="btn btn-primary btn-sm"
+                    aria-label="Review: Climate forcing data over Belgium 1950–2023">
+                    <i class="if if-check if--sm" aria-hidden="true"></i> Review
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Climate forcing data over Belgium 1950–2023">
+                    <i class="if if-edit" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h2 id="card-title-ff03" class="card-title">
+                    <a href="#">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
+                  </h2>
+                  <p class="card-authors">Goossens, C., Termonia, P.</p>
+                  <p class="card-publication">
+                    <span>2025</span> ·
+                    <a href="#">Zenodo</a>
+                  </p>
+                </div>
+              </article>
 
-            <article class="card-research" aria-labelledby="card-title-ff01">
-              <div class="card-meta">
-                <span class="badge-restricted">Restricted</span>
-                <span class="badge bg-primary">Journal article</span>
-                <span class="badge bg-info">Submitted</span>
-              </div>
-              <div class="card-actions">
-                <a href="#" class="btn btn-primary btn-sm"
-                  aria-label="Review: Entanglement entropy in quantum spin chains">
-                  <i class="if if-check if--sm" aria-hidden="true"></i> Review
-                </a>
-                <a href="#" class="btn btn-ghost btn-sm"
-                  aria-label="Edit: Entanglement entropy in quantum spin chains">
-                  <i class="if if-edit" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div class="card-body">
-                <h2 id="card-title-ff01" class="card-title">
-                  <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
-                </h2>
-                <p class="card-authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
-                <p class="card-publication">
-                  <span>2025</span> ·
-                  <a href="#">Physical Review B</a>
-                </p>
-              </div>
-            </article>
+            </div><!-- /view-cards -->
 
-            <article class="card-research" aria-labelledby="card-title-ff02">
-              <div class="card-meta">
-                <span class="badge-oa">Open access</span>
-                <span class="badge bg-primary">Journal article</span>
-                <span class="badge bg-info">Submitted</span>
-              </div>
-              <div class="card-actions">
-                <a href="#" class="btn btn-primary btn-sm"
-                  aria-label="Review: Machine learning approaches to protein folding">
-                  <i class="if if-check if--sm" aria-hidden="true"></i> Review
-                </a>
-                <a href="#" class="btn btn-ghost btn-sm"
-                  aria-label="Edit: Machine learning approaches to protein folding">
-                  <i class="if if-edit" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div class="card-body">
-                <h2 id="card-title-ff02" class="card-title">
-                  <a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
-                </h2>
-                <p class="card-authors">Hendrickx, E., Verhasselt, A.</p>
-                <p class="card-publication">
-                  <span>2025</span> ·
-                  <a href="#">Nature Computational Science</a>
-                </p>
-              </div>
-            </article>
+            <!-- Table view (hidden by default) -->
+            <div id="view-table" hidden>
+              <table class="table table-hover align-middle" aria-label="Research output records">
+                <thead class="text-uppercase text-muted small">
+                  <tr>
+                    <th scope="col">
+                      <input type="checkbox" class="form-check-input mt-0" id="select-all"
+                        aria-label="Select all records on this page">
+                    </th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
+                    <th scope="col" aria-sort="descending">
+                      <button type="button" class="btn btn-ghost btn-sm p-0"
+                        aria-label="Sort by year, currently descending">
+                        Year <i class="if if-caret-down if--xs ms-1" aria-hidden="true"></i>
+                      </button>
+                    </th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Access</th>
+                    <th scope="col"><span class="visually-hidden">Actions</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" class="form-check-input mt-0 row-check"
+                      aria-label="Select: Entanglement entropy in quantum spin chains"></td>
+                    <td>
+                      <a href="#" class="fw-semibold text-reset text-decoration-none">Entanglement entropy in quantum spin chains with long-range interactions</a>
+                      <div class="small text-muted mt-1">De Moor, B., Adriaens, T., Vanderstraeten, L.</div>
+                    </td>
+                    <td><span class="badge bg-primary">Journal article</span></td>
+                    <td>2025</td>
+                    <td><span class="badge bg-info">Submitted</span></td>
+                    <td><span class="badge-restricted">Restricted</span></td>
+                    <td class="text-end">
+                      <div class="btn-group">
+                        <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Entanglement entropy">
+                          <i class="if if-check if--xs" aria-hidden="true"></i> Review
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Entanglement entropy"><i class="if if-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" class="form-check-input mt-0 row-check"
+                      aria-label="Select: Machine learning approaches to protein folding"></td>
+                    <td>
+                      <a href="#" class="fw-semibold text-reset text-decoration-none">Machine learning approaches to protein folding prediction</a>
+                      <div class="small text-muted mt-1">Hendrickx, E., Verhasselt, A.</div>
+                    </td>
+                    <td><span class="badge bg-primary">Journal article</span></td>
+                    <td>2025</td>
+                    <td><span class="badge bg-info">Submitted</span></td>
+                    <td><span class="badge-oa">OA</span></td>
+                    <td class="text-end">
+                      <div class="btn-group">
+                        <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Machine learning approaches">
+                          <i class="if if-check if--xs" aria-hidden="true"></i> Review
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Machine learning approaches"><i class="if if-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><input type="checkbox" class="form-check-input mt-0 row-check"
+                      aria-label="Select: Climate forcing data"></td>
+                    <td>
+                      <a href="#" class="fw-semibold text-reset text-decoration-none">Climate forcing data over Belgium 1950–2023</a>
+                      <div class="small text-muted mt-1">Goossens, C., Termonia, P.</div>
+                    </td>
+                    <td><span class="badge bg-primary">Dataset</span></td>
+                    <td>2025</td>
+                    <td><span class="badge bg-info">Submitted</span></td>
+                    <td><span class="badge-restricted">Restricted</span></td>
+                    <td class="text-end">
+                      <div class="btn-group">
+                        <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Climate forcing data">
+                          <i class="if if-check if--xs" aria-hidden="true"></i> Review
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Climate forcing data"><i class="if if-edit" aria-hidden="true"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div><!-- /view-table -->
 
-            <article class="card-research" aria-labelledby="card-title-ff03">
-              <div class="card-meta">
-                <span class="badge-restricted">Restricted</span>
-                <span class="badge bg-primary">Dataset</span>
-                <span class="badge bg-info">Submitted</span>
+          </section>
+          <section class="u-main__content-footer">
+            <nav class="bt-toolbar" aria-label="Results pagination">
+              <div class="bt-toolbar__left">
+                <div class="bt-toolbar__item">
+                  <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a></li>
+                    <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-label="Next page">›</a></li>
+                  </ul>
+                </div>
+                <div class="bt-toolbar__item">
+                  <span class="text-muted small" aria-live="polite">Showing 1–12 of 12 records</span>
+                </div>
               </div>
-              <div class="card-actions">
-                <a href="#" class="btn btn-primary btn-sm"
-                  aria-label="Review: Climate forcing data over Belgium 1950–2023">
-                  <i class="if if-check if--sm" aria-hidden="true"></i> Review
-                </a>
-                <a href="#" class="btn btn-ghost btn-sm"
-                  aria-label="Edit: Climate forcing data over Belgium 1950–2023">
-                  <i class="if if-edit" aria-hidden="true"></i>
-                </a>
-              </div>
-              <div class="card-body">
-                <h2 id="card-title-ff03" class="card-title">
-                  <a href="#">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
-                </h2>
-                <p class="card-authors">Goossens, C., Termonia, P.</p>
-                <p class="card-publication">
-                  <span>2025</span> ·
-                  <a href="#">Zenodo</a>
-                </p>
-              </div>
-            </article>
-
-          </div><!-- /view-cards -->
-
-          <!-- Table view (hidden by default) -->
-          <div id="view-table" hidden>
-            <table class="table table-hover align-middle" aria-label="Research output records">
-              <thead class="text-uppercase text-muted small">
-                <tr>
-                  <th scope="col">
-                    <input type="checkbox" class="form-check-input mt-0" id="select-all"
-                      aria-label="Select all records on this page">
-                  </th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Type</th>
-                  <th scope="col" aria-sort="descending">
-                    <button type="button" class="btn btn-ghost btn-sm p-0"
-                      aria-label="Sort by year, currently descending">
-                      Year <i class="if if-caret-down if--xs ms-1" aria-hidden="true"></i>
-                    </button>
-                  </th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Access</th>
-                  <th scope="col"><span class="visually-hidden">Actions</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" class="form-check-input mt-0 row-check"
-                    aria-label="Select: Entanglement entropy in quantum spin chains"></td>
-                  <td>
-                    <a href="#" class="fw-semibold text-reset text-decoration-none">Entanglement entropy in quantum spin chains with long-range interactions</a>
-                    <div class="small text-muted mt-1">De Moor, B., Adriaens, T., Vanderstraeten, L.</div>
-                  </td>
-                  <td><span class="badge bg-primary">Journal article</span></td>
-                  <td>2025</td>
-                  <td><span class="badge bg-info">Submitted</span></td>
-                  <td><span class="badge-restricted">Restricted</span></td>
-                  <td class="text-end">
-                    <div class="btn-group">
-                      <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Entanglement entropy">
-                        <i class="if if-check if--xs" aria-hidden="true"></i> Review
-                      </a>
-                      <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Entanglement entropy"><i class="if if-edit" aria-hidden="true"></i></a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" class="form-check-input mt-0 row-check"
-                    aria-label="Select: Machine learning approaches to protein folding"></td>
-                  <td>
-                    <a href="#" class="fw-semibold text-reset text-decoration-none">Machine learning approaches to protein folding prediction</a>
-                    <div class="small text-muted mt-1">Hendrickx, E., Verhasselt, A.</div>
-                  </td>
-                  <td><span class="badge bg-primary">Journal article</span></td>
-                  <td>2025</td>
-                  <td><span class="badge bg-info">Submitted</span></td>
-                  <td><span class="badge-oa">OA</span></td>
-                  <td class="text-end">
-                    <div class="btn-group">
-                      <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Machine learning approaches">
-                        <i class="if if-check if--xs" aria-hidden="true"></i> Review
-                      </a>
-                      <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Machine learning approaches"><i class="if if-edit" aria-hidden="true"></i></a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" class="form-check-input mt-0 row-check"
-                    aria-label="Select: Climate forcing data"></td>
-                  <td>
-                    <a href="#" class="fw-semibold text-reset text-decoration-none">Climate forcing data over Belgium 1950–2023</a>
-                    <div class="small text-muted mt-1">Goossens, C., Termonia, P.</div>
-                  </td>
-                  <td><span class="badge bg-primary">Dataset</span></td>
-                  <td>2025</td>
-                  <td><span class="badge bg-info">Submitted</span></td>
-                  <td><span class="badge-restricted">Restricted</span></td>
-                  <td class="text-end">
-                    <div class="btn-group">
-                      <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Climate forcing data">
-                        <i class="if if-check if--xs" aria-hidden="true"></i> Review
-                      </a>
-                      <a href="#" class="btn btn-ghost btn-sm p-1" aria-label="Edit: Climate forcing data"><i class="if if-edit" aria-hidden="true"></i></a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div><!-- /view-table -->
-
-          <!-- Pagination -->
-          <div class="bt-toolbar border-top mt-auto pt-2">
-            <span class="text-muted small" aria-live="polite">Showing 1–12 of 12 records</span>
-            <nav aria-label="Results pagination">
-              <ul class="pagination pagination-sm mb-0">
-                <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a></li>
-                <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
-                <li class="page-item"><a class="page-link" href="#" aria-label="Next page">›</a></li>
-              </ul>
             </nav>
-          </div>
-
-        </div><!-- /results-list -->
-      </div><!-- /results-body -->
-    </div><!-- /bt-content-area -->
+          </section>
+        </section>
+    </div><!-- /u-main__body -->
   </main>
 </div>
 

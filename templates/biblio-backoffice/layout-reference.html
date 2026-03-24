@@ -1,0 +1,135 @@
+<!-- @title: Layout Reference — App Shell -->
+<!-- @surface: backoffice -->
+<!--
+  Canonical reference for the backoffice app shell.
+  Keep this page aligned with the actual CSS contract in _layouts.scss.
+-->
+
+<div class="u-layout--app">
+    <!-- @include: templates/partials/backoffice-header.html -->
+    <!-- NAVBAR CONTENT — included from partial -->
+    <!-- ALWAYS STICKY, never scrolls -->
+
+    <!-- @include: templates/partials/backoffice-sidebar.html -->
+    <!-- SIDEBAR CONTENT — included from partial -->
+    <!-- sticky, scrolls -->
+
+    <main id="main-content">
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+            <h1 class="h4">
+                Page header
+                <br>
+                <code>
+                    .u-layout--app > main > .u-main__header
+                </code>
+            </h1>
+        </div>
+        <div class="bt-toolbar__right">
+          <button class="btn btn-primary btn-sm">Primary action</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+
+        <aside class="u-main__sidebar u-main__sidebar--border-right">
+            <h2 class="h5">
+                Left pane
+                <br>
+                <code>
+                    .u-layout--app > main > .u-main__body > .u-main__sidebar
+                </code>
+            </h2>
+            <p class="text-muted"><span class="badge bg-success">Optional</span> This pane scrolls independently.</p>
+        </aside>
+
+        <section class="u-main__content">
+            <div class="u-main__content-header">
+                <h2 class="h4">
+                    Right pane header
+                    <br>
+                    <code>
+                        .u-layout--app > main > .u-main__body > .u-main__content > .u-main__content-header
+                    </code>
+                </h2>
+                <p class="text-muted mb-0"><span class="badge bg-success">Optional</span> Use for tabs, result tools, or scoped actions.</p>
+            </div>
+            <div class="u-main__content-body">
+                <h2 class="h4">
+                    Right pane body
+                    <br>
+                    <code>
+                        .u-layout--app > main > .u-main__body > .u-main__content > .u-main__content-body
+                    </code>
+                </h2>
+                <p class="text-muted">Required. This is the scrolling content area.</p>
+
+                <section>
+                    <h3 class="h6">Recommended Markup</h3>
+<pre class="mb-0 p-5 bg-light"><code>&lt;div class="u-layout--app"&gt;
+
+    &lt;header class="bt-navbar"&gt;...&lt;/header&gt;
+
+    &lt;nav class="bt-sidebar"&gt;...&lt;/nav&gt;
+
+    &lt;main id="main-content"&gt;
+        &lt;div class="u-main__header"&gt;...&lt;/div&gt;
+        &lt;div class="u-main__body"&gt;
+
+            &lt;aside class="u-main__sidebar"&gt;...&lt;/aside&gt;
+
+            &lt;section class="u-main__content"&gt;
+                &lt;div class="u-main__content-header"&gt;...&lt;/div&gt;
+                &lt;div class="u-main__content-body"&gt;...&lt;/div&gt;
+                &lt;div class="u-main__content-footer"&gt;...&lt;/div&gt;
+            &lt;/section&gt;
+
+        &lt;/div&gt;
+        &lt;div class="u-main__footer"&gt;...&lt;/div&gt;
+
+    &lt;/main&gt;
+    &lt;aside class="u-main__panel"&gt;...&lt;/aside&gt;
+
+&lt;/div&gt;</code></pre>
+                </section>
+            </div>
+            <div class="u-main__content-footer">
+                <h2 class="h4">
+                    Right pane footer
+                    <br>
+                    <code>
+                        .u-layout--app > main > .u-main__body > .u-main__content > .u-main__content-footer
+                    </code>
+                </h2>
+                <p class="text-muted mb-0"><span class="badge bg-success">Optional</span> Use for pane-level actions or summary controls that should stay separate from the scrolling body.</p>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="u-main__footer">
+        <h2 class="h4">
+            Page footer
+            <br>
+            <code>
+                .u-layout--app > main > .u-main__footer
+            </code>
+        </h2>
+        <p class="text-muted mb-0"><span class="badge bg-success">Optional</span> Use for pagination, bulk actions, or page-level submit actions.</p>
+    </div>
+  </main>
+  <aside class="u-main__panel p-4">
+      <h2 class="h5">
+          Right panel
+          <br>
+          <code>
+              .u-layout--app > .u-main__panel
+          </code>
+      </h2>
+      <p class="text-muted mb-3"><span class="badge bg-success">Optional</span> Use for action drawers, contextual edit panels, or temporary side tasks that sit next to <code>#main-content</code>.</p>
+      <div class="bg-light rounded p-3 small text-muted">This panel scrolls independently from the main area.</div>
+  </aside>
+</div>

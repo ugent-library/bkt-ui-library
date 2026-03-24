@@ -5,6 +5,16 @@
   outline: none; /* tabindex=-1, focus for skip links */
 }
 
+body[data-surface="backoffice"] .bt-content {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+body[data-surface="public"] .bt-content {
+  height: auto;
+  overflow-y: visible;
+}
+
 /* ─── Design system page chrome (inside bt-content) ─────────────────────────── */
 .ds-page {
   padding: var(--bt-sp-16) var(--bt-sp-12);
@@ -114,69 +124,6 @@
   width: 10rem;
   height: 2rem;
   display: block;
-}
-
-/* Icon grid (foundations/icons.html) */
-.icon-grid__group {
-  margin-bottom: var(--bt-sp-8);
-}
-
-.icon-grid__label {
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  color: var(--bt-gray-400);
-  margin: 0 0 var(--bt-sp-3);
-}
-
-.icon-grid__items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-1);
-}
-
-.icon-grid__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--bt-sp-1);
-  width: 80px;
-  padding: var(--bt-sp-3) var(--bt-sp-1) var(--bt-sp-2);
-  border: var(--bt-border);
-  border-radius: var(--bt-radius);
-  background: white;
-  cursor: pointer;
-  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
-  font-size: 0;
-}
-
-.icon-grid__item:hover {
-  border-color: var(--bt-blue-700);
-  background: var(--bt-blue-100);
-}
-
-.icon-grid__item:active {
-  background: var(--bt-blue-200);
-}
-
-.icon-grid__item .if {
-  font-size: 1.25rem;
-  color: var(--bt-gray-700);
-}
-
-.icon-grid__item span {
-  font-size: 10px;
-  color: var(--bt-gray-500);
-  text-align: center;
-  line-height: 1.3;
-  word-break: break-all;
-  font-family: var(--bt-font-mono);
-}
-
-.icon-grid__item:hover .if,
-.icon-grid__item:hover span {
-  color: var(--bt-blue-900);
 }
 
 .icon-toast {

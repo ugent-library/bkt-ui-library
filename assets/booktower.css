@@ -696,11 +696,14 @@ code, kbd, pre, samp {
 }
 
 .alert--sticky {
+  display: block;
   border-radius: 0;
   border-top: 0;
   border-right: 0;
   border-left: 0;
   margin-bottom: 0;
+  grid-row: 1;
+  grid-column: 1/-1;
 }
 
 /* Alert variants — semantic colors + light backgrounds + borders */
@@ -1225,6 +1228,12 @@ code, kbd, pre, samp {
   cursor: pointer;
 }
 
+.bt-avatar--xsmall {
+  width: 20px;
+  height: 20px;
+  font-size: var(--bt-text-xs);
+}
+
 .bt-avatar--small {
   width: 28px;
   height: 28px;
@@ -1379,8 +1388,6 @@ code, kbd, pre, samp {
 }
 
 .bt-toolbar__item {
-  display: flex;
-  flex-wrap: wrap;
   min-width: 0;
 }
 
@@ -1500,92 +1507,19 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
 }
 
-/* ── bt-stepper ──────────────────────────────────────────────────────────────── */
-/* Used in u-layout--deposit (deposit-flow.html) */
-.bt-stepper {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.bt-stepper__item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.625rem;
-  padding: 0.4375rem 0.5rem;
-  border-radius: var(--bt-radius);
-  text-decoration: none;
-  color: var(--bt-gray-700);
-  font-size: var(--bt-text-sm);
-  line-height: 1.4;
-  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
-}
-
-.bt-stepper__item:hover {
-  background: var(--bt-bg-alt);
-  color: var(--bt-gray-1000);
-}
-
-.bt-stepper__item[aria-current=step] {
-  background: var(--bt-white);
-  color: var(--bt-blue-900);
-  font-weight: 500;
-  box-shadow: var(--bt-shadow-xs);
-}
-
-.bt-stepper__item--done {
-  color: var(--bt-green);
-}
-
-.bt-stepper__num {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  flex-shrink: 0;
-  margin-top: 0.05rem;
-}
-
-.bt-stepper__item--done .bt-stepper__num {
-  background: var(--bt-green);
-  border-color: var(--bt-green);
-  color: white;
-}
-
-.bt-stepper__item[aria-current=step] .bt-stepper__num {
-  background: var(--bt-blue-900);
-  border-color: var(--bt-blue-900);
-  color: white;
-}
-
-.bt-stepper__label {
-  flex: 1;
-}
-
-.bt-stepper__required {
-  color: var(--bt-danger);
-  font-size: var(--bt-text-xs);
-  font-weight: 400;
-  display: block;
-}
-
 /* ── bt-radio-card ───────────────────────────────────────────────────────────── */
 /* Used in deposit-flow.html publication type picker */
 .bt-radio-card__group {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: var(--bt-sp-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-3);
+  margin-bottom: var(--bt-sp-6);
 }
 
 .bt-radio-card {
-  position: relative;
   cursor: pointer;
-  display: block;
+  display: inline-block;
+  min-height: var(--bt-sp-8);
 }
 
 .bt-radio-card input[type=radio] {
@@ -1598,13 +1532,13 @@ code, kbd, pre, samp {
 .bt-radio-card__body {
   border: 1.5px solid var(--bt-gray-150);
   border-radius: var(--bt-radius-md);
-  padding: 0.75rem 0.875rem;
+  padding: var(--bt-sp-3);
   background: var(--bt-white);
   transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
   font-size: var(--bt-text-sm);
   font-weight: 500;
   color: var(--bt-gray-700);
-  line-height: 1.35;
+  line-height: 1;
   user-select: none;
 }
 
@@ -2070,6 +2004,13 @@ code, kbd, pre, samp {
 /* ── Suggestions panel ─────────────────────────────────────────────────── */
 .bt-suggest-panel {
   z-index: 999;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: var(--bt-sp-1);
+  background-color: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
 }
 
 /* ── Token suggestions panel ─────────────────────────────────────────────────── */
@@ -2138,40 +2079,73 @@ code, kbd, pre, samp {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   u-layout — Application layout shells
+   LAYOUT SHELLS — Two shells, fully modular with no class switching
 
-   Three shells:
+   ── 1. u-layout--public ──────────────────────────────────────────────────────
+   Normal website. Navbar + full-width scrolling content.
 
-   1. u-layout--app      topbar + left nav sidebar + main
-                         Backoffice pages of all types
+   ── 2. u-layout--app ─────────────────────────────────────────────────────────
+   Backoffice shell. Sticky navbar + sticky left sidebar + flexible main area.
 
-   2. u-layout--deposit  topbar + step navigator + content column
-                         Deposit (work create/edit) flow
+   THE MAIN AREA IS GRID-BASED — automatically adapts to content structure:
 
-   3. u-layout--public   topbar + full-width document
-                         Public search, detail, researcher, organisation pages
+   Add/remove these blocks as needed — NO CSS classes to toggle:
+     u-main__header      (optional)  ← sticky at top (never scrolls)
+     u-main__body                    ← middle layout row, fills available height
+     u-main__footer      (optional)  ← sticky at bottom (never scrolls)
 
-   ── Two main modes inside u-layout--app ─────────────────────────────────────
+   If the body needs a left sidebar (filters, facets):
+     .u-main__body                 ← grid row, auto-splits into columns
+       └─ .u-main__sidebar         ← left column (scrolls)
+       └─ .u-main__content         ← right column shell
+            ├─ .u-main__content-header  ← optional fixed pane header
+            └─ .u-main__content-body    ← scrollable pane body
 
-   Default main (simple pages: dashboard, settings, deposit detail):
-     main scrolls as a single unit — overflow-y: auto.
-     Content flows naturally to any height.
-     The page header sticks at the top via position:sticky on the border-bottom div.
-
-   u-main--search (search pages: backoffice-search, filter-first):
-     main does NOT scroll — overflow: hidden.
-     main is a flex column: sticky toolbar at top, bt-content-area fills the rest.
-     bt-content-area is a flex row:
-       - facet aside: fixed height, scrolls independently (overflow-y: auto)
-       - results column: fills width, scrolls independently (overflow-y: auto)
+   NO FLEX UTILITIES IN HTML. NO CLASS SWITCHING.
+   Just add/remove the blocks you need — CSS handles spacing automatically.
 
    ═══════════════════════════════════════════════════════════════════════════════ */
-/* ── 1. u-layout--app ───────────────────────────────────────────────────────── */
+/* ── 1. u-layout--public ─────────────────────────────────────────────────────── */
+.u-layout--public {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100vh;
+}
+
+.u-layout--public > main {
+  width: 100%;
+}
+
+.u-layout--public > main > .u-main__header,
+.u-layout--public > main > .u-main__body,
+.u-layout--public > main > .u-main__footer {
+  width: 100%;
+}
+
+.u-layout--public > main > .u-main__header {
+  overflow: visible;
+}
+
+.u-layout--public > main > .u-main__body {
+  display: block;
+  min-height: auto;
+  overflow: visible;
+}
+
+.u-layout--public .u-main__content,
+.u-layout--public .u-main__content-body {
+  display: block;
+  min-width: 0;
+  min-height: auto;
+  overflow: visible;
+}
+
+/* ── 2. u-layout--app ────────────────────────────────────────────────────────── */
 .u-layout--app {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr;
-  grid-template-areas: "navbar  navbar" "sidebar main";
+  grid-template-areas: "navbar  navbar navbar" "sidebar main   panel";
   height: 100vh;
   overflow: hidden;
 }
@@ -2180,72 +2154,114 @@ code, kbd, pre, samp {
   grid-area: navbar;
 }
 
-/* Left nav sidebar — scrolls independently within its grid area */
-.u-layout--app > .bt-sub-sidebar {
+/* Left column — nav sidebar */
+.u-layout--app > .bt-sidebar {
   grid-area: sidebar;
   height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
 }
 
-/* ── Default main: scrolls as a unit (dashboard, settings, advanced search) ─── */
+/* Main — grid-based, automatically adapts to content structure */
 .u-layout--app > main {
   grid-area: main;
   min-width: 0;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* header, body, footer */
+  overflow: hidden;
 }
 
-/* ── Search main: toolbar fixed, columns scroll independently ────────────────
-   Apply class="u-main--search" on <main> for search pages.
-   Structure expected inside:
-     div.border-bottom.flex-shrink-0   ← sticky toolbar, never scrolls
-     div.bt-content-area               ← fills remaining height, flex row
-       aside.bt-sub-sidebar            ← fixed, scrolls independently
-       div#results-body                ← fills width, scrolls independently
-────────────────────────────────────────────────────────────────────────────── */
-.u-layout--app > main.u-main--search {
-  overflow: hidden; /* main itself does not scroll */
-  display: flex;
-  flex-direction: column;
-}
-
-.u-main--search > .border-bottom {
-  flex-shrink: 0; /* toolbar never compresses */
-}
-
-.u-main--search > .bt-content-area {
-  flex: 1;
-  min-height: 0; /* allows flex children to shrink below content size */
-  overflow: hidden; /* clips columns to their allotted space */
-}
-
-/* ── bt-content-area ─────────────────────────────────────────────────────────
-   Flex row: facet sidebar + results column.
-   Used on search pages inside u-main--search.
-────────────────────────────────────────────────────────────────────────────── */
-.bt-content-area {
-  display: flex;
-}
-
-/* Facet sidebar: fixed height, scrolls independently */
-.bt-content-area > .bt-sub-sidebar {
-  overflow-y: auto;
-  height: 100%;
-}
-
-/* Results column: fills available width, scrolls independently */
-.bt-content-area > div,
-.bt-content-area > [id$=-body],
-.bt-content-area > [id$=-results] {
-  flex: 1;
+.u-layout--app > .u-main__panel {
+  grid-area: panel;
   min-width: 0;
+  width: 21rem;
+  max-width: min(24rem, 100vw);
   overflow-y: auto;
+  border-left: var(--bt-border);
+  background: var(--bt-bg-white);
 }
 
-/* ── bt-sub-sidebar ─────────────────────────────────────────────────────────── */
-.bt-sub-sidebar {
-  width: 16rem;
+/* ── Main area blocks (semantic naming, no utilities needed) ──────────────────── */
+/* Optional sticky header — title bar, primary toolbar, filters, etc. */
+.u-main__header {
+  grid-row: 1;
+  overflow-y: visible;
+  overflow-x: hidden;
+  border-bottom: var(--bt-border);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+  background: var(--bt-bg-white);
+}
+
+/* Required body — always occupies middle row */
+.u-main__body {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Optional sticky footer — pagination, action bar, bulk actions, etc. */
+.u-main__footer {
+  grid-row: 3;
+  overflow-y: visible;
+  overflow-x: hidden;
+  border-top: var(--bt-border);
+  background: var(--bt-bg-white);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+}
+
+/* Left sidebar inside body (filters, facets, etc.) */
+.u-main__body > .u-main__sidebar {
+  grid-column: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+  max-width: 250px;
+}
+
+.u-main__sidebar--border-right {
+  border-right: var(--bt-border);
+}
+
+.u-main__sidebar--border-left {
+  border-left: var(--bt-border);
+}
+
+/* Right area inside body (results, etc.) */
+.u-main__content {
+  grid-column: 2;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.u-main__content-header {
+  min-width: 0;
+  background: var(--bt-bg-white);
+  border-bottom: var(--bt-border);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+}
+
+.u-main__content-body {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+}
+
+.u-main__content-footer {
+  min-width: 0;
+  background: var(--bt-bg-white);
+  border-top: var(--bt-border);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+}
+
+/* ── bt-sidebar ───────────────────────────────────────────────────────────────── */
+.bt-sidebar {
+  width: 14rem;
   flex-shrink: 0;
   overflow-y: auto;
   padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-5);
@@ -2253,82 +2269,25 @@ code, kbd, pre, samp {
   overflow-x: hidden;
 }
 
-.bt-sub-sidebar--bordered {
+.bt-sidebar--bordered {
   border-right: var(--bt-border);
 }
 
-.bt-sub-sidebar--slim {
+.bt-sidebar--slim {
   width: 3.5rem;
   padding: var(--bt-sp-4) var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-1);
   overflow: visible;
 }
-.bt-sub-sidebar--slim .bt-sub-sidebar__group-label,
-.bt-sub-sidebar--slim .bt-sub-sidebar__label,
-.bt-sub-sidebar--slim .badge {
+.bt-sidebar--slim .bt-sidebar__group-label,
+.bt-sidebar--slim .bt-sidebar__label,
+.bt-sidebar--slim .badge {
   display: none;
 }
-.bt-sub-sidebar--slim .bt-sub-sidebar__toggle .if {
+.bt-sidebar--slim .bt-sidebar__toggle .if {
   rotate: 180deg;
 }
 
-/* Optional right panel */
-.u-layout--app.has-panel {
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas: "navbar  navbar  navbar" "sidebar main    panel";
-}
-
-/* ── 2. u-layout--deposit ───────────────────────────────────────────────────── */
-.u-layout--deposit {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas: "navbar  navbar" "stepper content";
-  min-height: 100vh;
-}
-
-.u-layout--deposit > .bt-navbar {
-  grid-area: navbar;
-}
-
-.u-layout--deposit > .bt-stepper {
-  grid-area: stepper;
-  position: sticky;
-  top: var(--s-topbar-height);
-  height: calc(100vh - var(--s-topbar-height));
-  overflow-y: auto;
-  width: 200px;
-  flex-shrink: 0;
-  border-right: var(--bt-border);
-  padding: var(--bt-sp-5) 0;
-}
-
-.u-layout--deposit > main {
-  grid-area: content;
-  min-width: 0;
-  padding: var(--bt-sp-8) var(--bt-sp-10);
-  max-width: 800px;
-}
-
-/* ── 3. u-layout--public ────────────────────────────────────────────────────── */
-.u-layout--public {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  min-height: 100vh;
-  /* No height constraint or overflow:hidden — public pages scroll as documents */
-}
-
-.u-layout--public > main {
-  width: 100%;
-}
-
-/* ── Misc backoffice ────────────────────────────────────────────────────────── */
-.bt-advanced-search-content {
-  max-width: 900px;
-}
-
-.bt-content-narrow {
-  max-width: 680px;
-} /* settings pages, narrow forms */
+/* ── Misc ─────────────────────────────────────────────────────────────────────── */
 .table {
   --bs-table-active-bg: var(--bt-blue-100);
   --bs-table-hover-bg: var(--bt-gray-50);

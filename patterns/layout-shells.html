@@ -3,59 +3,54 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Layout Shells</h1>
-    <p class="lead">Three CSS grid shells handle every page layout in the system. Each shell owns its topbar, optional sidebar, and main content area. They replace the old flex + <code>overflow: hidden</code> approach that broke sticky positioning.</p>
+    <p class="lead">Two layout shells handle every page in the system. Each shell owns its topbar and main content area. The backoffice shell can host either a navigation sidebar or a stepper alongside the same main structure.</p>
   </header>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">The three shells</h2>
-    <p class="mb-4">All shells use <code>--s-topbar-height</code> (52px, defined in <code>_surfaces.scss</code>) for sticky sidebar offsets. Public <code>&lt;main&gt;</code> uses Bootstrap <code>.container</code> inside it — the shell itself has no <code>max-width</code>.</p>
+    <h2 class="h4 mb-3">The two shells</h2>
+    <p class="mb-4">All shells use <code>--s-topbar-height</code> (52px, defined in <code>_surfaces.scss</code>) for sticky sidebar offsets. Public <code>&lt;main&gt;</code> uses Bootstrap <code>.container</code> inside it — the shell itself has no <code>max-width</code>. The app shell can also host an optional right-side <code>u-main__panel</code> for contextual actions.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--app — backoffice list/detail pages</h3></div>
       <div class="ds-demo-body bg-light p-3">
-       TODO without inline styling
+        <div class="border rounded bg-white p-3">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Structure</p>
+          <p class="mb-2"><code>bt-navbar</code> and <code>bt-sidebar</code> are shell regions. Inside <code>main</code>, use <code>u-main__header</code>, <code>u-main__body</code>, and optional <code>u-main__footer</code>.</p>
+          <p class="mb-2">When the body splits, <code>u-main__sidebar</code> scrolls on the left, while <code>u-main__content-body</code> scrolls inside the right pane between an optional pane header and pane footer.</p>
+          <p class="mb-0">If you need contextual actions next to the page, add an optional shell-level <code>u-main__panel</code> as a sibling of <code>main</code>.</p>
+        </div>
       </div>
     </div>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
   &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
-  &lt;nav class="bt-sub-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
+  &lt;nav class="bt-sidebar" aria-label="Section navigation"&gt;…&lt;/nav&gt;
   &lt;main id="main-content"&gt;
-    &lt;!-- bt-toolbar → bt-content-area --&gt;
+    &lt;div class="u-main__header"&gt;…&lt;/div&gt;
+    &lt;div class="u-main__body"&gt;
+      &lt;aside class="u-main__sidebar"&gt;…&lt;/aside&gt;
+      &lt;section class="u-main__content"&gt;
+        &lt;div class="u-main__content-header"&gt;…&lt;/div&gt;
+        &lt;div class="u-main__content-body"&gt;…&lt;/div&gt;
+        &lt;div class="u-main__content-footer"&gt;…&lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+    &lt;div class="u-main__footer"&gt;…&lt;/div&gt;
   &lt;/main&gt;
+  &lt;aside class="u-main__panel" aria-label="Actions"&gt;…&lt;/aside&gt;
 &lt;/div&gt;
-
-&lt;!-- Optional right panel --&gt;
-&lt;div class="u-layout--app has-panel" data-surface="backoffice"&gt;
-  &lt;header class="bt-navbar"&gt;…&lt;/header&gt;
-  &lt;nav class="bt-sub-sidebar"&gt;…&lt;/nav&gt;
-  &lt;main id="main-content"&gt;…&lt;/main&gt;
-  &lt;aside aria-label="Detail panel"&gt;…&lt;/aside&gt;
-&lt;/div&gt;</pre>
-    </div>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--deposit — deposit/add publication flow</h3></div>
-      <div class="ds-demo-body bg-light p-3">
-        REDO
-      </div>
-    </div>
-    <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="u-layout--deposit" data-surface="backoffice"&gt;
-  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
-  &lt;nav class="bt-stepper" aria-label="Deposit steps"&gt;…&lt;/nav&gt;
-  &lt;main id="main-content"&gt;
-    &lt;!-- form sections → action bar --&gt;
-  &lt;/main&gt;
-&lt;/div&gt;</pre>
+</pre>
     </div>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">u-layout--public — public search and record pages</h3></div>
       <div class="ds-demo-body bg-light p-3">
-        REDO
+        <div class="border rounded bg-white p-3">
+          <p class="small text-uppercase text-muted fw-semibold mb-2">Structure</p>
+          <p class="mb-2">Public pages use the same <code>u-main__header</code>, <code>u-main__body</code>, and optional <code>u-main__footer</code> blocks inside <code>main</code>.</p>
+          <p class="mb-0">The difference is behavioral: public layouts use normal document scrolling, and content width comes from Bootstrap <code>.container</code> elements inside those blocks.</p>
+        </div>
       </div>
     </div>
     <div class="ds-code">
@@ -63,7 +58,12 @@
 <pre>&lt;div class="u-layout--public" data-surface="public"&gt;
   &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
   &lt;main id="main-content"&gt;
-    &lt;!-- .container or bt-hero provides internal layout --&gt;
+    &lt;div class="u-main__header"&gt;
+      &lt;div class="container"&gt;…&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="u-main__body"&gt;
+      &lt;div class="container"&gt;…&lt;/div&gt;
+    &lt;/div&gt;
   &lt;/main&gt;
 &lt;/div&gt;</pre>
     </div>
@@ -76,7 +76,7 @@
       <div class="ds-code-bar"><span class="ds-code-lang">scss — _surfaces.scss</span><button class="ds-code-copy">Copy</button></div>
 <pre>
 /* In _layouts.scss — no fallback needed, token is always defined */
-.u-layout--app > .bt-sub-sidebar {
+.u-layout--app > .bt-sidebar {
   top: var(--s-topbar-height);
   height: calc(100vh - var(--s-topbar-height));
 }</pre>
@@ -89,11 +89,34 @@
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Stacking order</h3></div>
       <div class="ds-demo-body">
-        REDO
+        <div class="border rounded overflow-hidden">
+          <div class="border-bottom bg-white px-3 py-2"><code>.u-main__header</code> optional fixed page header</div>
+          <div class="d-grid" style="grid-template-columns: 16rem 1fr; min-height: 12rem;">
+            <div class="border-end bg-white px-3 py-3"><code>.u-main__sidebar</code> optional left pane</div>
+            <div class="d-grid" style="grid-template-rows: auto 1fr auto;">
+              <div class="border-bottom bg-white px-3 py-2"><code>.u-main__content-header</code> optional right-pane header</div>
+              <div class="px-3 py-3 bg-light"><code>.u-main__content-body</code> required scrolling pane body</div>
+              <div class="border-top bg-white px-3 py-2"><code>.u-main__content-footer</code> optional right-pane footer</div>
+            </div>
+          </div>
+          <div class="border-top bg-white px-3 py-2"><code>.u-main__footer</code> optional fixed page footer</div>
+        </div>
       </div>
     </div>
     <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html — inside u-layout--app main</span><button class="ds-code-copy">Copy</button></div><pre></pre>REDO</pre>
+      <div class="ds-code-bar"><span class="ds-code-lang">html — inside u-layout--app main</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;main id="main-content"&gt;
+  &lt;div class="u-main__header"&gt;...&lt;/div&gt;
+  &lt;div class="u-main__body"&gt;
+    &lt;aside class="u-main__sidebar"&gt;...&lt;/aside&gt;
+    &lt;section class="u-main__content"&gt;
+      &lt;div class="u-main__content-header"&gt;...&lt;/div&gt;
+      &lt;div class="u-main__content-body"&gt;...&lt;/div&gt;
+      &lt;div class="u-main__content-footer"&gt;...&lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+  &lt;div class="u-main__footer"&gt;...&lt;/div&gt;
+&lt;/main&gt;</pre>
     </div>
   </section>
 
@@ -104,13 +127,13 @@
       <div class="ds-code-bar"><span class="ds-code-lang">deprecated — do not use</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;!-- OLD — caused sticky to break inside overflow:hidden --&gt;
 &lt;div class="u-scroll-wrapper"&gt;
-  &lt;div class="bt-sidebar"&gt;…&lt;/div&gt;
+  &lt;div class="bt-legacy-sidebar"&gt;…&lt;/div&gt;
   &lt;div class="u-scroll-wrapper__body"&gt;…&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;!-- These classes no longer exist: --&gt;
 u-scroll-wrapper    u-scroll-wrapper__body
-bt-sidebar           u-maximize-height</pre>
+u-maximize-height</pre>
     </div>
   </section>
 

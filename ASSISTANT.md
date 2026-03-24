@@ -95,7 +95,7 @@ We build two things: a **public research repository** (anonymous users, read-hea
 
 ```
 Application navigation   ← bt-navbar primary nav
-Section navigation       ← bt-sub-sidebar
+Section navigation       ← bt-sidebar
 Breadcrumb               ← breadcrumb nav
 Filter by                ← bt-facets-col aside (use aria-label on <aside>)
 Results pagination       ← pagination nav
@@ -512,14 +512,11 @@ Note: Facet groups use Bootstrap `fieldset`/`legend` + `collapse` component + `f
 
 **Sub-sidebar navigation**
 ```
-bt-sub-sidebar           bt-sub-sidebar--bordered
+bt-sidebar               bt-sidebar--bordered
 ```
 
 **Backoffice list layout**
-```
-bt-content-area
-```
-Note: `bt-sub-sidebar` is the sticky `<aside>` wrapping the facet groups. Results column uses Bootstrap flex utilities directly (`flex-grow-1`, `overflow-y-auto`, `p-4`).
+Note: `bt-sidebar` is the sticky `<aside>` wrapping the facet groups. Results layouts now use `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header`, and `u-main__content-body`.
 Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
 
 **View toggle**
@@ -544,7 +541,6 @@ Note: BEM modifier double-dash (`--`). The old styleguide used single-dash — t
 
 **Deposit flow components**
 ```
-bt-stepper               bt-stepper__item         bt-stepper__item--done
 bt-stepper__num          bt-stepper__label        bt-stepper__required
 bt-radio-card            bt-radio-card__body      bt-radio-card__group
 bt-file-drop             bt-file-drop__icon       bt-file-drop__text
@@ -578,13 +574,8 @@ nav-title
 
 **Layout shells**
 ```
-u-layout--app           u-layout--deposit       u-layout--public
+u-layout--app           u-layout--public
 ```
-
-**Search pages inside `u-layout--app`** must add `u-main--search` to `<main>`.
-This switches from the default single-scroll model to the three-region model:
-toolbar sticks, facet sidebar scrolls its filters, results column scrolls independently.
-Without this class, `main` scrolls as a unit (correct for dashboard, settings, etc.).
 
 ### Classes that no longer exist — do not use
 
@@ -603,7 +594,6 @@ bt-results-col           (removed — use Bootstrap flex utilities on the result
 is-selected on <tr>     (use Bootstrap .table-active)
 td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
-bt-sidebar               (OLD narrow icon rail — removed in v2)
 u-maximize-height       (OLD layout utility — removed in v2)
 bt-facets                (removed — old custom CSS grid, replaced by Bootstrap fieldset/collapse)
 bt-facet-name            (removed — label now associates directly via form-check)
@@ -685,16 +675,13 @@ Three CSS grid shells live in `patterns/_layouts.scss`. All use `--s-topbar-heig
 
 | Shell | Used for | Children |
 |-------|----------|----------|
-| `u-layout--app` | Backoffice list/detail pages | `.bt-navbar` + `.bt-sub-sidebar` + `<main>` |
-| `u-layout--deposit` | Deposit flow | `.bt-navbar` + `.bt-stepper` + `<main>` |
+| `u-layout--app` | Backoffice pages, including deposit flows | `.bt-navbar` + `.bt-sidebar` + `<main>` |
 | `u-layout--public` | Public search/detail | `.bt-navbar` + `<main>` |
 
 Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell itself has no `max-width` or padding.
 
-`u-layout--app` supports an optional right panel with `.has-panel` on the shell.
-
 **Deprecated layout classes (OLD system — do not use):**
-`u-scroll-wrapper`, `u-scroll-wrapper__body`, `bt-sidebar`, `u-maximize-height`
+`u-scroll-wrapper`, `u-scroll-wrapper__body`, `u-maximize-height`
 
 ---
 
@@ -703,8 +690,8 @@ Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell 
 | Prefix | Meaning | Examples |
 |--------|---------|----------|
 | `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar` |
-| `bt-` | Component — no Bootstrap base | `bt-facets-col`, `bt-stepper`, `bt-blank-slate` |
-| `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--deposit` |
+| `bt-` | Component — no Bootstrap base | `bt-facets-col`, `bt-blank-slate` |
+| `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--public` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.
 

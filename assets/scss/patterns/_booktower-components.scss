@@ -184,6 +184,11 @@
   border: none;
   cursor: pointer;
 }
+.bt-avatar--xsmall {
+  width: 20px;
+  height: 20px;
+  font-size: var(--bt-text-xs);
+}
 .bt-avatar--small {
   width: 28px;
   height: 28px;
@@ -320,8 +325,6 @@
   flex-wrap: wrap;
 }
 .bt-toolbar__item {
-  display: flex;
-  flex-wrap: wrap;
   min-width: 0;
 }
 .bt-toolbar__right {
@@ -435,83 +438,18 @@
 }
 
 
-/* ── bt-stepper ──────────────────────────────────────────────────────────────── */
-/* Used in u-layout--deposit (deposit-flow.html) */
-.bt-stepper {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.bt-stepper__item {
-  display: flex;
-  align-items: flex-start;
-  gap: .625rem;
-  padding: .4375rem .5rem;
-  border-radius: var(--bt-radius);
-  text-decoration: none;
-  color: var(--bt-gray-700);
-  font-size: var(--bt-text-sm);
-  line-height: 1.4;
-  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
-}
-.bt-stepper__item:hover {
-  background: var(--bt-bg-alt);
-  color: var(--bt-gray-1000);
-}
-.bt-stepper__item[aria-current="step"] {
-  background: var(--bt-white);
-  color: var(--bt-blue-900);
-  font-weight: 500;
-  box-shadow: var(--bt-shadow-xs);
-}
-.bt-stepper__item--done {
-  color: var(--bt-green);
-}
-.bt-stepper__num {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  flex-shrink: 0;
-  margin-top: .05rem;
-}
-.bt-stepper__item--done .bt-stepper__num {
-  background: var(--bt-green);
-  border-color: var(--bt-green);
-  color: white;
-}
-.bt-stepper__item[aria-current="step"] .bt-stepper__num {
-  background: var(--bt-blue-900);
-  border-color: var(--bt-blue-900);
-  color: white;
-}
-.bt-stepper__label {
-  flex: 1;
-}
-.bt-stepper__required {
-  color: var(--bt-danger);
-  font-size: var(--bt-text-xs);
-  font-weight: 400;
-  display: block;
-}
-
-
 /* ── bt-radio-card ───────────────────────────────────────────────────────────── */
 /* Used in deposit-flow.html publication type picker */
 .bt-radio-card__group {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: var(--bt-sp-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-3);
+  margin-bottom: var(--bt-sp-6);
 }
 .bt-radio-card {
-  position: relative;
   cursor: pointer;
-  display: block;
+  display: inline-block;
+  min-height: var(--bt-sp-8);
 }
 .bt-radio-card input[type="radio"] {
   position: absolute;
@@ -522,13 +460,13 @@
 .bt-radio-card__body {
   border: 1.5px solid var(--bt-gray-150);
   border-radius: var(--bt-radius-md);
-  padding: .75rem .875rem;
+  padding: var(--bt-sp-3);
   background: var(--bt-white);
   transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
   font-size: var(--bt-text-sm);
   font-weight: 500;
   color: var(--bt-gray-700);
-  line-height: 1.35;
+  line-height: 1;
   user-select: none;
 }
 .bt-radio-card:hover .bt-radio-card__body {
@@ -899,7 +837,14 @@
 // TODO: turn this into an actual semantic component instead of using helper classes.
 
 .bt-suggest-panel {
-    z-index: 999;
+  z-index: 999;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: var(--bt-sp-1);
+  background-color: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
 }
 
 /* ── Token suggestions panel ─────────────────────────────────────────────────── */

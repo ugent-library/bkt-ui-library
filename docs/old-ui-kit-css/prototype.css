@@ -1,0 +1,528 @@
+@charset "UTF-8";
+/* purgecss start ignore */
+/* ==========================================================================
+  Bedrock specific styles
+   ========================================================================== */
+/* ==========================================================================
+  Variables override
+  Overide variables set in core/scss/prototype.scss with your own
+   ========================================================================== */
+/* Variables
+   ========================================================================== */
+/* ==========================================================================
+  Variables override
+  Overide variables set in core/scss/prototype.scss with your own
+   ========================================================================== */
+/* Fixed layout
+   ========================================================================== */
+.br-pagetree-fixed-wrapper {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 3000;
+}
+
+/* Basic setup
+   ========================================================================== */
+.br-styleguide-default-styles-active {
+  height: 100%;
+  position: static;
+}
+.br-styleguide-default-styles-active body {
+  height: 100%;
+  overflow: visible !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+.br-styleguide-default-styles-active .br-styleguide-navigation-holder {
+  box-sizing: border-box;
+  padding: 2.4rem 2.4rem 2.4rem 2.4rem;
+}
+.br-styleguide-default-styles-active .br-styleguide-content {
+  background: #fff;
+  box-sizing: border-box;
+  padding: 2.4rem 2.4rem 2.4rem 4.8rem;
+}
+
+/* ==========================================================================
+  br-prototype-nav
+   ========================================================================== */
+/* Sidebar
+   ========================================================================== */
+html.br-styleguide,
+.br-styleguide body {
+  margin: 0;
+}
+
+.br-prototype-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.br-prototype-content {
+  height: 100%;
+  flex: 1 1 100%;
+  overflow: auto;
+}
+
+html.br-prototype-nav-is-open {
+  position: relative;
+}
+
+.br-prototype-nav {
+  background-color: #fff;
+  line-height: 1.5;
+  z-index: 2000;
+  width: 250px;
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  text-align: left;
+  height: 100%;
+}
+.br-prototype-nav .br-prototype-nav-inner {
+  padding: 2rem;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.br-prototype-nav.br-prototype-nav-open {
+  display: flex;
+  box-shadow: 0.2rem 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.br-prototype-nav-text {
+  font-size: 1.3rem;
+  margin: 0;
+  padding: 0 0 0.6rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Headings (both on index page and in sidebar)
+   ========================================================================== */
+.br-prototype-nav-main-heading {
+  color: #000;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Index page
+   ========================================================================== */
+.br-prototype-nav-index {
+  padding: 2rem;
+}
+
+.br-prototype-nav-index-cols {
+  -moz-column-count: 3;
+       column-count: 3;
+}
+.br-prototype-nav-index-cols li {
+  -moz-column-break-inside: avoid;
+       break-inside: avoid;
+}
+
+/* Page states
+   ========================================================================== */
+.br-prototype-page-states {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0.2rem 0 0.5rem rgba(0, 0, 0, 0.3);
+  margin-top: auto;
+  padding: 2rem;
+}
+
+.br-tree-dir-state-count {
+  float: right;
+  padding: 0 0.4rem;
+  border-radius: 3px;
+  background-color: #eee;
+  font-size: 1.2rem;
+}
+
+/* Utilities
+   ========================================================================== */
+.br-reset-link-styling {
+  text-decoration: none;
+  color: #000;
+}
+
+/* Expanded/collapsed states for directories
+   Only in side navigation
+   ========================================================================== */
+.br-bordered-list {
+  list-style: none;
+  padding: 0;
+}
+
+.br-prototype-nav .br-bordered-list ul {
+  padding: 0 0 0 1.8rem;
+  list-style: none;
+}
+.br-prototype-nav .br-tree-dir .br-tree-dir-title {
+  margin: 0;
+  cursor: default;
+  font-weight: 400;
+}
+.br-prototype-nav .br-tree-dir .br-tree-dir-title:before {
+  content: "";
+  width: 0;
+  height: 0;
+  display: inline-block;
+  text-align: center;
+  border: 0;
+  border-left: 0.4rem solid transparent;
+  border-right: 0.4rem solid transparent;
+  border-top: 0.4rem solid #999;
+  margin-left: 0.2rem;
+  margin-right: 0.4rem;
+  position: relative;
+  top: -0.3rem;
+}
+.br-prototype-nav .br-tree-dir--is-collapsed * {
+  display: none;
+}
+.br-prototype-nav .br-tree-dir--is-collapsed > .br-tree-dir-title {
+  display: block;
+}
+.br-prototype-nav .br-tree-dir--is-collapsed > .br-tree-dir-title:before {
+  border: 0;
+  border-top: 0.4rem solid transparent;
+  border-bottom: 0.4rem solid transparent;
+  border-left: 0.4rem solid #999;
+  margin-left: 0.35rem;
+  margin-right: 0.65rem;
+  top: 0;
+}
+
+/* br-component
+   ========================================================================== */
+.br-component-header {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+/* br-sample
+   ========================================================================== */
+.br-sample {
+  padding: 1.2rem 0;
+}
+
+.br-sample-clearfix:before,
+.br-sample-clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.br-sample-clearfix:after {
+  clear: both;
+}
+
+.br-sample-btn {
+  background: #fff;
+  border: 1px solid #ddd;
+  display: inline-block;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+}
+.br-sample-btn:hover {
+  background: #fff;
+}
+
+.br-sample-footer {
+  position: relative;
+}
+
+/* Code related
+   ========================================================================== */
+.br-sample-code {
+  position: relative;
+}
+
+.br-sample-copy-code-btn {
+  position: absolute;
+  z-index: 3;
+  top: 1rem;
+  right: 1rem;
+  display: none;
+}
+.br-sample-code:hover .br-sample-copy-code-btn {
+  display: block;
+}
+
+.br-sample-markup {
+  margin-top: 1rem;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 1rem;
+}
+
+.br-sample-content {
+  background: #fff;
+  padding: 3rem;
+  border: 1px solid #ddd;
+  margin: 1rem 0;
+  position: relative;
+  overflow-y: hidden;
+  overflow-x: auto;
+  resize: both;
+}
+
+.br-sample-content-is-layout {
+  min-height: 500px;
+}
+
+.br-sample-header .br-sample-header-link {
+  float: right;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 1.6rem;
+  margin: 1rem 0;
+  padding: 0 0.2rem 0 0;
+}
+
+.br-sample-header .br-sample-heading {
+  float: left;
+  margin: 1rem 0;
+  padding: 0;
+}
+
+/* Hide the 2nd render of code, so that we can paste it cleanly without Prism's classes
+   ========================================================================== */
+.br-copy-paste {
+  display: none;
+}
+
+/* Color swatches
+   ========================================================================== */
+.br-color-swatch-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.br-color-swatch-item {
+  min-width: 150px;
+  display: inline-block;
+  margin: 0 1rem 1rem 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.br-color-swatch-preview {
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.br-color-swatch-data {
+  color: #888;
+  font-size: 1.3rem;
+}
+
+/* Typography
+   ========================================================================== */
+.br-typography-sample-size {
+  opacity: 0.4;
+}
+
+/* ==========================================================================
+  br-bordered-list
+   ========================================================================== */
+/* ==========================================================================
+  Variables
+   ========================================================================== */
+/* Bordered list
+   ========================================================================== */
+.br-bordered-list-title {
+  font-weight: 700;
+  padding: 0;
+  margin: 0 0 1.2rem;
+  font-size: 1.5rem;
+  padding: 0.2rem;
+}
+
+.br-tree-dir-title {
+  margin: 0;
+  font-size: 1.3rem;
+  padding: 0.4rem 0.2rem;
+}
+
+.br-bordered-list {
+  margin: 0;
+  padding: 0 0 1rem;
+}
+.br-bordered-list ul {
+  padding: 0 0 0 1rem;
+}
+.br-bordered-list li {
+  display: block;
+}
+.br-bordered-list li a,
+.br-bordered-list li span.br-bordered-list-label {
+  padding: 0.2rem;
+  font-size: 1.3rem;
+  display: block;
+}
+.br-bordered-list li a {
+  text-decoration: none;
+  border-bottom: 1px solid #ddd;
+}
+.br-bordered-list li a:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.br-bordered-list li a.br-bordered-list__link--active {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Improve styles for nav
+   ========================================================================== */
+.br-bordered-list li a {
+  border-bottom: 1px solid #ddd;
+  padding: 0.4rem;
+}
+.br-bordered-list li a:hover {
+  background-color: #f0f0f0;
+}
+.br-bordered-list li a.br-bordered-list__link--active {
+  background-color: #f0f0f0;
+}
+
+.br-styleguide-navigation-holder .br-bordered-list li a {
+  border-bottom: 1px solid #ddd;
+}
+.br-styleguide-navigation-holder .br-bordered-list li a:hover {
+  background-color: #fff;
+}
+.br-styleguide-navigation-holder .br-bordered-list li a.br-bordered-list__link--active {
+  background-color: #fff;
+}
+
+/* Category markers (on components)
+   To use: add “source: unofficial” to YAML front matter in component .md file
+   ========================================================================== */
+.br-sample-category {
+  background: #eee;
+  display: inline-block;
+  border-radius: 12px;
+  padding: 0.2rem 0.8rem;
+  font-size: 90%;
+  margin: 0 0 0 1rem;
+  position: relative;
+  top: 0.7rem;
+}
+
+/* Category markers (in sidebar)
+   Use case: determine which “official” components contain custom code
+   To use: add containsCustom: true to YAML front matter in _docs.md file on component level
+   ========================================================================== */
+.br-docs-category-marker-custom {
+  background: #ccc;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  float: right;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+  Grid layout
+   ========================================================================== */
+.br-styleguide-navigation-holder {
+  border-right: 1px solid #ddd;
+  background: #f5f5f5;
+}
+@media (min-width: 800px) {
+  .br-styleguide-navigation-holder {
+    overflow: auto;
+  }
+}
+
+.br-styleguide-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem;
+  background: #f5f5f5;
+  border-right: 1px solid #ddd;
+}
+
+.br-styleguide-navigation-holder {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+}
+
+.br-styleguide-search {
+  padding: 1.5rem;
+  background: #f5f5f5;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.br-styleguide-search input {
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .br-styleguide-content {
+    overflow: scroll;
+  }
+}
+.br-styleguide-container {
+  flex: 1 1 100%;
+  height: 100%;
+  display: flex;
+}
+.br-styleguide-container .br-styleguide-navigation-wrapper-ie {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 20%;
+}
+.br-styleguide-container .br-styleguide-content {
+  flex: 1 0 80%;
+}
+
+@supports (display: grid) {
+  .br-styleguide-container {
+    height: 100%;
+    display: grid;
+    grid-template-areas: "header" "search" "content" "sidebar";
+  }
+  @media (min-width: 800px) {
+    .br-styleguide-container {
+      grid-template-columns: 22% auto;
+      grid-template-rows: auto auto 1fr;
+      grid-template-areas: "header content content" "search content content" "sidebar content content";
+    }
+    .br-styleguide-container .br-styleguide-navigation-wrapper-ie {
+      display: contents;
+    }
+  }
+  .br-styleguide-container .br-styleguide-header {
+    grid-area: header;
+  }
+  .br-styleguide-container .br-styleguide-search {
+    grid-area: search;
+  }
+  .br-styleguide-container .br-styleguide-navigation-holder {
+    grid-area: sidebar;
+  }
+  .br-styleguide-container .br-styleguide-content {
+    grid-area: content;
+  }
+}
+/* Component group header
+   ========================================================================== */
+.br-componentgroup-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* purgecss end ignore */
+/*# sourceMappingURL=prototype.css.map */

@@ -45,7 +45,7 @@
   <main id="main-content" class="bt-bg">
 
     <!-- Page header -->
-    <div class="bg-white border-bottom px-5 py-4">
+    <div class="u-main__header bg-white border-bottom px-5 py-4">
       <nav aria-label="Breadcrumb">
         <ol class="breadcrumb small mb-2">
           <li class="breadcrumb-item"><a href="#">Settings</a></li>
@@ -60,7 +60,9 @@
       </p>
     </div>
 
-    <div class="px-5 py-5 bt-content-narrow">
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body px-5 py-5">
       <form method="post" action="/settings/scope" id="scope-form">
 
         <!-- ── Current scope summary ───────────────────────────────────────
@@ -174,6 +176,7 @@
                 class="position-absolute start-0 end-0 top-100 bg-white border rounded-3 shadow mt-1 overflow-hidden"
                 role="listbox"
                 aria-label="Organisation suggestions"
+                hx-on::after-swap="this.hidden = this.textContent.trim().length === 0; document.getElementById('org-search')?.setAttribute('aria-expanded', this.hidden ? 'false' : 'true')"
                 hidden>
                 <ul class="list-unstyled mb-0 py-1">
                   <li>
@@ -351,6 +354,8 @@
         </div>
 
       </form>
+        </div>
+      </section>
     </div>
 
   </main>

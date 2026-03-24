@@ -1,0 +1,398 @@
+<!-- @title: Add research output — Step 1: Deposit -->
+<!-- @surface: backoffice -->
+<!--
+  Deposit flow — Step 1
+
+  Go templ params needed:
+    work_id        string
+    title          string
+    kind_label     string
+    year           int
+    authors        []Contributor — {name, affiliation, linked bool}
+    files          []File
+    oa_status      string        — "open" | "embargo" | "closed"
+    embargo_date   string        — ISO date, only when oa_status = "embargo"
+    has_abstract   bool          — if false, show optional abstract prompt
+-->
+
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/partials/backoffice-header.html -->
+  <!-- @include: templates/partials/backoffice-sidebar.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h4">
+              Deposit research output
+            </h1>
+            <p class="lead">We'll look up the metadata for you. You only need to add the full text.</p>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="/dashboard" class="btn btn-ghost btn-sm">
+              <i class="if if-arrow-left" aria-hidden="true"></i>
+              Back to dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+      <ul class="list-unstyled pt-3 d-flex gap-4">
+        <li class="d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0">
+            1
+          </span>
+          Describe
+        </li>
+        <li class="d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
+            2
+          </span>
+          Upload
+        </li>
+        <li class="d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
+            3
+          </span>
+          Access &amp; Rights
+        </li>
+        <li class="d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
+            4
+          </span>
+          Review
+        </li>
+      </ul>
+    </div>
+    <div class="u-main__body">
+
+      <div class="u-main__content">
+        <div class="u-main__content-body">
+          <h2 class="h4 mb-4">Describe</h2>
+
+          <!-- Option 1: DOI -->
+          <section id="find" aria-labelledby="doi-heading" class="mb-5">
+            <h3 id="doi-heading" class="h6">Look up by DOI</h3>
+            <p class="text-muted small mb-3">Works best for journal articles, books, and conference papers.</p>
+
+            <form action="/deposit/import-doi" method="get"
+              hx-get="/deposit/import-doi"
+              hx-target="#import-result"
+              hx-swap="innerHTML"
+              hx-indicator="#doi-indicator">
+              <div class="row g-2 align-items-start">
+                <div class="col-7">
+                  <label for="doi-input" class="visually-hidden">DOI</label>
+                  <input type="text" id="doi-input" name="doi" class="form-control"
+                    placeholder="e.g. 10.1038/s41586-024-07528-7"
+                    autocomplete="off">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary">
+                    Look up
+                    <span id="doi-indicator" class="htmx-indicator ms-1">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-label="Looking up…"></span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- On success: server renders a found-record card with "Use this record" button -->
+            <!-- "Use this record" creates a draft and redirects to deposit-v2-upload.html -->
+            <div id="import-result" aria-live="polite" class="mt-3"></div>
+          </section>
+
+          <hr class="my-4">
+
+          <!-- Option 2: Other identifier -->
+          <!-- <section aria-labelledby="id-heading" class="mb-5">
+            <h3 id="id-heading" class="h6">Look up by another identifier</h3>
+            <p class="text-muted small mb-3">Use a PubMed ID, arXiv ID, ISBN, or handle.</p>
+
+            <form action="/deposit/import-id" method="get"
+              hx-get="/deposit/import-id"
+              hx-target="#import-result-id"
+              hx-swap="innerHTML"
+              hx-indicator="#id-indicator">
+              <div class="row g-2 align-items-start">
+                <div class="col-auto">
+                  <label for="id-type" class="visually-hidden">Identifier type</label>
+                  <select id="id-type" name="type" class="form-select">
+                    <option value="pmid">PubMed ID</option>
+                    <option value="arxiv">arXiv ID</option>
+                    <option value="isbn">ISBN</option>
+                    <option value="handle">Handle</option>
+                  </select>
+                </div>
+                <div class="col-5">
+                  <label for="id-input" class="visually-hidden">Identifier value</label>
+                  <input type="text" id="id-input" name="id" class="form-control"
+                    placeholder="Paste identifier here"
+                    autocomplete="off">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary">
+                    Look up
+                    <span id="id-indicator" class="htmx-indicator ms-1">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-label="Looking up…"></span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div id="import-result-id" aria-live="polite" class="mt-3"></div>
+          </section>
+
+          <hr class="my-4"> -->
+
+          <!-- Option 3: File import — WoS export or BibTeX -->
+          <!-- Bridge for services not yet directly connected (e.g. Web of Science) -->
+          <!-- <section aria-labelledby="file-import-heading" class="mb-5">
+            <h3 id="file-import-heading" class="h6">Import from a file</h3>
+            <p class="text-muted small mb-3">Use a Web of Science export (.txt) or BibTeX file (.bib). Works with any service that lets you export references.</p>
+
+            <form action="/deposit/import-file" method="post" enctype="multipart/form-data"
+              hx-post="/deposit/import-file"
+              hx-target="#import-result-file"
+              hx-swap="innerHTML"
+              hx-indicator="#file-import-indicator">
+              <div class="row g-2 align-items-start">
+                <div class="col-7">
+                  <label for="import-file" class="visually-hidden">Reference file (.txt or .bib)</label>
+                  <input type="file" id="import-file" name="file" class="form-control" accept=".txt,.bib">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary">
+                    Import
+                    <span id="file-import-indicator" class="htmx-indicator ms-1">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-label="Importing…"></span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </form> -->
+            <!-- On success: list of found records to select -->
+            <!-- <div id="import-result-file" aria-live="polite" class="mt-3"></div>
+          </section>
+
+          <hr class="my-4"> -->
+
+          <!-- Option 4: Manual entry -->
+          <!-- <section aria-labelledby="manual-heading" class="mb-5">
+            <h3 id="manual-heading" class="h6">Enter manually</h3>
+            <p class="text-muted small mb-3">No identifier available? Choose the type and fill in the details yourself.</p>
+
+            <form action="/deposit/new" method="post">
+              <div class="row g-2 align-items-end">
+                <div class="col-5">
+                  <label for="work-type" class="form-label">Type <span class="text-danger" aria-label="required">*</span></label>
+                  <select id="work-type" name="kind" class="form-select" required>
+                    <option value="" disabled selected>Choose a type…</option>
+                    <option value="journal_article">Journal article</option>
+                    <option value="book">Book</option>
+                    <option value="book_chapter">Book chapter</option>
+                    <option value="conference">Conference contribution</option>
+                    <option value="dissertation">Dissertation</option>
+                    <option value="dataset">Dataset</option>
+                    <option value="software">Software</option>
+                    <option value="miscellaneous">Miscellaneous</option>
+                  </select>
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-secondary">
+                    Continue
+                    <i class="if if-arrow-right" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </section> -->
+
+
+
+          <div id="confirm" aria-labelledby="confirm-heading">
+          <!-- Prefill notice -->
+          <div class="alert alert-primary mb-4" role="status">
+            <i class="if if-info-circle" aria-hidden="true"></i>
+            <strong>Metadata prefilled from Crossref</strong> via DOI <code>10.1002/ppp3.70125</code>. Review the fields below — only correct what's wrong.
+          </div>
+
+            <h2 id="confirm-heading" class="h6 fw-semibold mb-4">Does everything look right?</h2>
+
+            <!-- Authors — editable -->
+            <div class="mb-4">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <h3 class="h6 fw-semibold mb-0">Authors</h3>
+                <button type="button" class="btn btn-ghost btn-sm"
+                  hx-get="/deposit/add-author-form"
+                  hx-target="#author-form-area"
+                  hx-swap="innerHTML"
+                  hx-indicator="#author-load-indicator">
+                  <i class="if if-add if--sm" aria-hidden="true"></i>
+                  Add author
+                  <span id="author-load-indicator" class="htmx-indicator" aria-live="polite">Loading…</span>
+                </button>
+              </div>
+
+              <div id="author-list" class="d-flex flex-column gap-2" aria-live="polite">
+
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <span class="bt-avatar bt-avatar--small" aria-hidden="true">ER</span>
+                  <div class="flex-grow-1">
+                    <div class="small fw-semibold">Esperon-Rodriguez, Manuel</div>
+                    <div class="text-muted small">External</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Remove Esperon-Rodriguez, Manuel from authors">
+                    <i class="if if-delete if--sm" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <span class="bt-avatar bt-avatar--small" aria-hidden="true">KD</span>
+                  <div class="flex-grow-1">
+                    <div class="small fw-semibold">De Pauw, Karen</div>
+                    <div class="text-muted small">UGent — Department of Environment</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Remove De Pauw, Karen from authors">
+                    <i class="if if-delete if--sm" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <span class="bt-avatar bt-avatar--small" aria-hidden="true">JV</span>
+                  <div class="flex-grow-1">
+                    <div class="small fw-semibold">Van den Berg, Judith</div>
+                    <div class="text-muted small">External</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Remove Van den Berg, Judith from authors">
+                    <i class="if if-delete if--sm" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Author add form — appears here on HTMX swap -->
+              <div id="author-form-area" class="mt-2"></div>
+            </div>
+
+            <!--
+              Optional abstract prompt — shown when has_abstract = false.
+              In Go templ: render this block conditionally.
+              Not required to submit. Framed as a discoverability benefit.
+            -->
+            <div class="bg-white border rounded p-4 mb-5">
+              <h3 class="h6 fw-semibold mb-1">Add an abstract <span class="text-muted fw-normal">(optional)</span></h3>
+              <p class="text-muted small mb-3">No abstract was found for this record. Adding one improves discoverability in search.</p>
+              <label for="abstract" class="visually-hidden">Abstract</label>
+              <textarea class="form-control" id="abstract" rows="4"
+                placeholder="Paste or type the abstract here…"
+                hx-post="/deposit/save-abstract"
+                hx-trigger="change"
+                hx-target="#save-status"
+                hx-indicator="#save-spinner"></textarea>
+            </div>
+
+            <!-- Section: Type (completed) -->
+            <section id="type" aria-labelledby="type-heading" class="mb-6">
+              <h2 id="type-heading" class="h6">
+                Type
+                <span class="badge bg-success ms-auto">Completed</span>
+              </h2>
+              <div class="bt-radio-card__group">
+                <label class="bt-radio-card">
+                  <input type="radio" name="pub-type" value="journal-article" checked>
+                  <span class="bt-radio-card__body">Journal article</span>
+                </label>
+                <label class="bt-radio-card">
+                  <input type="radio" name="pub-type" value="book">
+                  <span class="bt-radio-card__body">Book</span>
+                </label>
+                <label class="bt-radio-card">
+                  <input type="radio" name="pub-type" value="book-chapter">
+                  <span class="bt-radio-card__body">Book chapter</span>
+                </label>
+                <label class="bt-radio-card">
+                  <input type="radio" name="pub-type" value="dataset">
+                  <span class="bt-radio-card__body">Dataset</span>
+                </label>
+                <label class="bt-radio-card">
+                  <input type="radio" name="pub-type" value="software">
+                  <span class="bt-radio-card__body">Software</span>
+                </label>
+              </div>
+            </section>
+
+            <!-- Section: Description (active) -->
+            <section id="description" aria-labelledby="desbt-heading" class="mb-6">
+              <h2 id="desbt-heading" class="h6 mb-2">Metadata</h2>
+
+              <div class="row g-3 mb-4">
+                <div class="col-8">
+                  <label for="journal" class="form-label">Journal</label>
+                  <input type="text" class="form-control" id="journal" value="Plants People Planet"
+                    hx-get="/suggest/journals"
+                    hx-trigger="keyup changed delay:300ms"
+                    hx-target="#journal-suggestions"
+                    hx-swap="innerHTML">
+                  <div id="journal-suggestions"></div>
+                </div>
+                <div class="col-4">
+                  <label for="year" class="form-label">Year <span class="text-danger" aria-label="required">*</span></label>
+                  <input type="number" class="form-control" id="year" value="2026" min="1000" max="2030" required>
+                </div>
+              </div>
+
+              <div class="row g-3 mb-4">
+                <div class="col-3">
+                  <label for="volume" class="form-label">Volume</label>
+                  <input type="text" class="form-control" id="volume" value="8">
+                </div>
+                <div class="col-3">
+                  <label for="issue" class="form-label">Issue</label>
+                  <input type="text" class="form-control" id="issue" value="1">
+                </div>
+                <div class="col-3">
+                  <label for="pages-from" class="form-label">Pages from</label>
+                  <input type="text" class="form-control" id="pages-from" value="14">
+                </div>
+                <div class="col-3">
+                  <label for="pages-to" class="form-label">Pages to</label>
+                  <input type="text" class="form-control" id="pages-to" value="19">
+                </div>
+              </div>
+            </section>
+
+            <!-- Action bar -->
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__right">
+                <div class="bt-toolbar__item">
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    hx-post="/deposit/save-draft"
+                    hx-target="#save-status"
+                    hx-indicator="#save-spinner">
+                    Save draft
+                    <span id="save-spinner" class="htmx-indicator">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
+                    </span>
+                  </button>
+                  <a href="deposit-v2-submitted.html" class="btn btn-primary">
+                    Submit
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

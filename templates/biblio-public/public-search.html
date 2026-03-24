@@ -21,7 +21,7 @@
 <main class="bg-white" id="main-content">
 
   <!-- ── Search bar ──────────────────────────────────────────────────────── -->
-  <div class="bg-white border-bottom pb-3 pt-5">
+  <div class="u-main__header bg-white border-bottom pb-3 pt-5">
     <div class="container">
 
       <form role="search"
@@ -65,7 +65,7 @@
           -->
           <div
             id="suggest-panel"
-            class="bt-suggest-panel position-absolute start-0 end-0 top-100 bg-white border rounded-3 shadow mt-1 overflow-hidden"
+            class="bt-suggest-panel"
             role="listbox"
             aria-label="Search suggestions"
             hidden>
@@ -94,10 +94,11 @@
   </div>
 
   <!-- ── Body: facets sidebar + results ─────────────────────────────────── -->
-  <div class="container">
-  <div class="bt-content-area pt-4">
+  <div class="u-main__body">
+  <div class="container py-4">
+  <div class="row g-5 align-items-start">
 
-    <aside class="bt-sub-sidebar p-0" aria-label="Filter results">
+    <aside class="col-lg-3" aria-label="Filter results">
 
       <!-- Access -->
       <fieldset>
@@ -252,7 +253,7 @@
     </aside>
 
     <!-- ── Results ─────────────────────────────────────────────────────── -->
-    <div class="flex-grow-1 overflow-hidden ps-5" id="search-results">
+    <div class="col-lg-9" id="search-results">
 
       <div class="bt-toolbar mb-4">
         <div class="bt-toolbar__left">
@@ -468,8 +469,9 @@
       </nav>
 
     </div><!-- /results -->
-  </div><!-- /bt-content-area -->
+  </div><!-- /row -->
   </div><!-- /container -->
+  </div>
 
 </main>
 </div>

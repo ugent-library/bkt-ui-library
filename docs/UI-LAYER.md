@@ -53,8 +53,27 @@ Key layout shells:
 | Class | Used for |
 |-------|----------|
 | `u-layout--app` | Backoffice list and detail pages |
-| `u-layout--deposit` | Deposit (work create/edit) flow |
 | `u-layout--public` | Public search and detail pages |
+
+Backoffice pages use this main-area contract inside `u-layout--app`:
+
+```html
+<main id="main-content">
+  <div class="u-main__header">...</div>
+  <div class="u-main__body">
+    <aside class="u-main__sidebar">...</aside>
+    <section class="u-main__content">
+      <div class="u-main__content-header">...</div>
+      <div class="u-main__content-body">...</div>
+      <div class="u-main__content-footer">...</div>
+    </section>
+  </div>
+  <div class="u-main__footer">...</div>
+</main>
+<aside class="u-main__panel">...</aside>
+```
+
+Use `u-main__header`, `u-main__sidebar`, `u-main__content-header`, `u-main__content-footer`, `u-main__footer`, and `u-main__panel` only when needed. `u-main__body` is the required middle row, and `u-main__content-body` is the right-pane scroll container when the body is split.
 
 ---
 
@@ -76,10 +95,10 @@ The `templates/` directory in `booktower-ui-library` contains full-page prototyp
 
 | Prototype | Go templ equivalent |
 |-----------|-------------------|
-| `templates/backoffice-search.html` | Backoffice work list view |
-| `templates/research-detail.html` | Public work detail page |
-| `templates/deposit-flow.html` | Work create/edit (deposit) |
-| `templates/public-search.html` | Public search page |
+| `templates/biblio-backoffice/backoffice-search-filter-first.html` | Backoffice search/list view |
+| `templates/biblio-backoffice/deposit-v2-upload.html` | Deposit flow step |
+| `templates/biblio-public/public-search.html` | Public search page |
+| `templates/biblio-public/public-project.html` | Public detail page |
 
 HTMX URLs in prototypes are stubs (`hx-get="/search"`, etc.). The corresponding real endpoints in `bbl/app/*_handlers.go` are the production wiring.
 

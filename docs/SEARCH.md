@@ -44,21 +44,22 @@ Used in backoffice where curators need to narrow large datasets systematically.
 
 ## Layout Modes
 
-### u-main--search
-Applied to `<main>` on search pages for independent column scrolling.
+Backoffice search uses the standard `u-layout--app` shell:
 
 ```html
-<main class="u-main--search">
-  <div class="border-bottom flex-shrink-0"><!-- toolbar, never scrolls --></div>
-  <div class="bt-content-area"><!-- flex row -->
-    <aside class="bt-sub-sidebar"><!-- facets, scrolls independently --></aside>
-    <div id="results-body"><!-- results, scrolls independently --></div>
+<main id="main-content">
+  <div class="u-main__header"><!-- page-level toolbar --></div>
+  <div class="u-main__body">
+    <aside class="u-main__sidebar"><!-- facets --></aside>
+    <section class="u-main__content">
+      <div class="u-main__content-header"><!-- results toolbar --></div>
+      <div class="u-main__content-body"><!-- results list --></div>
+    </section>
   </div>
 </main>
 ```
 
-### Standard Main
-Default layout where main scrolls as a unit (dashboard, settings, detail pages).
+Detail and dashboard pages use the same shell without the split sidebar.
 
 ## Event System
 

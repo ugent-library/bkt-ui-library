@@ -7,30 +7,38 @@
 
 <!-- @include: templates/partials/backoffice-sidebar.html -->
 
-  <main id="main-content" class="bt-bg">
+  <main id="main-content">
 
     <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
-    <!-- Page header — white, sits above the grey canvas -->
-    <span class="alert alert-success alert--small py-2 alert--sticky">
-      <i class="if if-service me-2"></i>
-      <small><strong>12 items</strong> auto-resolved this week</small>
-    </span>
-    <div class="bg-white border-bottom px-5 py-4">
-      <div class="d-flex align-items-center justify-content-between">
-        <div>
-          <h1 class="h5 fw-semibold mb-0">Inbox</h1>
-          <p class="small text-muted mb-0 mt-1">Registration and deposit office for the Academic Bibliography of Ghent University.</p>
+    <!-- <div class="u-main__alert">
+      TODO: turn into component
+      <span class="alert alert-success alert--small py-2 alert--sticky">
+        <i class="if if-service me-2"></i>
+        <small><strong>12 items</strong> auto-resolved this week</small>
+      </span>
+    </div> -->
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h5 fw-semibold mb-0">Inbox</h1>
+            <p class="small text-muted mb-0 mt-1">Registration and deposit office for the Academic Bibliography of Ghent University.</p>
+          </div>
         </div>
-        <a href="#" class="btn btn-primary btn-sm">
-          <i class="if if-add if--sm" aria-hidden="true"></i>
-          Add research output
-        </a>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="#" class="btn btn-primary btn-sm">
+              <i class="if if-add if--sm" aria-hidden="true"></i>
+              Add research output
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 
-
-    <!-- Canvas -->
-    <div class="px-5 py-5">
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg">
 
       <!-- ============================================================
            ROW 1 — Inbox + Added on your behalf, side by side
@@ -304,8 +312,10 @@
           </section>
 
         </div>
-      </div>
+      </section>
 
+        </div>
+      </div>
     </div>
   </main>
 </div>

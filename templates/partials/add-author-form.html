@@ -9,7 +9,7 @@
 
   Production:
     hx-get="/people/search" on the input returns people-search-results.html.
-    POST to /deposit/authors returns an updated #author-list-area partial.
+    POST to /deposit/authors returns updated #author-list content.
 
   Prototype:
     people-search-stub.js intercepts the input event and serves results
@@ -123,7 +123,7 @@
     <button type="button" class="btn btn-primary btn-sm"
       hx-post="/deposit/authors"
       hx-include="#add-author-form"
-      hx-target="#author-list-area"
+      hx-target="#author-list"
       hx-swap="innerHTML">
       <i class="if if-check if--sm" aria-hidden="true"></i>
       Add author
