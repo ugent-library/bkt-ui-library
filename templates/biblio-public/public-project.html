@@ -30,362 +30,362 @@
 <!-- @include: templates/partials/public-header.html -->
 
 <div class="u-layout--public" data-surface="public">
-<main id="main-content">
+  <main id="main-content">
 
-  <!-- Project header -->
-  <div class="u-main__header border-bottom">
-    <div class="container py-5">
+    <!-- Project header -->
+    <div class="u-main__header border-bottom">
+      <div class="container py-5">
 
-      <nav aria-label="Breadcrumb" class="mb-4">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
-          <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Urban green infrastructure…</li>
-        </ol>
-      </nav>
+        <nav aria-label="Breadcrumb" class="mb-4">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
+            <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Urban green infrastructure…</li>
+          </ol>
+        </nav>
 
-      <article aria-labelledby="project-title">
+        <article aria-labelledby="project-title">
 
-        <!-- Type label + status -->
-        <div class="d-flex flex-wrap gap-2 mb-3">
-          <span class="badge bg-primary">Research project</span>
-          <span class="badge bg-success">Active</span>
-        </div>
-
-        <h1 id="project-title" class="mb-3">
-          Urban green infrastructure and climate adaptation in Flemish cities
-        </h1>
-
-        <!-- Funder + grant number — prominent trust signal -->
-        <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
-          <div class="d-flex align-items-center gap-2">
-            <i class="if if-building" aria-hidden="true"></i>
-            <a href="https://www.fwo.be" rel="noopener noreferrer" class="fw-semibold">
-              Research Foundation – Flanders (FWO)
-            </a>
-          </div>
-          <div class="bt-navbar__sep" aria-hidden="true"></div>
-          <span class="text-muted">Grant <code>G001234N</code></span>
-          <div class="bt-navbar__sep" aria-hidden="true"></div>
-          <div class="d-flex align-items-center gap-1 text-muted">
-            <i class="if if-calendar" aria-hidden="true"></i>
-            <span>
-              <time datetime="2023-01-01">January 2023</time>
-              –
-              <time datetime="2027-12-31">December 2027</time>
-            </span>
-          </div>
-        </div>
-
-        <!-- Quick stats -->
-        <ul class="list-unstyled d-flex flex-wrap gap-4 mb-0" aria-label="Project summary">
-          <li>
-            <span class="fw-semibold">23</span>
-            <span class="text-muted">research output</span>
-          </li>
-          <li>
-            <span class="fw-semibold">18</span>
-            <span class="text-muted">open access</span>
-          </li>
-          <li>
-            <span class="fw-semibold">4</span>
-            <span class="text-muted">team members</span>
-          </li>
-        </ul>
-
-      </article>
-    </div>
-  </div>
-
-  <!-- Main content -->
-  <div class="u-main__body">
-  <div class="container py-5">
-    <div class="row g-5">
-
-      <!-- Left: description + research output -->
-      <div class="col-lg-8">
-
-        <!-- Abstract / description -->
-        <section aria-labelledby="description-heading" class="mb-5">
-          <h2 id="description-heading" class="h4 mb-3">About this project</h2>
-          <p class="lead">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
-          <p>The project combines field measurements, remote sensing data and urban climate modelling to quantify the cooling, flood mitigation and biodiversity co-benefits of diverse urban green infrastructure typologies. Outcomes include evidence-based planning guidelines and open datasets for policymakers and urban designers.</p>
-        </section>
-
-        <!-- Research output -->
-        <section aria-labelledby="output-heading">
-          <div class="bt-toolbar mb-3">
-            <div class="bt-toolbar__left">
-              <h2 id="output-heading" class="h4 mb-0">Research output</h2>
-              <span class="text-muted" aria-live="polite" id="project-output-count">23 works</span>
-            </div>
-            <div class="bt-toolbar__right">
-              <div class="bt-toolbar__item">
-                <!-- @include: templates/partials/result-filter-bar.html -->
-              </div>
-            </div>
+          <!-- Type label + status -->
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span class="badge bg-primary">Research project</span>
+            <span class="badge bg-success">Active</span>
           </div>
 
-          <div
-            hx-get="/projects/fwo-g001234n/works"
-            hx-trigger="load"
-            hx-target="#project-output-list"
-            hx-indicator="#output-loading">
-          </div>
-          <span id="output-loading" class="htmx-indicator" aria-live="polite">Loading research output…</span>
+          <h1 id="project-title" class="mb-3">
+            Urban green infrastructure and climate adaptation in Flemish cities
+          </h1>
 
-          <div id="project-output-list">
-
-            <!-- Year group: 2026 -->
-            <div class="my-5">
-              <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2026</h3>
-
-              <article class="card-research" aria-labelledby="card-title-proj-01">
-                <div class="card-meta">
-                  <span class="badge-oa">Open access</span>
-                  <span class="badge bg-primary">Journal article</span>
-                </div>
-                <div class="card-actions">
-                  <a href="/research/01K9XTVXD41Z" class="btn btn-ghost btn-sm"
-                     aria-label="View: Urban forests as essential infrastructure for climate resilience">
-                    <i class="if if-eye" aria-hidden="true"></i> View
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h4 id="card-title-proj-01" class="card-title">
-                    <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
-                  </h4>
-                  <p class="card-authors">
-                    <a href="/persons/esperon-rodriguez">Esperon‑Rodriguez, M.</a>,
-                    <a href="/persons/stefan-arndt">Arndt, S.</a>,
-                    <a href="/persons/karen-de-pauw">De Pauw, K.</a>
-                    <span class="text-muted">et al.</span>
-                  </p>
-                  <p class="card-publication">
-                    <span>2026</span> ·
-                    <a href="#">Plants People Planet</a> ·
-                    <span>8(1) · pp. 14–19</span>
-                  </p>
-                </div>
-              </article>
-
-            </div>
-
-            <!-- Year group: 2025 -->
-            <div class="mb-5">
-              <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2025</h3>
-
-              <article class="card-research" aria-labelledby="card-title-proj-02">
-                <div class="card-meta">
-                  <span class="badge-oa">Open access</span>
-                  <span class="badge bg-primary">Journal article</span>
-                </div>
-                <div class="card-actions">
-                  <a href="#" class="btn btn-ghost btn-sm"
-                     aria-label="View: Green infrastructure planning in urban heat islands">
-                    <i class="if if-eye" aria-hidden="true"></i> View
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h4 id="card-title-proj-02" class="card-title">
-                    <a href="#">Green infrastructure planning in urban heat islands: lessons from Belgian cities</a>
-                  </h4>
-                  <p class="card-authors">
-                    <a href="/persons/karen-de-pauw">De Pauw, K.</a>,
-                    <a href="/persons/sander-vanderhaegen">Vanderhaegen, S.</a>
-                  </p>
-                  <p class="card-publication">
-                    <span>2025</span> ·
-                    <a href="#">Urban Forestry &amp; Urban Greening</a> ·
-                    <span>89 · p.128421</span>
-                  </p>
-                </div>
-              </article>
-
-              <article class="card-research" aria-labelledby="card-title-proj-03">
-                <div class="card-meta">
-                  <span class="badge-oa">Open access</span>
-                  <span class="badge bg-primary">Dataset</span>
-                </div>
-                <div class="card-actions">
-                  <a href="#" class="btn btn-ghost btn-sm"
-                     aria-label="View: Urban tree canopy cover measurements Belgium 2019–2024">
-                    <i class="if if-eye" aria-hidden="true"></i> View
-                  </a>
-                </div>
-                <div class="card-body">
-                  <h4 id="card-title-proj-03" class="card-title">
-                    <a href="#">Urban tree canopy cover measurements Belgium 2019–2024</a>
-                  </h4>
-                  <p class="card-authors">
-                    <a href="/persons/karen-de-pauw">De Pauw, K.</a>,
-                    <a href="/persons/jonas-maes">Maes, J.</a>
-                  </p>
-                  <p class="card-publication">
-                    <span>2025</span> ·
-                    <a href="#">Zenodo</a>
-                  </p>
-                </div>
-              </article>
-
-            </div>
-
-          </div><!-- /project-output-list -->
-
-          <!-- Pagination -->
-          <nav aria-label="Research output pagination" class="mt-4">
-            <ul class="pagination">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#" aria-current="page">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next page">›</a>
-              </li>
-            </ul>
-          </nav>
-
-        </section>
-
-      </div>
-
-      <!-- Right: sidebar -->
-      <div class="col-lg-4">
-
-        <!-- Team — roles are semantically meaningful (PI vs researcher matters for grant reporting) -->
-        <section aria-labelledby="team-heading" class="mb-5">
-          <h2 id="team-heading" class="h5 mb-3">Project team</h2>
-          <ul class="list-unstyled d-flex flex-column gap-3">
-
-            <li class="d-flex align-items-start gap-2">
-              <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">KD</span>
-              <div>
-                <a href="/persons/karen-de-pauw" class="fw-semibold text-decoration-none d-block">De Pauw, Karen</a>
-                <span class="small text-muted">Principal investigator</span><br>
-                <span class="small text-muted">
-                  <a href="/organisations/dept-environment">Department of Environment</a>
-                </span>
-              </div>
-            </li>
-
-            <li class="d-flex align-items-start gap-2">
-              <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">SA</span>
-              <div>
-                <a href="/persons/stefan-arndt" class="fw-semibold text-decoration-none d-block">Arndt, Stefan</a>
-                <span class="small text-muted">Researcher</span><br>
-                <span class="small text-muted">
-                  <a href="/organisations/dept-environment">Department of Environment</a>
-                </span>
-              </div>
-            </li>
-
-            <li class="d-flex align-items-start gap-2">
-              <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">JM</span>
-              <div>
-                <a href="/persons/jonas-maes" class="fw-semibold text-decoration-none d-block">Maes, Jonas</a>
-                <span class="small text-muted">Doctoral researcher</span><br>
-                <span class="small text-muted">
-                  <a href="/organisations/dept-environment">Department of Environment</a>
-                </span>
-              </div>
-            </li>
-
-            <li class="d-flex align-items-start gap-2">
-              <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">SV</span>
-              <div>
-                <a href="/persons/sander-vanderhaegen" class="fw-semibold text-decoration-none d-block">Vanderhaegen, Sander</a>
-                <span class="small text-muted">Postdoctoral researcher</span><br>
-                <span class="small text-muted">
-                  <a href="/organisations/dept-environment">Department of Environment</a>
-                </span>
-              </div>
-            </li>
-
-          </ul>
-        </section>
-
-        <!-- Funder metadata -->
-        <section aria-labelledby="funding-heading" class="mb-5">
-          <h2 id="funding-heading" class="h5 mb-3">Funding</h2>
-          <dl class="bt-dl">
-            <dt>Funder</dt>
-            <dd>
-              <a href="https://www.fwo.be" rel="noopener noreferrer">
+          <!-- Funder + grant number — prominent trust signal -->
+          <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+            <div class="d-flex align-items-center gap-2">
+              <i class="if if-building" aria-hidden="true"></i>
+              <a href="https://www.fwo.be" rel="noopener noreferrer" class="fw-semibold">
                 Research Foundation – Flanders (FWO)
               </a>
-            </dd>
-            <dt>Grant number</dt>
-            <dd><code>G001234N</code></dd>
-            <dt>Programme</dt>
-            <dd>FWO Research project</dd>
-            <dt>Period</dt>
-            <dd>
-              <time datetime="2023-01-01">January 2023</time>
-              –
-              <time datetime="2027-12-31">December 2027</time>
-            </dd>
-          </dl>
-        </section>
-
-        <!-- Host organisation -->
-        <section aria-labelledby="host-heading" class="mb-5">
-          <h2 id="host-heading" class="h5 mb-3">Host organisation</h2>
-          <ul class="list-unstyled mb-0">
-            <li><a href="/organisations/ghent-university">Ghent University</a></li>
-            <li><a href="/organisations/faculty-bioscience-engineering">Faculty of Bioscience Engineering</a></li>
-            <li><a href="/organisations/dept-environment">Department of Environment</a></li>
-          </ul>
-        </section>
-
-        <!-- Persistent link + data access -->
-        <div class="p-3 bg-white border rounded mb-4">
-          <span class="form-label d-block mb-2">Persistent link</span>
-          <div class="d-flex gap-2 align-items-start">
-            <code class="small">https://biblio.ugent.be/project/fwo-g001234n</code>
-            <button type="button" class="btn btn-ghost btn-sm px-2 flex-shrink-0"
-              aria-label="Copy persistent link"
-              onclick="navigator.clipboard.writeText('https://biblio.ugent.be/project/fwo-g001234n');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
-              <i class="if if-copy" aria-hidden="true"></i>
-            </button>
+            </div>
+            <div class="bt-navbar__sep" aria-hidden="true"></div>
+            <span class="text-muted">Grant <code>G001234N</code></span>
+            <div class="bt-navbar__sep" aria-hidden="true"></div>
+            <div class="d-flex align-items-center gap-1 text-muted">
+              <i class="if if-calendar" aria-hidden="true"></i>
+              <span>
+                <time datetime="2023-01-01">January 2023</time>
+                –
+                <time datetime="2027-12-31">December 2027</time>
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div class="p-3 bg-white border rounded">
-          <span class="form-label d-block mb-2">Data &amp; API</span>
-          <ul class="list-unstyled mb-0 d-flex flex-column gap-1">
+          <!-- Quick stats -->
+          <ul class="list-unstyled d-flex flex-wrap gap-4 mb-0" aria-label="Project summary">
             <li>
-              <a href="/projects/fwo-g001234n.json" class="d-flex align-items-center gap-1 small">
-                <i class="if if-download if--xs" aria-hidden="true"></i>
-                Export research output (JSON)
-              </a>
+              <span class="fw-semibold">23</span>
+              <span class="text-muted">research output</span>
             </li>
             <li>
-              <a href="/projects/fwo-g001234n.bib" class="d-flex align-items-center gap-1 small">
-                <i class="if if-download if--xs" aria-hidden="true"></i>
-                Export research output (BibTeX)
-              </a>
+              <span class="fw-semibold">18</span>
+              <span class="text-muted">open access</span>
             </li>
             <li>
-              <a href="https://biblio.ugent.be/oai?verb=ListRecords&set=project:fwo-g001234n"
-                 class="d-flex align-items-center gap-1 small"
-                 rel="noopener noreferrer">
-                <i class="if if-external-link if--xs" aria-hidden="true"></i>
-                OAI-PMH set
-              </a>
+              <span class="fw-semibold">4</span>
+              <span class="text-muted">team members</span>
             </li>
           </ul>
+
+        </article>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="u-main__body">
+    <div class="container py-5">
+      <div class="row g-5">
+
+        <!-- Left: description + research output -->
+        <div class="col-lg-8">
+
+          <!-- Abstract / description -->
+          <section aria-labelledby="description-heading" class="mb-5">
+            <h2 id="description-heading" class="h4 mb-3">About this project</h2>
+            <p class="lead">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
+            <p>The project combines field measurements, remote sensing data and urban climate modelling to quantify the cooling, flood mitigation and biodiversity co-benefits of diverse urban green infrastructure typologies. Outcomes include evidence-based planning guidelines and open datasets for policymakers and urban designers.</p>
+          </section>
+
+          <!-- Research output -->
+          <section aria-labelledby="output-heading">
+            <div class="bt-toolbar mb-3">
+              <div class="bt-toolbar__left">
+                <h2 id="output-heading" class="h4 mb-0">Research output</h2>
+                <span class="text-muted" aria-live="polite" id="project-output-count">23 works</span>
+              </div>
+              <div class="bt-toolbar__right">
+                <div class="bt-toolbar__item">
+                  <!-- @include: templates/partials/result-filter-bar.html -->
+                </div>
+              </div>
+            </div>
+
+            <div
+              hx-get="/projects/fwo-g001234n/works"
+              hx-trigger="load"
+              hx-target="#project-output-list"
+              hx-indicator="#output-loading">
+            </div>
+            <span id="output-loading" class="htmx-indicator" aria-live="polite">Loading research output…</span>
+
+            <div id="project-output-list">
+
+              <!-- Year group: 2026 -->
+              <div class="my-5">
+                <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2026</h3>
+
+                <article class="card-research" aria-labelledby="card-title-proj-01">
+                  <div class="card-meta">
+                    <span class="badge-oa">Open access</span>
+                    <span class="badge bg-primary">Journal article</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="/research/01K9XTVXD41Z" class="btn btn-ghost btn-sm"
+                      aria-label="View: Urban forests as essential infrastructure for climate resilience">
+                      <i class="if if-eye" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h4 id="card-title-proj-01" class="card-title">
+                      <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
+                    </h4>
+                    <p class="card-authors">
+                      <a href="/persons/esperon-rodriguez">Esperon‑Rodriguez, M.</a>,
+                      <a href="/persons/stefan-arndt">Arndt, S.</a>,
+                      <a href="/persons/karen-de-pauw">De Pauw, K.</a>
+                      <span class="text-muted">et al.</span>
+                    </p>
+                    <p class="card-publication">
+                      <span>2026</span> ·
+                      <a href="#">Plants People Planet</a> ·
+                      <span>8(1) · pp. 14–19</span>
+                    </p>
+                  </div>
+                </article>
+
+              </div>
+
+              <!-- Year group: 2025 -->
+              <div class="mb-5">
+                <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">2025</h3>
+
+                <article class="card-research" aria-labelledby="card-title-proj-02">
+                  <div class="card-meta">
+                    <span class="badge-oa">Open access</span>
+                    <span class="badge bg-primary">Journal article</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="#" class="btn btn-ghost btn-sm"
+                      aria-label="View: Green infrastructure planning in urban heat islands">
+                      <i class="if if-eye" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h4 id="card-title-proj-02" class="card-title">
+                      <a href="#">Green infrastructure planning in urban heat islands: lessons from Belgian cities</a>
+                    </h4>
+                    <p class="card-authors">
+                      <a href="/persons/karen-de-pauw">De Pauw, K.</a>,
+                      <a href="/persons/sander-vanderhaegen">Vanderhaegen, S.</a>
+                    </p>
+                    <p class="card-publication">
+                      <span>2025</span> ·
+                      <a href="#">Urban Forestry &amp; Urban Greening</a> ·
+                      <span>89 · p.128421</span>
+                    </p>
+                  </div>
+                </article>
+
+                <article class="card-research" aria-labelledby="card-title-proj-03">
+                  <div class="card-meta">
+                    <span class="badge-oa">Open access</span>
+                    <span class="badge bg-primary">Dataset</span>
+                  </div>
+                  <div class="card-actions">
+                    <a href="#" class="btn btn-ghost btn-sm"
+                      aria-label="View: Urban tree canopy cover measurements Belgium 2019–2024">
+                      <i class="if if-eye" aria-hidden="true"></i> View
+                    </a>
+                  </div>
+                  <div class="card-body">
+                    <h4 id="card-title-proj-03" class="card-title">
+                      <a href="#">Urban tree canopy cover measurements Belgium 2019–2024</a>
+                    </h4>
+                    <p class="card-authors">
+                      <a href="/persons/karen-de-pauw">De Pauw, K.</a>,
+                      <a href="/persons/jonas-maes">Maes, J.</a>
+                    </p>
+                    <p class="card-publication">
+                      <span>2025</span> ·
+                      <a href="#">Zenodo</a>
+                    </p>
+                  </div>
+                </article>
+
+              </div>
+
+            </div><!-- /project-output-list -->
+
+            <!-- Pagination -->
+            <nav aria-label="Research output pagination" class="mt-4">
+              <ul class="pagination">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#" aria-current="page">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next page">›</a>
+                </li>
+              </ul>
+            </nav>
+
+          </section>
+
         </div>
 
-      </div><!-- /sidebar -->
+        <!-- Right: sidebar -->
+        <div class="col-lg-4">
 
+          <!-- Team — roles are semantically meaningful (PI vs researcher matters for grant reporting) -->
+          <section aria-labelledby="team-heading" class="mb-5">
+            <h2 id="team-heading" class="h5 mb-3">Project team</h2>
+            <ul class="list-unstyled d-flex flex-column gap-3">
+
+              <li class="d-flex align-items-start gap-2">
+                <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">KD</span>
+                <div>
+                  <a href="/persons/karen-de-pauw" class="fw-semibold text-decoration-none d-block">De Pauw, Karen</a>
+                  <span class="small text-muted">Principal investigator</span><br>
+                  <span class="small text-muted">
+                    <a href="/organisations/dept-environment">Department of Environment</a>
+                  </span>
+                </div>
+              </li>
+
+              <li class="d-flex align-items-start gap-2">
+                <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">SA</span>
+                <div>
+                  <a href="/persons/stefan-arndt" class="fw-semibold text-decoration-none d-block">Arndt, Stefan</a>
+                  <span class="small text-muted">Researcher</span><br>
+                  <span class="small text-muted">
+                    <a href="/organisations/dept-environment">Department of Environment</a>
+                  </span>
+                </div>
+              </li>
+
+              <li class="d-flex align-items-start gap-2">
+                <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">JM</span>
+                <div>
+                  <a href="/persons/jonas-maes" class="fw-semibold text-decoration-none d-block">Maes, Jonas</a>
+                  <span class="small text-muted">Doctoral researcher</span><br>
+                  <span class="small text-muted">
+                    <a href="/organisations/dept-environment">Department of Environment</a>
+                  </span>
+                </div>
+              </li>
+
+              <li class="d-flex align-items-start gap-2">
+                <span class="bt-avatar bt-avatar--small flex-shrink-0" aria-hidden="true">SV</span>
+                <div>
+                  <a href="/persons/sander-vanderhaegen" class="fw-semibold text-decoration-none d-block">Vanderhaegen, Sander</a>
+                  <span class="small text-muted">Postdoctoral researcher</span><br>
+                  <span class="small text-muted">
+                    <a href="/organisations/dept-environment">Department of Environment</a>
+                  </span>
+                </div>
+              </li>
+
+            </ul>
+          </section>
+
+          <!-- Funder metadata -->
+          <section aria-labelledby="funding-heading" class="mb-5">
+            <h2 id="funding-heading" class="h5 mb-3">Funding</h2>
+            <dl class="bt-dl">
+              <dt>Funder</dt>
+              <dd>
+                <a href="https://www.fwo.be" rel="noopener noreferrer">
+                  Research Foundation – Flanders (FWO)
+                </a>
+              </dd>
+              <dt>Grant number</dt>
+              <dd><code>G001234N</code></dd>
+              <dt>Programme</dt>
+              <dd>FWO Research project</dd>
+              <dt>Period</dt>
+              <dd>
+                <time datetime="2023-01-01">January 2023</time>
+                –
+                <time datetime="2027-12-31">December 2027</time>
+              </dd>
+            </dl>
+          </section>
+
+          <!-- Host organisation -->
+          <section aria-labelledby="host-heading" class="mb-5">
+            <h2 id="host-heading" class="h5 mb-3">Host organisation</h2>
+            <ul class="list-unstyled mb-0">
+              <li><a href="/organisations/ghent-university">Ghent University</a></li>
+              <li><a href="/organisations/faculty-bioscience-engineering">Faculty of Bioscience Engineering</a></li>
+              <li><a href="/organisations/dept-environment">Department of Environment</a></li>
+            </ul>
+          </section>
+
+          <!-- Persistent link + data access -->
+          <div class="p-3 bg-white border rounded mb-4">
+            <span class="form-label d-block mb-2">Persistent link</span>
+            <div class="d-flex gap-2 align-items-start">
+              <code class="small">https://biblio.ugent.be/project/fwo-g001234n</code>
+              <button type="button" class="btn btn-ghost btn-sm px-2 flex-shrink-0"
+                aria-label="Copy persistent link"
+                onclick="navigator.clipboard.writeText('https://biblio.ugent.be/project/fwo-g001234n');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                <i class="if if-copy" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="p-3 bg-white border rounded">
+            <span class="form-label d-block mb-2">Data &amp; API</span>
+            <ul class="list-unstyled mb-0 d-flex flex-column gap-1">
+              <li>
+                <a href="/projects/fwo-g001234n.json" class="d-flex align-items-center gap-1 small">
+                  <i class="if if-download if--xs" aria-hidden="true"></i>
+                  Export research output (JSON)
+                </a>
+              </li>
+              <li>
+                <a href="/projects/fwo-g001234n.bib" class="d-flex align-items-center gap-1 small">
+                  <i class="if if-download if--xs" aria-hidden="true"></i>
+                  Export research output (BibTeX)
+                </a>
+              </li>
+              <li>
+                <a href="https://biblio.ugent.be/oai?verb=ListRecords&set=project:fwo-g001234n"
+                  class="d-flex align-items-center gap-1 small"
+                  rel="noopener noreferrer">
+                  <i class="if if-external-link if--xs" aria-hidden="true"></i>
+                  OAI-PMH set
+                </a>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /sidebar -->
+
+      </div>
     </div>
-  </div>
-  </div>
+    </div>
 
-</main>
+  </main>
 </div>
 
 <!-- @include: templates/partials/public-footer.html -->
