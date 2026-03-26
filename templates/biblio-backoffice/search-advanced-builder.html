@@ -419,14 +419,14 @@
                 </div>
 
                 <!-- Embed preview -->
-                <div class="border rounded mb-3" style="max-height: 280px; overflow-y: auto;">
+                <div class="border rounded mb-3 bt-scroll-frame">
                   <div class="bg-light border-bottom px-3 py-2 d-flex align-items-center gap-2">
                     <span class="text-muted small">Preview</span>
                     <span class="badge bg-secondary fw-normal small">Live iframe would show here</span>
                   </div>
                   <!-- Simulated embed output — in production this is the real iframe -->
                   <div class="p-3" data-surface="public">
-                    <article class="card-research" aria-labelledby="embed-card-1" style="padding-top: 0;">
+                    <article class="card-research card-research--flush-top" aria-labelledby="embed-card-1">
                       <div class="card-meta">
                         <span class="badge-oa">Open access</span>
                         <span class="badge bg-primary">Journal article</span>
@@ -487,7 +487,7 @@
                 <!-- Sample response -->
                 <details>
                   <summary class="btn btn-ghost btn-sm px-0">Show sample response</summary>
-                  <pre class="bg-light border rounded p-3 small mt-2 overflow-auto" style="max-height: 220px;"><code>{
+                  <pre class="bg-light border rounded p-3 small mt-2 overflow-auto bt-code-block"><code>{
     "total": 142,
     "offset": 0,
     "limit": 10,
@@ -650,8 +650,9 @@ function renderTokens(raw) {
       const token = document.createElement('span');
       token.className = 'token-bar__token';
       if (neg) token.dataset.negated = 'true';
+      if (neg) token.classList.add('token-bar__token--negated');
       token.innerHTML =
-        (neg ? '<span class="token-bar__field" style="color:var(--bt-danger)">-' + field + '</span>' :
+        (neg ? '<span class="token-bar__field">-' + field + '</span>' :
                '<span class="token-bar__field">' + field + '</span>') +
         '<span class="token-bar__sep">:</span>' +
         '<span class="token-bar__value">' + value + '</span>';

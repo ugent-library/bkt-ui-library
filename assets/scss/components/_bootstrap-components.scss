@@ -99,9 +99,9 @@
 /* ── Alerts ───────────────────────────────────────────────────────────────── */
 
 .alert {
-  padding: var(--bt-sp-4) var(--bt-sp-4);
+  padding: var(--bt-sp-6) var(--bt-sp-6);
   border: 1px solid transparent;
-  border-radius: var(--bt-radius);
+  border-radius: var(--bt-radius-lg);
   margin-bottom: var(--bt-sp-4);
   font-size: var(--bt-text-base);
   line-height: 1.6;
@@ -112,15 +112,9 @@
   }
 }
 
-.alert--sticky {
-  display: block;
-  border-radius: 0;
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
-  margin-bottom: 0;
-  grid-row: 1;
-  grid-column: 1 / -1;
+.alert--dashed {
+  border-style: dashed;
+  border-width: 2px;
 }
 
 /* Alert variants — semantic colors + light backgrounds + borders */
@@ -254,4 +248,18 @@
 
 .progress {
   height: 8px;
+}
+
+
+
+
+/* ── btn-check-group ───────────────────────────────────────────────────────────── */
+/* Used in deposit-flow work type picker */
+
+.bt-btn-check__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-3);
+  margin-bottom: var(--bt-sp-4);
+  margin-top: var(--bt-sp-2);
 }

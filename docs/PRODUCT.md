@@ -120,23 +120,27 @@ See `docs/PARTIALS.md` for the full spec.
 
 | Template | Prototype exists | Implemented in bbl |
 |----------|-----------------|-------------------|
-| `backoffice-search.html` | ✓ | ✓ (partial) |
+| backoffice | - | - |
+| `backoffice-search.html` | ✓ | ✗ |
 | `backoffice-dashboard.html` | ✓ | ✗ |
 | `backoffice-dashboard-empty.html` | ✓ | ✗ |
 | `backoffice-search-filter-first.html` | ✓ exploration | ✗ |
 | `backoffice-settings-scope.html` | ✓ exploration | ✗ |
-| `backoffice-deposit-flow.html` | ✓ | ✓ (partial) |
-| `public-search.html` | ✓ | ✓ (partial) |
-| `public-search.html` (merged with suggest variant) | ✓ | ✗ |
-| `public-index.html` | ✓ | ✗ |
-| `research-detail.html` | ✓ | ✓ (partial) |
-| `project.html` | ✓ | ✗ |
-| Researcher profile page | ✗ not prototyped | ✗ |
-| Organisation page | ✗ not prototyped | ✗ |
+| `backoffice-deposit-flow.html` | ✓ | ✗ |
 | Curator review queue | ✗ not prototyped | ✗ |
 | Candidate review | ✗ not prototyped | ✗ |
 | Duplicate review | ✗ not prototyped | ✗ |
-| Heritage object page | ✗ not prototyped | ✗ |
+| public | - | - |
+| `public-index.html` | ✓ | ✗ |
+| `public-search.html` | ✓ | ✗ |
+| `public-research-detail.html` | ✓ | ✗ |
+| public-organisations-overview | ✗ not prototyped | ✗ |
+| `public-organisation.html` | ✓ | ✗ |
+| public-projects-overview | ✗ not prototyped | ✗ |
+| `public-project.html` | ✓ | ✗ |
+| public-researchers-overview | ✗ not prototyped | ✗ |
+| `public-researcher.html` | ✓ | ✗ |
+| Public heritage object page | ✗ not prototyped | ✗ |
 
 ---
 

@@ -536,7 +536,7 @@ Note: BEM modifier double-dash (`--`). The old styleguide used single-dash — t
 
 **Deposit flow components**
 ```
-bt-radio-card            bt-radio-card__body      bt-radio-card__group
+bt-btn-check__group (works with btn-check from bootstrap)
 bt-file-drop             bt-file-drop__icon       bt-file-drop__text
 bt-file-drop__hint
 ```
@@ -684,8 +684,8 @@ Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell 
 
 | Prefix | Meaning | Examples |
 |--------|---------|----------|
-| `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar` |
-| `bt-` | Component — no Bootstrap base | `bt-blank-slate`, `bt-radio-card` |
+| `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar`, `bt-btn-check__group`  |
+| `bt-` | Component — no Bootstrap base | `bt-blank-slate`|
 | `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--public` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.

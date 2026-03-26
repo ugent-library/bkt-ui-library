@@ -241,7 +241,7 @@ function renderSearchResultCards() {
     <span class="badge-oa">Open access</span>
     <span class="badge bg-primary">Journal article</span>
   </div>
-  <div class="card-actions">
+  <div class="btn-toolbar">
     <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-ghost btn-sm" aria-label="View record">
       <i class="if if-eye" aria-hidden="true"></i> View
     </a>

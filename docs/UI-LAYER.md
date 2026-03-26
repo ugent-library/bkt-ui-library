@@ -157,3 +157,13 @@ After SCSS changes in `booktower-ui-library`:
 2. Copy `assets/booktower.css` and `assets/fonts/` to `bbl/app/assets/`
 
 A future npm package will replace the manual copy step.
+
+---
+
+## TODO
+
+### Patterns
+
+- Decide whether blank-slate is a component we should keep, or if it is just a card with text-center
+- Decide whether research-card is a component we should keep, or if it is just a card with text-center
+- Fix people-search

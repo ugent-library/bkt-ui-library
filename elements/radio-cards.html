@@ -4,66 +4,44 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Radio Cards</h1>
-    <p class="lead">Large, touch-friendly radio button alternatives. Used for publication type selection in deposit flows. The hidden radio input drives state; the visible card responds via CSS adjacent sibling selectors.</p>
+    <p class="lead">Bootstrap-based. Large, touch-friendly radio button alternatives. Used for publication type selection in deposit flows. The hidden radio input drives state; the visible card responds via CSS adjacent sibling selectors.</p>
   </header>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Basic radio card</h2>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label">Single card — unselected</div>
-      <div class="ds-demo-body">
-        <label class="bt-radio-card">
-          <input type="radio" name="demo-type" value="journal-article">
-          <span class="bt-radio-card__body">Journal article</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label">Single card — selected</div>
-      <div class="ds-demo-body">
-        <label class="bt-radio-card">
-          <input type="radio" name="demo-type" value="journal-article" checked>
-          <span class="bt-radio-card__body">Journal article</span>
-        </label>
-      </div>
-    </div>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Radio card group</h2>
+    <h2 class="h4 mb-3">Radio cards in group</h2>
 
     <div class="ds-demo">
       <div class="ds-demo-label">Publication type selection</div>
       <div class="ds-demo-body">
         <fieldset>
           <legend class="visually-hidden">Select publication type</legend>
-          <div class="bt-radio-card__group">
-            <label class="bt-radio-card">
-              <input type="radio" name="pub-type-demo" value="journal-article" checked>
-              <span class="bt-radio-card__body">Journal article</span>
-            </label>
-            <label class="bt-radio-card">
-              <input type="radio" name="pub-type-demo" value="book">
-              <span class="bt-radio-card__body">Book</span>
-            </label>
-            <label class="bt-radio-card">
-              <input type="radio" name="pub-type-demo" value="book-chapter">
-              <span class="bt-radio-card__body">Book chapter</span>
-            </label>
-            <label class="bt-radio-card">
-              <input type="radio" name="pub-type-demo" value="dataset">
-              <span class="bt-radio-card__body">Dataset</span>
-            </label>
-            <label class="bt-radio-card">
-              <input type="radio" name="pub-type-demo" value="software">
-              <span class="bt-radio-card__body">Software</span>
-            </label>
-            <label class="bt-radio-card">
-              <input type="radio" name="pub-type-demo" value="thesis">
-              <span class="bt-radio-card__body">Thesis</span>
-            </label>
+          <div class="bt-btn-check__group">
+            <input type="radio" class="btn-check" name="work-type" id="journal-article" autocomplete="off" checked>
+            <label class="btn btn-outline-dark" for="journal-article">Journal article</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="book" autocomplete="off">
+            <label class="btn btn-outline-dark" for="book">Book</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="book-chapter" autocomplete="off">
+            <label class="btn btn-outline-dark" for="book-chapter">Book chapter</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="conference-contribution" autocomplete="off">
+            <label class="btn btn-outline-dark" for="conference-contribution">Conference contribution</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="dataset" autocomplete="off">
+            <label class="btn btn-outline-dark" for="dataset">Dataset</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="dissertation" autocomplete="off">
+            <label class="btn btn-outline-dark" for="dissertation">Dissertation</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="report" autocomplete="off">
+            <label class="btn btn-outline-dark" for="report">Report</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="software" autocomplete="off">
+            <label class="btn btn-outline-dark" for="software">Software</label>
+
+            <input type="radio" class="btn-check" name="work-type" id="miscellaneous" autocomplete="off" disabled>
+            <label class="btn btn-outline-dark" for="miscellaneous">Other</label>
           </div>
         </fieldset>
       </div>
@@ -79,7 +57,6 @@
           <li>The legend can be visually hidden with <code>visually-hidden</code> if the context is clear</li>
           <li>Radio inputs remain focusable and keyboard navigable</li>
           <li>Screen readers announce the selected state and group context</li>
-          <li>Touch targets are large (minimum 44px) for mobile accessibility</li>
         </ul>
       </div>
     </div>

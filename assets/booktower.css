@@ -327,6 +327,8 @@ th,
   --bs-border-radius-xl: var(--bt-radius-xl);
   --bs-secondary-color: var(--bt-text-muted);
   --bs-secondary-color-rgb: 115, 115, 115;
+  --bs-card-box-shadow: var(--bt-shadow-sm);
+  --bs-card-border-radius: var(--bt-radius-xl);
   --bs-primary: var(--bt-gray-1000);
   --bs-primary-rgb: 20, 22, 26;
   --bs-danger: var(--bt-danger);
@@ -342,9 +344,8 @@ th,
   --bs-link-hover-color-rgb: 62, 126, 218;
   --bs-focus-ring-color: var(--bt-focus-ring-sm);
   --bs-focus-ring-width: 3px;
-  --bs-mark-padding: 0;
-  --bs-mark-color: var(--bt-text);
-  --bs-mark-bg: var(--bt-yellow);
+  --bs-mark-padding: 0px;
+  --bs-mark-bg: var(--bt-light-yellow);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -485,16 +486,14 @@ a:hover {
 
 mark {
   padding: var(--bs-mark-padding);
-  color: var(--bs-mark-color);
-  background-color: var(--bs-mark-bg);
-  font-weight: 600;
 }
 
-.bt-text-sm {
+.bt-meta-text {
   font-size: var(--bt-text-sm);
+  color: var(--bt-text-muted);
 }
 
-.bt-text-xs {
+.bt-text-xsmall {
   font-size: var(--bt-text-xs);
 }
 
@@ -693,9 +692,9 @@ code, kbd, pre, samp {
 
 /* ── Alerts ───────────────────────────────────────────────────────────────── */
 .alert {
-  padding: var(--bt-sp-4) var(--bt-sp-4);
+  padding: var(--bt-sp-6) var(--bt-sp-6);
   border: 1px solid transparent;
-  border-radius: var(--bt-radius);
+  border-radius: var(--bt-radius-lg);
   margin-bottom: var(--bt-sp-4);
   font-size: var(--bt-text-base);
   line-height: 1.6;
@@ -705,15 +704,9 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
 }
 
-.alert--sticky {
-  display: block;
-  border-radius: 0;
-  border-top: 0;
-  border-right: 0;
-  border-left: 0;
-  margin-bottom: 0;
-  grid-row: 1;
-  grid-column: 1/-1;
+.alert--dashed {
+  border-style: dashed;
+  border-width: 2px;
 }
 
 /* Alert variants — semantic colors + light backgrounds + borders */
@@ -831,6 +824,16 @@ code, kbd, pre, samp {
 /* ── Progress ────────────────────────────────────────────────────────────── */
 .progress {
   height: 8px;
+}
+
+/* ── btn-check-group ───────────────────────────────────────────────────────────── */
+/* Used in deposit-flow work type picker */
+.bt-btn-check__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-3);
+  margin-bottom: var(--bt-sp-4);
+  margin-top: var(--bt-sp-2);
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
@@ -1277,15 +1280,6 @@ code, kbd, pre, samp {
   margin-bottom: var(--bt-sp-3);
 }
 
-.card-research .card-actions {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--bt-sp-1);
-  flex-shrink: 0;
-}
-
 .card-research .card-body {
   grid-column: 1;
   grid-row: 2;
@@ -1342,6 +1336,10 @@ code, kbd, pre, samp {
 
 .card-research .card-publication a:hover {
   color: var(--bt-blue);
+}
+
+.card-research--flush-top {
+  padding-top: 0;
 }
 
 .card-research:first-child {
@@ -1433,19 +1431,26 @@ code, kbd, pre, samp {
   font-weight: 500;
 }
 
-.bt-button-toolbar {
+.btn-toolbar {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
 }
 
-.bt-button-toolbar--wide-spacing {
+.btn-toolbar--wide-spacing {
   gap: var(--bt-sp-4);
 }
 
-.bt-button-toolbar--vertical {
+.btn-toolbar--vertical {
   flex-direction: column;
   align-items: flex-end;
+}
+
+.bt-title-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--bt-sp-2);
 }
 
 /* ── bt-toolbar modifier ────────────────────────────────────────────────────── */
@@ -1515,56 +1520,6 @@ code, kbd, pre, samp {
 .bt-dl dd {
   margin: 0;
   color: var(--bt-gray-1000);
-}
-
-/* ── bt-radio-card ───────────────────────────────────────────────────────────── */
-/* Used in deposit-flow.html publication type picker */
-.bt-radio-card__group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-3);
-  margin-bottom: var(--bt-sp-6);
-}
-
-.bt-radio-card {
-  cursor: pointer;
-  display: inline-block;
-  min-height: var(--bt-sp-8);
-}
-
-.bt-radio-card input[type=radio] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.bt-radio-card__body {
-  border: 1.5px solid var(--bt-gray-150);
-  border-radius: var(--bt-radius-md);
-  padding: var(--bt-sp-3);
-  background: var(--bt-white);
-  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
-  font-size: var(--bt-text-sm);
-  font-weight: 500;
-  color: var(--bt-gray-700);
-  line-height: 1;
-  user-select: none;
-}
-
-.bt-radio-card:hover .bt-radio-card__body {
-  border-color: var(--bt-blue-700);
-}
-
-.bt-radio-card input:checked + .bt-radio-card__body {
-  border-color: var(--bt-blue-900);
-  background: var(--bt-blue-100);
-  color: var(--bt-blue-900);
-}
-
-.bt-radio-card input:focus-visible + .bt-radio-card__body {
-  outline: 3px solid var(--bt-focus-ring-sm);
-  outline-offset: 2px;
 }
 
 /* ── bt-file-drop ────────────────────────────────────────────────────────────── */
@@ -1746,6 +1701,14 @@ code, kbd, pre, samp {
 }
 
 /* ── bt-filter-picker — scrollable filter list ───────────────────────────────── */
+.bt-filter-picker__menu {
+  min-width: 260px;
+}
+
+.bt-filter-picker__menu--narrow {
+  min-width: 240px;
+}
+
 .bt-filter-picker__list {
   max-height: 320px;
   overflow-y: auto;
@@ -2023,6 +1986,20 @@ code, kbd, pre, samp {
   border-radius: var(--bt-radius-lg);
 }
 
+.bt-suggest-panel__body {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.bt-scroll-frame {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.bt-code-block {
+  max-height: 220px;
+}
+
 /* ── Token suggestions panel ─────────────────────────────────────────────────── */
 .token-suggestions {
   position: absolute;
@@ -2116,6 +2093,7 @@ code, kbd, pre, samp {
 /* ── 1. u-layout--public ─────────────────────────────────────────────────────── */
 .u-layout--public {
   min-height: 100vh;
+  background: var(--bt-bg-white);
 }
 
 .u-layout--public > main,
@@ -2132,8 +2110,10 @@ code, kbd, pre, samp {
 
 /* ── 2. u-layout--app ────────────────────────────────────────────────────────── */
 .u-layout--app {
-  --u-main-pad-x: var(--bt-sp-6);
-  --u-main-pad-y: var(--bt-sp-4);
+  --u-main-head-pad-x: var(--bt-sp-12);
+  --u-main-head-pad-y: var(--bt-sp-6);
+  --u-main-pad-x: var(--bt-sp-12);
+  --u-main-pad-y: var(--bt-sp-8);
   --u-nav-sidebar-width: 14rem;
   --u-nav-sidebar-width-slim: 3.5rem;
   --u-main-panel-width: 21rem;
@@ -2144,6 +2124,7 @@ code, kbd, pre, samp {
   grid-template-areas: "navbar  navbar navbar" "sidebar main   panel";
   height: 100vh;
   overflow: hidden;
+  background: var(--bt-bg-white);
 }
 
 .u-layout--app > .bt-navbar {
@@ -2183,7 +2164,7 @@ code, kbd, pre, samp {
   overflow-y: visible;
   overflow-x: hidden;
   border-bottom: var(--bt-border);
-  padding: var(--u-main-pad-y) var(--u-main-pad-x);
+  padding: var(--u-main-head-pad-y) var(--u-main-head-pad-x);
   background: var(--bt-bg-white);
 }
 
@@ -2751,7 +2732,7 @@ code, kbd, pre, samp {
 }
 @font-face {
   font-family: "icon-font";
-  src: url("/assets/fonts/icon-font.woff?16a4ee66411eba9a1676165f84079669") format("woff"), url("/assets/fonts/icon-font.woff2?16a4ee66411eba9a1676165f84079669") format("woff2");
+  src: url("/assets/fonts/icon-font.woff?246f5e5bca0cb21c58f8ecedd328873a") format("woff"), url("/assets/fonts/icon-font.woff2?246f5e5bca0cb21c58f8ecedd328873a") format("woff2");
 }
 i[class^=if-]:before, i[class*=" if-"]:before {
   font-family: icon-font !important;
@@ -2884,360 +2865,372 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   content: "\f11e";
 }
 
-.if-messages:before {
+.if-mit:before {
   content: "\f11f";
 }
 
-.if-message:before {
+.if-messages:before {
   content: "\f120";
 }
 
-.if-menu:before {
+.if-message:before {
   content: "\f121";
 }
 
-.if-map-pin-line:before {
+.if-menu:before {
   content: "\f122";
 }
 
-.if-mail:before {
+.if-map-pin-line:before {
   content: "\f123";
 }
 
-.if-log-out:before {
+.if-mail:before {
   content: "\f124";
 }
 
-.if-lock:before {
+.if-log-out:before {
   content: "\f125";
 }
 
-.if-lock-unlock:before {
+.if-lock:before {
   content: "\f126";
 }
 
-.if-list-unordered:before {
+.if-lock-unlock:before {
   content: "\f127";
 }
 
-.if-list-check:before {
+.if-list-unordered:before {
   content: "\f128";
 }
 
-.if-info-circle:before {
+.if-list-check:before {
   content: "\f129";
 }
 
-.if-info-circle-filled:before {
+.if-info-circle:before {
   content: "\f12a";
 }
 
-.if-home:before {
+.if-info-circle-filled:before {
   content: "\f12b";
 }
 
-.if-grid:before {
+.if-home:before {
   content: "\f12c";
 }
 
-.if-global:before {
+.if-grid:before {
   content: "\f12d";
 }
 
-.if-ghent-university:before {
+.if-global:before {
   content: "\f12e";
 }
 
-.if-forbid:before {
+.if-ghent-university:before {
   content: "\f12f";
 }
 
-.if-file:before {
+.if-forbid:before {
   content: "\f130";
 }
 
-.if-file-word:before {
+.if-file:before {
   content: "\f131";
 }
 
-.if-file-text:before {
+.if-file-word:before {
   content: "\f132";
 }
 
-.if-file-pdf:before {
+.if-file-text:before {
   content: "\f133";
 }
 
-.if-feedback-fill:before {
+.if-file-pdf:before {
   content: "\f134";
 }
 
-.if-eye:before {
+.if-feedback-fill:before {
   content: "\f135";
 }
 
-.if-eye-off:before {
+.if-eye:before {
   content: "\f136";
 }
 
-.if-eye-fill:before {
+.if-eye-off:before {
   content: "\f137";
 }
 
-.if-external-link:before {
+.if-eye-fill:before {
   content: "\f138";
 }
 
-.if-expand-width-line:before {
+.if-external-link:before {
   content: "\f139";
 }
 
-.if-expand-up-down-line:before {
+.if-expand-width-line:before {
   content: "\f13a";
 }
 
-.if-expand-right-line:before {
+.if-expand-up-down-line:before {
   content: "\f13b";
 }
 
-.if-expand-left-right-line:before {
+.if-expand-right-line:before {
   content: "\f13c";
 }
 
-.if-expand-left-line:before {
+.if-expand-left-right-line:before {
   content: "\f13d";
 }
 
-.if-expand-height-line:before {
+.if-expand-left-line:before {
   content: "\f13e";
 }
 
-.if-error-circle:before {
+.if-expand-height-line:before {
   content: "\f13f";
 }
 
-.if-error-circle-fill:before {
+.if-error-circle:before {
   content: "\f140";
 }
 
-.if-empty:before {
+.if-error-circle-fill:before {
   content: "\f141";
 }
 
-.if-edit:before {
+.if-empty:before {
   content: "\f142";
 }
 
-.if-drag:before {
+.if-edit:before {
   content: "\f143";
 }
 
-.if-draft:before {
+.if-drag:before {
   content: "\f144";
 }
 
-.if-draft-fill:before {
+.if-draft:before {
   content: "\f145";
 }
 
-.if-download:before {
+.if-draft-fill:before {
   content: "\f146";
 }
 
-.if-double-quotes:before {
+.if-download:before {
   content: "\f147";
 }
 
-.if-delete:before {
+.if-double-quotes:before {
   content: "\f148";
 }
 
-.if-database:before {
+.if-delete:before {
   content: "\f149";
 }
 
-.if-corner-right-up-line:before {
+.if-database:before {
   content: "\f14a";
 }
 
-.if-copy:before {
+.if-corner-right-up-line:before {
   content: "\f14b";
 }
 
-.if-contract-up-down-line:before {
+.if-copy:before {
   content: "\f14c";
 }
 
-.if-contract-right-line:before {
+.if-contract-up-down-line:before {
   content: "\f14d";
 }
 
-.if-contract-left-right-line:before {
+.if-contract-right-line:before {
   content: "\f14e";
 }
 
-.if-contract-left-line:before {
+.if-contract-left-right-line:before {
   content: "\f14f";
 }
 
-.if-close:before {
+.if-contract-left-line:before {
   content: "\f150";
 }
 
-.if-close-circle-fill:before {
+.if-close:before {
   content: "\f151";
 }
 
-.if-chevron-up:before {
+.if-close-circle-fill:before {
   content: "\f152";
 }
 
-.if-chevron-right:before {
+.if-chevron-up:before {
   content: "\f153";
 }
 
-.if-chevron-left:before {
+.if-chevron-right:before {
   content: "\f154";
 }
 
-.if-chevron-down:before {
+.if-chevron-left:before {
   content: "\f155";
 }
 
-.if-check:before {
+.if-chevron-down:before {
   content: "\f156";
 }
 
-.if-check-double:before {
+.if-check:before {
   content: "\f157";
 }
 
-.if-check-circle:before {
+.if-check-double:before {
   content: "\f158";
 }
 
-.if-check-circle-fill:before {
+.if-check-circle:before {
   content: "\f159";
 }
 
-.if-cc-zero-line:before {
+.if-check-circle-fill:before {
   content: "\f15a";
 }
 
-.if-cc-sa-line:before {
+.if-cc:before {
   content: "\f15b";
 }
 
-.if-cc-nd-line:before {
+.if-cc-zero-line:before {
   content: "\f15c";
 }
 
-.if-cc-nc-line:before {
+.if-cc-sa-line:before {
   content: "\f15d";
 }
 
-.if-cc-line:before {
+.if-cc-nd-line:before {
   content: "\f15e";
 }
 
-.if-cc-by-line:before {
+.if-cc-nc-line:before {
   content: "\f15f";
 }
 
-.if-caret-up:before {
+.if-cc-line:before {
   content: "\f160";
 }
 
-.if-caret-right:before {
+.if-cc-by-line:before {
   content: "\f161";
 }
 
-.if-caret-left:before {
+.if-caret-up:before {
   content: "\f162";
 }
 
-.if-caret-down:before {
+.if-caret-right:before {
   content: "\f163";
 }
 
-.if-calendar:before {
+.if-caret-left:before {
   content: "\f164";
 }
 
-.if-calendar-1:before {
+.if-caret-down:before {
   content: "\f165";
 }
 
-.if-building:before {
+.if-calendar:before {
   content: "\f166";
 }
 
-.if-briefcase:before {
+.if-calendar-1:before {
   content: "\f167";
 }
 
-.if-booktower:before {
+.if-building:before {
   content: "\f168";
 }
 
-.if-book:before {
+.if-briefcase:before {
   content: "\f169";
 }
 
-.if-bar-chart:before {
+.if-booktower:before {
   content: "\f16a";
 }
 
-.if-asterisk:before {
+.if-book:before {
   content: "\f16b";
 }
 
-.if-article:before {
+.if-bar-chart:before {
   content: "\f16c";
 }
 
-.if-arrow-up:before {
+.if-asterisk:before {
   content: "\f16d";
 }
 
-.if-arrow-right:before {
+.if-article:before {
   content: "\f16e";
 }
 
-.if-arrow-right-double-line:before {
+.if-arrow-up:before {
   content: "\f16f";
 }
 
-.if-arrow-left:before {
+.if-arrow-right:before {
   content: "\f170";
 }
 
-.if-arrow-go-back:before {
+.if-arrow-right-double-line:before {
   content: "\f171";
 }
 
-.if-arrow-down:before {
+.if-arrow-left:before {
   content: "\f172";
 }
 
-.if-arrow-double-up:before {
+.if-arrow-go-back:before {
   content: "\f173";
 }
 
-.if-arrow-double-down:before {
+.if-arrow-down:before {
   content: "\f174";
 }
 
-.if-alert:before {
+.if-arrow-double-up:before {
   content: "\f175";
 }
 
-.if-alert-fill:before {
+.if-arrow-double-down:before {
   content: "\f176";
 }
 
-.if-add:before {
+.if-apache:before {
   content: "\f177";
+}
+
+.if-alert:before {
+  content: "\f178";
+}
+
+.if-alert-fill:before {
+  content: "\f179";
+}
+
+.if-add:before {
+  content: "\f17a";
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

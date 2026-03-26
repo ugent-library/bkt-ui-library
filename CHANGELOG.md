@@ -35,9 +35,9 @@ partial, and stylesheet:
 | `c-blank-slate-default` | `bt-blank-slate--default` |
 | `c-blank-slate-muted` | `bt-blank-slate--muted` |
 | `c-blank-slate-primary` | `bt-blank-slate--primary` |
-| `c-radio-card` | `bt-radio-card` |
-| `c-radio-card__group` | `bt-radio-card__group` |
-| `c-radio-card__body` | `bt-radio-card__body` |
+| `c-radio-card` | `btn-check` (Bootstrap) |
+| `c-radio-card__group` | `bt-btn-check__group` (Bootstrap extension) |
+| `c-radio-card__body` | Deprecated |
 | `c-file-drop` | `bt-file-drop` |
 | `c-file-drop__icon` | `bt-file-drop__icon` |
 | `c-file-drop__text` | `bt-file-drop__text` |
@@ -45,9 +45,9 @@ partial, and stylesheet:
 | `c-hero` | `bt-hero` |
 | `c-hero__bg` | `bt-hero__bg` |
 | `c-hero__content` | `bt-hero__content` |
-| `c-button-toolbar` | `bt-button-toolbar` |
-| `c-button-toolbar--wide-spacing` | `bt-button-toolbar--wide-spacing` |
-| `c-button-toolbar--vertical` | `bt-button-toolbar--vertical` |
+| `c-button-toolbar` | `btn-toolbar` |
+| `c-button-toolbar--wide-spacing` | `btn-toolbar--wide-spacing` |
+| `c-button-toolbar--vertical` | `btn-toolbar--vertical` |
 
 **Rationale:** The split between `bc-` (Bootstrap Custom) and `c-` (Component)
 was never meaningful in practice and caused constant confusion. Every Booktower
@@ -136,9 +136,9 @@ is unchanged.
 | `bc-toolbar--auto` | Bootstrap `h-auto` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar--top` | Bootstrap `align-items-start` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar-lg-responsive` etc. | ⏳ | ⏳ Planned | Responsive stack variants — may be handled differently in v2. |
-| `c-button-toolbar` | `bt-button-toolbar` | ✅ Carried over | Active. |
-| `c-button-toolbar--wide-spacing` | `bt-button-toolbar--wide-spacing` | ✅ Carried over | |
-| `c-button-toolbar--vertical` | `bt-button-toolbar--vertical` | ✅ Carried over | |
+| `c-button-toolbar` | `btn-toolbar` | ✅ Carried over | Active. |
+| `c-button-toolbar--wide-spacing` | `btn-toolbar--wide-spacing` | ✅ Carried over | |
+| `c-button-toolbar--vertical` | `btn-toolbar--vertical` | ✅ Carried over | |
 
 ---
 
@@ -200,7 +200,7 @@ is unchanged.
 | `.is-valid`, `.is-invalid` | Same | ✅ Carried over | Active. |
 | `.form-check-input` | `.form-check-input` | ✅ Carried over | Active. `accent-color` on v2. |
 | `.form-control-search` | `.form-control-search` | ✅ Carried over | Active. Pill shape with embedded search icon. |
-| `c-radio-card` | `bt-radio-card` | ✅ Carried over | Active. Child elements: `bt-radio-card__group`, `bt-radio-card__body`. |
+| `c-radio-card` | `bt-btn-check` | ✅ Carried over, adapted syntax | Active. Parent element: `bt-btn-check__group`. |
 | `c-file-upload` / `c-file-drop` | `bt-file-drop` | ✅ Carried over | Active. Child elements: `bt-file-drop__icon`, `__text`, `__hint`. |
 | `tagify` | ⏳ | ⏳ Planned | Tag input (third-party lib integration). |
 | `flatpickr` | ⏳ | ⏳ Planned | Date picker (third-party lib integration). |

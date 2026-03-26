@@ -220,14 +220,6 @@
   gap: var(--bt-sp-2);
   margin-bottom: var(--bt-sp-3);
 }
-.card-research .card-actions {
-  grid-column: 2;
-  grid-row: 1;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--bt-sp-1);
-  flex-shrink: 0;
-}
 .card-research .card-body {
   grid-column: 1;
   grid-row: 2;
@@ -275,6 +267,9 @@
 }
 .card-research .card-publication a:hover {
   color: var(--bt-blue);
+}
+.card-research--flush-top {
+  padding-top: 0;
 }
 .card-research:first-child {
   padding-top: 0;
@@ -356,19 +351,25 @@
   font-weight: 500;
 }
 
-.bt-button-toolbar {
+.btn-toolbar {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
 }
-.bt-button-toolbar--wide-spacing {
+.btn-toolbar--wide-spacing {
   gap: var(--bt-sp-4);
 }
-.bt-button-toolbar--vertical {
+.btn-toolbar--vertical {
   flex-direction: column;
   align-items: flex-end;
 }
 
+.bt-title-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--bt-sp-2);
+}
 
 /* ── bt-toolbar modifier ────────────────────────────────────────────────────── */
 .bt-toolbar--bordered {
@@ -436,52 +437,6 @@
   margin: 0;
   color: var(--bt-gray-1000);
 }
-
-
-/* ── bt-radio-card ───────────────────────────────────────────────────────────── */
-/* Used in deposit-flow.html publication type picker */
-.bt-radio-card__group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-3);
-  margin-bottom: var(--bt-sp-6);
-}
-.bt-radio-card {
-  cursor: pointer;
-  display: inline-block;
-  min-height: var(--bt-sp-8);
-}
-.bt-radio-card input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.bt-radio-card__body {
-  border: 1.5px solid var(--bt-gray-150);
-  border-radius: var(--bt-radius-md);
-  padding: var(--bt-sp-3);
-  background: var(--bt-white);
-  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast);
-  font-size: var(--bt-text-sm);
-  font-weight: 500;
-  color: var(--bt-gray-700);
-  line-height: 1;
-  user-select: none;
-}
-.bt-radio-card:hover .bt-radio-card__body {
-  border-color: var(--bt-blue-700);
-}
-.bt-radio-card input:checked + .bt-radio-card__body {
-  border-color: var(--bt-blue-900);
-  background: var(--bt-blue-100);
-  color: var(--bt-blue-900);
-}
-.bt-radio-card input:focus-visible + .bt-radio-card__body {
-  outline: 3px solid var(--bt-focus-ring-sm);
-  outline-offset: 2px;
-}
-
 
 /* ── bt-file-drop ────────────────────────────────────────────────────────────── */
 /* Used in deposit-flow.html file upload area */
@@ -641,6 +596,14 @@
 }
 
 /* ── bt-filter-picker — scrollable filter list ───────────────────────────────── */
+.bt-filter-picker__menu {
+  min-width: 260px;
+}
+
+.bt-filter-picker__menu--narrow {
+  min-width: 240px;
+}
+
 .bt-filter-picker__list {
   max-height: 320px;
   overflow-y: auto;
@@ -845,6 +808,20 @@
   background-color: var(--bt-white);
   border: var(--bt-border);
   border-radius: var(--bt-radius-lg);
+}
+
+.bt-suggest-panel__body {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.bt-scroll-frame {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.bt-code-block {
+  max-height: 220px;
 }
 
 /* ── Token suggestions panel ─────────────────────────────────────────────────── */

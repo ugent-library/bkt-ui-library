@@ -16,126 +16,126 @@
     from a local PEOPLE array. Remove that script tag for production.
 -->
 
-<div class="border rounded p-3 bg-white mt-2" id="add-author-form"
+<div class="card" id="add-author-form"
   aria-label="Add author" role="region">
+  <div class="card-body">
+    <p class="filter-editor__title mb-3">Add author</p>
 
-  <p class="filter-editor__title mb-3">Add author</p>
+    <!-- ── People search widget ───────────────────────────────────────────── -->
+    <div class="mb-3" data-people-search>
 
-  <!-- ── People search widget ───────────────────────────────────────────── -->
-  <div class="mb-3" data-people-search>
+      <label for="author-search" class="form-label form-label-sm">
+        Search by name or ORCID
+      </label>
+      <input
+        type="search"
+        id="author-search"
+        data-ps-input
+        class="form-control form-control-sm"
+        placeholder="e.g. De Pauw or 0000-0002-1234-5678"
+        autocomplete="off"
+        hx-get="/people/search"
+        hx-trigger="keyup changed delay:300ms"
+        hx-target="next [data-ps-results]"
+        hx-indicator="next [data-ps-hint]">
 
-    <label for="author-search" class="form-label form-label-sm">
-      Search by name or ORCID
-    </label>
-    <input
-      type="search"
-      id="author-search"
-      data-ps-input
-      class="form-control form-control-sm"
-      placeholder="e.g. De Pauw or 0000-0002-1234-5678"
-      autocomplete="off"
-      hx-get="/people/search"
-      hx-trigger="keyup changed delay:300ms"
-      hx-target="next [data-ps-results]"
-      hx-indicator="next [data-ps-hint]">
+      <div
+        data-ps-results
+        class="people-results"
+        role="listbox"
+        aria-label="People matching your search"
+        hidden>
+      </div>
 
-    <div
-      data-ps-results
-      class="people-results"
-      role="listbox"
-      aria-label="People matching your search"
-      hidden>
+      <p data-ps-hint class="text-muted small mt-1 mb-0" aria-live="polite">
+        Type a name to search across UGent people and external authors.
+      </p>
+
+      <!-- Selected person confirmation slot -->
+      <div data-ps-selected hidden
+        class="d-flex align-items-start gap-3 p-2 mt-2 bg-light border rounded">
+        <span class="people-result__icon" aria-hidden="true">
+          <i class="if if-user if--sm"></i>
+        </span>
+        <div class="flex-grow-1">
+          <div class="people-result__name" data-ps-selected-name></div>
+          <div class="people-result__meta" data-ps-selected-affiliation></div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
+          aria-label="Clear selection">
+          <i class="if if-close if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Hidden fields filled by people-search.js on selection -->
+      <input type="hidden" data-ps-id   name="author_id"           value="">
+      <input type="hidden" data-ps-name name="author_display_name" value="">
+
     </div>
 
-    <p data-ps-hint class="text-muted small mt-1 mb-0" aria-live="polite">
-      Type a name to search across UGent people and external authors.
-    </p>
+    <!-- ── Role ────────────────────────────────────────────────────────────── -->
+    <div class="mb-3">
+      <label for="author-role" class="form-label form-label-sm">Role</label>
+      <select id="author-role" name="author_role" class="form-select form-select-sm w-auto">
+        <option value="author" selected>Author</option>
+        <option value="editor">Editor</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="translator">Translator</option>
+      </select>
+    </div>
 
-    <!-- Selected person confirmation slot -->
-    <div data-ps-selected hidden
-      class="d-flex align-items-start gap-3 p-2 mt-2 bg-light border rounded">
-      <span class="people-result__icon" aria-hidden="true">
-        <i class="if if-user if--sm"></i>
-      </span>
-      <div class="flex-grow-1">
-        <div class="people-result__name" data-ps-selected-name></div>
-        <div class="people-result__meta" data-ps-selected-affiliation></div>
+    <!-- ── External author fallback ────────────────────────────────────────── -->
+    <!--
+      An unlinked author is a valid state — not an error.
+      See DOMAIN.md: "An unlinked author is not an error state."
+    -->
+    <details class="mb-3">
+      <summary class="btn btn-ghost btn-sm px-0 text-muted">
+        Not in the system? Add as external author
+      </summary>
+      <div class="pt-3 d-flex flex-column gap-3">
+        <div>
+          <label for="external-first-name" class="form-label form-label-sm">First name</label>
+          <input type="text" id="external-first-name" name="external_first_name"
+            class="form-control form-control-sm" autocomplete="off">
+        </div>
+        <div>
+          <label for="external-last-name" class="form-label form-label-sm">
+            Last name <span class="text-danger" aria-label="required">*</span>
+          </label>
+          <input type="text" id="external-last-name" name="external_last_name"
+            class="form-control form-control-sm" autocomplete="family-name">
+        </div>
+        <div>
+          <label for="external-orcid" class="form-label form-label-sm">
+            ORCID <span class="text-muted">(optional)</span>
+          </label>
+          <input type="text" id="external-orcid" name="external_orcid"
+            class="form-control form-control-sm"
+            placeholder="0000-0000-0000-0000"
+            pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]">
+        </div>
       </div>
-      <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
-        aria-label="Clear selection">
-        <i class="if if-close if--xs" aria-hidden="true"></i>
+    </details>
+
+    <!-- ── Actions ─────────────────────────────────────────────────────────── -->
+    <div class="d-flex gap-2">
+      <button type="button" class="btn btn-primary btn-sm"
+        hx-post="/deposit/authors"
+        hx-include="#add-author-form"
+        hx-target="#author-list"
+        hx-swap="innerHTML">
+        <i class="if if-check if--sm" aria-hidden="true"></i>
+        Add author
+      </button>
+      <button type="button" class="btn btn-ghost btn-sm"
+        hx-delete="/partials/add-author-form"
+        hx-target="#author-form-area"
+        hx-swap="innerHTML">
+        Cancel
       </button>
     </div>
-
-    <!-- Hidden fields filled by people-search.js on selection -->
-    <input type="hidden" data-ps-id   name="author_id"           value="">
-    <input type="hidden" data-ps-name name="author_display_name" value="">
-
   </div>
-
-  <!-- ── Role ────────────────────────────────────────────────────────────── -->
-  <div class="mb-3">
-    <label for="author-role" class="form-label form-label-sm">Role</label>
-    <select id="author-role" name="author_role" class="form-select form-select-sm w-auto">
-      <option value="author" selected>Author</option>
-      <option value="editor">Editor</option>
-      <option value="supervisor">Supervisor</option>
-      <option value="translator">Translator</option>
-    </select>
-  </div>
-
-  <!-- ── External author fallback ────────────────────────────────────────── -->
-  <!--
-    An unlinked author is a valid state — not an error.
-    See DOMAIN.md: "An unlinked author is not an error state."
-  -->
-  <details class="mb-3">
-    <summary class="btn btn-ghost btn-sm px-0 text-muted">
-      Not in the system? Add as external author
-    </summary>
-    <div class="pt-3 d-flex flex-column gap-3">
-      <div>
-        <label for="external-first-name" class="form-label form-label-sm">First name</label>
-        <input type="text" id="external-first-name" name="external_first_name"
-          class="form-control form-control-sm" autocomplete="off">
-      </div>
-      <div>
-        <label for="external-last-name" class="form-label form-label-sm">
-          Last name <span class="text-danger" aria-label="required">*</span>
-        </label>
-        <input type="text" id="external-last-name" name="external_last_name"
-          class="form-control form-control-sm" autocomplete="family-name">
-      </div>
-      <div>
-        <label for="external-orcid" class="form-label form-label-sm">
-          ORCID <span class="text-muted">(optional)</span>
-        </label>
-        <input type="text" id="external-orcid" name="external_orcid"
-          class="form-control form-control-sm"
-          placeholder="0000-0000-0000-0000"
-          pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{3}[0-9X]">
-      </div>
-    </div>
-  </details>
-
-  <!-- ── Actions ─────────────────────────────────────────────────────────── -->
-  <div class="d-flex gap-2">
-    <button type="button" class="btn btn-primary btn-sm"
-      hx-post="/deposit/authors"
-      hx-include="#add-author-form"
-      hx-target="#author-list"
-      hx-swap="innerHTML">
-      <i class="if if-check if--sm" aria-hidden="true"></i>
-      Add author
-    </button>
-    <button type="button" class="btn btn-ghost btn-sm"
-      hx-delete="/partials/add-author-form"
-      hx-target="#author-form-area"
-      hx-swap="innerHTML">
-      Cancel
-    </button>
-  </div>
-
 </div>
 
 <script src="/assets/js/people-search.js"></script>

@@ -245,7 +245,7 @@
               <span class="badge bg-primary">Journal article</span>
               <span class="badge bg-success">Published</span>
             </div>
-            <div class="card-actions">
+            <div class="btn-toolbar">
               <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: The role of the parameter landscape…">
                 <i class="if if-edit" aria-hidden="true"></i> Edit
               </a>
@@ -268,7 +268,7 @@
               <span class="badge bg-primary">Journal article</span>
               <span class="badge bg-success">Published</span>
             </div>
-            <div class="card-actions">
+            <div class="btn-toolbar">
               <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Hybrid classical–quantum algorithms…">
                 <i class="if if-edit" aria-hidden="true"></i> Edit
               </a>
@@ -537,8 +537,9 @@ function renderTokens(raw) {
       const token = document.createElement('span');
       token.className = 'token-bar__token';
       if (neg) token.dataset.negated = 'true';
+      if (neg) token.classList.add('token-bar__token--negated');
       token.innerHTML =
-        (neg ? '<span class="token-bar__field" style="color:var(--bt-danger)">-' + field + '</span>' :
+        (neg ? '<span class="token-bar__field">-' + field + '</span>' :
                '<span class="token-bar__field">' + field + '</span>') +
         '<span class="token-bar__sep">:</span>' +
         '<span class="token-bar__value">' + value + '</span>';
