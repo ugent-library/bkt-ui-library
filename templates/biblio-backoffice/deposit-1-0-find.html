@@ -1,0 +1,374 @@
+<!-- @title: Add research output — Step 1: Describe -->
+<!-- @surface: backoffice -->
+<!--
+  Describe flow — Step 1
+  TODO: double check
+
+  Go templ params needed:
+    work_id        string
+    title          string
+    kind_label     string
+    year           int
+    authors        []Contributor — {name, affiliation, linked bool}
+    files          []File
+    oa_status      string        — "open" | "embargo" | "closed"
+    embargo_date   string        — ISO date, only when oa_status = "embargo"
+    has_abstract   bool          — if false, show optional abstract prompt
+-->
+
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/partials/backoffice-header.html -->
+  <!-- @include: templates/partials/backoffice-sidebar.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h3 mb-0">
+              Deposit research output
+            </h1>
+            <p class="lead">Share your work with the world.</p>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="/dashboard" class="btn btn-ghost btn-sm">
+              <i class="if if-arrow-left" aria-hidden="true"></i>
+              Back to dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+      <ul class="list-unstyled pt-2 d-flex gap-4">
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0">
+            1
+          </span>
+          Describe
+        </li>
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
+            2
+          </span>
+          Upload
+        </li>
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
+            3
+          </span>
+          Access &amp; Rights
+        </li>
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
+            4
+          </span>
+          Review
+        </li>
+      </ul>
+    </div>
+
+    <div class="u-main__body bg-light">
+      <div class="u-main__content">
+        <div class="u-main__content-body">
+          <h2 class="h5">1. Describe your work</h2>
+          <!-- <p class="lead">We'll look up the metadata for you. You only need to add the full text.</p> -->
+          <p class="lead">Paste an identifier to auto-fill, upload a file or enter details manually.</p>
+
+          <section class="row gap-4 mb-5">
+            <article class="col-7 alert alert-info alert--dashed ms-2 mb-0 align-items-center d-flex">
+              <!-- Option 1: DOI or other identifier -->
+              <div class="w-100">
+                <h3 id="doi-heading" class="h5">Quick fill with identifier</h3>
+                <p class="small mb-3">Use a <a href="#">DOI</a>, <a href="#">PubMed ID</a>, <a href="#">arXiv ID</a>, <a href="#">ISBN</a>, or <a href="#">handle</a>.</p>
+
+                <form action="/deposit/import-id" method="get"
+                  hx-get="/deposit/import-id"
+                  hx-target="#import-result-id"
+                  hx-swap="innerHTML"
+                  hx-indicator="#id-indicator">
+                  <div class="row g-2 align-items-start">
+                    <div class="col-auto">
+                      <label for="id-type" class="visually-hidden">Identifier type</label>
+                      <select id="id-type" name="type" class="form-select">
+                        <option value="DOI">DOI</option>
+                        <option value="pmid">PubMed ID</option>
+                        <option value="arxiv">arXiv ID</option>
+                        <option value="isbn">ISBN</option>
+                        <option value="handle">Handle</option>
+                      </select>
+                    </div>
+                    <div class="col-7">
+                      <label for="id-input" class="visually-hidden">Identifier value</label>
+                      <input type="text" id="id-input" name="id" class="form-control"
+                        placeholder="e.g. 10.1038/s41586-024-07528-7 or https://doi.org/.."
+                        autocomplete="off">
+                    </div>
+                    <div class="col">
+                      <a href="deposit-1-1-find.html" type="submit" class="btn btn-primary text-white">
+                        Look up
+                        <span id="id-indicator" class="htmx-indicator ms-1">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-label="Looking up…"></span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+                <!-- <p class="text-muted small mt-2">Works best for journal articles, books, and conference papers.</p> -->
+              </div>
+            </article>
+            <!-- Option 2: File import — WoS export or BibTeX -->
+            <!-- Bridge for services not yet directly connected (e.g. Web of Science) -->
+            <article class="col-3 bt-file-drop">
+              <label class="" for="file-upload-demo">
+                <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
+                <p class="bt-file-drop__text">
+                  Drag .txt, .bib or .ris file,
+                  <br>or browse.
+                </p>
+                <p class="bt-file-drop__hint">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). – max 500 MB</p>
+                <input type="file" id="file-upload-demo" class="visually-hidden" accept=".txt,.bib,.ris">
+              </label>
+            </article>
+          </section>
+
+          <!-- Manual entry -->
+
+          <form action="/deposit/new" method="post" class="col-7">
+
+            <!-- Section: Manual input (active) -->
+            <section aria-labelledby="manual-heading" class="d-flex flex-column gap-4 mb-5">
+
+                <!-- Section: Type -->
+                <article id="type" aria-labelledby="type-heading">
+
+                  <legend class="h6 mb-3">Resource type <span class="text-danger" aria-label="required">*</span></legend>
+
+                  <fieldset class="bt-btn-check__group">
+                    <input type="radio" class="btn-check" name="work-type" id="journal-article" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="journal-article">Journal article</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="book" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="book">Book</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="book-chapter" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="book-chapter">Book chapter</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="conference-contribution" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="conference-contribution">Conference contribution</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="dataset" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="dataset">Dataset</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="dissertation" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="dissertation">Dissertation</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="report" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="report">Report</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="software" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="software">Software</label>
+
+                    <input type="radio" class="btn-check" name="work-type" id="miscellaneous" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="miscellaneous">Other</label>
+
+                  </fieldset>
+                </article>
+
+                <article id="title" aria-labelledby="title-heading">
+                  <div class="bt-title-toolbar">
+                    <label class="h6" for="title" class="form-label">Title</label>
+                    <button type="button" class="btn btn-ghost btn-sm">
+                      <i class="if if-add if--sm" aria-hidden="true"></i>
+                      Add title
+                      <span id="author-load-indicator" class="htmx-indicator" aria-live="polite">Loading…</span>
+                    </button>
+                  </div>
+                  <div class="row g-3">
+                    <div class="col-10">
+                      <input type="text" class="form-control" id="title" placeholder="Add title">
+                    </div>
+                    <div class="col">
+                      <select id="id-type" name="type" class="form-select">
+                        <option value="select" disabled>Select</option>
+                        <option value="English">English</option>
+                      </select>
+                    </div>
+                  </div>
+                </article>
+
+                <article id="abstract" aria-labelledby="abstract-heading">
+                  <label class="h6" for="abstract" class="visually-hidden">Abstract</label>
+                  <div class="row g-3">
+                    <div class="">
+                      <textarea class="form-control" id="abstract" rows="4"
+                        placeholder="Paste or type the abstract here…"
+                        hx-post="/deposit/save-abstract"
+                        hx-trigger="change"
+                        hx-target="#save-status"
+                        hx-indicator="#save-spinner"></textarea>
+                    </div>
+                    <!-- <div class="col">
+                      <select id="id-type" name="type" class="form-select">
+                        <option value="select" disabled>Select</option>
+                        <option value="English">English</option>
+                      </select>
+                    </div> -->
+                  </div>
+                </article>
+
+                <article id="authors" aria-labelledby="authors-heading">
+                <!-- Authors — editable -->
+                  <div class="bt-title-toolbar">
+                    <h3 class="h6 fw-semibold mb-0">Authors</h3>
+                    <button type="button" class="btn btn-ghost btn-sm"
+                      hx-get="/deposit/add-author-form"
+                      hx-target="#author-form-area"
+                      hx-swap="innerHTML"
+                      hx-indicator="#author-load-indicator">
+                      <i class="if if-add if--sm" aria-hidden="true"></i>
+                      Add author
+                      <span id="author-load-indicator" class="htmx-indicator" aria-live="polite">Loading…</span>
+                    </button>
+                  </div>
+
+                  <div id="author-list" class="d-flex flex-column gap-2" aria-live="polite">
+                    <div class="card bt-bg-alt">
+                      <div class="card-body text-center p-2">
+                        <p class="mb-0 small fst-italic">No authors yet.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Author add form — appears here on HTMX swap -->
+                  <div id="author-form-area"></div>
+
+                </article>
+
+                <article id="keywords" aria-labelledby="keywords-heading">
+                  <label class="h6" for="add-keyword" class="form-label">Keywords</label>
+                  <div class="input-group mb-0">
+                    <input type="text" class="form-control" placeholder="Type a keyword and press Enter" aria-label="Keyword" aria-describedby="add-keyword">
+                    <button class="btn btn-outline-dark" type="button" id="add-keyword">Add keyword</button>
+                  </div>
+                </article>
+
+                <article id="projects" aria-labelledby="projects-heading">
+                  <div class="bt-title-toolbar">
+                    <h3 class="h6 mb-0" for="add-projects" class="form-h3">Projects</h3>
+                    <button type="button" class="btn btn-ghost btn-sm">
+                      <i class="if if-add if--sm" aria-hidden="true"></i>
+                      Add project
+                    </button>
+                  </div>
+
+                  <div id="project-list" class="d-flex flex-column gap-2" aria-live="polite">
+                    <!-- TODO: Projects-list -->
+                    <div class="card bt-bg-alt">
+                      <div class="card-body text-center p-2">
+                        <p class="mb-0 small fst-italic">No projects yet.</p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </section>
+
+              <!-- Section: Metadata (inactive) -->
+              <section class="card my-5" aria-labelledby="metadata-heading">
+                <div class="card-header bt-title-toolbar mb-0 bg-white" data-bs-toggle="collapse" data-bs-target="#metadata" aria-expanded="false" aria-controls="metadata">
+                  <h3 id="metadata-heading" class="h6 mt-2 d-flex gap-2">
+                    <i class="if if-book text-muted"></i>
+                    <span>Research metadata</span>
+                    <span class="badge bg-secondary">Optional</span>
+                  </h3>
+                  <i class="if if-chevron-down"></i>
+                </div>
+
+                <div class="card-body collapse" id="metadata">
+                  <div class="row g-3 mb-4">
+                    <div class="col-8">
+                      <label for="journal" class="form-label">Journal</label>
+                      <input type="text" class="form-control" id="journal"
+                        hx-get="/suggest/journals"
+                        hx-trigger="keyup changed delay:300ms"
+                        hx-target="#journal-suggestions"
+                        hx-swap="innerHTML">
+                      <div id="journal-suggestions"></div>
+                    </div>
+                    <div class="col-8">
+                      <label for="publisher" class="form-label">Publisher</label>
+                      <input type="text" class="form-control" id="publisher"
+                        hx-get="/suggest/publishers"
+                        hx-trigger="keyup changed delay:300ms"
+                        hx-target="#publisher-suggestions"
+                        hx-swap="innerHTML">
+                      <div id="publisher-suggestions"></div>
+                    </div>
+                  </div>
+                  <div class="row g-3 mb-4">
+                    <div class="col-4">
+                      <label for="year" class="form-label">Year <span class="text-danger" aria-label="required">*</span></label>
+                      <input type="number" class="form-control" id="year"  min="1000" max="2030" required>
+                    </div>
+                    <div class="col-4">
+                      <label for="publication-date" class="form-label">Publication date <span class="text-danger" aria-label="required">*</span></label>
+                      <input type="number" class="form-control" id="publication-date"  min="1000" max="2030" required>
+                    </div>
+                    <div class="col-4">
+                      <label for="ISSN" class="form-label">ISSN <span class="text-danger" aria-label="required">*</span></label>
+                      <input type="number" class="form-control" id="ISSN" min="1000" max="2030" required>
+                    </div>
+                  </div>
+
+                  <div class="row g-3 mb-4">
+                    <div class="col-3">
+                      <label for="volume" class="form-label">Volume</label>
+                      <input type="text" class="form-control" id="volume" >
+                    </div>
+                    <div class="col-3">
+                      <label for="issue" class="form-label">Issue</label>
+                      <input type="text" class="form-control" id="issue" >
+                    </div>
+                    <div class="col-3">
+                      <label for="pages-from" class="form-label">Pages from</label>
+                      <input type="text" class="form-control" id="pages-from" >
+                    </div>
+                    <div class="col-3">
+                      <label for="pages-to" class="form-label">Pages to</label>
+                      <input type="text" class="form-control" id="pages-to" >
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+
+
+
+              <!-- Action bar -->
+              <div class="bt-toolbar">
+                <div class="bt-toolbar__right">
+                  <div class="bt-toolbar__item">
+                    <button type="button" class="btn btn-ghost btn-sm"
+                      hx-post="/deposit/save-draft"
+                      hx-target="#save-status"
+                      hx-indicator="#save-spinner">
+                      Save draft
+                      <span id="save-spinner" class="htmx-indicator">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
+                      </span>
+                    </button>
+                    <a href="deposit-2-upload.html" class="btn btn-primary">
+                      Submit
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

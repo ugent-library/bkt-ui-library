@@ -68,26 +68,29 @@
       </ul>
     </div>
     <div class="u-main__body">
-
       <div class="u-main__content">
         <div class="u-main__content-body">
           <!-- Work identity — keeps researcher oriented throughout -->
-          <div class="mb-5">
-            <div class="d-flex align-items-center gap-2 mb-1">
-              <span class="badge bg-primary">Journal article</span>
-              <!-- Source badge: only shown for imported works; omit when empty -->
-              <span class="badge bg-secondary">Web of Science</span>
+          <div class="card mb-5">
+            <div class="card-body">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-primary">Journal article</span>
+                <!-- Source badge: only shown for imported works; omit when empty -->
+                <span class="badge bg-secondary">Web of Science</span>
+              </div>
+              <h1 class="h6 text-muted my-2">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</h1>
+              <p class="text-muted small mb-0">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
+              <button class="btn btn-sm btn-ghosts">
+                <i class="if if-edit"></i> Edit
+              </button>
             </div>
-            <h1 class="h5 fw-semibold mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</h1>
-            <p class="text-muted small mb-0">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
           </div>
 
-          <h2 class="h4 mb-4">Upload</h2>
 
           <section id="upload" aria-labelledby="upload-heading">
 
-            <h2 id="upload-heading" class="h6 fw-semibold mb-1">Upload your full text</h2>
-            <p class="lead">Guiding text</p>
+            <h2 id="upload-heading" class="h4">Upload your files</h2>
+            <p class="lead">Drag and drop your manuscript, dataset, or supplementary materials.</p>
 
             <!-- Uploaded file summary — read-only -->
             <div class="bg-white border rounded p-3 mb-4 d-flex align-items-center gap-3">
@@ -122,8 +125,28 @@
 
           </section>
 
+          <!-- Action bar -->
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <button type="button" class="btn btn-ghost btn-sm"
+                  hx-post="/deposit/save-draft"
+                  hx-target="#save-status"
+                  hx-indicator="#save-spinner">
+                  Save draft
+                  <span id="save-spinner" class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
+                  </span>
+                </button>
+                <a href="deposit-3-access-rights.html" class="btn btn-primary">
+                  Submit
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </div>

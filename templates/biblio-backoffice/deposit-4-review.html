@@ -91,6 +91,27 @@
 
           </fieldset>
 
+          <hr>
+          <!-- Action bar -->
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <button type="button" class="btn btn-ghost btn-sm"
+                  hx-post="/deposit/save-draft"
+                  hx-target="#save-status"
+                  hx-indicator="#save-spinner">
+                  Save draft
+                  <span id="save-spinner" class="htmx-indicator">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
+                  </span>
+                </button>
+                <a href="deposit-5-submitted.html" class="btn btn-primary">
+                  Submit
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </main>
