@@ -11,11 +11,13 @@ Add it to the root of any project where I'm a regular collaborator.
 
 When a new session begins on this project, execute these steps before writing any code or HTML:
 
-1. **Read the docs folder** — read all three files in order:
+1. **Read the docs folder** — read all relevant files before writing code:
    - `docs/DOMAIN.md` — entity vocabulary, status values, badge mappings, profile system, review workflow
    - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `bbl` backend, data flow, what is out of scope
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
    - `docs/CONSUMING-BOOKTOWER.md` — how to use this UI library correctly inside another project
+   - `docs/JAVASCRIPT.md` — JS file registry, event contract, loading order
+   - `docs/DEPOSIT-FLOW.md` — if working on the deposit flow
 
 2. **Check the verified class list** — the complete class list in this file (ASSISTANT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
 
@@ -611,6 +613,39 @@ Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any 
 **About accessibility:** produce the correct static HTML, then explicitly state that screen reader testing has not been performed.
 
 **About the surface of a new page:** check or ask which user this is for before writing the first line of HTML.
+
+---
+
+## Bootstrap-first: check before creating any new class
+
+Before writing a new CSS class, answer: does Bootstrap already have a component or pattern that handles this use case?
+
+The check is not "does Bootstrap have a class with this exact visual output?" — it is "does Bootstrap have a pattern that handles this *use case*?" Check the full Bootstrap component list: buttons, dropdowns, button groups, list groups, cards, navs, tabs, pagination, modals, collapse, offcanvas, tooltips, popovers, progress, spinners, alerts, badges, breadcrumbs, tables, forms. Read what each component *does*, not just what it looks like.
+
+If Bootstrap covers the use case, use it — even if you would need to override some styles with a Booktower token. Overriding is cheaper than duplicating.
+
+A new Booktower class is only justified when:
+1. Bootstrap has no equivalent concept, **or**
+2. The pattern is domain-specific to Biblio and meaningfully reused across multiple templates
+
+If you proceed with a new class, state in a comment: which Bootstrap component you checked, and the specific reason it did not fit.
+
+---
+
+## JavaScript: no inline scripts, no undocumented files
+
+**Never write an inline `<script>` block in a template or partial.** All JavaScript that runs on real pages belongs in a named file in `assets/js/`. Each file handles one concern.
+
+The only exception: UI kit documentation pages (`foundations/`, `elements/`, `patterns/`) may contain inline scripts to *demonstrate* a JS interaction pattern — never to provide working behaviour.
+
+**Every file in `assets/js/` must be documented in `docs/JAVASCRIPT.md`** with:
+- its purpose
+- which templates load it
+- which events it listens to
+- which events it dispatches
+- whether it is prototype-only (to be removed when a real endpoint exists)
+
+If you find a `<script>` block in a template, flag it and move it to the correct file before considering the template ready for Go templ implementation.
 
 ---
 
