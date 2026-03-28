@@ -38,6 +38,7 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 - [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
 - [Integration](base/integration.html) — Using the design system in apps
 - [AI-assistent guidelines](ASSISTANT.md) — Working guidelines for AI-assisted development on this project
+- [Deposit flow](docs/DEPOSIT-FLOW.md) — Researcher deposit flow: steps, fields, JS, and Go templ params
 
 ## Browser Support
 
@@ -157,4 +158,4 @@ For surface-aware components, add `data-surface="public"` or `data-surface="back
 
 **CSS not updating** — make sure you're running `npm run dev`, not just `npm start`.
 
-**Port 3000 in use** — change `PORT` at the top of `server.js`.
+**Port 3111 in use** — change `PORT` at the top of `server.js`.
