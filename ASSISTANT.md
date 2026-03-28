@@ -496,7 +496,7 @@ bt-hero                  bt-hero__bg              bt-hero__content
 
 **Research card**
 ```
-card-research           card-meta               card-actions
+card-research           card-meta               btn-toolbar
 card-body               card-title              card-authors
 card-publication
 ```
