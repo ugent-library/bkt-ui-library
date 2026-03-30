@@ -3,6 +3,10 @@
 <!--
   Deposit flow — Step 4
 
+  Read-only summary of the complete record before submission.
+  The "Submit" action moves the work from draft → submitted status
+  and triggers the librarian review queue.
+
   Go templ params needed:
     work_id        string
     title          string
@@ -12,9 +16,14 @@
     files          []File
     oa_status      string        — "open" | "embargo" | "closed"
     embargo_date   string        — ISO date, only when oa_status = "embargo"
-    has_abstract   bool          — if false, show optional abstract prompt
--->
+    license        string        — e.g. "CC BY 4.0"
+    source_label   string        — e.g. "Web of Science", empty when manually entered
 
+  TODO: The summary content is not yet designed.
+  Needs to show: type, title, authors, abstract (truncated), keywords,
+  files (name + OA status), access status, license.
+  Design the read-only summary layout before implementing.
+-->
 
 <div class="u-layout--app" data-surface="backoffice">
   <!-- @include: templates/partials/backoffice-header.html -->
@@ -25,10 +34,8 @@
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
-            <h1 class="h4">
-              Deposit research output
-            </h1>
-            <p class="lead">We'll look up the metadata for you. You only need to add the full text.</p>
+            <h1 class="h3 mb-0">Deposit research output</h1>
+            <p class="lead mb-0">We'll look up the metadata for you. You only need to add the full text.</p>
           </div>
         </div>
         <div class="bt-toolbar__right">
@@ -40,72 +47,65 @@
           </div>
         </div>
       </div>
-      <ul class="list-unstyled pt-3 d-flex gap-4">
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0">
-            1
-          </span>
+
+      <!-- Stepper -->
+      <ul class="list-unstyled pt-2 d-flex gap-4 mb-0" aria-label="Deposit steps">
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0" aria-hidden="true">1</span>
           Describe
         </li>
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0">
-            2
-          </span>
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0" aria-hidden="true">2</span>
           Upload
         </li>
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0">
-            3
-          </span>
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0" aria-hidden="true">3</span>
           Access &amp; Rights
         </li>
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0">
-            4
-          </span>
-          Review
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0" aria-hidden="true">4</span>
+          <span aria-current="step">Review</span>
         </li>
       </ul>
     </div>
-    <div class="u-main__body">
 
+    <div class="u-main__body">
       <div class="u-main__content">
         <div class="u-main__content-body">
-          <!-- Work identity — keeps researcher oriented throughout -->
+
           <div class="mb-5">
             <div class="d-flex align-items-center gap-2 mb-1">
               <span class="badge bg-primary">Journal article</span>
-              <!-- Source badge: only shown for imported works; omit when empty -->
               <span class="badge bg-secondary">Web of Science</span>
             </div>
-            <h1 class="h5 fw-semibold mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</h1>
+            <p class="h5 fw-semibold mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</p>
             <p class="text-muted small mb-0">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
           </div>
 
-          <h2 class="h4 mb-4">Review</h2>
+          <h2 class="h4 mb-4">Does everything look right?</h2>
 
+          <!--
+            TODO: Read-only summary layout goes here.
+            See DEPOSIT-FLOW.md known gaps.
+          -->
+          <p class="text-muted">Summary of type, authors, files, access status, and license will appear here.</p>
 
-          <!-- OA question -->
-          <fieldset class="mb-2">
-            <legend class="form-label fw-semibold mb-3">Does everything look right?</legend>
+          <hr class="my-5">
 
-          </fieldset>
+          <!-- Status region for auto-save -->
+          <span id="save-status" role="status" aria-live="polite" class="visually-hidden"></span>
 
-          <hr>
           <!-- Action bar -->
           <div class="bt-toolbar">
             <div class="bt-toolbar__right">
               <div class="bt-toolbar__item">
-                <button type="button" class="btn btn-ghost btn-sm"
-                  hx-post="/deposit/save-draft"
-                  hx-target="#save-status"
-                  hx-indicator="#save-spinner">
+                <button type="button" class="btn btn-ghost btn-sm">
                   Save draft
                   <span id="save-spinner" class="htmx-indicator">
                     <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
                   </span>
                 </button>
-                <a href="deposit-5-submitted.html" class="btn btn-primary">
+                <a href="deposit-5-submitted.html" type="submit" class="btn btn-primary">
                   Submit
                 </a>
               </div>
@@ -114,6 +114,6 @@
 
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </div>

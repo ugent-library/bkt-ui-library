@@ -514,19 +514,6 @@ function renderAuthorList(name = 'Baker, Josephine') {
 </div>`;
 }
 
-function renderImportResult(kind) {
-  return `
-<article class="border rounded bg-white p-3">
-  <div class="d-flex align-items-center gap-2 mb-2">
-    <span class="badge bg-primary">${kind}</span>
-    <span class="badge bg-secondary">Metadata found</span>
-  </div>
-  <h3 class="h6 mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</h3>
-  <p class="text-muted small mb-3">Esperon-Rodriguez, M. · De Pauw, K. · 2026</p>
-  <a href="deposit-v2-upload.html" class="btn btn-primary btn-sm">Use this record</a>
-</article>`;
-}
-
 function renderUploadList() {
   return `
 <div class="bg-white border rounded p-3 d-flex align-items-center gap-3">

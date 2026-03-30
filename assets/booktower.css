@@ -847,6 +847,7 @@ code, kbd, pre, samp {
     .btn      → 38px
     .btn-lg   → 44px
 */
+.btn[type=submit],
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 500;
@@ -900,12 +901,14 @@ code, kbd, pre, samp {
 }
 
 /* ── Variants ───────────────────────────────────────────────────────────────── */
+.btn-primary[type=submit],
 .btn-primary {
   background: var(--bt-blue-900);
   border: 1px solid var(--bt-blue-900);
   color: white;
 }
 
+.btn-primary[type=submit]:hover:not(:disabled),
 .btn-primary:hover:not(:disabled) {
   background: var(--bt-blue-800);
   border-color: var(--bt-blue-800);
@@ -1724,15 +1727,6 @@ code, kbd, pre, samp {
   box-shadow: var(--bt-shadow-md);
   padding: var(--bt-sp-4);
   max-width: 480px;
-}
-
-.filter-editor__title {
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  color: var(--bt-gray-600);
-  margin: 0 0 var(--bt-sp-3);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
 
 .filter-editor__actions {

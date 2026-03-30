@@ -16,10 +16,10 @@
     from a local PEOPLE array. Remove that script tag for production.
 -->
 
-<div class="card" id="add-author-form"
+<div class="card mt-3" id="add-author-form"
   aria-label="Add author" role="region">
   <div class="card-body">
-    <p class="filter-editor__title mb-3">Add author</p>
+    <p class="h6 mb-3">Add author</p>
 
     <!-- ── People search widget ───────────────────────────────────────────── -->
     <div class="mb-3" data-people-search>
@@ -104,7 +104,7 @@
             Last name <span class="text-danger" aria-label="required">*</span>
           </label>
           <input type="text" id="external-last-name" name="external_last_name"
-            class="form-control form-control-sm" autocomplete="family-name">
+            class="form-control form-control-sm" autocomplete="family-name" required>
         </div>
         <div>
           <label for="external-orcid" class="form-label form-label-sm">
@@ -138,6 +138,9 @@
   </div>
 </div>
 
-<script src="/assets/js/people-search.js"></script>
-<script src="/assets/js/people-search-stub.js"></script>
-<!-- Remove people-search-stub.js when wiring the real /people/search endpoint -->
+<!--
+  Note: people-search.js and people-search-stub.js must be loaded by the
+  deposit template that hosts this partial, not here.
+  Scripts injected via HTMX innerHTML swap do not execute.
+  See docs/JAVASCRIPT.md.
+-->

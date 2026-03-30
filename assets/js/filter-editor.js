@@ -136,7 +136,7 @@
 
   // ── Render editor ─────────────────────────────────────────────────────────
   function renderEditor(filterId, def, existing) {
-    const title = `<p class="filter-editor__title" id="filter-editor-title">${def.label}</p>`;
+    const title = `<p class="h6" id="filter-editor-title">${def.label}</p>`;
     let body = '';
 
     switch (def.type) {

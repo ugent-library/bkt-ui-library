@@ -12,9 +12,12 @@
     files          []File
     oa_status      string        — "open" | "embargo" | "closed"
     embargo_date   string        — ISO date, only when oa_status = "embargo"
-    has_abstract   bool          — if false, show optional abstract prompt
--->
+    source_label   string        — e.g. "Web of Science", empty when manually entered
 
+  JavaScript: deposit.js
+    - Shows/hides #embargo-date-field when "Embargoed" radio is selected
+    - Moves focus to #embargo-date when the field becomes visible
+-->
 
 <div class="u-layout--app" data-surface="backoffice">
   <!-- @include: templates/partials/backoffice-header.html -->
@@ -25,10 +28,8 @@
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
-            <h1 class="h4">
-              Deposit research output
-            </h1>
-            <p class="lead">We'll look up the metadata for you. You only need to add the full text.</p>
+            <h1 class="h3 mb-0">Deposit research output</h1>
+            <p class="lead mb-0">We'll look up the metadata for you. You only need to add the full text.</p>
           </div>
         </div>
         <div class="bt-toolbar__right">
@@ -40,63 +41,58 @@
           </div>
         </div>
       </div>
-      <ul class="list-unstyled pt-3 d-flex gap-4">
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0">
-            1
-          </span>
+
+      <!-- Stepper -->
+      <ul class="list-unstyled pt-2 d-flex gap-4 mb-0" aria-label="Deposit steps">
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0" aria-hidden="true">1</span>
           Describe
         </li>
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0">
-            2
-          </span>
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-dark text-white flex-shrink-0" aria-hidden="true">2</span>
           Upload
         </li>
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0">
-            3
-          </span>
-          Access &amp; Rights
+        <li class="small d-flex gap-2 align-items-center">
+          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0" aria-hidden="true">3</span>
+          <span aria-current="step">Access &amp; Rights</span>
         </li>
-        <li class="d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
-            4
-          </span>
+        <li class="small d-flex gap-2 align-items-center" aria-disabled="true">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0" aria-hidden="true">4</span>
           Review
         </li>
       </ul>
     </div>
-    <div class="u-main__body">
 
+    <div class="u-main__body">
       <div class="u-main__content">
         <div class="u-main__content-body">
-          <!-- Work identity — keeps researcher oriented throughout -->
+
+          <!-- Work identity card -->
           <div class="card mb-5">
             <div class="card-body">
               <div class="d-flex align-items-center gap-2 mb-1">
                 <span class="badge bg-primary">Journal article</span>
-                <!-- Source badge: only shown for imported works; omit when empty -->
                 <span class="badge bg-secondary">Web of Science</span>
               </div>
-              <h1 class="h6 text-muted my-2">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</h1>
-              <p class="text-muted small mb-0">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
-              <button class="btn btn-sm btn-ghosts">
-                <i class="if if-edit"></i> Edit
-              </button>
+              <p class="fw-semibold mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</p>
+              <p class="text-muted small mb-2">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
+              <a href="deposit-1-1-find.html" class="btn btn-ghost btn-sm px-0">
+                <i class="if if-edit if--sm" aria-hidden="true"></i>
+                Edit details
+              </a>
             </div>
           </div>
 
           <h2 class="h4">Access &amp; Rights</h2>
 
-          <!-- OA question -->
+          <!-- OA status -->
           <fieldset class="mb-2">
             <legend class="form-label mb-3">Who can see your full text / dataset?</legend>
 
             <div class="d-flex flex-column gap-2">
 
-              <label class="d-flex gap-3 align-items-start p-3 bg-white border rounded" for="oa-yes">
-                <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="oa-yes" value="open">
+              <label class="d-flex gap-3 align-items-start p-3 bg-white border rounded" for="oa-open">
+                <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="oa-open" value="open">
                 <div>
                   <span class="fw-semibold d-block">Open Access</span>
                   <span class="text-muted small">Anyone can read and download immediately. Maximum visibility and impact.</span>
@@ -108,10 +104,18 @@
                 <div>
                   <span class="fw-semibold d-block">Embargoed</span>
                   <span class="text-muted small">Files become publicly available after a date you choose. Metadata is visible now.</span>
-                  <!-- Embargo date: shown when this option is selected via JS -->
-                  <div id="embargo-date-field" class="mt-3 d-none">
-                    <label for="embargo-date" class="form-label">Release date <span class="text-danger" aria-label="required">*</span></label>
-                    <input type="date" id="embargo-date" class="form-control col-4">
+                  <!--
+                    Embargo date field — shown/hidden by deposit.js when this radio is selected.
+                    Hidden attribute is the correct toggle for AT (not d-none).
+                  -->
+                  <div id="embargo-date-field" class="mt-3" hidden>
+                    <label for="embargo-date" class="form-label">
+                      Release date
+                      <span class="text-danger" aria-label="required">*</span>
+                    </label>
+                    <div class="col-5">
+                      <input type="date" id="embargo-date" name="embargo_date" class="form-control">
+                    </div>
                   </div>
                 </div>
               </label>
@@ -133,21 +137,21 @@
             <a href="#" class="text-muted">UGent scholarly publishing policy</a>
           </p>
 
-
+          <!-- License -->
           <h2 class="h4">License</h2>
 
-          <fieldset class="mb-2">
+          <fieldset class="mb-5">
             <legend class="form-label">How can your research be used?</legend>
             <div class="row g-3">
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-3" for="">
-                      <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                  <input type="radio" class="btn-check" name="license" id="license-cc-by" value="cc-by-4.0" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-cc-by">
+                    <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">CC BY 4.0</p>
-                      <p class="small">Attribution</p>
+                      <p class="small mb-0">Attribution</p>
                     </div>
                   </label>
                 </div>
@@ -155,12 +159,12 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-cc-by-sa" value="cc-by-sa-4.0" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-cc-by-sa">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">CC BY-SA 4.0</p>
-                      <p class="small">Attribution, ShareAlike</p>
+                      <p class="small mb-0">Attribution, ShareAlike</p>
                     </div>
                   </label>
                 </div>
@@ -168,12 +172,12 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-cc-by-nc" value="cc-by-nc-4.0" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-cc-by-nc">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">CC BY-NC 4.0</p>
-                      <p class="small">Attribution, NonCommercial</p>
+                      <p class="small mb-0">Attribution, NonCommercial</p>
                     </div>
                   </label>
                 </div>
@@ -181,12 +185,12 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-cc-by-nc-sa" value="cc-by-nc-sa-4.0" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-cc-by-nc-sa">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">CC BY-NC-SA 4.0</p>
-                      <p class="small">Attribution, NC, ShareAlike</p>
+                      <p class="small mb-0">Attribution, NC, ShareAlike</p>
                     </div>
                   </label>
                 </div>
@@ -194,12 +198,12 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-cc0" value="cc0-1.0" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-cc0">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
-                      <p class="h6 mb-0">CCO 1.0</p>
-                      <p class="small">Public Domain</p>
+                      <p class="h6 mb-0">CC0 1.0</p>
+                      <p class="small mb-0">Public Domain</p>
                     </div>
                   </label>
                 </div>
@@ -207,12 +211,12 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-mit" value="mit" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-mit">
                     <i class="if if-mit if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">MIT License</p>
-                      <p class="small">Permissive software license</p>
+                      <p class="small mb-0">Permissive software license</p>
                     </div>
                   </label>
                 </div>
@@ -220,12 +224,12 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-apache" value="apache-2.0" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-apache">
                     <i class="if if-apache if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">Apache 2.0</p>
-                      <p class="small">Permissive with patent grant</p>
+                      <p class="small mb-0">Permissive with patent grant</p>
                     </div>
                   </label>
                 </div>
@@ -233,20 +237,22 @@
 
               <div class="col-6">
                 <div class="card">
-                  <input type="radio" class="btn-check" name="work-type" id="" autocomplete="off">
-                  <label class="card-body d-flex gap-4" for="">
+                  <input type="radio" class="btn-check" name="license" id="license-all-rights" value="all-rights-reserved" autocomplete="off">
+                  <label class="card-body d-flex gap-3" for="license-all-rights">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div>
                       <p class="h6 mb-0">All Rights Reserved</p>
-                      <p class="small">No reuse without permission</p>
+                      <p class="small mb-0">No reuse without permission</p>
                     </div>
                   </label>
                 </div>
               </div>
+
             </div>
           </fieldset>
 
-          <hr class="mt-5">
+          <!-- Status region for auto-save -->
+          <span id="save-status" role="status" aria-live="polite" class="visually-hidden"></span>
 
           <!-- Action bar -->
           <div class="bt-toolbar">
@@ -261,28 +267,15 @@
                     <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
                   </span>
                 </button>
-                <a href="deposit-4-review.html" class="btn btn-primary">
-                  Submit
-                </a>
+                <a href="deposit-4-review.html" class="btn btn-primary">Next</a>
               </div>
             </div>
           </div>
 
         </div>
       </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </div>
 
-
-<script>
-  // Show embargo date field only when "Not yet" is selected
-  document.querySelectorAll('input[name="oa"]').forEach(radio => {
-    radio.addEventListener('change', () => {
-      const field = document.getElementById('embargo-date-field');
-      const show = document.getElementById('oa-embargo').checked;
-      field.classList.toggle('d-none', !show);
-      if (show) document.getElementById('embargo-date').focus();
-    });
-  });
-</script>
+<script src="/assets/js/deposit.js"></script>

@@ -1,8 +1,9 @@
-<!-- @title: Add research output — Step 1: Describe -->
+<!-- @title: Add research output — Step 1: Describe (prefilled) -->
 <!-- @surface: backoffice -->
 <!--
-  Describe flow — Step 1
-  TODO: double check
+  Describe flow — Step 1 (prefilled from identifier lookup)
+  Shows the same form as deposit-1-0-find.html with metadata already populated
+  from an external source (Crossref, PubMed, etc.) and a confirmation notice.
 
   Go templ params needed:
     work_id        string
@@ -13,9 +14,10 @@
     files          []File
     oa_status      string        — "open" | "embargo" | "closed"
     embargo_date   string        — ISO date, only when oa_status = "embargo"
-    has_abstract   bool          — if false, show optional abstract prompt
+    has_abstract   bool
+    import_source  string        — e.g. "Crossref", "PubMed"
+    import_id      string        — the identifier used for lookup
 -->
-
 
 <div class="u-layout--app" data-surface="backoffice">
   <!-- @include: templates/partials/backoffice-header.html -->
@@ -26,10 +28,8 @@
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
-            <h1 class="h3 mb-0">
-              Deposit research output
-            </h1>
-            <p class="lead">Share your work with the world.</p>
+            <h1 class="h3 mb-0">Deposit research output</h1>
+            <p class="lead mb-0">Share your work with the world.</p>
           </div>
         </div>
         <div class="bt-toolbar__right">
@@ -41,29 +41,23 @@
           </div>
         </div>
       </div>
-      <ul class="list-unstyled pt-2 d-flex gap-4">
+
+      <!-- Stepper -->
+      <ul class="list-unstyled pt-2 d-flex gap-4 mb-0" aria-label="Deposit steps">
         <li class="small d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0">
-            1
-          </span>
-          Describe
+          <span class="bt-avatar bt-avatar--xsmall bt-avatar--primary flex-shrink-0" aria-hidden="true">1</span>
+          <span aria-current="step">Describe</span>
         </li>
-        <li class="small d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
-            2
-          </span>
+        <li class="small d-flex gap-2 align-items-center" aria-disabled="true">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0" aria-hidden="true">2</span>
           Upload
         </li>
-        <li class="small d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
-            3
-          </span>
+        <li class="small d-flex gap-2 align-items-center" aria-disabled="true">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0" aria-hidden="true">3</span>
           Access &amp; Rights
         </li>
-        <li class="small d-flex gap-2 align-items-center">
-          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0">
-            4
-          </span>
+        <li class="small d-flex gap-2 align-items-center" aria-disabled="true">
+          <span class="bt-avatar bt-avatar--xsmall bt-bg-white bt-border flex-shrink-0" aria-hidden="true">4</span>
           Review
         </li>
       </ul>
@@ -72,352 +66,363 @@
     <div class="u-main__body bg-light">
       <div class="u-main__content">
         <div class="u-main__content-body">
+
           <h2 class="h5">1. Describe your work</h2>
-          <!-- <p class="lead">We'll look up the metadata for you. You only need to add the full text.</p> -->
-          <p class="lead">Paste an identifier to auto-fill, upload a file or enter details manually.</p>
+          <p class="lead">Paste an identifier to auto-fill, upload a file, or enter details manually.</p>
 
-          <section class="row gap-4 mb-5">
-            <article class="col-7 alert alert-info alert--dashed ms-2 mb-0 align-items-center d-flex">
-              <!-- Option 1: DOI or other identifier -->
-              <div class="w-100">
-                <h3 id="doi-heading" class="h5">Quick fill with identifier</h3>
-                <p class="small mb-3">Use a <a href="#">DOI</a>, <a href="#">PubMed ID</a>, <a href="#">arXiv ID</a>, <a href="#">ISBN</a>, or <a href="#">handle</a>.</p>
-
-                <form action="/deposit/import-id" method="get"
-                  hx-get="/deposit/import-id"
-                  hx-target="#import-result-id"
-                  hx-swap="innerHTML"
-                  hx-indicator="#id-indicator">
-                  <div class="row g-2">
-                    <div class="col-auto">
-                      <label for="id-type" class="visually-hidden">Identifier type</label>
-                      <select id="id-type" name="type" class="form-select">
-                        <option value="DOI">DOI</option>
-                        <option value="pmid">PubMed ID</option>
-                        <option value="arxiv">arXiv ID</option>
-                        <option value="isbn">ISBN</option>
-                        <option value="handle">Handle</option>
-                      </select>
-                    </div>
-                    <div class="col-7">
-                      <label for="id-input" class="visually-hidden">Identifier value</label>
-                      <input type="text" id="id-input" name="id" class="form-control"
-                        placeholder="e.g. 10.1038/s41586-024-07528-7 or https://doi.org/.."
-                        autocomplete="off">
-                    </div>
-                    <div class="col">
-                      <button type="submit" class="btn btn-primary">
-                        Look up
-                        <span id="id-indicator" class="htmx-indicator ms-1">
-                          <span class="spinner-border spinner-border-sm" role="status" aria-label="Looking up…"></span>
-                        </span>
-                      </button>
-                    </div>
+          <!-- Entry paths -->
+          <div class="row gap-4 mb-5">
+            <!-- Option 1: Identifier -->
+            <div class="col-8 alert alert-info alert--dashed ms-2 mb-0">
+              <h3 class="h5">Quick fill with identifier</h3>
+              <p class="small mb-3">Use a <a href="#">DOI</a>, <a href="#">PubMed ID</a>, <a href="#">arXiv ID</a>, <a href="#">ISBN</a>, or <a href="#">handle</a>.</p>
+              <form action="/deposit/import-id" method="get"
+                hx-get="/deposit/import-id"
+                hx-target="#import-result-id"
+                hx-swap="innerHTML"
+                hx-indicator="#id-indicator">
+                <div class="row g-2 align-items-start">
+                  <div class="col-auto">
+                    <label for="id-type" class="visually-hidden">Identifier type</label>
+                    <select id="id-type" name="type" class="form-select">
+                      <option value="doi">DOI</option>
+                      <option value="pmid">PubMed ID</option>
+                      <option value="arxiv">arXiv ID</option>
+                      <option value="isbn">ISBN</option>
+                      <option value="handle">Handle</option>
+                    </select>
                   </div>
-                </form>
-                <!-- <p class="text-muted small mt-2">Works best for journal articles, books, and conference papers.</p> -->
-              </div>
-            </article>
-            <!-- Option 2: File import — WoS export or BibTeX -->
-            <!-- Bridge for services not yet directly connected (e.g. Web of Science) -->
-            <article class="col-3 bt-file-drop">
-              <label class="" for="file-upload-demo">
+                  <div class="col-7">
+                    <label for="id-input" class="visually-hidden">Identifier value</label>
+                    <input type="text" id="id-input" name="id" class="form-control"
+                      placeholder="e.g. 10.1038/s41586-024-07528-7"
+                      autocomplete="off">
+                  </div>
+                  <div class="col">
+                    <button type="submit" class="btn btn-primary">
+                      Look up
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Option 2: File import -->
+            <div class="col-3 bt-file-drop">
+              <label for="file-upload-import">
                 <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
-                <p class="bt-file-drop__text">
-                  Drag .txt, .bib or .ris file,
-                  <br>or browse.
-                </p>
-                <p class="bt-file-drop__hint">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). – max 500 MB</p>
-                <input type="file" id="file-upload-demo" class="visually-hidden" accept=".txt,.bib,.ris">
+                <p class="bt-file-drop__text">Drag a file to upload, or browse.</p>
+                <p class="bt-file-drop__hint">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). Max 500 MB.</p>
+                <input type="file" id="file-upload-import" class="visually-hidden" accept=".txt,.bib,.ris">
               </label>
-            </article>
-          </section>
+            </div>
+          </div>
 
-          <!-- Manual entry -->
+          <!-- Manual entry form -->
+          <form action="/deposit/new" method="post" class="col-8">
 
-          <form action="/deposit/new" method="post" class="col-7">
+            <!-- Prefill confirmation notice -->
+            <div class="alert alert-info mb-4" role="status">
+              <h3 class="h6 mb-1">
+                <i class="if if-info-circle" aria-hidden="true"></i>
+                Does everything look right?
+              </h3>
+              <p class="mb-0">
+                <strong>Metadata prefilled from Crossref</strong> via DOI <code>10.1002/ppp3.70125</code>.
+                Review the fields below — only correct what's wrong.
+              </p>
+            </div>
 
-            <div class="mb-4">
-              <!-- Prefill notice -->
-              <div class="alert alert-info" role="status">
-                <h2 id="confirm-heading" class="h6"><i class="if if-info-circle" aria-hidden="true"></i> Does everything look right?</h2>
+            <div class="d-flex flex-column gap-5 mb-5">
 
-                <strong>Metadata prefilled from Crossref</strong> via DOI <code>10.1002/ppp3.70125</code>. Review the fields below — only correct what's wrong.
+              <!-- Title -->
+              <div>
+                <div class="bt-title-toolbar">
+                  <label class="h6 mb-0" for="title">
+                    Title
+                    <span class="text-danger" aria-label="required">*</span>
+                  </label>
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add title
+                  </button>
+                </div>
+                <div class="row g-3">
+                  <div class="col-10">
+                    <input type="text" class="form-control" id="title" name="title"
+                      value="Urban forests as essential infrastructure for climate resilience"
+                      required autocomplete="off">
+                  </div>
+                  <div class="col">
+                    <label for="title-language" class="visually-hidden">Title language</label>
+                    <select id="title-language" name="title_language" class="form-select">
+                      <option value="en" selected>English</option>
+                      <option value="nl">Dutch</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Abstract -->
+              <div>
+                <div class="bt-title-toolbar">
+                  <label class="h6 mb-0" for="abstract">
+                    Abstract
+                    <span class="text-danger" aria-label="required">*</span>
+                  </label>
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add abstract
+                  </button>
+                </div>
+                <textarea class="form-control" id="abstract" name="abstract" rows="4"
+                  hx-post="/deposit/save-abstract"
+                  hx-trigger="change"
+                  hx-target="#save-status"
+                  hx-indicator="#save-spinner">An abstract about urban forests and climate resilience.</textarea>
+              </div>
+
+              <!-- Authors -->
+              <div>
+                <div class="bt-title-toolbar">
+                  <h3 class="h6 mb-0">Authors</h3>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    hx-get="/deposit/add-author-form"
+                    hx-target="#author-form-area"
+                    hx-swap="innerHTML"
+                    hx-indicator="#author-indicator">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add author
+                    <span id="author-indicator" class="htmx-indicator" aria-live="polite">Loading…</span>
+                  </button>
+                </div>
+                <div id="author-list" class="d-flex flex-column gap-2" aria-live="polite">
+                  <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                    <span class="bt-avatar bt-avatar--small" aria-hidden="true">ER</span>
+                    <div class="flex-grow-1">
+                      <div class="small fw-semibold">Esperon-Rodriguez, Manuel</div>
+                      <div class="text-muted small">External</div>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm p-1"
+                      aria-label="Remove Esperon-Rodriguez, Manuel from authors">
+                      <i class="if if-delete if--sm" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                    <span class="bt-avatar bt-avatar--small" aria-hidden="true">KD</span>
+                    <div class="flex-grow-1">
+                      <div class="small fw-semibold">De Pauw, Karen</div>
+                      <div class="text-muted small">UGent — Department of Environment</div>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm p-1"
+                      aria-label="Remove De Pauw, Karen from authors">
+                      <i class="if if-delete if--sm" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                  <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                    <span class="bt-avatar bt-avatar--small" aria-hidden="true">JV</span>
+                    <div class="flex-grow-1">
+                      <div class="small fw-semibold">Van den Berg, Judith</div>
+                      <div class="text-muted small">External</div>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm p-1"
+                      aria-label="Remove Van den Berg, Judith from authors">
+                      <i class="if if-delete if--sm" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <div id="author-form-area"></div>
+              </div>
+
+              <!-- Keywords -->
+              <div>
+                <label class="h6 mb-2" for="keyword-input">Keywords</label>
+                <div class="input-group">
+                  <input type="text" id="keyword-input" class="form-control"
+                    placeholder="Type a keyword and press Enter"
+                    aria-describedby="keyword-hint">
+                  <button class="btn btn-outline-dark" type="button" id="add-keyword-btn">Add keyword</button>
+                </div>
+                <p id="keyword-hint" class="form-text">Press Enter or click Add keyword after each term.</p>
+                <div class="d-flex flex-wrap gap-1 mt-2">
+                  <span class="badge bg-primary">Urban climate</span>
+                  <span class="badge bg-primary">Resilience</span>
+                  <span class="badge bg-primary">Green infrastructure</span>
+                  <span class="badge bg-primary">Ghent</span>
+                </div>
+              </div>
+
+              <!-- Projects -->
+              <div>
+                <div class="bt-title-toolbar">
+                  <h3 class="h6 mb-0">Projects</h3>
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add project
+                  </button>
+                </div>
+                <div id="project-list" class="d-flex flex-column gap-2" aria-live="polite">
+                  <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                    <span class="badge bg-primary" aria-hidden="true">FWO</span>
+                    <div class="flex-grow-1">
+                      <div class="small fw-semibold">Urban ecosystem services in a changing climate</div>
+                      <div class="text-muted small">FWO Strategic Basic Research · 2022–2026</div>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm p-1"
+                      aria-label="Remove Urban ecosystem services project">
+                      <i class="if if-delete if--sm" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Research metadata (collapsible) -->
+            <section aria-labelledby="metadata-heading" class="card my-5">
+              <div class="card-header bt-title-toolbar mb-0"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#metadata-body"
+                  aria-expanded="false"
+                  aria-controls="metadata-body"
+                  aria-label="Toggle research metadata">
+                <h3 id="metadata-heading" class="h6 mt-2 d-flex gap-2 mb-0">
+                  <i class="if if-book text-muted" aria-hidden="true"></i>
+                  Research metadata
+                  <span class="badge bg-secondary">Optional</span>
+                </h3>
+                <button type="button" class="btn btn-ghost btn-sm p-0">
+                  <i class="if if-chevron-down" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="card-body collapse" id="metadata-body">
+                <div class="row g-3 mb-4">
+                  <div class="col-12">
+                    <!-- Work type -->
+                    <fieldset>
+                      <legend class="form-label mb-2">
+                        Resource type
+                        <span class="text-danger" aria-label="required">*</span>
+                      </legend>
+                      <div class="bt-btn-check__group">
+                        <input type="radio" class="btn-check" name="work_type" id="type-journal-article" value="journal_article" autocomplete="off" checked>
+                        <label class="btn btn-outline-dark" for="type-journal-article">Journal article</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-book" value="book" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-book">Book</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-book-chapter" value="book_chapter" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-book-chapter">Book chapter</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-conference" value="conference_paper" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-conference">Conference contribution</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-dataset" value="dataset" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-dataset">Dataset</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-dissertation" value="dissertation" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-dissertation">Dissertation</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-report" value="report" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-report">Report</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-software" value="software" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-software">Software</label>
+
+                        <input type="radio" class="btn-check" name="work_type" id="type-miscellaneous" value="miscellaneous" autocomplete="off">
+                        <label class="btn btn-outline-dark" for="type-miscellaneous">Other</label>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div class="col-8">
+                    <label for="journal" class="form-label">Journal</label>
+                    <input type="text" class="form-control" id="journal" name="journal"
+                      value="Plants People Planet"
+                      hx-get="/suggest/journals"
+                      hx-trigger="keyup changed delay:300ms"
+                      hx-target="#journal-suggestions"
+                      hx-swap="innerHTML">
+                    <div id="journal-suggestions"></div>
+                  </div>
+                  <div class="col-8">
+                    <label for="publisher" class="form-label">Publisher</label>
+                    <input type="text" class="form-control" id="publisher" name="publisher"
+                      value="Springer Nature"
+                      hx-get="/suggest/publishers"
+                      hx-trigger="keyup changed delay:300ms"
+                      hx-target="#publisher-suggestions"
+                      hx-swap="innerHTML">
+                    <div id="publisher-suggestions"></div>
+                  </div>
+                </div>
+                <div class="row g-3 mb-4">
+                  <div class="col-4">
+                    <label for="pub-year" class="form-label">Year</label>
+                    <input type="number" class="form-control" id="pub-year" name="year" value="2026" min="1000" max="2099">
+                  </div>
+                  <div class="col-4">
+                    <label for="pub-date" class="form-label">Publication date</label>
+                    <input type="text" class="form-control" id="pub-date" name="publication_date"
+                      value="2026-01-14" placeholder="e.g. 2024-06-01">
+                  </div>
+                  <div class="col-4">
+                    <label for="issn" class="form-label">ISSN</label>
+                    <input type="text" class="form-control" id="issn" name="issn"
+                      value="2572-2611"
+                      placeholder="e.g. 0028-0836"
+                      pattern="[0-9]{4}-[0-9]{3}[0-9X]">
+                  </div>
+                </div>
+                <div class="row g-3 mb-4">
+                  <div class="col-3">
+                    <label for="volume" class="form-label">Volume</label>
+                    <input type="text" class="form-control" id="volume" name="volume" value="8">
+                  </div>
+                  <div class="col-3">
+                    <label for="issue" class="form-label">Issue</label>
+                    <input type="text" class="form-control" id="issue" name="issue" value="1">
+                  </div>
+                  <div class="col-3">
+                    <label for="pages-from" class="form-label">Pages from</label>
+                    <input type="text" class="form-control" id="pages-from" name="pages_from" value="14">
+                  </div>
+                  <div class="col-3">
+                    <label for="pages-to" class="form-label">Pages to</label>
+                    <input type="text" class="form-control" id="pages-to" name="pages_to" value="19">
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Status region for auto-save -->
+            <span id="save-status" role="status" aria-live="polite" class="visually-hidden"></span>
+
+            <!-- Action bar -->
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__right">
+                <div class="bt-toolbar__item">
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    hx-post="/deposit/save-draft"
+                    hx-target="#save-status"
+                    hx-indicator="#save-spinner">
+                    Save draft
+                    <span id="save-spinner" class="htmx-indicator">
+                      <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
+                    </span>
+                  </button>
+                  <a href="deposit-2-upload.html" class="btn btn-primary">Next</a>
+                </div>
               </div>
             </div>
 
-            <!-- Section: Manual input (active) -->
-            <section aria-labelledby="manual-heading" class="d-flex flex-column gap-4 mb-5">
-
-                <!-- Section: Type -->
-                <article id="type" aria-labelledby="type-heading">
-
-                  <legend class="h6 mb-3">Resource type <span class="text-danger" aria-label="required">*</span></legend>
-
-                  <fieldset class="bt-btn-check__group">
-                    <input type="radio" class="btn-check" name="work-type" id="journal-article" autocomplete="off" checked>
-                    <label class="btn btn-outline-dark" for="journal-article">Journal article</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="book" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="book">Book</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="book-chapter" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="book-chapter">Book chapter</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="conference-contribution" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="conference-contribution">Conference contribution</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="dataset" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="dataset">Dataset</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="dissertation" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="dissertation">Dissertation</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="report" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="report">Report</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="software" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="software">Software</label>
-
-                    <input type="radio" class="btn-check" name="work-type" id="miscellaneous" autocomplete="off">
-                    <label class="btn btn-outline-dark" for="miscellaneous">Other</label>
-
-                  </fieldset>
-                </article>
-
-                <article id="title" aria-labelledby="title-heading">
-                  <div class="bt-title-toolbar">
-                    <label class="h6 mb-0" for="title" class="form-label">Title</label>
-                    <button type="button" class="btn btn-ghost btn-sm">
-                      <i class="if if-add if--sm" aria-hidden="true"></i>
-                      Add title
-                      <span id="author-load-indicator" class="htmx-indicator" aria-live="polite">Loading…</span>
-                    </button>
-                  </div>
-                  <div class="row g-3">
-                    <div class="col-10">
-                      <input type="text" class="form-control" id="title" placeholder="Add title" value="A title">
-                    </div>
-                    <div class="col">
-                      <select id="id-type" name="type" class="form-select">
-                        <option value="select" disabled>Select</option>
-                        <option value="English">English</option>
-                      </select>
-                    </div>
-                  </div>
-                </article>
-
-                <article id="abstract" aria-labelledby="abstract-heading">
-                  <label class="h6" for="abstract" class="visually-hidden">Abstract</label>
-                  <div class="row g-3">
-                    <div class="">
-                      <textarea class="form-control" id="abstract" rows="4"
-                        placeholder="Paste or type the abstract here…"
-                        hx-post="/deposit/save-abstract"
-                        hx-trigger="change"
-                        hx-target="#save-status"
-                        hx-indicator="#save-spinner">An abstract</textarea>
-                    </div>
-                    <!-- <div class="col">
-                      <select id="id-type" name="type" class="form-select">
-                        <option value="select" disabled>Select</option>
-                        <option value="English">English</option>
-                      </select>
-                    </div> -->
-                  </div>
-                </article>
-
-                <article id="authors" aria-labelledby="authors-heading">
-                <!-- Authors — editable -->
-                  <div class="bt-title-toolbar">
-                    <label class="h6">Authors</label>
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      hx-get="/deposit/add-author-form"
-                      hx-target="#author-form-area"
-                      hx-swap="innerHTML"
-                      hx-indicator="#author-load-indicator">
-                      <i class="if if-add if--sm" aria-hidden="true"></i>
-                      Add author
-                      <span id="author-load-indicator" class="htmx-indicator" aria-live="polite">Loading…</span>
-                    </button>
-                  </div>
-
-                  <div id="author-list" class="d-flex flex-column gap-2" aria-live="polite">
-
-                    <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
-                      <span class="bt-avatar bt-avatar--small" aria-hidden="true">ER</span>
-                      <div class="flex-grow-1">
-                        <div class="small fw-semibold">Esperon-Rodriguez, Manuel</div>
-                        <div class="text-muted small">External</div>
-                      </div>
-                      <button type="button" class="btn btn-ghost btn-sm p-1"
-                        aria-label="Remove Esperon-Rodriguez, Manuel from authors">
-                        <i class="if if-delete if--sm" aria-hidden="true"></i>
-                      </button>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
-                      <span class="bt-avatar bt-avatar--small" aria-hidden="true">KD</span>
-                      <div class="flex-grow-1">
-                        <div class="small fw-semibold">De Pauw, Karen</div>
-                        <div class="text-muted small">UGent — Department of Environment</div>
-                      </div>
-                      <button type="button" class="btn btn-ghost btn-sm p-1"
-                        aria-label="Remove De Pauw, Karen from authors">
-                        <i class="if if-delete if--sm" aria-hidden="true"></i>
-                      </button>
-                    </div>
-
-                    <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
-                      <span class="bt-avatar bt-avatar--small" aria-hidden="true">JV</span>
-                      <div class="flex-grow-1">
-                        <div class="small fw-semibold">Van den Berg, Judith</div>
-                        <div class="text-muted small">External</div>
-                      </div>
-                      <button type="button" class="btn btn-ghost btn-sm p-1"
-                        aria-label="Remove Van den Berg, Judith from authors">
-                        <i class="if if-delete if--sm" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- Author add form — appears here on HTMX swap -->
-                  <div id="author-form-area"></div>
-
-                </article>
-
-                <article id="projects" aria-labelledby="projects-heading">
-                  <div class="bt-title-toolbar">
-                    <h3 class="h6 mb-0" for="add-projects" class="form-h3">Projects</h3>
-                    <button type="button" class="btn btn-ghost btn-sm">
-                      <i class="if if-add if--sm" aria-hidden="true"></i>
-                      Add project
-                    </button>
-                  </div>
-
-                  <div id="author-list" class="d-flex flex-column gap-2" aria-live="polite">
-                    <!-- TODO: Projects-list -->
-
-                    <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
-                      <span class="badge bg-primary" aria-hidden="true">CODE</span>
-                      <div class="flex-grow-1">
-                        <div class="small fw-semibold">Project name</div>
-                        <div class="text-muted small">Description</div>
-                      </div>
-                      <button type="button" class="btn btn-ghost btn-sm p-1"
-                        aria-label="Remove Esperon-Rodriguez, Manuel from authors">
-                        <i class="if if-delete if--sm" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-                </article>
-
-                <article id="keywords" aria-labelledby="keywords-heading">
-                  <label class="h6" for="add-keyword" class="form-label">Keywords</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Type a keyword and press Enter" aria-label="Keyword" aria-describedby="add-keyword">
-                    <button class="btn btn-outline-dark" type="button" id="add-keyword">Add keyword</button>
-                  </div>
-                  <div class="d-flex flex-wrap gap-1 mt-1">
-                    <a href="#" class="badge bg-primary text-decoration-none">Urban climate</a>
-                    <a href="#" class="badge bg-primary text-decoration-none">Resilience</a>
-                    <a href="#" class="badge bg-primary text-decoration-none">Green infrastructure</a>
-                    <a href="#" class="badge bg-primary text-decoration-none">Ghent</a>
-                  </div>
-                </article>
-              </section>
-
-              <!-- Section: Metadata (inactive) -->
-              <section class="card my-5" aria-labelledby="metadata-heading">
-                <div class="card-header bt-title-toolbar mb-0" data-bs-toggle="collapse" data-bs-target="#metadata" aria-expanded="false" aria-controls="metadata">
-                  <h3 id="metadata-heading" class="h6 mt-2 d-flex gap-2">
-                    <i class="if if-book text-muted"></i>
-                    <span>Research metadata</span>
-                    <span class="badge bg-secondary">Optional</span>
-                  </h3>
-                  <i class="if if-chevron-down"></i>
-                </div>
-
-                <div class="card-body collapse" id="metadata">
-                  <div class="row g-3 mb-4">
-                    <div class="col-8">
-                      <label for="journal" class="form-label">Journal</label>
-                      <input type="text" class="form-control" id="journal" value="Plants People Planet"
-                        hx-get="/suggest/journals"
-                        hx-trigger="keyup changed delay:300ms"
-                        hx-target="#journal-suggestions"
-                        hx-swap="innerHTML">
-                      <div id="journal-suggestions"></div>
-                    </div>
-                    <div class="col-8">
-                      <label for="publisher" class="form-label">Publisher</label>
-                      <input type="text" class="form-control" id="publisher" value="Springer Nature"
-                        hx-get="/suggest/publishers"
-                        hx-trigger="keyup changed delay:300ms"
-                        hx-target="#publisher-suggestions"
-                        hx-swap="innerHTML">
-                      <div id="publisher-suggestions"></div>
-                    </div>
-                  </div>
-                  <div class="row g-3 mb-4">
-                    <div class="col-4">
-                      <label for="year" class="form-label">Year <span class="text-danger" aria-label="required">*</span></label>
-                      <input type="number" class="form-control" id="year" value="2026" min="1000" max="2030" required>
-                    </div>
-                    <div class="col-4">
-                      <label for="publication-date" class="form-label">Publication date <span class="text-danger" aria-label="required">*</span></label>
-                      <input type="number" class="form-control" id="publication-date" value="2026" min="1000" max="2030" required>
-                    </div>
-                    <div class="col-4">
-                      <label for="ISSN" class="form-label">ISSN <span class="text-danger" aria-label="required">*</span></label>
-                      <input type="number" class="form-control" id="ISSN" value="0028-0836" min="1000" max="2030" required>
-                    </div>
-                  </div>
-
-                  <div class="row g-3 mb-4">
-                    <div class="col-3">
-                      <label for="volume" class="form-label">Volume</label>
-                      <input type="text" class="form-control" id="volume" value="8">
-                    </div>
-                    <div class="col-3">
-                      <label for="issue" class="form-label">Issue</label>
-                      <input type="text" class="form-control" id="issue" value="1">
-                    </div>
-                    <div class="col-3">
-                      <label for="pages-from" class="form-label">Pages from</label>
-                      <input type="text" class="form-control" id="pages-from" value="14">
-                    </div>
-                    <div class="col-3">
-                      <label for="pages-to" class="form-label">Pages to</label>
-                      <input type="text" class="form-control" id="pages-to" value="19">
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Action bar -->
-              <div class="bt-toolbar">
-                <div class="bt-toolbar__right">
-                  <div class="bt-toolbar__item">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      hx-post="/deposit/save-draft"
-                      hx-target="#save-status"
-                      hx-indicator="#save-spinner">
-                      Save draft
-                      <span id="save-spinner" class="htmx-indicator">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
-                      </span>
-                    </button>
-                    <a href="deposit-2-upload.html" class="btn btn-primary">
-                      Submit
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </form>
-
+          </form>
         </div>
       </div>
     </div>
   </main>
 </div>
+
+<script src="/assets/js/people-search.js"></script>
+<script src="/assets/js/people-search-stub.js"></script>
+<!-- Remove people-search-stub.js when wiring the real /people/search endpoint -->
+<script src="/assets/js/deposit.js"></script>
