@@ -29,14 +29,16 @@ partial, and stylesheet:
 | `bc-avatar` | `bt-avatar` |
 | `bc-avatar--small` | `bt-avatar--small` |
 | `bc-avatar--large` | `bt-avatar--large` |
-| `c-sub-sidebar` | `bt-sidebar` |
-| `c-sub-sidebar--bordered` | `bt-sidebar--bordered` |
+| `c-sidebar` | `bt-sidebar` |
+| `c-sidebar--bordered` | `bt-sidebar--bordered` |
+| `c-sub-sidebar` | `u-main__sidebar` |
+| `c-sub-sidebar--bordered` | `u-main__sidebar--bordered` |
 | `c-blank-slate` | `bt-blank-slate` |
 | `c-blank-slate-default` | `bt-blank-slate--default` |
 | `c-blank-slate-muted` | `bt-blank-slate--muted` |
 | `c-blank-slate-primary` | `bt-blank-slate--primary` |
 | `c-radio-card` | `btn-check` (Bootstrap) |
-| `c-radio-card__group` | `bt-btn-check__group` (Bootstrap extension) |
+| `c-radio-card__group` | `bt-btn-check__group` (Bootstrap extension for grouping btn-checks) |
 | `c-radio-card__body` | Deprecated |
 | `c-file-drop` | `bt-file-drop` |
 | `c-file-drop__icon` | `bt-file-drop__icon` |
@@ -146,13 +148,14 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `c-sidebar` (narrow icon rail, blue bg) | — | ❌ Retired | Not used in the old prototype pages we are carrying forward, and not implemented in v2. |
-| `c-sidebar--bordered` | — | ❌ Retired | |
+| `c-sidebar` (narrow icon rail, blue bg) | `bt-sidebar` | 🔄 Renamed | This is the sidebar pattern retained in v2. |
+| `c-sidebar--bordered` | `bt-sidebar—-bordered` | 🔄 Renamed | |
 | `c-sidebar--dark-gray`, `--green` | — | ❌ Retired | |
-| `c-sub-sidebar` (wide text nav) | `bt-sidebar` | 🔄 Renamed | This is the sidebar pattern retained in v2. |
-| `c-sub-sidebar--bordered` | `bt-sidebar--bordered` | 🔄 Renamed | |
-| `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge` | — | ❌ Retired | Width variants are not being carried into v2. |
-| `c-sub-sidebar--small`, `--icons` | `bt-sidebar--slim` | 🔧 Revised | v2 keeps a single collapsed variant rather than multiple width/icon variants. |
+| `c-sidebar` | `bt-sidebar` | 🔄 Renamed | This is the sidebar pattern retained in v2. |
+
+| `c-sub-sidebar` (wide text nav) | `u-main__sidebar` | 🔄 Renamed | This is the second sidebar pattern retained in v2. |
+| `c-sub-sidebar--bordered` | `u-main__sidebar--bordered` | 🔄 Renamed | |
+| `c-sub-sidebar--medium`, `--large`, `--xlarge`, `--xxlarge`, `--xxxlarge`, `--small`, `--icons` | — | ❌ Retired | Width variants are not being carried into v2. |
 | `c-sub-sidebar-responsive-wrapper` | — | ❌ Retired | Responsive behavior is handled by the layout shell, not a wrapper class. |
 
 ---
