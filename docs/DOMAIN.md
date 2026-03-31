@@ -101,8 +101,8 @@ Describes who can access the full text of a file. Access is **per-file**, not pe
 
 | Value | Label | Badge |
 |-------|-------|-------|
-| `open` | Open access | `badge-oa` |
-| `restricted` | Restricted | `badge-restricted` |
+| `open` | Open access | `badge bg-success` |
+| `restricted` | Restricted | `badge bg-warning` |
 | `closed` | Closed | no badge shown |
 
 In summary views (cards, table rows), show the most permissive access level across all files on the work.
@@ -253,10 +253,10 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `draft` | `badge bg-warning` | Yellow |
 | `deleted` | not rendered in normal lists | — |
 
-| Access kind | Badge class |
-|-------------|-------------|
-| `open` | `badge-oa` |
-| `restricted` | `badge-restricted` |
+| Access kind |
+|-------------|
+| `open` | `badge bg-success` |
+| `restricted` | `badge badge-warning` |
 | `closed` | no badge |
 
 Work kind is always `badge bg-primary` (blue).

@@ -238,7 +238,7 @@ function renderSearchResultCards() {
   return `
 <article class="card-research" aria-labelledby="search-result-1">
   <div class="card-meta">
-    <span class="badge-oa">Open access</span>
+    <span class="badge bg-success">Open access</span>
     <span class="badge bg-primary">Journal article</span>
   </div>
   <div class="btn-toolbar">

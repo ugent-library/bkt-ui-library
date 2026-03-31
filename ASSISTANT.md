@@ -337,7 +337,7 @@ selectAll.setAttribute('aria-label', 'Some records selected — click to select 
 
 **G2. Focus ring must be visible against both the element and the page background.** `--bt-focus-ring` must meet 3:1 in both contexts. Verify when adding new surface colours.
 
-**G3. Never convey information by colour alone.** Status badges (`Published`, `Draft`, `Locked`) use colour + text label — correct. `badge-oa` and `badge-restricted` use colour + text — correct. A purely colour-coded dot or border with no text equivalent fails WCAG 1.4.1.
+**G3. Never convey information by colour alone.** Status badges (`Published`, `Draft`, `Locked`) use colour + text label — correct. A purely colour-coded dot or border with no text equivalent fails WCAG 1.4.1.
 
 **G4. `text-muted` (`--bt-gray-500`) on white is borderline.** Only use it for supplementary, non-critical content: publication year, secondary author lines, helper text. Never for primary information the user needs to complete a task.
 
@@ -556,11 +556,6 @@ bt-dl
 **HTMX state classes**
 ```
 htmx-indicator          htmx-swapping           htmx-settling
-```
-
-**Badges**
-```
-badge-oa                badge-restricted
 ```
 
 **Footer**

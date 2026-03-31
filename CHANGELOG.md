@@ -216,8 +216,6 @@ is unchanged.
 |-----|----|--------|-------|
 | `.badge` | `.badge` | ✅ Carried over | Active in `elements/_badges.scss`. |
 | `.badge.bg-primary`, `.bg-success`, etc. | Same | 🔧 Revised | Token colours are remapped in `elements/_badges.scss`. |
-| `.badge-oa` | `.badge-oa` | ✅ Carried over | Domain-specific open access badge. |
-| `.badge-restricted` | `.badge-restricted` | ✅ Carried over | |
 
 ---
 
