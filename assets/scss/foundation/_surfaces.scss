@@ -19,6 +19,9 @@
      --s-lead-font         font-family for .lead
      --s-display-weight    font-weight for .display-*
      --s-display-leading   line-height for .display-*
+     --s-bg                page background colour
+     --s-heading-color     heading colour (can differ from body text)
+     --s-link-color        link colour override per surface
 
    TODO — to be activated as components are built:
      --s-section-gap       gap between major page sections
@@ -35,26 +38,32 @@
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 body {
   --s-heading-font:     var(--bt-font-sans);
-  --s-heading-weight:   500;
+  --s-heading-weight:   600;
+  --s-heading-color:    var(--bt-blue-800);    /* institutional, deliberate — not generic near-black */
   --s-heading-leading:  1.2;
-  --s-body-color:       var(--bt-text);
+  --s-body-color:       var(--bt-gray-700);
   --s-body-font:        var(--bt-font-sans);
-  --s-body-size:        1rem;
+  --s-body-size:        0.9375rem;             /* 15px — compact for a data-dense tool */
   --s-body-leading:     1.5;
   --s-lead-font:        var(--bt-font-sans);
-  --s-display-weight:   600;
-  --s-display-leading:  1.2;
+  --s-display-weight:   700;
+  --s-display-leading:  1.15;
+  --s-bg:               var(--bt-white);
   --s-topbar-height:    var(--bt-sp-12);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
 [data-surface="public"],
 .s-public {
-  --s-heading-font:     var(--bt-font-serif);
-  --s-heading-weight:   400;
-  --s-display-weight:   600;
-  --s-body-leading:     1.7;
-  --s-lead-font:        var(--bt-font-serif);
+  --s-heading-weight:   300;                  /* light weight — editorial, refined */
+  --s-heading-color:    var(--bt-blue-800);    /* institutional blue — consistent with backoffice */
+  --s-heading-leading:  1.1;                   /* tighter = more mass, more presence */
+  --s-body-color:       var(--bt-gray-900);
+  --s-body-size:        1rem;                  /* 16px — reading comfort */
+  --s-body-leading:     1.75;                  /* generous — this is a reading surface */
+  --s-display-weight:   300;                  /* light weight at display size — authority through scale, not mass */
+  --s-display-leading:  1.05;                  /* display headings sit heavy */
+  --s-bg:               #f9f7f4;               /* warm off-white — not clinical, not yellow */
   --s-topbar-height:    var(--bt-sp-16);
 }
 

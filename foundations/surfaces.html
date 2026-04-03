@@ -19,9 +19,9 @@
                 <dt>Tag</dt>
                 <dd><code>data-surface="public"</code></dd>
                 <dt>Headings</dt>
-                <dd>IBM Plex Serif, weight 300</dd>
+                <dd>System-UI, weight 300</dd>
                 <dt>Body</dt>
-                <dd>IBM Plex Sans, 16px, 1.7 leading</dd>
+                <dd>System-UI, 16px, 1.75 leading</dd>
                 <dt>Density</dt>
                 <dd>Generous — 24px section gaps, 8px card radius</dd>
                 <dt>Cards</dt>
@@ -40,9 +40,9 @@
                 <dt>Tag</dt>
                 <dd><code>data-surface="backoffice"</code></dd>
                 <dt>Headings</dt>
-                <dd>IBM Plex Sans, weight 500</dd>
+                <dd>System-UI, weight 600</dd>
                 <dt>Body</dt>
-                <dd>IBM Plex Sans, 15px, 1.5 leading</dd>
+                <dd>System-UI, 15px, 1.5 leading</dd>
                 <dt>Density</dt>
                 <dd>Compact — 6px section gaps, 4px card radius</dd>
                 <dt>Cards</dt>
@@ -196,7 +196,7 @@
         <div class="ds-code">
           <div class="ds-code-bar"><span class="ds-code-lang">html — public layout</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;body data-surface="public"&gt;
-  &lt;!-- all components render with serif headings, generous spacing --&gt;
+  &lt;!-- all components render with light-weight headings, generous spacing --&gt;
 &lt;/body&gt;</pre>
         </div>
 
@@ -224,7 +224,7 @@
           <div class="ds-code-bar"><span class="ds-code-lang">css — reading surface variables in a custom component</span><button class="ds-code-copy">Copy</button></div>
 <pre>/* Component reads from surface — works in both contexts */
 .my-component-title {
-  font-family: var(--s-heading-font);      /* serif on public, sans on backoffice */
+  font-family: var(--s-heading-font);      /* system-UI on both surfaces */
   font-weight: var(--s-heading-weight);
   letter-spacing: var(--s-heading-tracking);
 }

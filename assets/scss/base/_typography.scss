@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--s-heading-font);
   line-height: var(--s-heading-leading);
   font-weight: var(--s-heading-weight);
-  color: var(--s-body-color);
+  color: var(--s-heading-color);
 }
 
 h1 {
@@ -20,15 +20,21 @@ h2 {
 }
 h3 {
   font-size: var(--bt-text-lg);
+  font-weight: 300;   /* light weight at mid-size — refined, not loud */
 }
 h4 {
   font-size: var(--bt-text-md);
 }
 h5 {
   font-size: var(--bt-text-base);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 h6 {
-  font-size: var(--bt-text-sm);
+  font-size: var(--bt-text-base);
+  font-style: italic;
+  font-weight: 300;   /* light weight at small size — label-like, subtle */
 }
 
 // Displays
@@ -39,11 +45,11 @@ h6 {
 .display-4,
 .display-5,
 .display-6 {
-  font-family: var(--bt-font-serif);
+  font-family: var(--s-heading-font);
   line-height: var(--s-display-leading);
   font-weight: var(--s-display-weight);
   margin-bottom: var(--bt-sp-4);
-  color: var(--bt-text);
+  color: var(--s-heading-color);
 }
 
 .display-1 {
@@ -64,7 +70,7 @@ h6 {
 
 .display-5 {
   font-size: var(--bt-text-md);
-  color: var(--bt-gray-600);
+  color: var(--bt-blue-800);
   text-transform: uppercase;
   letter-spacing: 0.05em;  /* uppercase needs breathing room — em scales with font-size */
   font-weight: 500;
@@ -74,7 +80,7 @@ h6 {
   font-size: var(--bt-text-lg);
   font-style: italic;
   margin-bottom: var(--bt-sp-1);
-  font-weight: 500;
+  font-weight: 300;
 }
 
 // Lead
@@ -86,6 +92,11 @@ h6 {
   font-family: var(--s-lead-font);
   color: var(--bt-gray-700);
   margin-bottom: var(--bt-sp-6);
+}
+
+[data-surface="public"] .lead,
+.s-public .lead {
+  font-style: italic;
 }
 
 // Body
@@ -147,10 +158,6 @@ code, kbd, pre, samp {
 }
 
 // Utility
-
-.ff-serif {
-  font-family: var(--bt-font-serif);
-}
 
 .ff-sans {
   font-family: var(--bt-font-sans);

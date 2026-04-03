@@ -89,11 +89,10 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `font-family: 'Source Sans Pro'` | `font-family: var(--bt-font-sans)` → IBM Plex Sans | 🔄 Renamed | Font family changed. |
-| — | `var(--bt-font-serif)` → IBM Plex Serif | 🆕 New | Public surface uses serif headings. Backoffice does not. |
-| — | `var(--bt-font-mono)` → IBM Plex Mono | 🆕 New | Used for identifiers (DOI, Biblio ID, ISBN). |
-| `h1`–`h4` coloured via `$header` | `h1`–`h4` inherit body colour | 🔧 Revised | Heading colour is no longer special-cased in the reset. |
-| `display-1` through `display-6` | Same | ✅ Carried over | Bootstrap display classes, unchanged. |
+| `font-family: 'Source Sans Pro'` | `font-family: var(--bt-font-sans)` → system-UI stack | 🔄 Renamed | Font family changed. No web fonts loaded for sans-serif — uses OS native stack. |
+| — | `var(--bt-font-mono)` → OS monospace stack | 🆕 New | Used for identifiers (DOI, Biblio ID, ISBN). No web font loaded — uses `SFMono-Regular`, `Consolas`, `Liberation Mono`, `Menlo`. |
+| `h1`–`h4` coloured via `$header` | `h1`–`h6` coloured via `--s-heading-color` | 🔧 Revised | Heading colour is now `--bt-blue-800` (#132e53) on both surfaces via CSS variable. |
+| `display-1` through `display-6` | Same | ✅ Carried over | Bootstrap display classes, now wired to surface tokens (`--s-heading-color`, `--s-display-weight`). |
 
 ---
 
@@ -132,7 +131,7 @@ is unchanged.
 | `bc-toolbar` | `bt-toolbar` | ✅ Carried over | Active in `_booktower-components.scss`. |
 | `bc-toolbar-left` | `bt-toolbar__left` | 🔧 Revised | Corrected to BEM `__element` syntax. |
 | `bc-toolbar-right` | `bt-toolbar__right` | 🔧 Revised | |
-| `bc-toolbar-title` | `bt-toolbar__title` | 🔧 Revised | Surface-aware: serif weight in public, sans 500 in backoffice. |
+| `bc-toolbar-title` | `bt-toolbar__title` | 🔧 Revised | Surface-aware: light weight in public, sans 500 in backoffice. |
 | `bc-toolbar-item` | `bt-toolbar__item` | ⏳ Planned | Spacing unit within toolbar halves. Not yet written in v2. |
 | `bc-toolbar-sm` | ⏳ | ⏳ Planned | Compact height variant. |
 | `bc-toolbar--auto` | Bootstrap `h-auto` | 🔄 Renamed | Use Bootstrap utility. |
@@ -180,8 +179,8 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.btn` | `.btn` | ✅ Carried over | Active in `_buttons.scss`. IBM Plex Sans, 500 weight. |
-| `.btn-primary` | `.btn-primary` | ✅ Carried over | Dark navy (`--bt-blue-900`), not UGent blue. |
+| `.btn` | `.btn` | ✅ Carried over | Active in `_buttons.scss`. System-UI, 500 weight. |
+| `.btn-primary` | `.btn-primary` | ✅ Carried over | `--bt-blue-800` background, not UGent blue. |
 | `.btn-secondary` | `.btn-secondary` | ✅ Carried over | Outlined, blue-navy border. |
 | `.btn-danger` | `.btn-danger` | ✅ Carried over | Outlined danger. |
 | `.btn-link` | `.btn-link` | ✅ Carried over | |
@@ -343,10 +342,13 @@ These were Bootstrap overrides in the OLD system. In v2 they either use Bootstra
 
 Things that did not exist at all in the OLD system:
 
-- **Surface system** — `data-surface="public"` / `data-surface="backoffice"` switching behaviour and density via CSS variables
-- **IBM Plex type family** — Serif for editorial, Sans for interface, Mono for identifiers
+- **Surface system** — `data-surface="public"` / `data-surface="backoffice"` switching typography, density, and colour via CSS variables
+- **Two-surface type system** — public uses system-UI at weight 300 (refined, editorial); backoffice uses system-UI at weight 600 (dense, tool-like). Both share `--bt-blue-800` as the heading colour.
+- **Selective heading weights** — `h4` and `h6` carry `font-weight: 300` regardless of surface; `h6` also gets uppercase + letter-spacing, making it a label element
+- **Italic `.lead` on public surface** — scoped to `[data-surface="public"]`, not applied in backoffice
 - **CSS custom property token stack** — runtime theming, no Sass recompile needed
 - **`u-layout--app` / `u-layout--public`** — CSS grid layout shells (replace flex stacking)
+- **Institutional blue as design signature** — `--bt-blue-800` on headings, displays, buttons, and ghost button hover across both surfaces
 - **Full colour scale utilities** — `bt-bg-*`, `bt-text-*` for every token
 - **`bt-toolbar` surface awareness** — title font changes with surface context
 - **HTMX patterns** — documented and built into the system, not bolted on

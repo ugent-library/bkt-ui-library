@@ -35,9 +35,11 @@ Every rendered page must declare which of the two user contexts it belongs to. T
 This is not optional decoration. It activates CSS tokens that change typography, density, and visual weight throughout the component tree:
 
 ```
-Public:     IBM Plex Serif headings · 16px body · 1.7 leading · generous padding · shadow on cards
-Backoffice: IBM Plex Sans headings  · 15px body · 1.5 leading · compact padding  · flat cards
+Public:     system-UI headings weight 300 · 16px body · 1.75 leading · italic lead · warm off-white bg
+Backoffice: system-UI headings weight 600 · 15px body · 1.5 leading  · upright lead · white bg
 ```
+
+Both surfaces share `--bt-blue-800` (`#132e53`) as the heading colour.
 
 **In Go templ templates:** set `data-surface` in the layout shell, not in individual partials. The layout shell owns the surface declaration for the whole page.
 

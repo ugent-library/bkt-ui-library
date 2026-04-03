@@ -96,8 +96,11 @@ in `assets/scss/`. Flag these before implementing in `bbl`.
 | Issue | File | Status |
 |-------|------|--------|
 | `--bt-text-muted` token mismatch | `_surfaces.scss` | ⚠ Reported — not yet resolved |
-| IBM Plex Serif weight 600 missing from Google Fonts import | `_header.scss` | ✓ Fixed |
-| `--s-display-weight: 600` missing from public surface block | `_surfaces.scss` | ✓ Fixed |
+| Web fonts removed — system-UI stack adopted for all text; monospace uses OS stack | `_header.scss`, `_tokens.scss`, `_bootstrap-overrides.scss` | ✓ Done |
+| Bold synthesis override removed — `strong`/`b`/`th` no longer forced to 600 | `_bootstrap-overrides.scss` | ✓ Done |
+| `--bs-font-sans-serif` updated to system-UI stack | `_bootstrap-overrides.scss` | ✓ Done |
+| Display classes wired to `--s-heading-color` and `--s-heading-font` | `_typography.scss` | ✓ Done |
+| `.ff-serif` utility removed | `_typography.scss` | ✓ Done |
 | `style=` on year range inputs (sidebar) | `backoffice-search-filter-first.html` | ⚠ Needs SCSS token |
 | `style=` on `max-width: 680px` (settings page) | `backoffice-settings-scope.html` | ⚠ Needs layout token or utility |
 

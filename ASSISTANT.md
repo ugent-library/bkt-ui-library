@@ -53,9 +53,11 @@ The system is HTMX-first, Bootstrap-based, semantically correct HTML, progressiv
 Every layout container must carry `data-surface="public"` or `data-surface="backoffice"`. This is not optional decoration — it activates surface tokens that change typography, density, and visual weight throughout the component tree.
 
 ```
-Public:     IBM Plex Serif headings · 16px body · 1.7 leading · generous padding · shadow on cards
-Backoffice: IBM Plex Sans headings  · 15px body · 1.5 leading · compact padding  · flat cards
+Public:     system-UI headings weight 300 · 16px body · 1.75 leading · italic .lead · warm off-white bg (#f9f7f4)
+Backoffice: system-UI headings weight 600 · 15px body · 1.5 leading  · upright .lead · white bg
 ```
+
+Both surfaces share `--bt-blue-800` (`#132e53`) as the heading and display colour. No web fonts are loaded — all typefaces are OS-native.
 
 **When I forget this, I produce inconsistent UIs.** Check every new template has the attribute on `<body>` or the outermost layout element.
 
@@ -731,7 +733,7 @@ Bootstrap utilities (`d-flex`, `gap-3`, `text-muted`, `mb-4`) are used directly 
 Before creating a new page in `foundations/`, `elements/`, or `patterns/`, read at least two existing pages. Match their structure exactly.
 
 ```html
-<!-- Page header — data-surface="public" for serif display -->
+<!-- Page header — data-surface="public" for display heading style -->
 <header class="ds-page-header col-6" data-surface="public">
   <p class="ds-eyebrow">Patterns</p>
   <h1 class="display-1">Page title</h1>

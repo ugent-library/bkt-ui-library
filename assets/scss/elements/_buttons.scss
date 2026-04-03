@@ -30,6 +30,12 @@
     transform        var(--bt-dur-fast) var(--bt-ease);
 }
 
+.btn-xs {
+  font-size: var(--bt-text-sm);         /* stay at 14px — don't go smaller */
+  padding: var(--bt-btn-pad-y-xs) var(--bt-btn-pad-x-xs);
+  gap: var(--bt-sp-1);
+}
+
 .btn-sm {
   font-size: var(--bt-text-sm);         /* stay at 14px — don't go smaller */
   padding: var(--bt-btn-pad-y-sm) var(--bt-btn-pad-x-sm);   /* 5px 10px → 32px tall */
@@ -71,26 +77,26 @@
 
 .btn-primary[type="submit"],
 .btn-primary {
-  background: var(--bt-blue-900);
-  border: 1px solid var(--bt-blue-900);
+  background: var(--bt-blue-800);
+  border: 1px solid var(--bt-blue-800);
   color: white;
 }
 .btn-primary[type="submit"]:hover:not(:disabled),
 .btn-primary:hover:not(:disabled) {
-  background: var(--bt-blue-800);
-  border-color: var(--bt-blue-800);
+  background: var(--bt-blue-700);
+  border-color: var(--bt-blue-700);
   color: white;
 }
 
 .btn-secondary {
   background: transparent;
-  border: 1px solid var(--bt-blue-900);
-  color: var(--bt-blue-900);
+  border: 1px solid var(--bt-blue-800);
+  color: var(--bt-blue-800);
 }
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-50);   /* #e9f0fa — light tint */
-  border-color: var(--bt-blue-800);
-  color: var(--bt-blue-900);       /* Bootstrap overrides this to white — lock it explicitly */
+  background: var(--bt-blue-50);
+  border-color: var(--bt-blue-700);
+  color: var(--bt-blue-800);
 }
 
 .btn-ghost {
@@ -100,7 +106,7 @@
 }
 .btn-ghost:hover:not(:disabled) {
   background: var(--bt-gray-50);
-  color: var(--bt-gray-1000);
+  color: var(--bt-blue-800);
 }
 
 .btn-danger {
