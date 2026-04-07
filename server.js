@@ -28,6 +28,7 @@ const DEFAULT_HEAD_SCRIPTS = [
 ];
 const DEFAULT_FOOTER_SCRIPTS = [
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
+  '/assets/js/clipboard.js',
 ];
 
 // ─── MIME ─────────────────────────────────────────────────────────────────────
@@ -241,7 +242,7 @@ function renderSearchResultCards() {
     <span class="badge bg-success">Open access</span>
     <span class="badge bg-primary">Journal article</span>
   </div>
-  <div class="btn-toolbar">
+  <div class="bt-btn-toolbar">
     <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-ghost btn-sm" aria-label="View record">
       <i class="if if-eye" aria-hidden="true"></i> View
     </a>
@@ -887,7 +888,7 @@ function sourceView(filePath, html) {
     document.getElementById('copy-btn').addEventListener('click', function() {
       const raw = document.getElementById('src').textContent;
       navigator.clipboard.writeText(raw).then(() => {
-        this.textContent = 'Copied!';
+        this.textContent = 'Copied';
         setTimeout(() => this.textContent = 'Copy HTML', 1800);
       });
     });

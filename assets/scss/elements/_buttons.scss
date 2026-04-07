@@ -31,7 +31,7 @@
 }
 
 .btn-xs {
-  font-size: var(--bt-text-sm);         /* stay at 14px — don't go smaller */
+  font-size: var(--bt-text-xs);         /* stay at 14px — don't go smaller */
   padding: var(--bt-btn-pad-y-xs) var(--bt-btn-pad-x-xs);
   gap: var(--bt-sp-1);
 }
@@ -61,31 +61,25 @@
   filter: saturate(0.4);
 }
 
-/* Dark surface — reverse variants for use on dark backgrounds */
-.btn-outline-white {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,.45);
-  color: white;
-}
-.btn-outline-white:hover:not(:disabled) {
-  background: rgba(255,255,255,.1);
-  border-color: rgba(255,255,255,.7);
-  color: white;
-}
-
 /* ── Variants ───────────────────────────────────────────────────────────────── */
 
 .btn-primary[type="submit"],
 .btn-primary {
   background: var(--bt-blue-800);
   border: 1px solid var(--bt-blue-800);
-  color: white;
+  color: var(--bt-white);
 }
 .btn-primary[type="submit"]:hover:not(:disabled),
 .btn-primary:hover:not(:disabled) {
   background: var(--bt-blue-700);
   border-color: var(--bt-blue-700);
-  color: white;
+  color: var(--bt-white);
+}
+.btn-primary[type="submit"]:active:not(:disabled),
+.btn-primary:active:not(:disabled) {
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
+  color: var(--bt-white);
 }
 
 .btn-secondary {
@@ -98,6 +92,11 @@
   border-color: var(--bt-blue-700);
   color: var(--bt-blue-800);
 }
+.btn-secondary:active:not(:disabled) {
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
+  color: var(--bt-white);
+}
 
 .btn-ghost {
   background: transparent;
@@ -108,16 +107,100 @@
   background: var(--bt-gray-50);
   color: var(--bt-blue-800);
 }
+.btn-ghost:active:not(:disabled) {
+  color: var(--bt-gray-700);
+}
+
+.btn-success {
+  --bs-btn-bg:                  var(--bt-green-700);
+  --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
+  --bs-btn-border-color:        var(--bt-green-700);
+
+  --bs-btn-hover-bg:            var(--bt-green-600);
+  --bs-btn-hover-color:         white;
+  --bs-btn-hover-border-color:  var(--bt-green-600);
+
+  --bs-btn-active-bg:           var(--bt-dark-success);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-dark-success);
+}
+
+.btn-warning {
+  --bs-btn-bg:                  var(--bt-orange-700);
+  --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
+  --bs-btn-border-color:        var(--bt-orange-700);
+
+  --bs-btn-hover-bg:            var(--bt-warning);
+  --bs-btn-hover-color:         white;
+  --bs-btn-hover-border-color:  var(--bt-warning);
+
+  --bs-btn-active-bg:           var(--bt-dark-warning);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-dark-warning);
+}
+
+.btn-info {
+  --bs-btn-bg:                  var(--bt-blue);          /* blue-600, 5.7:1 on white */
+  --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
+  --bs-btn-border-color:        var(--bt-blue);
+
+  --bs-btn-hover-bg:            var(--bt-blue-500);
+  --bs-btn-hover-color:         white;
+  --bs-btn-hover-border-color:  var(--bt-blue-500);
+
+  --bs-btn-active-bg:           var(--bt-blue-700);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-blue-700);
+}
 
 .btn-danger {
-  background: transparent;
-  border: 1px solid var(--bt-danger);
-  color: var(--bt-danger);
+  --bs-btn-bg:                    var(--bt-red-600);
+  --bs-btn-color:                 var(--bt-white);
+  --bs-btn-border-color:          var(--bt-red-600);
+
+  --bs-btn-hover-bg:              var(--bt-danger);
+  --bs-btn-hover-border-color:    var(--bt-danger);
+
+  --bs-btn-active-bg:             var(--bt-dark-danger);
+  --bs-btn-active-color:          var(--bt-white);
+  --bs-btn-active-border-color:   var(--bt-dark-danger);
 }
-.btn-danger:hover:not(:disabled) {
-  background: var(--bt-light-red);
-  border-color: var(--bt-dark-red);
-  color: var(--bt-dark-red);
+
+.btn-light {
+  --bs-btn-bg:                  var(--bt-gray-50);
+  --bs-btn-color:               var(--bt-gray-700);
+  --bs-btn-border-color:        var(--bt-gray-200);
+
+  --bs-btn-hover-bg:            var(--bt-gray-100);
+  --bs-btn-hover-color:         var(--bt-gray-800);
+  --bs-btn-hover-border-color:  var(--bt-gray-300);
+
+  --bs-btn-active-bg:           var(--bt-gray-200);
+  --bs-btn-active-color:        var(--bt-gray-800);
+  --bs-btn-active-border-color: var(--bt-gray-300);
+}
+
+.btn-dark {
+  --bs-btn-bg:                  var(--bt-gray-1000);
+  --bs-btn-color:               white;
+  --bs-btn-border-color:        var(--bt-gray-1000);
+
+  --bs-btn-hover-bg:            var(--bt-gray-900);
+  --bs-btn-hover-color:         white;
+  --bs-btn-hover-border-color:  var(--bt-gray-900);
+
+  --bs-btn-active-bg:           var(--bt-black);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-black);
+}
+
+/* ── .btn-link override ──────────────────────────────────────────────────────── */
+.btn-link:hover {
+  background: var(--bt-gray-50);
+}
+
+.btn-link:active:not(:disabled) {
+  background: var(--bt-gray-50);
 }
 
 /* ── Loading state ─────────────────────────────────────────────────────────── */
@@ -134,6 +217,133 @@
 .btn .htmx-indicator {
   gap: var(--bt-sp-2);   /* space between spinner and loading text */
 }
+
+/* ── Bootstrap outline variants ─────────────────────────────────────────────── */
+/*
+  Override Bootstrap's generated btn-outline-* with Booktower tokens.
+  Hover: subtle tint, text stays dark.
+  Active: filled with semantic colour + white text (all pass WCAG AA).
+*/
+
+.btn-outline-primary {
+  --bs-btn-color:               var(--bt-blue-800);
+  --bs-btn-border-color:        var(--bt-blue-800);
+
+  --bs-btn-hover-bg:            var(--bt-blue-50);
+  --bs-btn-hover-color:         var(--bt-blue-800);
+  --bs-btn-hover-border-color:  var(--bt-blue-700);
+
+  --bs-btn-active-bg:           var(--bt-blue-800);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-blue-900);
+}
+
+.btn-outline-secondary {
+  --bs-btn-bg:                  transparent;
+  --bs-btn-color:               var(--bt-gray-700);
+  --bs-btn-border-color:        var(--bt-gray-700);
+
+  --bs-btn-hover-bg:            var(--bt-gray-50);
+  --bs-btn-hover-color:         var(--bt-gray-700);
+  --bs-btn-hover-border-color:  var(--bt-gray-700);
+
+  --bs-btn-active-bg:           var(--bt-blue-800);
+  --bs-btn-active-color:        var(--bt-white);
+  --bs-btn-active-border-color: var(--bt-blue-800);
+}
+
+.btn-outline-success {
+  --bs-btn-color:               var(--bt-dark-success);
+  --bs-btn-border-color:        var(--bt-success);
+
+  --bs-btn-hover-bg:            var(--bt-green-100);
+  --bs-btn-hover-color:         var(--bt-dark-success);
+  --bs-btn-hover-border-color:  var(--bt-success);
+
+  --bs-btn-active-bg:           var(--bt-green-700);       /* green-500, 4.6:1 on white */
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-green-700);
+}
+
+
+.btn-outline-danger {
+  --bs-btn-bg:                  transparent;
+  --bs-btn-color:               var(--bt-danger);
+  --bs-btn-border-color:        var(--bt-danger);
+
+  --bs-btn-hover-bg:            var(--bt-red-50);
+  --bs-btn-hover-color:         var(--bt-danger);
+  --bs-btn-hover-border-color:  var(--bt-danger);
+
+  --bs-btn-active-bg:           var(--bt-red-700);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-red-700);
+}
+
+.btn-outline-info {
+  --bs-btn-color:               var(--bt-blue-700);
+  --bs-btn-border-color:        var(--bt-blue);
+
+  --bs-btn-hover-bg:            var(--bt-blue-50);
+  --bs-btn-hover-color:         var(--bt-blue-700);
+  --bs-btn-hover-border-color:  var(--bt-blue);
+
+  --bs-btn-active-bg:           var(--bt-blue-700);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-blue-800);
+}
+
+.btn-outline-warning {
+  --bs-btn-color:               var(--bt-orange-600);
+  --bs-btn-border-color:        var(--bt-warning);
+
+  --bs-btn-hover-bg:            var(--bt-orange-50);
+  --bs-btn-hover-color:         var(--bt-orange-600);
+  --bs-btn-hover-border-color:  var(--bt-warning);
+
+  --bs-btn-active-bg:           var(--bt-orange-700);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-orange-700);
+}
+
+.btn-outline-light {
+  --bs-btn-color:               var(--bt-gray-600);
+  --bs-btn-border-color:        var(--bt-gray-300);
+
+  --bs-btn-hover-bg:            var(--bt-gray-50);
+  --bs-btn-hover-color:         var(--bt-gray-700);
+  --bs-btn-hover-border-color:  var(--bt-gray-400);
+
+  --bs-btn-active-bg:           var(--bt-gray-100);
+  --bs-btn-active-color:        var(--bt-gray-800);
+  --bs-btn-active-border-color: var(--bt-gray-400);
+}
+
+.btn-outline-dark {
+  --bs-btn-color:               var(--bt-gray-1000);
+  --bs-btn-border-color:        var(--bt-gray-1000);
+
+  --bs-btn-hover-bg:            var(--bt-gray-50);
+  --bs-btn-hover-color:         var(--bt-gray-1000);
+  --bs-btn-hover-border-color:  var(--bt-gray-1000);
+
+  --bs-btn-active-bg:           var(--bt-gray-1000);
+  --bs-btn-active-color:        white;
+  --bs-btn-active-border-color: var(--bt-black);
+}
+
+/* Dark surface — reverse variants for use on dark backgrounds */
+.btn-outline-white {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.45);
+  color: var(--bt-white);
+}
+.btn-outline-white:hover:not(:disabled) {
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.7);
+  color: var(--bt-white);
+}
+
 
 /* ── Button group ───────────────────────────────────────────────────────────── */
 /*

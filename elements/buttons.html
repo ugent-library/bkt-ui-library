@@ -33,9 +33,20 @@
     </div>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Danger — only for irreversible destructive actions</h3></div>
-      <div class="ds-demo-body">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Status — filled contextual actions for success, warning, info, danger</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-success">Approve</button>
+        <button type="button" class="btn btn-warning">Review required</button>
+        <button type="button" class="btn btn-info">More info</button>
         <button type="button" class="btn btn-danger">Delete record</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Neutral — light and dark for surface-specific use</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-light">Light</button>
+        <button type="button" class="btn btn-dark">Dark</button>
       </div>
     </div>
 
@@ -48,37 +59,81 @@
   </section>
 
 
+  <!-- ── Outline variants ─────────────────────────────────────────────────── -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Outline variants</h2>
+    <p class="text-muted mb-4">Bootstrap's <code>btn-outline-*</code> variants, aligned to Booktower tokens. Hover shows a subtle tint; active fills with the semantic colour. Use these when status context matters — success confirmations, warning prompts, danger actions — but a filled button would be too heavy.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">All — default state</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-outline-primary">Primary</button>
+        <button type="button" class="btn btn-outline-secondary">Secondary</button>
+        <button type="button" class="btn btn-outline-success">Success</button>
+        <button type="button" class="btn btn-outline-warning">Warning</button>
+        <button type="button" class="btn btn-outline-danger">Danger</button>
+        <button type="button" class="btn btn-outline-info">Info</button>
+        <button type="button" class="btn btn-outline-dark">Dark</button>
+        <button type="button" class="btn btn-outline-light">Light</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">With icons</h3></div>
+      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
+        <button type="button" class="btn btn-outline-primary">
+          <i class="if if-eye" aria-hidden="true"></i>
+          Read
+        </button>
+        <button type="button" class="btn btn-outline-secondary">
+          <i class="if if-add" aria-hidden="true"></i>
+          Add to list
+        </button>
+        <button type="button" class="btn btn-outline-success">
+          <i class="if if-check" aria-hidden="true"></i>
+          Approve
+        </button>
+        <button type="button" class="btn btn-outline-warning">
+          <i class="if if-alert" aria-hidden="true"></i>
+          Review required
+        </button>
+        <button type="button" class="btn btn-outline-danger">
+          <i class="if if-delete" aria-hidden="true"></i>
+          Delete record
+        </button>
+        <button type="button" class="btn btn-outline-info">
+          <i class="if if-info-circle" aria-hidden="true"></i>
+          More info
+        </button>
+        <button type="button" class="btn btn-outline-dark">
+          <i class="if if-add" aria-hidden="true"></i>
+          Journal article
+        </button>
+        <button type="button" class="btn btn-outline-light">
+          <i class="if if-add" aria-hidden="true"></i>
+          Journal article
+        </button>
+      </div>
+    </div>
+  </section>
+
+
   <!-- ── Sizes ─────────────────────────────────────────────────────────────── -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Sizes</h2>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Large — <code>btn-lg</code> — 44px — confirmation dialogs, hero CTAs</h3></div>
-      <div class="ds-demo-body">
-        <button type="button" class="btn btn-primary btn-lg">Submit deposit</button>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">
+        Large — <code>btn-lg</code> — 44px — confirmation dialogs, hero CTAs
+        <br> Default — 38px — standard toolbar and form actions
+        <br> Small — <code>btn-sm</code> — 32px — inline row actions, compact toolbars
+        <br> Extra small — <code>btn-xs</code> — 28px — backoffice tooling</h3>
       </div>
-    </div>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Default — 38px — standard toolbar and form actions</h3></div>
       <div class="ds-demo-body">
-        <button type="button" class="btn btn-primary">Save draft</button>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Small — <code>btn-sm</code> — 32px — inline row actions, compact toolbars</h3></div>
-      <div class="ds-demo-body">
-        <button type="button" class="btn btn-primary btn-sm">Edit</button>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">All three side by side — size comparison</h3></div>
-      <div class="ds-demo-body d-flex flex-wrap gap-2 align-items-center">
-        <button type="button" class="btn btn-secondary btn-lg">Large</button>
-        <button type="button" class="btn btn-secondary">Default</button>
-        <button type="button" class="btn btn-secondary btn-sm">Small</button>
+        <button type="button" class="btn btn-primary btn-lg">Large – Submit deposit</button>
+        <button type="button" class="btn btn-primary">Medium – Save draft</button>
+        <button type="button" class="btn btn-primary btn-sm">Small – Edit</button>
+        <button type="button" class="btn btn-primary btn-xs">Extra small – Edit</button>
       </div>
     </div>
   </section>
@@ -151,6 +206,40 @@
           title="Complete all required fields before submitting">
           Submit deposit
         </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Button toolbar ──────────────────────────────────────────────────────── -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Button toolbar</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Segmented control — related actions in a regular row</h3></div>
+      <div class="ds-demo-body">
+        <div class="bt-btn-toolbar" role="group" aria-label="Export format">
+          <button type="button" class="btn btn-secondary">CSV</button>
+          <button type="button" class="btn btn-secondary">XLSX</button>
+          <button type="button" class="btn btn-secondary">RIS</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Small group</h3></div>
+      <div class="ds-demo-body">
+        <div class="bt-btn-toolbar" role="group" aria-label="Record actions">
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Edit: Urban forests paper">
+            <i class="if if-edit" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Download: Urban forests paper">
+            <i class="if if-download" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Delete: Urban forests paper">
+            <i class="if if-delete" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </div>
   </section>
