@@ -1,11 +1,5 @@
 @charset "UTF-8";
-/* IBM Plex via Google Fonts — replace with self-hosted in production */
-/* IBM Plex — 9 variants only (audited against actual usage)
-   Mono  400          — code blocks
-   Sans  300,400,500,600 + italic 400  — UI text, labels, italic journal names
-   Serif 300,400 + italic 400          — public headings, display text
-   Weights 700 and italic 300/500/600/700 are unused — removed to save ~14 variant downloads */
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,400&display=swap");
+/* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
  * Bootstrap override layer + Booktower component system
@@ -15,8 +9,8 @@
  *   2. booktower.css          ← this file
  *
  * TWO-SURFACE ARCHITECTURE:
- *   [data-surface="public"]     → expressive, serif, breathable, reader-paced
- *   [data-surface="backoffice"] → dense, sans, information-first, action-ready
+ *   [data-surface="public"]     → expressive, light-weight headings, breathable, reader-paced
+ *   [data-surface="backoffice"] → dense, medium-weight headings, information-first, action-ready
  *
  *   Apply to <body> or any layout container.
  *   Components read from surface variables — same HTML, two personalities.
@@ -36,9 +30,8 @@
    ═══════════════════════════════════════════════════════════════════════════════ */
 :root {
   /* ── Typography ────────────────────────────────────────────────────────────── */
-  --bt-font-serif: 'IBM Plex Serif', serif;
-  --bt-font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-  --bt-font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --bt-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bt-font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   /*
     Type scale — rem values by necessity, type doesn't snap to a 4px grid.
     Never write .875rem in component code — always reference a token.
@@ -59,8 +52,8 @@
   --bt-text-md: 1.125rem;
   --bt-text-lg: 1.375rem;
   --bt-text-xl: 1.75rem;
-  --bt-text-2xl: 2.25rem;
-  --bt-text-3xl: 3rem;
+  --bt-text-2xl: 2.5rem; /* was 2.25rem — larger for public monumental h1 */
+  --bt-text-3xl: 3.5rem; /* was 3rem — hero display needs more mass */
   /* ── Spacing — 4px base ────────────────────────────────────────────────────── */
   --bt-sp-1: 0.25rem;
   --bt-sp-2: 0.5rem;
@@ -84,6 +77,8 @@
       base → 38px  (21 + 7 + 7 + 1px border×2)
       lg   → 44px  (21px @ 16px + 10 + 10 + border×2)
   */
+  --bt-btn-pad-y-xs: 0.25rem; /*  5px */
+  --bt-btn-pad-x-xs: 0.3rem; /* 10px */
   --bt-btn-pad-y-sm: 0.3125rem; /*  5px */
   --bt-btn-pad-x-sm: 0.625rem; /* 10px */
   --bt-btn-pad-y: 0.4375rem; /*  7px */
@@ -261,6 +256,9 @@
      --s-lead-font         font-family for .lead
      --s-display-weight    font-weight for .display-*
      --s-display-leading   line-height for .display-*
+     --s-bg                page background colour
+     --s-heading-color     heading colour (can differ from body text)
+     --s-link-color        link colour override per surface
 
    TODO — to be activated as components are built:
      --s-section-gap       gap between major page sections
@@ -275,26 +273,32 @@
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 body {
   --s-heading-font: var(--bt-font-sans);
-  --s-heading-weight: 500;
+  --s-heading-weight: 600;
+  --s-heading-color: var(--bt-blue-800); /* institutional, deliberate — not generic near-black */
   --s-heading-leading: 1.2;
-  --s-body-color: var(--bt-text);
+  --s-body-color: var(--bt-gray-700);
   --s-body-font: var(--bt-font-sans);
-  --s-body-size: 1rem;
+  --s-body-size: 0.9375rem; /* 15px — compact for a data-dense tool */
   --s-body-leading: 1.5;
   --s-lead-font: var(--bt-font-sans);
-  --s-display-weight: 600;
-  --s-display-leading: 1.2;
+  --s-display-weight: 700;
+  --s-display-leading: 1.15;
+  --s-bg: var(--bt-white);
   --s-topbar-height: var(--bt-sp-12);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
 [data-surface=public],
 .s-public {
-  --s-heading-font: var(--bt-font-serif);
-  --s-heading-weight: 400;
-  --s-display-weight: 600;
-  --s-body-leading: 1.7;
-  --s-lead-font: var(--bt-font-serif);
+  --s-heading-weight: 700; /* confident, editorial — authority through scale and contrast with body */
+  --s-heading-color: var(--bt-blue-900); /* deeper than backoffice — closer to printed page, more monumental */
+  --s-heading-leading: 1.05; /* tight — typeset, deliberate, not browser-default */
+  --s-body-color: var(--bt-gray-900);
+  --s-body-size: 1rem; /* 16px — reading comfort */
+  --s-body-leading: 1.8; /* generous contrast against tight headings */
+  --s-display-weight: 700;
+  --s-display-leading: 1.0; /* display sits very heavy — monumental at large size */
+  --s-bg: #f9f7f4; /* warm off-white — editorial, not clinical */
   --s-topbar-height: var(--bt-sp-16);
 }
 
@@ -302,18 +306,11 @@ body {
 /* ═══════════════════════════════════════════════════════════════════════════════
    3. BOOTSTRAP VARIABLE OVERRIDES
    ═══════════════════════════════════════════════════════════════════════════════ */
-/* Remap bold to semibold — IBM Plex 700 is not loaded; this prevents fake bold synthesis */
-strong, b,
-th,
-.fw-bold,
-.fw-bolder {
-  font-weight: 600 !important;
-}
-
+/* System-UI has native 700 — no bold synthesis risk. Semibold override removed. */
 :root {
-  --bs-font-weight-bold: 600;
-  --bs-font-sans-serif: 'IBM Plex Sans', system-ui, sans-serif;
-  --bs-font-monospace: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --bs-font-weight-bold: 700;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  --bs-font-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-color: var(--bt-text);
   --bs-body-color-rgb: 77, 77, 77;
@@ -329,14 +326,16 @@ th,
   --bs-secondary-color-rgb: 115, 115, 115;
   --bs-card-box-shadow: var(--bt-shadow-sm);
   --bs-card-border-radius: var(--bt-radius-xl);
-  --bs-primary: var(--bt-gray-1000);
-  --bs-primary-rgb: 20, 22, 26;
+  --bs-primary: var(--bt-blue-800);
+  --bs-primary-rgb: 19, 46, 83;
   --bs-danger: var(--bt-danger);
   --bs-danger-rgb: 220, 78, 40;
   --bs-success: var(--bt-green);
   --bs-success-rgb: 113, 168, 96;
   --bs-warning: var(--bt-warning);
   --bs-warning-rgb: 218, 132, 11;
+  --bs-info: var(--bt-blue);
+  --bs-info-rgb: 0, 63, 163;
   --bs-heading-color: var(--bt-dark-gray);
   --bs-link-color: var(--bt-blue-700);
   --bs-link-color-rgb: 0, 63, 163;
@@ -390,7 +389,8 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--s-heading-font);
   line-height: var(--s-heading-leading);
   font-weight: var(--s-heading-weight);
-  color: var(--s-body-color);
+  color: var(--s-heading-color);
+  text-wrap: balance;
 }
 
 h1 {
@@ -403,6 +403,7 @@ h2 {
 
 h3 {
   font-size: var(--bt-text-lg);
+  font-weight: 300; /* light weight at mid-size — refined, not loud */
 }
 
 h4 {
@@ -411,10 +412,15 @@ h4 {
 
 h5 {
   font-size: var(--bt-text-base);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em; /* em scales with font-size */
 }
 
 h6 {
-  font-size: var(--bt-text-sm);
+  font-size: var(--bt-text-base);
+  font-style: italic;
+  font-weight: 300; /* light weight at small size — label-like, subtle */
 }
 
 .display-1,
@@ -423,11 +429,11 @@ h6 {
 .display-4,
 .display-5,
 .display-6 {
-  font-family: var(--bt-font-serif);
+  font-family: var(--s-heading-font);
   line-height: var(--s-display-leading);
   font-weight: var(--s-display-weight);
   margin-bottom: var(--bt-sp-4);
-  color: var(--bt-text);
+  color: var(--s-heading-color);
 }
 
 .display-1 {
@@ -448,26 +454,36 @@ h6 {
 
 .display-5 {
   font-size: var(--bt-text-md);
-  color: var(--bt-gray-600);
+  color: var(--s-heading-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em; /* uppercase needs breathing room — em scales with font-size */
+  letter-spacing: 0.05em;
   font-weight: 500;
+  opacity: 0.65; /* pulls back from heading colour so it reads as a label, not a heading */
 }
 
 .display-6 {
   font-size: var(--bt-text-lg);
   font-style: italic;
   margin-bottom: var(--bt-sp-1);
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .lead {
-  line-height: 1.7;
+  line-height: var(--s-body-leading);
   font-size: var(--bt-text-md);
   font-weight: 400;
   font-family: var(--s-lead-font);
   color: var(--bt-gray-700);
   margin-bottom: var(--bt-sp-6);
+}
+
+[data-surface=public] .lead,
+.s-public .lead {
+  font-style: italic;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 p:last-child {
@@ -525,10 +541,6 @@ code, kbd, pre, samp {
   font-size: var(--bt-text-sm);
 }
 
-.ff-serif {
-  font-family: var(--bt-font-serif);
-}
-
 .ff-sans {
   font-family: var(--bt-font-sans);
 }
@@ -584,12 +596,6 @@ code, kbd, pre, samp {
     animation-duration: 0.01ms !important;
   }
 }
-/* ── .btn-link override ──────────────────────────────────────────────────────── */
-/* Bootstrap's btn-link adds underline on hover — suppress it */
-.btn-link {
-  text-decoration: none;
-}
-
 /* ── Forms & inputs ─────────────────────────────────────────────────────────── */
 .form-control,
 .form-select {
@@ -702,6 +708,22 @@ code, kbd, pre, samp {
 .alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
   margin: 0 0 var(--bt-sp-2) 0;
   color: var(--bt-gray-1000);
+}
+
+.alert--sm {
+  padding: var(--bt-sp-2) var(--bt-sp-2);
+  font-size: var(--bt-text-xs);
+  border-radius: var(--bt-radius);
+}
+
+.alert--seamless-inbox {
+  border: 0;
+  border-bottom: 1px solid var(--bt-green-200);
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: var(--bt-sp-2) var(--bt-sp-2) var(--bt-sp-2) var(--bt-sp-12);
+  font-size: var(--bt-text-xs);
+  border-radius: 0;
 }
 
 .alert--dashed {
@@ -862,6 +884,12 @@ code, kbd, pre, samp {
   transition: background-color var(--bt-dur-fast) var(--bt-ease), border-color var(--bt-dur-fast) var(--bt-ease), color var(--bt-dur-fast) var(--bt-ease), transform var(--bt-dur-fast) var(--bt-ease);
 }
 
+.btn-xs {
+  font-size: var(--bt-text-xs); /* stay at 14px — don't go smaller */
+  padding: var(--bt-btn-pad-y-xs) var(--bt-btn-pad-x-xs);
+  gap: var(--bt-sp-1);
+}
+
 .btn-sm {
   font-size: var(--bt-text-sm); /* stay at 14px — don't go smaller */
   padding: var(--bt-btn-pad-y-sm) var(--bt-btn-pad-x-sm); /* 5px 10px → 32px tall */
@@ -887,44 +915,44 @@ code, kbd, pre, samp {
   filter: saturate(0.4);
 }
 
-/* Dark surface — reverse variants for use on dark backgrounds */
-.btn-outline-white {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  color: white;
-}
-
-.btn-outline-white:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.7);
-  color: white;
-}
-
 /* ── Variants ───────────────────────────────────────────────────────────────── */
 .btn-primary[type=submit],
 .btn-primary {
-  background: var(--bt-blue-900);
-  border: 1px solid var(--bt-blue-900);
-  color: white;
+  background: var(--bt-blue-800);
+  border: 1px solid var(--bt-blue-800);
+  color: var(--bt-white);
 }
 
 .btn-primary[type=submit]:hover:not(:disabled),
 .btn-primary:hover:not(:disabled) {
-  background: var(--bt-blue-800);
-  border-color: var(--bt-blue-800);
-  color: white;
+  background: var(--bt-blue-700);
+  border-color: var(--bt-blue-700);
+  color: var(--bt-white);
+}
+
+.btn-primary[type=submit]:active:not(:disabled),
+.btn-primary:active:not(:disabled) {
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
+  color: var(--bt-white);
 }
 
 .btn-secondary {
   background: transparent;
-  border: 1px solid var(--bt-blue-900);
-  color: var(--bt-blue-900);
+  border: 1px solid var(--bt-blue-800);
+  color: var(--bt-blue-800);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-50); /* #e9f0fa — light tint */
-  border-color: var(--bt-blue-800);
-  color: var(--bt-blue-900); /* Bootstrap overrides this to white — lock it explicitly */
+  background: var(--bt-blue-50);
+  border-color: var(--bt-blue-700);
+  color: var(--bt-blue-800);
+}
+
+.btn-secondary:active:not(:disabled) {
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
+  color: var(--bt-white);
 }
 
 .btn-ghost {
@@ -935,19 +963,91 @@ code, kbd, pre, samp {
 
 .btn-ghost:hover:not(:disabled) {
   background: var(--bt-gray-50);
-  color: var(--bt-gray-1000);
+  color: var(--bt-blue-800);
+}
+
+.btn-ghost:active:not(:disabled) {
+  color: var(--bt-gray-700);
+}
+
+.btn-success {
+  --bs-btn-bg: var(--bt-green-700);
+  --bs-btn-color: white; /* override Bootstrap's compiled dark text */
+  --bs-btn-border-color: var(--bt-green-700);
+  --bs-btn-hover-bg: var(--bt-green-600);
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-border-color: var(--bt-green-600);
+  --bs-btn-active-bg: var(--bt-dark-success);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-dark-success);
+}
+
+.btn-warning {
+  --bs-btn-bg: var(--bt-orange-700);
+  --bs-btn-color: white; /* override Bootstrap's compiled dark text */
+  --bs-btn-border-color: var(--bt-orange-700);
+  --bs-btn-hover-bg: var(--bt-warning);
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-border-color: var(--bt-warning);
+  --bs-btn-active-bg: var(--bt-dark-warning);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-dark-warning);
+}
+
+.btn-info {
+  --bs-btn-bg: var(--bt-blue); /* blue-600, 5.7:1 on white */
+  --bs-btn-color: white; /* override Bootstrap's compiled dark text */
+  --bs-btn-border-color: var(--bt-blue);
+  --bs-btn-hover-bg: var(--bt-blue-500);
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-border-color: var(--bt-blue-500);
+  --bs-btn-active-bg: var(--bt-blue-700);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-blue-700);
 }
 
 .btn-danger {
-  background: transparent;
-  border: 1px solid var(--bt-danger);
-  color: var(--bt-danger);
+  --bs-btn-bg: var(--bt-red-600);
+  --bs-btn-color: var(--bt-white);
+  --bs-btn-border-color: var(--bt-red-600);
+  --bs-btn-hover-bg: var(--bt-danger);
+  --bs-btn-hover-border-color: var(--bt-danger);
+  --bs-btn-active-bg: var(--bt-dark-danger);
+  --bs-btn-active-color: var(--bt-white);
+  --bs-btn-active-border-color: var(--bt-dark-danger);
 }
 
-.btn-danger:hover:not(:disabled) {
-  background: var(--bt-light-red);
-  border-color: var(--bt-dark-red);
-  color: var(--bt-dark-red);
+.btn-light {
+  --bs-btn-bg: var(--bt-gray-50);
+  --bs-btn-color: var(--bt-gray-700);
+  --bs-btn-border-color: var(--bt-gray-200);
+  --bs-btn-hover-bg: var(--bt-gray-100);
+  --bs-btn-hover-color: var(--bt-gray-800);
+  --bs-btn-hover-border-color: var(--bt-gray-300);
+  --bs-btn-active-bg: var(--bt-gray-200);
+  --bs-btn-active-color: var(--bt-gray-800);
+  --bs-btn-active-border-color: var(--bt-gray-300);
+}
+
+.btn-dark {
+  --bs-btn-bg: var(--bt-gray-1000);
+  --bs-btn-color: white;
+  --bs-btn-border-color: var(--bt-gray-1000);
+  --bs-btn-hover-bg: var(--bt-gray-900);
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-border-color: var(--bt-gray-900);
+  --bs-btn-active-bg: var(--bt-black);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-black);
+}
+
+/* ── .btn-link override ──────────────────────────────────────────────────────── */
+.btn-link:hover {
+  background: var(--bt-gray-50);
+}
+
+.btn-link:active:not(:disabled) {
+  background: var(--bt-gray-50);
 }
 
 /* ── Loading state ─────────────────────────────────────────────────────────── */
@@ -963,6 +1063,115 @@ code, kbd, pre, samp {
 
 .btn .htmx-indicator {
   gap: var(--bt-sp-2); /* space between spinner and loading text */
+}
+
+/* ── Bootstrap outline variants ─────────────────────────────────────────────── */
+/*
+  Override Bootstrap's generated btn-outline-* with Booktower tokens.
+  Hover: subtle tint, text stays dark.
+  Active: filled with semantic colour + white text (all pass WCAG AA).
+*/
+.btn-outline-primary {
+  --bs-btn-color: var(--bt-blue-800);
+  --bs-btn-border-color: var(--bt-blue-800);
+  --bs-btn-hover-bg: var(--bt-blue-50);
+  --bs-btn-hover-color: var(--bt-blue-800);
+  --bs-btn-hover-border-color: var(--bt-blue-700);
+  --bs-btn-active-bg: var(--bt-blue-800);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-blue-900);
+}
+
+.btn-outline-secondary {
+  --bs-btn-bg: transparent;
+  --bs-btn-color: var(--bt-gray-700);
+  --bs-btn-border-color: var(--bt-gray-700);
+  --bs-btn-hover-bg: var(--bt-gray-50);
+  --bs-btn-hover-color: var(--bt-gray-700);
+  --bs-btn-hover-border-color: var(--bt-gray-700);
+  --bs-btn-active-bg: var(--bt-blue-800);
+  --bs-btn-active-color: var(--bt-white);
+  --bs-btn-active-border-color: var(--bt-blue-800);
+}
+
+.btn-outline-success {
+  --bs-btn-color: var(--bt-dark-success);
+  --bs-btn-border-color: var(--bt-success);
+  --bs-btn-hover-bg: var(--bt-green-100);
+  --bs-btn-hover-color: var(--bt-dark-success);
+  --bs-btn-hover-border-color: var(--bt-success);
+  --bs-btn-active-bg: var(--bt-green-700); /* green-500, 4.6:1 on white */
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-green-700);
+}
+
+.btn-outline-danger {
+  --bs-btn-bg: transparent;
+  --bs-btn-color: var(--bt-danger);
+  --bs-btn-border-color: var(--bt-danger);
+  --bs-btn-hover-bg: var(--bt-red-50);
+  --bs-btn-hover-color: var(--bt-danger);
+  --bs-btn-hover-border-color: var(--bt-danger);
+  --bs-btn-active-bg: var(--bt-red-700);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-red-700);
+}
+
+.btn-outline-info {
+  --bs-btn-color: var(--bt-blue-700);
+  --bs-btn-border-color: var(--bt-blue);
+  --bs-btn-hover-bg: var(--bt-blue-50);
+  --bs-btn-hover-color: var(--bt-blue-700);
+  --bs-btn-hover-border-color: var(--bt-blue);
+  --bs-btn-active-bg: var(--bt-blue-700);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-blue-800);
+}
+
+.btn-outline-warning {
+  --bs-btn-color: var(--bt-orange-600);
+  --bs-btn-border-color: var(--bt-warning);
+  --bs-btn-hover-bg: var(--bt-orange-50);
+  --bs-btn-hover-color: var(--bt-orange-600);
+  --bs-btn-hover-border-color: var(--bt-warning);
+  --bs-btn-active-bg: var(--bt-orange-700);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-orange-700);
+}
+
+.btn-outline-light {
+  --bs-btn-color: var(--bt-gray-600);
+  --bs-btn-border-color: var(--bt-gray-300);
+  --bs-btn-hover-bg: var(--bt-gray-50);
+  --bs-btn-hover-color: var(--bt-gray-700);
+  --bs-btn-hover-border-color: var(--bt-gray-400);
+  --bs-btn-active-bg: var(--bt-gray-100);
+  --bs-btn-active-color: var(--bt-gray-800);
+  --bs-btn-active-border-color: var(--bt-gray-400);
+}
+
+.btn-outline-dark {
+  --bs-btn-color: var(--bt-gray-1000);
+  --bs-btn-border-color: var(--bt-gray-1000);
+  --bs-btn-hover-bg: var(--bt-gray-50);
+  --bs-btn-hover-color: var(--bt-gray-1000);
+  --bs-btn-hover-border-color: var(--bt-gray-1000);
+  --bs-btn-active-bg: var(--bt-gray-1000);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-black);
+}
+
+/* Dark surface — reverse variants for use on dark backgrounds */
+.btn-outline-white {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: var(--bt-white);
+}
+
+.btn-outline-white:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: var(--bt-white);
 }
 
 /* ── Button group ───────────────────────────────────────────────────────────── */
@@ -1027,7 +1236,7 @@ code, kbd, pre, samp {
   color: var(--bt-gray-500);
 }
 
-/* ── bt-hero ─────────────────────────────────────────────────────────────────── */
+/* -- bt-hero -- */
 /*
   Full-bleed hero section with an absolute SVG background layer.
   Used on public-index and research-detail.
@@ -1085,7 +1294,7 @@ code, kbd, pre, samp {
   z-index: 5;
 }
 
-/* ── bt-section ──────────────────────────────────────────────────────────────── */
+/* -- bt-section -- */
 /* Making sure the landing pages have enough breathing room */
 .bt-section-landing {
   padding: calc(var(--bt-sp-12) * 3) 0;
@@ -1099,7 +1308,7 @@ code, kbd, pre, samp {
   background-color: var(--bt-bg);
 }
 
-/* ── bt-navbar ──────────────────────────────────────────────────────────────── */
+/* -- bt-navbar -- */
 .bt-navbar {
   background: var(--bt-white);
   border-bottom: var(--bt-border);
@@ -1169,7 +1378,7 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* ── bt-blank-slate ─────────────────────────────────────────────────────────── */
+/* -- bt-blank-slate -- */
 /* Used in toolbar-blank-slate.html and any empty-state screen */
 .bt-blank-slate {
   text-align: center;
@@ -1199,7 +1408,7 @@ code, kbd, pre, samp {
   color: var(--bt-blue-900);
 }
 
-/* ── bt-avatar ──────────────────────────────────────────────────────────────── */
+/* -- bt-avatar -- */
 /* Used in backoffice-header.html as the account menu trigger */
 .bt-avatar {
   display: inline-flex;
@@ -1237,119 +1446,166 @@ code, kbd, pre, samp {
   font-size: 1rem;
 }
 
-/* ── card-research ──────────────────────────────────────────────────────────── */
-.card-research {
-  background: var(--bt-white);
-  border-bottom: 1px solid var(--bt-border-color);
-  padding: var(--bt-sp-6) 0;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: auto auto;
-  gap: 0 var(--bt-sp-6);
+/* -- bt-work-card -- */
+/*
+  Research output card. Three variants via surface + modifier:
+    Backoffice curator    data-surface="backoffice" (default)
+    Backoffice researcher data-surface="backoffice" + .bt-work-card--researcher
+    Public                data-surface="public"
+
+  Based on Bootstrap .card but with box chrome removed for list context.
+  Bootstrap utilities handle all internal layout.
+  Custom classes only for: border-only separation, title link, pub line, foot.
+
+  Justified as a custom component because:
+  - Bootstrap .card is a boxed container; this is a border-separated list item
+  - Bootstrap .list-group-item has border-on-all-sides assumptions
+  - The domain-specific metadata structure (departments, projects, notice, foot)
+    is not expressible with Bootstrap utilities alone
+*/
+/* Strip Bootstrap card box chrome -- list items use border-bottom only */
+.bt-work-card.card {
+  background: transparent;
+  border: none;
+  border-bottom: var(--bt-border);
+  border-radius: 0;
+  box-shadow: none;
 }
 
-.card-research .card-meta {
-  grid-column: 1;
-  grid-row: 1;
+.bt-work-card.card:first-of-type {
+  border-top: var(--bt-border);
+}
+
+.bt-work-card .card-header {
+  background: transparent;
+  border-bottom: none;
+  padding: var(--bt-sp-4) 0 var(--bt-sp-2);
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  margin-bottom: var(--bt-sp-3);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--bt-sp-3);
+  margin-bottom: 0;
 }
 
-.card-research .card-body {
-  grid-column: 1;
-  grid-row: 2;
-  padding: 0;
+.bt-work-card .card-body {
+  padding: 0 0 var(--bt-sp-2);
 }
 
-.card-research .card-title {
-  font-family: var(--bt-font-serif);
+.bt-work-card .card-footer {
+  background: transparent;
+  border-top: none;
+  padding: var(--bt-sp-2) 0 var(--bt-sp-4);
+  color: var(--bt-gray-500);
+}
+
+/* Title */
+.bt-work-card__title {
   font-size: var(--bt-text-md);
-  font-weight: 400;
-  line-height: 1.4;
-  margin-bottom: var(--bt-sp-2);
-  color: var(--bt-gray-1000);
+  line-height: 1.35;
+  margin: 0 0 var(--bt-sp-1);
+  color: var(--s-heading-color);
 }
 
-.card-research .card-title a {
+.bt-work-card__title a {
   color: inherit;
   text-decoration: none;
 }
 
-.card-research .card-title a:hover {
-  color: var(--bt-blue);
+.bt-work-card__title a:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-.card-research .card-authors {
+/* Authors */
+.bt-work-card__authors {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
-  margin-bottom: var(--bt-sp-1);
   line-height: 1.5;
-}
-
-.card-research .card-authors a {
-  color: var(--bt-gray-700);
-}
-
-.card-research .card-authors a:hover {
-  color: var(--bt-blue);
-}
-
-.card-research .card-publication {
-  font-size: var(--bt-text-sm);
-  color: var(--bt-gray-500);
+  margin: 0 0 var(--bt-sp-1);
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--bt-sp-2);
+  gap: var(--bt-sp-2);
 }
 
-.card-research .card-publication a {
-  color: var(--bt-gray-500);
-  text-underline-offset: 2px;
-}
-
-.card-research .card-publication a:hover {
-  color: var(--bt-blue);
-}
-
-.card-research--flush-top {
-  padding-top: 0;
-}
-
-.card-research:first-child {
-  padding-top: 0;
-}
-
-/* Backoffice surface — tighter, sans-serif, operational */
-[data-surface=backoffice] .card-research,
-.s-backoffice .card-research {
-  padding: var(--bt-sp-4) 0;
-}
-
-[data-surface=backoffice] .card-research .card-title,
-.s-backoffice .card-research .card-title {
-  font-family: var(--bt-font-sans);
-  font-size: var(--bt-text-base);
+.bt-work-card__authors a {
+  color: var(--bt-gray-700);
   font-weight: 500;
-  margin-bottom: var(--bt-sp-1);
+  text-decoration: none;
 }
 
-[data-surface=backoffice] .card-research .card-authors,
-.s-backoffice .card-research .card-authors {
+.bt-work-card__authors a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+}
+
+/* Publication line */
+.bt-work-card__pub {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-600);
+  margin: 0 0 var(--bt-sp-3);
+}
+
+/* bt-meta-list */
+.bt-meta-list {
   font-size: var(--bt-text-xs);
-  margin-bottom: var(--bt-sp-1);
+  color: var(--bt-gray-700);
+  line-height: 1.5;
+  margin: 0 0 var(--bt-sp-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
 }
 
-[data-surface=backoffice] .card-research .card-publication,
-.s-backoffice .card-research .card-publication {
-  font-size: var(--bt-text-xs);
+.bt-meta-list a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
 }
 
-/* ── bt-toolbar ─────────────────────────────────────────────────────────────── */
+.bt-meta-list__item {
+  display: inline-flex;
+  gap: var(--bt-sp-1);
+  margin-right: var(--bt-sp-2);
+}
+
+.bt-meta-list__item-bordered {
+  border-right: var(--bt-border);
+  padding-right: var(--bt-sp-2);
+}
+
+/* Public surface overrides */
+[data-surface=public] .bt-work-card .card-header {
+  padding-top: var(--bt-sp-6);
+  padding-bottom: var(--bt-sp-3);
+}
+
+[data-surface=public] .bt-work-card .card-body {
+  padding-bottom: var(--bt-sp-3);
+}
+
+[data-surface=public] .bt-work-card .card-footer {
+  padding-bottom: var(--bt-sp-6);
+}
+
+[data-surface=public] .bt-work-card__title {
+  font-size: var(--bt-text-lg);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: var(--bt-sp-2);
+}
+
+[data-surface=public] .bt-work-card__authors {
+  margin-bottom: var(--bt-sp-2);
+}
+
+[data-surface=public] .bt-work-card__pub {
+  font-style: italic;
+}
+
+[data-surface=public] .bt-work-card__pub a {
+  font-style: normal;
+}
+
+/* -- bt-toolbar -- */
 .bt-toolbar {
   display: flex;
   align-items: center;
@@ -1392,7 +1648,7 @@ code, kbd, pre, samp {
 }
 
 .bt-toolbar__title {
-  font-family: var(--s-heading-font, var(--bt-font-serif));
+  font-family: var(--s-heading-font, var(--bt-font-sans));
   font-size: var(--bt-text-lg);
   font-weight: var(--s-heading-weight, 300);
   color: var(--bt-gray-1000);
@@ -1409,17 +1665,17 @@ code, kbd, pre, samp {
   font-weight: 500;
 }
 
-.btn-toolbar {
+.bt-btn-toolbar {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
 }
 
-.btn-toolbar--wide-spacing {
+.bt-btn-toolbar--wide-spacing {
   gap: var(--bt-sp-4);
 }
 
-.btn-toolbar--vertical {
+.bt-btn-toolbar--vertical {
   flex-direction: column;
   align-items: flex-end;
 }
@@ -1431,12 +1687,12 @@ code, kbd, pre, samp {
   margin-bottom: var(--bt-sp-2);
 }
 
-/* ── bt-toolbar modifier ────────────────────────────────────────────────────── */
+/* bt-toolbar modifier */
 .bt-toolbar--bordered {
   border-bottom: var(--bt-border);
 }
 
-/* ── View toggle ────────────────────────────────────────────────────────────── */
+/* -- View toggle -- */
 .view-toggle {
   display: flex;
   gap: var(--bt-sp-1);
@@ -1467,7 +1723,7 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* ── Public footer ──────────────────────────────────────────────────────────── */
+/* -- Public footer -- */
 /* Uses Bootstrap grid + utilities directly.
    Only .nav-title needs a definition (used on <h2> in footer nav columns). */
 .nav-title {
@@ -1478,7 +1734,7 @@ code, kbd, pre, samp {
   color: var(--bt-gray-700);
 }
 
-/* ── bt-dl — metadata definition list ──────────────────────────────────────── */
+/* -- bt-dl -- metadata definition list -- */
 /* Used in research-detail.html sidebar */
 .bt-dl {
   display: grid;
@@ -1500,7 +1756,7 @@ code, kbd, pre, samp {
   color: var(--bt-gray-1000);
 }
 
-/* ── bt-file-drop ────────────────────────────────────────────────────────────── */
+/* -- bt-file-drop -- */
 /* Used in deposit-flow.html file upload area */
 .bt-file-drop {
   border: 2px dashed var(--bt-gray-150);
@@ -1536,7 +1792,7 @@ code, kbd, pre, samp {
   margin: var(--bt-sp-1) 0 0;
 }
 
-/* ── HTMX states ────────────────────────────────────────────────────────────── */
+/* -- HTMX states -- */
 /* Used in research-detail.html, deposit-flow.html, backoffice-search.html */
 .htmx-indicator {
   display: none;
@@ -1563,9 +1819,9 @@ code, kbd, pre, samp {
   cursor: wait;
 }
 
-/* ── Facet expand/collapse toggle labels ───────────────────────────────────── */
+/* -- Facet expand/collapse toggle labels -- */
 /* Bootstrap adds .collapsed to the trigger button when the panel is closed.
-   Use that to swap visible label text — no extra state needed. */
+   Use that to swap visible label text -- no extra state needed. */
 .btn[data-bs-toggle=collapse] .when-expanded {
   display: block;
 }
@@ -1582,17 +1838,17 @@ code, kbd, pre, samp {
   display: block;
 }
 
-/* ── filter-tag ─────────────────────────────────────────────────────────────── */
+/* -- filter-tag -- */
 /*
   Three variants:
-    .filter-tag               — simple removable chip (× inside the button)
-    .filter-tag--editable     — left half of a split chip; click opens editor
-    .filter-tag--static       — display-only, used in saved search previews
+    .filter-tag               -- simple removable chip (x inside the button)
+    .filter-tag--editable     -- left half of a split chip; click opens editor
+    .filter-tag--static       -- display-only, used in saved search previews
 
   Split chip pattern:
     <div class="filter-tag-group">
       <button class="filter-tag filter-tag--editable">Type: Journal article</button>
-      <button class="filter-tag__remove" aria-label="Remove filter…">
+      <button class="filter-tag__remove" aria-label="Remove filter...">
         <i class="if if-close if--xs" aria-hidden="true"></i>
       </button>
     </div>
@@ -1623,13 +1879,13 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* Editable variant — right radius flattened to join remove button */
+/* Editable variant -- right radius flattened to join remove button */
 .filter-tag--editable {
   border-radius: var(--bt-radius-pill) 0 0 var(--bt-radius-pill);
   padding-right: var(--bt-sp-2);
 }
 
-/* Remove button — right half of split chip */
+/* Remove button -- right half of split chip */
 .filter-tag__remove {
   display: inline-flex;
   align-items: center;
@@ -1678,7 +1934,7 @@ code, kbd, pre, samp {
   cursor: default;
 }
 
-/* ── bt-filter-picker — scrollable filter list ───────────────────────────────── */
+/* -- bt-filter-picker -- scrollable filter list -- */
 .bt-filter-picker__menu {
   min-width: 260px;
 }
@@ -1693,7 +1949,7 @@ code, kbd, pre, samp {
   overflow-x: hidden;
 }
 
-/* ── Filter editor panel ─────────────────────────────────────────────────────── */
+/* -- Filter editor panel -- */
 .filter-editor {
   background: var(--bt-white);
   border: var(--bt-border);
@@ -1711,7 +1967,7 @@ code, kbd, pre, samp {
   border-top: var(--bt-border);
 }
 
-/* ── Filter editor — checklist ───────────────────────────────────────────────── */
+/* -- Filter editor -- checklist -- */
 .filter-checklist {
   display: flex;
   flex-direction: column;
@@ -1736,7 +1992,7 @@ code, kbd, pre, samp {
   width: 100%;
 }
 
-/* ── Filter editor — boolean toggle ─────────────────────────────────────────── */
+/* -- Filter editor -- boolean toggle -- */
 .filter-boolean {
   display: flex;
   gap: var(--bt-sp-2);
@@ -1771,7 +2027,7 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* ── Filter editor — year range ──────────────────────────────────────────────── */
+/* -- Filter editor -- year range -- */
 .filter-year {
   display: flex;
   align-items: center;
@@ -1782,7 +2038,7 @@ code, kbd, pre, samp {
   width: 120px;
 }
 
-/* ── People search (author filter editor) ────────────────────────────────────── */
+/* -- People search (author filter editor) -- */
 /* TODO: simplify, has too many specifics */
 .people-results {
   border: var(--bt-border);
@@ -1832,7 +2088,7 @@ code, kbd, pre, samp {
   gap: 3px;
 }
 
-/* ── Token bar ───────────────────────────────────────────────────────────────── */
+/* -- Token bar -- */
 /* TODO: simplify, has too many specifics */
 .token-bar {
   position: relative;
@@ -1943,7 +2199,7 @@ code, kbd, pre, samp {
   color: var(--bt-gray-400);
 }
 
-/* ── Suggestions panel ─────────────────────────────────────────────────── */
+/* -- Suggestions panel -- */
 .bt-suggest-panel {
   z-index: 999;
   position: absolute;
@@ -1969,7 +2225,7 @@ code, kbd, pre, samp {
   max-height: 220px;
 }
 
-/* ── Token suggestions panel ─────────────────────────────────────────────────── */
+/* -- Token suggestions panel -- */
 .token-suggestions {
   position: absolute;
   z-index: 200;
@@ -2062,7 +2318,7 @@ code, kbd, pre, samp {
 /* ── 1. u-layout--public ─────────────────────────────────────────────────────── */
 .u-layout--public {
   min-height: 100vh;
-  background: var(--bt-bg-white);
+  background: var(--s-bg);
 }
 
 .u-layout--public > main,

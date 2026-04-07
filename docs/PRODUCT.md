@@ -147,6 +147,61 @@ See `docs/PARTIALS.md` for the full spec.
 
 ---
 
+---
+
+## Research card — design decisions
+
+Decisions made during the research card redesign. These replace the previous ad hoc card implementation.
+
+### Surfaces and variants
+
+The card exists in three variants, designed in this order:
+1. **Backoffice curator** — maximum density, all metadata visible
+2. **Backoffice researcher** — lighter, same structure, fewer fields
+3. **Public** — open, readable, action-focused
+
+The backoffice variants are the base. The public variant is derived from them with information removed, not added.
+
+### Naming
+
+The entity is a **work**, not a "record" or "publication". Work is shorter and more inclusive — not all content is purely academic. Component class: `bt-work-card`.
+
+### Backoffice density
+
+Curators currently use the research output list as a working dashboard — they filter by various criteria and act directly from the list. This behaviour is established and will not change quickly. The card must therefore expose all metadata at once:
+- Status badges (Biblio status, work type, OA status)
+- Title (links to the record)
+- Authors with affiliation indicators (UGent icon, ORCID icon)
+- Publication line (year, journal/venue, volume/pages)
+- Departments
+- Projects
+- Biblio message (when present — shown to both curator and researcher; it is addressed to the researcher)
+- Biblio ID + audit trail
+- VABB data (when present)
+- Quick links
+
+**Known tension:** this density is a workaround for the absence of an action-driven dashboard. A proper dashboard is a future goal — the card design should not make that harder to add later.
+
+### Backoffice researcher card
+
+Same structure, remove: projects, VABB. Keep: departments (own only), Biblio message (addressed to them), Biblio ID, audit, quick links.
+
+**Backoffice:** View/Edit the full record is the primary action. The title itself links to the record. An explicit View/Edit button is also present — curators need it for keyboard navigation and scanning.
+
+**Public:** Read/Download is the primary action — rendered as a prominent button. Cite is secondary but explicitly visible as a button (citation is a primary use case for public users). Save to list is tertiary — icon-only, not shown to logged-out users.
+
+### Save to list (public)
+
+- Logged-out users: not shown at initial view
+- Logged-in researchers: shown as an icon-only button
+- Rationale: reduces visual noise for the majority anonymous audience without removing the feature
+
+### Backoffice actions placement
+
+Actions (View, Edit) are not inline buttons competing with metadata — they are accessible via the title link and a secondary action control. The card does not use a prominent action button row like the public version.
+
+---
+
 ## Deferred / won't do (v1)
 
 - Natural language search

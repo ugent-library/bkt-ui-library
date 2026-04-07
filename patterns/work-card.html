@@ -1,0 +1,492 @@
+<!-- @title: Work card — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Work card</h1>
+    <p class="lead">The primary unit for displaying research output in list and search contexts. Three variants: backoffice curator, backoffice researcher, and public. The card uses Bootstrap's card component as a structural base, with surface tokens and a small set of custom classes for domain-specific content.</p>
+  </header>
+
+
+  <!-- ============================================================
+       BACKOFFICE — CURATOR
+       Maximum density. All metadata visible. Used as a working
+       dashboard — curators filter and act directly from this view.
+       ============================================================ -->
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Backoffice — curator</h2>
+    <p class="mb-4 text-muted small">All metadata visible: status, authors, affiliations, departments, projects, Biblio message, audit trail, VABB, quick links.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Curator card — open access, with Biblio message</div>
+      <div class="ds-demo-body" data-surface="backoffice">
+
+        <article class="card bt-work-card" aria-labelledby="wc-cur-01">
+          <div class="card-header bt-work-card__head">
+
+            <!-- Status badges -->
+            <div class="bt-meta-list pt-1">
+              <span class="badge bg-success">Public</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-meta-list__item-bordered">Restricted access</span>
+              <span>Open access from 23-05-2026</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="bt-button-toolbar">
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="Edit: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-edit" aria-hidden="true"></i>
+                Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="View: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-eye" aria-hidden="true"></i>
+                View
+              </a>
+            </div>
+
+          </div>
+
+          <div class="card-body bt-work-card__body">
+
+            <!-- Title -->
+            <h2 class="bt-work-card__title" id="wc-cur-01">
+              <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
+            </h2>
+
+            <!-- Authors with affiliation indicators -->
+            <p class="bt-work-card__authors">
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <i class="if if-orcid text-success" aria-label="ORCID"></i>
+                <a href="#">Cooper, J.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Simmons, B.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <a href="#">Palumbo, Z.</a>
+              </span>
+              <span>et al.</span>
+              <span>supervised by</span>
+              <span class="d-inline-flex align-items-center gap-1">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Howard, E.</a>
+              </span>
+            </p>
+
+            <!-- Publication line -->
+            <p class="bt-work-card__pub">
+              <span>2020</span>
+              <span class="text-muted mx-1">·</span>
+              <span>International Journal of Environmental Research and Public Health</span>
+              <span class="text-muted mx-1">·</span>
+              <span>Vol. 17 · Issue 7 · pp. 12–32</span>
+            </p>
+
+            <!-- Biblio message -->
+            <div class="alert alert-warning alert--sm mb-1"
+              role="note"
+              aria-label="Biblio message">
+              <div class="d-flex align-items-start gap-2">
+                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div>
+                  <p class="mb-0">Please upload the author accepted manuscript. <a href="#" class="fw-medium">Uploading full texts</a></p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Backoffice-only metadata -->
+          <div class="my-2">
+
+            <!-- Departments -->
+            <div class="bt-meta-list">
+              <i class="if if-building text-muted" aria-hidden="true"></i>
+              <span class="badge bt-bg-alt text-dark bt-text-xsmall">DI10</span>
+              <span class="badge bt-bg-alt text-dark bt-text-xsmall">DI05</span>
+            </div>
+
+            <!-- Projects -->
+            <div class="bt-meta-list align-items-start">
+              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div class="d-flex flex-column gap-1">
+                <span class="bt-meta-list__item">
+                  <span>Valorisation of cytokine traps: IL33 as lead case</span>
+                  <span class="text-muted">F2016/IOF-ADV/307</span>
+                </span>
+                <span class="bt-meta-list__item">
+                  <span>The archaeological material of ed-Dur (Umm al-Qaiwain, UAE)</span>
+                  <span class="text-muted ms-1">F2016/IOF-ADV/308</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- VABB -->
+            <div class="bt-meta-list">
+              <i class="if if-bar-chart" aria-hidden="true"></i>
+              <span class="bt-meta-list__item">
+                VABB: c:vabb:339050 · VABB-3 · not approved · 2013
+              </span>
+            </div>
+
+          </div>
+
+          <div class="card-footer bt-work-card__foot d-flex flex-column gap-1">
+
+            <!-- Biblio ID + audit -->
+            <div class="bt-meta-list align-items-center">
+              <div class="bt-meta-list__item">
+                <span class="input-group">
+                  <button class="btn btn-outline-secondary btn-xs border" data-clipboard>
+                    <i class="if if-copy if--xs" aria-hidden="true"></i>
+                    <span class="btn-text">Biblio ID</span>
+                  </button>
+                  <code class="bg-alt-light border small align-content-center">01G3TZB614X7XXR52JYYGAND25</code>
+                </span>
+              </div>
+              <span class="bt-meta-list__item">Created 13/07/2023 by Valerie Van Den Bussche</span>
+              <span class="bt-meta-list__item">System update 2023-05-08 13:47</span>
+            </div>
+
+            <!-- Quick links -->
+            <div class="bt-meta-list">
+              <a href="#">View publication</a>
+              <a href="#">Full texts &amp; files</a>
+              <a href="#">DOI</a>
+              <a href="#">Public record</a>
+            </div>
+
+          </div>
+        </article>
+
+        <article class="card bt-work-card" aria-labelledby="wc-cur-01">
+          <div class="card-header bt-work-card__head">
+
+            <!-- Status badges -->
+            <div class="bt-meta-list pt-1">
+              <span class="badge bg-success">Public</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-meta-list__item-bordered">Restricted access</span>
+              <span>Open access from 23-05-2026</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="bt-button-toolbar">
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="Edit: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-edit" aria-hidden="true"></i>
+                Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="View: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-eye" aria-hidden="true"></i>
+                View
+              </a>
+            </div>
+
+          </div>
+
+          <div class="card-body bt-work-card__body">
+
+            <!-- Title -->
+            <h2 class="bt-work-card__title" id="wc-cur-01">
+              <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
+            </h2>
+
+            <!-- Authors with affiliation indicators -->
+            <p class="bt-work-card__authors">
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <i class="if if-orcid text-success" aria-label="ORCID"></i>
+                <a href="#">Cooper, J.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Simmons, B.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <a href="#">Palumbo, Z.</a>
+              </span>
+              <span>et al.</span>
+              <span>supervised by</span>
+              <span class="d-inline-flex align-items-center gap-1">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Howard, E.</a>
+              </span>
+            </p>
+
+            <!-- Publication line -->
+            <p class="bt-work-card__pub">
+              <span>2020</span>
+              <span class="text-muted mx-1">·</span>
+              <span>International Journal of Environmental Research and Public Health</span>
+              <span class="text-muted mx-1">·</span>
+              <span>Vol. 17 · Issue 7 · pp. 12–32</span>
+            </p>
+
+            <!-- Biblio message -->
+            <div class="alert alert-warning alert--sm mb-1"
+              role="note"
+              aria-label="Biblio message">
+              <div class="d-flex align-items-start gap-2">
+                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div>
+                  <p class="mb-0">Please upload the author accepted manuscript. <a href="#" class="fw-medium">Uploading full texts</a></p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Backoffice-only metadata -->
+          <div class="my-2">
+
+            <!-- Departments -->
+            <div class="bt-meta-list">
+              <i class="if if-building text-muted" aria-hidden="true"></i>
+              <span class="badge bt-bg-alt text-dark bt-text-xsmall">DI10</span>
+              <span class="badge bt-bg-alt text-dark bt-text-xsmall">DI05</span>
+            </div>
+
+            <!-- Projects -->
+            <div class="bt-meta-list align-items-start">
+              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div class="d-flex flex-column gap-1">
+                <span class="bt-meta-list__item">
+                  <span>Valorisation of cytokine traps: IL33 as lead case</span>
+                  <span class="text-muted">F2016/IOF-ADV/307</span>
+                </span>
+                <span class="bt-meta-list__item">
+                  <span>The archaeological material of ed-Dur (Umm al-Qaiwain, UAE)</span>
+                  <span class="text-muted ms-1">F2016/IOF-ADV/308</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- VABB -->
+            <div class="bt-meta-list">
+              <i class="if if-bar-chart" aria-hidden="true"></i>
+              <span class="bt-meta-list__item">
+                VABB: c:vabb:339050 · VABB-3 · not approved · 2013
+              </span>
+            </div>
+
+          </div>
+
+          <div class="card-footer bt-work-card__foot d-flex flex-column gap-1">
+
+            <!-- Biblio ID + audit -->
+            <div class="bt-meta-list align-items-center">
+              <div class="bt-meta-list__item">
+                <span class="input-group">
+                  <button class="btn btn-outline-secondary btn-xs border" data-clipboard>
+                    <i class="if if-copy if--xs" aria-hidden="true"></i>
+                    <span class="btn-text">Biblio ID</span>
+                  </button>
+                  <code class="bg-alt-light border small align-content-center">01G3TZB614X7XXR52JYYGAND25</code>
+                </span>
+              </div>
+              <span class="bt-meta-list__item">Created 13/07/2023 by Valerie Van Den Bussche</span>
+              <span class="bt-meta-list__item">System update 2023-05-08 13:47</span>
+            </div>
+
+            <!-- Quick links -->
+            <div class="bt-meta-list">
+              <a href="#">View publication</a>
+              <a href="#">Full texts &amp; files</a>
+              <a href="#">DOI</a>
+              <a href="#">Public record</a>
+            </div>
+
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       BACKOFFICE — RESEARCHER
+       Lighter view: no projects, no VABB. Own departments only.
+       Biblio message shown when present. ID, audit, quick links.
+       ============================================================ -->
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Backoffice — researcher</h2>
+    <p class="mb-4 text-muted small">Researcher's own view: fewer administrative fields. No projects or VABB. Own department only.</p>
+
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Curator card — open access, with Biblio message</div>
+      <div class="ds-demo-body" data-surface="backoffice">
+
+        <article class="card bt-work-card" aria-labelledby="wc-cur-01">
+          <div class="card-header bt-work-card__head">
+
+            <!-- Status badges -->
+            <div class="bt-meta-list pt-1">
+              <span class="badge bg-success">Public</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-meta-list__item-bordered">Restricted access</span>
+              <span>Open access from 23-05-2026</span>
+            </div>
+
+            <!-- Actions -->
+            <!-- <div class="bt-button-toolbar">
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="Edit: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-edit" aria-hidden="true"></i>
+                Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="View: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-eye" aria-hidden="true"></i>
+                View
+              </a>
+            </div> -->
+
+          </div>
+
+          <div class="card-body bt-work-card__body">
+
+            <!-- Title -->
+            <h2 class="bt-work-card__title" id="wc-cur-01">
+              <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
+            </h2>
+
+            <!-- Authors with affiliation indicators -->
+            <p class="bt-work-card__authors">
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <i class="if if-orcid text-success" aria-label="ORCID"></i>
+                <a href="#">Cooper, J.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Simmons, B.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <a href="#">Palumbo, Z.</a>
+              </span>
+              <span>et al.</span>
+              <span>supervised by</span>
+              <span class="d-inline-flex align-items-center gap-1">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Howard, E.</a>
+              </span>
+            </p>
+
+            <!-- Publication line -->
+            <p class="bt-work-card__pub">
+              <span>2020</span>
+              <span class="text-muted mx-1">·</span>
+              <span>International Journal of Environmental Research and Public Health</span>
+              <span class="text-muted mx-1">·</span>
+              <span>Vol. 17 · Issue 7 · pp. 12–32</span>
+            </p>
+
+            <!-- Biblio message -->
+            <div class="alert alert-warning alert--sm mb-1"
+              role="note"
+              aria-label="Biblio message">
+              <div class="d-flex align-items-start gap-2">
+                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div>
+                  <p class="mb-0">Please upload the author accepted manuscript. <a href="#" class="fw-medium">Uploading full texts</a></p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+        <article class="card bt-work-card" aria-labelledby="wc-cur-01">
+          <div class="card-header bt-work-card__head">
+
+            <!-- Status badges -->
+            <div class="bt-meta-list pt-1">
+              <span class="badge bg-success">Public</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-meta-list__item-bordered">Restricted access</span>
+              <span>Open access from 23-05-2026</span>
+            </div>
+
+            <!-- Actions -->
+            <!-- <div class="bt-button-toolbar">
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="Edit: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-edit" aria-hidden="true"></i>
+                Edit
+              </a>
+              <a href="#" class="btn btn-ghost btn-xs"
+                aria-label="View: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-eye" aria-hidden="true"></i>
+                View
+              </a>
+            </div> -->
+
+          </div>
+
+          <div class="card-body bt-work-card__body">
+
+            <!-- Title -->
+            <h2 class="bt-work-card__title" id="wc-cur-01">
+              <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
+            </h2>
+
+            <!-- Authors with affiliation indicators -->
+            <p class="bt-work-card__authors">
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <i class="if if-orcid text-success" aria-label="ORCID"></i>
+                <a href="#">Cooper, J.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Simmons, B.</a>
+              </span>
+              <span class="bt-meta-list__item">
+                <a href="#">Palumbo, Z.</a>
+              </span>
+              <span>et al.</span>
+              <span>supervised by</span>
+              <span class="d-inline-flex align-items-center gap-1">
+                <i class="if if-ghent-university text-info" aria-label="UGent"></i>
+                <a href="#">Howard, E.</a>
+              </span>
+            </p>
+
+            <!-- Publication line -->
+            <p class="bt-work-card__pub">
+              <span>2020</span>
+              <span class="text-muted mx-1">·</span>
+              <span>International Journal of Environmental Research and Public Health</span>
+              <span class="text-muted mx-1">·</span>
+              <span>Vol. 17 · Issue 7 · pp. 12–32</span>
+            </p>
+
+            <!-- Biblio message -->
+            <div class="alert alert-warning alert--sm mb-1"
+              role="note"
+              aria-label="Biblio message">
+              <div class="d-flex align-items-start gap-2">
+                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div>
+                  <p class="mb-0">Please upload the author accepted manuscript. <a href="#" class="fw-medium">Uploading full texts</a></p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</div>

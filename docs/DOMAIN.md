@@ -146,7 +146,7 @@ A review message thread records the back-and-forth between submitter and curator
 - `returned` — curator returned to draft with reason
 - `published` — optional curator note on publish
 
-In the UI: the deposit flow (`templates/deposit-flow.html`) covers the **submitter side**. The **curator side** (review queue, approve/return actions, message thread) is not yet prototyped in the UI library.
+In the UI: the deposit flow (`templates/biblio-backoffice/deposit-1-0-find.html` through `deposit-4-review.html`) covers the **submitter side**. The **curator side** (review queue, approve/return actions, message thread) is not yet prototyped in the UI library.
 
 ---
 
@@ -171,7 +171,7 @@ A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked
 ### Organisation page (public)
 A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. Supports the cluster model in UB2030 where library services are organised by campus cluster, not individual faculty.
 
-### ~~Project page (public)~~ ✓ `templates/project.html`
+### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project.html`
 A page for a funded research project. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. Important for grant reporting and societal impact visibility.
 
 ### Curated list / collection page (public)
@@ -230,14 +230,13 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 
 | Template | Entity / concept | Surface |
 |----------|-----------------|---------|
-| `templates/backoffice-search.html` | Work list, search, facets | Backoffice |
-| `templates/research-detail.html` | Work detail page | Public |
-| `templates/deposit-flow.html` | Work create/edit (deposit) | Backoffice |
-| `templates/public-search.html` | Work search | Public |
-| `templates/public-index.html` | Public homepage | Public |
-| `patterns/research-card.html` | Work card component | Both |
-| `patterns/deposit-components.html` | Deposit form components | Backoffice |
-| `templates/project.html` | Project detail page | Public |
+| `templates/biblio-backoffice/search-filter-first.html` | Work list, search, facets | Backoffice |
+| `templates/biblio-public/public-research-detail.html` | Work detail page | Public |
+| `templates/biblio-backoffice/deposit-1-0-find.html` … `deposit-4-review.html` | Work create/edit (deposit) | Backoffice |
+| `templates/biblio-public/public-search.html` | Work search | Public |
+| `templates/biblio-public/public-index.html` | Public homepage | Public |
+| `patterns/work-card.html` | Work card component | Both |
+| `templates/biblio-public/public-project.html` | Project detail page | Public |
 | `patterns/sidebar.html` | Sub-sidebar nav | Backoffice |
 
 **Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge (`Dataset`, `Journal article`, etc.) is how type is communicated, not separate nav sections.
@@ -256,7 +255,7 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | Access kind |
 |-------------|
 | `open` | `badge bg-success` |
-| `restricted` | `badge badge-warning` |
+| `restricted` | `badge bg-warning` |
 | `closed` | no badge |
 
 Work kind is always `badge bg-primary` (blue).

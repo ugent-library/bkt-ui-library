@@ -10,6 +10,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--s-heading-leading);
   font-weight: var(--s-heading-weight);
   color: var(--s-heading-color);
+  text-wrap: balance;
 }
 
 h1 {
@@ -29,7 +30,7 @@ h5 {
   font-size: var(--bt-text-base);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.06em;  /* em scales with font-size */
 }
 h6 {
   font-size: var(--bt-text-base);
@@ -70,10 +71,11 @@ h6 {
 
 .display-5 {
   font-size: var(--bt-text-md);
-  color: var(--bt-blue-800);
+  color: var(--s-heading-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em;  /* uppercase needs breathing room — em scales with font-size */
+  letter-spacing: 0.05em;
   font-weight: 500;
+  opacity: 0.65;  /* pulls back from heading colour so it reads as a label, not a heading */
 }
 
 .display-6 {
@@ -86,7 +88,7 @@ h6 {
 // Lead
 
 .lead {
-  line-height: 1.7;
+  line-height: var(--s-body-leading);
   font-size: var(--bt-text-md);
   font-weight: 400;
   font-family: var(--s-lead-font);
@@ -100,6 +102,10 @@ h6 {
 }
 
 // Body
+
+p {
+  text-wrap: pretty;
+}
 
 p:last-child {
   margin-bottom: 0;

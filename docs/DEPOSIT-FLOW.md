@@ -63,7 +63,7 @@ Links below the group: "Which version can I share?" and "UGent scholarly publish
 
 The work identity card appears at the top of this step as well.
 
-The embargo date field is conditionally shown by `assets/js/deposit.js` (the `embargo-date-field` div has `d-none` by default; the script toggles it on radio change and moves focus to the date input when shown).
+The embargo date field is conditionally shown by `assets/js/deposit.js` (the `embargo-date-field` container uses the `hidden` attribute by default; the script toggles it on radio change and moves focus to the date input when shown).
 
 ---
 
@@ -105,7 +105,7 @@ The stepper is inline HTML in each template header, not a separate component. If
 
 The deposit flow requires one JS file: `assets/js/deposit.js`.
 
-Currently, the embargo date toggle logic lives as an inline `<script>` at the bottom of `deposit-3-access-rights.html`. It must be moved to `deposit.js` before implementation. See `docs/JAVASCRIPT.md`.
+The embargo date toggle logic for Step 3 already lives in `deposit.js`. See `docs/JAVASCRIPT.md`.
 
 ---
 

@@ -101,9 +101,9 @@ The `templates/` directory in `booktower-ui-library` contains full-page prototyp
 | Prototype | Go templ equivalent |
 |-----------|-------------------|
 | `templates/biblio-backoffice/backoffice-search-filter-first.html` | Backoffice search/list view |
-| `templates/biblio-backoffice/deposit-v2-upload.html` | Deposit flow step |
+| `templates/biblio-backoffice/deposit-2-upload.html` | Deposit flow step |
 | `templates/biblio-public/public-search.html` | Public search page |
-| `templates/biblio-public/public-project.html` | Public detail page |
+| `templates/biblio-public/public-project.html` | Public project detail page |
 
 HTMX URLs in prototypes are stubs (`hx-get="/search"`, etc.). The corresponding real endpoints in `bbl/app/*_handlers.go` are the production wiring.
 

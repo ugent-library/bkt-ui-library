@@ -115,7 +115,22 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Prototype-only:** no
 
-**Note:** The embargo date logic currently lives as an inline `<script>` in `deposit-3-access-rights.html`. It must be moved here before Go templ implementation.
+**Note:** The Step 3 embargo toggle now lives here and uses the `hidden` attribute on `#embargo-date-field`, not `d-none`.
+
+---
+
+### `sidebar-toggle.js`
+
+**Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync.
+
+**Loaded by:** backoffice pages via `templates/partials/backoffice-sidebar.html`
+
+**Listens for:**
+- Click on `.bt-sidebar__toggle`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
 
 ---
 

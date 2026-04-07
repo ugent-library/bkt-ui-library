@@ -47,9 +47,9 @@ partial, and stylesheet:
 | `c-hero` | `bt-hero` |
 | `c-hero__bg` | `bt-hero__bg` |
 | `c-hero__content` | `bt-hero__content` |
-| `c-button-toolbar` | `btn-toolbar` |
-| `c-button-toolbar--wide-spacing` | `btn-toolbar--wide-spacing` |
-| `c-button-toolbar--vertical` | `btn-toolbar--vertical` |
+| `c-button-toolbar` | `bt-btn-toolbar` |
+| `c-button-toolbar--wide-spacing` | `bt-btn-toolbar--wide-spacing` |
+| `c-button-toolbar--vertical` | `bt-btn-toolbar--vertical` |
 
 **Rationale:** The split between `bc-` (Bootstrap Custom) and `c-` (Component)
 was never meaningful in practice and caused constant confusion. Every Booktower
@@ -59,6 +59,8 @@ is unchanged.
 ---
 
 ## Status key
+
+**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in `ASSISTANT.md` as the verified class list.
 
 | Symbol | Meaning |
 |--------|---------|
@@ -137,9 +139,9 @@ is unchanged.
 | `bc-toolbar--auto` | Bootstrap `h-auto` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar--top` | Bootstrap `align-items-start` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar-lg-responsive` etc. | ⏳ | ⏳ Planned | Responsive stack variants — may be handled differently in v2. |
-| `c-button-toolbar` | `btn-toolbar` | ✅ Carried over | Active. |
-| `c-button-toolbar--wide-spacing` | `btn-toolbar--wide-spacing` | ✅ Carried over | |
-| `c-button-toolbar--vertical` | `btn-toolbar--vertical` | ✅ Carried over | |
+| `c-button-toolbar` | `bt-btn-toolbar` | ✅ Carried over | Active. |
+| `c-button-toolbar--wide-spacing` | `bt-btn-toolbar--wide-spacing` | ✅ Carried over | |
+| `c-button-toolbar--vertical` | `bt-btn-toolbar--vertical` | ✅ Carried over | |
 
 ---
 

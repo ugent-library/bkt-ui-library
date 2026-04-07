@@ -473,6 +473,8 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 ### Complete verified class list (ground truth — cross-checked against SCSS source)
 
+**Important:** The changelog (`CHANGELOG.md`) tracks classes relative to `old-ui-kit-css/main.css` — the legacy stylesheet. Classes that are new to v2 and have no equivalent in the old system do not appear in the changelog migration tables. The verified list below is the ground truth for what currently exists.
+
 **Navigation & topbar**
 ```
 bt-navbar               bt-navbar__brand        bt-navbar__nav
@@ -485,12 +487,14 @@ Note: `bt-navbar__brand` is used (backoffice logo link). `bt-navbar__mark` does 
 bt-toolbar              bt-toolbar--bordered
 bt-toolbar__left        bt-toolbar__right       bt-toolbar__middle
 bt-toolbar__item        bt-toolbar__title
+bt-btn-toolbar
 ```
 `bt-toolbar__item` elements are siblings within `bt-toolbar__left`/`bt-toolbar__right`/`bt-toolbar__middle` and get automatic padding between them.
 
 **Avatar**
 ```
-bt-avatar               bt-avatar--small        bt-avatar--large
+bt-avatar               bt-avatar--xsmall       bt-avatar--small
+bt-avatar--large
 ```
 
 **Hero (public surface)**
@@ -498,11 +502,12 @@ bt-avatar               bt-avatar--small        bt-avatar--large
 bt-hero                  bt-hero__bg              bt-hero__content
 ```
 
-**Research card**
+**Work card**
 ```
-card-research           card-meta               btn-toolbar
-card-body               card-title              card-authors
-card-publication
+bt-work-card            bt-work-card--researcher
+bt-work-card__title     bt-work-card__authors   bt-work-card__pub
+bt-work-card__head      bt-work-card__body      bt-work-card__foot
+bt-meta-list            bt-meta-list__item      bt-meta-list__item-bordered
 ```
 
 **Facets sidebar**
@@ -511,7 +516,8 @@ Note: the old custom facet classes (`bt-facets`, `bt-facet-name`, `bt-facet-sepa
 
 **Sub-sidebar navigation**
 ```
-bt-sidebar               bt-sidebar--bordered
+bt-sidebar               bt-sidebar--bordered    bt-sidebar--slim
+bt-sidebar__toggle       bt-sidebar__label       bt-sidebar__group-label
 ```
 
 **Backoffice list layout**
@@ -585,6 +591,7 @@ bt-pagination-bar        (use bt-toolbar)
 bt-results-toolbar       (use bt-toolbar bt-toolbar--bordered)
 bt-results-col           (removed — use Bootstrap flex utilities on the results column directly)
 bt-stepper__num          bt-stepper__label        bt-stepper__required  (removed — stepper is not part of this library)
+card--work  card-research  card-meta  card-actions  card-title  card-authors  card-publication  (replaced by bt-work-card)
 is-selected on <tr>     (use Bootstrap .table-active)
 td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
@@ -643,6 +650,16 @@ The only exception: UI kit documentation pages (`foundations/`, `elements/`, `pa
 - whether it is prototype-only (to be removed when a real endpoint exists)
 
 If you find a `<script>` block in a template, flag it and move it to the correct file before considering the template ready for Go templ implementation.
+
+---
+
+## No inline styles — with one exception
+
+Never use `style=` attributes in HTML. If a value isn't in SCSS, add it there first, then reference it via a class.
+
+**The one exception:** genuinely dynamic values that cannot be known at build time — for example, a progress bar width (`style="width: 73%"`) driven by data. Static visual values like `font-size`, `color`, `padding`, `background` are never acceptable inline.
+
+Before writing `style=`, ask: is this value static? If yes — ask yourself if it's available in Bootstrap or if there's already a class we can use. If not, ask before you write the css class.
 
 ---
 
