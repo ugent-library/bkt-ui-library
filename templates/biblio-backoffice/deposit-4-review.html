@@ -3,7 +3,7 @@
 <!--
   Deposit flow — Step 4
 
-  Read-only summary of the complete record before submission.
+  Lightweight confirmation step before submission.
   The "Submit" action moves the work from draft → submitted status
   and triggers the librarian review queue.
 
@@ -18,11 +18,6 @@
     embargo_date   string        — ISO date, only when oa_status = "embargo"
     license        string        — e.g. "CC BY 4.0"
     source_label   string        — e.g. "Web of Science", empty when manually entered
-
-  TODO: The summary content is not yet designed.
-  Needs to show: type, title, authors, abstract (truncated), keywords,
-  files (name + OA status), access status, license.
-  Design the read-only summary layout before implementing.
 -->
 
 <div class="u-layout--app" data-surface="backoffice">
@@ -73,22 +68,67 @@
       <div class="u-main__content">
         <div class="u-main__content-body">
 
-          <div class="mb-5">
-            <div class="d-flex align-items-center gap-2 mb-1">
-              <span class="badge bg-primary">Journal article</span>
-              <span class="badge bg-secondary">Web of Science</span>
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-primary">Journal article</span>
+                <span class="badge bg-secondary">Web of Science</span>
+              </div>
+              <p class="fw-semibold mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</p>
+              <p class="text-muted small mb-2">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
+              <a href="deposit-1-1-find.html" class="btn btn-ghost btn-sm px-0">
+                <i class="if if-edit if--sm" aria-hidden="true"></i>
+                Edit details
+              </a>
             </div>
-            <p class="h5 fw-semibold mb-1">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</p>
-            <p class="text-muted small mb-0">Esperon-Rodriguez, M. · De Pauw, K. · 3 more · 2026</p>
           </div>
 
-          <h2 class="h4 mb-4">Does everything look right?</h2>
+          <div class="alert alert-info d-flex align-items-start gap-2 mb-4" role="alert">
+            <i class="if if-info-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+            <div>
+              <p class="fw-semibold mb-1">Ready to submit?</p>
+              <p class="mb-0">Submitting sends this draft to the library review queue. You can still go back and make changes first.</p>
+            </div>
+          </div>
 
-          <!--
-            TODO: Read-only summary layout goes here.
-            See DEPOSIT-FLOW.md known gaps.
-          -->
-          <p class="text-muted">Summary of type, authors, files, access status, and license will appear here.</p>
+          <section class="card" aria-labelledby="review-check-heading">
+            <div class="card-body">
+              <h2 id="review-check-heading" class="h5 mb-1">Final check</h2>
+              <p class="text-muted small mb-4">A quick summary before you submit.</p>
+
+              <dl class="row mb-4">
+                <dt class="col-sm-3 text-muted fw-normal">Title</dt>
+                <dd class="col-sm-9">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</dd>
+
+                <dt class="col-sm-3 text-muted fw-normal">Authors</dt>
+                <dd class="col-sm-9">Mariana Esperon-Rodriguez, Kobe De Pauw, Emma Li, Sofia Novak, Pieter Vermeulen</dd>
+
+                <dt class="col-sm-3 text-muted fw-normal">File</dt>
+                <dd class="col-sm-9">publisher-version.pdf</dd>
+
+                <dt class="col-sm-3 text-muted fw-normal">Access</dt>
+                <dd class="col-sm-9"><span class="badge bg-success">Open access</span></dd>
+
+                <dt class="col-sm-3 text-muted fw-normal">License</dt>
+                <dd class="col-sm-9 mb-0">CC BY 4.0</dd>
+              </dl>
+
+              <div class="d-flex flex-wrap gap-2">
+                <a href="deposit-1-1-find.html" class="btn btn-ghost btn-sm">
+                  <i class="if if-edit if--sm" aria-hidden="true"></i>
+                  Edit details
+                </a>
+                <a href="deposit-2-upload.html" class="btn btn-ghost btn-sm">
+                  <i class="if if-file if--sm" aria-hidden="true"></i>
+                  Edit files
+                </a>
+                <a href="deposit-3-access-rights.html" class="btn btn-ghost btn-sm">
+                  <i class="if if-lock-unlock if--sm" aria-hidden="true"></i>
+                  Edit access
+                </a>
+              </div>
+            </div>
+          </section>
 
           <hr class="my-5">
 
@@ -105,7 +145,7 @@
                     <span class="spinner-border spinner-border-sm" role="status" aria-label="Saving…"></span>
                   </span>
                 </button>
-                <a href="deposit-5-submitted.html" type="submit" class="btn btn-primary">
+                <a href="dashboard.html" type="submit" class="btn btn-primary">
                   Submit
                 </a>
               </div>

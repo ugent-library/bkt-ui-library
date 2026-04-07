@@ -69,21 +69,22 @@ The embargo date field is conditionally shown by `assets/js/deposit.js` (the `em
 
 ### Step 4 — Review (`deposit-4-review.html`)
 
-A read-only summary of the complete record before the researcher submits.
+A lightweight confirmation step before submission.
 
-This step is currently a stub. The summary layout — showing work type, title, authors, files, OA status, and license — has not yet been designed.
+This step should be intentionally brief. It is not a second detail page. It shows:
+
+- the same work identity card used in steps 2 and 3
+- a short confirmation alert explaining that submission sends the draft to the library review queue
+- one compact summary block with title, authors, uploaded file, OA status, and license
+- three small edit actions back to Step 1, Step 2, and Step 3
 
 The action button at this step is "Submit", not "Next". Submitting moves the work from `draft` to `submitted` status and triggers the librarian review queue.
 
 ---
 
-### Step 5 — Submitted (`deposit-5-submitted.html`)
+### After submit
 
-Confirmation screen. Two documented variants:
-
-**Variant A (standard)** — confirmation heading, status badge ("Submitted"), title, and a "Back to dashboard" button. Copy: "The library will review your submission."
-
-**Variant B (OA unclear)** — used when the work type is patent, classified, or confidential, or when the researcher selected "Restricted". Adds a sentence explaining that a librarian will follow up about the full text. Reassures the researcher they don't need to do anything. Currently commented out in the template.
+Preferred behaviour: after a successful submit, redirect back to the dashboard and show an inline success alert there. This avoids making the researcher pass through an extra dead-end page before returning to their work overview.
 
 ---
 
@@ -128,7 +129,6 @@ has_abstract   bool
 
 ## Known gaps
 
-- **Step 4 (Review)** content is not designed. The summary layout needs to be prototyped before implementation.
-- **Variant B** of the submitted screen is commented out in the template. It needs to become a proper conditional state, not an HTML comment.
+- **Dashboard success alert** should become a reusable pattern rather than one inline example in the dashboard template.
 - **Work identity card** (steps 2–4) is duplicated across three templates. Extract as a partial when implementing in Go templ.
 - **`add-author-form.html`** is the HTMX target for inline author addition in Step 1. Its interaction with the people-search widget is documented in `docs/PARTIALS.md`.
