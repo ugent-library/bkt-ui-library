@@ -1,10 +1,22 @@
 /* ═══════════════════════════════════════════════════════════════════════════════
-   3. BOOTSTRAP VARIABLE OVERRIDES
+   BOOTSTRAP VARIABLE OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════════════
+
+   Only global :root tokens here — things Bootstrap exposes at :root and that
+   are safe to override there.
+
+   Component-scoped overrides (pagination, card, etc.) are at the bottom of
+   this file, scoped to their component class. Bootstrap 5.3 scopes many
+   component variables to their own class, not :root — :root overrides for
+   those have no effect.
+
+   Surface-aware overrides (--bs-secondary-color per surface) live in
+   _surfaces.scss alongside the other surface tokens.
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* System-UI has native 700 — no bold synthesis risk. Semibold override removed. */
-
+/* System-UI has native 700 — no bold synthesis risk. */
 :root {
+  /* Typography */
   --bs-font-weight-bold: 700;
   --bs-font-sans-serif:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
   --bs-font-monospace:   'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
@@ -12,21 +24,23 @@
   --bs-body-color:       var(--bt-text);
   --bs-body-color-rgb:   77, 77, 77;
 
+  /* Backgrounds */
   --bs-body-bg:          var(--bt-white);
   --bs-body-bg-rgb:      255, 255, 255;
+
+  /* Borders */
   --bs-border-color:     var(--bt-border-color);
   --bs-border-color-rgb: 222, 222, 222;
-
   --bs-border-radius:    var(--bt-radius);
   --bs-border-radius-sm: var(--bt-radius-sm);
   --bs-border-radius-lg: var(--bt-radius-lg);
   --bs-border-radius-xl: var(--bt-radius-xl);
-  --bs-secondary-color:   var(--bt-text-muted);
+
+  /* Secondary / muted text */
+  --bs-secondary-color:     var(--bt-text-muted);
   --bs-secondary-color-rgb: 115, 115, 115;
 
-  --bs-card-box-shadow:     var(--bt-shadow-sm);
-  --bs-card-border-radius:  var(--bt-radius-xl); // why does this not work? Todo investigatee
-
+  /* Theme colours */
   --bs-primary:          var(--bt-blue-800);
   --bs-primary-rgb:      19, 46, 83;
   --bs-danger:           var(--bt-danger);
@@ -38,37 +52,42 @@
   --bs-info:             var(--bt-blue);
   --bs-info-rgb:         0, 63, 163;
 
-  --bs-heading-color:    var(--bt-dark-gray);
-  --bs-link-color:       var(--bt-blue-700);
-  --bs-link-color-rgb:   0, 63, 163;
-  --bs-link-hover-color: var(--bt-blue-500);
-  --bs-link-hover-color-rgb: 62, 126, 218;
-
+  /* Focus */
   --bs-focus-ring-color: var(--bt-focus-ring-sm);
   --bs-focus-ring-width: 3px;
 
-  --bs-mark-padding:                0px;
-  --bs-mark-bg:                     var(--bt-light-yellow);
+  /* Misc */
+  --bs-mark-padding: 0px;
+  --bs-mark-bg:      var(--bt-light-yellow);
+}
 
-  // TODO: --bs-form-select-bg-img:  ;
-  // --pagination-color:                  red;
-  // --pagination-bg:                     blue;
-  // --pagination-border-color:           green;
+/* ── Component-scoped overrides ─────────────────────────────────────────────── */
+/*
+  Bootstrap 5.3 scopes component variables to their own class selector, not
+  :root. Any override must match that specificity. Rule of thumb: if the
+  variable name contains a component hint (--bs-pagination-*, --bs-card-*),
+  scope the override to that component's class.
+*/
 
-  // --pagination-focus-color:            white;
-  // --pagination-focus-bg:               black;
-  // --pagination-focus-box-shadow:       --focus-ring-box-shadow;
-  // --pagination-focus-outline:          0;
+.card {
+  --bs-card-box-shadow:    var(--bt-shadow-sm);
+  --bs-card-border-radius: var(--bt-radius-xl);
+}
 
-  // --pagination-hover-color:            pink;
-  // --pagination-hover-bg:               salmon;
-  // --pagination-hover-border-color:     grey; // Todo in v6: remove this?
-
-  // --pagination-active-color:           --component-active-color;
-  // --pagination-active-bg:              --component-active-bg;
-  // --pagination-active-border-color:    --component-active-bg;
-
-  // --pagination-disabled-color:         var(--#{$prefix}secondary-color);
-  // --pagination-disabled-bg:            var(--#{$prefix}secondary-bg);
-  // --pagination-disabled-border-color:  var(--#{$prefix}border-color);
+.pagination {
+  --bs-pagination-color:                 var(--bt-blue-800);
+  --bs-pagination-bg:                    var(--s-bg, var(--bt-white));
+  --bs-pagination-border-color:          var(--bt-gray-150);
+  --bs-pagination-hover-color:           var(--bt-blue-800);
+  --bs-pagination-hover-bg:              var(--bt-blue-50);
+  --bs-pagination-hover-border-color:    var(--bt-gray-150);
+  --bs-pagination-focus-color:           var(--bt-white);
+  --bs-pagination-focus-bg:              var(--bt-blue-700);
+  --bs-pagination-focus-box-shadow:      var(--bt-focus-ring);
+  --bs-pagination-active-color:          var(--bt-white);
+  --bs-pagination-active-bg:             var(--bt-blue-800);
+  --bs-pagination-active-border-color:   var(--bt-blue-800);
+  --bs-pagination-disabled-color:        var(--bt-gray-400);
+  --bs-pagination-disabled-bg:           var(--s-bg, var(--bt-white));
+  --bs-pagination-disabled-border-color: var(--bt-gray-150);
 }

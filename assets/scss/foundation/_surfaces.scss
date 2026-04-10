@@ -9,19 +9,27 @@
    or any layout container. Mix within a page if needed.
 
    Active surface tokens:
-     --s-heading-font      font-family for headings
-     --s-heading-weight    font-weight for headings
-     --s-heading-leading   line-height for headings
-     --s-body-color        color for headings and body text
-     --s-body-font         font-family for body text
-     --s-body-size         base font size
-     --s-body-leading      line-height for body text
-     --s-lead-font         font-family for .lead
-     --s-display-weight    font-weight for .display-*
-     --s-display-leading   line-height for .display-*
-     --s-bg                page background colour
-     --s-heading-color     heading colour (can differ from body text)
-     --s-link-color        link colour override per surface
+     --s-heading-font          font-family for headings
+     --s-heading-weight        font-weight for headings
+     --s-heading-leading       line-height for headings
+     --s-heading-color         heading colour
+     --s-body-color            body text colour
+     --s-body-font             font-family for body text
+     --s-body-size             base font size
+     --s-body-leading          line-height for body text
+     --s-lead-font             font-family for .lead
+     --s-display-weight        font-weight for .display-*
+     --s-display-leading       line-height for .display-*
+     --s-bg                    page background colour
+     --s-link-color            link colour
+     --s-link-hover-color      link hover colour
+     --s-btn-primary-bg        btn-primary background
+     --s-btn-primary-hover     btn-primary hover background
+     --s-btn-secondary-color   btn-secondary text
+     --s-btn-secondary-border  btn-secondary border
+     --s-bg-dark               .bt-bg-dark background
+     --s-text-muted            .text-muted colour
+     --s-topbar-height         application topbar height
 
    TODO — to be activated as components are built:
      --s-section-gap       gap between major page sections
@@ -31,40 +39,58 @@
      --s-card-shadow-hover card shadow on hover/focus
      --s-input-pad-y/x     form input padding
      --s-btn-pad-y/x       button padding
-     --s-topbar-height     application topbar height
 */
 
 
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 body {
-  --s-heading-font:     var(--bt-font-sans);
-  --s-heading-weight:   600;
-  --s-heading-color:    var(--bt-blue-800);    /* institutional, deliberate — not generic near-black */
-  --s-heading-leading:  1.2;
-  --s-body-color:       var(--bt-gray-700);
-  --s-body-font:        var(--bt-font-sans);
-  --s-body-size:        0.9375rem;             /* 15px — compact for a data-dense tool */
-  --s-body-leading:     1.5;
-  --s-lead-font:        var(--bt-font-sans);
-  --s-display-weight:   700;
-  --s-display-leading:  1.15;
-  --s-bg:               var(--bt-white);
-  --s-topbar-height:    var(--bt-sp-12);
+  --s-heading-font:         var(--bt-font-sans);
+  --s-heading-weight:       600;
+  --s-heading-color:        var(--bt-gray-900);
+  --s-heading-leading:      1.2;
+  --s-body-color:           var(--bt-gray-700);
+  --s-body-font:            var(--bt-font-sans);
+  --s-body-size:            0.9375rem;           /* 15px — compact for a data-dense tool */
+  --s-body-leading:         1.5;
+  --s-lead-font:            var(--bt-font-sans);
+  --s-lead-color:           var(--bt-gray-700);
+  --s-display-weight:       700;
+  --s-display-leading:      1.15;
+  --s-bg:                   var(--bt-white);
+  --s-link-color:           var(--bt-dark-gray);
+  --s-link-hover-color:     var(--bt-blue);
+  --s-btn-primary-bg:       var(--bt-blue-800);
+  --s-btn-primary-hover:    var(--bt-blue-700);
+  --s-btn-secondary-color:  var(--bt-blue-800);
+  --s-btn-secondary-border: var(--bt-blue-800);
+  --s-bg-dark:              var(--bt-bg-dark);
+  --s-topbar-height:        var(--bt-sp-12);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
 [data-surface="public"],
 .s-public {
-  --s-heading-weight:   700;                   /* confident, editorial — authority through scale and contrast with body */
-  --s-heading-color:    var(--bt-blue-900);    /* deeper than backoffice — closer to printed page, more monumental */
-  --s-heading-leading:  1.05;                  /* tight — typeset, deliberate, not browser-default */
-  --s-body-color:       var(--bt-gray-900);
-  --s-body-size:        1rem;                  /* 16px — reading comfort */
-  --s-body-leading:     1.8;                   /* generous contrast against tight headings */
-  --s-display-weight:   700;
-  --s-display-leading:  1.0;                   /* display sits very heavy — monumental at large size */
-  --s-bg:               #f9f7f4;               /* warm off-white — editorial, not clinical */
-  --s-topbar-height:    var(--bt-sp-16);
+  --s-heading-weight:       700;               /* confident, editorial */
+  --s-heading-color:        var(--bt-blue-800);
+  --s-heading-leading:      1.05;              /* tight — typeset, deliberate */
+  --s-body-color:           var(--bt-blue-900);
+  --s-body-size:            1rem;              /* 16px — reading comfort */
+  --s-body-leading:         1.8;               /* generous contrast against tight headings */
+  --s-lead-color:           var(--bt-blue-800);
+  --s-display-weight:       700;
+  --s-display-leading:      1.0;               /* monumental at large size */
+  --s-bg:                   var(--bt-bg-paper);           /* warm off-white, faintly rosy — editorial, not clinical */
+  --s-link-color:           var(--bt-blue-800);
+  --s-link-hover-color:     var(--bt-blue-600);
+  --s-btn-primary-bg:       var(--bt-blue-800);
+  --s-btn-primary-hover:    var(--bt-blue-700);
+  --s-btn-secondary-color:  var(--bt-blue-800);
+  --s-btn-secondary-border: var(--bt-blue-800);
+  --s-btn-dark-bg:          var(--bt-blue-800);
+  --s-btn-dark-hover:       var(--bt-blue-700);
+  --s-bg-dark:              var(--bt-blue-800);
+  --bs-secondary-color:     var(--s-text-muted); /* Bootstrap .text-muted reads this */
+  --s-topbar-height:        var(--bt-sp-16);
 }
 
 /* ── Backoffice — explicit alias, no overrides needed ───────────────────────── */
