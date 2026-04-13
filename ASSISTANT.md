@@ -277,21 +277,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 
 **E4. Dropdowns.** Bootstrap dropdown keyboard handling is correct (Enter/Space open, Arrow keys navigate items, Escape closes). Do not replace Bootstrap dropdowns with custom implementations.
 
-**E5. Toggle buttons use `aria-pressed`, not `role="tab"`.** The view toggle (card/table view) is a pair of toggle buttons, not a tab panel. `role="tab"` requires an associated `role="tabpanel"` and Arrow-key navigation — that is not what this component does.
-
-```html
-<!-- ✓ Correct -->
-<div class="view-toggle" role="group" aria-label="Switch view">
-  <button type="button" class="view-toggle-btn is-active"
-    aria-pressed="true" aria-label="Card view">
-    <i class="if if-list-unordered" aria-hidden="true"></i>
-  </button>
-  <button type="button" class="view-toggle-btn"
-    aria-pressed="false" aria-label="Table view">
-    <i class="if if-table" aria-hidden="true"></i>
-  </button>
-</div>
-```
+**E5. We use button groups for view toggle buttons.** The view toggle (card/table view) is a pair of buttons, not a tab panel. `role="tab"` requires an associated `role="tabpanel"` and Arrow-key navigation — that is not what this component does. We do not invent a new view-toggle.
 
 ---
 
@@ -523,11 +509,6 @@ bt-sidebar__toggle       bt-sidebar__label       bt-sidebar__group-label
 **Backoffice list layout**
 Note: `bt-sidebar` is the sticky `<aside>` wrapping the facet groups. Results layouts now use `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header`, and `u-main__content-body`.
 Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
-
-**View toggle**
-```
-view-toggle             view-toggle-btn         view-toggle-btn.is-active
-```
 
 **Table**
 

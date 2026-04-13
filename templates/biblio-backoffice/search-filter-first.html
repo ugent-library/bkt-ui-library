@@ -95,15 +95,16 @@
                 </button>
               </div>
               <div class="bt-toolbar__right">
-                <div class="view-toggle" role="group" aria-label="Switch view">
-                  <button type="button" class="view-toggle-btn is-active" id="btn-card-view"
-                    aria-pressed="true" aria-label="Card view">
+                <div class="btn-group" role="group" aria-label="Switch view">
+                  <input type="radio" class="btn-check" name="switchview" id="btn-card-view" autocomplete="off" aria-label="Card view" checked>
+                  <label class="btn btn-outline-light" for="btn-card-view">
                     <i class="if if-list-unordered" aria-hidden="true"></i>
-                  </button>
-                  <button type="button" class="view-toggle-btn" id="btn-table-view"
-                    aria-pressed="false" aria-label="Table view">
+                  </label>
+
+                  <input type="radio" class="btn-check" name="switchview" id="btn-table-view"  aria-label="Table view" autocomplete="off">
+                  <label class="btn btn-outline-light" for="btn-table-view">
                     <i class="if if-table" aria-hidden="true"></i>
-                  </button>
+                  </label>
                 </div>
               </div>
             </div>
@@ -346,10 +347,8 @@
     const isCard = view === 'card';
     viewCards.hidden = !isCard;
     viewTable.hidden =  isCard;
-    btnCard.classList.toggle('is-active',  isCard);
-    btnTable.classList.toggle('is-active', !isCard);
-    btnCard.setAttribute('aria-pressed',  String(isCard));
-    btnTable.setAttribute('aria-pressed', String(!isCard));
+    btnCard.toggleAttribute('checked',  String(isCard));
+    btnTable.toggleAttribute('checked', String(!isCard));
     try { localStorage.setItem('results-view', view); } catch(e) {}
   }
 

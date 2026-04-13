@@ -1,0 +1,162 @@
+/* -- bt-work-card -- */
+/*
+  Research output card. Three variants via surface + modifier:
+    Backoffice curator    data-surface="backoffice" (default)
+    Backoffice researcher data-surface="backoffice" + .bt-work-card--researcher
+    Public                data-surface="public"
+
+  Based on Bootstrap .card but with box chrome removed for list context.
+  Bootstrap utilities handle all internal layout.
+  Custom classes only for: border-only separation, title link, pub line, foot.
+
+  Justified as a custom component because:
+  - Bootstrap .card is a boxed container; this is a border-separated list item
+  - Bootstrap .list-group-item has border-on-all-sides assumptions
+  - The domain-specific metadata structure (departments, projects, notice, foot)
+    is not expressible with Bootstrap utilities alone
+*/
+
+/* Strip Bootstrap card box chrome -- list items use border-bottom only */
+.bt-work-card.card {
+  background: transparent;
+  border: none;
+  border-bottom: var(--bt-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.bt-work-card.card:first-of-type {
+  border-top: var(--bt-border);
+}
+
+.bt-work-card .card-header {
+  background: transparent;
+  border-bottom: none;
+  padding: var(--bt-sp-4) 0 var(--bt-sp-2);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--bt-sp-3);
+  margin-bottom: 0;
+}
+
+.bt-work-card .card-body {
+  padding: 0 0 var(--bt-sp-2);
+}
+
+.bt-work-card .card-footer {
+  background: transparent;
+  border-top: none;
+  padding: var(--bt-sp-2) 0 var(--bt-sp-4);
+  color: var(--bt-gray-500);
+}
+
+/* Title */
+.bt-work-card__title {
+  font-size: var(--bt-text-md);
+  line-height: 1.35;
+  margin: 0 0 var(--bt-sp-1);
+  color: var(--s-heading-color);
+  font-weight: 600;
+}
+
+.bt-work-card__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.bt-work-card__title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Authors */
+.bt-work-card__authors {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-700);
+  line-height: 1.5;
+  margin: 0 0 var(--bt-sp-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+}
+
+.bt-work-card__authors a {
+  color: var(--bt-gray-700);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.bt-work-card__authors a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+}
+
+/* Publication line */
+.bt-work-card__pub {
+  font-size: var(--bt-text-sm);
+  color: var(--bt-gray-600);
+  margin: 0 0 var(--bt-sp-3);
+}
+
+/* bt-meta-list */
+
+.bt-meta-list {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-700);
+  line-height: 1.5;
+  margin: 0 0 var(--bt-sp-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+}
+
+
+.bt-meta-list a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+}
+
+.bt-meta-list__item {
+  display: inline-flex;
+  gap: var(--bt-sp-1);
+  margin-right: var(--bt-sp-2);
+}
+
+.bt-meta-list__item-bordered {
+  border-right: var(--bt-border);
+  padding-right: var(--bt-sp-2);
+}
+
+
+// /* Public surface overrides */
+// [data-surface="public"] .bt-work-card .card-header {
+//   padding-top: var(--bt-sp-6);
+//   padding-bottom: var(--bt-sp-3);
+// }
+
+// [data-surface="public"] .bt-work-card .card-body {
+//   padding-bottom: var(--bt-sp-3);
+// }
+
+// [data-surface="public"] .bt-work-card .card-footer {
+//   padding-bottom: var(--bt-sp-6);
+// }
+
+// [data-surface="public"] .bt-work-card__title {
+//   font-size: var(--bt-text-lg);
+//   line-height: 1.2;
+//   margin-bottom: var(--bt-sp-2);
+// }
+
+// [data-surface="public"] .bt-work-card__authors {
+//   margin-bottom: var(--bt-sp-2);
+// }
+
+// [data-surface="public"] .bt-work-card__pub {
+//   font-style: italic;
+// }
+
+// [data-surface="public"] .bt-work-card__pub a {
+//   font-style: normal;
+// }

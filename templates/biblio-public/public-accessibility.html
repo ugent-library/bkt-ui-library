@@ -1,0 +1,414 @@
+<!-- @title: Accessibility — Biblio UGent -->
+<!-- @surface: public -->
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+  <main class="bg-white" id="main-content">
+
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-8">
+
+          <h1>Accessibility statement</h1>
+
+          <p>
+            Ghent University Library is committed to making its websites accessible, in accordance with the <strong>Bestuursdecreet of 7 December 2018</strong>, which transposes <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016L2102" target="_blank" rel="noopener">European Directive 2016/2102</a>.
+          </p>
+
+          <p>
+            This accessibility statement applies to
+            <strong>lib.ugent.be</strong> — the website of the Ghent
+            University Library (Dutch and English versions).
+          </p>
+
+          <!-- ── Two-zone explanation ───────────────────────────────────── -->
+          <h2>About this website</h2>
+
+          <p>
+            lib.ugent.be consists of two parts with different technical
+            ownership:
+          </p>
+
+          <dl class="mb-4">
+            <dt>Content pages (lib.ugent.be)</dt>
+            <dd class="mb-3">
+              Library information, services, opening hours, and contact pages. Built and maintained by Ghent University Library. We have full control over the code and can fix issues directly.
+            </dd>
+
+            <dt>Search and catalogue (libcatalog.ugent.be)</dt>
+            <dd>
+              The homepage, search functionality, and catalogue are provided by <a href="https://knowledge.exlibrisgroup.com/Primo/Product_Materials/Primo_Accessibility" target="_blank" rel="noopener">Ex Libris Primo NDE<span class="visually-hidden"> (opens in new window)</span></a>, a third-party discovery platform. We can configure some aspects (labels, colours, page titles) and apply CSS overrides, but we cannot change the underlying application code. Issues in the core application require action by the vendor.
+            </dd>
+          </dl>
+
+          <!-- ── Compliance status ──────────────────────────────────────── -->
+          <h2>Compliance status</h2>
+
+          <p>
+            This website <strong>partially complies</strong> with the <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">Web Content Accessibility Guidelines (WCAG) 2.1</a> level AA. The non-compliant areas are listed below.
+          </p>
+
+          <!-- ── Non-accessible content ─────────────────────────────────── -->
+          <h2>Non-accessible content</h2>
+
+          <p>
+            The content listed below is not yet accessible for the
+            following reasons.
+          </p>
+
+          <h3>Content pages (lib.ugent.be)</h3>
+
+          <table class="table" aria-label="Accessibility issues on lib.ugent.be content pages">
+            <thead>
+              <tr>
+                <th scope="col">WCAG criterion</th>
+                <th scope="col">Issue</th>
+                <th scope="col">Severity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2.4.1 Bypass blocks</td>
+                <td>
+                  There is no skip link on content pages. Keyboard users
+                  must tab through the entire navigation to reach the
+                  main content.
+                </td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td>2.4.7 Focus visible</td>
+                <td>
+                  The focus indicator is suppressed on all interactive
+                  elements (<code>outline: none</code> with no visible
+                  replacement). Keyboard users cannot see which element
+                  is currently focused.
+                </td>
+                <td>High</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  Some pages have heading hierarchy issues. For example,
+                  an <code>&lt;h3&gt;</code> follows directly after
+                  <code>&lt;h1&gt;</code>, skipping the
+                  <code>&lt;h2&gt;</code> level.
+                </td>
+                <td>Moderate</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  The <code>&lt;main&gt;</code> element has no
+                  <code>id</code> attribute, so a skip link would have
+                  no target.
+                </td>
+                <td>Moderate</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  Breadcrumb navigation uses <code>&lt;ul&gt;</code>
+                  instead of <code>&lt;ol&gt;</code>. Position in the
+                  hierarchy is meaningful and should use an ordered list.
+                </td>
+                <td>Low</td>
+              </tr>
+              <tr>
+                <td>1.1.1 Non-text content</td>
+                <td>
+                  Some decorative icons lack
+                  <code>aria-hidden</code>.
+                </td>
+                <td>Moderate</td>
+              </tr>
+              <tr>
+                <td>1.4.3 Contrast (minimum)</td>
+                <td>
+                  The cookie consent button has white text on a blue
+                  background with a contrast ratio of 4.27:1, below the
+                  required 4.5:1 minimum for normal-sized text.
+                </td>
+                <td>Low</td>
+              </tr>
+              <tr>
+                <td>2.4.4 Link purpose (in context)</td>
+                <td>
+                  Some links use generic text such as "More info"
+                  without sufficient surrounding context. Links opening
+                  in a new window lack visible warning text.
+                </td>
+                <td>Moderate</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Search and catalogue (Ex Libris Primo NDE)</h3>
+
+          <p>
+            The following issues were found in the Primo NDE application.
+            We have noted which issues are within our configuration
+            control and which require action by the vendor.
+          </p>
+
+          <table class="table" aria-label="Accessibility issues on Primo NDE search and catalogue pages">
+            <thead>
+              <tr>
+                <th scope="col">WCAG criterion</th>
+                <th scope="col">Issue</th>
+                <th scope="col">Severity</th>
+                <th scope="col">Can we fix this?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2.4.7 Focus visible</td>
+                <td>
+                  Focus outline is suppressed on many elements.
+                  Some elements use <code>box-shadow</code> on
+                  <code>:focus-visible</code> but the coverage is
+                  inconsistent — not all focusable elements receive a
+                  visible indicator.
+                </td>
+                <td>High</td>
+                <td>Partially — we can apply CSS overrides for some elements</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  The <code>&lt;h1&gt;</code> text is "home" or "search"
+                  — not meaningful page headings.
+                </td>
+                <td>High</td>
+                <td>No — not configurable in Primo NDE. Raised with vendor.</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  An empty <code>&lt;h2&gt;</code> is present in the DOM.
+                </td>
+                <td>Moderate</td>
+                <td>No — vendor issue</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  Heading hierarchy is broken: search results heading is
+                  <code>&lt;h4&gt;</code> after a preceding
+                  <code>&lt;h2&gt;</code>, skipping
+                  <code>&lt;h3&gt;</code>.
+                </td>
+                <td>Moderate</td>
+                <td>No — vendor issue</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info and relationships</td>
+                <td>
+                  Four of five <code>&lt;nav&gt;</code> elements have no
+                  <code>aria-label</code>. Screen reader users cannot
+                  distinguish between them.
+                </td>
+                <td>Moderate</td>
+                <td>No — vendor issue</td>
+              </tr>
+              <tr>
+                <td>4.1.2 Name, role, value</td>
+                <td>
+                  Several <code>&lt;mat-icon role="img"&gt;</code>
+                  elements have no accessible name.
+                </td>
+                <td>Moderate</td>
+                <td>No — vendor issue</td>
+              </tr>
+              <tr>
+                <td>2.4.2 Page titled</td>
+                <td>
+                  The English homepage title still shows the Dutch name
+                  "Universiteitsbibliotheek Gent" instead of an English
+                  title.
+                </td>
+                <td>Low</td>
+                <td>Investigating — may be configurable</td>
+              </tr>
+              <tr>
+                <td>2.4.4 Link purpose (in context)</td>
+                <td>
+                  External links open in a new window without visible
+                  warning text.
+                </td>
+                <td>Low</td>
+                <td>Investigating — may be configurable via CSS/labels</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- ── What we have done ──────────────────────────────────────── -->
+          <h2>What we have done</h2>
+
+          <p>
+            We have reported the vendor-side issues listed above to
+            Ex Libris. Where possible, we apply CSS overrides and
+            configuration changes to improve accessibility within the
+            constraints of the platform.
+          </p>
+
+          <p>
+            In parallel, Ghent University Library is rebuilding its
+            research output repository (biblio.ugent.be) with
+            accessibility integrated from the ground up in the design
+            system, template architecture, and development workflow.
+            The target standard is WCAG 2.1 AA.
+          </p>
+
+          <!-- ── Planned improvements ───────────────────────────────────── -->
+          <h2>Planned improvements</h2>
+
+          <h3>Short term (within 3 months)</h3>
+          <p>
+            Add a skip link to all lib.ugent.be content pages.
+            Restore visible focus indicators across the site.
+            Fix heading hierarchy issues on library detail pages.
+            Add <code>id="main-content"</code> to the
+            <code>&lt;main&gt;</code> element.
+            Apply CSS overrides to improve focus visibility on Primo NDE
+            pages where possible.
+          </p>
+
+          <h3>Medium term (3–6 months)</h3>
+          <p>
+            Fix breadcrumb list semantics. Add visible "opens in new
+            window" indicators to external links. Address the contrast
+            issue on the cookie consent widget. Investigate remaining
+            Primo NDE configuration options for page titles and link
+            text.
+          </p>
+
+          <h3>Long term (after 6 months)</h3>
+          <p>
+            Launch the redesigned biblio.ugent.be with full WCAG 2.1 AA
+            compliance. Establish an internal accessibility testing
+            procedure with regular re-audits.
+          </p>
+
+          <!-- ── Audit details ──────────────────────────────────────────── -->
+          <h2>How we tested</h2>
+
+          <p>
+            This statement is based on two accessibility audits of
+            lib.ugent.be.
+          </p>
+
+          <table class="table" aria-label="Audit details">
+            <tbody>
+              <tr>
+                <th scope="row">First audit</th>
+                <td>
+                  <time datetime="2025-10">October 2025</time> — manual
+                  audit by Ghent University Library
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Second audit</th>
+                <td>
+                  <time datetime="2026-04">April 2026</time> — manual
+                  and automated audit by Ghent University Library
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Scope</th>
+                <td>
+                  Dutch and English versions of lib.ugent.be (content
+                  pages) and libcatalog.ugent.be (Primo NDE homepage
+                  and search)
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Standard</th>
+                <td>WCAG 2.1 level AA (EN 301 549)</td>
+              </tr>
+              <tr>
+                <th scope="row">Automated tools</th>
+                <td>WAVE</td>
+              </tr>
+              <tr>
+                <th scope="row">Manual testing</th>
+                <td>
+                  Visual inspection (Safari, Chrome, Firefox, iOS),
+                  keyboard navigation (Safari, Chrome, Firefox),
+                  screen reader (VoiceOver), DOM and computed style
+                  inspection
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Limitations</th>
+                <td>
+                  Search result pages could not be fully tested in an
+                  unauthenticated session. Facet checkbox labelling,
+                  modal keyboard trapping, and form validation in the
+                  Primo interface were not covered. A follow-up audit
+                  with an authenticated session is planned.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <details>
+            <summary>Pages tested</summary>
+            <ul class="mt-2">
+              <li>lib.ugent.be/nl and /en (homepage — redirects to Primo NDE)</li>
+              <li>lib.ugent.be/nl/libraries (+ individual library pages including Boekentoren)</li>
+              <li>lib.ugent.be/nl/services (+ subpages: registration, loans, scanning, ILL, study locations, etc.)</li>
+              <li>lib.ugent.be/nl/info (+ subpages: regulations, research tips, e-resources, open data, etc.)</li>
+              <li>libcatalog.ugent.be search results page (limited — guest session)</li>
+            </ul>
+          </details>
+
+          <!-- ── Feedback and contact ───────────────────────────────────── -->
+          <h2>Problems? Let us know</h2>
+
+          <p>
+            Are you having difficulty accessing content on this
+            website? Or do you have a question or remark about its
+            accessibility?
+          </p>
+
+          <p>
+            Contact us at
+            <a href="mailto:libservice@ugent.be">libservice@ugent.be</a>.
+            You will receive a response within 5 working days.
+          </p>
+
+          <!-- ── Enforcement ────────────────────────────────────────────── -->
+          <h2>Enforcement procedure</h2>
+
+          <p>
+            If you are not satisfied with our response, you can contact
+            the <span lang="nl">Vlaamse Ombudsdienst</span>:
+          </p>
+
+          <address>
+            <span lang="nl">Vlaamse Ombudsdienst</span><br>
+            <a href="https://www.vlaamseombudsdienst.be" target="_blank" rel="noopener">
+              vlaamseombudsdienst.be<span class="visually-hidden"> (opens in new window)</span></a><br>
+            <a href="mailto:klachten@vlaamseombudsdienst.be">klachten@vlaamseombudsdienst.be</a><br>
+            Phone: <a href="tel:+3218000700">+32 1800 0700</a> (free)
+          </address>
+
+          <p class="text-muted mt-5">
+            <small>
+              This statement was prepared on
+              <time datetime="2025-10">October 2025</time>
+              and last updated on
+              <time datetime="2026-04-13">13 April 2026</time>.
+            </small>
+          </p>
+
+        </div><!-- /col -->
+      </div><!-- /row -->
+    </div><!-- /container -->
+
+  </main>
+</div>
+
+<!-- @include: templates/partials/public-footer.html -->
