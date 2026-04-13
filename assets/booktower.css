@@ -998,15 +998,15 @@ code, kbd, pre, samp {
 /* ── Variants ───────────────────────────────────────────────────────────────── */
 .btn-primary[type=submit],
 .btn-primary {
-  background: var(--s-btn-primary-bg, var(--bt-blue-800));
-  border: 1px solid var(--s-btn-primary-bg, var(--bt-blue-800));
+  background: var(--bt-blue-800);
+  border: 1px solid var(--bt-blue-800);
   color: var(--bt-white);
 }
 
 .btn-primary[type=submit]:hover:not(:disabled),
 .btn-primary:hover:not(:disabled) {
-  background: var(--s-btn-primary-hover, var(--bt-blue-700));
-  border-color: var(--s-btn-primary-hover, var(--bt-blue-700));
+  background: var(--bt-blue-700);
+  border-color: var(--bt-blue-700);
   color: var(--bt-white);
 }
 
@@ -1019,26 +1019,26 @@ code, kbd, pre, samp {
 
 .btn-secondary {
   background: transparent;
-  border: 1px solid var(--s-btn-secondary-border, var(--bt-blue-800));
-  color: var(--s-btn-secondary-color, var(--bt-blue-800));
+  border: 1px solid var(--bt-blue-800);
+  color: var(--bt-blue-800);
 }
 
 .btn-secondary:hover:not(:disabled) {
   background: var(--bt-blue-50);
-  border-color: var(--s-btn-secondary-border, var(--bt-blue-800));
-  color: var(--s-btn-secondary-color, var(--bt-blue-800));
+  border-color: var(--bt-blue-700);
+  color: var(--bt-blue-800);
 }
 
 .btn-secondary:active:not(:disabled) {
-  background: var(--s-btn-primary-bg, var(--bt-blue-800));
-  border-color: var(--s-btn-primary-bg, var(--bt-blue-800));
+  background: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
   color: var(--bt-white);
 }
 
 .btn-ghost {
   background: transparent;
   border: 1px solid transparent;
-  color: var(--bt-gray-700);
+  color: var(--bt-blue-800);
 }
 
 .btn-ghost:hover:not(:disabled) {
@@ -1195,6 +1195,17 @@ code, kbd, pre, samp {
   --bs-btn-active-bg: var(--bt-red-700);
   --bs-btn-active-color: white;
   --bs-btn-active-border-color: var(--bt-red-700);
+}
+
+.btn-outline-info {
+  --bs-btn-color: var(--bt-blue-700);
+  --bs-btn-border-color: var(--bt-blue);
+  --bs-btn-hover-bg: var(--bt-blue-50);
+  --bs-btn-hover-color: var(--bt-blue-700);
+  --bs-btn-hover-border-color: var(--bt-blue);
+  --bs-btn-active-bg: var(--bt-blue-700);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-blue-800);
 }
 
 .btn-outline-info {
@@ -1500,8 +1511,7 @@ img.bt-navbar__logo {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--bt-blue-200);
-  color: var(--bt-blue-900);
+  color: var(--bt-heading-color);
   font-size: var(--bt-text-sm);
   font-weight: 600;
   flex-shrink: 0;
@@ -1527,6 +1537,13 @@ img.bt-navbar__logo {
   width: 48px;
   height: 48px;
   font-size: 1rem;
+}
+
+.bt-avatar--outline {
+  border: 1px solid var(--bt-blue-800);
+  font-weight: 800;
+  background-color: var(--s-bg);
+  color: var(--bt-blue-800);
 }
 
 /* -- bt-work-card -- */
@@ -2442,6 +2459,7 @@ img.bt-navbar__logo {
   border-bottom: var(--bt-border);
   padding: var(--u-main-head-pad-y) var(--u-main-head-pad-x);
   background: var(--bt-bg-white);
+  overflow: visible;
 }
 
 /* Required body — always occupies middle row */
@@ -3635,7 +3653,7 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 }
 
 .bt-bg-dark {
-  background-color: var(--bt-bg-dark);
+  background-color: var(--s-bg-dark);
 }
 
 .bt-bg-white {

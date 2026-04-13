@@ -54,6 +54,7 @@ const SECTIONS = [
   { dir: 'patterns',    label: 'Patterns'    },
   { dir: 'templates',   label: 'Templates'   },
   { dir: 'base',        label: 'base'        },
+  { dir: 'product',     label: 'product'     },
 ];
 
 // ─── Build nav from filesystem ────────────────────────────────────────────────
@@ -237,34 +238,55 @@ function renderBackofficeResultsRows() {
 
 function renderSearchResultCards() {
   return `
-<article class="card-research" aria-labelledby="search-result-1">
-  <div class="card-meta">
-    <span class="badge bg-success">Open access</span>
-    <span class="badge bg-primary">Journal article</span>
+<article class="card bt-work-card" aria-labelledby="search-result-1">
+  <div class="card-header bt-work-card__head">
+    <div class="bt-meta-list pt-1">
+      <span class="badge bg-success">Open access</span>
+      <span class="bt-meta-list__item-bordered">Journal article</span>
+    </div>
+    <div class="bt-btn-toolbar">
+      <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure">
+        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+      </button>
+      <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban forests as essential infrastructure">
+        <i class="if if-list-check" aria-hidden="true"></i> Save
+      </button>
+      <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-primary btn-sm">
+        <i class="if if-book" aria-hidden="true"></i> Read
+      </a>
+    </div>
   </div>
-  <div class="bt-btn-toolbar">
-    <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-ghost btn-sm" aria-label="View record">
-      <i class="if if-eye" aria-hidden="true"></i> View
-    </a>
-  </div>
-  <div class="card-body">
-    <h3 id="search-result-1" class="card-title">
+  <div class="card-body bt-work-card__body">
+    <h3 id="search-result-1" class="bt-work-card__title">
       <a href="/templates/biblio-public/public-research-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
     </h3>
-    <p class="card-authors">Esperon-Rodriguez, M., Arndt, S., De Pauw, K. <span class="text-muted">et al.</span></p>
-    <p class="card-publication"><span>2026</span> · <a href="#">Plants People Planet</a></p>
+    <p class="bt-work-card__authors">Esperon-Rodriguez, M., Arndt, S., De Pauw, K. <span class="text-muted">et al.</span></p>
+    <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Plants People Planet</a></p>
   </div>
 </article>
-<article class="card-research" aria-labelledby="search-result-2">
-  <div class="card-meta">
-    <span class="badge bg-primary">Dataset</span>
+<article class="card bt-work-card" aria-labelledby="search-result-2">
+  <div class="card-header bt-work-card__head">
+    <div class="bt-meta-list pt-1">
+      <span class="bt-meta-list__item-bordered">Dataset</span>
+    </div>
+    <div class="bt-btn-toolbar">
+      <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
+        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+      </button>
+      <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban tree canopy cover measurements Belgium 2020–2025">
+        <i class="if if-list-check" aria-hidden="true"></i> Save
+      </button>
+      <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-primary btn-sm" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
+        <i class="if if-download" aria-hidden="true"></i> Download
+      </a>
+    </div>
   </div>
-  <div class="card-body">
-    <h3 id="search-result-2" class="card-title">
+  <div class="card-body bt-work-card__body">
+    <h3 id="search-result-2" class="bt-work-card__title">
       <a href="/templates/biblio-public/public-research-detail.html">Urban tree canopy cover measurements Belgium 2020–2025</a>
     </h3>
-    <p class="card-authors">De Pauw, K., Maes, J.</p>
-    <p class="card-publication"><span>2026</span> · <a href="#">Zenodo</a></p>
+    <p class="bt-work-card__authors">De Pauw, K., Maes, J.</p>
+    <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Zenodo</a></p>
   </div>
 </article>`;
 }
@@ -530,7 +552,7 @@ function renderUploadList() {
 function renderWorksFeed(label) {
   return `
 <div class="my-5">
-  <h3 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">${label}</h3>
+  <h3 class="h6 text-uppercase text-muted pb-2 mb-3">${label}</h3>
   ${renderSearchResultCards()}
 </div>`;
 }
@@ -992,7 +1014,7 @@ server.listen(PORT, () => {
   console.log('  ──────────────────────────────────────');
   console.log(`  http://localhost:${PORT}`);
   console.log('\n  Drop .html files into:');
-  console.log('    foundations/  elements/  patterns/  templates/<app-name>/');
+  console.log('    foundations/  elements/  patterns/  templates/<app-name>/ product/');
   console.log('  Sidebar rebuilds automatically.\n');
 });
 
@@ -1034,7 +1056,7 @@ function broadcast() {
 
 // ─── File watcher (built-in fs.watch, recursive) ──────────────────────────────
 let debounce;
-const WATCH = ['shell', 'assets', 'foundations', 'elements', 'patterns', 'templates'];
+const WATCH = ['shell', 'assets', 'foundations', 'elements', 'patterns', 'templates', 'product'];
 
 for (const dir of WATCH) {
   const abs = path.join(ROOT, dir);
