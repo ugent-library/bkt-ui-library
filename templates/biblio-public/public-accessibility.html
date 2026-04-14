@@ -77,6 +77,17 @@
             ═══════════════════════════════════════════════════════════
             ZONE 1 — lib.ugent.be content pages (our code)
             ═══════════════════════════════════════════════════════════
+
+            RESOLVED in April 2026 (verified on live site):
+            - 2.4.1 Skip link: now present (<a href="#main-content"
+              class="skip-link">Ga naar hoofdinhoud</a>)
+            - 1.3.1 <main> id: now has id="main-content"
+            - 1.3.1 Heading hierarchy: alert component now uses <h2>,
+              empty CMS heading on /nl/services/ill removed
+            - 1.3.1 Breadcrumb: now uses <ol> instead of <ul>
+            - 2.4.4 Footer new-window link: now has
+              <span class="visually-hidden">Link opent in een nieuw
+              venster.</span>
           -->
           <h3>Content pages (lib.ugent.be)</h3>
 
@@ -91,147 +102,54 @@
             <tbody>
 
               <!--
-                ISSUE: No skip link
-                WHERE: Every lib.ugent.be page — the shared layout has
-                       no skip link at all. First focusable element is
-                       <a> "Ga naar zoektips" (link to onderzoektips.ugent.be
-                       injected at the top of the page).
-                FIX:   Add <a href="#main-content" class="skip-link">
-                       Ga naar hoofdinhoud</a> as the first child inside
-                       the layout wrapper, before the header/nav.
-              -->
-              <tr>
-                <td>2.4.1 Bypass blocks</td>
-                <td>
-                  There is no skip link on content pages. Keyboard users
-                  must tab through the entire navigation to reach the
-                  main content.
-                </td>
-                <td>High</td>
-              </tr>
+                ISSUE: No visible focus indicator on plain links
+                WHERE: Every lib.ugent.be page. Plain <a> links and
+                       .nav-link elements get outline: 0px none on
+                       :focus with no box-shadow or border replacement.
 
-              <!--
-                ISSUE: No visible focus indicator
-                WHERE: Every lib.ugent.be page — all <a>, <button>, and
-                       other interactive elements get outline: 0px none
-                       on :focus with no box-shadow or border replacement.
-                TESTED: Nav links on /nl/libraries/bib, /nl/services/registration,
-                        /nl/services — all show outline: 0px none, box-shadow: none.
-                FIX:   Add to the global stylesheet:
-                       :focus-visible {
-                         outline: 3px solid #1E64C8;
+                       Bootstrap's .btn:focus-visible and .form-control:focus
+                       DO provide a box-shadow ring — those are fine.
+                       The gap: there is no :focus-visible rule for
+                       plain <a> or .nav-link anywhere in main.min.css.
+
+                TESTED: Nav link "Home" on /nl/libraries/bib — April 2026.
+                       Shows outline: 0px none, box-shadow: none on focus.
+                       .btn elements show box-shadow via Bootstrap — OK.
+                FIX:   Add to the site stylesheet:
+                       a:focus-visible,
+                       .nav-link:focus-visible {
+                         outline: 3px solid rgba(30, 100, 200, 0.5);
                          outline-offset: 2px;
                        }
               -->
               <tr>
                 <td>2.4.7 Focus visible</td>
                 <td>
-                  The focus indicator is suppressed on all interactive
-                  elements (<code>outline: none</code> with no visible
-                  replacement). Keyboard users cannot see which element
-                  is currently focused.
+                  Plain links and navigation links have no visible focus
+                  indicator. The <code>outline</code> is suppressed with
+                  no replacement style. Buttons and form inputs do
+                  receive a focus ring via Bootstrap's
+                  <code>:focus-visible</code> styles, but links do not.
                 </td>
                 <td>High</td>
               </tr>
 
               <!--
-                ISSUE: Heading hierarchy skips — two distinct causes
-
-                CAUSE A — Alert banner component
-                WHERE:   /nl/libraries/bib (Boekentoren)
-                         H1 "Boekentoren" is followed directly by
-                         H3 "Geluidsoverlast" (inside <div class="alert-content">
-                         <h3 class="alert-title">), skipping H2.
-                         Any page displaying an alert notification will
-                         have this skip — it's the alert component template.
-                FIX:     Change the alert component to use <h2> or make
-                         the heading level dynamic based on page context.
-
-                CAUSE B — Empty CMS heading
-                WHERE:   /nl/services/ill (IBL page)
-                         An empty <h4 data-block-key="ikt93"></h4> appears
-                         between H2 "Hoe werkt het?" and H2 "Prijzen".
-                         The data-block-key attribute indicates this comes
-                         from the CMS (Wagtail StreamField). Creates both
-                         a heading skip (h2 → h4) and an empty heading.
-                FIX:     Remove the empty heading in the CMS editor for
-                         the IBL page. Consider adding CMS validation to
-                         prevent saving empty headings.
-              -->
-              <tr>
-                <td>1.3.1 Info and relationships</td>
-                <td>
-                  Some pages have heading hierarchy issues. For example,
-                  an <code>&lt;h3&gt;</code> follows directly after
-                  <code>&lt;h1&gt;</code>, skipping the
-                  <code>&lt;h2&gt;</code> level. On another page, an
-                  empty heading is present in the content.
-                </td>
-                <td>Moderate</td>
-              </tr>
-
-              <!--
-                ISSUE: <main> has no id attribute
-                WHERE: Every lib.ugent.be page. The <main> element exists
-                       but has id="" (empty) — a skip link would have no
-                       target.
-                FIX:   Add id="main-content" to the <main> element in
-                       the shared page layout template.
-              -->
-              <tr>
-                <td>1.3.1 Info and relationships</td>
-                <td>
-                  The <code>&lt;main&gt;</code> element has no
-                  <code>id</code> attribute, so a skip link would have
-                  no target.
-                </td>
-                <td>Moderate</td>
-              </tr>
-
-              <!--
-                ISSUE: Breadcrumb uses <ul> instead of <ol>
-                WHERE: Every lib.ugent.be page with breadcrumb navigation.
-                       The HTML is:
-                       <nav aria-label="breadcrumb">
-                         <ul class="nav nav-display">
-                           <li class="nav-item"><a>Home</a></li>
-                           <li class="nav-item active" aria-current="true">…</li>
-                           ...
-                         </ul>
-                       </nav>
-                TESTED: /nl/libraries/bib, /nl/services/registration
-                FIX:    Change <ul class="nav nav-display"> to
-                        <ol class="nav nav-display"> in the breadcrumb
-                        partial/template. Position in the hierarchy is
-                        meaningful — <ol> is semantically correct.
-              -->
-              <tr>
-                <td>1.3.1 Info and relationships</td>
-                <td>
-                  Breadcrumb navigation uses <code>&lt;ul&gt;</code>
-                  instead of <code>&lt;ol&gt;</code>. Position in the
-                  hierarchy is meaningful and should use an ordered list.
-                </td>
-                <td>Low</td>
-              </tr>
-
-              <!--
                 ISSUE: Cookie consent button contrast
-                WHERE: Every page — Piwik PRO consent manager, fixed
-                       position at bottom-right of the viewport.
+                WHERE: Every page — Piwik PRO consent manager widget,
+                       fixed at bottom-right.
                        <button id="ppms_cm_open-popup"
                                class="ppms_cm_set_your_consent">
                          Set your privacy
                        </button>
-                       White text rgb(255,255,255) on blue background
-                       rgb(39,117,242) at 12px / font-weight 400.
+                       White rgb(255,255,255) on blue rgb(39,117,242)
+                       at 12px / font-weight 400.
                        Contrast ratio: 4.27:1 (needs 4.5:1 for normal text).
                 FIX:   CSS override in the site stylesheet:
                        .ppms_cm_set_your_consent {
                          background-color: #1a56a8;
                        }
-                       Or increase font-size to 14px bold (large text
-                       threshold = 3:1, which it passes at 4.27:1).
+                VERIFIED: April 2026 on /nl/libraries/bib
               -->
               <tr>
                 <td>1.4.3 Contrast (minimum)</td>
@@ -239,32 +157,6 @@
                   The cookie consent button has white text on a blue
                   background with a contrast ratio of 4.27:1, below the
                   required 4.5:1 minimum for normal-sized text.
-                </td>
-                <td>Low</td>
-              </tr>
-
-              <!--
-                ISSUE: Footer logo link opens new window without warning
-                WHERE: Footer on every page.
-                       <a href="https://ugent.be" target="_blank"
-                          aria-label="Bezoek de website van de
-                          Universiteit Gent, waar de universiteits-
-                          bibliotheek Gent onderdeel van is.">
-                         <img src="/images/logo-ugent.svg"
-                              alt="Logo van Universiteit Gent" height="80">
-                       </a>
-                       The aria-label describes the destination but does
-                       not mention "opens in new window". Sighted users
-                       get no visual indicator either.
-                FIX:   Add <span class="visually-hidden">(opent in nieuw
-                       venster)</span> inside the link, or add a small
-                       external-link icon.
-              -->
-              <tr>
-                <td>2.4.4 Link purpose (in context)</td>
-                <td>
-                  The footer logo link to ugent.be opens in a new window
-                  without a visible or programmatic warning.
                 </td>
                 <td>Low</td>
               </tr>
@@ -298,10 +190,7 @@
             </thead>
             <tbody>
 
-              <!--
-                WHERE: Search results page.
-              -->
-
+              <!-- WHERE: Search results page. -->
               <tr>
                 <td>WCAG 2.1, Success Criteria, 1.4.10 (AA)</td>
                 <td>
@@ -405,6 +294,8 @@
                 WHERE: Throughout Primo pages. Angular Material icons
                        rendered as <mat-icon role="img"> without
                        aria-label. Found on homepage and search pages.
+
+                       For 4.1.2 "Name, role, value" in the Primo nde pages: is it enough that when you land on it with assistive technology that it actually reads the label out loud? It's not with an aria attribute but added with javascript, I tested it with voice over utility.
               -->
               <tr>
                 <td>4.1.2 Name, role, value</td>
@@ -413,7 +304,7 @@
                   elements have no accessible name.
                 </td>
                 <td>Moderate</td>
-                <td>No — vendor issue</td>
+                <td>No — vendor issue. Raised with vendor.</td>
               </tr>
 
               <!--
@@ -448,7 +339,6 @@
                 <td>Low</td>
                 <td>Investigating — may be configurable via CSS/labels</td>
               </tr>
-              <tr>
 
             </tbody>
           </table>
@@ -467,11 +357,11 @@
           <h2>Planned improvements</h2>
 
           <h3>Medium term (3–6 months)</h3>
-          <p>Address the contrast issue on the cookie consent widget.
-            Investigate empty CMS headings.
+          <p>
+            Address the contrast issue on the cookie consent widget.
             Investigate remaining Primo NDE configuration
             options for page titles and link text.
-          </p>=
+          </p>
 
           <!-- ── Audit details ──────────────────────────────────────────── -->
           <h2>How we tested</h2>
@@ -539,19 +429,36 @@
             <summary>Pages tested</summary>
             <ul class="mt-2">
               <li>lib.ugent.be/nl and /en (homepage — redirects to Primo NDE)</li>
-              <li>lib.ugent.be/nl/libraries (+ individual library pages including Boekentoren)</li>
-              <li>lib.ugent.be/nl/services (+ subpages: registration, loans, scanning, ILL, study locations, etc.)</li>
-              <li>lib.ugent.be/nl/info (+ subpages: regulations, research tips, e-resources, open data, etc.)</li>
-              <li>libcatalog.ugent.be search results page (limited — guest session)</li>
+              <li>lib.ugent.be/nl/libraries and /en/libraries (+ individual library pages including Boekentoren)</li>
+              <li>lib.ugent.be/nl/services and /en/services (+ subpages: registration, loans, scanning, ILL, study locations, etc.)</li>
+              <li>lib.ugent.be/nl/info and /en/info (+ subpages: regulations, research tips, e-resources, open data, etc.)</li>
+              <li>libcatalog.ugent.be search results page (limited — new session planned)</li>
+              <li>libcatalog.ugent.be detail page (limited — new session planned)</li>
             </ul>
           </details>
 
           <!-- ── Feedback and contact ───────────────────────────────────── -->
           <h2>Problems? Let us know</h2>
 
-          <p>If you are having difficulty accessing content on this website, or if you have a question or remark about its accessibility, please contact us  us at
+          <p>If you are having difficulty accessing content on this website, or if you have a question or remark about its accessibility, please contact us at
             <a href="mailto:lib.service@ugent.be">lib.service@ugent.be</a>.
           </p>
+
+          <!-- ── Enforcement ────────────────────────────────────────────── -->
+          <h2>Enforcement procedure</h2>
+
+          <p>
+            If you are not satisfied with our response, you can contact
+            the <span lang="nl">Vlaamse Ombudsdienst</span>:
+          </p>
+
+          <address>
+            <span lang="nl">Vlaamse Ombudsdienst</span><br>
+            <a href="https://www.vlaamseombudsdienst.be" target="_blank" rel="noopener">
+              vlaamseombudsdienst.be<span class="visually-hidden"> (opens in new window)</span></a><br>
+            <a href="mailto:klachten@vlaamseombudsdienst.be">klachten@vlaamseombudsdienst.be</a><br>
+            Phone: <a href="tel:+3218000700">+32 1800 0700</a> (free)
+          </address>
 
           <p class="text-muted mt-5">
             <small>
