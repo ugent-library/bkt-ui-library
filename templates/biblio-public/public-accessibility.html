@@ -13,7 +13,11 @@
           <h1>Accessibility statement</h1>
 
           <p>
-            Ghent University Library is committed to making its websites accessible, in accordance with the <strong>Bestuursdecreet of 7 December 2018</strong>, which transposes <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016L2102" target="_blank" rel="noopener">European Directive 2016/2102</a>.
+            Ghent University Library is committed to making its websites
+            accessible, in accordance with the <strong>Bestuursdecreet of 7 December 2018</strong>,
+            which transposes
+            <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016L2102" target="_blank" rel="noopener">
+              European Directive 2016/2102<span class="visually-hidden"> (opens in new window)</span></a>.
           </p>
 
           <p>
@@ -33,12 +37,21 @@
           <dl class="mb-4">
             <dt>Content pages (lib.ugent.be)</dt>
             <dd class="mb-3">
-              Library information, services, opening hours, and contact pages. Built and maintained by Ghent University Library. We have full control over the code and can fix issues directly.
+              Library information, services, opening hours, and contact
+              pages. Built and maintained by Ghent University and Ghent University Library.
             </dd>
 
             <dt>Search and catalogue (libcatalog.ugent.be)</dt>
             <dd>
-              The homepage, search functionality, and catalogue are provided by <a href="https://knowledge.exlibrisgroup.com/Primo/Product_Materials/Primo_Accessibility" target="_blank" rel="noopener">Ex Libris Primo NDE<span class="visually-hidden"> (opens in new window)</span></a>, a third-party discovery platform. We can configure some aspects (labels, colours, page titles) and apply CSS overrides, but we cannot change the underlying application code. Issues in the core application require action by the vendor.
+              The homepage, search functionality, and catalogue are
+              provided by
+              <a href="https://knowledge.exlibrisgroup.com/Primo/Product_Materials/Primo_Accessibility" target="_blank" rel="noopener">
+                Ex Libris Primo NDE<span class="visually-hidden"> (opens in new window)</span></a>,
+              a third-party discovery platform. We can configure some
+              aspects (labels, colours, page titles) and apply CSS
+              overrides, but we cannot change the underlying application
+              code. Issues in the core application require action by the
+              vendor.
             </dd>
           </dl>
 
@@ -46,7 +59,10 @@
           <h2>Compliance status</h2>
 
           <p>
-            This website <strong>partially complies</strong> with the <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">Web Content Accessibility Guidelines (WCAG) 2.1</a> level AA. The non-compliant areas are listed below.
+            This website <strong>partially complies</strong> with the
+            <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">
+              Web Content Accessibility Guidelines (WCAG) 2.1<span class="visually-hidden"> (opens in new window)</span></a>
+            level AA. The non-compliant areas are listed below.
           </p>
 
           <!-- ── Non-accessible content ─────────────────────────────────── -->
@@ -57,6 +73,11 @@
             following reasons.
           </p>
 
+          <!--
+            ═══════════════════════════════════════════════════════════
+            ZONE 1 — lib.ugent.be content pages (our code)
+            ═══════════════════════════════════════════════════════════
+          -->
           <h3>Content pages (lib.ugent.be)</h3>
 
           <table class="table" aria-label="Accessibility issues on lib.ugent.be content pages">
@@ -68,6 +89,17 @@
               </tr>
             </thead>
             <tbody>
+
+              <!--
+                ISSUE: No skip link
+                WHERE: Every lib.ugent.be page — the shared layout has
+                       no skip link at all. First focusable element is
+                       <a> "Ga naar zoektips" (link to onderzoektips.ugent.be
+                       injected at the top of the page).
+                FIX:   Add <a href="#main-content" class="skip-link">
+                       Ga naar hoofdinhoud</a> as the first child inside
+                       the layout wrapper, before the header/nav.
+              -->
               <tr>
                 <td>2.4.1 Bypass blocks</td>
                 <td>
@@ -77,6 +109,20 @@
                 </td>
                 <td>High</td>
               </tr>
+
+              <!--
+                ISSUE: No visible focus indicator
+                WHERE: Every lib.ugent.be page — all <a>, <button>, and
+                       other interactive elements get outline: 0px none
+                       on :focus with no box-shadow or border replacement.
+                TESTED: Nav links on /nl/libraries/bib, /nl/services/registration,
+                        /nl/services — all show outline: 0px none, box-shadow: none.
+                FIX:   Add to the global stylesheet:
+                       :focus-visible {
+                         outline: 3px solid #1E64C8;
+                         outline-offset: 2px;
+                       }
+              -->
               <tr>
                 <td>2.4.7 Focus visible</td>
                 <td>
@@ -87,16 +133,51 @@
                 </td>
                 <td>High</td>
               </tr>
+
+              <!--
+                ISSUE: Heading hierarchy skips — two distinct causes
+
+                CAUSE A — Alert banner component
+                WHERE:   /nl/libraries/bib (Boekentoren)
+                         H1 "Boekentoren" is followed directly by
+                         H3 "Geluidsoverlast" (inside <div class="alert-content">
+                         <h3 class="alert-title">), skipping H2.
+                         Any page displaying an alert notification will
+                         have this skip — it's the alert component template.
+                FIX:     Change the alert component to use <h2> or make
+                         the heading level dynamic based on page context.
+
+                CAUSE B — Empty CMS heading
+                WHERE:   /nl/services/ill (IBL page)
+                         An empty <h4 data-block-key="ikt93"></h4> appears
+                         between H2 "Hoe werkt het?" and H2 "Prijzen".
+                         The data-block-key attribute indicates this comes
+                         from the CMS (Wagtail StreamField). Creates both
+                         a heading skip (h2 → h4) and an empty heading.
+                FIX:     Remove the empty heading in the CMS editor for
+                         the IBL page. Consider adding CMS validation to
+                         prevent saving empty headings.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
                   Some pages have heading hierarchy issues. For example,
                   an <code>&lt;h3&gt;</code> follows directly after
                   <code>&lt;h1&gt;</code>, skipping the
-                  <code>&lt;h2&gt;</code> level.
+                  <code>&lt;h2&gt;</code> level. On another page, an
+                  empty heading is present in the content.
                 </td>
                 <td>Moderate</td>
               </tr>
+
+              <!--
+                ISSUE: <main> has no id attribute
+                WHERE: Every lib.ugent.be page. The <main> element exists
+                       but has id="" (empty) — a skip link would have no
+                       target.
+                FIX:   Add id="main-content" to the <main> element in
+                       the shared page layout template.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
@@ -106,6 +187,24 @@
                 </td>
                 <td>Moderate</td>
               </tr>
+
+              <!--
+                ISSUE: Breadcrumb uses <ul> instead of <ol>
+                WHERE: Every lib.ugent.be page with breadcrumb navigation.
+                       The HTML is:
+                       <nav aria-label="breadcrumb">
+                         <ul class="nav nav-display">
+                           <li class="nav-item"><a>Home</a></li>
+                           <li class="nav-item active" aria-current="true">…</li>
+                           ...
+                         </ul>
+                       </nav>
+                TESTED: /nl/libraries/bib, /nl/services/registration
+                FIX:    Change <ul class="nav nav-display"> to
+                        <ol class="nav nav-display"> in the breadcrumb
+                        partial/template. Position in the hierarchy is
+                        meaningful — <ol> is semantically correct.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
@@ -115,14 +214,25 @@
                 </td>
                 <td>Low</td>
               </tr>
-              <tr>
-                <td>1.1.1 Non-text content</td>
-                <td>
-                  Some decorative icons lack
-                  <code>aria-hidden</code>.
-                </td>
-                <td>Moderate</td>
-              </tr>
+
+              <!--
+                ISSUE: Cookie consent button contrast
+                WHERE: Every page — Piwik PRO consent manager, fixed
+                       position at bottom-right of the viewport.
+                       <button id="ppms_cm_open-popup"
+                               class="ppms_cm_set_your_consent">
+                         Set your privacy
+                       </button>
+                       White text rgb(255,255,255) on blue background
+                       rgb(39,117,242) at 12px / font-weight 400.
+                       Contrast ratio: 4.27:1 (needs 4.5:1 for normal text).
+                FIX:   CSS override in the site stylesheet:
+                       .ppms_cm_set_your_consent {
+                         background-color: #1a56a8;
+                       }
+                       Or increase font-size to 14px bold (large text
+                       threshold = 3:1, which it passes at 4.27:1).
+              -->
               <tr>
                 <td>1.4.3 Contrast (minimum)</td>
                 <td>
@@ -132,18 +242,43 @@
                 </td>
                 <td>Low</td>
               </tr>
+
+              <!--
+                ISSUE: Footer logo link opens new window without warning
+                WHERE: Footer on every page.
+                       <a href="https://ugent.be" target="_blank"
+                          aria-label="Bezoek de website van de
+                          Universiteit Gent, waar de universiteits-
+                          bibliotheek Gent onderdeel van is.">
+                         <img src="/images/logo-ugent.svg"
+                              alt="Logo van Universiteit Gent" height="80">
+                       </a>
+                       The aria-label describes the destination but does
+                       not mention "opens in new window". Sighted users
+                       get no visual indicator either.
+                FIX:   Add <span class="visually-hidden">(opent in nieuw
+                       venster)</span> inside the link, or add a small
+                       external-link icon.
+              -->
               <tr>
                 <td>2.4.4 Link purpose (in context)</td>
                 <td>
-                  Some links use generic text such as "More info"
-                  without sufficient surrounding context. Links opening
-                  in a new window lack visible warning text.
+                  The footer logo link to ugent.be opens in a new window
+                  without a visible or programmatic warning.
                 </td>
-                <td>Moderate</td>
+                <td>Low</td>
               </tr>
+
             </tbody>
           </table>
 
+          <!--
+            ═══════════════════════════════════════════════════════════
+            ZONE 2 — Primo NDE (Ex Libris code)
+            Served at libcatalog.ugent.be, accessed via lib.ugent.be/nl
+            and lib.ugent.be/en.
+            ═══════════════════════════════════════════════════════════
+          -->
           <h3>Search and catalogue (Ex Libris Primo NDE)</h3>
 
           <p>
@@ -162,6 +297,29 @@
               </tr>
             </thead>
             <tbody>
+
+              <!--
+                WHERE: Search results page.
+              -->
+
+              <tr>
+                <td>WCAG 2.1, Success Criteria, 1.4.10 (AA)</td>
+                <td>
+                  Content can be enlarged without increasing line length. Requires 400% zoom to work.
+                </td>
+                <td>High</td>
+                <td>No — not configurable in Primo NDE nor fixable within reasonable effort, without rewriting the entire application css. Raised with vendor.</td>
+              </tr>
+
+              <!--
+                WHERE: Primo homepage and search results page.
+                       Focus outline is set to 0px/none on most elements.
+                       Some elements get :focus-visible { box-shadow: ... }
+                       (e.g. .nav-link, .mdc-checkbox) but coverage is
+                       inconsistent — links in the main content area, mat-icon
+                       buttons, and several other focusable elements receive
+                       no visible focus style at all.
+              -->
               <tr>
                 <td>2.4.7 Focus visible</td>
                 <td>
@@ -174,6 +332,13 @@
                 <td>High</td>
                 <td>Partially — we can apply CSS overrides for some elements</td>
               </tr>
+
+              <!--
+                WHERE: Primo homepage: <h1>home</h1>
+                       Primo search page: <h1>search</h1>
+                       These are generic English words regardless of the
+                       interface language, not meaningful page titles.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
@@ -183,6 +348,12 @@
                 <td>High</td>
                 <td>No — not configurable in Primo NDE. Raised with vendor.</td>
               </tr>
+
+              <!--
+                WHERE: Primo homepage. An <h2> with empty text content
+                       exists in the DOM between the menu and the search
+                       bar sections.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
@@ -191,6 +362,14 @@
                 <td>Moderate</td>
                 <td>No — vendor issue</td>
               </tr>
+
+              <!--
+                WHERE: Primo search results page.
+                       H2 "Verfijn zoekresultaten" is followed by
+                       H4 "Zoekresultaten", skipping H3.
+
+                       Comment. Not sure. I did find an h3 with text content. Maybe it did not load yet.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
@@ -202,6 +381,15 @@
                 <td>Moderate</td>
                 <td>No — vendor issue</td>
               </tr>
+
+              <!--
+                WHERE: Primo homepage and search results page.
+                       5 <nav> elements present; only 1 has aria-label
+                       ("Hoofdmenugebied" on <nde-main-menu>).
+                       The other 4 navs have no aria-label or
+                       aria-labelledby — screen reader users navigating
+                       by landmarks cannot tell them apart.
+              -->
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
@@ -212,6 +400,12 @@
                 <td>Moderate</td>
                 <td>No — vendor issue</td>
               </tr>
+
+              <!--
+                WHERE: Throughout Primo pages. Angular Material icons
+                       rendered as <mat-icon role="img"> without
+                       aria-label. Found on homepage and search pages.
+              -->
               <tr>
                 <td>4.1.2 Name, role, value</td>
                 <td>
@@ -221,6 +415,14 @@
                 <td>Moderate</td>
                 <td>No — vendor issue</td>
               </tr>
+
+              <!--
+                WHERE: English Primo homepage (lib.ugent.be/en →
+                       libcatalog.ugent.be with lang = en).
+                       <title></title> is "Universiteitsbibliotheek Gent"
+                       (Dutch) even though the interface is in English.
+                       The lang attribute on the html tag is correctly "en".
+              -->
               <tr>
                 <td>2.4.2 Page titled</td>
                 <td>
@@ -229,8 +431,14 @@
                   title.
                 </td>
                 <td>Low</td>
-                <td>Investigating — may be configurable</td>
+                <td>Investigating.</td>
               </tr>
+
+              <!--
+                WHERE: Primo homepage. E.g. "Ga naar zoektips" links to
+                       onderzoektips.ugent.be with target="_blank" but
+                       no visible or programmatic new-window warning.
+              -->
               <tr>
                 <td>2.4.4 Link purpose (in context)</td>
                 <td>
@@ -240,6 +448,8 @@
                 <td>Low</td>
                 <td>Investigating — may be configurable via CSS/labels</td>
               </tr>
+              <tr>
+
             </tbody>
           </table>
 
@@ -253,43 +463,15 @@
             constraints of the platform.
           </p>
 
-          <p>
-            In parallel, Ghent University Library is rebuilding its
-            research output repository (biblio.ugent.be) with
-            accessibility integrated from the ground up in the design
-            system, template architecture, and development workflow.
-            The target standard is WCAG 2.1 AA.
-          </p>
-
           <!-- ── Planned improvements ───────────────────────────────────── -->
           <h2>Planned improvements</h2>
 
-          <h3>Short term (within 3 months)</h3>
-          <p>
-            Add a skip link to all lib.ugent.be content pages.
-            Restore visible focus indicators across the site.
-            Fix heading hierarchy issues on library detail pages.
-            Add <code>id="main-content"</code> to the
-            <code>&lt;main&gt;</code> element.
-            Apply CSS overrides to improve focus visibility on Primo NDE
-            pages where possible.
-          </p>
-
           <h3>Medium term (3–6 months)</h3>
-          <p>
-            Fix breadcrumb list semantics. Add visible "opens in new
-            window" indicators to external links. Address the contrast
-            issue on the cookie consent widget. Investigate remaining
-            Primo NDE configuration options for page titles and link
-            text.
-          </p>
-
-          <h3>Long term (after 6 months)</h3>
-          <p>
-            Launch the redesigned biblio.ugent.be with full WCAG 2.1 AA
-            compliance. Establish an internal accessibility testing
-            procedure with regular re-audits.
-          </p>
+          <p>Address the contrast issue on the cookie consent widget.
+            Investigate empty CMS headings.
+            Investigate remaining Primo NDE configuration
+            options for page titles and link text.
+          </p>=
 
           <!-- ── Audit details ──────────────────────────────────────────── -->
           <h2>How we tested</h2>
@@ -367,40 +549,16 @@
           <!-- ── Feedback and contact ───────────────────────────────────── -->
           <h2>Problems? Let us know</h2>
 
-          <p>
-            Are you having difficulty accessing content on this
-            website? Or do you have a question or remark about its
-            accessibility?
+          <p>If you are having difficulty accessing content on this website, or if you have a question or remark about its accessibility, please contact us  us at
+            <a href="mailto:lib.service@ugent.be">lib.service@ugent.be</a>.
           </p>
-
-          <p>
-            Contact us at
-            <a href="mailto:libservice@ugent.be">libservice@ugent.be</a>.
-            You will receive a response within 5 working days.
-          </p>
-
-          <!-- ── Enforcement ────────────────────────────────────────────── -->
-          <h2>Enforcement procedure</h2>
-
-          <p>
-            If you are not satisfied with our response, you can contact
-            the <span lang="nl">Vlaamse Ombudsdienst</span>:
-          </p>
-
-          <address>
-            <span lang="nl">Vlaamse Ombudsdienst</span><br>
-            <a href="https://www.vlaamseombudsdienst.be" target="_blank" rel="noopener">
-              vlaamseombudsdienst.be<span class="visually-hidden"> (opens in new window)</span></a><br>
-            <a href="mailto:klachten@vlaamseombudsdienst.be">klachten@vlaamseombudsdienst.be</a><br>
-            Phone: <a href="tel:+3218000700">+32 1800 0700</a> (free)
-          </address>
 
           <p class="text-muted mt-5">
             <small>
               This statement was prepared on
               <time datetime="2025-10">October 2025</time>
               and last updated on
-              <time datetime="2026-04-13">13 April 2026</time>.
+              <time datetime="2026-04-14">14 April 2026</time>.
             </small>
           </p>
 
