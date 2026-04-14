@@ -148,6 +148,11 @@ All CSS lives in `booktower-ui-library/assets/scss/` and compiles to `assets/boo
 - `style=` attributes on HTML elements
 - JavaScript files (add/remove classes only; no `.style.foo = 'bar'`)
 
+The SCSS is no longer just one large pattern partial. Shared patterns still live in `patterns/_booktower-components.scss`, while larger feature blocks are being split into focused partials such as:
+- `patterns/_booktower-navbar.scss`
+- `patterns/_booktower-toolbar.scss`
+- `patterns/_booktower-work-card.scss`
+
 When a style is missing from the system, flag it and add it to the correct SCSS partial in `booktower-ui-library`. Do not patch inline.
 
 ---

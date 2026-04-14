@@ -1,0 +1,66 @@
+/* -- bt-navbar -- */
+.bt-navbar {
+  background: var(--s-bg);
+  border-bottom: var(--bt-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--bt-sp-6);
+  gap: var(--bt-sp-4);
+  position: sticky;
+  top: 0;
+  min-height: var(--s-topbar-height);
+}
+.bt-navbar__sep {
+  width: 1px;
+  height: var(--bt-sp-5);
+  background: var(--bt-border-color);
+  flex-shrink: 0;
+  display: block;
+}
+.bt-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  flex: 1;
+}
+.bt-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  text-decoration: none;
+  color: var(--bt-blue-800);
+  font-weight: 500;
+  text-decoration: none;
+  text-wrap: nowrap;
+}
+
+img.bt-navbar__logo  {
+  max-width: 2.65rem;
+}
+.bt-navbar__link {
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-blue-800);
+  text-decoration: none;
+  padding: var(--bt-sp-1) var(--bt-sp-3);
+  border-radius: var(--bt-radius);
+  transition: color var(--bt-dur-fast), background var(--bt-dur-fast);
+  white-space: nowrap;
+}
+.bt-navbar__link:hover {
+  color: var(--bt-blue-700);
+  background: var(--bt-gray-50);
+}
+.bt-navbar__link.active,
+.bt-navbar__link[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: var(--bt-sp-2);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--bt-blue-900);
+  font-weight: 500;
+}
+
+.bt-navbar__link:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}

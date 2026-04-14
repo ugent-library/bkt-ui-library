@@ -1,0 +1,173 @@
+/* -- filter-tag -- */
+/*
+  Three variants:
+    .filter-tag               -- simple removable chip (x inside the button)
+    .filter-tag--editable     -- left half of a split chip; click opens editor
+    .filter-tag--static       -- display-only, used in saved search previews
+
+  Split chip pattern:
+    <div class="filter-tag-group">
+      <button class="filter-tag filter-tag--editable">Type: Journal article</button>
+      <button class="filter-tag__remove" aria-label="Remove filter...">
+        <i class="if if-close if--xs" aria-hidden="true"></i>
+      </button>
+    </div>
+*/
+.filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-900);
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  padding: .2em .5em .2em .625em;
+  border-radius: var(--bt-radius-pill);
+  cursor: pointer;
+  border: none;
+  transition: background var(--bt-dur-fast);
+  white-space: nowrap;
+  height: 24px;
+}
+.filter-tag:hover {
+  background: var(--bt-blue-300);
+}
+.filter-tag:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Editable variant -- right radius flattened to join remove button */
+.filter-tag--editable {
+  border-radius: var(--bt-radius-pill) 0 0 var(--bt-radius-pill);
+  padding-right: var(--bt-sp-2);
+}
+
+/* Remove button -- right half of split chip */
+.filter-tag__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bt-blue-200);
+  color: var(--bt-blue-700);
+  border: none;
+  border-radius: 0 var(--bt-radius-pill) var(--bt-radius-pill) 0;
+  padding: .2em var(--bt-sp-2) .2em var(--bt-sp-1);
+  cursor: pointer;
+  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+  line-height: 1;
+  height: 24px;
+}
+.filter-tag__remove:hover {
+  background: var(--bt-blue-300);
+  color: var(--bt-blue-900);
+}
+.filter-tag__remove:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Wrapper keeping editable + remove visually joined */
+.filter-tag-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Static/display-only variant */
+.filter-tag--static {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-800);
+  font-size: var(--bt-text-xs);
+  font-weight: 500;
+  padding: .2em .625em;
+  border-radius: var(--bt-radius-pill);
+  border: none;
+  cursor: default;
+}
+
+/* -- bt-filter-picker -- scrollable filter list -- */
+.bt-filter-picker__menu {
+  min-width: 260px;
+}
+
+.bt-filter-picker__menu--narrow {
+  min-width: 240px;
+}
+
+.bt-filter-picker__list {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* -- Filter editor panel -- */
+.filter-editor {
+  background: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
+  box-shadow: var(--bt-shadow-md);
+  padding: var(--bt-sp-4);
+  max-width: 480px;
+}
+.filter-editor__actions {
+  display: flex;
+  gap: var(--bt-sp-2);
+  margin-top: var(--bt-sp-3);
+  padding-top: var(--bt-sp-3);
+  border-top: var(--bt-border);
+}
+
+/* -- Filter editor -- checklist -- */
+.filter-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-1);
+  max-height: 240px;
+  overflow-y: auto;
+}
+.filter-checklist .form-check {
+  margin: 0;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  border-radius: var(--bt-radius-sm);
+}
+.filter-checklist .form-check:hover { background: var(--bt-gray-50); }
+.filter-checklist .form-check-label {
+  font-size: var(--bt-text-sm);
+  cursor: pointer;
+  width: 100%;
+}
+
+/* -- Filter editor -- boolean toggle -- */
+.filter-boolean { display: flex; gap: var(--bt-sp-2); }
+.filter-boolean__option {
+  flex: 1;
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  border: 1.5px solid var(--bt-gray-150);
+  border-radius: var(--bt-radius-md);
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-gray-700);
+  background: var(--bt-white);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+.filter-boolean__option:hover { border-color: var(--bt-blue-500); }
+.filter-boolean__option.is-selected {
+  border-color: var(--bt-blue-700);
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-900);
+}
+.filter-boolean__option:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}
+
+/* -- Filter editor -- year range -- */
+.filter-year { display: flex; align-items: center; gap: var(--bt-sp-3); }
+.filter-year__input { width: 120px; }

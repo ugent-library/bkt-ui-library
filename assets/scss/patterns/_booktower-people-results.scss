@@ -1,0 +1,32 @@
+/* -- People search (author filter editor) -- */
+/* TODO: simplify, has too many specifics */
+.people-results {
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-md);
+  overflow: hidden;
+  margin-top: var(--bt-sp-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.people-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  cursor: pointer;
+  border-bottom: var(--bt-border);
+  transition: background var(--bt-dur-fast);
+}
+.people-result:last-child { border-bottom: none; }
+.people-result:hover,
+.people-result:focus { background: var(--bt-blue-50); outline: none; }
+.people-result.is-selected { background: var(--bt-blue-100); }
+.people-result__meta {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-500);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+  margin-top: 2px;
+}
+.people-result__meta-item { display: flex; align-items: center; gap: 3px; }

@@ -1,0 +1,76 @@
+/* -- Token bar -- */
+/* TODO: simplify, has too many specifics */
+.token-bar {
+  position: relative;
+  border: 1px solid var(--bt-border-color);
+  border-radius: var(--bt-radius);
+  background: var(--bt-white);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--bt-sp-3);
+  gap: var(--bt-sp-2);
+  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
+}
+.token-bar:focus-within {
+  border-color: var(--bt-blue-700);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring);
+}
+.token-bar__display {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--bt-sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  flex-wrap: wrap;
+  pointer-events: none;
+  overflow: hidden;
+}
+.token-bar__token {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bt-blue-100);
+  border: 1px solid var(--bt-blue-200);
+  border-radius: var(--bt-radius-sm);
+  font-family: var(--bt-font-mono);
+  font-size: var(--bt-text-sm);
+  line-height: 1.6;
+  white-space: nowrap;
+  padding: 0 var(--bt-sp-1);
+}
+.token-bar__field  { color: var(--bt-blue-900); font-weight: 600; }
+.token-bar__sep    { color: var(--bt-blue-500); }
+.token-bar__value  { color: var(--bt-blue-800); }
+.token-bar__token--negated { background: var(--bt-red-50); border-color: var(--bt-red-200); }
+.token-bar__token--negated .token-bar__field { color: var(--bt-red-500); }
+.token-bar__input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--bt-font-mono);
+  font-size: var(--bt-text-sm);
+  color: transparent;
+  caret-color: var(--bt-gray-1000);
+  padding: 0;
+  min-width: 0;
+}
+.token-bar__input.no-tokens { color: var(--bt-gray-1000); }
+.token-bar__clear {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--bt-gray-400);
+  cursor: pointer;
+  padding: var(--bt-sp-1);
+  line-height: 1;
+  border-radius: var(--bt-radius-sm);
+  transition: color var(--bt-dur-fast);
+}
+.token-bar__clear:hover { color: var(--bt-gray-700); }
+.token-bar__indicator { position: relative; z-index: 1; flex-shrink: 0; color: var(--bt-gray-400); }

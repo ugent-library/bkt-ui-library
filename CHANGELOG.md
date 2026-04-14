@@ -114,7 +114,7 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-navbar` | `bt-navbar` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `bc-navbar` | `bt-navbar` | ✅ Carried over | Active in `_booktower-navbar.scss`. |
 | `bc-navbar--fixed` | `bt-navbar--fixed` | ⏳ Planned | Sticky variant. |
 | `bc-navbar--white` | `bt-navbar--white` | ⏳ Planned | |
 | `bc-navbar--large`, `--small` | ⏳ | ⏳ Planned | Size variants — review whether all are needed. |
@@ -130,11 +130,11 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `bc-toolbar` | `bt-toolbar` | ✅ Carried over | Active in `_booktower-components.scss`. |
+| `bc-toolbar` | `bt-toolbar` | ✅ Carried over | Active in `_booktower-toolbar.scss`. |
 | `bc-toolbar-left` | `bt-toolbar__left` | 🔧 Revised | Corrected to BEM `__element` syntax. |
 | `bc-toolbar-right` | `bt-toolbar__right` | 🔧 Revised | |
 | `bc-toolbar-title` | `bt-toolbar__title` | 🔧 Revised | Surface-aware: light weight in public, sans 500 in backoffice. |
-| `bc-toolbar-item` | `bt-toolbar__item` | ⏳ Planned | Spacing unit within toolbar halves. Not yet written in v2. |
+| `bc-toolbar-item` | `bt-toolbar__item` | ✅ Carried over | Spacing unit within toolbar halves. Active in `_booktower-toolbar.scss`. |
 | `bc-toolbar-sm` | ⏳ | ⏳ Planned | Compact height variant. |
 | `bc-toolbar--auto` | Bootstrap `h-auto` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar--top` | Bootstrap `align-items-start` | 🔄 Renamed | Use Bootstrap utility. |
@@ -233,8 +233,8 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.card`, `.card-body`, `.card-title`, `.card-footer` | Same | ✅ Carried over | Bootstrap cards remain available. Domain-specific research cards use the separate `card-research` pattern. |
-| `c-publication-card` | ⏳ | ⏳ Planned | Domain-specific research output card. |
+| `.card`, `.card-body`, `.card-title`, `.card-footer` | Same | ✅ Carried over | Bootstrap cards remain available. Domain-specific research cards build on Bootstrap card markup. |
+| `card--work`, `card-research`, `card-meta`, `card-actions`, `card-title`, `card-authors`, `card-publication` | `bt-work-card` and `bt-work-card__*` | 🔄 Renamed | Domain research-output card lives in `_booktower-work-card.scss`. |
 
 ---
 

@@ -36,6 +36,8 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 - [Server API](docs/SERVER.md) — Development server documentation
 - [Domain](docs/DOMAIN.md) — Research repository domain knowledge
 - [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
+- [Consuming Booktower](docs/CONSUMING-BOOKTOWER.md) — Integration contract for using this library in another app
+- [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [Integration](base/integration.html) — Using the design system in apps
 - [AI-assistent guidelines](ASSISTANT.md) — Working guidelines for AI-assisted development on this project
 - [Deposit flow](docs/DEPOSIT-FLOW.md) — Researcher deposit flow: steps, fields, JS, and Go templ params
@@ -59,11 +61,13 @@ The design system supports modern browsers that Bootstrap 5 supports:
 | `assets/fonts/` | Icon font files (woff, woff2) |
 | `assets/icon-font-source/` | SVG source files for the icon font |
 | `assets/scss/` | SCSS source — edit this, not the compiled CSS |
+| `assets/scss/patterns/` | Pattern partials such as `booktower-components`, `booktower-navbar`, `booktower-toolbar`, `booktower-work-card` |
 | `foundations/` | UI kit docs: tokens, colours, typography, icons |
 | `elements/` | UI kit docs: buttons, forms |
 | `patterns/` | UI kit docs: components |
 | `templates/` | Full-page prototype templates |
 | `templates/partials/` | Reusable HTML templates for common layouts |
+| `product/` | Product-facing notes and concept pages |
 | `shell/` | UI kit navigation chrome (not part of the design system) |
 
 ---
@@ -72,7 +76,7 @@ The design system supports modern browsers that Bootstrap 5 supports:
 
 For common page layouts, copy from `templates/partials/` and customize. These use only existing CSS classes from the design system:
 
-- `backoffice-overview.html` — Backoffice list view with sidebar, toolbar, filters, facets, and table results (uses `u-layout--app`, `c-sub-sidebar`, etc.)
+- `backoffice-overview.html` — Backoffice list view with sidebar, toolbar, filters, facets, and table results (uses `u-layout--app`, `u-main__sidebar`, etc.)
 - `public-search.html` — Public search page with hero, filters, facets, and card results
 
 These include placeholder content and comments showing where to customize. The full HTML output remains copy-paste friendly for developers.

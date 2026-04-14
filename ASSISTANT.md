@@ -537,11 +537,6 @@ bt-file-drop__hint
 filter-tag
 ```
 
-**Definition list**
-```
-bt-dl
-```
-
 **HTMX state classes**
 ```
 htmx-indicator          htmx-swapping           htmx-settling

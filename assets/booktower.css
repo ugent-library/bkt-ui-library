@@ -286,6 +286,7 @@ body {
   --s-heading-color: var(--bt-gray-900);
   --s-heading-leading: 1.2;
   --s-body-color: var(--bt-gray-700);
+  --s-text-muted: var(--bt-text-muted);
   --s-body-font: var(--bt-font-sans);
   --s-body-size: 0.9375rem; /* 15px — compact for a data-dense tool */
   --s-body-leading: 1.5;
@@ -1399,107 +1400,133 @@ code, kbd, pre, samp {
   background-color: var(--s-bg);
 }
 
-/* -- bt-navbar -- */
-.bt-navbar {
-  background: var(--s-bg);
-  border-bottom: var(--bt-border);
-  display: flex;
-  align-items: center;
-  padding: 0 var(--bt-sp-6);
-  gap: var(--bt-sp-4);
-  position: sticky;
-  top: 0;
-  min-height: var(--s-topbar-height);
-}
-
-.bt-navbar__sep {
-  width: 1px;
-  height: var(--bt-sp-5);
-  background: var(--bt-border-color);
-  flex-shrink: 0;
-  display: block;
-}
-
-.bt-navbar__nav {
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-1);
-  flex: 1;
-}
-
-.bt-navbar__brand {
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  text-decoration: none;
-  color: var(--bt-blue-800);
-  font-weight: 500;
-  text-decoration: none;
-  text-wrap: nowrap;
-}
-
-img.bt-navbar__logo {
-  max-width: 2.65rem;
-}
-
-.bt-navbar__link {
-  font-size: var(--bt-text-sm);
-  font-weight: 500;
-  color: var(--bt-blue-800);
-  text-decoration: none;
-  padding: var(--bt-sp-1) var(--bt-sp-3);
-  border-radius: var(--bt-radius);
-  transition: color var(--bt-dur-fast), background var(--bt-dur-fast);
-  white-space: nowrap;
-}
-
-.bt-navbar__link:hover {
-  color: var(--bt-blue-700);
-  background: var(--bt-gray-50);
-}
-
-.bt-navbar__link.active,
-.bt-navbar__link[aria-current=page] {
-  text-decoration: underline;
-  text-underline-offset: var(--bt-sp-2);
-  text-decoration-thickness: 2px;
-  text-decoration-color: var(--bt-blue-900);
-  font-weight: 500;
-}
-
-.bt-navbar__link:focus-visible {
-  outline: 3px solid var(--bt-focus-ring);
-  outline-offset: 2px;
-}
-
-/* -- bt-blank-slate -- */
-/* Used in toolbar-blank-slate.html and any empty-state screen */
-.bt-blank-slate {
-  text-align: center;
-  padding: var(--bt-sp-8) var(--bt-sp-6);
+/* -- Public footer -- */
+/* Uses Bootstrap grid + utilities directly.
+   Only .nav-title needs a definition (used on <h2> in footer nav columns). */
+.nav-title {
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   color: var(--bt-gray-700);
-  font-size: var(--bt-text-sm);
 }
 
-.bt-blank-slate p {
-  margin: var(--bt-sp-2) 0 0;
+/* -- HTMX states -- */
+/* Used in research-detail.html, deposit-flow.html, backoffice-search.html */
+.htmx-indicator {
+  display: none;
 }
 
-.bt-blank-slate--default {
-  background: var(--bt-bg);
+.htmx-request .htmx-indicator,
+.htmx-request.htmx-indicator {
+  display: inline-flex;
+  align-items: center;
+}
+
+.htmx-swapping {
+  opacity: 0.5;
+  transition: opacity var(--bt-dur-base);
+}
+
+.htmx-settling {
+  transition: opacity var(--bt-dur-base);
+}
+
+.htmx-request.btn {
+  opacity: 0.7;
+  pointer-events: none;
+  cursor: wait;
+}
+
+/* -- Suggestions panel -- */
+.bt-suggest-panel {
+  z-index: 999;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: var(--bt-sp-1);
+  background-color: var(--bt-white);
   border: var(--bt-border);
   border-radius: var(--bt-radius-lg);
 }
 
-.bt-blank-slate--muted {
-  background: var(--bt-bg-alt);
-  border-radius: var(--bt-radius-lg);
+.bt-suggest-panel__body {
+  max-height: 480px;
+  overflow-y: auto;
 }
 
-.bt-blank-slate--primary {
-  background: var(--bt-blue-100);
-  border-radius: var(--bt-radius-lg);
-  color: var(--bt-blue-900);
+.bt-scroll-frame {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.bt-code-block {
+  max-height: 220px;
+}
+
+/* -- Token suggestions panel -- */
+.token-suggestions {
+  position: absolute;
+  z-index: 200;
+  background: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-md);
+  box-shadow: var(--bt-shadow-md);
+  width: 100%;
+  max-height: 380px;
+  overflow-y: auto;
+  margin-top: var(--bt-sp-1);
+}
+
+.token-suggestions__group {
+  font-size: var(--bt-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--bt-gray-500);
+  padding: var(--bt-sp-2) var(--bt-sp-3) var(--bt-sp-1);
+}
+
+.token-suggestions__group:not(:first-child) {
+  border-top: var(--bt-border);
+  margin-top: var(--bt-sp-1);
+  padding-top: var(--bt-sp-3);
+}
+
+.token-suggestions__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  cursor: pointer;
+}
+
+.token-suggestions__item:hover,
+.token-suggestions__item[aria-selected=true] {
+  background: var(--bt-blue-50);
+}
+
+.token-suggestions__hint {
+  color: var(--bt-gray-500);
+  font-size: var(--bt-text-xs);
+}
+
+.token-suggestions__footer {
+  border-top: var(--bt-border);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+}
+
+.token-suggestions__syntax-link {
+  font-size: var(--bt-text-xs);
+  color: var(--bt-gray-500);
+}
+
+[data-surface=public] .filter-group--backoffice-only {
+  display: none;
+}
+
+[data-surface=backoffice] .filter-group--public-only {
+  display: none;
 }
 
 /* -- bt-avatar -- */
@@ -1546,39 +1573,6 @@ img.bt-navbar__logo {
   color: var(--bt-blue-800);
 }
 
-/* -- Public footer -- */
-/* Uses Bootstrap grid + utilities directly.
-   Only .nav-title needs a definition (used on <h2> in footer nav columns). */
-.nav-title {
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--bt-gray-700);
-}
-
-/* -- bt-dl -- metadata definition list -- */
-/* Used in research-detail.html sidebar */
-.bt-dl {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 0.3125rem 1.25rem;
-  font-size: var(--bt-text-sm);
-}
-
-.bt-dl dt {
-  font-size: var(--bt-text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  color: var(--bt-gray-700);
-  padding-top: 0.1rem;
-}
-
-.bt-dl dd {
-  margin: 0;
-  color: var(--bt-gray-1000);
-}
-
 /* -- bt-file-drop -- */
 /* Used in deposit-flow.html file upload area */
 .bt-file-drop {
@@ -1613,52 +1607,6 @@ img.bt-navbar__logo {
   font-size: var(--bt-text-xs);
   color: var(--bt-gray-400);
   margin: var(--bt-sp-1) 0 0;
-}
-
-/* -- HTMX states -- */
-/* Used in research-detail.html, deposit-flow.html, backoffice-search.html */
-.htmx-indicator {
-  display: none;
-}
-
-.htmx-request .htmx-indicator,
-.htmx-request.htmx-indicator {
-  display: inline-flex;
-  align-items: center;
-}
-
-.htmx-swapping {
-  opacity: 0.5;
-  transition: opacity var(--bt-dur-base);
-}
-
-.htmx-settling {
-  transition: opacity var(--bt-dur-base);
-}
-
-.htmx-request.btn {
-  opacity: 0.7;
-  pointer-events: none;
-  cursor: wait;
-}
-
-/* -- Facet expand/collapse toggle labels -- */
-/* Bootstrap adds .collapsed to the trigger button when the panel is closed.
-   Use that to swap visible label text -- no extra state needed. */
-.btn[data-bs-toggle=collapse] .when-expanded {
-  display: block;
-}
-
-.btn[data-bs-toggle=collapse] .when-collapsed {
-  display: none;
-}
-
-.btn.collapsed[data-bs-toggle=collapse] .when-expanded {
-  display: none;
-}
-
-.btn.collapsed[data-bs-toggle=collapse] .when-collapsed {
-  display: block;
 }
 
 /* -- filter-tag -- */
@@ -1861,6 +1809,79 @@ img.bt-navbar__logo {
   width: 120px;
 }
 
+/* -- bt-navbar -- */
+.bt-navbar {
+  background: var(--s-bg);
+  border-bottom: var(--bt-border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--bt-sp-6);
+  gap: var(--bt-sp-4);
+  position: sticky;
+  top: 0;
+  min-height: var(--s-topbar-height);
+}
+
+.bt-navbar__sep {
+  width: 1px;
+  height: var(--bt-sp-5);
+  background: var(--bt-border-color);
+  flex-shrink: 0;
+  display: block;
+}
+
+.bt-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-1);
+  flex: 1;
+}
+
+.bt-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  text-decoration: none;
+  color: var(--bt-blue-800);
+  font-weight: 500;
+  text-decoration: none;
+  text-wrap: nowrap;
+}
+
+img.bt-navbar__logo {
+  max-width: 2.65rem;
+}
+
+.bt-navbar__link {
+  font-size: var(--bt-text-sm);
+  font-weight: 500;
+  color: var(--bt-blue-800);
+  text-decoration: none;
+  padding: var(--bt-sp-1) var(--bt-sp-3);
+  border-radius: var(--bt-radius);
+  transition: color var(--bt-dur-fast), background var(--bt-dur-fast);
+  white-space: nowrap;
+}
+
+.bt-navbar__link:hover {
+  color: var(--bt-blue-700);
+  background: var(--bt-gray-50);
+}
+
+.bt-navbar__link.active,
+.bt-navbar__link[aria-current=page] {
+  text-decoration: underline;
+  text-underline-offset: var(--bt-sp-2);
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--bt-blue-900);
+  font-weight: 500;
+}
+
+.bt-navbar__link:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}
+
 /* -- People search (author filter editor) -- */
 /* TODO: simplify, has too many specifics */
 .people-results {
@@ -1909,208 +1930,6 @@ img.bt-navbar__logo {
   display: flex;
   align-items: center;
   gap: 3px;
-}
-
-/* -- Token bar -- */
-/* TODO: simplify, has too many specifics */
-.token-bar {
-  position: relative;
-  border: 1px solid var(--bt-border-color);
-  border-radius: var(--bt-radius);
-  background: var(--bt-white);
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 var(--bt-sp-3);
-  gap: var(--bt-sp-2);
-  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
-}
-
-.token-bar:focus-within {
-  border-color: var(--bt-blue-700);
-  box-shadow: 0 0 0 3px var(--bt-focus-ring);
-}
-
-.token-bar__display {
-  position: absolute;
-  inset: 0;
-  padding: 0 var(--bt-sp-3);
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  flex-wrap: wrap;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.token-bar__token {
-  display: inline-flex;
-  align-items: center;
-  background: var(--bt-blue-100);
-  border: 1px solid var(--bt-blue-200);
-  border-radius: var(--bt-radius-sm);
-  font-family: var(--bt-font-mono);
-  font-size: var(--bt-text-sm);
-  line-height: 1.6;
-  white-space: nowrap;
-  padding: 0 var(--bt-sp-1);
-}
-
-.token-bar__field {
-  color: var(--bt-blue-900);
-  font-weight: 600;
-}
-
-.token-bar__sep {
-  color: var(--bt-blue-500);
-}
-
-.token-bar__value {
-  color: var(--bt-blue-800);
-}
-
-.token-bar__token--negated {
-  background: var(--bt-red-50);
-  border-color: var(--bt-red-200);
-}
-
-.token-bar__token--negated .token-bar__field {
-  color: var(--bt-red-500);
-}
-
-.token-bar__input {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: var(--bt-font-mono);
-  font-size: var(--bt-text-sm);
-  color: transparent;
-  caret-color: var(--bt-gray-1000);
-  padding: 0;
-  min-width: 0;
-}
-
-.token-bar__input.no-tokens {
-  color: var(--bt-gray-1000);
-}
-
-.token-bar__clear {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--bt-gray-400);
-  cursor: pointer;
-  padding: var(--bt-sp-1);
-  line-height: 1;
-  border-radius: var(--bt-radius-sm);
-  transition: color var(--bt-dur-fast);
-}
-
-.token-bar__clear:hover {
-  color: var(--bt-gray-700);
-}
-
-.token-bar__indicator {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  color: var(--bt-gray-400);
-}
-
-/* -- Suggestions panel -- */
-.bt-suggest-panel {
-  z-index: 999;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-top: var(--bt-sp-1);
-  background-color: var(--bt-white);
-  border: var(--bt-border);
-  border-radius: var(--bt-radius-lg);
-}
-
-.bt-suggest-panel__body {
-  max-height: 480px;
-  overflow-y: auto;
-}
-
-.bt-scroll-frame {
-  max-height: 280px;
-  overflow-y: auto;
-}
-
-.bt-code-block {
-  max-height: 220px;
-}
-
-/* -- Token suggestions panel -- */
-.token-suggestions {
-  position: absolute;
-  z-index: 200;
-  background: var(--bt-white);
-  border: var(--bt-border);
-  border-radius: var(--bt-radius-md);
-  box-shadow: var(--bt-shadow-md);
-  width: 100%;
-  max-height: 380px;
-  overflow-y: auto;
-  margin-top: var(--bt-sp-1);
-}
-
-.token-suggestions__group {
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--bt-gray-500);
-  padding: var(--bt-sp-2) var(--bt-sp-3) var(--bt-sp-1);
-}
-
-.token-suggestions__group:not(:first-child) {
-  border-top: var(--bt-border);
-  margin-top: var(--bt-sp-1);
-  padding-top: var(--bt-sp-3);
-}
-
-.token-suggestions__item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--bt-sp-3);
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-  cursor: pointer;
-}
-
-.token-suggestions__item:hover,
-.token-suggestions__item[aria-selected=true] {
-  background: var(--bt-blue-50);
-}
-
-.token-suggestions__hint {
-  color: var(--bt-gray-500);
-  font-size: var(--bt-text-xs);
-}
-
-.token-suggestions__footer {
-  border-top: var(--bt-border);
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-}
-
-.token-suggestions__syntax-link {
-  font-size: var(--bt-text-xs);
-  color: var(--bt-gray-500);
-}
-
-[data-surface=public] .filter-group--backoffice-only {
-  display: none;
-}
-
-[data-surface=backoffice] .filter-group--public-only {
-  display: none;
 }
 
 /* -- bt-work-card -- */
@@ -2238,6 +2057,117 @@ img.bt-navbar__logo {
 .bt-meta-list__item-bordered {
   border-right: var(--bt-border);
   padding-right: var(--bt-sp-2);
+}
+
+/* -- Token bar -- */
+/* TODO: simplify, has too many specifics */
+.token-bar {
+  position: relative;
+  border: 1px solid var(--bt-border-color);
+  border-radius: var(--bt-radius);
+  background: var(--bt-white);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--bt-sp-3);
+  gap: var(--bt-sp-2);
+  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
+}
+
+.token-bar:focus-within {
+  border-color: var(--bt-blue-700);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring);
+}
+
+.token-bar__display {
+  position: absolute;
+  inset: 0;
+  padding: 0 var(--bt-sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  flex-wrap: wrap;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.token-bar__token {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bt-blue-100);
+  border: 1px solid var(--bt-blue-200);
+  border-radius: var(--bt-radius-sm);
+  font-family: var(--bt-font-mono);
+  font-size: var(--bt-text-sm);
+  line-height: 1.6;
+  white-space: nowrap;
+  padding: 0 var(--bt-sp-1);
+}
+
+.token-bar__field {
+  color: var(--bt-blue-900);
+  font-weight: 600;
+}
+
+.token-bar__sep {
+  color: var(--bt-blue-500);
+}
+
+.token-bar__value {
+  color: var(--bt-blue-800);
+}
+
+.token-bar__token--negated {
+  background: var(--bt-red-50);
+  border-color: var(--bt-red-200);
+}
+
+.token-bar__token--negated .token-bar__field {
+  color: var(--bt-red-500);
+}
+
+.token-bar__input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--bt-font-mono);
+  font-size: var(--bt-text-sm);
+  color: transparent;
+  caret-color: var(--bt-gray-1000);
+  padding: 0;
+  min-width: 0;
+}
+
+.token-bar__input.no-tokens {
+  color: var(--bt-gray-1000);
+}
+
+.token-bar__clear {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--bt-gray-400);
+  cursor: pointer;
+  padding: var(--bt-sp-1);
+  line-height: 1;
+  border-radius: var(--bt-radius-sm);
+  transition: color var(--bt-dur-fast);
+}
+
+.token-bar__clear:hover {
+  color: var(--bt-gray-700);
+}
+
+.token-bar__indicator {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  color: var(--bt-gray-400);
 }
 
 /* -- bt-toolbars -- */
