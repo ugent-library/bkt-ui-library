@@ -203,7 +203,7 @@
                   <code>&lt;h3&gt;</code>.
                 </td>
                 <td>Moderate</td>
-                <td>No — vendor issue.</td>
+                <td>No — vendor issue. Will raise this when other problems have been resolved.</td>
               </tr>
 
               <!--
@@ -222,7 +222,7 @@
                   distinguish between them.
                 </td>
                 <td>Moderate</td>
-                <td>No — vendor issue.</td>
+                <td>No — vendor issue. Will raise this when other problems have been resolved.</td>
               </tr>
 
               <!--
@@ -272,14 +272,13 @@
 
           <h3>Resolved in April 2026 (verified on live site)</h3>
           <ul>
-            <li>2.4.1 Skip link: now present for faster keyboard navigation on lib.ugent.be (<a href="#main-content"
-              class="skip-link">Ga naar hoofdinhoud</a>)</li>
+            <li>2.4.1 Skip link: now present for faster keyboard navigation on lib.ugent.be</li>
             <li>1.3.1 <main> id: now has id="main-content" for skip-link target</li>
             <li>We have improved the focus visibility for interactive elements on css-overrides.</li>
-            <li>1.3.1 Heading hierarchy: alert component now uses <h2>, empty CMS heading on /nl/services/ill and /en/services/ill removed</li>
+            <li>1.3.1 Heading hierarchy: alert component now uses <code>h2</code>, empty CMS heading on <code>/nl/services/ill</code> and <code>/en/services/ill</code> removed</li>
             <li>1.3.1 Breadcrumb: now uses "ol" instead of "ul"</li>
             <li>2.4.4 Footer new-window link: now has an indicator that it opens in a new window</li>
-            <li>1.3.1 Info and relationships:We have added unique aria labels to all navigation regions in lib.ugent.be (<nav> elements). This allows screen reader users to immediately distinguish between the main menu, pagination, and the filters in the catalog. Not yet for libcatalog (Ex Libris).</li>
+            <li>1.3.1 Info and relationships: We have done a systematic review. We have added unique aria labels to navigation regions across both domains (<nav> elements). Not yet for all libcatalog.ugent.be navigation (Ex Libris).</li>
           </ul>
 
           <!-- ── Planned improvements ───────────────────────────────────── -->
@@ -295,6 +294,7 @@
           <p>
             Follow up on vendor-side issues with Ex Libris and verify fixes on the live site.
             Investigate solutions if no vendor fixes are possible.
+            Follow up on nav issue and headings issue with Ex Libris, when there is progress on the other ones to avoid overload.
           </p>
 
           <!-- ── Audit details ──────────────────────────────────────────── -->
@@ -357,15 +357,15 @@
             </tbody>
           </table>
 
-          <details>
+          <details class="mb-4">
             <summary>Pages tested</summary>
             <ul class="mt-2">
               <li>lib.ugent.be/nl and /en (homepage — redirects to Primo NDE)</li>
               <li>lib.ugent.be/nl/libraries and /en/libraries (+ individual library pages including Boekentoren)</li>
               <li>lib.ugent.be/nl/services and /en/services (+ subpages: registration, loans, scanning, ILL, study locations, etc.)</li>
               <li>lib.ugent.be/nl/info and /en/info (+ subpages: regulations, research tips, e-resources, open data, etc.)</li>
-              <li>libcatalog.ugent.be search results page (limited — new session planned)</li>
-              <li>libcatalog.ugent.be detail page (limited — new session planned)</li>
+              <li>libcatalog.ugent.be search results page</li>
+              <li>libcatalog.ugent.be detail pages</li>
             </ul>
           </details>
 

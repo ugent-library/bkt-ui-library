@@ -1,0 +1,270 @@
+<!-- @title: Accessibility — Biblio UGent NL -->
+<!-- @surface: public -->
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+  <main class="bg-white" id="main-content">
+
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-8">
+
+          <h1>Toegankelijkheidsverklaring</h1>
+
+          <p>
+            De Universiteitsbibliotheek Gent streeft ernaar haar websites toegankelijk te maken, in overeenstemming met het <strong>Bestuursdecreet van 7 december 2018</strong>, tot omzetting van
+            <a href="https://eur-lex.europa.eu/legal-content/NL/TXT/?uri=CELEX%3A32016L2102" target="_blank" rel="noopener">
+              Europese Richtlijn 2016/2102<span class="visually-hidden"> (opent in nieuw venster)</span></a>.
+          </p>
+
+          <p>
+            Deze toegankelijkheidsverklaring is van toepassing op
+            <strong>lib.ugent.be</strong> — de website van de Universiteitsbibliotheek Gent (Nederlandse en Engelse versies).
+          </p>
+
+          <h2>Over deze website</h2>
+
+          <p>
+            lib.ugent.be bestaat uit twee delen met verschillend technisch eigendom:
+          </p>
+
+          <dl class="mb-4">
+            <dt>Informatiepagina's (lib.ugent.be)</dt>
+            <dd class="mb-3">
+              Informatie over de bibliotheek, diensten, openingsuren en contactpagina's. Gebouwd en beheerd door de Universiteit Gent en de Universiteitsbibliotheek Gent.
+            </dd>
+
+            <dt>Zoeken en catalogus (libcatalog.ugent.be)</dt>
+            <dd>
+              De homepage, zoekfunctionaliteit en catalogus worden aangeboden via
+              <a href="https://knowledge.exlibrisgroup.com/Primo/Product_Materials/Primo_Accessibility" target="_blank" rel="noopener">
+                Ex Libris Primo NDE<span class="visually-hidden"> (opent in nieuw venster)</span></a>,
+              een platform van een externe leverancier. We kunnen bepaalde aspecten configureren (labels, kleuren, paginatitels) en CSS-aanpassingen doorvoeren, maar we kunnen de onderliggende code van de applicatie niet wijzigen. Problemen in de kernapplicatie vereisen actie van de leverancier.
+            </dd>
+          </dl>
+
+          <h2>Nalevingsstatus</h2>
+
+          <p>
+            Deze website voldoet <strong>gedeeltelijk</strong> aan de
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">
+              Web Content Accessibility Guidelines (WCAG) 2.2<span class="visually-hidden"> (opent in nieuw venster)</span></a>
+            niveau AA. De onderdelen die nog niet voldoen, worden hieronder opgelijst.
+          </p>
+
+          <h2>Niet-toegankelijke inhoud</h2>
+
+          <p>
+            De onderstaande inhoud is nog niet toegankelijk om de volgende redenen:
+          </p>
+
+          <h3>Informatiepagina's (lib.ugent.be)</h3>
+
+          <table class="table" aria-label="Toegankelijkheidsproblemen op de informatiepagina's van lib.ugent.be">
+            <thead>
+              <tr>
+                <th scope="col">WCAG-criterium</th>
+                <th scope="col">Probleem</th>
+                <th scope="col">Ernst</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1.4.3 Contrast (minimum)</td>
+                <td>
+                  De knop voor cookie-instellingen heeft witte tekst op een blauwe achtergrond met een contrastratio van 4,27:1. Dit is lager dan de vereiste 4,5:1 voor tekst van normale grootte.
+                </td>
+                <td>Laag</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Zoeken en catalogus (Ex Libris Primo NDE)</h3>
+
+          <p>
+            De volgende problemen zijn vastgesteld in de Primo NDE-applicatie. We hebben aangegeven welke problemen binnen onze configuratiemogelijkheden vallen en welke actie van de leverancier vereisen.
+          </p>
+
+          <table class="table" aria-label="Toegankelijkheidsproblemen in de Primo NDE catalogus">
+            <thead>
+              <tr>
+                <th scope="col">WCAG-criterium</th>
+                <th scope="col">Probleem</th>
+                <th scope="col">Ernst</th>
+                <th scope="col">Kunnen we dit zelf oplossen?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1.4.10 (AA) Reflow</td>
+                <td>
+                  Inhoud moet vergroot kunnen worden zonder dat de regellengte toeneemt (tot 400% zoom).
+                </td>
+                <td>Hoog</td>
+                <td>Nee — niet configureerbaar in Primo NDE zonder de volledige CSS van de applicatie te herschrijven. Gemeld bij de leverancier in november 2025; oplossing gepland voor juli 2026. Gebruikers die een hoog zoomniveau nodig hebben, wordt aangeraden de "vereenvoudigde weergave" van de browser te gebruiken of contact met ons op te nemen voor hulp.</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info en relaties</td>
+                <td>
+                  De tekst van de <code>&lt;h1&gt;</code> is "home" of "search" — dit zijn geen betekenisvolle paginatitels.
+                </td>
+                <td>Hoog</td>
+                <td>Nee — niet configureerbaar in Primo NDE. Gemeld bij leverancier in april 2026.</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info en relaties</td>
+                <td>
+                  Er bevindt zich een lege <code>&lt;h2&gt;</code> in de broncode.
+                </td>
+                <td>Laag</td>
+                <td>Nee — probleem bij de leverancier. Gemeld in april 2026.</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info en relaties</td>
+                <td>
+                  De koppenhiërarchie is onderbroken: de kop van de zoekresultaten is een <code>&lt;h4&gt;</code> die volgt op een <code>&lt;h2&gt;</code>, waarbij <code>&lt;h3&gt;</code> wordt overgeslagen.
+                </td>
+                <td>Gemiddeld</td>
+                <td>Nee — probleem bij de leverancier. Dit wordt aangekaart zodra andere prioriteiten zijn opgelost.</td>
+              </tr>
+              <tr>
+                <td>1.3.1 Info en relaties</td>
+                <td>
+                  Sommige <code>&lt;nav&gt;</code> elementen hebben geen <code>aria-label</code>. Gebruikers van schermlezers kunnen deze regio's niet van elkaar onderscheiden.
+                </td>
+                <td>Gemiddeld</td>
+                <td>Nee — probleem bij de leverancier. Dit wordt aangekaart zodra andere prioriteiten zijn opgelost.</td>
+              </tr>
+              <tr>
+                <td>2.4.2 Paginatitel</td>
+                <td>
+                  De titel van de Engelstalige homepage toont nog de Nederlandstalige naam "Universiteitsbibliotheek Gent" in de browsertab.
+                </td>
+                <td>Laag</td>
+                <td>We onderzoeken de configuratiemogelijkheden.</td>
+              </tr>
+              <tr>
+                <td>2.4.4 Doel van een link (in context)</td>
+                <td>
+                  Links in de zoekresultatenlijst (zoals "Beschikbaar in" of "Details") missen een beschrijvend ARIA-label dat de titel van het werk bevat.
+                </td>
+                <td>Gemiddeld</td>
+                <td>Nee — probleem bij de leverancier. Gemeld in april 2026.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Wat we hebben gedaan</h2>
+
+          <p>
+            We hebben de bovenstaande problemen bij de leverancier (Ex Libris) gemeld. Waar mogelijk en proportioneel voeren we CSS-aanpassingen en configuratiewijzigingen door om de toegankelijkheid binnen de beperkingen van het platform te verbeteren.
+          </p>
+
+          <h3>Opgelost in april 2026 (geverifieerd op de live site)</h3>
+          <ul>
+            <li>2.4.1 Skip-link: nu aanwezig op lib.ugent.be voor snellere navigatie via het toetsenbord.</li>
+            <li>1.3.1 Main-ID: de hoofdinhoud heeft nu <code>id="main-content"</code> als doel voor de skip-link.</li>
+            <li>Focus-zichtbaarheid: de visuele indicatie voor interactieve elementen is verbeterd via CSS-overrides.</li>
+            <li>1.3.1 Koppenhiërarchie: waarschuwingscomponenten gebruiken nu <code>h2</code>; lege CMS-koppen op de ILL-pagina's zijn verwijderd.</li>
+            <li>1.3.1 Kruimelpad: gebruikt nu een geordende lijst (<code>ol</code>) in plaats van <code>ul</code>.</li>
+            <li>2.4.4 Externe links: links in de footer die een nieuw venster openen, zijn nu voorzien van een visuele en tekstuele indicatie.</li>
+            <li>1.3.1 Navigatie-regio's: we hebben een systematische check uitgevoerd en unieke aria-labels toegevoegd aan navigatieblokken (<code>&lt;nav&gt;</code>) op beide domeinen, inclusief paginering en filters.</li>
+          </ul>
+
+          <h2>Geplande verbeteringen</h2>
+
+          <h3>Korte termijn (3 maanden)</h3>
+          <p>
+            De resterende configuratie van Primo NDE onderzoeken om de paginatitels te verbeteren. Het contrastprobleem van de cookie-widget oplossen.
+          </p>
+
+          <h3>Middellange termijn (3–6 maanden)</h3>
+          <p>
+            De meldingen bij de leverancier opvolgen en oplossingen verifiëren op de live site. Indien geen oplossing door de leverancier mogelijk is, onderzoeken we alternatieve technische oplossingen (scripting).
+          </p>
+
+          <h2>Hoe we hebben getest</h2>
+
+          <p>
+            Deze verklaring is gebaseerd op twee toegankelijkheidsaudits van lib.ugent.be.
+          </p>
+
+          <table class="table" aria-label="Audit details">
+            <tbody>
+              <tr>
+                <th scope="row">Eerste audit</th>
+                <td>
+                  <time datetime="2025-10">Oktober 2025</time> — handmatige audit door Universiteitsbibliotheek Gent
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Tweede audit</th>
+                <td>
+                  <time datetime="2026-04">April 2026</time> — handmatige en automatische audit door Universiteitsbibliotheek Gent
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Scope</th>
+                <td>
+                  De audit omvatte de volledige online dienstverlening, waarbij lib.ugent.be (informatiepagina's) en libcatalog.ugent.be (catalogus) als één geïntegreerde gebruikerservaring zijn getest.
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Standaard</th>
+                <td>WCAG 2.2 niveau AA (EN 301 549)</td>
+              </tr>
+              <tr>
+                <th scope="row">Tools</th>
+                <td>WAVE, Axe DevTools</td>
+              </tr>
+              <tr>
+                <th scope="row">Handmatige test</th>
+                <td>
+                  Visuele inspectie, toetsenbordnavigatie (Safari, Chrome, Firefox), schermlezer (VoiceOver), inspectie van de DOM en stijlen.
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Beperkingen</th>
+                <td>
+                  Zoekresultaten konden niet volledig getest worden in een sessie zonder inloggen. Facet-checkboxes en modale vensters in de interface worden meegenomen in een vervolgaudit.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Problemen? Laat het ons weten</h2>
+
+          <p>Ondervindt u problemen met de toegankelijkheid van onze inhoud, of heeft u een vraag of opmerking? Neem contact op via
+            <a href="mailto:lib.service@ugent.be">lib.service@ugent.be</a>.
+          </p>
+
+          <h2>Handhavingsprocedure</h2>
+
+          <p>
+            Bent u niet tevreden met ons antwoord? Dan kunt u terecht bij de Vlaamse Ombudsdienst:
+          </p>
+
+          <address>
+            Vlaamse Ombudsdienst<br>
+            <a href="https://www.vlaamseombudsdienst.be" target="_blank" rel="noopener">
+              vlaamseombudsdienst.be<span class="visually-hidden"> (opent in nieuw venster)</span></a><br>
+            <a href="mailto:klachten@vlaamseombudsdienst.be">klachten@vlaamseombudsdienst.be</a><br>
+            Telefoon: <a href="tel:+3218000700">0800 240 50</a> (gratis)
+          </address>
+
+          <p class="text-muted mt-5">
+            <small>
+              Deze verklaring is opgesteld op
+              <time datetime="2025-10">oktober 2025</time>
+              en laatst bijgewerkt op
+              <time datetime="2026-04-14">14 april 2026</time>.
+            </small>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
