@@ -61,7 +61,7 @@
           <p>
             This website <strong>partially complies</strong> with the
             <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">
-              Web Content Accessibility Guidelines (WCAG) 2.1<span class="visually-hidden"> (opens in new window)</span></a>
+              Web Content Accessibility Guidelines (WCAG) 2.2<span class="visually-hidden"> (opens in new window)</span></a>
             level AA. The non-compliant areas are listed below.
           </p>
 
@@ -78,16 +78,6 @@
             ZONE 1 — lib.ugent.be content pages (our code)
             ═══════════════════════════════════════════════════════════
 
-            RESOLVED in April 2026 (verified on live site):
-            - 2.4.1 Skip link: now present (<a href="#main-content"
-              class="skip-link">Ga naar hoofdinhoud</a>)
-            - 1.3.1 <main> id: now has id="main-content"
-            - 1.3.1 Heading hierarchy: alert component now uses <h2>,
-              empty CMS heading on /nl/services/ill removed
-            - 1.3.1 Breadcrumb: now uses <ol> instead of <ul>
-            - 2.4.4 Footer new-window link: now has
-              <span class="visually-hidden">Link opent in een nieuw
-              venster.</span>
           -->
           <h3>Content pages (lib.ugent.be)</h3>
 
@@ -100,39 +90,6 @@
               </tr>
             </thead>
             <tbody>
-
-              <!--
-                ISSUE: No visible focus indicator on plain links
-                WHERE: Every lib.ugent.be page. Plain <a> links and
-                       .nav-link elements get outline: 0px none on
-                       :focus with no box-shadow or border replacement.
-
-                       Bootstrap's .btn:focus-visible and .form-control:focus
-                       DO provide a box-shadow ring — those are fine.
-                       The gap: there is no :focus-visible rule for
-                       plain <a> or .nav-link anywhere in main.min.css.
-
-                TESTED: Nav link "Home" on /nl/libraries/bib — April 2026.
-                       Shows outline: 0px none, box-shadow: none on focus.
-                       .btn elements show box-shadow via Bootstrap — OK.
-                FIX:   Add to the site stylesheet:
-                       a:focus-visible,
-                       .nav-link:focus-visible {
-                         outline: 3px solid rgba(30, 100, 200, 0.5);
-                         outline-offset: 2px;
-                       }
-              -->
-              <tr>
-                <td>2.4.7 Focus visible</td>
-                <td>
-                  Plain links and navigation links have no visible focus
-                  indicator. The <code>outline</code> is suppressed with
-                  no replacement style. Buttons and form inputs do
-                  receive a focus ring via Bootstrap's
-                  <code>:focus-visible</code> styles, but links do not.
-                </td>
-                <td>High</td>
-              </tr>
 
               <!--
                 ISSUE: Cookie consent button contrast
@@ -192,34 +149,12 @@
 
               <!-- WHERE: Search results page. -->
               <tr>
-                <td>WCAG 2.1, Success Criteria, 1.4.10 (AA)</td>
+                <td>WCAG 2.2, Success Criteria, 1.4.10 (AA)</td>
                 <td>
                   Content can be enlarged without increasing line length. Requires 400% zoom to work.
                 </td>
                 <td>High</td>
-                <td>No — not configurable in Primo NDE nor fixable within reasonable effort, without rewriting the entire application css. Raised with vendor.</td>
-              </tr>
-
-              <!--
-                WHERE: Primo homepage and search results page.
-                       Focus outline is set to 0px/none on most elements.
-                       Some elements get :focus-visible { box-shadow: ... }
-                       (e.g. .nav-link, .mdc-checkbox) but coverage is
-                       inconsistent — links in the main content area, mat-icon
-                       buttons, and several other focusable elements receive
-                       no visible focus style at all.
-              -->
-              <tr>
-                <td>2.4.7 Focus visible</td>
-                <td>
-                  Focus outline is suppressed on many elements.
-                  Some elements use <code>box-shadow</code> on
-                  <code>:focus-visible</code> but the coverage is
-                  inconsistent — not all focusable elements receive a
-                  visible indicator.
-                </td>
-                <td>High</td>
-                <td>Partially — we can apply CSS overrides for some elements</td>
+                <td>No — not configurable in Primo NDE nor fixable within reasonable effort, without rewriting the entire application css. Raised with vendor in November 2025, fix planned in July 2026. Users needing high zoom levels are advised to use the browser's simplified view or contact us for assistance in retrieving specific metadata.</td>
               </tr>
 
               <!--
@@ -235,7 +170,7 @@
                   — not meaningful page headings.
                 </td>
                 <td>High</td>
-                <td>No — not configurable in Primo NDE. Raised with vendor.</td>
+                <td>No — not configurable in Primo NDE. Raised with vendor in April 2026.</td>
               </tr>
 
               <!--
@@ -248,8 +183,8 @@
                 <td>
                   An empty <code>&lt;h2&gt;</code> is present in the DOM.
                 </td>
-                <td>Moderate</td>
-                <td>No — vendor issue</td>
+                <td>Low</td>
+                <td>No — vendor issue. Raised with vendor in April 2026.</td>
               </tr>
 
               <!--
@@ -268,7 +203,7 @@
                   <code>&lt;h3&gt;</code>.
                 </td>
                 <td>Moderate</td>
-                <td>No — vendor issue</td>
+                <td>No — vendor issue.</td>
               </tr>
 
               <!--
@@ -282,29 +217,12 @@
               <tr>
                 <td>1.3.1 Info and relationships</td>
                 <td>
-                  Four of five <code>&lt;nav&gt;</code> elements have no
+                  Some <code>&lt;nav&gt;</code> elements have no
                   <code>aria-label</code>. Screen reader users cannot
                   distinguish between them.
                 </td>
                 <td>Moderate</td>
-                <td>No — vendor issue</td>
-              </tr>
-
-              <!--
-                WHERE: Throughout Primo pages. Angular Material icons
-                       rendered as <mat-icon role="img"> without
-                       aria-label. Found on homepage and search pages.
-
-                       For 4.1.2 "Name, role, value" in the Primo nde pages: is it enough that when you land on it with assistive technology that it actually reads the label out loud? It's not with an aria attribute but added with javascript, I tested it with voice over utility.
-              -->
-              <tr>
-                <td>4.1.2 Name, role, value</td>
-                <td>
-                  Several <code>&lt;mat-icon role="img"&gt;</code>
-                  elements have no accessible name.
-                </td>
-                <td>Moderate</td>
-                <td>No — vendor issue. Raised with vendor.</td>
+                <td>No — vendor issue.</td>
               </tr>
 
               <!--
@@ -315,14 +233,14 @@
                        The lang attribute on the html tag is correctly "en".
               -->
               <tr>
-                <td>2.4.2 Page titled</td>
+                <td>2.4.2 Page title</td>
                 <td>
                   The English homepage title still shows the Dutch name
                   "Universiteitsbibliotheek Gent" instead of an English
                   title.
                 </td>
                 <td>Low</td>
-                <td>Investigating.</td>
+                <td>Investigating configuration.</td>
               </tr>
 
               <!--
@@ -333,11 +251,10 @@
               <tr>
                 <td>2.4.4 Link purpose (in context)</td>
                 <td>
-                  External links open in a new window without visible
-                  warning text.
+                  Links in the search results list (such as "Available in" or "Details") lack a descriptive ARIA label containing the title of the work.
                 </td>
-                <td>Low</td>
-                <td>Investigating — may be configurable via CSS/labels</td>
+                <td>Moderate</td>
+                <td>No — Vendor issue. Raised with vendor in April 2026.</td>
               </tr>
 
             </tbody>
@@ -348,19 +265,36 @@
 
           <p>
             We have reported the vendor-side issues listed above to
-            Ex Libris. Where possible, we apply CSS overrides and
+            Ex Libris. Where possible and proportionate, we apply CSS overrides and
             configuration changes to improve accessibility within the
             constraints of the platform.
           </p>
 
+          <h3>Resolved in April 2026 (verified on live site)</h3>
+          <ul>
+            <li>2.4.1 Skip link: now present for faster keyboard navigation on lib.ugent.be (<a href="#main-content"
+              class="skip-link">Ga naar hoofdinhoud</a>)</li>
+            <li>1.3.1 <main> id: now has id="main-content" for skip-link target</li>
+            <li>We have improved the focus visibility for interactive elements on css-overrides.</li>
+            <li>1.3.1 Heading hierarchy: alert component now uses <h2>, empty CMS heading on /nl/services/ill and /en/services/ill removed</li>
+            <li>1.3.1 Breadcrumb: now uses "ol" instead of "ul"</li>
+            <li>2.4.4 Footer new-window link: now has an indicator that it opens in a new window</li>
+            <li>1.3.1 Info and relationships:We have added unique aria labels to all navigation regions in lib.ugent.be (<nav> elements). This allows screen reader users to immediately distinguish between the main menu, pagination, and the filters in the catalog. Not yet for libcatalog (Ex Libris).</li>
+          </ul>
+
           <!-- ── Planned improvements ───────────────────────────────────── -->
           <h2>Planned improvements</h2>
 
+          <h3>Short term (3 months)</h3>
+          <p>
+            Investigate remaining Primo NDE configuration: improve page title.
+            Address the contrast issue on the cookie consent widget.
+          </p>
+
           <h3>Medium term (3–6 months)</h3>
           <p>
-            Address the contrast issue on the cookie consent widget.
-            Investigate remaining Primo NDE configuration
-            options for page titles and link text.
+            Follow up on vendor-side issues with Ex Libris and verify fixes on the live site.
+            Investigate solutions if no vendor fixes are possible.
           </p>
 
           <!-- ── Audit details ──────────────────────────────────────────── -->
@@ -390,14 +324,12 @@
               <tr>
                 <th scope="row">Scope</th>
                 <td>
-                  Dutch and English versions of lib.ugent.be (content
-                  pages) and libcatalog.ugent.be (Primo NDE homepage
-                  and search)
+                  The audit covered the online service of Ghent University Library, in which lib.ugent.be (information pages) and libcatalog.ugent.be (search engine/catalogue) were tested as a single integrated user experience. Although technically divided across various subdomains, the navigation flow from landing to detail page was assessed against WCAG guidelines as a whole.
                 </td>
               </tr>
               <tr>
                 <th scope="row">Standard</th>
-                <td>WCAG 2.1 level AA (EN 301 549)</td>
+                <td>WCAG 2.2 level AA (EN 301 549)</td>
               </tr>
               <tr>
                 <th scope="row">Automated tools</th>
