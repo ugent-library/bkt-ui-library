@@ -10,42 +10,43 @@
   In Go templ, pass `currentPage string` and `suggestionCount int` as parameters.
 -->
 
-<nav class="bt-sidebar bt-sidebar--bordered" aria-label="Section navigation" id="bt-sidebar">
-  <div class="d-flex justify-content-end pb-3 pe-1">
-    <button type="button"
-      class="btn btn-ghost btn-sm p-1 bt-sidebar__toggle"
+<nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation" id="bt-sidebar">
+  <div class="bt-sidebar__toggle"
       aria-controls="bt-sidebar"
       aria-expanded="true"
       aria-label="Collapse sidebar">
+    <button type="button"
+      class="btn btn-ghost btn-sm">
       <i class="if if-arrow-left" aria-hidden="true"></i>
     </button>
   </div>
 
-  <p class="bt-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pb-1">My work</p>
+  <p class="bt-sidebar__group-label">My work</p>
 
-  <a href="/templates/biblio-backoffice/dashboard.html" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Dashboard">
-    <i class="if if-home" aria-hidden="true"></i>
-    <span class="bt-sidebar__label">Dashboard</span>
-  </a>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a href="/templates/biblio-backoffice/dashboard.html" class="nav-link" aria-current="page" aria-label="Dashboard">
+        <i class="if if-home" aria-hidden="true"></i>
+        <span class="bt-sidebar__label">Dashboard</span>
+      </a>
+    </li>
 
-  <a href="/research-output" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Research output">
-    <i class="if if-article" aria-hidden="true"></i>
-    <span class="bt-sidebar__label">Research output</span>
-  </a>
+    <li class="nav-item">
+      <a href="/research-output" class="nav-link active" aria-label="Research output">
+        <i class="if if-article" aria-hidden="true"></i>
+        <span class="bt-sidebar__label">Research output</span>
+      </a>
+    </li>
 
-  <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
-  <a href="/suggestions" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Suggestions, 3 new">
-    <i class="if if-notification" aria-hidden="true"></i>
-    <span class="bt-sidebar__label">Suggestions</span>
-    <span class="badge bg-warning ms-auto" aria-hidden="true">3</span>
-  </a>
-
-  <p class="bt-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
-
-  <a href="/proxies" class="nav-link d-flex align-items-center gap-2 text-decoration-none ps-3 pe-3 py-2" aria-label="Manage proxies">
-    <i class="if if-user-add" aria-hidden="true"></i>
-    <span class="bt-sidebar__label">Manage proxies</span>
-  </a>
+    <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
+    <li class="nav-item">
+      <a href="/suggestions" class="nav-link" aria-label="Suggestions, 3 new">
+        <i class="if if-notification" aria-hidden="true"></i>
+        <span class="bt-sidebar__label">Suggestions</span>
+        <span class="badge bg-warning ms-auto" aria-hidden="true">3</span>
+      </a>
+    </li>
+  </ul>
 </nav>
 
 <script src="/assets/js/sidebar-toggle.js"></script>
