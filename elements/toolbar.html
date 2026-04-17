@@ -4,7 +4,7 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Toolbar</h1>
-    <p class="lead">Flexible layout containers for action bars, search bars, and pagination. Use <code>bt-toolbar__left</code>, <code>bt-toolbar__right</code>, and <code>bt-toolbar__item</code> for consistent spacing and alignment.</p>
+    <p class="lead">Flexible layout containers for action bars, search bars, and pagination. Use <code>bt-toolbar__left</code>, <code>bt-toolbar__right</code>, and <code>bt-toolbar__item</code> for consistent spacing and alignment. Toolbar layout lives in <code>assets/scss/patterns/_booktower-toolbar.scss</code>; view switches use Bootstrap <code>btn-group</code> and <code>btn-check</code>, not a separate custom component.</p>
   </header>
 
   <section class="ds-section">
@@ -110,6 +110,19 @@
           <li>Navigation toolbars should use <code>&lt;nav&gt;</code> in the middle section</li>
           <li>Screen readers navigate toolbar content as part of the page flow</li>
           <li>Interactive elements within toolbars remain fully keyboard accessible</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Implementation notes</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul>
+          <li>Use <code>bt-toolbar</code> for the bar layout itself and Bootstrap controls inside it.</li>
+          <li>For card/table result switches, use a Bootstrap <code>btn-group</code> with <code>input.btn-check</code> and matching <code>label.btn</code> controls.</li>
+          <li>The old standalone view-toggle documentation page was removed because Bootstrap already provides the correct control mechanics.</li>
         </ul>
       </div>
     </div>
