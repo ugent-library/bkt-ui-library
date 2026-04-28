@@ -52,9 +52,6 @@
   --u-main-head-pad-y: var(--bt-sp-6);
   --u-main-pad-x: var(--bt-sp-12);
   --u-main-pad-y: var(--bt-sp-8);
-  --u-nav-sidebar-width: 13rem;
-  --u-nav-sidebar-width-slim: 3rem;
-  --u-nav-sidebar-pad-x: var(--bt-sp-6);
   --u-main-panel-width: 21rem;
   --u-main-split-sidebar-width: 15.625rem;
   display: grid;
@@ -194,6 +191,9 @@
 /* ── bt-sidebar ───────────────────────────────────────────────────────────────── */
 
 .bt-sidebar {
+  --u-nav-sidebar-width: 14rem;
+  --u-nav-sidebar-width-slim: 3rem !important;
+  --u-nav-sidebar-pad-x: var(--bt-sp-6);
   width: var(--u-nav-sidebar-width);
   flex-shrink: 0;
   overflow-y: auto;
@@ -216,30 +216,35 @@
 }
 
 .bt-sidebar__group-label {
-  font-size: var(--bt-text-sm);
-  font-weight: 600;
+  font-size: var(--bt-text-xs);
+  font-weight: 700;
   color: var(--bt-text-muted);
   padding-left: var(--bt-sp-4);
   margin-bottom: var(--bt-sp-2);
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-a.nav-link {
-  display: block;
+/* Nav links inside bt-sidebar carry their own flex layout.
+   d-flex / align-items-center / gap / padding utilities are not needed in templates. */
+.bt-sidebar a.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  width: 100%;
+}
+.bt-sidebar a.nav-link .badge {
+  margin-left: auto;
 }
 .nav-link.active {
   background-color: var(--bt-gray-50);
 }
 
-a.nav-link i {
-  transform: translateY(-0.02em);
-  padding-right: var(--bt-sp-1);
-}
-
 .bt-sidebar--slim {
   width: var(--u-nav-sidebar-width-slim);
   padding: var(--bt-sp-4) var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-4);
-  overflow: visible;
+  overflow-y: visible;
 
   &.bt-sidebar--flush {
     padding-left: 0;

@@ -7,6 +7,9 @@
   Badge count:  render the <span class="badge …"> only when count > 0.
   Slim toggle:  the toggle button adds/removes bt-sidebar--slim on the <nav>.
 
+  Tooltips:     data-bs-toggle="tooltip" on every link keeps labels discoverable
+                in slim mode. Initialised by sidebar-toggle.js.
+
   In Go templ, pass `currentPage string` and `suggestionCount int` as parameters.
 -->
 
@@ -21,32 +24,41 @@
     </button>
   </div>
 
-  <p class="bt-sidebar__group-label">My work</p>
+  <p class="bt-sidebar__group-label">My research output</p>
 
-  <ul class="nav flex-column">
-    <li class="nav-item">
-      <a href="/templates/biblio-backoffice/dashboard.html" class="nav-link" aria-current="page" aria-label="Dashboard">
-        <i class="if if-home" aria-hidden="true"></i>
-        <span class="bt-sidebar__label">Dashboard</span>
-      </a>
-    </li>
+  <a href="/templates/biblio-backoffice/dashboard.html" class="nav-link active" aria-current="page" aria-label="Dashboard"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Inbox">
+    <i class="if if-home" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Inbox</span>
+  </a>
 
-    <li class="nav-item">
-      <a href="/research-output" class="nav-link active" aria-label="Research output">
-        <i class="if if-article" aria-hidden="true"></i>
-        <span class="bt-sidebar__label">Research output</span>
-      </a>
-    </li>
+  <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
+  <a href="/deadlines" class="nav-link" aria-label="Deadlines, 2 overdue"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Review deadlines">
+    <i class="if if-error-circle" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Review deadlines</span>
+    <span class="badge bg-danger" aria-hidden="true">2</span>
+  </a>
 
-    <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
-    <li class="nav-item">
-      <a href="/suggestions" class="nav-link" aria-label="Suggestions, 3 new">
-        <i class="if if-notification" aria-hidden="true"></i>
-        <span class="bt-sidebar__label">Suggestions</span>
-        <span class="badge bg-warning ms-auto" aria-hidden="true">3</span>
-      </a>
-    </li>
-  </ul>
+  <a href="/suggestions" class="nav-link" aria-label="Suggestions, 2 new"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Suggestions">
+    <i class="if if-notification" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Suggestions</span>
+    <span class="badge bg-primary" aria-hidden="true">2</span>
+  </a>
+
+  <a href="/incomplete" class="nav-link" aria-label="Incomplete, 3 drafts"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Incomplete">
+    <i class="if if-draft" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Incomplete</span>
+    <span class="badge bg-warning" aria-hidden="true">3</span>
+  </a>
+
+  <a href="/research-output" class="nav-link" aria-label="Research output"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="All research">
+    <i class="if if-list-unordered" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">All research</span>
+  </a>
 </nav>
 
 <script src="/assets/js/sidebar-toggle.js"></script>

@@ -3,114 +3,291 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Sidebar Navigation</h1>
-    <p class="lead"><code>bt-sidebar</code> is the persistent section navigator inside <code>u-layout--app</code>. It carries meaningful navigation state and should be used only for real page navigation, not decoration.</p>
+    <p class="lead"><code>bt-sidebar</code> is the persistent left-column navigator inside <code>u-layout--app</code>. Use it for real page navigation only — not as a filter panel or decorative element.</p>
   </header>
 
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 1 — Basic structure
+  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">bt-sidebar — section navigator</h2>
-    <p class="mb-4">Used in backoffice list and detail pages. Sits in the left column of <code>u-layout--app</code>, sticky below the topbar. Links use Bootstrap <code>.nav-link</code> directly — no extra wrapper class needed beyond the sidebar container.</p>
+    <h2 class="h4 mb-3">Basic structure</h2>
+    <p class="mb-4">Links use Bootstrap <code>.nav-link</code> directly on <code>&lt;a&gt;</code> elements inside the sidebar. The SCSS provides flex layout, gap, and padding — no Bootstrap utility classes needed on the link. Group labels use <code>.bt-sidebar__group-label</code>. Wrap link text in <code>.bt-sidebar__label</code> so it hides cleanly in slim mode.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Standard — with active item and badge</h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Standard — with group label and active item</h3></div>
       <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
-        <nav class="bt-sidebar" aria-label="Section navigation" id="sidebar-demo">
-          <div class="d-flex justify-content-end pb-3 pe-1">
-            <button type="button"
-              class="btn btn-ghost btn-sm p-1 bt-sidebar__toggle"
-              aria-controls="sidebar-demo"
-              aria-expanded="true"
-              aria-label="Collapse sidebar"
-              onclick="
-                const nav = document.getElementById('sidebar-demo');
-                const slim = nav.classList.toggle('bt-sidebar--slim');
-                this.setAttribute('aria-expanded', !slim);
-                this.setAttribute('aria-label', slim ? 'Expand sidebar' : 'Collapse sidebar');
-              ">
-              <i class="if if-arrow-left" aria-hidden="true"></i>
-            </button>
-          </div>
-          <p class="bt-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pb-1">My work</p>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-current="page" aria-label="Research output">
+        <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation">
+          <p class="bt-sidebar__group-label">My research output</p>
+          <a href="#" class="nav-link active" aria-current="page"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Research output">
             <i class="if if-article" aria-hidden="true"></i>
             <span class="bt-sidebar__label">Research output</span>
           </a>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-label="Datasets">
-            <i class="if if-database" aria-hidden="true"></i>
-            <span class="bt-sidebar__label">Datasets</span>
-          </a>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-label="Suggestions, 3 new">
-            <i class="if if-notification" aria-hidden="true"></i>
-            <span class="bt-sidebar__label">Suggestions</span>
-            <span class="badge bg-warning ms-auto" aria-hidden="true">3</span>
-          </a>
-          <p class="bt-sidebar__group-label small fw-bold text-uppercase text-muted px-3 pt-3 pb-1">Acting for</p>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-label="Manage proxies">
-            <i class="if if-user-add" aria-hidden="true"></i>
-            <span class="bt-sidebar__label">Manage proxies</span>
+          <a href="#" class="nav-link"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Inbox">
+            <i class="if if-home" aria-hidden="true"></i>
+            <span class="bt-sidebar__label">Inbox</span>
           </a>
         </nav>
       </div>
     </div>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;nav class="bt-sidebar" aria-label="Section navigation"&gt;
+<pre>&lt;nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation"&gt;
 
-  &lt;p class="small fw-bold text-uppercase text-muted px-3 pt-3 pb-1"&gt;My work&lt;/p&gt;
+  &lt;p class="bt-sidebar__group-label"&gt;My research output&lt;/p&gt;
 
-  &lt;a href="/research" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2"
-    aria-current="page"&gt;
+  &lt;!-- data-bs-toggle="tooltip" on every link keeps labels visible in slim mode --&gt;
+  &lt;a href="/research" class="nav-link active" aria-current="page"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Research output"&gt;
     &lt;i class="if if-article" aria-hidden="true"&gt;&lt;/i&gt;
-    Research output
+    &lt;span class="bt-sidebar__label"&gt;Research output&lt;/span&gt;
   &lt;/a&gt;
 
-  &lt;a href="/suggestions" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2"&gt;
-    &lt;i class="if if-notification" aria-hidden="true"&gt;&lt;/i&gt;
-    Suggestions
-    &lt;!-- Badge: keep aria-label on the badge for screen readers --&gt;
-    &lt;span class="badge bg-warning ms-auto" aria-label="3 new suggestions"&gt;3&lt;/span&gt;
+  &lt;a href="/inbox" class="nav-link"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Inbox"&gt;
+    &lt;i class="if if-home" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="bt-sidebar__label"&gt;Inbox&lt;/span&gt;
   &lt;/a&gt;
 
 &lt;/nav&gt;</pre>
     </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 2 — Badges
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Badges</h2>
+    <p class="mb-3">Drop a Bootstrap badge directly inside the link. The SCSS pushes it to the right automatically via <code>margin-left: auto</code> — no <code>ms-auto</code> needed. Add <code>aria-hidden="true"</code> on the badge and put the count and context in <code>aria-label</code> on the link. Badges are hidden in slim mode automatically.</p>
+    <p class="mb-4">Badge colour signals urgency: <code>bg-danger</code> for overdue/errors, <code>bg-warning</code> for items needing attention, <code>bg-primary</code> for neutral counts.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Bordered variant — when the sidebar needs visual separation from a panel</h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Links with badges</h3></div>
       <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
-        <nav class="bt-sidebar bt-sidebar--bordered" aria-label="Panel navigation">
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2" aria-current="page">
+        <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation">
+          <a href="#" class="nav-link active" aria-current="page" aria-label="Review deadlines, 2 overdue"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Review deadlines">
+            <i class="if if-error-circle" aria-hidden="true"></i>
+            <span class="bt-sidebar__label">Review deadlines</span>
+            <span class="badge bg-danger" aria-hidden="true">2</span>
+          </a>
+          <a href="#" class="nav-link" aria-label="Incomplete, 2 drafts"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Incomplete">
+            <i class="if if-draft" aria-hidden="true"></i>
+            <span class="bt-sidebar__label">Incomplete</span>
+            <span class="badge bg-warning" aria-hidden="true">2</span>
+          </a>
+          <a href="#" class="nav-link" aria-label="Suggestions, 3 new"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Suggestions">
+            <i class="if if-notification" aria-hidden="true"></i>
+            <span class="bt-sidebar__label">Suggestions</span>
+            <span class="badge bg-primary" aria-hidden="true">3</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;!-- Put count + context in aria-label on the link; hide the badge from AT --&gt;
+&lt;a href="/deadlines" class="nav-link" aria-label="Review deadlines, 2 overdue"
+  data-bs-toggle="tooltip" data-bs-placement="right" title="Review deadlines"&gt;
+  &lt;i class="if if-error-circle" aria-hidden="true"&gt;&lt;/i&gt;
+  &lt;span class="bt-sidebar__label"&gt;Review deadlines&lt;/span&gt;
+  &lt;span class="badge bg-danger" aria-hidden="true"&gt;2&lt;/span&gt;
+&lt;/a&gt;</pre>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 3 — Collapsible (slim mode)
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Collapsible — slim mode</h2>
+    <p class="mb-4">Adding <code>.bt-sidebar--slim</code> collapses the sidebar to icon-only width (<code>3rem</code>). Group labels, link text, and badges are hidden via CSS. The toggle button updates <code>aria-expanded</code> and <code>aria-label</code> — handled by <code>sidebar-toggle.js</code>, which also initialises Bootstrap tooltips on all links at page load.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Expanded — click the arrow to collapse</h3></div>
+      <div class="ds-demo-body">
+        <!-- @include: templates/partials/backoffice-sidebar.html -->
+      </div>
+    </div>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+<pre>&lt;nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation" id="sidebar-nav"&gt;
+
+  &lt;div class="bt-sidebar__toggle"
+    aria-controls="sidebar-nav"
+    aria-expanded="true"
+    aria-label="Collapse sidebar"&gt;
+    &lt;button type="button" class="btn btn-ghost btn-sm"&gt;
+      &lt;i class="if if-arrow-left" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;p class="bt-sidebar__group-label"&gt;My research output&lt;/p&gt;
+
+  &lt;a href="/research" class="nav-link active" aria-current="page"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Research output"&gt;
+    &lt;i class="if if-article" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="bt-sidebar__label"&gt;Research output&lt;/span&gt;
+  &lt;/a&gt;
+
+  &lt;a href="/deadlines" class="nav-link" aria-label="Review deadlines, 2 overdue"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Review deadlines"&gt;
+    &lt;i class="if if-error-circle" aria-hidden="true"&gt;&lt;/i&gt;
+    &lt;span class="bt-sidebar__label"&gt;Review deadlines&lt;/span&gt;
+    &lt;span class="badge bg-danger" aria-hidden="true"&gt;2&lt;/span&gt;
+  &lt;/a&gt;
+
+&lt;/nav&gt;
+
+&lt;script src="/assets/js/sidebar-toggle.js"&gt;&lt;/script&gt;</pre>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 4 — Bordered variant
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Bordered variant</h2>
+    <p class="mb-4">Add <code>.bt-sidebar--bordered</code> when the sidebar needs a visible right-edge separator — for example as a detail-page section navigator inside a panel layout, rather than as the full-page app sidebar.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">bt-sidebar--bordered — detail page section nav</h3></div>
+      <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
+        <nav class="bt-sidebar bt-sidebar--bordered" aria-label="Record sections">
+          <a href="#" class="nav-link active" aria-current="page"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Description">
             <i class="if if-info-circle" aria-hidden="true"></i>
-            Description
+            <span class="bt-sidebar__label">Description</span>
           </a>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+          <a href="#" class="nav-link"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="People">
             <i class="if if-user" aria-hidden="true"></i>
-            People
+            <span class="bt-sidebar__label">People</span>
           </a>
-          <a href="#" class="nav-link d-flex align-items-center gap-2 ps-3 pe-3 py-2">
+          <a href="#" class="nav-link"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Files">
             <i class="if if-file" aria-hidden="true"></i>
-            Files
+            <span class="bt-sidebar__label">Files</span>
           </a>
         </nav>
       </div>
     </div>
   </section>
 
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 5 — Layout integration
+  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Layout integration</h2>
-    <p class="mb-3"><code>bt-sidebar</code> is a direct child of <code>u-layout--app</code> and is made sticky by the layout shell. Do not add <code>position: sticky</code> manually.</p>
+    <p class="mb-3"><code>bt-sidebar</code> is a direct child of <code>u-layout--app</code> placed in the <code>sidebar</code> grid area. The shell handles sticky positioning and scroll — do not add <code>position: sticky</code> or overflow rules to the sidebar element.</p>
+    <p class="mb-4">Sidebar width is controlled by two CSS custom properties on <code>u-layout--app</code>: <code>--u-nav-sidebar-width</code> (default <code>13rem</code>) and <code>--u-nav-sidebar-width-slim</code> (default <code>3rem</code>). Override them on the shell element if a page needs different widths.</p>
+
     <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html — u-layout--app with bt-sidebar</span><button class="ds-code-copy">Copy</button></div>
+      <div class="ds-code-bar"><span class="ds-code-lang">html — u-layout--app skeleton</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
+
+  &lt;!-- Grid area: navbar --&gt;
   &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
 
+  &lt;!-- Grid area: sidebar --&gt;
   &lt;nav class="bt-sidebar" aria-label="Section navigation"&gt;
     &lt;!-- nav links --&gt;
   &lt;/nav&gt;
 
+  &lt;!-- Grid area: main --&gt;
   &lt;main id="main-content"&gt;
-    &lt;!-- u-main__header → u-main__body … --&gt;
+    &lt;div class="u-main__header"&gt;…&lt;/div&gt;
+    &lt;div class="u-main__body u-main__body--split"&gt;
+      &lt;aside class="u-main__sidebar" aria-label="Filter by"&gt;…&lt;/aside&gt;
+      &lt;section class="u-main__content"&gt;
+        &lt;div class="u-main__content-header"&gt;…&lt;/div&gt;
+        &lt;div class="u-main__content-body"&gt;…&lt;/div&gt;
+        &lt;div class="u-main__content-footer"&gt;…&lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+    &lt;div class="u-main__footer"&gt;…&lt;/div&gt;
   &lt;/main&gt;
+
+  &lt;!-- Grid area: panel (optional) --&gt;
+  &lt;aside class="u-main__panel" aria-label="Record detail"&gt;…&lt;/aside&gt;
+
 &lt;/div&gt;</pre>
     </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 6 — Available classes
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Available classes</h2>
+
+    <table class="table table-hover align-middle" aria-label="bt-sidebar class reference">
+      <thead>
+        <tr>
+          <th scope="col" class="text-uppercase text-muted small">Class</th>
+          <th scope="col" class="text-uppercase text-muted small">Element</th>
+          <th scope="col" class="text-uppercase text-muted small">Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>bt-sidebar</code></td>
+          <td><code>&lt;nav&gt;</code></td>
+          <td>Base sidebar container. Sets width, padding, and scroll behaviour.</td>
+        </tr>
+        <tr>
+          <td><code>bt-sidebar--bordered</code></td>
+          <td>Modifier on <code>bt-sidebar</code></td>
+          <td>Adds a right-edge border. Use for detail-page section navs, not the global app sidebar.</td>
+        </tr>
+        <tr>
+          <td><code>bt-sidebar--slim</code></td>
+          <td>Modifier on <code>bt-sidebar</code></td>
+          <td>Collapses to icon-only width (<code>3rem</code>). Hides group labels, link text, and badges.</td>
+        </tr>
+        <tr>
+          <td><code>bt-sidebar--flush</code></td>
+          <td>Modifier on <code>bt-sidebar</code></td>
+          <td>Removes horizontal padding. Use when links provide their own internal spacing.</td>
+        </tr>
+        <tr>
+          <td><code>bt-sidebar__toggle</code></td>
+          <td><code>&lt;button&gt;</code></td>
+          <td>Collapse/expand trigger. Toggles <code>bt-sidebar--slim</code> on the parent nav.</td>
+        </tr>
+        <tr>
+          <td><code>bt-sidebar__group-label</code></td>
+          <td><code>&lt;p&gt;</code></td>
+          <td>Section heading inside the sidebar. Hidden automatically in slim mode.</td>
+        </tr>
+        <tr>
+          <td><code>bt-sidebar__label</code></td>
+          <td><code>&lt;span&gt;</code> inside <code>.nav-link</code></td>
+          <td>Link text. Must be wrapped in this span so slim mode can hide it while keeping the icon visible.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       SECTION 7 — Bootstrap recommendations
+  ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Bootstrap recommendations</h2>
+
+    <p class="mb-3">The sidebar uses Bootstrap's <a href="https://getbootstrap.com/docs/5.3/components/navs-tabs/" class="link-primary">.nav-link</a> on <code>&lt;a&gt;</code> elements directly. The SCSS scopes all flex layout, spacing, and badge alignment inside <code>.bt-sidebar</code> — no Bootstrap utility classes needed on the links themselves.</p>
+
+    <p class="fw-semibold mb-1">Active state</p>
+    <p class="mb-3">Set both <code>aria-current="page"</code> and <code>class="nav-link active"</code> on the active link. <code>aria-current</code> is what screen readers use; <code>.active</code> handles the visual background. In server-rendered templates, set both explicitly.</p>
+
+    <p class="fw-semibold mb-1">Tooltips</p>
+    <p class="mb-3">Add <code>data-bs-toggle="tooltip" data-bs-placement="right" title="…"</code> to every link. Bootstrap reads the <code>title</code> attribute — no extra markup needed. <code>sidebar-toggle.js</code> initialises all tooltips at page load by querying <code>.bt-sidebar a.nav-link[data-bs-toggle="tooltip"]</code>. Tooltips are present at all times but become essential when the label is hidden in slim mode.</p>
+
+    <p class="fw-semibold mb-1">Mobile — consider Offcanvas</p>
+    <p class="mb-0">Bootstrap's <a href="https://getbootstrap.com/docs/5.3/components/offcanvas/" class="link-primary">Offcanvas</a> handles mobile drawers that slide over content. If the sidebar needs to become a drawer on small screens, wrap it in an Offcanvas body rather than building a custom mobile variant. <code>bt-sidebar</code> styles remain usable inside the Offcanvas body with no changes.</p>
   </section>
 
 </div>
