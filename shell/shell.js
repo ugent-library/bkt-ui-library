@@ -157,6 +157,7 @@
     }
 
     document.querySelectorAll('.ds-demo').forEach((demo, index) => {
+      if (demo.dataset.noToggle !== undefined) return;
       const label = demo.querySelector('.ds-demo-label');
       const body = demo.querySelector('.ds-demo-body');
       if (!label || !body) return;

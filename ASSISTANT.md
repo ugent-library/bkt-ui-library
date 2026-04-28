@@ -765,6 +765,7 @@ Rules:
 - No `<style>` blocks — all styles go in SCSS
 - No `style=` attributes unless the value is genuinely dynamic
 - `ds-demo-body` wraps live demos; `ds-code` wraps code examples — never mix them
+- **Static `ds-code` blocks are only justified when they show something the "Show HTML" toggle cannot** — for example, a structural skeleton with explanatory comments, a JS snippet, or a usage pattern that differs from the live demo. If a `ds-code` block duplicates what the toggle would generate, delete it. If the code block is *more complete* than the demo, update the demo to match — then delete the block.
 
 ---
 
