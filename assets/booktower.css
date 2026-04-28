@@ -817,7 +817,8 @@ code, kbd, pre, samp {
 .alert-success h2, .alert-success h3, .alert-success h4, .alert-success h5, .alert-success h6, .alert-success p {
   color: var(--bt-dark-success);
 }
-.alert-success i {
+.alert-success > .btn-close,
+.alert-success > i {
   color: var(--bt-dark-success);
 }
 .alert-success a:not(.btn) {
@@ -838,7 +839,8 @@ code, kbd, pre, samp {
 .alert-danger h2, .alert-danger h3, .alert-danger h4, .alert-danger h5, .alert-danger h6, .alert-danger p {
   color: var(--bt-dark-danger);
 }
-.alert-danger i {
+.alert-danger > .btn-close,
+.alert-danger > i {
   color: var(--bt-dark-danger);
 }
 .alert-danger a:not(.btn) {
@@ -856,7 +858,8 @@ code, kbd, pre, samp {
 .alert-warning h2, .alert-warning h3, .alert-warning h4, .alert-warning h5, .alert-warning h6, .alert-warning p {
   color: var(--bt-dark-warning);
 }
-.alert-warning i {
+.alert-warning > .btn-close,
+.alert-warning > i {
   color: var(--bt-dark-warning);
 }
 .alert-warning a:not(.btn) {
@@ -882,8 +885,10 @@ code, kbd, pre, samp {
 .alert-info p {
   color: var(--bt-blue-800);
 }
-.alert-primary i,
-.alert-info i {
+.alert-primary > .btn-close,
+.alert-primary > i,
+.alert-info > .btn-close,
+.alert-info > i {
   color: var(--bt-dark-blue);
 }
 .alert-primary a:not(.btn),
@@ -900,7 +905,8 @@ code, kbd, pre, samp {
   border-color: var(--bt-gray-200);
   color: var(--bt-gray-1000);
 }
-.alert-secondary i {
+.alert-secondary > .btn-close,
+.alert-secondary > i {
   color: var(--bt-gray-600);
 }
 .alert-secondary a:not(.btn) {
@@ -1234,8 +1240,8 @@ a.btn-danger,
 }
 
 .btn-outline-warning {
-  --bs-btn-color: var(--bt-orange-600);
-  --bs-btn-border-color: var(--bt-warning);
+  --bs-btn-color: var(--bt-orange-700);
+  --bs-btn-border-color: var(--bt-orange-700);
   --bs-btn-hover-bg: var(--bt-orange-50);
   --bs-btn-hover-color: var(--bt-orange-600);
   --bs-btn-hover-border-color: var(--bt-warning);
@@ -1311,7 +1317,8 @@ a.btn-danger,
 }
 
 /* Bootstrap semantic badges — remapped to Booktower tokens */
-.badge.bg-primary {
+.badge.bg-primary,
+.badge.bg-primary i {
   background: var(--bt-blue-800) !important;
   color: var(--bt-white);
 }
@@ -1321,7 +1328,8 @@ a.btn-danger,
   color: var(--bt-blue-900);
 }
 
-.badge.bg-success {
+.badge.bg-success,
+.badge.bg-success i {
   background: var(--bt-green-600) !important;
   color: var(--bt-white);
 }
@@ -1331,7 +1339,8 @@ a.btn-danger,
   color: var(--bt-dark-green);
 }
 
-.badge.bg-warning {
+.badge.bg-warning,
+.badge.bg-warning i {
   background: var(--bt-orange-600) !important;
   color: var(--bt-white);
 }
@@ -1341,7 +1350,8 @@ a.btn-danger,
   color: var(--bt-dark-orange);
 }
 
-.badge.bg-danger {
+.badge.bg-danger,
+.badge.bg-danger i {
   background: var(--bt-red-500) !important;
   color: var(--bt-white);
 }
@@ -1609,6 +1619,13 @@ a.btn-danger,
   font-weight: 800;
   background-color: var(--s-bg);
   color: var(--bt-blue-800);
+}
+
+.bt-avatar.bg-primary, .bt-avatar.bg-success, .bt-avatar.bg-warning, .bt-avatar.bg-danger {
+  color: var(--bt-white);
+}
+.bt-avatar.bg-primary i, .bt-avatar.bg-success i, .bt-avatar.bg-warning i, .bt-avatar.bg-danger i {
+  color: var(--bt-white);
 }
 
 /* -- bt-file-drop -- */
@@ -3660,4 +3677,8 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 
 .bt-bg-white {
   background-color: var(--bt-white);
+}
+
+.bg-danger-light {
+  background-color: var(--bt-red-50);
 }
