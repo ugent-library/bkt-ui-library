@@ -1,33 +1,32 @@
-<!-- @title: Dashboard — Biblio -->
+<!-- @title: Dashboard — Split queue — Biblio -->
 <!-- @surface: backoffice -->
+<!-- @states: filled, empty, message -->
 
-<div class="u-layout--app">
+<div class="u-layout--app" data-surface="backoffice">
 
 <!-- @include: templates/partials/backoffice-header.html -->
-
 <!-- @include: templates/partials/backoffice-sidebar.html -->
 
   <main id="main-content">
 
+    <!-- Live region for HTMX action confirmations -->
     <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
-    <!-- <div class="u-main__alert">
-      TODO: turn into component
-      <span class="alert alert-success alert--small py-2 alert--sticky">
-        <i class="if if-service me-2"></i>
-        <small><strong>12 items</strong> auto-resolved this week</small>
-      </span>
-    </div> -->
+
     <div class="u-main__header">
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
-            <h1 class="h5 fw-semibold mb-0">Inbox</h1>
-            <p class="small text-muted mb-0 mt-1">Registration and deposit office for the Academic Bibliography of Ghent University.</p>
+            <h1 class="h5 mb-0 fw-semibold d-flex align-items-center gap-2">
+              Inbox
+              <!-- @state: filled message -->
+              <span class="badge bg-primary" aria-label="2 records added recently">7</span>
+              <!-- @state -->
+            </h1>
           </div>
         </div>
         <div class="bt-toolbar__right">
           <div class="bt-toolbar__item">
-            <a href="#" class="btn btn-primary btn-sm">
+            <a href="#" class="btn btn-outline-primary">
               <i class="if if-add if--sm" aria-hidden="true"></i>
               Add research output
             </a>
@@ -38,287 +37,474 @@
 
     <div class="u-main__body">
       <section class="u-main__content">
-        <div class="alert alert-success alert--seamless-inbox" role="alert">
+        <!-- <div class="alert alert-success alert--seamless-inbox" role="alert">
           <p class="mb-0"><i class="if if-check-circle flex-shrink-0 mt-1" aria-hidden="true"></i> <strong>Submitted</strong>: Urban forests as essential infrastructure for climate resilience and biodiversity.</p>
-        </div>
+        </div> -->
+
         <div class="u-main__content-body bt-bg">
 
-      <!-- ============================================================
-           ROW 1 — Inbox + Added on your behalf, side by side
-           ============================================================ -->
-      <div class="row g-4 mb-4 justify-content-between">
+          <!-- ============================================================
+               TWO-COLUMN LAYOUT: action queues left, activity right
+               ============================================================ -->
+          <div class="row g-4 align-items-start justify-content-between">
 
-        <!-- Inbox -->
-        <div class="col-6">
-          <section aria-labelledby="inbox-heading" class="h-100">
-
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h2 id="inbox-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
+            <!-- LEFT: action queues -->
+            <div class="col-lg-7 d-flex flex-column gap-4">
+              <!-- <h2 id="added-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
                 Inbox
-                <span class="badge bg-warning" aria-label="5 items need your attention">5</span>
-              </h2>
-              <a href="#" class="small text-muted text-decoration-none">View all</a>
+                <span class="badge bg-primary" aria-label="2 records added recently">7</span>
+              </h2> -->
+
+              <!-- @state: filled -->
+                <!-- ============================================================
+                      DEADLINE ALERT — full width, top
+                      ============================================================ -->
+                <div class="alert alert-danger d-flex align-items-center justify-content-between mb-0 py-3" role="alert">
+                  <div class="d-flex gap-3">
+                    <i class="if if-error-circle if--lg"></i>
+                    <div>
+                      <h2 class="h6 mb-0 d-flex align-items-center gap-2">
+                        Review for FWO deadline in 30 days
+                        <span class="badge bg-danger-light" aria-label="4 records to complete">3</span>
+                      </h2>
+                      <p class="small">Add open access where possible.</p>
+                    </div>
+                  </div>
+                  <div class="bt-btn-toolbar bt-btn-toolbar--wide-spacing">
+                    <!-- <a href="#" class="small fw-normal">
+                      Completed
+                      This should go inside the specific page instead?
+                    </a> -->
+                    <a href="#" class="btn btn-danger">
+                      Review
+                      <i class="if if-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+              <!-- @state -->
+
+              <!-- <section aria-labelledby="deadline-heading">
+                <div class="card">
+                  <div class="bt-toolbar px-4 py-3">
+                    <div class="bt-toolbar__left">
+                      <div class="bt-toolbar__item">
+                        <h2 id="suggestions-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                          <i class="if if-error-circle"></i>
+                          FWO deadline in 30 days
+                          <span class="badge bg-secondary" aria-label="2 outputs to review">2</span>
+                        </h2>
+                      </div>
+                    </div>
+                    <div class="bt-toolbar__right">
+                      <div class="bt-toolbar__item">
+                        <a href="#" class="btn btn-danger btn-sm flex-shrink-0">Review
+                          <i class="if if-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section> -->
+
+              <!-- @state: filled message -->
+                <!-- ── Suggestions (claims to decide) ── -->
+                <section aria-labelledby="suggestions-heading">
+
+                  <div class="card">
+                    <div class="bt-toolbar px-4 py-3">
+                      <div class="bt-toolbar__left">
+                        <div class="bt-toolbar__item">
+                          <h2 id="suggestions-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                            <i class="if if-message-ai if--md" aria-hidden="true"></i>
+                            Suggestions
+                            <span class="badge bg-secondary" aria-label="2 suggestions to decide">2</span>
+                          </h2>
+                        </div>
+                      </div>
+                      <div class="bt-toolbar__right">
+                        <div class="bt-toolbar__item">
+                          <a href="#" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <article class="px-4 py-3 border-top" aria-labelledby="claim-1-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <a href="#" id="claim-1-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Transfer learning across hospitals: a multicentric ICU study
+                          </a>
+                          <p class="small mb-1">
+                            S. Van Hoecke, M. Lefèvre, T. Okafor · 2025 · Journal article
+                          </p>
+                          <span class="badge bg-secondary">Web of Science</span> <span class="fw-normal small">High-confidence match.</span>
+                          <!-- <div class="progress mt-2 w-50 mb-1" style="height: 4px" role="progressbar" aria-label="Match confidence: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-primary" style="width: 86%"></div>
+                          </div>
+                          <p class="small mb-0" aria-hidden="true">86% match confidence</p>
+                          <p class="visually-hidden">Match confidence: 86 out of 100</p> -->
+                        </div>
+                        <div class="d-flex gap-2 flex-shrink-0">
+                          <button type="button" class="btn btn-ghost btn-sm"
+                            aria-label="Not mine: Transfer learning across hospitals: a multicentric ICU study"
+                            hx-post="/suggestions/claim-1/reject"
+                            hx-target="closest article"
+                            hx-swap="outerHTML"
+                            hx-indicator="#action-status">
+                            Not mine
+                          </button>
+                          <button type="button" class="btn btn-primary btn-sm"
+                            aria-label="Confirm mine: Transfer learning across hospitals: a multicentric ICU study"
+                            hx-post="/suggestions/claim-1/confirm"
+                            hx-target="closest article"
+                            hx-swap="outerHTML"
+                            hx-indicator="#action-status">
+                            <!-- <i class="if if-check" aria-hidden="true"></i> -->
+                            Review &amp; confirm
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="px-4 py-3 border-top" aria-labelledby="claim-2-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <a href="#" id="claim-2-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Workshop notes on responsible AI in clinical decision support
+                          </a>
+                          <p class="small mb-1">
+                            S. Van Hoecke et al. · 2024 · Conference paper
+                          </p>
+                          <span class="badge bg-secondary">Crossref</span> <span class="fw-normal small">74% match.</span>
+                          <!-- <div class="progress mt-2 w-50 mb-1" style="height: 4px" role="progressbar" aria-label="Match confidence: 74%" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-primary" style="width: 74%"></div>
+                          </div>
+                          <p class="small mb-0" aria-hidden="true">74% match confidence</p>
+                          <p class="visually-hidden">Match confidence: 74 out of 100</p> -->
+                        </div>
+                        <div class="d-flex gap-2 flex-shrink-0">
+                          <button type="button" class="btn btn-ghost btn-sm"
+                            aria-label="Not mine: Workshop notes on responsible AI in clinical decision support"
+                            hx-post="/suggestions/claim-2/reject"
+                            hx-target="closest article"
+                            hx-swap="outerHTML"
+                            hx-indicator="#action-status">
+                            Not mine
+                          </button>
+                          <button type="button" class="btn btn-primary btn-sm"
+                            aria-label="Confirm mine: Workshop notes on responsible AI in clinical decision support"
+                            hx-post="/suggestions/claim-2/confirm"
+                            hx-target="closest article"
+                            hx-swap="outerHTML"
+                            hx-indicator="#action-status">
+                            <!-- <i class="if if-check" aria-hidden="true"></i> -->
+                            Review &amp; confirm
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+
+
+                    <!-- <article class="px-4 py-3" aria-labelledby="claim-3-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <a href="#" id="claim-3-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Benchmark dataset for wearable PPG signal quality (BeWearPPG)
+                          </a>
+                          <p class="small">
+                            <span class="badge bg-secondary me-1">ORCID</span>
+                            S. Van Hoecke et al. · 2025 · Dataset
+                          </p>
+                          <div class="progress mt-2 w-50 mb-1" style="height: 4px" role="progressbar" aria-label="Match confidence: 91%" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-primary" style="width: 91%"></div>
+                          </div>
+                          <p class="small mb-0" aria-hidden="true">91% match confidence</p>
+                          <p class="visually-hidden">Match confidence: 91 out of 100</p>
+                        </div>
+                        <div class="d-flex gap-2 flex-shrink-0">
+                          <button type="button" class="btn btn-ghost btn-sm"
+                            aria-label="Not mine: Benchmark dataset for wearable PPG signal quality"
+                            hx-post="/suggestions/claim-3/reject"
+                            hx-target="closest article"
+                            hx-swap="outerHTML"
+                            hx-indicator="#action-status">
+                            Not mine
+                          </button>
+                          <button type="button" class="btn btn-primary btn-sm"
+                            aria-label="Confirm mine: Benchmark dataset for wearable PPG signal quality"
+                            hx-post="/suggestions/claim-3/confirm"
+                            hx-target="closest article"
+                            hx-swap="outerHTML"
+                            hx-indicator="#action-status">
+                            <i class="if if-check" aria-hidden="true"></i>
+                            Review &amp; confirm
+                          </button>
+                        </div>
+                      </div>
+                    </article> -->
+
+                  </div>
+                </section>
+
+                <!-- ── Missing fields (to complete) ── -->
+                <section aria-labelledby="complete-heading">
+                  <div class="card">
+                    <div class="bt-toolbar px-4 py-3">
+                      <div class="bt-toolbar__left">
+                        <div class="bt-toolbar__item">
+                          <h2 id="complete-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                            <i class="if if-draft if--md" aria-hidden="true"></i>
+                            Incomplete work
+                            <span class="badge bg-secondary" aria-label="4 records to complete">3</span>
+                          </h2>
+                        </div>
+                      </div>
+                      <div class="bt-toolbar__right">
+                        <div class="bt-toolbar__item">
+                          <a href="#" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Returned for revision — most urgent, first -->
+                    <article class="px-4 py-3 border-top" aria-labelledby="returned-1-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <p class="badge bg-danger-light small mb-1">Returned for revision</p>
+                          <span class="badge border text-dark fw-normal" aria-hidden="true">74% complete</span>
+                          <a href="#" id="returned-1-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Contrastive learning for cross-lingual biomedical text mining
+                          </a>
+                          <p class="small mb-2">2024 · Conference paper</p>
+                          <div class="alert alert-light alert--sm mb-0 d-inline-block">
+                            <p class="mb-0 fst-italic">
+                              <i class="if if-message me-1" aria-hidden="true"></i>
+                              Please confirm the open access licence.
+                            </p>
+                          </div>
+                        </div>
+                        <div class="flex-shrink-0">
+                          <a href="#" class="btn btn-outline-warning btn-sm"
+                            aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
+                            Edit &amp; resubmit
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="px-4 py-3 border-top" aria-labelledby="missing-1-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <p class="badge bg-warning-light small mb-1">Missing: full-text file, funding, license</p>
+                          <span class="badge border text-dark fw-normal" aria-hidden="true">74% complete</span>
+                          <a href="#" id="missing-1-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Real-time atrial fibrillation detection on edge devices
+                          </a>
+                          <p class="small mb-0">2025 · Journal article</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                          <a href="#" class="btn btn-outline-warning btn-sm"
+                            aria-label="Complete: Real-time atrial fibrillation detection on edge devices">
+                            Complete
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="px-4 py-3 border-top" aria-labelledby="missing-2-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <p class="badge bg-warning-light small mb-1">Missing: abstract, peer-review status</p>
+                          <span class="badge border text-dark fw-normal" aria-hidden="true">74% complete</span>
+                          <a href="#" id="missing-2-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Tutorial: building reproducible ML pipelines for biosignals
+                          </a>
+                          <p class="small mb-0">2024 · Conference paper</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                          <a href="#" class="btn btn-outline-warning btn-sm"
+                            aria-label="Complete: Tutorial: building reproducible ML pipelines for biosignals">
+                            Complete
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+
+                    <!-- <article class="px-4 py-3 border-top" aria-labelledby="missing-3-title">
+                      <div class="d-flex align-items-start justify-content-between gap-3">
+                        <div class="flex-grow-1 min-w-0">
+                          <p class="badge bg-warning-light small mb-1">Missing: license, linked publication</p>
+                          <a href="#" id="missing-3-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
+                            Wearable cohort dataset (preview release)
+                          </a>
+                          <p class="small mb-0">2024 · Dataset</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                          <a href="#" class="btn btn-secondary btn-sm"
+                            aria-label="Complete: Wearable cohort dataset (preview release)">
+                            Complete
+                          </a>
+                        </div>
+                      </div>
+                    </article> -->
+
+                  </div>
+                </section>
+              <!-- @state -->
+              <!-- @state: empty -->
+
+
+                <!-- ============================================================
+                      Connect sources
+                      ============================================================ -->
+                <div class="alert alert--dashed alert-success alert-dismissible fade show" role="alert">
+                  <h2 class="h5">
+                    Complete your bibliography and deposit automatically by connecting your sources.
+                  </h2>
+                  <p class="lead">Connect your other platforms to automatically populate your bibliography.</p>
+                  <div class="bt-btn-toolbar">
+                    <a href="#" class="btn btn-outline-success">
+                      <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                      Connect ORCID
+                    </a>
+                    <a href="#" class="btn btn-outline-success">
+                      <i class="if if-global if--xs" aria-hidden="true"></i>
+                      Connect Web of Science
+                    </a>
+                  </div>
+                  <button type="button" class="btn-close btn-sm m-1" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+              <!-- @state -->
+
+                <section aria-labelledby="all-caught-up-heading">
+                  <div class="card">
+                    <div class="bt-toolbar px-4 py-3">
+                      <div class="bt-toolbar__left">
+                        <div class="bt-toolbar__item">
+                          <h2 id="complete-heading" class="h6 mb-0 d-flex align-items-center">
+                            <i class="if if-star if--md" aria-hidden="true"></i>
+                            All caught up
+                            <span class="badge bg-success ms-2" aria-label="No output left to review or complete">0</span>
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body border-top px-4 py-3">
+                      <p class="mb-0">Enjoy your day or <a href="#" class="text-decoration-underline">Add research output</a>.</p>
+                    </div>
+                  </div>
+                </section>
             </div>
 
-            <!-- Returned for revision -->
-            <div class="card">
+            <!-- RIGHT: added on your behalf + activity feed -->
+            <div class="col-lg-4 d-flex flex-column gap-4">
 
-              <div class="px-4 py-3 border-bottom d-flex align-items-center gap-2">
-                <i class="if if-arrow-left" aria-hidden="true"></i>
-                <span class="small fw-semibold">Returned for revision</span>
-              </div>
-
-              <div class="px-4 py-3 border-bottom">
-                <div class="d-flex align-items-start justify-content-between gap-4">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Contrastive learning for cross-lingual biomedical text mining</a>
-                    <small class="mb-1 text-muted fst-italic d-block">"Please add the DOI and confirm the open access licence."</small>
-                    <span class="badge bg-primary">Journal article</span>
-                  </div>
-                  <a href="#" class="btn btn-secondary btn-sm flex-shrink-0"
-                    aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
-                    Edit &amp; resubmit
+              <!-- @state: message -->
+                <!-- ============================================================
+                      Get summaries via mail — top right
+                      ============================================================ -->
+                <div class="alert alert--dashed alert-info alert-dismissible fade show" role="alert">
+                  <h2 class="h5">
+                    Stay on top of your research output via mail.
+                  </h2>
+                  <p class="lead">Get a monthly summary of upcoming deadlines, new suggestions, and recent activity.</p>
+                  <a href="#" class="btn btn-outline-primary">
+                    <i class="if if-mail if--xs" aria-hidden="true"></i>
+                    Get summary
                   </a>
+                  <button type="button" class="btn-close btn-sm m-1" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-              </div>
+              <!-- @state -->
 
-              <div class="px-4 py-3">
-                <div class="d-flex align-items-start justify-content-between gap-4">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Annotated corpus for biomedical relation extraction — v2</a>
-                    <small class="mb-1 text-muted fst-italic d-block">"Data licence is missing. Please specify a Creative Commons licence."</small>
-                    <span class="badge bg-primary">Dataset</span>
-                  </div>
-                  <a href="#" class="btn btn-secondary btn-sm flex-shrink-0"
-                    aria-label="Edit and resubmit: Annotated corpus for biomedical relation extraction">
-                    Edit &amp; resubmit
-                  </a>
+              <!-- ── Added on your behalf ── -->
+              <section aria-labelledby="added-heading">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h2 id="added-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
+                    Added on your behalf
+                    <span class="badge bg-secondary" aria-label="2 records added recently">2</span>
+                  </h2>
+                  <a href="#" class="small text-muted text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
                 </div>
-              </div>
+
+                <ol class="list-unstyled mb-0" aria-label="Work recently added on your behalf">
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2h ago</span>
+                    <p class="small mb-0"><span class="fw-semibold">Biblio assistant</span> auto-imported a conference paper via Web of Science:
+                      <a href="#" id="added-1-title">
+                        A survey of self-supervised learning for physiological signals
+                      </a>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2d ago</span>
+                    <p class="small mb-0"><strong>Biblio assistant</strong> auto-imported a dataset via ORCID claim:
+                      <a href="#" id="added-2-title">
+                        Annotated dataset of arrhythmia episodes
+                      </a>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                    <p class="small mb-0"><span class="fw-semibold">Hannelore Vanhoutte</span> added a new Journal article:
+                      <a href="#" id="added-2-title">
+                        Annotated dataset of arrhythmia episodes
+                      </a>
+                    </p>
+                  </li>
+                </ol>
+              </section>
+
+              <!-- ── Recent activity ── -->
+              <section aria-labelledby="activity-heading">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h2 id="activity-heading" class="small fw-bold text-uppercase text-muted mb-0">Recent activity</h2>
+                  <a href="#" class="small text-muted text-decoration-none">All <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                </div>
+
+                <ol class="list-unstyled mb-0" aria-label="Recent changes to your research output">
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">Yesterday</span>
+                    <p class="small mb-0"><strong>You</strong> attached a PDF for <a href="#" class="text-reset">'A survey of self-supervised learning…'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">3d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> confirmed two co-authors for <a href="#" class="text-reset">'Open hardware for low-cost ECG…'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">3d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> confirmed two co-authors for <a href="#" class="text-reset">'Open hardware for low-cost ECG…'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> linked software to <a href="#" class="text-reset">'Annotated dataset of arrhythmia episodes'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> linked software to <a href="#" class="text-reset">'Annotated dataset of arrhythmia episodes'</a></p>
+                  </li>
+                </ol>
+              </section>
 
             </div>
 
-            <!-- Suggestions -->
-            <div class="bg-white rounded-3 bt-border">
-
-              <div class="px-4 py-3 border-bottom d-flex align-items-center gap-2">
-                <i class="if if-notification" aria-hidden="true"></i>
-                <span class="small fw-semibold">Suggestions</span>
-              </div>
-
-              <div class="px-4 py-3 border-bottom">
-                <div class="d-flex align-items-center justify-content-between gap-4">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Deep learning approaches for protein structure prediction in low-data regimes</a>
-                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                      <span class="badge bg-secondary">Web of Science</span>
-                      <span class="badge bg-primary">Journal article</span>
-                      <small class="text-muted">Nature Methods · 2024</small>
-                    </div>
-                  </div>
-                  <div class="d-flex gap-2 flex-shrink-0">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Not mine: Deep learning approaches for protein structure prediction"
-                      hx-post="/suggestions/sug-001/reject"
-                      hx-target="closest .py-3"
-                      hx-swap="outerHTML"
-                      hx-indicator="#action-status">
-                      Not mine
-                    </button>
-                    <button type="button" class="btn btn-success btn-sm"
-                      aria-label="Confirm: Deep learning approaches for protein structure prediction"
-                      hx-post="/suggestions/sug-001/confirm"
-                      hx-target="closest .py-3"
-                      hx-swap="outerHTML"
-                      hx-indicator="#action-status">
-                      <i class="if if-check if--sm" aria-hidden="true"></i> Confirm
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="px-4 py-3 border-bottom">
-                <div class="d-flex align-items-center justify-content-between gap-4">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Benchmarking transformer architectures for genomic sequence classification</a>
-                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                      <span class="badge bg-secondary">ORCID</span>
-                      <span class="badge bg-primary">Preprint</span>
-                      <small class="text-muted">bioRxiv · 2025</small>
-                    </div>
-                  </div>
-                  <div class="d-flex gap-2 flex-shrink-0">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Not mine: Benchmarking transformer architectures"
-                      hx-post="/suggestions/sug-002/reject"
-                      hx-target="closest .py-3"
-                      hx-swap="outerHTML"
-                      hx-indicator="#action-status">
-                      Not mine
-                    </button>
-                    <button type="button" class="btn btn-success btn-sm"
-                      aria-label="Confirm: Benchmarking transformer architectures"
-                      hx-post="/suggestions/sug-002/confirm"
-                      hx-target="closest .py-3"
-                      hx-swap="outerHTML"
-                      hx-indicator="#action-status">
-                      <i class="if if-check if--sm" aria-hidden="true"></i> Confirm
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="px-4 py-3">
-                <div class="d-flex align-items-center justify-content-between gap-4">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Efficient fine-tuning of large language models for biomedical NER</a>
-                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                      <span class="badge bg-secondary">arXiv</span>
-                      <span class="badge bg-primary">Conference paper</span>
-                      <small class="text-muted">ACL 2024</small>
-                    </div>
-                  </div>
-                  <div class="d-flex gap-2 flex-shrink-0">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Not mine: Efficient fine-tuning of large language models"
-                      hx-post="/suggestions/sug-003/reject"
-                      hx-target="closest .py-3"
-                      hx-swap="outerHTML"
-                      hx-indicator="#action-status">
-                      Not mine
-                    </button>
-                    <button type="button" class="btn btn-success btn-sm"
-                      aria-label="Confirm: Efficient fine-tuning of large language models"
-                      hx-post="/suggestions/sug-003/confirm"
-                      hx-target="closest .py-3"
-                      hx-swap="outerHTML"
-                      hx-indicator="#action-status">
-                      <i class="if if-check if--sm" aria-hidden="true"></i> Confirm
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </section>
-        </div>
-
-        <!-- Added on your behalf + Recent activity -->
-        <div class="col-5 d-flex flex-column gap-4">
-
-          <!-- Added on your behalf -->
-          <section aria-labelledby="added-heading">
-
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h2 id="added-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
-                Added on your behalf
-                <span class="badge bg-warning" aria-label="2 items added recently">2</span>
-              </h2>
-              <a href="#" class="small text-muted text-decoration-none">View all</a>
-            </div>
-
-            <div class="d-flex flex-column">
-
-              <div class="py-3 border-bottom">
-                <div class="d-flex align-items-start justify-content-between gap-3">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Multimodal representations of scientific knowledge graphs</a>
-                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                      <span class="badge bg-secondary">Librarian</span>
-                      <span class="badge bg-success">Open access</span>
-                    </div>
-                  </div>
-                  <div class="d-flex gap-2 flex-shrink-0">
-                    <a href="#" class="btn btn-ghost btn-sm"
-                      aria-label="View: Multimodal representations of scientific knowledge graphs">View</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="py-3">
-                <div class="d-flex align-items-start justify-content-between gap-3">
-                  <div>
-                    <a href="#" class="small fw-semibold text-reset text-decoration-none d-block mb-1">Graph neural networks for drug–target interaction prediction at scale</a>
-                    <div class="d-flex align-items-center gap-2 flex-wrap">
-                      <span class="badge bg-secondary">Proxy</span>
-                      <span class="badge bg-success">Open access</span>
-                    </div>
-                  </div>
-                  <div class="d-flex gap-2 flex-shrink-0">
-                    <a href="#" class="btn btn-ghost btn-sm"
-                      aria-label="View: Graph neural networks for drug–target interaction prediction">View</a>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </section>
-
-          <!-- Recent activity -->
-          <section class="mt-3" aria-labelledby="activity-heading">
-
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h2 id="activity-heading" class="small fw-bold text-uppercase text-muted mb-0">Recent activity</h2>
-              <a href="#" class="small text-muted text-decoration-none">View all</a>
-            </div>
-
-            <div class="d-flex d-flex-column">
-
-              <ol class="list-unstyled mb-0 w-100" aria-label="Recent changes to your research output">
-
-                <li class="py-3 border-bottom">
-                  <div class="d-flex align-items-baseline gap-2">
-                    <span class="badge bg-success flex-shrink-0">Published</span>
-                    <a href="#" class="small text-reset text-decoration-none">Deep learning approaches for protein structure prediction</a>
-                  </div>
-                  <p class="mb-0 mt-1 text-muted small">By librarian · 2 hours ago</p>
-                </li>
-
-                <li class="py-3 border-bottom">
-                  <div class="d-flex align-items-baseline gap-2">
-                    <span class="badge bg-warning flex-shrink-0">Revision</span>
-                    <a href="#" class="small text-reset text-decoration-none">Contrastive learning for cross-lingual biomedical text mining</a>
-                  </div>
-                  <p class="mb-0 mt-1 text-muted bt-text-xs">By librarian · Yesterday</p>
-                </li>
-
-                <li class="py-3 border-bottom">
-                  <div class="d-flex align-items-baseline gap-2">
-                    <span class="badge bg-secondary flex-shrink-0">Added</span>
-                    <a href="#" class="small text-reset text-decoration-none">Multimodal representations of scientific knowledge graphs</a>
-                  </div>
-                  <p class="mb-0 mt-1 text-muted bt-text-xs">By librarian · Yesterday</p>
-                </li>
-
-                <li class="py-3 border-bottom">
-                  <div class="d-flex align-items-baseline gap-2">
-                    <span class="badge bg-secondary flex-shrink-0">Edited</span>
-                    <a href="#" class="small text-reset text-decoration-none">Benchmark results for variational quantum eigensolver</a>
-                  </div>
-                  <p class="mb-0 mt-1 text-muted bt-text-xs">By you · 3 days ago</p>
-                </li>
-
-                <li class="py-3">
-                  <div class="d-flex align-items-baseline gap-2">
-                    <span class="badge bg-info flex-shrink-0">Submitted</span>
-                    <a href="#" class="small text-reset text-decoration-none">Annotated corpus for biomedical relation extraction — v2</a>
-                  </div>
-                  <p class="mb-0 mt-1 text-muted bt-text-xs">By you · 4 days ago</p>
-                </li>
-
-              </ol>
-
-            </div>
-
-          </section>
-
+          </div>
         </div>
       </section>
-
-        </div>
-      </div>
     </div>
+
   </main>
 </div>
