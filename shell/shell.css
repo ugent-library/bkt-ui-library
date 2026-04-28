@@ -265,23 +265,39 @@ body {
   transition: opacity var(--bt-dur-fast);
 }
 
+.bt-nav-state-list {
+  padding-left: var(--bt-sp-5);
+}
+
 .bt-nav-template-item:hover .bt-nav-template-actions,
 .bt-nav-template-item.active .bt-nav-template-actions {
   opacity: 1;
 }
 
+.bt-nav-state-btn,
 .bt-nav-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
   color: var(--bt-gray-300);
   text-decoration: none;
   border-radius: var(--bt-radius-sm);
   transition: color var(--bt-dur-fast), background var(--bt-dur-fast);
 }
 
+.bt-nav-action {
+  width: 24px;
+  height: 24px;
+}
+
+.bt-nav-state-btn {
+  padding: 2px 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: var(--bt-text-xs);
+}
+
+.bt-nav-state-btn:hover,
 .bt-nav-action:hover {
   color: var(--bt-white);
   background-color: var(--bt-gray-600);

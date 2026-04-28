@@ -9,6 +9,7 @@
  * - Live reload via minimal WebSocket implementation
  * - HTMX partial responses: ?partial=true strips shell
  * - Template HTML view: ?view=html shows source with copy button
+ * - Template states: @states meta + <!-- @state: name --> blocks + ?state= param
  */
 
 const http    = require('http');
@@ -57,6 +58,19 @@ const SECTIONS = [
   { dir: 'product',     label: 'product'     },
 ];
 
+// ─── Read @states from top of a template file (cheap, first few lines only) ──
+function getStateList(filePath) {
+  try {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const lines = content.split('\n').slice(0, 10).join('\n');
+    const m = lines.match(/<!--\s*@states\s*:\s*([^\-]+?)\s*-->/);
+    if (!m) return [];
+    return m[1].split(',').map(s => s.trim()).filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
 // ─── Nav cache — rebuilt only when files change ───────────────────────────────
 let _navCache = null;
 
@@ -81,6 +95,7 @@ function buildNav() {
           name:       slugToLabel(e.name.replace('.html', '')),
           path:       `/templates/${e.name}`,
           isTemplate: true,
+          stateList:  getStateList(path.join(dirPath, e.name)),
         }));
 
       const groups = entries
@@ -97,6 +112,7 @@ function buildNav() {
               name:       slugToLabel(f.replace('.html', '')),
               path:       `/templates/${subDir.name}/${f}`,
               isTemplate: true,
+              stateList:  getStateList(path.join(dirPath, subDir.name, f)),
             })),
         }))
         .filter(g => g.files.length);
@@ -143,7 +159,32 @@ function parseMetaAndBody(raw, filePath) {
       .replace(/-/g, ' ')
       .replace(/\b\w/g, c => c.toUpperCase());
   }
+  // Parse comma-separated @states into an array
+  if (meta.states) {
+    meta.stateList = meta.states.split(',').map(s => s.trim()).filter(Boolean);
+  }
   return { meta, body };
+}
+
+// ─── State filtering ──────────────────────────────────────────────────────────
+// Strips <!-- @state: name --> ... <!-- @/state --> blocks that don't match
+// the active state. Blocks for the active state have the wrapper comments
+// removed and their content kept. If no activeState, all blocks are shown.
+function filterStateContent(html, activeState) {
+  if (!activeState) return html;
+  return html.replace(
+    /<!--\s*@state:\s*([\w][\w\s-]*?)\s*-->[\s\S]*?<!--\s*@\/?state\s*-->/g,
+    (match, stateNames) => {
+      const states = stateNames.trim().split(/\s+/);
+      if (states.includes(activeState)) {
+        // Strip the wrapper comments, keep content
+        return match
+          .replace(/^<!--\s*@state:\s*[\w][\w\s-]*?\s*-->\s*/, '')
+          .replace(/\s*<!--\s*@\/?state\s*-->$/, '');
+      }
+      return '';
+    }
+  );
 }
 
 function resolveIncludes(body, filePath) {
@@ -162,9 +203,11 @@ function stripHtmlComments(html) {
   return html.replace(/<!--(?!\s*\[if\b)([\s\S]*?)-->/g, '');
 }
 
-function renderBodyTemplate(raw, filePath) {
+function renderBodyTemplate(raw, filePath, activeState) {
   const { meta, body: rawBody } = parseMetaAndBody(raw, filePath);
-  const body = stripHtmlComments(resolveIncludes(rawBody, filePath));
+  const resolved = resolveIncludes(rawBody, filePath);
+  const stateFiltered = filterStateContent(resolved, activeState);
+  const body = stripHtmlComments(stateFiltered);
   const surface = meta.surface ? ` data-surface="${meta.surface}"` : '';
   const headCss = DEFAULT_CSS.map(href => `  <link rel="stylesheet" href="${href}">`).join('\n');
   const headScripts = DEFAULT_HEAD_SCRIPTS
@@ -792,9 +835,14 @@ async function handleTemplateHtmx(req, res, urlPath, params) {
 }
 
 // ─── Nav link renderer ────────────────────────────────────────────────────────
-function renderNavLink(f, currentPath) {
+function renderNavLink(f, currentPath, activeState) {
   const active = currentPath === f.path;
   if (f.isTemplate) {
+    const stateBtns = (f.stateList || []).map(s => {
+      const isCurrent = active && activeState === s;
+      return `<a href="${f.path}?state=${encodeURIComponent(s)}" class="bt-nav-state-btn${isCurrent ? ' is-active' : ''}" title="State: ${s}">${s}</a>`;
+    }).join('');
+    const stateSection = (stateBtns && active) ? `<span class="bt-nav-state-list">${stateBtns}</span>` : '';
     return `
           <div class="bt-nav-template-item${active ? ' active' : ''}">
             <a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>
@@ -802,20 +850,21 @@ function renderNavLink(f, currentPath) {
               <a href="${f.path}" class="bt-nav-action" title="View template">⊙</a>
               <a href="${f.path}?view=html" class="bt-nav-action" title="Show HTML">&lt;/&gt;</a>
             </span>
-          </div>`;
+          </div>
+          ${stateSection}`;
   }
   return `<a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>`;
 }
 
 // ─── Shell injection ──────────────────────────────────────────────────────────
-function injectShell(filePath, html, currentPath) {
+function injectShell(filePath, html, currentPath, activeState) {
   if (html.includes('data-bare')) return html;
 
   const nav     = buildNav();
   const navHtml = nav.map(section => `
     <div class="bt-nav-section">
       <p class="bt-nav-section-label">${section.label}</p>
-      ${(section.files || []).map(f => renderNavLink(f, currentPath)).join('\n')}
+      ${(section.files || []).map(f => renderNavLink(f, currentPath, activeState)).join('\n')}
       ${(section.groups || []).map(group => {
         const hasActive = group.files.some(f => f.path === currentPath);
         return `
@@ -827,7 +876,7 @@ function injectShell(filePath, html, currentPath) {
           </svg>
         </button>
         <div class="bt-nav-group-items" id="${group.id}-items">
-          ${group.files.map(f => renderNavLink(f, currentPath)).join('\n')}
+          ${group.files.map(f => renderNavLink(f, currentPath, activeState)).join('\n')}
         </div>
       </div>`;
       }).join('\n')}
@@ -867,7 +916,7 @@ function injectShell(filePath, html, currentPath) {
       ${navHtml}
     </div>
     <div class="bt-nav-footer" aria-label="Keyboard shortcuts">
-      <kbd title="Toggle sidebar">⌘M</kbd> sidebar &nbsp;·&nbsp; <kbd title="Focus search">⌘K</kbd> search
+      <kbd title="Toggle sidebar">⌘M</kbd> sidebar &nbsp;·&nbsp; <kbd title="Focus search">⌘K</kbd> search &nbsp;·&nbsp; <kbd title="Cycle states">⌘E</kbd> state
     </div>
   </nav>
   <main id="bt-content" class="bt-content" tabindex="-1">`;
@@ -984,9 +1033,11 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  const activeState = params.state || null;
+
   let html = fs.readFileSync(filePath, 'utf8');
   const isFullDocument = /<\s*html\b/i.test(html);
-  const parsedTemplate = isFullDocument ? null : renderBodyTemplate(html, filePath);
+  const parsedTemplate = isFullDocument ? null : renderBodyTemplate(html, filePath, activeState);
 
   // ?view=html — show source with includes resolved
   if (params.view === 'html') {
@@ -1007,7 +1058,7 @@ const server = http.createServer(async (req, res) => {
     html = parsedTemplate.html;
   }
 
-  html = injectShell(filePath, html, urlPath);
+  html = injectShell(filePath, html, urlPath, activeState);
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(html);
 });

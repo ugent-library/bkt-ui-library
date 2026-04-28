@@ -230,6 +230,21 @@
         search.select();
       }
     }
+
+    // Cmd/Ctrl + E — cycle template states
+    if (mod && e.key === 'e') {
+      const stateBtns = [...document.querySelectorAll('.bt-nav-state-btn')];
+      if (!stateBtns.length) return;
+      e.preventDefault();
+      const current = stateBtns.findIndex(b => b.classList.contains('is-active'));
+      const next = stateBtns[(current + 1) % (stateBtns.length + 1)];
+      if (next) {
+        window.location.href = next.href;
+      } else {
+        // wrap back to bare URL (no state)
+        window.location.href = window.location.pathname;
+      }
+    }
   });
 
   // ─── Code block copy buttons ─────────────────────────────────────────────────
@@ -246,10 +261,26 @@
     });
   });
 
-  // ─── Active nav item scroll into view ────────────────────────────────────────
-  const activeLink = navBody?.querySelector('.bt-nav-link.active');
-  if (activeLink) {
-    activeLink.scrollIntoView({ block: 'nearest' });
+  // ─── Nav scroll position persistence ──────────────────────────────────────────
+  const NAV_SCROLL_KEY = 'bt-nav-scroll';
+
+  if (navBody) {
+    // Restore saved scroll position
+    const savedScroll = sessionStorage.getItem(NAV_SCROLL_KEY);
+    if (savedScroll !== null) {
+      navBody.scrollTop = parseInt(savedScroll, 10);
+    } else {
+      // First visit — scroll active item into view
+      const activeLink = navBody.querySelector('.bt-nav-link.active');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    // Save scroll position before navigating away
+    navBody.addEventListener('scroll', () => {
+      sessionStorage.setItem(NAV_SCROLL_KEY, navBody.scrollTop);
+    }, { passive: true });
   }
 
 })();
