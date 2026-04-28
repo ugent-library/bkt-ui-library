@@ -57,15 +57,21 @@ const SECTIONS = [
   { dir: 'product',     label: 'product'     },
 ];
 
-// ─── Build nav from filesystem ────────────────────────────────────────────────
+// ─── Nav cache — rebuilt only when files change ───────────────────────────────
+let _navCache = null;
+
+function invalidateNav() {
+  _navCache = null;
+}
+
 function buildNav() {
-  return SECTIONS.reduce((acc, section) => {
+  if (_navCache) return _navCache;
+
+  _navCache = SECTIONS.reduce((acc, section) => {
     const dirPath = path.join(ROOT, section.dir);
     if (!fs.existsSync(dirPath)) return acc;
 
     if (section.dir === 'templates') {
-      // Each subdirectory (excluding partials) becomes a named collapsible group (one group = one app).
-      // Top-level .html files in templates/ are listed before any groups.
       const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
       const topFiles = entries
@@ -101,7 +107,6 @@ function buildNav() {
       return acc;
     }
 
-    // All other sections: flat file list
     const files = fs.readdirSync(dirPath)
       .filter(f => f.endsWith('.html'))
       .sort()
@@ -113,6 +118,8 @@ function buildNav() {
     if (files.length) acc.push({ ...section, files });
     return acc;
   }, []);
+
+  return _navCache;
 }
 
 function slugToLabel(slug) {
@@ -126,7 +133,6 @@ function parseMetaAndBody(raw, filePath) {
   while (i < lines.length) {
     const m = lines[i].match(/^\s*<!--\s*@([\w-]+)\s*:\s*(.*?)\s*-->\s*$/);
     if (!m) break;
-    // Stop parsing meta directives when we hit an @include — leave it in the body
     if (m[1].toLowerCase() === 'include') break;
     meta[m[1].toLowerCase()] = m[2];
     i += 1;
@@ -146,7 +152,6 @@ function resolveIncludes(body, filePath) {
     if (!fs.existsSync(abs)) {
       return `<!-- @include not found: ${includePath} -->`;
     }
-    // Strip meta comments from included file — include only the body fragment
     const raw = fs.readFileSync(abs, 'utf8');
     const { body: fragment } = parseMetaAndBody(raw, abs);
     return fragment;
@@ -371,7 +376,7 @@ function renderSavedSearchCard(id, title, tags) {
 }
 
 function renderSuggestionState(label) {
-  return `<div class="px-4 py-3 small text-muted fst-italic bg-light border rounded">${label}</div>`;
+  return `<div class="px-4 py-3 small text-muted fst-italic bg-light border-bottom">${label}</div>`;
 }
 
 function renderScopeList(names) {
@@ -804,7 +809,7 @@ function renderNavLink(f, currentPath) {
 
 // ─── Shell injection ──────────────────────────────────────────────────────────
 function injectShell(filePath, html, currentPath) {
-  if (html.includes('data-bare')) return html; // opt-out for templates in prototype mode
+  if (html.includes('data-bare')) return html;
 
   const nav     = buildNav();
   const navHtml = nav.map(section => `
@@ -871,8 +876,6 @@ function injectShell(filePath, html, currentPath) {
   </main>
 </div>`;
 
-  // UI Library pages that declare no surface get backoffice density (they are
-  // working tools). Templates that already declare data-surface keep their own.
   const hasSurface = html.includes('data-surface=');
 
   return html
@@ -924,7 +927,7 @@ const server = http.createServer(async (req, res) => {
   const [urlPath, queryString = ''] = req.url.split('?');
   const params = Object.fromEntries(new URLSearchParams(queryString));
 
-  // Demo delay — HTMX partial requests to /elements/partials/ get a 1.5 s artificial delay
+  // Demo delay — HTMX partial requests to /elements/partials/ get a 1 s artificial delay
   // so the spinner is visible in the design system demos.
   if (req.headers['hx-request'] && urlPath.startsWith('/elements/partials/')) {
     const partialPath = path.join(ROOT, urlPath);
@@ -1065,6 +1068,7 @@ for (const dir of WATCH) {
     clearTimeout(debounce);
     debounce = setTimeout(() => {
       process.stdout.write(`  ↺  ${dir}/${filename}\n`);
+      invalidateNav();
       broadcast();
     }, 80);
   });
