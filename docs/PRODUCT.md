@@ -4,6 +4,7 @@
 This file tracks what we're building, what's decided, what's deferred, and what still
 has open questions. It is not a changelog (see CHANGELOG.md) and not domain vocabulary
 (see DOMAIN.md). For strategic context behind these decisions, see STRATEGY.md.
+For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
 
 Update this file when: a flagged item is resolved, a new gap is found, a prototype
 session produces a decision, or priorities shift.
@@ -21,19 +22,22 @@ The existing `dashboard.html` is a partial researcher view only.
 
 | What | Prototype | Status |
 |------|-----------|--------|
-| Dashboard — researcher | `backoffice/dashboard.html` | Nearing completion, with filled, empty and message state. |
+| Dashboard — researcher | `biblio-researcher/dashboard.html` | Nearing completion, with filled, empty and message state. |
 | Dashboard — proxy | ✗ | **Not designed** |
-| Dashboard — curator | ✗ | **Not designed — highest priority gap** |
+| Dashboard — curator | `biblio-team/team-dashboard.html.html` | ✓ Prototyped |
 
 **Curator review queue**
-After a researcher submits, the work is automatically published. The curator sees it in their queue. They can choose to go with FIFO (first in, first out) or go by urgency (deadlines, important missing information). They can also see who or what service added the reviews and either edits, asks a question or returns the work (doubles or if this is not the right platform). When they are finished, they can check it as reviewed.
-This closes the deposit loop.
+After a researcher submits, the work is automatically published. The curator sees it
+in their queue. They can choose FIFO or urgency-first (deadlines, missing high-stakes
+fields). They can see who or what created the record, then edit, ask a question, or
+return the work (for duplicates or records that don't belong on this platform). When
+finished, they mark it as reviewed. This closes the deposit loop.
 
 | What | Prototype | Status |
 |------|-----------|--------|
-| Curator review queue (list of submitted works) | ✗ | Not prototyped |
-| Curator review: approve | ✗ | Not prototyped |
-| Curator review: return with reason | ✗ | Not prototyped |
+| Curator review queue (list of submitted works) | `biblio-team/team-queue.html` | ✓ Prototyped |
+| Curator review: mark as reviewed | `biblio-team/team-review.html` | ✓ Prototyped |
+| Curator review: return with reason | `biblio-team/team-review.html` | ✓ Prototyped (modal) |
 
 **Deposit flow**
 The four-step flow is structurally prototyped. The field content is illustrative —
@@ -43,11 +47,11 @@ the form can be considered implementation-ready. See Output types section below.
 
 | What | Prototype | Status |
 |------|-----------|--------|
-| Step 1a: entry (blank) | `backoffice/deposit-1-0-find.html` | ✓ Structure done |
-| Step 1b: entry (pre-filled from import) | `backoffice/deposit-1-1-find.html` | ✓ Structure done |
-| Step 2: upload | `backoffice/deposit-2-upload.html` | ✓ Structure done |
-| Step 3: access rights | `backoffice/deposit-3-access-rights.html` | ✓ Structure done |
-| Step 4: review & submit | `backoffice/deposit-4-review.html` | ✓ Structure done |
+| Step 1a: entry (blank) | `biblio-researcher/deposit-1-0-find.html` | ✓ Structure done |
+| Step 1b: entry (pre-filled from import) | `biblio-researcher/deposit-1-1-find.html` | ✓ Structure done |
+| Step 2: upload | `biblio-researcher/deposit-2-upload.html` | ✓ Structure done |
+| Step 3: access rights | `biblio-researcher/deposit-3-access-rights.html` | ✓ Structure done |
+| Step 4: review & submit | `biblio-researcher/deposit-4-review.html` | ✓ Structure done |
 | Field requirements per output type | — | ✗ **Needs curator/policy workshop** |
 
 **Backoffice search**
@@ -55,8 +59,10 @@ Filter-first is the committed approach.
 
 | What | Prototype | Status |
 |------|-----------|--------|
-| Search, filter-first | `backoffice/search-filter-first.html` | ✓ Committed approach |
-| Search settings / scope | `backoffice/search-settings-scope.html` | ✓ Exploration |
+| Search, filter-first | `biblio-researcher/search-filter-first.html` | ✓ Exploration |
+| Search settings / scope | `biblio-researcher/search-settings-scope.html` | ✓ Exploration |
+| Search — researcher | `biblio-researcher/search-researcher.html` | ✓ Done |
+| Search — curator | `biblio-team/search-team.html` | ✓ Done |
 
 **Public surface**
 All primary detail pages exist. Overview/browse pages are missing — no way for
@@ -64,12 +70,12 @@ a user to browse to an organisation, project, or researcher page without a direc
 
 | What | Prototype | Status |
 |------|-----------|--------|
-| Homepage | `public/public-index.html` | ✓ |
-| Search | `public/public-search.html` | ✓ |
-| Work detail | `public/public-research-detail.html` | ✓ |
-| Organisation detail | `public/public-organisation.html` | ✓ |
-| Project detail | `public/public-project.html` | ✓ |
-| Researcher profile | `public/public-researcher.html` | ✓ |
+| Homepage | `biblio-public/public-index.html` | ✓ |
+| Search | `biblio-public/public-search.html` | ✓ |
+| Work detail | `biblio-public/public-research-detail.html` | ✓ |
+| Organisation detail | `biblio-public/public-organisation.html` | ✓ |
+| Project detail | `biblio-public/public-project.html` | ✓ |
+| Researcher profile | `biblio-public/public-researcher.html` | ✓ |
 | Organisations overview | ✗ | Not prototyped |
 | Projects overview | ✗ | Not prototyped |
 | Researchers overview | ✗ | Not prototyped |
@@ -79,7 +85,7 @@ a user to browse to an organisation, project, or researcher page without a direc
 ### Next
 
 **Candidate review (auto-import inbox)**
-To be discussed; right now the idea is that researchers review harvested candidates (WoS, ORCID, arXiv) and accept or reject them.
+Researchers review harvested candidates (WoS, ORCID, arXiv) and accept or reject them.
 Distinct from the curator review queue: that handles researcher-submitted works;
 this handles machine-harvested records.
 
@@ -133,6 +139,7 @@ The three roles have different relationships to the work in Biblio:
 The mistake to avoid: designing one dashboard and trying to make it serve all three
 by showing/hiding sections. The information hierarchy is different enough that this
 produces a confused interface for all three.
+
 ---
 
 ### Dashboard: researcher
@@ -143,20 +150,19 @@ produces a confused interface for all three.
 
 | Section | Contents | Priority |
 |---------|----------|----------|
-| Requested | Works that need to be completed by curator, only for doubles or | Highest — researcher must act |
+| Requested | Works returned by curator — researcher must act | Highest |
 | Suggestions | Harvested candidates matched to this researcher — confirm or dismiss | High — time-sensitive |
 | Added on your behalf | Works added by a librarian or proxy — researcher should verify | Medium |
-| Returned | Works that are not supposed to be in Biblio |  Low — informational |
-| Merged | Doubles that are now merged as one |  Low — informational |
-| Recent activity | Audit trail of changes to the researcher's works — published, edited, submitted | Low — informational |
+| Returned | Works that don't belong on this platform | Low — informational |
+| Merged | Duplicates now merged as one | Low — informational |
+| Recent activity | Audit trail of changes to the researcher's works | Low — informational |
 
 **What does not belong here:**
 - Anything scoped beyond the researcher's own works
 - Bulk actions
 - Filter/search controls
 
-**Current prototype:** `backoffice/dashboard.html` — partial, needs review.
-**Empty state:** `backoffice/dashboard-empty.html` — exists.
+**Current prototype:** `biblio-researcher/dashboard.html` — partial, needs review.
 
 **Open questions:**
 - Which metrics should be shown? To be discussed with policy.
@@ -177,14 +183,13 @@ dashboard scaled across multiple people, plus their own deposit queue.
 
 | Section | Contents | Priority |
 |---------|----------|----------|
-| Needs action | Works that need extra information across all represented researchers, grouped by researcher | Highest |
-| My deposit queue | Works the proxy has started depositing but not yet submitted | High |
+| Needs action | Works needing extra information across all represented researchers, grouped by researcher | Highest |
+| My deposit queue | Works the proxy has started but not yet submitted | High |
 | Suggestions | Harvested candidates for represented researchers — proxy can confirm or forward | High |
-| Recent activity | Changes across represented researchers — scoped to proxy's people | Medium |
+| Recent activity | Changes across represented researchers | Medium |
 
 **What does not belong here:**
 - Anything outside the proxy's assigned researchers
-- Curator-level bulk review tools (TBD, are we sure? Does the scope not make that redundant?)
 
 **Current prototype:** ✗ Does not exist. Must be built.
 
@@ -197,52 +202,76 @@ dashboard scaled across multiple people, plus their own deposit queue.
 
 ### Dashboard: curator
 
-**Primary question the dashboard answers:** "What is in my queue, and what is at risk?"
+**Full brief:** `docs/CURATOR-DASHBOARD-BRIEF.md`
 
-Curators are currently working inside the filter list — applying "Needs review" saved
-views and managing from search results. That works but it means every session starts
-with rebuilding context. The curator dashboard should front-load the most important
-signals without requiring a filter.
+**Primary question the dashboard answers:** "What is in my queue, and what is at risk — within my scope?"
 
-Their dashboard now consists out of a list of publications that don't have a classification yet. That is not the right approach, it's depending on the bibliography's metadata.
+Curators currently work inside the filter list — applying "Needs review" saved views and
+managing from search results. That works but means every session starts with rebuilding
+context. The curator dashboard is a triage layer that front-loads the most important
+signals. It sits **alongside** the filter-first search list, not as a replacement.
+
+The current unofficial dashboard (list of unclassified records) is the wrong model —
+it is driven by bibliography metadata, not by what curators actually need to do today.
+
+**Scope is the personalisation mechanism.** Curators arrive with a configured scope
+(one or more faculties/departments, optional type filter). The entire dashboard reflects
+that scope. Scope can vary per curator — not everyone covers the same departments.
 
 **What belongs here:**
 
 | Section | Contents | Priority |
 |---------|----------|----------|
-| Review queue | Works with `status=submitted` within the curator's scope, oldest first | Highest — this is the primary job (Is that true? Should they not focus on the nearest deadlines?) |
-| At risk / flagged | Works approaching deadlines (VABB, mandate), works with missing required fields, works flagged by the system | High |
-| Candidate inbox | Count of unreviewed harvested candidates within scope. These can also be submitted if we trust the source. | High |
-| Answers | Changes to research output by the resercher, that have been answered. Resubmitted | Medium (TBD) |
-| Scope activity | Recent changes within the curator's scope — published, returned, imported | Medium |
-| Stats (optional) | Records reviewed this week, OA percentage within scope, pipeline health | Low — may belong in a separate reports view |
+| Review queue | Works with `status=submitted` within scope, not yet reviewed | Highest |
+| At risk / flagged | Works approaching deadlines (VABB, FWO, OA mandate), missing required fields, system or curator-set flags | High |
+| Candidate inbox | Count + preview of unreviewed harvested candidates within scope | High |
+| Answers / resubmissions | Works returned to researcher and since resubmitted — time-sensitive | Medium |
+| Scope activity | Recent changes within scope — published, returned, imported | Medium |
+| Stats | Deferred to v2 — belongs in a reporting surface, not this dashboard | — |
+
+**Sort order for review queue:**
+- If any item has a deadline within 30 days: sort deadline-flagged items first, by date
+- Otherwise: oldest submitted first (FIFO)
+- Curators can override sort
+
+**Risk tiers (from RESPONSIBILITY.md):**
+
+| Tier | Label | Conditions |
+|------|-------|-----------|
+| 1 | Fast Pass | Clean import, no funding ambiguity, no duplicate flag, no file issue |
+| 2 | Standard | Grant confirmation needed, affiliation mismatch, duplicate warning, missing link |
+| 3 | Deep curation | VABB-sensitive, FWO attribution critical, books/chapters, embargo complexity |
+
+Tier 3 items are visually distinct — not just a badge.
 
 **What does not belong here:**
-- Individual researcher-level notifications (that is the researcher's dashboard)
-- UI for editing records (click through to the detail page)
+- Individual researcher-level notifications
+- UI for editing records (link to detail page)
+- Bulk editing tools (that is the search list)
+- Stats requiring a separate reporting pipeline
+- Anything requiring manual curation to stay current
 
-**Current prototype:** ✗ Does not exist. Must be built.
+**Decided:**
+- Dashboard and search list are alongside each other — not replacements
+- Review queue count = "Needs review" saved view count (same query, same number)
+- Sort: deadline-first when deadlines are present; FIFO otherwise
+- Scope is per-curator, collapsible by department
+- At-risk flags: both system-generated and curator-set
+- Dashboard must not require manual maintenance — everything derived from record state
+
+**Current prototype:** `biblio-team/team-dashboard.html.html` — ✓ Prototyped.
 
 **Open questions:**
-- Q: Should the review queue on the dashboard be the same as the "Needs review" saved
-  view in the filter list — or is the dashboard a separate, curated surface?
-  A: it needs to be the same count
-- Q: What is the right sort order for the review queue: oldest submitted first
-  (fairness), or highest risk first (urgency)?
-  A: depending if there is a nearing deadline
-- Q: Should curators see a queue for their entire scope, or should scope be collapsible
-  by faculty/department?
-  A: They should be scopable by department. Not each curator has the same set.
-- Q: Are "at risk" flags generated by the system automatically, or manually set by
-  curators? Both?
-  A: Both
-- Q: Does the curator dashboard replace the current filter-list-as-working-surface,
-  or does it sit alongside it?
-  A: they should still be able to filter themselves. Alongside.
-
-**Design constraint:** the curator dashboard must not become another place curators
-have to maintain. If it requires manual curation to stay useful, it will be ignored.
-Everything on it should be derived automatically from record state and scope.
+- Trusted import definition: when a WoS harvest creates a record without researcher
+  initiation, does it land in the review queue or the candidate inbox? (RESPONSIBILITY.md: open)
+- Curator-owned fields — complete list: VABB, pagination, short journal title confirmed.
+  Full list still pending from curator team.
+- Proxy-submitted flags: how prominent should the flag be when OA/version/access was
+  set by a proxy rather than the researcher?
+- Multi-department coordination: when the same output is being entered by two
+  departments, does it surface here? No current mechanism.
+- "Done" definition: what does an all-clear state mean exactly? Queue empty?
+  No Tier-3 unresolved? No deadlines within 14 days?
 
 ---
 
@@ -322,7 +351,7 @@ Two dimensions:
 
 Scope ≠ Grant (what you *can* access). Scope ≠ filter (session-level).
 
-**Prototype:** `backoffice/search-settings-scope.html` + sidebar of `search-filter-first.html`
+**Prototype:** `biblio-researcher/search-settings-scope.html` + sidebar of `biblio-researcher/search-filter-first.html`
 
 **Still open:**
 - Overlap with saved views: scope = persistent org/type constraint;
@@ -344,7 +373,7 @@ Four system views bootstrapped on first login:
 
 Users can save additional views from the current query state.
 
-**Prototype:** sidebar of `backoffice/search-filter-first.html`
+**Prototype:** sidebar of `biblio-researcher/search-filter-first.html`
 
 **Still open:**
 - Storage: proposed `user_saved_views (user_id, name, url_params, created_at)`. Backend decision needed.
@@ -360,14 +389,16 @@ Resolve before handing a template to the dev for implementation.
 
 | Component / issue | Used in | Status |
 |-------------------|---------|--------|
-| `bt-list-item` | `dashboard.html` | ⚠ Not in SCSS |
-| Scope indicator block | `search-filter-first.html` | ⚠ Bootstrap utilities only |
-| Saved views nav | `search-filter-first.html` | ⚠ Bootstrap utilities only |
-| `filter-tag--editable` modifier | `result-filter-bar.html` | ⚠ Exists in JS, not in SCSS |
-| `filter-tag-group` wrapper | `result-filter-bar.html` | ⚠ Not in SCSS |
+| `bt-list-item` | `biblio-researcher/dashboard.html` | ⚠ Not in SCSS |
+| Scope indicator block | `biblio-researcher/search-filter-first.html` | ⚠ Bootstrap utilities only |
+| Saved views nav | `biblio-researcher/search-filter-first.html` | ⚠ Bootstrap utilities only |
+| `filter-tag--editable` modifier | `partials/result-filter-bar.html` | ⚠ Exists in JS, not in SCSS |
+| `filter-tag-group` wrapper | `partials/result-filter-bar.html` | ⚠ Not in SCSS |
 | `--bt-text-muted` token mismatch | `_surfaces.scss` | ⚠ Not yet resolved |
-| `style=` on year range inputs | `search-filter-first.html` | ⚠ Needs SCSS token |
-| `style=` on `max-width: 680px` | `search-settings-scope.html` | ⚠ Needs layout token or utility |
+| `style=` on year range inputs | `biblio-researcher/search-filter-first.html` | ⚠ Needs SCSS token |
+| `style=` on `max-width: 680px` | `biblio-researcher/search-settings-scope.html` | ⚠ Needs layout token or utility |
+| Risk tier Tier-3 visual treatment | `biblio-team/curator-*` | ⚠ Not yet designed |
+| Scope indicator in dashboard header | `biblio-team/curator-*` | ⚠ Bootstrap utilities only |
 
 ---
 

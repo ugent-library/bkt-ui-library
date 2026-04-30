@@ -2,6 +2,8 @@
 
 This file defines the shared language between the backend (`bbl`) and the UI layer (`booktower-ui-library`). When working on either side, use these terms consistently. Do not invent synonyms.
 
+For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
+
 ---
 
 ## Core entities
@@ -146,7 +148,7 @@ A review message thread records the back-and-forth between submitter and curator
 - `returned` — curator returned to draft with reason
 - `published` — optional curator note on publish
 
-In the UI: the deposit flow (`templates/biblio-backoffice/deposit-1-0-find.html` through `deposit-4-review.html`) covers the **submitter side**. The **curator side** (review queue, approve/return actions, message thread) is not yet prototyped in the UI library.
+In the UI: the deposit flow (`templates/biblio-researcher/deposit-1-0-find.html` through `deposit-4-review.html`) covers the **submitter side**. The **curator side** is prototyped in `templates/biblio-team/`.
 
 ---
 
@@ -161,30 +163,31 @@ Two distinct user contexts. Must never be conflated. Determined by `data-surface
 
 ---
 
-## Page types not yet prototyped
+## Page types — prototyped and still to do
 
-These are first-class UI destinations implied by the domain model and the UB2030 strategic plan. They do not exist as templates yet but must be treated as real pages when designing.
+### ~~Researcher profile page (public)~~ ✓ `templates/biblio-public/public-researcher.html`
+A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked works, ORCID and other identifiers.
 
-### Researcher profile page (public)
-A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked works, ORCID and other identifiers. Distinct from the backoffice person edit view. Strategic priority — open science means making researchers and their output discoverable, not just searchable.
-
-### Organisation page (public)
-A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. Supports the cluster model in UB2030 where library services are organised by campus cluster, not individual faculty.
+### ~~Organisation page (public)~~ ✓ `templates/biblio-public/public-organisation.html`
+A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people.
 
 ### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project.html`
-A page for a funded research project. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. Important for grant reporting and societal impact visibility.
+A page for a funded research project. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer.
 
-### Curated list / collection page (public)
+### Curated list / collection page (public) — not yet prototyped
 A named set of Works, editable by curators. Used for OAI-PMH sets, open access subsets, faculty publication feeds, heritage object collections, and reading lists. Backed by `bbl_lists` (user-curated) and `bbl_work_collections` (administratively defined).
 
-### Heritage / erfgoed object page (public)
+### Heritage / erfgoed object page (public) — not yet prototyped
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
 
-### Candidate review (backoffice)
+### Candidate review (backoffice) — not yet prototyped
 The inbox for harvested Work candidates. Filtering by source (WoS, ORCID), confidence, person, and organisation. Accept/reject actions with a reason. Reducing manual registration burden for researchers is an explicit UB2030 goal — this interface is doing strategic work.
 
-### Curator review queue (backoffice)
-The curator-side view of the `submitted → public` workflow. Shows submitted works awaiting review, with approve/return actions and the review message thread. Not yet prototyped. Distinct from the researcher deposit flow.
+### ~~Curator review queue (backoffice)~~ ✓ `templates/biblio-team/`
+The curator-side view of the `submitted → public` workflow. Dashboard, queue overview (Wachtrij), single-record review with inline editing and AI suggestions, team health overview. Distinct from the researcher deposit flow.
+
+### Proxy dashboard (backoffice) — not yet prototyped
+The proxy-side view for managing deposits on behalf of one or more researchers. `templates/biblio-proxy/` directory exists; no templates yet.
 
 ---
 
@@ -228,16 +231,64 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 
 ## Template-to-entity map
 
-| Template | Entity / concept | Surface |
-|----------|-----------------|---------|
-| `templates/biblio-backoffice/search-filter-first.html` | Work list, search, facets | Backoffice |
-| `templates/biblio-public/public-research-detail.html` | Work detail page | Public |
-| `templates/biblio-backoffice/deposit-1-0-find.html` … `deposit-4-review.html` | Work create/edit (deposit) | Backoffice |
-| `templates/biblio-public/public-search.html` | Work search | Public |
-| `templates/biblio-public/public-index.html` | Public homepage | Public |
-| `patterns/work-card.html` | Work card component | Both |
-| `templates/biblio-public/public-project.html` | Project detail page | Public |
-| `patterns/sidebar.html` | Sub-sidebar nav | Backoffice |
+### Public — `templates/biblio-public/`
+
+| Template | Entity / concept |
+|----------|------------------|
+| `public-index.html` | Public homepage |
+| `public-search.html` | Work search + results |
+| `public-research-detail.html` | Work detail page |
+| `public-researcher.html` | Researcher profile (PersonIdentity) |
+| `public-organisation.html` | Organisation landing page |
+| `public-project.html` | Project detail page |
+
+### Researcher — `templates/biblio-researcher/`
+
+| Template | Entity / concept |
+|----------|------------------|
+| `dashboard.html` | Researcher inbox + activity |
+| `search-researcher.html` | My research output list |
+| `search-filter-first.html` | Filter-first search exploration |
+| `search-advanced-builder.html` | Advanced filter builder |
+| `search-advanced-token.html` | Advanced filter token variant |
+| `search-settings-scope.html` | Scope configuration (Settings) |
+| `deposit-1-0-find.html` | Deposit step 1a — entry (blank) |
+| `deposit-1-1-find.html` | Deposit step 1b — entry (pre-filled from import) |
+| `deposit-2-upload.html` | Deposit step 2 — upload full text |
+| `deposit-3-access-rights.html` | Deposit step 3 — OA + access rights |
+| `deposit-4-review.html` | Deposit step 4 — review & submit |
+
+### Curator / team — `templates/biblio-team/`
+
+| Template | Entity / concept |
+|----------|------------------|
+| `team-dashboard.html.html` | Curator triage dashboard |
+| `team-queue.html` | Queue overview (Wachtrij) — pipeline by tier + type |
+| `team-review.html` | Single-record review — inline edit, AI suggestions |
+| `search-team.html` | All research output (curator scope + flags) |
+| `overview-team.html` | Team health overview (head of curation) |
+
+### Proxy — `templates/biblio-proxy/`
+
+Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow are still to be designed.
+
+### Partials — `templates/partials/`
+
+| Partial | Used by |
+|---------|---------|
+| `backoffice-header.html` | All backoffice templates |
+| `backoffice-sidebar.html` | Researcher templates |
+| `curator-sidebar.html` | Curator / team templates |
+| `backoffice-facet-sidebar.html` | Search pages with filter sidebar |
+| `search-filter-bar.html` | Search results header |
+| `search-suggest-panel.html` | Search autocomplete panel |
+| `result-filter-bar.html` | Active filter chips bar |
+| `public-header.html` | Public templates |
+| `public-footer.html` | Public templates |
+| `backoffice-footer.html` | Backoffice templates |
+| `people-search-widget.html` | Deposit author search |
+| `people-search-results.html` | Deposit author search results |
+| `add-author-form.html` | Deposit author add form |
 
 **Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge (`Dataset`, `Journal article`, etc.) is how type is communicated, not separate nav sections.
 
@@ -252,8 +303,8 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `draft` | `badge bg-warning` | Yellow |
 | `deleted` | not rendered in normal lists | — |
 
-| Access kind |
-|-------------|
+| Access kind | Badge |
+|-------------|-------|
 | `open` | `badge bg-success` |
 | `restricted` | `badge bg-warning` |
 | `closed` | no badge |

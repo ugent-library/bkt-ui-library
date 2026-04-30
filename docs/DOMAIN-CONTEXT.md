@@ -3,6 +3,7 @@
 This file explains how the booktower-ui-library relates to the `bbl` backend — what the templates represent, how data flows into the UI, and what backend constraints shape UI decisions.
 
 For entity definitions and shared vocabulary, see `DOMAIN.md`.
+For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
 
 ---
 

@@ -98,12 +98,19 @@ The full icon list is at `http://localhost:3000/foundations/icons.html` (UI kit 
 
 The `templates/` directory in `booktower-ui-library` contains full-page prototype implementations. These are the reference for Go templ work.
 
-| Prototype | Go templ equivalent |
-|-----------|-------------------|
-| `templates/biblio-backoffice/backoffice-search-filter-first.html` | Backoffice search/list view |
-| `templates/biblio-backoffice/deposit-2-upload.html` | Deposit flow step |
-| `templates/biblio-public/public-search.html` | Public search page |
-| `templates/biblio-public/public-project.html` | Public project detail page |
+| Prototype | Role | Go templ equivalent |
+|-----------|------|--------------------|
+| `templates/biblio-public/public-search.html` | Public | Public search page |
+| `templates/biblio-public/public-research-detail.html` | Public | Work detail page |
+| `templates/biblio-public/public-project.html` | Public | Project detail page |
+| `templates/biblio-researcher/dashboard.html` | Researcher | Researcher inbox |
+| `templates/biblio-researcher/deposit-*.html` | Researcher | Deposit flow steps |
+| `templates/biblio-researcher/search-researcher.html` | Researcher | My research output list |
+| `templates/biblio-team/team-dashboard.html.html` | Curator | Curator triage dashboard |
+| `templates/biblio-team/team-queue.html` | Curator | Queue overview (Wachtrij) |
+| `templates/biblio-team/team-review.html` | Curator | Single-record review |
+| `templates/biblio-team/search-team.html` | Curator | All research output (curator) |
+| `templates/biblio-team/overview-team.html` | Curator | Team health overview |
 
 HTMX URLs in prototypes are stubs (`hx-get="/search"`, etc.). The corresponding real endpoints in `bbl/app/*_handlers.go` are the production wiring.
 

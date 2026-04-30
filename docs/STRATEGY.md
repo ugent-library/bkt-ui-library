@@ -7,6 +7,7 @@ Read this before making product decisions. It is not a feature list — it is th
 
 For implementation decisions, see `PRODUCT.md`.
 For domain vocabulary, see `DOMAIN.md`.
+For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
 
 ---
 
