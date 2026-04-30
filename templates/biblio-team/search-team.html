@@ -1,0 +1,690 @@
+<!-- @title: Research output — Curator — Biblio -->
+<!-- @surface: backoffice -->
+<!--
+  Research output list — curator view.
+  "All output in my scope" — scoped to configured faculties.
+
+  Curator-specific differences from researcher view:
+  - Scope indicator in header
+  - Saved views in facet sidebar (Needs review, Missing full text, etc.)
+  - Facets: Status first, then Flags (curator-only), Type, Year, Access
+  - Cards: Review is primary action, tier/flag badges visible
+  - Table: VABB + Flags columns
+  - Sidebar: curator nav (Dashboard · Queue · All research output · Team)
+  - Add is secondary, not primary CTA
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="bt-navbar" role="banner">
+    <a href="#" class="bt-navbar__brand" aria-label="Biblio — go to dashboard">
+      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" width="auto" height="70">
+      Biblio
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <div class="dropdown">
+        <button class="bt-avatar btn" type="button" data-bs-toggle="dropdown"
+          aria-label="Account menu for Hannelore Vanhoutte">HV</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text fw-semibold">Hannelore Vanhoutte</span></li>
+          <li><span class="dropdown-item-text text-muted small">Hannelore.Vanhoutte@UGent.be</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- @include: templates/partials/curator-sidebar.html -->
+  <!-- @active: all-research -->
+
+  <main id="main-content">
+
+    <!-- ══ Page header ══ -->
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Research output</h1>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="text-muted small">
+              <i class="if if-building if--xs me-1" aria-hidden="true"></i>
+              Sciences · Engineering &amp; Architecture
+            </span>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="text-muted small" aria-live="polite" id="result-count">4,831 records</span>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="if if-download if--sm" aria-hidden="true"></i>
+                Export
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">CSV</a></li>
+                <li><a class="dropdown-item" href="#">BibTeX</a></li>
+                <li><a class="dropdown-item" href="#">RIS</a></li>
+              </ul>
+            </div>
+            <a href="deposit-1-0-find.html" class="btn btn-outline-primary btn-sm">
+              <i class="if if-add if--sm" aria-hidden="true"></i>
+              Add
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Body: facet sidebar + results ══ -->
+    <div class="u-main__body u-main__body--split">
+
+      <!-- ── Facet sidebar ── -->
+      <!-- @include: templates/partials/backoffice-facet-sidebar.html (curator variant) -->
+      <aside class="u-main__sidebar u-main__sidebar--border-right" aria-label="Filter by">
+
+        <!-- Scope -->
+        <div class="mb-3">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <p class="small fw-bold text-uppercase text-muted mb-0">Scope</p>
+            <a href="#" class="btn btn-ghost btn-sm p-0 text-muted" aria-label="Edit scope in settings">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
+          <div class="d-flex flex-column gap-1">
+            <div class="d-flex align-items-center gap-1">
+              <i class="if if-building if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+              <span class="small">Faculty of Sciences</span>
+            </div>
+            <div class="d-flex align-items-center gap-1">
+              <i class="if if-building if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+              <span class="small">Faculty of Engineering &amp; Architecture</span>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- Saved views -->
+        <div class="mb-3">
+          <p class="small fw-bold text-uppercase text-muted mb-2">Views</p>
+          <nav aria-label="Saved views">
+            <ul class="list-unstyled mb-0">
+              <li>
+                <a href="?view=all" class="nav-link d-flex align-items-center gap-2 py-1 px-0">
+                  <i class="if if-list-unordered if--xs text-muted" aria-hidden="true"></i>
+                  <span class="small">All records</span>
+                </a>
+              </li>
+              <li>
+                <a href="?view=needs-review" class="nav-link d-flex align-items-center gap-2 py-1 px-0" aria-current="true">
+                  <i class="if if-check-circle if--xs text-muted" aria-hidden="true"></i>
+                  <span class="small fw-semibold">Needs review</span>
+                  <span class="badge bg-warning text-dark ms-auto" aria-label="14 items need review">14</span>
+                </a>
+              </li>
+              <li>
+                <a href="?view=missing-fulltext" class="nav-link d-flex align-items-center gap-2 py-1 px-0">
+                  <i class="if if-file if--xs text-muted" aria-hidden="true"></i>
+                  <span class="small">Missing full text</span>
+                  <span class="badge bg-secondary ms-auto" aria-label="47 items missing full text">47</span>
+                </a>
+              </li>
+              <li>
+                <a href="?view=recently-updated" class="nav-link d-flex align-items-center gap-2 py-1 px-0">
+                  <i class="if if-time if--xs text-muted" aria-hidden="true"></i>
+                  <span class="small">Recently updated</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <button type="button" class="btn btn-ghost btn-sm px-0 mt-1 text-muted small text-nowrap">
+            <i class="if if-bookmark-line if--xs" aria-hidden="true"></i>
+            Save view
+          </button>
+        </div>
+
+        <hr>
+
+        <!-- Status -->
+        <fieldset class="mb-3">
+          <legend class="form-label h6 mb-2">Status</legend>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cs-submitted" checked
+              aria-label="Submitted (14 records)">
+            <label class="bt-facet-name" for="cs-submitted">Submitted</label>
+            <span class="bt-facet-count" aria-hidden="true">14</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cs-published"
+              aria-label="Published (3,802 records)">
+            <label class="bt-facet-name" for="cs-published">Published</label>
+            <span class="bt-facet-count" aria-hidden="true">3,802</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cs-draft"
+              aria-label="Draft (1,015 records)">
+            <label class="bt-facet-name" for="cs-draft">Draft</label>
+            <span class="bt-facet-count" aria-hidden="true">1,015</span>
+          </div>
+        </fieldset>
+
+        <hr>
+
+        <!-- Flags — curator-only -->
+        <fieldset class="mb-3">
+          <legend class="form-label h6 mb-2">Flags</legend>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cf-proxy"
+              aria-label="Proxy-set OA (23 records)">
+            <label class="bt-facet-name" for="cf-proxy">Proxy-set OA</label>
+            <span class="bt-facet-count" aria-hidden="true">23</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cf-vabb"
+              aria-label="VABB missing (31 records)">
+            <label class="bt-facet-name" for="cf-vabb">VABB missing</label>
+            <span class="bt-facet-count" aria-hidden="true">31</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cf-nofile"
+              aria-label="No file (47 records)">
+            <label class="bt-facet-name" for="cf-nofile">No file</label>
+            <span class="bt-facet-count" aria-hidden="true">47</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="cf-flagged"
+              aria-label="Curator-flagged (3 records)">
+            <label class="bt-facet-name" for="cf-flagged">Curator-flagged</label>
+            <span class="bt-facet-count" aria-hidden="true">3</span>
+          </div>
+        </fieldset>
+
+        <hr>
+
+        <!-- Type -->
+        <fieldset class="mb-3">
+          <legend class="form-label h6 mb-2">Type</legend>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ct-journal"
+              aria-label="Journal article (2,231 records)">
+            <label class="bt-facet-name" for="ct-journal">Journal article</label>
+            <span class="bt-facet-count" aria-hidden="true">2,231</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ct-conference"
+              aria-label="Conference (841 records)">
+            <label class="bt-facet-name" for="ct-conference">Conference</label>
+            <span class="bt-facet-count" aria-hidden="true">841</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ct-dataset"
+              aria-label="Dataset (312 records)">
+            <label class="bt-facet-name" for="ct-dataset">Dataset</label>
+            <span class="bt-facet-count" aria-hidden="true">312</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ct-book"
+              aria-label="Book (204 records)">
+            <label class="bt-facet-name" for="ct-book">Book</label>
+            <span class="bt-facet-count" aria-hidden="true">204</span>
+          </div>
+          <div class="collapse" id="more-types">
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="ct-chapter"
+                aria-label="Book chapter (187 records)">
+              <label class="bt-facet-name" for="ct-chapter">Book chapter</label>
+              <span class="bt-facet-count" aria-hidden="true">187</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="ct-dissertation"
+                aria-label="Dissertation (98 records)">
+              <label class="bt-facet-name" for="ct-dissertation">Dissertation</label>
+              <span class="bt-facet-count" aria-hidden="true">98</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="ct-misc"
+                aria-label="Miscellaneous (141 records)">
+              <label class="bt-facet-name" for="ct-misc">Miscellaneous</label>
+              <span class="bt-facet-count" aria-hidden="true">141</span>
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-sm px-0 mt-1 text-muted small" type="button"
+            data-bs-toggle="collapse" data-bs-target="#more-types"
+            aria-expanded="false" aria-controls="more-types">
+            Show more
+          </button>
+        </fieldset>
+
+        <hr>
+
+        <!-- Year -->
+        <fieldset class="mb-3">
+          <legend class="form-label h6 mb-2">Year</legend>
+          <div class="d-flex gap-2 align-items-center">
+            <label for="cy-from" class="visually-hidden">From year</label>
+            <input type="number" id="cy-from" class="form-control form-control-sm"
+              placeholder="From" min="1800" max="2099">
+            <span class="text-muted small" aria-hidden="true">–</span>
+            <label for="cy-to" class="visually-hidden">To year</label>
+            <input type="number" id="cy-to" class="form-control form-control-sm"
+              placeholder="To" min="1800" max="2099">
+          </div>
+        </fieldset>
+
+        <hr>
+
+        <!-- Access -->
+        <fieldset class="mb-0">
+          <legend class="form-label h6 mb-2">Access</legend>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ca-oa"
+              aria-label="Open access (2,901 records)">
+            <label class="bt-facet-name" for="ca-oa">Open access</label>
+            <span class="bt-facet-count" aria-hidden="true">2,901</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ca-restricted"
+              aria-label="Restricted (1,118 records)">
+            <label class="bt-facet-name" for="ca-restricted">Restricted</label>
+            <span class="bt-facet-count" aria-hidden="true">1,118</span>
+          </div>
+          <div class="bt-facet-check">
+            <input class="form-check-input" type="checkbox" id="ca-nofile"
+              aria-label="No file (812 records)">
+            <label class="bt-facet-name" for="ca-nofile">No file</label>
+            <span class="bt-facet-count" aria-hidden="true">812</span>
+          </div>
+        </fieldset>
+
+      </aside>
+
+      <!-- ── Results column ── -->
+      <section class="u-main__content">
+
+        <!-- Search + active filters -->
+        <div class="u-main__content-header">
+
+          <div class="bt-toolbar bt-toolbar--bordered">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item" role="search" aria-label="Search within research output">
+                <label for="c-search-refine" class="visually-hidden">Search by title, author, DOI</label>
+                <div class="d-flex align-items-center gap-2">
+                  <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <input type="search" id="c-search-refine"
+                    class="form-control form-control-sm border-0 bg-transparent shadow-none"
+                    placeholder="Search by title, author, DOI…"
+                    hx-get="/search"
+                    hx-trigger="keyup changed delay:300ms"
+                    hx-target="#c-results-list"
+                    hx-indicator="#c-search-indicator">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active filter chips -->
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <span class="text-muted small">Filtered by:</span>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="button" class="filter-tag" aria-label="Remove filter: Status is Submitted">
+                  Status: Submitted
+                  <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted small" aria-live="polite">14 records</span>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="button" class="btn btn-ghost btn-sm text-muted py-0 small">
+                  Clear all
+                </button>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Switch view">
+                  <input type="radio" class="btn-check" name="cswitchview" id="c-card-view" autocomplete="off" checked aria-label="Card view">
+                  <label class="btn btn-outline-light" for="c-card-view">
+                    <i class="if if-list-unordered" aria-hidden="true"></i>
+                  </label>
+                  <input type="radio" class="btn-check" name="cswitchview" id="c-table-view" autocomplete="off" aria-label="Table view">
+                  <label class="btn btn-outline-light" for="c-table-view">
+                    <i class="if if-table" aria-hidden="true"></i>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bulk actions — hidden until rows selected -->
+          <div id="c-bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+                <div class="bt-toolbar__item">
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-download if--sm" aria-hidden="true"></i>
+                    Export selected
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /u-main__content-header -->
+
+        <!-- Results list -->
+        <div id="c-results-list" class="u-main__content-body">
+          <span id="c-search-indicator" class="htmx-indicator text-muted small px-4 py-3 d-block" aria-live="polite">
+            Searching…
+          </span>
+
+          <!-- ── Card view ── -->
+          <div id="c-view-cards">
+
+            <article class="card bt-work-card" aria-labelledby="c-card-title-01">
+              <div class="card-header bt-work-card__head">
+                <div class="bt-meta-list pt-1">
+                  <span class="badge bg-info">Submitted</span>
+                  <span class="bt-meta-list__item-bordered">Journal article</span>
+                  <span class="badge bg-danger">Deep curation</span>
+                  <span class="badge bg-warning text-dark">FWO — 18d</span>
+                </div>
+                <div class="bt-btn-toolbar">
+                  <a href="team-review.html" class="btn btn-primary btn-sm"
+                    aria-label="Review: Entanglement entropy in quantum spin chains">
+                    <i class="if if-check if--sm" aria-hidden="true"></i>
+                    Review
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Edit: Entanglement entropy in quantum spin chains">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="card-body bt-work-card__body">
+                <h2 id="c-card-title-01" class="bt-work-card__title">
+                  <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
+                </h2>
+                <p class="bt-work-card__authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
+                <p class="bt-work-card__pub">
+                  <span>2025</span>
+                  <span class="text-muted mx-1">·</span>
+                  <a href="#">Physical Review B</a>
+                </p>
+                <p class="small text-muted mb-0">Submitted by <strong>researcher</strong> · 3d ago</p>
+              </div>
+            </article>
+
+            <article class="card bt-work-card" aria-labelledby="c-card-title-02">
+              <div class="card-header bt-work-card__head">
+                <div class="bt-meta-list pt-1">
+                  <span class="badge bg-info">Submitted</span>
+                  <span class="bt-meta-list__item-bordered">Journal article</span>
+                  <span class="badge bg-secondary">Standard</span>
+                  <span class="badge bg-warning text-dark">Proxy-set OA</span>
+                </div>
+                <div class="bt-btn-toolbar">
+                  <a href="team-review.html" class="btn btn-primary btn-sm"
+                    aria-label="Review: Characterisation of biofilm formation on stainless steel surfaces">
+                    <i class="if if-check if--sm" aria-hidden="true"></i>
+                    Review
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Edit: Characterisation of biofilm formation">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="card-body bt-work-card__body">
+                <h2 id="c-card-title-02" class="bt-work-card__title">
+                  <a href="#">Characterisation of biofilm formation on stainless steel surfaces in food processing environments</a>
+                </h2>
+                <p class="bt-work-card__authors">Van Acker, H., Coenye, T., Martinez-Garcia, L.</p>
+                <p class="bt-work-card__pub">
+                  <span>2025</span>
+                  <span class="text-muted mx-1">·</span>
+                  <a href="#">Biofouling</a>
+                </p>
+                <p class="small text-muted mb-0">Submitted by <strong>proxy</strong> (Mieke Declercq) · 5d ago</p>
+              </div>
+            </article>
+
+            <article class="card bt-work-card" aria-labelledby="c-card-title-03">
+              <div class="card-header bt-work-card__head">
+                <div class="bt-meta-list pt-1">
+                  <span class="badge bg-info">Submitted</span>
+                  <span class="bt-meta-list__item-bordered">Journal article</span>
+                  <span class="badge bg-light text-dark border">Fast pass</span>
+                </div>
+                <div class="bt-btn-toolbar">
+                  <a href="team-review.html" class="btn btn-outline-primary btn-sm"
+                    aria-label="Review: Comparative transcriptomics of drought stress response">
+                    <i class="if if-check if--sm" aria-hidden="true"></i>
+                    Review
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Edit: Comparative transcriptomics">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="card-body bt-work-card__body">
+                <h2 id="c-card-title-03" class="bt-work-card__title">
+                  <a href="#">Comparative transcriptomics of drought stress response in Arabidopsis thaliana ecotypes</a>
+                </h2>
+                <p class="bt-work-card__authors">Inzé, D., Nelissen, H.</p>
+                <p class="bt-work-card__pub">
+                  <span>2025</span>
+                  <span class="text-muted mx-1">·</span>
+                  <a href="#">Plant Cell</a>
+                </p>
+                <p class="small text-muted mb-0">Via <strong>WoS import</strong> · 6d ago</p>
+              </div>
+            </article>
+
+          </div><!-- /c-view-cards -->
+
+          <!-- ── Table view ── -->
+          <div id="c-view-table" hidden>
+            <table class="table table-hover align-middle" aria-label="Research output — curator view">
+              <thead class="text-uppercase text-muted small">
+                <tr>
+                  <th scope="col">
+                    <input type="checkbox" class="form-check-input mt-0" id="c-select-all"
+                      aria-label="Select all records on this page">
+                  </th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Type</th>
+                  <th scope="col" aria-sort="descending">
+                    <button type="button" class="btn btn-ghost btn-sm p-0"
+                      aria-label="Sort by year, currently descending">
+                      Year <i class="if if-caret-down if--xs ms-1" aria-hidden="true"></i>
+                    </button>
+                  </th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Access</th>
+                  <th scope="col">VABB</th>
+                  <th scope="col">Flags</th>
+                  <th scope="col"><span class="visually-hidden">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <input type="checkbox" class="form-check-input mt-0 c-row-check"
+                      aria-label="Select: Entanglement entropy in quantum spin chains">
+                  </td>
+                  <td>
+                    <a href="#" class="fw-semibold text-reset text-decoration-none">
+                      Entanglement entropy in quantum spin chains
+                    </a>
+                    <div class="small text-muted mt-1">De Moor, B., Adriaens, T., Vanderstraeten, L.</div>
+                  </td>
+                  <td><span class="badge bg-primary">Journal article</span></td>
+                  <td>2025</td>
+                  <td><span class="badge bg-info">Submitted</span></td>
+                  <td><span class="badge badge-restricted">Restricted</span></td>
+                  <td><span class="text-muted small">—</span></td>
+                  <td>
+                    <span class="badge bg-danger">Deep</span>
+                    <span class="badge bg-warning text-dark">FWO</span>
+                  </td>
+                  <td class="text-end">
+                    <a href="team-review.html" class="btn btn-primary btn-sm"
+                      aria-label="Review: Entanglement entropy">
+                      <i class="if if-check if--xs" aria-hidden="true"></i>
+                      Review
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" class="form-check-input mt-0 c-row-check"
+                      aria-label="Select: Characterisation of biofilm formation">
+                  </td>
+                  <td>
+                    <a href="#" class="fw-semibold text-reset text-decoration-none">
+                      Characterisation of biofilm formation on stainless steel
+                    </a>
+                    <div class="small text-muted mt-1">Van Acker, H., Coenye, T.</div>
+                  </td>
+                  <td><span class="badge bg-primary">Journal article</span></td>
+                  <td>2025</td>
+                  <td><span class="badge bg-info">Submitted</span></td>
+                  <td><span class="badge badge-oa">Open access</span></td>
+                  <td><span class="text-muted small">—</span></td>
+                  <td><span class="badge bg-warning text-dark">Proxy OA</span></td>
+                  <td class="text-end">
+                    <a href="team-review.html" class="btn btn-primary btn-sm"
+                      aria-label="Review: Characterisation of biofilm">
+                      <i class="if if-check if--xs" aria-hidden="true"></i>
+                      Review
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="checkbox" class="form-check-input mt-0 c-row-check"
+                      aria-label="Select: Comparative transcriptomics">
+                  </td>
+                  <td>
+                    <a href="#" class="fw-semibold text-reset text-decoration-none">
+                      Comparative transcriptomics of drought stress response
+                    </a>
+                    <div class="small text-muted mt-1">Inzé, D., Nelissen, H.</div>
+                  </td>
+                  <td><span class="badge bg-primary">Journal article</span></td>
+                  <td>2025</td>
+                  <td><span class="badge bg-info">Submitted</span></td>
+                  <td><span class="badge badge-oa">Open access</span></td>
+                  <td><span class="small">A1</span></td>
+                  <td><span class="text-muted small">—</span></td>
+                  <td class="text-end">
+                    <a href="team-review.html" class="btn btn-outline-primary btn-sm"
+                      aria-label="Review: Comparative transcriptomics">
+                      <i class="if if-check if--xs" aria-hidden="true"></i>
+                      Review
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div><!-- /c-view-table -->
+
+        </div><!-- /c-results-list -->
+
+        <!-- Pagination -->
+        <div class="u-main__content-footer">
+          <nav class="bt-toolbar" aria-label="Results pagination">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <ul class="pagination pagination-sm mb-0">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#" aria-current="page">1</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next page">›</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted small" aria-live="polite">Showing 1–14 of 14</span>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+      </section>
+    </div><!-- /u-main__body -->
+  </main>
+</div>
+
+<script>
+  // View toggle
+  const btnCard  = document.getElementById('c-card-view');
+  const btnTable = document.getElementById('c-table-view');
+  const viewCards = document.getElementById('c-view-cards');
+  const viewTable = document.getElementById('c-view-table');
+
+  function setView(v) {
+    viewCards.hidden = v !== 'card';
+    viewTable.hidden = v === 'card';
+    try { localStorage.setItem('curator-results-view', v); } catch(e) {}
+  }
+
+  btnCard.addEventListener('click',  () => setView('card'));
+  btnTable.addEventListener('click', () => setView('table'));
+
+  try {
+    const saved = localStorage.getItem('curator-results-view');
+    if (saved === 'table') setView('table');
+  } catch(e) {}
+
+  // Bulk selection
+  const bulkBar  = document.getElementById('c-bulk-bar');
+  const selectAll = document.getElementById('c-select-all');
+
+  function updateBulk() {
+    const checked = document.querySelectorAll('.c-row-check:checked');
+    const total   = document.querySelectorAll('.c-row-check');
+    bulkBar.hidden = checked.length === 0;
+    if (selectAll) {
+      selectAll.checked       = checked.length === total.length && total.length > 0;
+      selectAll.indeterminate = checked.length > 0 && checked.length < total.length;
+      if (selectAll.indeterminate) {
+        selectAll.setAttribute('aria-label', 'Some records selected — click to select all');
+      } else if (selectAll.checked) {
+        selectAll.setAttribute('aria-label', 'All records selected — click to deselect all');
+      } else {
+        selectAll.setAttribute('aria-label', 'Select all records on this page');
+      }
+    }
+  }
+
+  document.querySelectorAll('.c-row-check').forEach(cb => {
+    cb.addEventListener('change', updateBulk);
+  });
+
+  if (selectAll) {
+    selectAll.addEventListener('change', () => {
+      document.querySelectorAll('.c-row-check').forEach(cb => {
+        cb.checked = selectAll.checked;
+      });
+      updateBulk();
+    });
+  }
+</script>
+<script src="/assets/js/sidebar-toggle.js"></script>

@@ -1,0 +1,441 @@
+<!-- @title: dashboard — Curator — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: active-dashboard -->
+<!--
+  Curator dashboard overview ("Wachtrij").
+
+  Purpose: pipeline awareness. Answers "what is waiting, broken down so I can plan."
+  This is NOT a reporting surface (that is Power BI).
+  This is NOT a triage surface (that is the dashboard).
+  This is a structured entry point into the search list.
+
+  Every count is a link that opens search-team.html with the correct filters pre-applied.
+
+  Three sections:
+  1. Needs review — submitted works, broken down by type and by tier
+  2. At risk — flagged works, broken down by flag type
+  3. Candidates — harvested records awaiting decision, broken down by source
+
+  Scope: same as dashboard — curator's configured scope (Faculty of Sciences +
+  Faculty of Engineering & Architecture in this prototype).
+
+  The old matrix (type × faculty × status) answered a reporting question, not a
+  curation question. This page answers the curation question more directly:
+  "what effort is waiting for me, in what shape?"
+
+  HTMX URLs are stubs.
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="bt-navbar" role="banner">
+    <a href="#" class="bt-navbar__brand" aria-label="Biblio — go to dashboard">
+      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" width="auto" height="70">
+      Biblio
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <div class="dropdown">
+        <button class="bt-avatar btn" type="button" data-bs-toggle="dropdown"
+          aria-label="Account menu for Hannelore Vanhoutte">HV</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text fw-semibold">Hannelore Vanhoutte</span></li>
+          <li><span class="dropdown-item-text text-muted small">Hannelore.Vanhoutte@UGent.be</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- @include: templates/partials/curator-sidebar.html -->
+  <!-- @active: dashboard -->
+
+  <main id="main-content">
+
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h4 mb-0 fw-semibold">Dashboard</h1>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="lead">
+              <i class="if if-building me-1" aria-hidden="true"></i>
+              Sciences · Engineering &amp; Architecture
+            </span>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="team-review.html" class="btn btn-primary btn-sm">
+              <i class="if if-service if--sm" aria-hidden="true"></i>
+              Start reviewing
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body p-4 p-lg-5">
+
+          <!-- ══ Deadline alert ══ seems superfluous as reviewers and curators are well aware-->
+          <!-- <div class="alert alert-danger d-flex align-items-start justify-content-between gap-3 mb-5" role="alert">
+            <div class="d-flex gap-3 align-items-start">
+              <i class="if if-error-circle-fill if--lg flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div>
+                <p class="fw-semibold mb-0">FWO deadline in 18 days</p>
+                <p class="small mb-0">2 works need a confirmed project link or OA status before the grant report closes.</p>
+              </div>
+            </div>
+            <a href="search-team.html?view=needs-review&flag=fwo" class="btn btn-danger btn-sm flex-shrink-0">
+              Show these 2 <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div> -->
+
+          <div class="row g-5 align-items-start">
+
+            <!-- ══ Left: Needs review + At risk ══ -->
+            <div class="col-lg-7">
+
+              <!-- ── Needs review ── -->
+              <section aria-labelledby="dashboard-heading" class="mb-5">
+                <div class="d-flex align-items-baseline justify-content-between mb-3">
+                  <h2 id="dashboard-heading" class="h5 fw-semibold mb-0">
+                    Needs review
+                    <span class="badge bg-primary ms-2 align-middle" aria-label="14 works waiting">14</span>
+                  </h2>
+                  <a href="search-team.html?status=submitted" class="small text-muted text-decoration-none">
+                    View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                  </a>
+                </div>
+
+                <!-- By type -->
+                <div class="card mb-4">
+                  <div class="card-header">
+                    <p class="small fw-semibold text-uppercase text-muted mb-0">By type</p>
+                  </div>
+
+                  <div class="card-body p-0">
+                    <table class="table table-hover align-middle mb-0" aria-label="Queue breakdown by output type">
+                      <thead class="visually-hidden">
+                        <tr>
+                          <th scope="col">Type</th>
+                          <th scope="col">Count</th>
+                          <th scope="col">Open list</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="px-4 py-3 small fw-semibold">Journal article</td>
+                          <td class="px-4 py-3">
+                            <span class="badge bg-primary">6</span>
+                          </td>
+                          <td class="px-4 py-3 text-end">
+                            <a href="search-team.html?status=submitted&type=journal_article"
+                              class="btn btn-ghost btn-sm"
+                              aria-label="Show 6 submitted journal articles">
+                              Show <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="px-4 py-3 small fw-semibold">Conference</td>
+                          <td class="px-4 py-3">
+                            <span class="badge bg-primary">3</span>
+                          </td>
+                          <td class="px-4 py-3 text-end">
+                            <a href="search-team.html?status=submitted&type=conference"
+                              class="btn btn-ghost btn-sm"
+                              aria-label="Show 3 submitted conference papers">
+                              Show <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="px-4 py-3 small fw-semibold">Dataset</td>
+                          <td class="px-4 py-3">
+                            <span class="badge bg-primary">3</span>
+                          </td>
+                          <td class="px-4 py-3 text-end">
+                            <a href="search-team.html?status=submitted&type=dataset"
+                              class="btn btn-ghost btn-sm"
+                              aria-label="Show 3 submitted datasets">
+                              Show <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="px-4 py-3 small fw-semibold">Dissertation</td>
+                          <td class="px-4 py-3">
+                            <span class="badge bg-primary">2</span>
+                          </td>
+                          <td class="px-4 py-3 text-end">
+                            <a href="search-team.html?status=submitted&type=dissertation"
+                              class="btn btn-ghost btn-sm"
+                              aria-label="Show 2 submitted dissertations">
+                              Show <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr class="table-light">
+                          <td class="px-4 py-3 small fw-bold">Total</td>
+                          <td class="px-4 py-3">
+                            <span class="badge bg-primary fw-bold">14</span>
+                          </td>
+                          <td class="px-4 py-3 text-end">
+                            <a href="search-team.html?status=submitted"
+                              class="btn btn-outline-primary btn-sm"
+                              aria-label="Show all 14 submitted works">
+                              Show all <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                  <div class="card-footer bg-transparent">
+                    <p class="small text-muted mb-0">
+                      <a href="#" class="text-muted">Team</a>: <strong>5323 reviewed</strong> (79%) of 13,802 published.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- By tier -->
+                <div class="card mb-3">
+                  <div class="card-header">
+                    <p class="small fw-semibold text-uppercase text-muted mb-0">By effort</p>
+                  </div>
+
+                  <a href="search-team.html?status=submitted&tier=3"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="2 deep curation works — open in search list">
+                    <span class="badge bg-danger flex-shrink-0">2</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Deep curation needed</p>
+                      <p class="small text-muted mb-0">VABB, FWO attribution, embargo complexity</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+
+                  <a href="search-team.html?status=submitted&tier=2"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="5 standard works — open in search list">
+                    <span class="badge bg-secondary flex-shrink-0">5</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Standard curation</p>
+                      <p class="small text-muted mb-0">Affiliation, project link, or OA confirmation needed</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+
+                  <a href="search-team.html?status=submitted&tier=1"
+                    class="d-flex align-items-center gap-3 px-4 py-3 text-decoration-none text-reset"
+                    aria-label="7 fast pass works — open in search list">
+                    <span class="badge bg-light text-dark border flex-shrink-0">7</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Fast pass</p>
+                      <p class="small text-muted mb-0">Clean imports — quick confirm</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+                </div>
+
+              </section>
+
+            </div><!-- /left -->
+
+            <!-- ══ Right: Candidates + resubmissions + totals ══ -->
+            <div class="col-lg-5">
+
+              <!-- ── At risk ── -->
+              <section aria-labelledby="risk-heading" class="mb-5">
+                <div class="d-flex align-items-baseline justify-content-between mb-3">
+                  <h2 id="risk-heading" class="h5 fw-semibold mb-0">
+                    Highlights
+                    <span class="badge bg-danger ms-2 align-middle" aria-label="3 flagged works">3</span>
+                  </h2>
+                  <a href="search-team.html?flag=any" class="small text-muted text-decoration-none">
+                    View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                  </a>
+                </div>
+
+                <div class="card">
+                  <a href="search-team.html?flag=auto-imported"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="1 work with VABB deadline approaching — open in search list">
+                    <span class="badge bg-primary flex-shrink-0">4</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Automatic imports</p>
+                      <p class="small text-muted mb-0">Output added from WoS and ORCID.</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+                  <a href="search-team.html?flag=vabb-deadline"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="1 work with VABB deadline approaching — open in search list">
+                    <span class="badge bg-danger flex-shrink-0">1</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">VABB deadline — 12 days</p>
+                      <p class="small text-muted mb-0">Pagination missing on published work</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+
+                  <a href="search-team.html?flag=embargo-no-licence"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="1 work with embargo lifting without a licence — open in search list">
+                    <span class="badge bg-warning flex-shrink-0">1</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Embargo lifting — no licence</p>
+                      <p class="small text-muted mb-0">Will become open access in 7 days without a licence set</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+
+                  <a href="search-team.html?flag=curator"
+                    class="d-flex align-items-center gap-3 px-4 py-3 text-decoration-none text-reset"
+                    aria-label="1 work flagged by curator — open in search list">
+                    <span class="badge bg-secondary flex-shrink-0">1</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Possible duplicate detected</p>
+                      <p class="small text-muted mb-0">Needs resolution</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </section>
+
+              <!-- ── Candidates seems a bit too specific, can be added to highlights ── -->
+              <!-- <section aria-labelledby="candidates-heading" class="mb-5">
+                <div class="d-flex align-items-baseline justify-content-between mb-3">
+                  <h2 id="candidates-heading" class="h5 fw-semibold mb-0">
+                    Candidates
+                    <span class="badge bg-secondary ms-2 align-middle" aria-label="7 unreviewed candidates">7</span>
+                  </h2>
+                  <a href="#" class="small text-muted text-decoration-none">
+                    View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+                  </a>
+                </div>
+                <div class="card">
+                  <a href="#"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="4 candidates from Web of Science — open candidate list">
+                    <span class="badge bg-secondary flex-shrink-0">4</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Web of Science</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+                  <a href="#"
+                    class="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="2 candidates from ORCID — open candidate list">
+                    <span class="badge bg-secondary flex-shrink-0">2</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">ORCID</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+                  <a href="#"
+                    class="d-flex align-items-center gap-3 px-4 py-3 text-decoration-none text-reset"
+                    aria-label="1 candidate from arXiv — open candidate list">
+                    <span class="badge bg-secondary flex-shrink-0">1</span>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">arXiv</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </section> -->
+
+              <!-- ── Resubmissions ── possibly does not need to be a separate list since they work FIFO
+              <section aria-labelledby="resub-heading" class="mb-5">
+                <div class="d-flex align-items-baseline justify-content-between mb-3">
+                  <h2 id="resub-heading" class="h5 fw-semibold mb-0">
+                    Resubmitted
+                    <span class="badge bg-primary ms-2 align-middle" aria-label="2 works resubmitted after return">2</span>
+                  </h2>
+                </div>
+                <div class="card">
+                  <a href="team-review.html"
+                    class="d-flex align-items-start gap-3 px-4 py-3 border-bottom text-decoration-none text-reset"
+                    aria-label="Review resubmission: Contrastive learning for cross-lingual biomedical text mining">
+                    <i class="if if-messages if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Contrastive learning for cross-lingual biomedical text mining</p>
+                      <p class="small text-muted mb-0">Returned: licence · resubmitted 2h ago</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                  </a>
+                  <a href="team-review.html"
+                    class="d-flex align-items-start gap-3 px-4 py-3 text-decoration-none text-reset"
+                    aria-label="Review resubmission: Benchmark dataset for wearable PPG signal quality">
+                    <i class="if if-messages if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div class="flex-grow-1">
+                      <p class="small fw-semibold mb-0">Benchmark dataset for wearable PPG signal quality</p>
+                      <p class="small text-muted mb-0">Returned: licence + linked publication · resubmitted yesterday</p>
+                    </div>
+                    <i class="if if-arrow-right if--xs text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </section> -->
+
+              <!-- ── Scope totals — awareness, not action ── -->
+              <section aria-labelledby="totals-heading">
+                <div class="card">
+                  <div class="card-header">
+                    <p class="small fw-semibold text-uppercase text-muted mb-0">
+                      Scope totals
+                    </p>
+                  </div>
+                  <table class="table table-sm align-middle mb-0 small" aria-label="Total records in scope by status">
+                    <thead class="visually-hidden">
+                      <tr><th scope="col">Status</th><th scope="col">Count</th><th scope="col">Open</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="px-4 py-2 text-muted">Reviewed</td>
+                        <td class="px-4 py-2 text-end fw-semibold">
+                          <a href="search-team.html?status=public" class="text-reset">3,802</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="px-4 py-2 text-muted">Submitted</td>
+                        <td class="px-4 py-2 text-end fw-semibold">
+                          <a href="search-team.html?status=submitted" class="text-reset">14</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="px-4 py-2 text-muted">Draft</td>
+                        <td class="px-4 py-2 text-end fw-semibold">
+                          <a href="search-team.html?status=draft" class="text-reset">1,015</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="card-footer d-flex justify-content-between px-4">
+                    <p class="fw-semibold mb-1">Total:</p>
+                    <a href="search-team.html" class="text-reset">4,831</a>
+                  </div>
+                </div>
+              </section>
+
+            </div><!-- /right -->
+
+          </div><!-- /row -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+</div>
+
+<script src="/assets/js/sidebar-toggle.js"></script>

@@ -1,0 +1,587 @@
+<!-- @title: Curator review — single record — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: standard-review, proxy-flagged -->
+<!--
+  Curator review — inline edit throughout, suggestions pre-populated.
+
+  Interaction model:
+  - Every field is an input at rest. No mode switch.
+  - Suggestions are inline banners with Accept / Dismiss. One click confirms.
+  - Changes auto-save on field change (hx-trigger="change").
+  - Single primary action: "Confirm & next" in the sticky footer only.
+  - "Return for revision" is secondary — same footer, lower visual weight.
+  - Top toolbar: navigation only (breadcrumb, queue position). No duplicate actions.
+
+  Left sidebar: issues checklist + field history (collapsed by default after 3 items).
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="bt-navbar" role="banner">
+    <a href="#" class="bt-navbar__brand" aria-label="Biblio — go to dashboard">
+      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" width="auto" height="70">
+      Biblio
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <div class="dropdown">
+        <button class="bt-avatar btn" type="button" data-bs-toggle="dropdown"
+          aria-label="Account menu for Hannelore Vanhoutte">HV</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text fw-semibold">Hannelore Vanhoutte</span></li>
+          <li><span class="dropdown-item-text text-muted small">Hannelore.Vanhoutte@UGent.be</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- @include: templates/partials/curator-sidebar.html -->
+  <!-- @active: queue -->
+
+  <main id="main-content">
+
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
+    <span id="save-indicator" class="htmx-indicator visually-hidden" aria-live="polite">Saving…</span>
+
+    <!-- ══ Toolbar: navigation only, no duplicate actions ══ -->
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <nav aria-label="Breadcrumb">
+              <ol class="breadcrumb mb-0 small">
+                <li class="breadcrumb-item"><a href="team-dashboard.html">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#">Review queue</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Review</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="badge bg-secondary">Standard</span>
+            <span class="badge bg-warning text-dark ms-1">Proxy-set OA</span>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item d-flex align-items-center gap-1">
+            <button type="button" class="btn btn-ghost btn-sm" aria-label="Previous record in queue">
+              <i class="if if-arrow-left" aria-hidden="true"></i>
+            </button>
+            <span class="small text-muted">3 / 14</span>
+            <button type="button" class="btn btn-ghost btn-sm" aria-label="Next record in queue">
+              <i class="if if-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Body ══ -->
+    <div class="u-main__body u-main__body--split">
+
+      <!-- ── Left: issues + history ── -->
+      <aside class="u-main__sidebar border-end" aria-label="Record context" style="min-width:220px;max-width:240px">
+        <div class="p-3 d-flex flex-column gap-4">
+
+          <!-- Submission context -->
+          <div>
+            <p class="small fw-semibold text-uppercase text-muted mb-2">Submitted by</p>
+            <p class="small mb-0">
+              <strong>Mieke Declercq</strong> (proxy)<br>
+              <span class="text-muted">for Van Acker, H.</span><br>
+              <span class="text-muted">5 days ago</span>
+            </p>
+          </div>
+
+          <!-- Issues: anchor links to flagged fields -->
+          <div>
+            <p class="small fw-semibold text-uppercase text-muted mb-2">
+              3 issues
+            </p>
+            <ol class="list-unstyled mb-0 d-flex flex-column gap-1">
+              <li>
+                <a href="#field-licence" class="small d-flex align-items-center gap-1 text-danger text-decoration-none">
+                  <i class="if if-error-circle if--xs flex-shrink-0" aria-hidden="true"></i>
+                  Licence missing
+                </a>
+              </li>
+              <li>
+                <a href="#field-oa" class="small d-flex align-items-center gap-1 text-warning text-decoration-none">
+                  <i class="if if-alert if--xs flex-shrink-0" aria-hidden="true"></i>
+                  OA status — verify
+                </a>
+              </li>
+              <li>
+                <a href="#field-version" class="small d-flex align-items-center gap-1 text-warning text-decoration-none">
+                  <i class="if if-alert if--xs flex-shrink-0" aria-hidden="true"></i>
+                  File version — verify
+                </a>
+              </li>
+              <li>
+                <a href="#field-vabb" class="small d-flex align-items-center gap-1 text-muted text-decoration-none">
+                  <i class="if if-message-ai if--xs flex-shrink-0" aria-hidden="true"></i>
+                  VABB — confirm suggestion
+                </a>
+              </li>
+            </ol>
+          </div>
+
+          <!-- Field history — collapsed after 3 -->
+          <div>
+            <p class="small fw-semibold text-uppercase text-muted mb-2">Field history</p>
+            <ol class="list-unstyled small mb-0">
+              <li class="py-2 border-bottom">
+                <span class="d-block">OA → <strong>Open access</strong></span>
+                <span class="text-muted">Mieke Declercq · 5d</span>
+              </li>
+              <li class="py-2 border-bottom">
+                <span class="d-block">File uploaded</span>
+                <span class="text-muted">Mieke Declercq · 5d</span>
+              </li>
+              <li class="py-2">
+                <span class="d-block">Record created</span>
+                <span class="text-muted">Mieke Declercq · 5d</span>
+              </li>
+            </ol>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- ── Right: editable record ── -->
+      <section class="u-main__content" aria-label="Record fields">
+        <div class="u-main__content-body p-4 p-lg-5">
+
+          <!-- Title -->
+          <div class="mb-4">
+            <label for="field-title" class="form-label small fw-semibold text-muted text-uppercase mb-1">Title</label>
+            <input type="text" id="field-title" name="title" class="form-control form-control-lg fw-semibold border-0 border-bottom rounded-0 px-0"
+              value="Characterisation of biofilm formation on stainless steel surfaces in food processing environments"
+              hx-post="/records/BIB-2025-08847/field/title"
+              hx-trigger="change"
+              hx-indicator="#save-indicator">
+          </div>
+
+          <!-- Type · Year · DOI -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-4">
+              <label for="field-type" class="form-label small fw-semibold text-muted text-uppercase mb-1">Type</label>
+              <select id="field-type" name="type" class="form-select form-select-sm"
+                hx-post="/records/BIB-2025-08847/field/type" hx-trigger="change" hx-indicator="#save-indicator">
+                <option value="journal_article" selected>Journal article</option>
+                <option value="book_chapter">Book chapter</option>
+                <option value="conference">Conference</option>
+                <option value="dataset">Dataset</option>
+                <option value="dissertation">Dissertation</option>
+                <option value="preprint">Preprint</option>
+                <option value="report">Report</option>
+                <option value="software">Software</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
+              <label for="field-year" class="form-label small fw-semibold text-muted text-uppercase mb-1">Year</label>
+              <input type="number" id="field-year" name="year" class="form-control form-control-sm"
+                value="2025" min="1000" max="2099"
+                hx-post="/records/BIB-2025-08847/field/year" hx-trigger="change" hx-indicator="#save-indicator">
+            </div>
+            <div class="col-sm-6">
+              <label for="field-doi" class="form-label small fw-semibold text-muted text-uppercase mb-1">DOI</label>
+              <input type="text" id="field-doi" name="doi" class="form-control form-control-sm"
+                value="10.1080/08927014.2025.2201234"
+                hx-post="/records/BIB-2025-08847/field/doi" hx-trigger="change" hx-indicator="#save-indicator">
+            </div>
+          </div>
+
+          <!-- Journal · Vol · Issue · Pages -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-5">
+              <label for="field-journal" class="form-label small fw-semibold text-muted text-uppercase mb-1">Journal</label>
+              <input type="text" id="field-journal" name="journal" class="form-control form-control-sm"
+                value="Biofouling: The Journal of Bioadhesion and Biofilm Research"
+                hx-post="/records/BIB-2025-08847/field/journal" hx-trigger="change" hx-indicator="#save-indicator">
+            </div>
+            <div class="col-sm-2">
+              <label for="field-volume" class="form-label small fw-semibold text-muted text-uppercase mb-1">Vol.</label>
+              <input type="text" id="field-volume" class="form-control form-control-sm" value="41"
+                hx-post="/records/BIB-2025-08847/field/volume" hx-trigger="change" hx-indicator="#save-indicator">
+            </div>
+            <div class="col-sm-2">
+              <label for="field-issue" class="form-label small fw-semibold text-muted text-uppercase mb-1">Issue</label>
+              <input type="text" id="field-issue" class="form-control form-control-sm" value="3"
+                hx-post="/records/BIB-2025-08847/field/issue" hx-trigger="change" hx-indicator="#save-indicator">
+            </div>
+            <div class="col-sm-3">
+              <label for="field-pages" class="form-label small fw-semibold text-muted text-uppercase mb-1">Pages</label>
+              <input type="text" id="field-pages" class="form-control form-control-sm" value="218–234"
+                hx-post="/records/BIB-2025-08847/field/pages" hx-trigger="change" hx-indicator="#save-indicator">
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <!-- Authors -->
+          <section aria-labelledby="authors-heading" class="mb-4">
+            <h2 id="authors-heading" class="small fw-semibold text-muted text-uppercase mb-3">Authors</h2>
+            <ol class="list-unstyled mb-2">
+              <li class="d-flex align-items-center gap-2 py-2 border-bottom">
+                <i class="if if-drag if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                <i class="if if-check-circle-fill if--sm text-success flex-shrink-0" aria-hidden="true"></i>
+                <span class="small flex-grow-1">Van Acker, H.</span>
+                <span class="badge bg-light text-dark border">UGent · Biochemistry</span>
+                <a href="#" class="small text-muted" aria-label="ORCID profile for Van Acker H.">
+                  <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                </a>
+                <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Remove Van Acker H.">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="d-flex align-items-center gap-2 py-2 border-bottom">
+                <i class="if if-drag if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                <i class="if if-check-circle-fill if--sm text-success flex-shrink-0" aria-hidden="true"></i>
+                <span class="small flex-grow-1">Coenye, T.</span>
+                <span class="badge bg-light text-dark border">UGent · Biochemistry</span>
+                <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Remove Coenye T.">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </li>
+              <li class="d-flex align-items-center gap-2 py-2 border-bottom">
+                <i class="if if-drag if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                <i class="if if-user if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                <span class="small flex-grow-1">Martinez-Garcia, L.</span>
+                <span class="badge bg-light text-muted border">External</span>
+                <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Remove Martinez-Garcia L.">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </li>
+            </ol>
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add author
+            </button>
+          </section>
+
+          <!-- Departments + Projects -->
+          <div class="row g-4 mb-4">
+            <section class="col-sm-6" aria-labelledby="dept-heading">
+              <h2 id="dept-heading" class="small fw-semibold text-muted text-uppercase mb-2">Departments</h2>
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <span class="badge bg-light text-dark border">Biochemistry and Microbiology</span>
+                <button type="button" class="btn btn-ghost btn-sm">
+                  <i class="if if-add if--xs" aria-hidden="true"></i>
+                  Add
+                </button>
+              </div>
+            </section>
+
+            <section class="col-sm-6" aria-labelledby="projects-heading">
+              <h2 id="projects-heading" class="small fw-semibold text-muted text-uppercase mb-2">Projects</h2>
+
+              <!-- System suggestion from ORCID grants -->
+              <div class="d-flex align-items-start gap-2 p-2 rounded border border-info bg-info bg-opacity-10 mb-2" id="project-suggestion">
+                <i class="if if-message-ai if--xs text-info flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div class="flex-grow-1 small">
+                  <strong>BOF24/GOA/014</strong> — Microbial biofilm dynamics
+                  <span class="text-muted d-block">Van Acker is PI · dates overlap · via ORCID</span>
+                </div>
+                <div class="d-flex gap-1 flex-shrink-0">
+                  <button type="button" class="btn btn-primary btn-sm py-0"
+                    aria-label="Accept project suggestion BOF24/GOA/014"
+                    onclick="this.closest('#project-suggestion').remove(); document.getElementById('project-confirmed').removeAttribute('hidden');"
+                    hx-post="/records/BIB-2025-08847/field/project"
+                    hx-vals='{"project_id":"BOF24-GOA-014"}'
+                    hx-indicator="#save-indicator">
+                    Accept
+                  </button>
+                  <button type="button" class="btn btn-ghost btn-sm py-0"
+                    aria-label="Dismiss project suggestion"
+                    onclick="this.closest('#project-suggestion').remove();">
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+
+              <div id="project-confirmed" class="d-flex align-items-center gap-2" hidden>
+                <span class="badge bg-light text-dark border">BOF24/GOA/014</span>
+                <i class="if if-check-circle-fill if--xs text-success" aria-hidden="true"></i>
+              </div>
+
+              <button type="button" class="btn btn-ghost btn-sm mt-1">
+                <i class="if if-add if--xs" aria-hidden="true"></i>
+                Link project
+              </button>
+            </section>
+          </div>
+
+          <hr class="my-4">
+
+          <!-- ── Open access & file — FLAGGED ── -->
+          <section aria-labelledby="oa-heading" class="mb-4">
+            <h2 id="oa-heading" class="small fw-semibold text-muted text-uppercase mb-3 d-flex align-items-center gap-2">
+              Open access &amp; file
+              <span class="badge bg-warning text-dark">Proxy-set — verify</span>
+            </h2>
+
+            <div class="row g-3 mb-3">
+
+              <!-- OA status -->
+              <div class="col-sm-4" id="field-oa">
+                <label for="field-oa-select" class="form-label small fw-semibold mb-1">OA status</label>
+                <select id="field-oa-select" name="oa_status" class="form-select form-select-sm"
+                  hx-post="/records/BIB-2025-08847/field/oa_status"
+                  hx-trigger="change"
+                  hx-indicator="#save-indicator">
+                  <option value="open" selected>Open access</option>
+                  <option value="embargo">Under embargo</option>
+                  <option value="restricted">Restricted</option>
+                  <option value="closed">Closed</option>
+                </select>
+                <p class="small text-muted mt-1 mb-0">Set by proxy</p>
+              </div>
+
+              <!-- File version -->
+              <div class="col-sm-4" id="field-version">
+                <label for="field-version-select" class="form-label small fw-semibold mb-1">File version</label>
+                <select id="field-version-select" name="file_version" class="form-select form-select-sm"
+                  hx-post="/records/BIB-2025-08847/field/file_version"
+                  hx-trigger="change"
+                  hx-indicator="#save-indicator">
+                  <option value="">— select —</option>
+                  <option value="published">Published (VoR)</option>
+                  <option value="accepted" selected>Accepted manuscript</option>
+                  <option value="preprint">Preprint</option>
+                </select>
+                <p class="small text-muted mt-1 mb-0">Set by proxy</p>
+              </div>
+
+              <!-- File -->
+              <div class="col-sm-4">
+                <p class="form-label small fw-semibold mb-1">File</p>
+                <div class="d-flex align-items-center gap-2">
+                  <a href="#" class="small">
+                    <i class="if if-file-pdf if--sm text-danger me-1" aria-hidden="true"></i>
+                    biofilm_stainless_accepted.pdf
+                  </a>
+                  <span class="text-muted small">1.4 MB</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Publisher policy check — system, no user action needed -->
+            <div class="d-flex align-items-start gap-2 p-2 rounded border bg-light mb-3 small">
+              <i class="if if-check-circle if--xs text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <span>
+                <strong>Publisher policy:</strong> Taylor &amp; Francis allows accepted manuscript deposit for this journal after 12 months. Embargo ended March 2026 — deposit is permitted.
+                <span class="text-muted ms-1">Sherpa Romeo</span>
+              </span>
+            </div>
+
+            <!-- Licence — MISSING — system suggestion -->
+            <div id="field-licence">
+              <label for="field-licence-select" class="form-label small fw-semibold mb-1">
+                Licence <span class="text-danger" aria-label="required">*</span>
+              </label>
+
+              <!-- Suggestion -->
+              <div class="d-flex align-items-start gap-2 p-2 rounded border border-info bg-info bg-opacity-10 mb-2" id="licence-suggestion">
+                <i class="if if-message-ai if--xs text-info flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div class="flex-grow-1 small">
+                  <strong>CC BY 4.0</strong>
+                  <span class="text-muted d-block">This journal deposits AAM under CC BY by default · journal OA policy</span>
+                </div>
+                <div class="d-flex gap-1 flex-shrink-0">
+                  <button type="button" class="btn btn-primary btn-sm py-0"
+                    aria-label="Accept licence suggestion: CC BY 4.0"
+                    onclick="
+                      this.closest('#licence-suggestion').remove();
+                      document.getElementById('field-licence-select').value = 'cc-by-4';
+                      document.getElementById('field-licence-select').classList.remove('is-invalid');
+                      document.getElementById('field-licence-select').removeAttribute('aria-invalid');
+                      document.getElementById('licence-error').hidden = true;
+                    "
+                    hx-post="/records/BIB-2025-08847/field/licence"
+                    hx-vals='{"licence":"cc-by-4"}'
+                    hx-indicator="#save-indicator">
+                    Accept CC BY 4.0
+                  </button>
+                  <button type="button" class="btn btn-ghost btn-sm py-0"
+                    aria-label="Dismiss licence suggestion"
+                    onclick="this.closest('#licence-suggestion').remove();">
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+
+              <select id="field-licence-select" name="licence" class="form-select form-select-sm w-auto is-invalid"
+                aria-describedby="licence-error"
+                aria-invalid="true"
+                hx-post="/records/BIB-2025-08847/field/licence"
+                hx-trigger="change"
+                hx-indicator="#save-indicator">
+                <option value="" selected>— select licence —</option>
+                <option value="cc-by-4">CC BY 4.0</option>
+                <option value="cc-by-nc-4">CC BY-NC 4.0</option>
+                <option value="cc-by-nd-4">CC BY-ND 4.0</option>
+                <option value="cc-by-sa-4">CC BY-SA 4.0</option>
+                <option value="cc0">CC0 (public domain)</option>
+                <option value="all-rights-reserved">All rights reserved</option>
+              </select>
+              <div id="licence-error" class="invalid-feedback d-block">Required for open access works.</div>
+            </div>
+          </section>
+
+          <hr class="my-4">
+
+          <!-- VABB -->
+          <section aria-labelledby="vabb-heading" class="mb-4" id="field-vabb">
+            <h2 id="vabb-heading" class="small fw-semibold text-muted text-uppercase mb-3">VABB classification</h2>
+
+            <!-- AI suggestion -->
+            <div class="d-flex align-items-start gap-2 p-2 rounded border border-info bg-info bg-opacity-10 mb-2" id="vabb-suggestion">
+              <i class="if if-message-ai if--xs text-info flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div class="flex-grow-1 small">
+                <strong>A1</strong> — International peer-reviewed journal article
+                <span class="text-muted d-block">Journal in VABB-SHW list · article type matches A1 criteria · AI</span>
+              </div>
+              <div class="d-flex gap-1 flex-shrink-0">
+                <button type="button" class="btn btn-primary btn-sm py-0"
+                  aria-label="Accept VABB suggestion: A1"
+                  onclick="
+                    this.closest('#vabb-suggestion').remove();
+                    document.getElementById('field-vabb-select').value = 'A1';
+                  "
+                  hx-post="/records/BIB-2025-08847/field/vabb"
+                  hx-vals='{"vabb":"A1"}'
+                  hx-indicator="#save-indicator">
+                  Accept A1
+                </button>
+                <button type="button" class="btn btn-ghost btn-sm py-0"
+                  aria-label="Dismiss VABB suggestion"
+                  onclick="this.closest('#vabb-suggestion').remove();">
+                  Override
+                </button>
+              </div>
+            </div>
+
+            <select id="field-vabb-select" name="vabb" class="form-select form-select-sm w-auto"
+              hx-post="/records/BIB-2025-08847/field/vabb"
+              hx-trigger="change"
+              hx-indicator="#save-indicator">
+              <option value="">— not classified —</option>
+              <option value="A1">A1 — International peer-reviewed journal</option>
+              <option value="A2">A2 — National peer-reviewed journal</option>
+              <option value="B1">B1 — International non-peer-reviewed journal</option>
+              <option value="C1">C1 — Conference proceedings</option>
+            </select>
+          </section>
+
+          <hr class="my-4">
+
+          <!-- Note for curators -->
+          <section aria-labelledby="note-heading" class="mb-2">
+            <h2 id="note-heading" class="small fw-semibold text-muted text-uppercase mb-2">Note for curators</h2>
+            <textarea class="form-control form-control-sm" rows="2"
+              placeholder="Not visible to the researcher…"
+              hx-post="/records/BIB-2025-08847/note"
+              hx-trigger="change"
+              hx-indicator="#save-indicator"
+              aria-label="Internal note for curators"></textarea>
+          </section>
+
+          <!-- Spacer so footer doesn't cover last field -->
+          <div style="height:5rem"></div>
+
+        </div><!-- /content-body -->
+
+        <!-- ── Sticky footer — single location for primary actions ── -->
+        <div class="u-main__content-footer border-top bg-white">
+          <div class="bt-toolbar px-4 py-3">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <span class="small text-muted">
+                  BIB-2025-08847
+                  <span class="ms-2" id="autosave-indicator" aria-live="polite"></span>
+                </span>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item d-flex gap-2">
+                <button type="button" class="btn btn-ghost btn-sm"
+                  data-bs-toggle="modal" data-bs-target="#return-modal"
+                  aria-label="Return this record to the researcher for revision">
+                  Return for revision
+                </button>
+                <button type="button" class="btn btn-primary btn-sm"
+                  hx-post="/records/BIB-2025-08847/confirm"
+                  hx-indicator="#save-indicator"
+                  aria-label="Confirm this record and move to the next in queue">
+                  <i class="if if-check if--sm" aria-hidden="true"></i>
+                  Confirm &amp; next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div><!-- /u-main__body -->
+  </main>
+
+</div>
+
+<!-- ── Return modal ── -->
+<div class="modal fade" id="return-modal" tabindex="-1"
+  aria-labelledby="return-modal-title" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="return-modal-title">Return for revision</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="/records/BIB-2025-08847/return">
+        <div class="modal-body">
+          <p class="small text-muted mb-3">The researcher will see your message and be asked to resubmit.</p>
+          <div class="mb-3">
+            <label for="return-reason" class="form-label">
+              Message to researcher <span class="text-danger" aria-label="required">*</span>
+            </label>
+            <textarea id="return-reason" name="reason" class="form-control" rows="4" required
+              placeholder="Describe what needs to be fixed or confirmed…"></textarea>
+          </div>
+          <div>
+            <p class="form-label mb-2">Quick reasons</p>
+            <div class="d-flex flex-wrap gap-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+                onclick="document.getElementById('return-reason').value='Please confirm the open access licence and whether the file is the accepted manuscript or the published version.'">
+                Licence / version
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+                onclick="document.getElementById('return-reason').value='Please confirm or correct the linked project. If this work is funded by a grant, add it here.'">
+                Project link
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+                onclick="document.getElementById('return-reason').value='Please verify the author list and confirm UGent affiliations.'">
+                Author affiliations
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary"
+                onclick="document.getElementById('return-reason').value='This record may be a duplicate. Please check and confirm.'">
+                Possible duplicate
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-warning">
+            <i class="if if-request-change if--sm me-1" aria-hidden="true"></i>
+            Return to researcher
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/sidebar-toggle.js"></script>

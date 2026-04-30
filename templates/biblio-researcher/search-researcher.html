@@ -1,0 +1,383 @@
+<!-- @title: Research output — Researcher — Biblio -->
+<!-- @surface: backoffice -->
+<!--
+  Research output list — researcher view.
+  "My output" — scoped to the signed-in researcher's own works.
+
+  Differences from curator view:
+  - Page title: "My research output" not "Research output"
+  - Primary toolbar action: "Add research output" (deposit)
+  - No scope indicator — always the researcher's own works
+  - No saved views — researcher has no curation presets
+  - Facets: Status, Type, Year, Access — no VABB, no proxy flag, no tier filters
+  - Cards: no Review button, no tier badge, no proxy flag
+  - Table: no VABB column, no proxy column
+  - Sidebar: researcher nav (Inbox, Review deadlines, Suggestions, Incomplete)
+  - Result count phrasing: "Your 4,831 records" not "4,831 records"
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- @include: templates/partials/backoffice-header.html -->
+  <header class="bt-navbar" role="banner">
+    <a href="#" class="bt-navbar__brand" aria-label="Biblio — go to inbox">
+      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" width="auto" height="70">
+      Biblio
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <div class="dropdown">
+        <button class="bt-avatar btn" type="button" data-bs-toggle="dropdown"
+          aria-label="Account menu for Hendrik Defoort">HD</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text fw-semibold">Hendrik Defoort</span></li>
+          <li><span class="dropdown-item-text text-muted small">Hendrik.Defoort@UGent.be</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- @include: templates/partials/backoffice-sidebar.html -->
+  <!-- @active: all-research -->
+
+  <main id="main-content">
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">My research output</h1>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="text-muted small" aria-live="polite" id="result-count">4,831 records</span>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="if if-download if--sm" aria-hidden="true"></i> Export
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">CSV</a></li>
+                <li><a class="dropdown-item" href="#">BibTeX</a></li>
+                <li><a class="dropdown-item" href="#">RIS</a></li>
+              </ul>
+            </div>
+            <!-- Primary action for researcher: deposit -->
+            <a href="deposit-1-0-find.html" class="btn btn-primary btn-sm">
+              <i class="if if-add if--sm" aria-hidden="true"></i>
+              Add research output
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body u-main__body--split">
+
+      <!-- Facet sidebar — researcher variant (no scope, no saved views, no VABB) -->
+      <aside class="u-main__sidebar border-end" aria-label="Filter by">
+        <div class="p-3">
+
+          <!-- Status — researcher sees own works in all states -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rs-published"
+                aria-label="Published (3,802 records)">
+              <label class="bt-facet-name" for="rs-published">Published</label>
+              <span class="bt-facet-count" aria-hidden="true">3,802</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rs-submitted"
+                aria-label="Submitted (12 records)">
+              <label class="bt-facet-name" for="rs-submitted">Submitted</label>
+              <span class="bt-facet-count" aria-hidden="true">12</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rs-draft"
+                aria-label="Draft (1,017 records)">
+              <label class="bt-facet-name" for="rs-draft">Draft</label>
+              <span class="bt-facet-count" aria-hidden="true">1,017</span>
+            </div>
+          </fieldset>
+
+          <hr class="bt-facet-separator">
+
+          <!-- Type -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Type</legend>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rt-journal"
+                aria-label="Journal article (2,231 records)">
+              <label class="bt-facet-name" for="rt-journal">Journal article</label>
+              <span class="bt-facet-count" aria-hidden="true">2,231</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rt-conference"
+                aria-label="Conference (841 records)">
+              <label class="bt-facet-name" for="rt-conference">Conference</label>
+              <span class="bt-facet-count" aria-hidden="true">841</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rt-dataset"
+                aria-label="Dataset (312 records)">
+              <label class="bt-facet-name" for="rt-dataset">Dataset</label>
+              <span class="bt-facet-count" aria-hidden="true">312</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="rt-book"
+                aria-label="Book (204 records)">
+              <label class="bt-facet-name" for="rt-book">Book</label>
+              <span class="bt-facet-count" aria-hidden="true">204</span>
+            </div>
+          </fieldset>
+
+          <hr class="bt-facet-separator">
+
+          <!-- Year -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Year</legend>
+            <div class="d-flex gap-2 align-items-center">
+              <label for="ry-from" class="visually-hidden">From year</label>
+              <input type="number" id="ry-from" class="form-control form-control-sm" placeholder="From" min="1800" max="2099">
+              <span class="text-muted small" aria-hidden="true">–</span>
+              <label for="ry-to" class="visually-hidden">To year</label>
+              <input type="number" id="ry-to" class="form-control form-control-sm" placeholder="To" min="1800" max="2099">
+            </div>
+          </fieldset>
+
+          <hr class="bt-facet-separator">
+
+          <!-- Access -->
+          <fieldset class="mb-0">
+            <legend class="form-label fw-semibold mb-2">Access</legend>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="ra-oa"
+                aria-label="Open access (2,901 records)">
+              <label class="bt-facet-name" for="ra-oa">Open access</label>
+              <span class="bt-facet-count" aria-hidden="true">2,901</span>
+            </div>
+            <div class="bt-facet-check">
+              <input class="form-check-input" type="checkbox" id="ra-restricted"
+                aria-label="Restricted (1,118 records)">
+              <label class="bt-facet-name" for="ra-restricted">Restricted</label>
+              <span class="bt-facet-count" aria-hidden="true">1,118</span>
+            </div>
+          </fieldset>
+
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <section class="u-main__content">
+        <div class="u-main__content-header border-bottom px-4 py-3">
+
+          <div role="search" aria-label="Search within your research output">
+            <label for="search-refine" class="visually-hidden">Search by title, author, DOI</label>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+              <input type="search" id="search-refine" class="form-control form-control-sm border-0 bg-transparent shadow-none"
+                placeholder="Search by title, author, DOI…"
+                hx-get="/search" hx-trigger="keyup changed delay:300ms"
+                hx-target="#results-list" hx-indicator="#search-indicator">
+            </div>
+          </div>
+
+          <div class="bt-toolbar m-0">
+            <div class="bt-toolbar__left">
+              <span class="text-muted small">Showing all</span>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="btn-group btn-group-sm" role="group" aria-label="Switch view">
+                <input type="radio" class="btn-check" name="switchview" id="res-card-view" autocomplete="off" checked aria-label="Card view">
+                <label class="btn btn-outline-light" for="res-card-view">
+                  <i class="if if-list-unordered" aria-hidden="true"></i>
+                </label>
+                <input type="radio" class="btn-check" name="switchview" id="res-table-view" autocomplete="off" aria-label="Table view">
+                <label class="btn btn-outline-light" for="res-table-view">
+                  <i class="if if-table" aria-hidden="true"></i>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div id="results-list" class="u-main__content-body">
+          <span id="search-indicator" class="htmx-indicator text-muted small px-4 py-3 d-block" aria-live="polite">Searching…</span>
+
+          <!-- Card view — researcher: no Review button, no tier, Edit is primary -->
+          <div id="view-cards">
+
+            <article class="card bt-work-card" aria-labelledby="r-card-title-01">
+              <div class="card-header bt-work-card__head">
+                <div class="bt-meta-list pt-1">
+                  <span class="badge bg-success">Published</span>
+                  <span class="bt-meta-list__item-bordered">Journal article</span>
+                  <span class="bt-meta-list__item-bordered badge-oa">Open access</span>
+                </div>
+                <div class="bt-btn-toolbar">
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Entanglement entropy in quantum spin chains">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                  </a>
+                </div>
+              </div>
+              <div class="card-body bt-work-card__body">
+                <h2 id="r-card-title-01" class="bt-work-card__title">
+                  <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
+                </h2>
+                <p class="bt-work-card__authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
+                <p class="bt-work-card__pub">
+                  <span>2025</span>
+                  <span class="text-muted mx-1">·</span>
+                  <a href="#">Physical Review B</a>
+                </p>
+              </div>
+            </article>
+
+            <article class="card bt-work-card" aria-labelledby="r-card-title-02">
+              <div class="card-header bt-work-card__head">
+                <div class="bt-meta-list pt-1">
+                  <span class="badge bg-info">Submitted</span>
+                  <span class="bt-meta-list__item-bordered">Journal article</span>
+                  <span class="bt-meta-list__item-bordered badge-oa">Open access</span>
+                </div>
+                <div class="bt-btn-toolbar">
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Machine learning approaches to protein folding">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                  </a>
+                </div>
+              </div>
+              <div class="card-body bt-work-card__body">
+                <h2 id="r-card-title-02" class="bt-work-card__title">
+                  <a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
+                </h2>
+                <p class="bt-work-card__authors">Hendrickx, E., Verhasselt, A.</p>
+                <p class="bt-work-card__pub">
+                  <span>2025</span>
+                  <span class="text-muted mx-1">·</span>
+                  <a href="#">Nature Computational Science</a>
+                </p>
+              </div>
+            </article>
+
+            <article class="card bt-work-card" aria-labelledby="r-card-title-03">
+              <div class="card-header bt-work-card__head">
+                <div class="bt-meta-list pt-1">
+                  <span class="badge bg-warning text-dark">Draft</span>
+                  <span class="bt-meta-list__item-bordered">Dataset</span>
+                </div>
+                <div class="bt-btn-toolbar">
+                  <a href="deposit-1-0-find.html" class="btn btn-outline-primary btn-sm"
+                    aria-label="Continue deposit: Climate forcing data over Belgium">
+                    Continue
+                  </a>
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Climate forcing data over Belgium">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                  </a>
+                </div>
+              </div>
+              <div class="card-body bt-work-card__body">
+                <h2 id="r-card-title-03" class="bt-work-card__title">
+                  <a href="#">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
+                </h2>
+                <p class="bt-work-card__authors">Goossens, C., Termonia, P.</p>
+                <p class="bt-work-card__pub"><span>2025</span></p>
+              </div>
+            </article>
+
+          </div><!-- /view-cards -->
+
+          <div id="view-table" hidden>
+            <table class="table table-hover align-middle" aria-label="My research output">
+              <thead class="text-uppercase text-muted small">
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Type</th>
+                  <th scope="col" aria-sort="descending">
+                    <button type="button" class="btn btn-ghost btn-sm p-0" aria-label="Sort by year, currently descending">
+                      Year <i class="if if-caret-down if--xs ms-1" aria-hidden="true"></i>
+                    </button>
+                  </th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Access</th>
+                  <th scope="col"><span class="visually-hidden">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <a href="#" class="fw-semibold text-reset text-decoration-none">Entanglement entropy in quantum spin chains</a>
+                    <div class="small text-muted mt-1">De Moor, B., Adriaens, T., Vanderstraeten, L.</div>
+                  </td>
+                  <td><span class="badge bg-primary">Journal article</span></td>
+                  <td>2025</td>
+                  <td><span class="badge bg-success">Published</span></td>
+                  <td><span class="badge-oa badge">Open access</span></td>
+                  <td class="text-end">
+                    <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Entanglement entropy">
+                      <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <a href="#" class="fw-semibold text-reset text-decoration-none">Machine learning approaches to protein folding prediction</a>
+                    <div class="small text-muted mt-1">Hendrickx, E., Verhasselt, A.</div>
+                  </td>
+                  <td><span class="badge bg-primary">Journal article</span></td>
+                  <td>2025</td>
+                  <td><span class="badge bg-info">Submitted</span></td>
+                  <td><span class="badge-oa badge">Open access</span></td>
+                  <td class="text-end">
+                    <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Machine learning approaches">
+                      <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div><!-- /results-list -->
+
+        <div class="u-main__content-footer border-top">
+          <nav class="bt-toolbar px-4 py-2" aria-label="Results pagination">
+            <div class="bt-toolbar__left">
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">‹</a></li>
+                <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">›</a></li>
+              </ul>
+              <span class="text-muted small ms-3" aria-live="polite">Showing 1–20 of 4,831</span>
+            </div>
+          </nav>
+        </div>
+
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+  const btnCard = document.getElementById('res-card-view');
+  const btnTable = document.getElementById('res-table-view');
+  const viewCards = document.getElementById('view-cards');
+  const viewTable = document.getElementById('view-table');
+  function setView(v) {
+    viewCards.hidden = v !== 'card';
+    viewTable.hidden = v === 'card';
+  }
+  btnCard.addEventListener('click', () => setView('card'));
+  btnTable.addEventListener('click', () => setView('table'));
+</script>
+<script src="/assets/js/sidebar-toggle.js"></script>
