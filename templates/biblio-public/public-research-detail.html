@@ -28,20 +28,25 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
         <li class="breadcrumb-item"><a href="/research">Research output</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Urban forests…</li>
+        <li class="breadcrumb-item active" aria-current="page">Urban forests as essential infrastructure...</li>
       </ol>
     </nav>
 
-    <div class="row g-5">
+    <!-- Heading -->
+    <div class="row g-md-4 g-0 align-items-end border-bottom bt-section-detail">
 
-      <!-- Main column -->
-      <div class="col-lg-8">
+      <!-- Main column: heading -->
+      <div class="col-lg-12 col-xl-8">
 
         <!-- Status badges -->
         <div class="d-flex flex-wrap gap-2 mb-3">
-          <span class="badge bg-success">● Open access</span>
           <span class="badge bg-primary">Journal article</span>
-          <span class="badge bg-success">Peer reviewed</span>
+          <span class="badge bg-success">
+            <i class="if if-open-access"></i> Open access
+          </span>
+          <span class="badge bg-success">
+            <i class="if if-check"></i> Methodology certified
+          </span>
         </div>
 
         <!-- Title -->
@@ -50,7 +55,7 @@
         </h1>
 
         <!-- Authors -->
-        <p class="mb-4">
+        <p class="mb-1">
           <a href="#">Esperon‑Rodriguez, M.</a>,
           <a href="#">Arndt, S.</a>,
           <a href="#">De Pauw, K.</a>
@@ -71,16 +76,16 @@
         </p>
 
         <!-- Primary actions -->
-        <div class="d-flex flex-wrap gap-2 mb-5">
+        <div class="bt-btn-toolbar bt-btn-toolbar--wide-spacing">
           <a href="#" class="btn btn-primary">
             <i class="if if-download" aria-hidden="true"></i>
-            Download PDF
+            Download Full Text
           </a>
           <button type="button" class="btn btn-secondary"
             hx-post="/lists/add"
             hx-vals='{"id":"01K9XTVXD41Z"}'
             hx-swap="none">
-            <i class="if if-list-check" aria-hidden="true"></i>
+            <i class="if if-bookmark-line" aria-hidden="true"></i>
             Add to list
           </button>
           <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#cite-modal">
@@ -92,12 +97,43 @@
             Share
           </button>
         </div>
+        <p class="bt-text-xsmall mt-2">PDF &middot; Open Access &middot; 158.71 KB</p>
+      </div>
+
+      <!-- Sidebar column: heading -->
+      <div class="col-lg-8 col-xl-4">
+
+        <!-- Persistent link -->
+        <div class="alert alert-light mb-1">
+          <h2 class="form-label mb-2">Link to this record</h2>
+          <div class="btn-group mb-2">
+            <code class="small overflow-auto fw-800 p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTVXD41Z</code>
+            <button type="button" class="btn btn-light btn-sm"
+              aria-label="Copy persistent link to person page"
+              onclick="navigator.clipboard.writeText('https://hdl.handle.net/1854/LU-01K9XTVXD41Z');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+              <i class="if if-copy" aria-hidden="true"></i>
+            </button>
+          </div>
+          <p class="small fst-italic">This persistent links guarantees, even when the location changes, your citations will always lead to the right place.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="row justify-content-between mb-5">
+
+      <!-- Main column: content -->
+      <div class="col-lg-7">
 
         <!-- Abstract -->
         <section aria-labelledby="abstract-heading" class="mb-5">
           <h2 id="abstract-heading" class="h4 mb-3">Abstract</h2>
-          <p class="lead">By 2050, nearly 70% of the global population will live in cities. Urban forests form the backbone of green infrastructure supporting resilient, equitable, and sustainable cities.</p>
-          <p>Urban areas are facing increasing risks from climate change, including heatwaves, flooding, wildfires, and growing social inequality, which challenges urban planning and design.</p>
+          <p class="lead">
+            By 2050, nearly 70% of the global population will live in cities. Urban forests form the backbone of green infrastructure supporting resilient, equitable, and sustainable cities.
+          </p>
+          <p class="lead">
+            Urban areas are facing increasing risks from climate change, including heatwaves, flooding, wildfires, and growing social inequality, which challenges urban planning and design.
+          </p>
         </section>
 
         <!-- Files -->
@@ -125,28 +161,13 @@
             <div class="text-muted">Loading related output…</div>
           </div>
         </section>
-
       </div>
 
-      <!-- Sidebar column -->
+      <!-- Sidebar column: content -->
       <div class="col-lg-4">
-
-        <!-- Persistent link -->
-        <div class="p-3 bg-white border rounded mb-4">
-          <span class="form-label d-block mb-2">Persistent link</span>
-          <div class="d-flex align-items-start">
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Copy persistent link to person page"
-              onclick="navigator.clipboard.writeText('https://hdl.handle.net/1854/LU-01K9XTVXD41Z');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
-              <i class="if if-copy" aria-hidden="true"></i>
-            </button>
-            <code class="small overflow-auto">https://hdl.handle.net/1854/LU-01K9XTVXD41Z</code>
-          </div>
-        </div>
-
         <!-- Metadata -->
         <div class="mb-4">
-          <span class="form-label d-block mb-3">Metadata</span>
+          <h2 class="form-label d-block mb-3">Metadata</h2>
           <dl class="row g-2 mb-0 small">
             <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
             <dd class="col-sm-9 mb-0"><a href="https://doi.org/10.1002/ppp3.70125">10.1002/ppp3.70125</a></dd>
@@ -167,29 +188,46 @@
 
         <!-- Keywords -->
         <div class="mb-4">
-          <span class="form-label d-block mb-2">Keywords</span>
+          <h3 class="form-label d-block mb-2">Keywords</h3>
           <div class="d-flex flex-wrap gap-1">
-            <a href="#" class="badge bg-primary text-decoration-none">Urban climate</a>
-            <a href="#" class="badge bg-primary text-decoration-none">Resilience</a>
-            <a href="#" class="badge bg-primary text-decoration-none">Green infrastructure</a>
-            <a href="#" class="badge bg-primary text-decoration-none">Ghent</a>
+            <a href="#" class="badge bg-secondary text-decoration-none">Urban climate</a>
+            <a href="#" class="badge bg-secondary text-decoration-none">Resilience</a>
+            <a href="#" class="badge bg-secondary text-decoration-none">Green infrastructure</a>
+            <a href="#" class="badge bg-secondary text-decoration-none">Ghent</a>
           </div>
         </div>
 
         <!-- Organisations -->
         <div class="mb-4">
-          <span class="form-label d-block mb-2">Organisations</span>
+          <h3 class="form-label d-block mb-2">Organisations</h3>
           <ul class="list-unstyled mb-0">
-            <li><a href="#">Ghent University</a></li>
-            <li><a href="#">Faculty of Bioscience Engineering</a></li>
             <li><a href="#">Department of Environment</a></li>
+            <li><a href="#">Faculty of Bioscience Engineering</a></li>
+            <li><a href="#">Ghent University</a></li>
+          </ul>
+        </div>
+
+        <!-- Certificates -->
+        <div class="mb-5">
+          <h3 class="form-label d-block mb-2">Certification</h3>
+          <ul class="list-unstyled mb-0">
+            <li>
+              <span class="bt-avatar bt-avatar--xsmall border border-primary me-2">
+                <i class="if if-check if--xs"></i>
+              </span>
+              <a href="#">Methodology certificate</a>
+            </li>
           </ul>
         </div>
 
         <!-- Curation note -->
-        <div class="p-3 bg-white border rounded">
-          <i class="if if-service" aria-hidden="true"></i>
-          This research output has been carefully curated at Ghent University Library.
+        <div class="d-flex gap-3 p-3 border rounded mb-5 justify-content-center">
+          <span class="bt-avatar bt-avatar--md bg-danger text-white flex-shrink-0 mt-1">
+            <i class="if if-service if--lg" aria-hidden="true"></i>
+          </span>
+          <p>
+            This research output has been carefully curated at Ghent University Library.
+          </p>
         </div>
 
       </div>
