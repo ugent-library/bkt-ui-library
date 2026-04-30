@@ -234,8 +234,17 @@
   padding: var(--bt-sp-2) var(--bt-sp-3);
   width: 100%;
 }
-.bt-sidebar a.nav-link .badge {
-  margin-left: auto;
+.bt-sidebar a.nav-link:has(.badge--total) {
+  padding-right: var(--bt-sp-8);
+}
+.bt-sidebar .badge--total {
+  position: absolute;
+  top: 50%;
+  --bs-badge-font-size: .625rem;
+  --bs-badge-padding-x: .4em;
+  --bs-badge-padding-y: .25em;
+  right: var(--bt-sp-3) !important;
+  transform: translateY(-50%) !important;
 }
 .nav-link.active {
   background-color: var(--bt-gray-50);
@@ -253,8 +262,22 @@
 
   .bt-sidebar__group-label,
   .bt-sidebar__label,
-  .badge {
+  .badge:not(.badge--total),
+  .btn-text {
     display: none;
+  }
+
+  .badge--total {
+    width: .5rem;
+    height: .5rem;
+    padding: 0 !important;
+    overflow: hidden;
+    color: transparent;
+    border: var(--bs-border-width) var(--bs-border-style);
+    border-radius: var(--bs-border-radius-pill);
+    top: calc(var(--bt-sp-1)/0.45) !important;
+    left: var(--bt-sp-5) !important;
+    transform: translate(50%, -50%) !important;
   }
 
   .bt-sidebar__toggle .if {

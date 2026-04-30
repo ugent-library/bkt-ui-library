@@ -1,0 +1,89 @@
+<!-- @title: Curator sidebar partial -->
+<!-- @surface: backoffice -->
+<!--
+  backoffice-sidebar-curator.html: deleted, superseded by this file.
+  curator-sidebar.html: single source of truth.
+
+  Navigation for the curator role. Distinct from the researcher sidebar
+  (templates/partials/backoffice-sidebar.html).
+
+  HOW TO USE IN PROTOTYPES
+  Do not copy this nav block into page templates. Place the include directive
+  at the injection point, followed by an active key comment:
+
+    @include templates/partials/curator-sidebar.html
+    @active dashboard | queue | all-research | team
+
+  The local prototype renderer consumes the active key and adds active plus
+  aria-current="page" to the matching data-nav-key link.
+
+  HOW TO USE IN GO TEMPL
+  templ CuratorSidebar(currentPage string, queueCount int, hasDeadline bool) {
+    <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" ...>
+      Repeat the nav-link pattern for each link.
+    </nav>
+  }
+
+  Valid currentPage values: "dashboard" | "queue" | "all-research" | "team"
+
+  ACTIVE STATE PER TEMPLATE:
+  team-dashboard.html  → @active: dashboard
+  team-queue.html      → @active: queue
+  team-review.html     → @active: queue   (reviewing is part of the queue flow)
+  search-team.html     → @active: all-research
+  overview-team.html   → @active: team
+
+  BADGE COLOUR LOGIC
+  bg-danger  — any Tier-3 or deadline-flagged item exists within 30 days
+  bg-primary — items waiting, no immediate deadline
+  Omit the badge span entirely when queueCount = 0.
+-->
+
+<nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation" id="bt-sidebar">
+
+  <div class="bt-sidebar__toggle"
+    aria-controls="bt-sidebar"
+    aria-expanded="true"
+    aria-label="Collapse sidebar">
+    <button type="button" class="btn btn-ghost btn-sm">
+      <i class="if if-arrow-left" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <p class="bt-sidebar__group-label">Curation</p>
+
+  <a href="/templates/biblio-team/team-dashboard.html" class="nav-link position-relative" data-nav-key="dashboard"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-home aria-hidden="true"></i>
+    </span>
+    <span class="bt-sidebar__label">Dashboard</span>
+    <!-- bg-danger when hasDeadline = true, bg-primary otherwise -->
+    <span class="badge bg-danger badge--total">
+      14
+      <span class="visually-hidden">waiting items</span>
+    </span>
+  </a>
+
+  <a href="/templates/biblio-team/overview-team.html" class="nav-link" data-nav-key="team"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Team">
+    <i class="if if-service" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Queue</span>
+  </a>
+
+  <a href="/templates/biblio-team/search-team.html" class="nav-link" data-nav-key="all-research"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="All research output">
+    <i class="if if-article" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">All research output</span>
+  </a>
+
+  <div class="d-grid mx-2 mt-3">
+    <a href="/templates/biblio-researcher/deposit-1-0-find.html" class="btn btn-outline-primary btn-xs justify-content-center">
+      <i class="if if-add" aria-hidden="true"></i>
+      <span class="btn-text">Add research output</span>
+    </a>
+  </div>
+
+</nav>
+
+<script src="/assets/js/sidebar-toggle.js"></script>

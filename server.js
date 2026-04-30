@@ -187,15 +187,39 @@ function filterStateContent(html, activeState) {
   );
 }
 
+function applySidebarActive(fragment, activeKey) {
+  if (!activeKey) return fragment;
+
+  return fragment.replace(/<a\b([^>]*?)>/g, (tag, attrs) => {
+    const keyMatch = attrs.match(/\sdata-nav-key="([^"]+)"/);
+    if (!keyMatch) return tag;
+
+    const isActive = keyMatch[1] === activeKey;
+    let next = tag.replace(/\saria-current="page"/g, '');
+
+    next = next.replace(/\sclass="([^"]*)"/, (classMatch, classValue) => {
+      const classes = classValue.split(/\s+/).filter(c => c && c !== 'active');
+      if (isActive) classes.push('active');
+      return ` class="${classes.join(' ')}"`;
+    });
+
+    if (isActive) {
+      next = next.replace(/>$/, ' aria-current="page">');
+    }
+
+    return next;
+  });
+}
+
 function resolveIncludes(body, filePath) {
-  return body.replace(/<!--\s*@include:\s*([^\s]+)\s*-->/g, (match, includePath) => {
+  return body.replace(/<!--\s*@include:\s*([^\s]+)\s*-->[ \t]*(?:\r?\n[ \t]*<!--\s*@active:\s*([\w-]+)\s*-->)?/g, (match, includePath, activeKey) => {
     const abs = path.join(ROOT, includePath.trim());
     if (!fs.existsSync(abs)) {
       return `<!-- @include not found: ${includePath} -->`;
     }
     const raw = fs.readFileSync(abs, 'utf8');
     const { body: fragment } = parseMetaAndBody(raw, abs);
-    return fragment;
+    return applySidebarActive(fragment, activeKey);
   });
 }
 

@@ -9,6 +9,9 @@
  * discoverable in slim (icon-only) mode.
  */
 (function () {
+  if (window.btSidebarToggleInitialised) return;
+  window.btSidebarToggleInitialised = true;
+
   function updateToggleState(button, sidebar, isSlim) {
     sidebar.classList.toggle('bt-sidebar--slim', isSlim);
     button.setAttribute('aria-expanded', String(!isSlim));

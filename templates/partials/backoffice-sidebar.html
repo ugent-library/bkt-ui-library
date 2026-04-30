@@ -1,16 +1,37 @@
 <!-- @title: Backoffice sidebar partial -->
 <!-- @surface: backoffice -->
 <!--
-  bt-sidebar — researcher/submitter navigation
+  bt-sidebar: researcher/submitter navigation
 
-  Active state: set aria-current="page" on the matching link server-side.
-  Badge count:  render the <span class="badge …"> only when count > 0.
-  Slim toggle:  the toggle button adds/removes bt-sidebar--slim on the <nav>.
+  HOW TO USE IN PROTOTYPES
+  Do not copy this nav block into page templates. Place the include directive
+  at the injection point, followed by an active key comment:
 
-  Tooltips:     data-bs-toggle="tooltip" on every link keeps labels discoverable
-                in slim mode. Initialised by sidebar-toggle.js.
+    @include templates/partials/backoffice-sidebar.html
+    @active dashboard | review | suggestions | incomplete | all-research
 
-  In Go templ, pass `currentPage string` and `suggestionCount int` as parameters.
+  The local prototype renderer consumes the active key and adds active plus
+  aria-current="page" to the matching data-nav-key link.
+
+  HOW TO USE IN GO TEMPL
+  templ ResearcherSidebar(currentPage string, reviewCount int, suggestionCount int, incompleteCount int) {
+    <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" ...>
+      Repeat the nav-link pattern for each link.
+      Omit badge spans entirely when count == 0.
+    </nav>
+  }
+
+  Valid currentPage values: "dashboard" | "review" | "suggestions" | "incomplete" | "all-research"
+
+  ACTIVE STATE PER TEMPLATE:
+  dashboard.html        → @active: dashboard
+  search-researcher.html → @active: all-research
+  deposit templates      → @active: dashboard
+
+  OTHER NOTES
+  Badge count: render the badge span only when count > 0.
+  Slim toggle: the toggle button adds/removes bt-sidebar--slim on the nav.
+  Tooltips: data-bs-toggle="tooltip" keeps labels discoverable in slim mode.
 -->
 
 <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation" id="bt-sidebar">
@@ -26,7 +47,7 @@
 
   <p class="bt-sidebar__group-label">My research output</p>
 
-  <a href="/templates/biblio-backoffice/dashboard.html" class="nav-link active" aria-current="page" aria-label="Dashboard"
+  <a href="/templates/biblio-researcher/dashboard.html" class="nav-link" data-nav-key="dashboard" aria-label="Dashboard"
     data-bs-toggle="tooltip" data-bs-placement="right" title="Inbox">
     <i class="if if-home" aria-hidden="true"></i>
     <span class="bt-sidebar__label">Inbox</span>
@@ -34,34 +55,49 @@
 
   <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
   <!-- @state: filled message -->
-  <a href="/deadlines" class="nav-link" aria-label="Deadlines, 2 overdue"
+  <a href="/deadlines" class="nav-link position-relative" data-nav-key="review"
     data-bs-toggle="tooltip" data-bs-placement="right" title="Review deadlines">
-    <i class="if if-error-circle" aria-hidden="true"></i>
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-error-circle" aria-hidden="true"></i>
+    </span>
     <span class="bt-sidebar__label">Review</span>
-    <span class="badge bg-danger" aria-hidden="true">2</span>
+    <span class="badge bg-danger badge--total">
+      2
+      <span class="visually-hidden">overdue deadlines</span>
+    </span>
   </a>
   <!-- @state -->
 
   <!-- @state: filled message -->
-  <a href="/suggestions" class="nav-link" aria-label="Suggestions, 2 new"
+  <a href="/suggestions" class="nav-link position-relative" data-nav-key="suggestions"
     data-bs-toggle="tooltip" data-bs-placement="right" title="Suggestions">
-    <i class="if if-notification" aria-hidden="true"></i>
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-notification" aria-hidden="true"></i>
+    </span>
     <span class="bt-sidebar__label">Suggestions</span>
-    <span class="badge bg-primary" aria-hidden="true">2</span>
+    <span class="badge bg-primary badge--total">
+      2
+      <span class="visually-hidden">new suggestions</span>
+    </span>
   </a>
   <!-- @state -->
 
 
   <!-- @state: filled message -->
-  <a href="/incomplete" class="nav-link" aria-label="Incomplete, 3 drafts"
+  <a href="/incomplete" class="nav-link position-relative" data-nav-key="incomplete"
     data-bs-toggle="tooltip" data-bs-placement="right" title="Incomplete">
-    <i class="if if-draft" aria-hidden="true"></i>
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-draft" aria-hidden="true"></i>
+    </span>
     <span class="bt-sidebar__label">Incomplete</span>
-    <span class="badge bg-warning" aria-hidden="true">3</span>
+    <span class="badge bg-warning badge--total">
+      3
+      <span class="visually-hidden">drafts</span>
+    </span>
   </a>
   <!-- @state -->
 
-  <a href="/research-output" class="nav-link" aria-label="Research output"
+  <a href="/templates/biblio-researcher/search-researcher.html" class="nav-link" data-nav-key="all-research" aria-label="Research output"
     data-bs-toggle="tooltip" data-bs-placement="right" title="All research">
     <i class="if if-list-unordered" aria-hidden="true"></i>
     <span class="bt-sidebar__label">All research</span>
