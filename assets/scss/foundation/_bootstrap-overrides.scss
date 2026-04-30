@@ -97,3 +97,26 @@
   --bs-nav-link-hover-color: var(--bt-blue-700);
   --bs-nav-padding-x: var(--bt-sp-1) !important;
 }
+
+.breadcrumb {
+
+  a {
+    text-decoration: none;
+  }
+
+  .breadcrumb-item.active {
+    opacity: .6;
+  }
+
+  .breadcrumb-item+.breadcrumb-item::before {
+    content: "|";
+    margin-top: -1px;
+    opacity: .4;
+  }
+
+  --bs-breadcrumb-divider-color: var(--bt-blue-900);
+  --bs-breadcrumb-padding-y: var(--bt-sp-4);
+  --bs-breadcrumb-margin-bottom: var(--bt-sp-2);
+  --bs-breadcrumb-font-size: var(--bt-text-sm);
+  --bs-breadcrumb-item-active-color: var(--bt-gray-900);
+}
