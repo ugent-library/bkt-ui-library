@@ -1,7 +1,6 @@
 <!-- @title: Curator sidebar partial -->
 <!-- @surface: backoffice -->
 <!--
-  backoffice-sidebar-curator.html: deleted, superseded by this file.
   curator-sidebar.html: single source of truth.
 
   Navigation for the curator role. Distinct from the researcher sidebar
@@ -12,7 +11,7 @@
   at the injection point, followed by an active key comment:
 
     @include templates/partials/curator-sidebar.html
-    @active dashboard | queue | all-research | team
+    @active queue | all-research | overview
 
   The local prototype renderer consumes the active key and adds active plus
   aria-current="page" to the matching data-nav-key link.
@@ -24,14 +23,13 @@
     </nav>
   }
 
-  Valid currentPage values: "dashboard" | "queue" | "all-research" | "team"
+  Valid currentPage values: "queue" | "all-research" | "overview"
 
   ACTIVE STATE PER TEMPLATE:
-  team-dashboard.html  → @active: dashboard
   team-queue.html      → @active: queue
   team-review.html     → @active: queue   (reviewing is part of the queue flow)
   search-team.html     → @active: all-research
-  overview-team.html   → @active: team
+  overview-team.html   → @active: overview
 
   BADGE COLOUR LOGIC
   bg-danger  — any Tier-3 or deadline-flagged item exists within 30 days
@@ -52,23 +50,23 @@
 
   <p class="bt-sidebar__group-label">Curation</p>
 
-  <a href="/templates/biblio-team/team-dashboard.html" class="nav-link position-relative" data-nav-key="dashboard"
-    data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+  <a href="/templates/biblio-team/overview-team.html" class="nav-link" data-nav-key="overview"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Overview">
+    <i class="if if-service" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Team overview</span>
+  </a>
+
+  <a href="/templates/biblio-team/team-queue.html" class="nav-link position-relative" data-nav-key="queue"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Queue">
     <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
-      <i class="if if-home aria-hidden="true"></i>
+      <i class="if if-list-check" aria-hidden="true"></i>
     </span>
-    <span class="bt-sidebar__label">Dashboard</span>
+    <span class="bt-sidebar__label">Queue</span>
     <!-- bg-danger when hasDeadline = true, bg-primary otherwise -->
-    <span class="badge bg-danger badge--total">
+    <span class="badge bg-primary badge--total">
       14
       <span class="visually-hidden">waiting items</span>
     </span>
-  </a>
-
-  <a href="/templates/biblio-team/overview-team.html" class="nav-link" data-nav-key="team"
-    data-bs-toggle="tooltip" data-bs-placement="right" title="Team">
-    <i class="if if-service" aria-hidden="true"></i>
-    <span class="bt-sidebar__label">Queue</span>
   </a>
 
   <a href="/templates/biblio-team/search-team.html" class="nav-link" data-nav-key="all-research"
