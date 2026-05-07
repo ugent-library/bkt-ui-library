@@ -262,11 +262,10 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 
 | Template | Entity / concept |
 |----------|------------------|
-| `team-dashboard.html.html` | Curator triage dashboard |
-| `team-queue.html` | Queue overview (Wachtrij) — pipeline by tier + type |
-| `team-review.html` | Single-record review — inline edit, AI suggestions |
+| `team-queue.html` | Queue overview (Wachtrij) — personal scoped waiting list |
+| `team-review.html` | Single-record review — inline edit, AI suggestions, return modal |
 | `search-team.html` | All research output (curator scope + flags) |
-| `overview-team.html` | Team health overview (head of curation) |
+| `overview-team.html` | Team health overview — entry point for head of curation |
 
 ### Proxy — `templates/biblio-proxy/`
 

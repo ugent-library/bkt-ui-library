@@ -106,11 +106,10 @@ The `templates/` directory in `booktower-ui-library` contains full-page prototyp
 | `templates/biblio-researcher/dashboard.html` | Researcher | Researcher inbox |
 | `templates/biblio-researcher/deposit-*.html` | Researcher | Deposit flow steps |
 | `templates/biblio-researcher/search-researcher.html` | Researcher | My research output list |
-| `templates/biblio-team/team-dashboard.html.html` | Curator | Curator triage dashboard |
 | `templates/biblio-team/team-queue.html` | Curator | Queue overview (Wachtrij) |
 | `templates/biblio-team/team-review.html` | Curator | Single-record review |
 | `templates/biblio-team/search-team.html` | Curator | All research output (curator) |
-| `templates/biblio-team/overview-team.html` | Curator | Team health overview |
+| `templates/biblio-team/overview-team.html` | Curator | Team health overview (head of curation) |
 
 HTMX URLs in prototypes are stubs (`hx-get="/search"`, etc.). The corresponding real endpoints in `bbl/app/*_handlers.go` are the production wiring.
 

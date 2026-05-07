@@ -460,8 +460,6 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 ### Complete verified class list (ground truth — cross-checked against SCSS source)
 
-**Important:** The changelog (`CHANGELOG.md`) tracks classes relative to `old-ui-kit-css/main.css` — the legacy stylesheet. Classes that are new to v2 and have no equivalent in the old system do not appear in the changelog migration tables. The verified list below is the ground truth for what currently exists.
-
 **Navigation & topbar**
 ```
 bt-navbar               bt-navbar__brand        bt-navbar__nav
@@ -474,28 +472,65 @@ Note: `bt-navbar__brand` is used (backoffice logo link). `bt-navbar__mark` does 
 bt-toolbar              bt-toolbar--bordered
 bt-toolbar__left        bt-toolbar__right       bt-toolbar__middle
 bt-toolbar__item        bt-toolbar__title
-bt-btn-toolbar
+bt-btn-toolbar          bt-btn-toolbar--wide-spacing  bt-btn-toolbar--vertical
+bt-title-toolbar
 ```
 `bt-toolbar__item` elements are siblings within `bt-toolbar__left`/`bt-toolbar__right`/`bt-toolbar__middle` and get automatic padding between them.
+`bt-title-toolbar` is a flex row for pairing a heading with a right-aligned action button.
 
 **Avatar**
 ```
 bt-avatar               bt-avatar--xsmall       bt-avatar--small
-bt-avatar--large
+bt-avatar--large        bt-avatar--outline
 ```
 
 **Hero (public surface)**
 ```
 bt-hero                  bt-hero__bg              bt-hero__content
+input-group--hero
+```
+
+**Landing page sections (public surface)**
+```
+bt-section-landing       bt-section-landing--border   bt-section-landing--light
+bt-section-detail
+```
+
+**Suggestion / autocomplete panel**
+```
+bt-suggest-panel         bt-suggest-panel__body
+token-suggestions        token-suggestions__group  token-suggestions__item
+token-suggestions__hint  token-suggestions__footer token-suggestions__syntax-link
+```
+
+**Token search bar**
+```
+token-bar                token-bar__display        token-bar__token
+token-bar__field         token-bar__sep            token-bar__value
+token-bar__token--negated
+token-bar__input         token-bar__clear          token-bar__indicator
+```
+
+**People search results**
+```
+people-results           people-result             people-result__meta
+people-result__meta-item people-result.is-selected
+```
+
+**Scroll utility**
+```
+bt-scroll-frame          bt-code-block
 ```
 
 **Work card**
 ```
-bt-work-card            bt-work-card--researcher
+bt-work-card
 bt-work-card__title     bt-work-card__authors   bt-work-card__pub
-bt-work-card__head      bt-work-card__body      bt-work-card__foot
 bt-meta-list            bt-meta-list__item      bt-meta-list__item-bordered
 ```
+Note: `bt-work-card` uses Bootstrap's `.card` as the structural base. Internal regions
+use Bootstrap's own `.card-header`, `.card-body`, and `.card-footer` — not BEM elements.
+`bt-work-card--researcher` and `bt-work-card__head`/`__body`/`__foot` do NOT exist in SCSS.
 
 **Facets sidebar**
 Use Bootstrap structure directly: `fieldset`, `legend`, `form-check`, `form-check-input`, `form-check-label`, spacing utilities, and Collapse where needed.
@@ -524,7 +559,6 @@ Row selection state: Bootstrap's `.table-active` on `<tr>`. The CSS tokens `--bs
 bt-blank-slate           bt-blank-slate--default  bt-blank-slate--muted
 bt-blank-slate--primary
 ```
-Note: BEM modifier double-dash (`--`). The old styleguide used single-dash — that was wrong.
 
 **Deposit flow components**
 ```
@@ -535,7 +569,22 @@ bt-file-drop__hint
 
 **Filter tags**
 ```
-filter-tag
+filter-tag               filter-tag--editable     filter-tag--static
+filter-tag__remove       filter-tag-group
+bt-filter-picker__menu   bt-filter-picker__menu--narrow  bt-filter-picker__list
+```
+
+**Filter editor panel**
+```
+filter-editor            filter-editor__actions
+filter-checklist
+filter-boolean           filter-boolean__option   filter-boolean__option.is-selected
+filter-year              filter-year__input
+```
+
+**Surface-aware filter group visibility**
+```
+filter-group--backoffice-only    filter-group--public-only
 ```
 
 **HTMX state classes**
@@ -543,14 +592,48 @@ filter-tag
 htmx-indicator          htmx-swapping           htmx-settling
 ```
 
-**Footer**
+**Badges**
 ```
-nav-title
+badge.bg-primary        badge.bg-primary-light
+badge.bg-success        badge.bg-success-light
+badge.bg-warning        badge.bg-warning-light
+badge.bg-danger         badge.bg-danger-light
+badge.bg-secondary      badge.bg-transparent
+badge.badge--outline    badge--total
 ```
+Note: `badge-oa` and `badge-restricted` do NOT exist — use `badge bg-success` (open) and `badge bg-warning` (restricted).
+
+**Buttons**
+`btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap
+variants (`btn-primary`, `btn-secondary`, `btn-ghost`, `btn-success`, `btn-warning`,
+`btn-danger`, `btn-info`, `btn-light`, `btn-dark`, `btn-link`) and all `btn-outline-*` variants are overridden with Booktower tokens.
 
 **Layout shells**
 ```
 u-layout--app           u-layout--public
+```
+
+**Main area regions (inside `u-layout--app`)**
+```
+u-main__header
+u-main__body            u-main__body--split
+u-main__sidebar         u-main__sidebar--border-right   u-main__sidebar--border-left
+u-main__content
+u-main__content-header  u-main__content-body    u-main__content-footer
+u-main__footer
+u-main__panel
+```
+
+**App nav sidebar**
+```
+bt-sidebar              bt-sidebar--bordered    bt-sidebar--slim    bt-sidebar--flush
+bt-sidebar__toggle      bt-sidebar__label       bt-sidebar__group-label
+badge--total
+```
+
+**Footer**
+```
+nav-title
 ```
 
 ### Classes that no longer exist — do not use
@@ -566,16 +649,23 @@ bt-filter-bar            (use bt-toolbar)
 bt-bulk-bar              (use bt-toolbar)
 bt-pagination-bar        (use bt-toolbar)
 bt-results-toolbar       (use bt-toolbar bt-toolbar--bordered)
-bt-results-col           (removed — use Bootstrap flex utilities on the results column directly)
-bt-stepper__num          bt-stepper__label        bt-stepper__required  (removed — stepper is not part of this library)
-card--work  card-research  card-meta  card-actions  card-title  card-authors  card-publication  (replaced by bt-work-card)
+bt-results-col           (removed — use u-main__content)
+bt-sub-sidebar           bt-sub-sidebar--bordered  bt-sub-sidebar--slim
+                         (removed — replaced by bt-sidebar and its modifiers)
+bt-stepper               bt-stepper__item         bt-stepper__item--done
+bt-stepper__num          bt-stepper__label        bt-stepper__required
+                         (stepper is not part of this library)
+card--work  card-research  card-meta  card-actions  card-title  card-authors  card-publication
+                         (replaced by bt-work-card)
 is-selected on <tr>     (use Bootstrap .table-active)
 td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
 u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
-u-maximize-height       (OLD layout utility — removed in v2)
+u-maximize-height       (OLD layout utility removed)
 bt-facets                (removed — old custom CSS grid, replaced by Bootstrap fieldset/collapse)
-bt-facet-name            (removed — label now associates directly via form-check)
+bt-facet-name            (removed)
 bt-facet-separator       (removed — use a plain <hr> and spacing utilities)
+bt-content-area          bt-facets-col            bt-results-col
+                         (removed — use u-main__body--split with u-main__sidebar / u-main__content)
 ```
 
 ### Icon names — verified source of truth
@@ -698,8 +788,6 @@ Two CSS grid shells live in `patterns/_layouts.scss`. Both use `--s-topbar-heigh
 |-------|----------|----------|
 | `u-layout--app` | Backoffice pages, including deposit flows | `.bt-navbar` + `.bt-sidebar` + `<main>` |
 | `u-layout--public` | Public search/detail | `.bt-navbar` + `<main>` |
-
-Public `<main>` uses Bootstrap `.container` inside it for gutters — the shell itself has no `max-width` or padding.
 
 **Deprecated layout classes (OLD system — do not use):**
 `u-scroll-wrapper`, `u-scroll-wrapper__body`, `u-maximize-height`

@@ -24,7 +24,7 @@ The existing `dashboard.html` is a partial researcher view only.
 |------|-----------|--------|
 | Dashboard — researcher | `biblio-researcher/dashboard.html` | Nearing completion, with filled, empty and message state. |
 | Dashboard — proxy | ✗ | **Not designed** |
-| Dashboard — curator | `biblio-team/team-dashboard.html.html` | ✓ Prototyped |
+| Dashboard — curator | `biblio-team/team-queue.html` | ✓ Prototyped |
 
 **Curator review queue**
 After a researcher submits, the work is automatically published. The curator sees it
@@ -259,7 +259,7 @@ Tier 3 items are visually distinct — not just a badge.
 - At-risk flags: both system-generated and curator-set
 - Dashboard must not require manual maintenance — everything derived from record state
 
-**Current prototype:** `biblio-team/team-dashboard.html.html` — ✓ Prototyped.
+**Current prototype:** `biblio-team/team-queue.html` — ✓ Prototyped.
 
 **Open questions:**
 - Trusted import definition: when a WoS harvest creates a record without researcher
@@ -392,13 +392,11 @@ Resolve before handing a template to the dev for implementation.
 | `bt-list-item` | `biblio-researcher/dashboard.html` | ⚠ Not in SCSS |
 | Scope indicator block | `biblio-researcher/search-filter-first.html` | ⚠ Bootstrap utilities only |
 | Saved views nav | `biblio-researcher/search-filter-first.html` | ⚠ Bootstrap utilities only |
-| `filter-tag--editable` modifier | `partials/result-filter-bar.html` | ⚠ Exists in JS, not in SCSS |
-| `filter-tag-group` wrapper | `partials/result-filter-bar.html` | ⚠ Not in SCSS |
 | `--bt-text-muted` token mismatch | `_surfaces.scss` | ⚠ Not yet resolved |
 | `style=` on year range inputs | `biblio-researcher/search-filter-first.html` | ⚠ Needs SCSS token |
 | `style=` on `max-width: 680px` | `biblio-researcher/search-settings-scope.html` | ⚠ Needs layout token or utility |
-| Risk tier Tier-3 visual treatment | `biblio-team/curator-*` | ⚠ Not yet designed |
-| Scope indicator in dashboard header | `biblio-team/curator-*` | ⚠ Bootstrap utilities only |
+| Risk tier Tier-3 visual treatment | `biblio-team/team-*` | ⚠ Not yet designed |
+| Scope indicator in dashboard header | `biblio-team/team-*` | ⚠ Bootstrap utilities only |
 
 ---
 
