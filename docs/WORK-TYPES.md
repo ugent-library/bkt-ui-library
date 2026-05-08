@@ -66,6 +66,14 @@ for citation, discovery, or external export, it is required at deposit — not l
 curators to fill in later. The curator team is small. Their job is quality review and
 classification, not completing researcher metadata.
 
+**Curators are not a migration mechanism.** Migration from legacy types to the new
+type system cannot rely on per-record curator review as its primary path. The curator
+team is too small to be the safety net for hundreds of thousands of legacy records,
+and the rule above — that curator work is quality review and classification, not
+metadata completion — applies as much to historical data as to new deposits. The
+implications of this constraint for the migration matrix are deferred; the rule
+itself stands now.
+
 **Biblio is a primary source.** Type decisions have long-term consequences. External
 systems (OpenAlex, WoS, FRIS, DataCite) index from Biblio. Getting type wrong means
 wrong data in every downstream system, permanently, until someone corrects it record
@@ -1019,30 +1027,33 @@ to items resolved elsewhere come at the bottom.*
 
 ### Other open questions
 
-- **Lecture as a sub-question on `conference_presentation`:** A
-  *standalone academic lecture* (an invited lecture at another university
-  outside any conference, an online masterclass for a discipline-specific
-  audience) sits awkwardly between `conference_presentation` (part of a
-  conference event) and `public_lecture` (popular venue). The colleague's
+- **Lecture VS `conference_presentation`:** A *standalone academic lecture*
+  (an invited lecture at another university outside any conference,
+  an online masterclass for a discipline-specific audience) sits awkwardly
+  between `conference_presentation` (part of a conference event) and
+  `public_lecture` (popular venue). The colleague's
   2024 mapping preserves COAR `lecture` (`c_8544`) as distinct.
 
-  Three options to evaluate:
-  1. Keep current design (`conference_presentation` covers all academic
-     talks; venue context goes in metadata). Researcher uses
-     `conference_presentation` for the standalone-academic-lecture case;
-     curator may flag for review if venue is not a conference.
-  2. Add `lecture` as a third type alongside `conference_presentation` and
+  Curator-routing is not an option. Letting the researcher pick
+  `conference_presentation` and relying on a curator to flag and
+  reclassify the standalone-academic-lecture case puts the work on the
+  wrong actor — see the hard rule on curator workload. The deposit form
+  must let the researcher land on the correct type without curator
+  intervention.
+
+  Two options to evaluate:
+  1. Add `lecture` as a third type alongside `conference_presentation` and
      `public_lecture`. Researcher self-classifies into
      part-of-conference / standalone-academic / public, with each having
      its own type. The colleague's 2024 mapping supports this.
-  3. Generalise `conference_presentation` into a broader `academic_talk`
+  2. Generalise `conference_presentation` into a broader `academic_talk`
      type with a venue-context field that includes "conference",
      "seminar", "masterclass", "invited talk". Single type, field-driven.
      Risks the no-subtypes rule depending on field shape.
 
-  ⚠️ TBD — confirm with faculty librarians whether the
-  standalone-academic-lecture case is common enough to warrant its own
-  type or whether option 1 (curator routing) is acceptable.
+  ⚠️ TBD — confirm whether the standalone-academic-lecture case is common
+  enough to warrant its own type, or whether the field-driven
+  `academic_talk` approach is preferable.
 
 - **Commentary as a sub-question on `journal_article`:** A *commentary*
   is an in-depth analytical piece about an existing work, distinct from
