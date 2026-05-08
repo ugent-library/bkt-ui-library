@@ -1,7 +1,7 @@
 # WORK-TYPES.md
 # Research output type redesign — decisions, principles, and obligations
 
-Version 0.3 — May 2026
+Version 0.4 — May 2026
 
 Owner: Miet Claes
 
@@ -211,8 +211,10 @@ minting or import.
 **Impact on type design:** CrossRef distinguishes `journal_article`, review, letter,
 and proceedings-article. Of these, only review and proceedings-paper are first-class
 type choices in Biblio. CrossRef `journal_article` and CrossRef `letter` both import
-as Biblio `journal_article` (see Resolved decisions for the letter/note rationale).
-The CrossRef-original-type is preserved as import-provenance metadata.
+as Biblio `journal_article` (see Resolved decisions for the letter/note rationale,
+including how the original CrossRef type is handled in that specific case).
+Whether source-system types are preserved as audit metadata more broadly is an
+Open question.
 
 ---
 
@@ -277,7 +279,7 @@ substituted for the hyphen they use), making the mapping layer easier to maintai
 | **Working paper** `working_paper` | A pre-publication research paper circulated for comment, typically issued in a numbered series by an institution or research group. | NBER working paper; IZA discussion paper; departmental working paper; SSRN preprint in a series | A finalised institutional report (→ `report`); a published journal article (→ `journal_article`) | VABB R1 eligible when published with ISBN/ISSN. Series name and institution are required fields. Maps to COAR `working paper`. Distinct from a `journal_article` with `submitted version` — a working paper is a standalone document in a series; a preprint is a state of an article. |
 | **Policy report** `policy_report` | An evidence-based document addressed to decision-makers — government bodies, regulators, or public institutions — with the explicit purpose of informing a decision or policy. | Policy brief; advisory report; government commission report; regulatory submission | A general institutional report (→ `report`); a journal article (→ `journal_article`) | Target audience (the decision-making body) is a required field. Maps to COAR `policy report`. Not VABB-eligible. |
 | **Annotation** `annotation` | A single, citable annotation applied to a specific existing resource — text, image, dataset, or other primary source. The annotated resource must be referenced by a stable identifier (DOI, Handle, URL, or other persistent ID) at deposit. When the annotated resource is itself a Biblio record, raven additionally resolves to a record-to-record link. | A TEI annotation on a manuscript line; a scholarly note attached to a corpus sentence | A collection of annotations (→ `annotation_collection`); inline commentary in a book chapter (→ `book_chapter`) | Distinct from `annotation_collection` as `book_chapter` is from `book` — both principle 3 tests pass. |
-| **Annotation collection** `annotation_collection` | A structured set of annotations applied to one or more existing resources, with a documented annotation scheme. | A TEI-encoded annotated corpus; a named entity recognition dataset with annotation guidelines | A dataset without annotation structure (→ `dataset`); a book with scholarly commentary (→ `book_chapter`) | Annotation scheme (e.g. TEI, Web Annotation, CATMA) is a required field. **⚠️ TBD:** Volume at UGent needs confirmation — confirm with humanities faculty librarians. |
+| **Annotation collection** `annotation_collection` | A structured set of annotations applied to one or more existing resources, with a documented annotation scheme. | A TEI-encoded annotated corpus; a named entity recognition dataset with annotation guidelines | A dataset without annotation structure (→ `dataset`); a book with scholarly commentary (→ `book_chapter`) | Annotation scheme (e.g. TEI, Web Annotation, CATMA) is a required field. |
 | **Research communication** `research_communication` | Research-derived output delivered in a public, non-scholarly venue, where the purpose is to make research accessible beyond academia. | Newspaper or magazine article; opinion piece; blog post; public podcast episode; popular science book; radio or TV appearance; public lecture at a museum or festival | A seminar talk at a university (→ `conference_presentation`); a scholarly review article (→ `review_article`); anything where the link to a specific research activity cannot be stated | Medium field required (e.g. `blog post`, `podcast`, `newspaper article`). Trash-bucket test: if you cannot answer "which research does this communicate?", it does not belong here. No VABB, FWO, or FRIS obligation. |
 
 ---
@@ -291,70 +293,213 @@ from type definitions — they require input from curators, the backend develope
 and in some cases policy confirmation.
 
 **Publication version**
-Values aligned with COAR Version Type vocabulary and NISO/ALPSP JAV:
-`submitted version`, `accepted version`, `published version`.
-Required fields when version is `submitted version`: server name, server identifier
-(arXiv ID, bioRxiv DOI, etc.).
+A closed-vocabulary text field aligned with COAR Version Type vocabulary and
+NISO/ALPSP JAV: `submitted version`, `accepted version`, `published version`.
+
 This is the field that captures preprint state. A preprint is not a type — it is a
 `journal_article` (or other applicable type) with publication version `submitted
 version` and a server identifier. The legacy system's `miscellaneous_types.preprint`
 subtype is replaced by this field. See "What is not a type" below.
-Owner: to be confirmed. Applies to: all types.
+
+**Applies to** (peer-review lifecycle types only): `journal_article`,
+`review_article`, `book`, `book_chapter`, `conference_paper`. Possibly `report`
+and `policy_report` (drafts vs. final — confirm with curators). Does not apply
+to types without a peer-review lifecycle: `dataset`, `software`, `dissertation`,
+`conference_abstract`, `conference_poster`, `conference_presentation`,
+`annotation`, `annotation_collection`, `research_communication`, `working_paper`
+(a working paper is by definition pre-publication; the document *is* the
+working paper, no submitted/accepted/published lifecycle on top).
+
+**Server identifier when state is `submitted version`.** When the value is
+`submitted version`, the record must carry an identifier that locates the
+preprint on a server (arXiv ID, bioRxiv DOI, ChemRxiv DOI, SSRN ID, etc.). This
+reuses the existing `identifier` field with `relation = self` and the existing
+scheme machinery (`arxiv`, `doi`, `handle`, `ssrn`) — no new field shape is
+introduced. arXiv broadens beyond its current `allowed_for: [journal_article,
+dataset]` to cover the peer-review lifecycle types listed above.
+
+**How the conditional is enforced** (server identifier required when
+publication_version is submitted version) is a raven implementation question —
+see Open questions for raven. The type design commits to the requirement;
+raven decides the mechanism (engine layer, form layer, or guidance only).
+
+Owner: researcher-provided at deposit, curator-correctable.
 
 **Proceedings indicator**
-A required boolean field on `conference_paper`: was this paper published in a formal
-proceedings volume with an ISBN or ISSN? Values: `yes` / `no`. Drives three
-downstream consequences: (1) COAR mapping — `conference paper` when yes,
-`conference paper not in proceedings` when no; (2) VABB C1 eligibility — only
-applies when yes and ISBN/ISSN is present; (3) citation format — proceedings
-citations require publisher and proceedings title; non-proceedings citations do not.
-Required for all `conference_paper` records.
+A required yes/no field on `conference_paper`: was this paper published in a formal
+proceedings volume with an ISBN or ISSN? Drives three downstream consequences:
+(1) COAR mapping — `conference paper` when yes, `conference paper not in proceedings`
+when no; (2) VABB C1 eligibility — only applies when yes and ISBN/ISSN is present;
+(3) citation format — proceedings citations require publisher and proceedings title;
+non-proceedings citations do not.
+Required for all `conference_paper` records. Field shape — see Open questions for
+raven for the raven-side representation choice.
 Owner: researcher-provided at deposit, curator-correctable.
 
 **Medium**
 A free-text field on `research_communication`. The researcher describes the format
-of delivery in their own words — newspaper article, blog post, podcast, radio
-appearance, popular science book, etc. No controlled vocabulary. No filtering.
-Medium is not mapped to any external system and carries no reporting obligation.
-Its purpose is to give the curator enough context to assess scope (principle 2)
-and to support citation formatting.
+of delivery in their own words — "opinion piece in De Standaard", "weekly podcast
+on climate policy", "guest appearance on Canvas". No filtering. Medium is not
+consumed by external pipelines and carries no reporting obligation. Its purpose
+is to give curators enough context to assess scope (principle 2) and to give
+human readers a descriptive label.
+
+`research_communication` cites generically as CSL `article-magazine` regardless
+of medium — see "Why generic citation for research_communication" below for the
+reasoning, and the Decision history at the end of this section for the path we
+took to get there.
 
 Note: a recording of a `conference_presentation` is not a medium value. It is a
 related output — attach the recording as a file linked to the presentation record.
 Owner: researcher. Free text.
 
-**Context**
-A free-text field available on all types. For a researcher to describe their output
-in their own words when no medium term or type label fits precisely. Not indexed as
-a type or classification. Not a substitute for structured fields. Curators can use
-it as a signal during review.
-Owner: researcher. No controlled vocabulary.
+**Why generic citation for research_communication**
 
-**Annotation scheme**
+`research_communication` is a deliberately broad type. CSL has medium-specific
+types for many of its members (`post-weblog` for blog posts, `broadcast` for
+podcasts and TV, `speech` for public lectures, `book` for popular science books,
+`article-newspaper` and `article-magazine` for press pieces). We do not route to
+those medium-specific CSL types. Every `research_communication` record cites as
+`article-magazine`.
+
+This is a cost we accept. A TV appearance cited as `article-magazine` reads
+slightly wrong; a podcast cited as `article-magazine` reads slightly wrong; a
+public lecture cited as `article-magazine` reads more wrong. The trade is that
+the type stays clean: one type, one CSL mapping, no closed-vocabulary subtype
+field hidden as a property, no keyword-matching code to maintain.
+
+If, in practice, generic citation proves too lossy — researchers complain that
+their podcasts read as magazine articles, or accessibility / citation-manager
+tools mis-handle the records — Plan B is to **split `research_communication`
+into multiple top-level types**. Each medium becomes a first-class type choice
+on the deposit list, not a subtype:
+
+- `popular_article` — newspaper, magazine, opinion piece (CSL `article-magazine`)
+- `online_publication` — blog post, web article (CSL `post-weblog`)
+- `broadcast_appearance` — radio, TV, podcast (CSL `broadcast`)
+- `public_lecture` — public talk at a museum, festival, or community event (CSL `speech`)
+- `popular_book` — popular science book (CSL `book`)
+
+The catalogue grows from 17 to 21 types. Researchers self-classify into a
+medium-specific type at deposit — the same way they already choose between
+`book` and `book_chapter`. No subtype rule is violated because the distinction
+is a first-class type choice. The cost is researcher-side cognitive load (more
+options on the deposit picker) and the principle-6 risk that future media
+formats need new types added.
+
+Plan B is not the v1 design. It is the documented escape hatch if generic
+citation does not hold up.
+
+**Decision history for research_communication and citation rendering**
+
+Three options were evaluated. Recording the path here so future readers
+understand why we landed on generic citation rather than something more
+expressive.
+
+1. **Generic citation.** Single CSL type for the whole bucket. Simple, honest
+   about limits, slightly wrong on non-press cases.
+2. **Light controlled vocabulary on top of free text.** Add a `medium_kind`
+   field with six closed values (`written`, `online`, `broadcast`, `spoken`,
+   `book`, `other`) that map to CSL. System-derived from free-text `medium` via
+   keyword matching, curator-correctable. Considered, drafted, then rejected.
+   Reason: structurally identical to the rejected `article-form` field for
+   letter / note (a closed-vocabulary subdivision of a parent type, dressed as
+   a property field). The "no subtypes" hard rule kills it for the same reason.
+3. **Free text with render-time CSL derivation.** Citation formatter reads the
+   free-text `medium` and derives the CSL type at render time via the same
+   keyword logic. No closed vocabulary stored on the record. Considered,
+   rejected on maintenance grounds. The keyword map is a small thing today
+   and a creeping maintenance burden tomorrow — every new medium becomes a
+   code change in the citation layer.
+
+**Resolved on option 1 (generic citation, CSL `article-magazine`).** Plan B
+(split into multiple top-level types) is held in reserve.
+
+**Context** (specification deferred to the per-type fields project)
+A free-text field available on all types, used by researchers to describe their
+output when no controlled term fits precisely. Referenced by several type
+definitions and Open questions in this doc as an existing field. Full
+specification (length limits, indexing, curator visibility) lives in the
+per-type fields project, not here.
+
+**Annotation scheme** (specification deferred to the per-type fields project)
 Required for `annotation_collection`. Captures the standard or framework used
-(e.g. TEI, Web Annotation, CATMA). Controlled vocabulary or free-text — to be
-confirmed with the digital humanities community at UGent.
-Owner: researcher-provided at deposit.
+(e.g. TEI, Web Annotation, CATMA). Listed here because it is required for the
+type to be defined; the field's vocabulary, value list, and validation belong
+in the per-type fields project.
 
-**Series indicator and parent reference**
+**Parent reference**
 For `book_chapter`: the parent ISBN is the required anchor (captured as an
 identifier with `relation = part_of`). When the parent book exists as a Biblio
 record, raven resolves the ISBN to a record-to-record link automatically — the
-link is a strengthening, not a separate requirement. The same pattern applies to
-`annotation_collection` when its members reference parent resources.
-For `book`: a series indicator field flags whether the book is part of a series,
-enabling multiple ISBN support. Schema to be confirmed with the backend developer.
+link is a strengthening, not a separate requirement. The same pattern applies
+to `annotation_collection` when its members reference parent resources, and to
+`annotation` for the annotated resource (anchored on DOI, Handle, URL, or other
+persistent identifier as appropriate to the target).
 Owner: researcher-provided at deposit, curator-correctable.
 
-**Policy report audience**
-Required for `policy_report`: the target decision-making body or institution the
-report is addressed to. Free-text or controlled vocabulary — to be confirmed.
-Owner: researcher-provided at deposit.
+**Series indicator**
+A required yes/no field on `book`. Asks the researcher whether the book is
+published as part of a named series — publisher series like "Springer Lecture
+Notes in Computer Science", scholarly series like "Routledge Studies in
+Comparative Literature", or institutional working-paper-style series with a
+book ISBN.
+
+When yes, two follow-on fields apply:
+
+- **Series name** (required). The human-readable series name. Used in citation
+  rendering and series-level discovery — many series do not have their own
+  ISBN, so the name is the only durable identifier.
+- **Series ISBN or ISSN** (optional). Captured as an additional identifier on
+  the book record with `relation = part_of`, scheme `isbn` or `issn`. The
+  book's own ISBN remains the `relation = self` identifier; raven's existing
+  `TermListField` already supports multiple identifiers per record, so no
+  schema work is needed beyond extending the `allowed_for` scope.
+
+When no, no series fields are shown.
+
+Required for `book`. Field shape (yes/no) — see Open questions for raven for
+the raven-side representation choice.
+
+Owner: researcher-provided at deposit, curator-correctable.
+
+**Policy report audience** (specification deferred to the per-type fields project)
+Required for `policy_report`. The target decision-making body or institution the
+report is addressed to. The existence of this field is what distinguishes
+`policy_report` from `report` (see Open question on the policy_report / report
+split). The field's exact shape — free-text vs. controlled vocabulary — is
+deferred to the per-type fields project.
 
 **Working paper series**
-Required for `working_paper`: the name of the series and the issuing institution.
-Series number is optional but recommended.
-Owner: researcher-provided at deposit.
+A required compound field on `working_paper`. Captures the series in which the
+working paper is issued — NBER Working Paper Series, IZA Discussion Papers,
+departmental working paper series, SSRN preprint series, etc. The presence of a
+series is what distinguishes `working_paper` from `report`: a standalone
+document with an issuing body but no series is a `report`.
+
+Sub-fields:
+
+- **Series name** (required). The human-readable series name. Used in citation
+  rendering and for series-level discovery. Many series do not have their own
+  ISBN or ISSN, so the name is the primary durable identifier.
+- **Issuing institution** (required). The institution or research group that
+  issues the series. Captured as an organization reference where possible
+  (linkable to a Biblio organization record), free-text otherwise.
+- **Series number** (optional but recommended). The numeric or alphanumeric
+  identifier of this paper within the series.
+- **Series ISBN or ISSN** (optional). Captured as an additional identifier on
+  the working paper record with `relation = part_of`, scheme `isbn` or `issn`.
+  Required for VABB R1 eligibility — without it, the working paper is not
+  VABB-eligible regardless of other criteria. The working paper's own
+  identifier (DOI, Handle, etc.) remains the `relation = self` identifier;
+  raven's existing `TermListField` already supports multiple identifiers per
+  record, so no schema work is needed beyond extending the `allowed_for` scope.
+
+Required for `working_paper`. Field shapes for the sub-fields — see Open
+questions for raven for the raven-side representation choices on the
+organization reference and the compound-field structure.
+
+Owner: researcher-provided at deposit, curator-correctable.
 
 ---
 
@@ -424,25 +569,25 @@ and is not shown in the deposit UI. See Resolved decisions for the rationale.
 
 What label Biblio sends when exporting a record to each target system.
 
-| Researcher label | Biblio `kind` | COAR 3.2 | DataCite 4.6 | OpenAIRE | VABB | FRIS / FWO |
-|-----------------|--------------|----------|-------------|----------|------|------------|
-| **Journal article** | `journal_article` | ✅ `research article` | ✅ `JournalArticle` | ✅ literature | A1 / A2 | ✅ publication (FWO mandatory) |
-| **Review article** | `review_article` | ✅ `review article` | ✅ `JournalArticle` | ✅ literature | A1 / A2 | ✅ publication (FWO mandatory) |
-| **Book** | `book` | ✅ `book` | ✅ `Text / Book` | ✅ literature | B1 | ✅ publication |
-| **Book chapter** | `book_chapter` | ✅ `book part` | ✅ `Text / BookChapter` | ✅ literature | B2 | ✅ publication |
-| **Conference paper** | `conference_paper` | ✅ `conference paper` | ✅ `Text / ConferencePaper` | ✅ literature | C1 | ✅ publication |
-| **Conference abstract** | `conference_abstract` | ✅ `conference object` | ≈ `Text / Other` | ≈ literature | — | publication |
-| **Poster** | `conference_poster` | ✅ `conference poster` | ≈ `Text / Other` | ≈ literature | — | publication |
-| **Presentation** | `conference_presentation` | ✅ `conference presentation` | ≈ `Text / Other` | ≈ literature | — | publication |
-| **Dissertation** | `dissertation` | ✅ `thesis` | ✅ `Text / Dissertation` | ✅ literature | — | ✅ publication |
-| **Dataset** | `dataset` | ✅ `dataset` | ✅ `Dataset` | ✅ dataset | — | ✅ dataset (FWO mandatory) |
-| **Software** | `software` | ✅ `software` | ✅ `Software` | ✅ software | — | ✅ publication |
-| **Report** | `report` | ✅ `report` | ✅ `Text / Report` | ≈ literature | — | ✅ publication |
-| **Working paper** | `working_paper` | ✅ `working paper` | ✅ `Text / Report` | ✅ literature | R1 (with ISBN/ISSN) | ✅ publication |
-| **Policy report** | `policy_report` | ✅ `policy report` | ≈ `Text / Report` | ≈ other research product | — | publication |
-| **Annotation** | `annotation` | ✅ `annotation` | ≈ `Text / Other` | ≈ other research product | — | publication |
-| **Annotation collection** | `annotation_collection` | ✅ `annotation collection` | ≈ `Text / Other` | ≈ other research product | — | publication |
-| **Research communication** | `research_communication` | ≈ `other (text)` | ≈ `Text / Other` | ≈ other research product | — | publication |
+| Researcher label | Biblio `kind` | COAR 3.2 | DataCite 4.6 | OpenAIRE | CSL 1.0.2 | VABB | FRIS / FWO |
+|-----------------|--------------|----------|-------------|----------|-----------|------|------------|
+| **Journal article** | `journal_article` | ✅ `research article` | ✅ `JournalArticle` | ✅ literature | ✅ `article-journal` | A1 / A2 | ✅ publication (FWO mandatory) |
+| **Review article** | `review_article` | ✅ `review article` | ✅ `JournalArticle` | ✅ literature | ✅ `article-journal` | A1 / A2 | ✅ publication (FWO mandatory) |
+| **Book** | `book` | ✅ `book` | ✅ `Text / Book` | ✅ literature | ✅ `book` | B1 | ✅ publication |
+| **Book chapter** | `book_chapter` | ✅ `book part` | ✅ `Text / BookChapter` | ✅ literature | ✅ `chapter` | B2 | ✅ publication |
+| **Conference paper** | `conference_paper` | ✅ `conference paper` | ✅ `Text / ConferencePaper` | ✅ literature | ✅ `paper-conference` | C1 | ✅ publication |
+| **Conference abstract** | `conference_abstract` | ✅ `conference object` | ≈ `Text / Other` | ≈ literature | ≈ `paper-conference` | — | publication |
+| **Poster** | `conference_poster` | ✅ `conference poster` | ≈ `Text / Other` | ≈ literature | ≈ `paper-conference` | — | publication |
+| **Presentation** | `conference_presentation` | ✅ `conference presentation` | ≈ `Text / Other` | ≈ literature | ✅ `speech` | — | publication |
+| **Dissertation** | `dissertation` | ✅ `thesis` | ✅ `Text / Dissertation` | ✅ literature | ✅ `thesis` | — | ✅ publication |
+| **Dataset** | `dataset` | ✅ `dataset` | ✅ `Dataset` | ✅ dataset | ✅ `dataset` | — | ✅ dataset (FWO mandatory) |
+| **Software** | `software` | ✅ `software` | ✅ `Software` | ✅ software | ✅ `software` | — | ✅ publication |
+| **Report** | `report` | ✅ `report` | ✅ `Text / Report` | ≈ literature | ✅ `report` | — | ✅ publication |
+| **Working paper** | `working_paper` | ✅ `working paper` | ✅ `Text / Report` | ✅ literature | ≈ `report` | R1 (with ISBN/ISSN) | ✅ publication |
+| **Policy report** | `policy_report` | ✅ `policy report` | ≈ `Text / Report` | ≈ other research product | ≈ `report` | — | publication |
+| **Annotation** | `annotation` | ✅ `annotation` | ≈ `Text / Other` | ≈ other research product | ≈ `entry` | — | publication |
+| **Annotation collection** | `annotation_collection` | ✅ `annotation collection` | ≈ `Text / Other` | ≈ other research product | ≈ `entry` | — | publication |
+| **Research communication** | `research_communication` | ≈ `other (text)` | ≈ `Text / Other` | ≈ other research product | ≈ `article-magazine` | — | publication |
 
 ⚠️ **Weak-fit types are Biblio-owned.** Research communication, policy report, and
 annotation types have no import pipeline and approximate external schema mappings.
@@ -548,6 +693,70 @@ defined in the Fields to be defined section above.
 - **Mapping table validation:** The table above needs review by the backend developer
   against live schema versions of COAR, CrossRef, DataCite, and FRIS before any
   import/export pipeline is built.
+- **Roles per type.** The new types broaden role vocabulary beyond what the
+  legacy system covered: annotator (annotation, annotation_collection), data
+  creator (dataset), software developer (software), addressee organization
+  (policy_report), issuing institution (working_paper). The legacy system's
+  contributor list was a known trash bucket — researchers, curators, and
+  reviewers all left it half-filled. Before defining a roles-per-type schema,
+  decide: do we want to commit to richer role vocabularies for the new types,
+  or keep contributor minimal (author + a few essentials) and capture
+  role-specific information in dedicated fields where it matters? This is a
+  workflow decision, not just a vocabulary decision. ⚠️ TBD — confirm with
+  curators and workshop participants.
+- **Source-system type preservation scope.** The doc commits to preserving the
+  original WoS / PubMed / CrossRef type as import-provenance metadata for
+  letter / note (see Resolved decisions). Should the same principle apply more
+  broadly to every imported record where the source-system type doesn't map
+  one-to-one to a Biblio kind (correction, editorial material, anything that
+  comes through with a source-specific tag), or stay scoped to the letter /
+  note case where it was specifically resolved? Related: what other
+  source-system metadata is worth preserving as audit data (sub-classifiers,
+  funding mentions, license tags)? This is a scope question about what the
+  audit metadata strategy is for imports broadly. ⚠️ TBD.
+
+---
+
+## Open questions for raven
+
+Implementation questions surfaced by this type design that need decisions from
+the raven backend team. Distinct from the curator/policy questions above —
+these are about how raven represents and enforces the design, not about what
+the design is.
+
+- **Boolean field shape.** `proceedings_indicator` (yes/no on `conference_paper`)
+  and `series_indicator` (yes/no on `book`) need a representation in raven's
+  field registry. Add a new `BoolFieldSchema`, or model as `TextFieldSchema`
+  with closed `values: [yes, no]`? Either works; consistency matters more than
+  the choice.
+- **`publication_version` field shape and conditional requirement.** The field
+  is a closed-vocabulary text value (`submitted version`, `accepted version`,
+  `published version`). When the value is `submitted version`, a server
+  identifier (arXiv, bioRxiv DOI, SSRN, etc.) is required. raven's existing
+  `required_for` machinery is per-subtype, not per-other-field-value — does
+  this conditional get expressed in the field registry, in form-layer
+  validation, or somewhere else?
+- **Import-provenance audit field for letter / note.** WORK-TYPES.md commits
+  to preserving the original WoS / PubMed / CrossRef type value
+  (`Letter`, `Note`, `letter`) as import-provenance metadata only. Does that
+  live in `source_records.raw` (already on the row, no schema change), as a
+  dedicated audit-only column on `source_records`, or as a never-displayed
+  field on the work itself? The constraint is: not a classification field,
+  not read by export, not shown in deposit UI, but reachable for backward
+  lookup.
+- **Identifier scheme expansion.** DOI, ISBN, and ISSN scheme `allowed_for`
+  lists need to widen to cover the new types. DOI to `software`,
+  `book_chapter`, `conference_paper`, `report`, `working_paper`,
+  `policy_report`. ISBN to `book_chapter` (parent ISBN with `relation = part_of`),
+  `working_paper` (when in series). ISSN to `working_paper` (series ISSN).
+  arXiv broadens beyond `journal_article` and `dataset` once `publication_version`
+  is wired in. Mostly mechanical YAML — listed once so it's not forgotten.
+- **`work_relation_values` timing and ISBN backfill.** `book_chapter` ships
+  ISBN-anchored. When `work_relation_values` lands, the record-to-record link
+  to a parent book (when the parent is a Biblio record) should be derivable
+  from the ISBN. Is the backfill from existing ISBN identifiers to
+  `work_relation_values` rows automatic when the table ships, or a separate
+  follow-up pass?
 
 ---
 
@@ -615,6 +824,112 @@ queue filter run on the source-type audit field?"
 
 ---
 
+## Migration matrix
+
+This section maps every legacy type and subtype value (from the i18n keys in
+`docs/old-research-output-types.md`) to a destination in the new type system.
+
+Mappings fall into three categories:
+
+- **Mechanical** — one-to-one or driven by a clear sub-classifier. Can be
+  migrated by script, no per-record review needed.
+- **Curator-review** — the destination depends on record-level context (venue,
+  form, scholarly vs. popular framing) that the legacy type alone doesn't
+  encode. Per-record review needed.
+- **Out of scope for v1** — no v1 destination. Records remain in legacy
+  storage until the corresponding TBD type lands or a curator re-classifies.
+
+⚠️ This matrix needs validation by the curator / reviewer team before any migration
+script is run. The mechanical rows are reasonably confident; the
+curator-review rows are uncertain by design.
+
+### Mechanical mappings
+
+| Legacy key | New `kind` | Notes |
+|------------|-----------|-------|
+| `dataset` | `dataset` | — |
+| `book` | `book` | — |
+| `book_chapter` | `book_chapter` | — |
+| `dissertation` | `dissertation` | — |
+| `journal_article` (no subtype, or subtype `original`) | `journal_article` | — |
+| `journal_article_types.review` | `review_article` | New dedicated type for scholarly reviews of literature. |
+| `journal_article_types.letterNote` | `journal_article` | Per resolved decision; original WoS / PubMed / CrossRef type preserved as import-provenance metadata only. |
+| `journal_article_types.proceedingsPaper` | `conference_paper` | With `proceedings_indicator = yes`. The "proceedings paper published in a journal" boundary case is flagged in Open questions — confirm with curators before migrating. |
+| `conference_types.proceedingsPaper` | `conference_paper` | With `proceedings_indicator = yes`. |
+| `conference_types.abstract` | `conference_abstract` | — |
+| `conference_types.poster` | `conference_poster` | — |
+| `conference_types.other` | `conference_presentation` | Lossy by definition — "other" may have included presentations, posters, abstracts, or panels. Curator spot-check recommended. |
+| `miscellaneous_types.preprint` | `journal_article` | With `publication_version = submitted version` and the preprint server identifier as `relation = self` on the existing `identifier` field. |
+| `miscellaneous_types.report` | `report` | — |
+| `miscellaneous_types.workingPaper` | `working_paper` | — |
+| `miscellaneous_types.technicalStandard` | `report` | A technical standard is a standalone document with an issuing body — same metadata schema as `report`. |
+| `miscellaneous_types.correction` | `journal_article` | Same logic as letter / note: published in a journal, schema identical to `journal_article`. Whether the original "Correction" tag is preserved as import-provenance metadata depends on the source-system type preservation scope question — see Open questions. |
+| `miscellaneous_types.editorialMaterial` | `journal_article` | Same logic. |
+| `miscellaneous_types.dictionaryEntry` | `book_chapter` | A dictionary entry is a contribution to an edited reference work with ISBN — same schema as `book_chapter`. |
+| `miscellaneous_types.encyclopediaEntry` | `book_chapter` | Same logic. |
+| `miscellaneous_types.lemma` | `book_chapter` | Same logic. |
+| `miscellaneous_types.blogPost` | `research_communication` | Free-text `medium = "blog post"` (or original blog name if known). |
+| `miscellaneous_types.magazinePiece` | `research_communication` | Free-text `medium` carries the magazine name. |
+| `miscellaneous_types.newsArticle` | `research_communication` | Free-text `medium` carries the publication name. |
+| `miscellaneous_types.newspaperPiece` | `research_communication` | Free-text `medium` carries the newspaper name. |
+
+### Role-only migrations (record stays, type does not split)
+
+| Legacy key | Action |
+|------------|--------|
+| `book_editor` | Record becomes `book` with the depositor recorded as a contributor with `role = editor`. Editor is no longer a type — it is a contributor role on `book` records. |
+
+### Curator-review mappings
+
+These cases need per-record review because the destination depends on context
+not encoded in the legacy type alone (typically: scholarly venue vs. popular
+venue, or standalone publication vs. embedded contribution).
+
+| Legacy key | Likely destinations | What the curator decides |
+|------------|--------------------|--------------------------|
+| `issue_editor` | `book` (with editor role), or split into multiple `journal_article` records linked together, or remain unmapped | Whether a guest-edited journal special issue is treated as an edited volume (book) or as a set of articles. Boundary case — needs explicit curator decision. |
+| `miscellaneous_types.artReview` | `journal_article` (peer-reviewed venue) or `research_communication` (popular venue) | Was it published in a scholarly journal or in a magazine / newspaper / blog? |
+| `miscellaneous_types.bookReview` | Same as artReview | Same. |
+| `miscellaneous_types.exhibitionReview` | Same | Same. |
+| `miscellaneous_types.filmReview` | Same | Same. |
+| `miscellaneous_types.musicReview` | Same | Same. |
+| `miscellaneous_types.productReview` | Same | Same. |
+| `miscellaneous_types.theatreReview` | Same | Same. |
+| `miscellaneous_types.biography` | `book` (standalone scholarly biography), `journal_article` (biographical sketch in a journal), or `research_communication` (popular biographical piece) | Form and venue. |
+| `miscellaneous_types.bibliography` | `book` (standalone published bibliography), `journal_article` (short list in a journal), or `report` (institutional bibliography) | Form and venue. |
+| `miscellaneous_types.manual` | `report` (institutional / technical manual) or `book` (published with ISBN) | Whether it has an ISBN and was issued through a publisher. |
+| `miscellaneous_types.lectureSpeech` | `conference_presentation` (scholarly venue) or `research_communication` (public venue: museum, festival, community event) | Was the venue scholarly or public? |
+| `miscellaneous_types.musicEdition` | `book` (published score), or eventually `musical_notation` / `critical_edition` if those TBD types land | If the TBD types land, re-classify; otherwise default to `book` when ISBN is present. |
+| `miscellaneous_types.textEdition` | `book` (published edition), or eventually `critical_edition` (TBD) | Same logic. |
+| `miscellaneous_types.textTranslation` | `book` (standalone published translation) or `journal_article` (translation embedded in an article) | Form. Note: translation is the work, not a separate type. |
+| `miscellaneous_types.other` | Per-record curator review | Catch-all. Most likely targets: `research_communication`, `report`, or `journal_article`. No automatic destination. |
+
+### Out of scope for v1
+
+| Legacy key | Status |
+|------------|--------|
+| `miscellaneous_types.artisticWork` | No v1 destination. Per the doc, artistic works are out of scope for v1; revisit when volume at UGent warrants it. Records remain in legacy storage. |
+
+### What this matrix does not cover
+
+- **The `book_editor` and `issue_editor` legacy types as curator workload.**
+  Mechanical conversion of `book_editor` records to `book` + editor role is
+  scriptable, but the conversion needs the depositor's contributor record to
+  exist and be linkable. Records where the depositor's identity is unclear
+  fall into curator review.
+- **Records with multiple legacy subtype values** (where a record was
+  re-classified in legacy and carries history). Migration script should
+  read the most recent value; legacy history preserved in audit metadata.
+- **Provenance preservation for the merged `journal_article` path.** The
+  resolved decision commits to preserving the original WoS / PubMed / CrossRef
+  type as import-provenance metadata for letter and note specifically. Whether
+  the same treatment applies to correction, editorial material, and other
+  migrated cases is the source-system audit scope question — see Open
+  questions. The implementation question (where the audit data lives in
+  raven) is in Open questions for raven.
+
+---
+
 ## To be discussed
 
 These types from other systems were considered and not rejected, but require further
@@ -672,4 +987,4 @@ design question; it is a scope question about what belongs in Biblio at all.
 - `DOMAIN.md` — `kind` values must be updated to match the finalised type list here.
 - `PRODUCT.md` — Output types section and field requirements workshop depend on this.
 - `RESPONSIBILITY.md` — Field ownership per type will be defined after types are settled.
-- `docs/old-research-output-types.md` — Legacy i18n strings; reference for migration scope.
+- `docs/old-research-output-types.md` — Legacy strings; the source list every legacy key is mapped from in the Migration matrix above.
