@@ -176,8 +176,7 @@ reportable output categories.
 
 **Impact on type design:** `journal-article` and `review-article` must be unambiguous
 types in Biblio. FWO pulls journal article metadata automatically — errors in type
-assignment propagate directly into funding reports. Letters and notes were dropped
-as separate types in v0.3 — they are `journal-article` records.
+assignment propagate directly into funding reports.
 
 ### FRIS (Flanders Research Information Space)
 
@@ -307,19 +306,16 @@ Required for all `conference-paper` records.
 Owner: researcher-provided at deposit, curator-correctable.
 
 **Medium**
-To be discussed: A free field field(?) applying to `research-communication`. Captures the
-format of public delivery: `newspaper article`, `magazine article`, `blog post`,
-`podcast`, `video`, `radio or TV appearance`, `popular science book`, etc.
-Vocabulary is maintained by curators and versioned over time. New formats are added
-to the vocabulary — they do not become types. Deprecated terms are retained for
-historical records but hidden from the deposit UI. Required for all
-`research-communication` records.
+A free-text field on `research-communication`. The researcher describes the format
+of delivery in their own words — newspaper article, blog post, podcast, radio
+appearance, popular science book, etc. No controlled vocabulary. No filtering.
+Medium is not mapped to any external system and carries no reporting obligation.
+Its purpose is to give the curator enough context to assess scope (principle 2)
+and to support citation formatting.
 
-Note: a recording of a `conference-presentation` is not a separate type or medium
-value. It is a related output — attach the recording as a file linked to the
-presentation record. Course materials not linked to a specific research activity
-fail principle 2 and do not belong in Biblio.
-Owner: curators maintain the vocabulary. Researcher provides value at deposit.
+Note: a recording of a `conference-presentation` is not a medium value. It is a
+related output — attach the recording as a file linked to the presentation record.
+Owner: researcher. Free text.
 
 **Context**
 A free-text field available on all types. For a researcher to describe their output
