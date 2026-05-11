@@ -41,6 +41,7 @@ further down.
 ## Hard rules
 
 These are non-negotiable constraints. They apply to every decision about the type system.
+Decided during the workshop.
 
 **No subtypes.** The type list is flat. There is no mandatory second step. Ever.
 Distinctions that matter for mapping or reporting are shown as first-class type
@@ -62,9 +63,11 @@ Fields to be defined. The legacy system treated `preprint` as a `miscellaneous_t
 subtype; that was a misclassification, corrected in this design.
 
 **Required fields at deposit are not optional curator cleanup.** If a field matters
-for citation, discovery, or external export, it is required at deposit — not left for
-curators to fill in later. The curator team is small. Their job is quality review and
-classification, not completing researcher metadata.
+for citation, discovery, or external export – and a researcher only knows the correct
+format, or an external system knows better than the researcher or the curator – it is
+required at deposit — not left for curators to fill in later. The curator team is
+small. Their job is quality review and classification, not completing metadata the
+researcher is responsible for.
 
 **Curators are not a migration mechanism.** Migration from legacy types to the new
 type system cannot rely on per-record curator review as its primary path. The curator
@@ -82,6 +85,11 @@ by record.
 ---
 
 ## Design principles
+
+Decided during the workshop.
+
+These constraints help us decide, but are inherintly negotiable as they sometimes
+suggest opposing things.
 
 ### 1. Describes an activity, not a medium
 
@@ -241,7 +249,7 @@ Open question.
 
 ## Proposed type list
 
-These twenty types are intended to cover approximately 95% of research output at UGent.
+These nineteen types are intended to cover approximately 95% of research output at UGent.
 Each has a positive definition. None is a residual category. Four further candidates
 are flagged ⚠️ TBD at the bottom of the table — they are under discussion and not part
 of v1. See "To be discussed" for full rationale on each.
@@ -267,7 +275,7 @@ substituted for the hyphen they use), making the mapping layer easier to maintai
 | Conference paper | `conference_paper` | Full paper or extended abstract presented at a scholarly conference, with a written component in proceedings or programme? |
 | Conference abstract | `conference_abstract` | Abstract-only submission to a scholarly conference, not published as a full paper? |
 | Poster | `conference_poster` | A poster presented at a scholarly venue? |
-| Presentation | `conference_presentation` | A standalone presentation at a scholarly venue? |
+| Presentation | `conference_presentation` | A presentation given at any venue — scholarly conference, academic seminar, or public setting? |
 | Dissertation | `dissertation` | A degree-granting thesis? |
 | Dataset | `dataset` | A structured collection of data for reuse? |
 | Software | `software` | A citable software artefact? |
@@ -278,7 +286,6 @@ substituted for the hyphen they use), making the mapping layer easier to maintai
 | Popular article | `popular_article` | A research-derived article in a newspaper, magazine, or popular periodical? |
 | Online publication | `online_publication` | A research-derived blog post or web article? |
 | Broadcast appearance | `broadcast_appearance` | A research-derived appearance on radio, TV, or in a podcast? |
-| Public lecture | `public_lecture` | A research-derived public talk at a museum, festival, or community event? |
 | Popular book | `popular_book` | A popular-science book aimed at a general audience? |
 | ⚠️ TBD **Musical notation** | `musical_notation` | A musical score or notation produced as part of research? |
 | ⚠️ TBD **Transcription** | `transcription` | A scholarly transcription of a manuscript or primary source? |
@@ -295,8 +302,8 @@ substituted for the hyphen they use), making the mapping layer easier to maintai
 | **Book chapter** `book_chapter` | A defined contribution to an edited book, with its own title and authorship, published within a volume with an ISBN. | Chapter in an edited volume; entry in a handbook; contribution to a Festschrift | A standalone report (→ `report`); a journal article (→ `journal_article`) | Parent ISBN required at deposit (the durable anchor — works whether or not the parent book is in Biblio). When the parent book is a Biblio record, raven resolves the ISBN to a record-to-record link automatically. |
 | **Conference paper** `conference_paper` | A full paper or extended abstract presented at a scholarly conference and published in proceedings or a conference programme. | Proceedings paper with ISBN/ISSN; extended abstract in a programme; short paper in conference proceedings | A poster (→ `conference_poster`); slides only (→ `conference_presentation`); abstract only (→ `conference_abstract`) | Proceedings indicator field (yes/no) required — drives COAR mapping and VABB C1 eligibility. |
 | **Conference abstract** `conference_abstract` | An abstract-only submission to a scholarly conference, not accompanied by a full paper. | Meeting abstract in a conference booklet; congress abstract; symposium abstract | A full paper in proceedings (→ `conference_paper`); a poster (→ `conference_poster`) | Not VABB-eligible. Maps to COAR `conference object`. Typically no DOI. |
-| **Poster** `conference_poster` | A display poster presented at a scholarly venue — conference, symposium, workshop, or seminar. | Research poster at a conference; poster at a doctoral symposium; poster at an academic workshop | A poster at a public science festival (→ `public_lecture` if accompanied by a talk; otherwise marginal v1 case) | The `conference-` prefix follows COAR convention; scope is not limited to conferences. If a full paper exists in proceedings, deposit that as `conference_paper` and link the poster. |
-| **Presentation** `conference_presentation` | A set of slides or documented talk presenting research at a scholarly venue. | Invited talk slides; keynote deck; seminar presentation; guest lecture at a university | A public lecture at a museum or community event (→ `public_lecture`); a TV/radio/podcast appearance (→ `broadcast_appearance`) | A recording of a presentation is a related output — attach as a file linked to this record. |
+| **Poster** `conference_poster` | A display poster presented at a scholarly venue — conference, symposium, workshop, or seminar. | Research poster at a conference; poster at a doctoral symposium; poster at an academic workshop | A poster at a public science festival (→ `conference_presentation` if accompanied by a talk; otherwise marginal v1 case) | The `conference-` prefix follows COAR convention; scope is not limited to conferences. If a full paper exists in proceedings, deposit that as `conference_paper` and link the poster. |
+| **Presentation** `conference_presentation` | A set of slides or documented talk presenting research at any venue — scholarly conference, academic seminar, or public setting (museum, festival, community event). The activity is presenting research orally; the venue is metadata. | Invited talk slides; keynote deck; seminar presentation; guest lecture at a university; talk at the Boekentoren during Open Monumentendag; lecture at a science festival; community lecture at a public library | A TV/radio/podcast appearance (→ `broadcast_appearance`); a written paper or extended abstract (→ `conference_paper`) | The `conference-` prefix follows COAR convention; scope is not limited to conferences. A recording of a presentation is a related output — attach as a file linked to this record. The popular/scholarly framing, where it matters for UB2030 reporting, is captured by an audience or context field, not by a type split — see Resolved decisions § "`public_lecture` collapsed into `conference_presentation`". |
 | **Dissertation** `dissertation` | A thesis submitted in fulfilment of a degree requirement. | Doctoral dissertation; master's thesis | A bachelor's thesis (out of scope — handled by separate institutional software, see "Out of scope") | Degree, supervisor, and institution are required fields. |
 | **Dataset** `dataset` | A structured, documented collection of data produced for reuse by others, with a persistent identifier. | Survey data with codebook; experimental measurements; annotated corpus; genomic data deposited at EGA or ENA | Any internal analysis file or spreadsheet; a database that is internal tooling (→ `software`) | DOI via DataCite preferred. Intent to make data reusable and citable is the criterion. |
 | **Software** `software` | A citable software artefact produced as part of research, with a persistent identifier or versioned repository URL. | Research tool with DOI on Zenodo; analysis pipeline on GitHub with version tag; R or Python package | An analysis script used once and not intended for reuse; a commercial tool the researcher used but did not produce; **a software paper describing a research tool (→ `journal_article`)** | Version and licence are required fields. COAR distinguishes `software` (`c_5ce6`, the artefact) from `software paper` (`c_7bab`, the article describing the artefact); Biblio uses `software` only for the artefact. The article describing it is a `journal_article` with a `related_identifier` linking back to this software record — see Resolved decisions for reasoning and counter-argument. |
@@ -306,8 +313,7 @@ substituted for the hyphen they use), making the mapping layer easier to maintai
 | **Review** `review` | A scholarly review of a single specific work — a book, film, exhibition, performance, recording, software, or product — written for either a scholarly or popular audience. The reviewed work is referenced by a stable identifier (ISBN, DOI, URL, Handle, or other persistent ID). | Book review in a scholarly journal; film review in a magazine; exhibition review on a blog; theatre review in a newspaper; software review in a peer-reviewed journal | A literature-synthesis review of multiple works (→ `review_article`); an analytical commentary that does not focus on a single specific work (→ see Open question on `journal_article`); an article that mentions other works without being primarily a review (→ `journal_article` or `popular_article`) | Maps to COAR `review` (`c_efa0`) with `book review` (`c_ba08`) as a known sub-concept. CSL `review` or `review-book`. Required: identifier of the reviewed work, work-type-of-reviewed-work (book, film, exhibition, etc.). Replaces the earlier venue-based migration rule for `artReview`/`bookReview`/`filmReview`/`exhibitionReview`/`musicReview`/`productReview`/`theatreReview` — all collapse to `review` regardless of venue. |
 | **Popular article** `popular_article` | A research-derived article published in a newspaper, magazine, or popular-interest periodical, written for a general audience rather than a scholarly readership. | Opinion piece in De Standaard; feature article in Eos; column in De Morgen; commentary in Knack; piece in The Conversation in print | A scholarly review article (→ `review_article`); an article in a peer-reviewed journal (→ `journal_article`); a blog post or web-native article (→ `online_publication`); a review of a specific work (→ `review`) | CSL `article-magazine`. Maps to COAR `≈ other (text)`. Required field: publication name. Not VABB, FWO, or FRIS eligible. |
 | **Online publication** `online_publication` | A research-derived blog post, web article, or other web-native publication, written for a general audience. | Blog post on a personal academic blog; article on The Conversation online; piece on UGent's institutional blog; long-form essay on a popular-science platform | A peer-reviewed open-access article (→ `journal_article`); a podcast (→ `broadcast_appearance`); an institutional or research-project website (→ not a type, see "What is not a type"); a print-first piece that also appears online (→ `popular_article`) | CSL `post-weblog`. Maps to COAR `c_6947 blog post`. Required fields: URL, site/blog name. Not VABB-eligible. |
-| **Broadcast appearance** `broadcast_appearance` | A research-derived appearance on radio, television, or in a podcast — a recorded broadcast where the researcher communicates research to a general audience. | Guest appearance on Canvas; interview on Radio 1; weekly podcast episode on climate policy; TED talk recording released as broadcast | A public lecture at a museum or community event (→ `public_lecture`); a presentation at a scholarly conference (→ `conference_presentation`); a research-output video that is not a broadcast (→ attach as a file on the parent record, see "What is not a type") | CSL `broadcast`. Maps to COAR `≈ other`. DataCite `≈ Audiovisual` (video) or `≈ Sound` (audio). Required fields: channel/platform, programme name, air date. Not VABB-eligible. Absorbs research-communication video forms. |
-| **Public lecture** `public_lecture` | A research-derived public talk at a non-scholarly venue — museum, library, festival, community event, or similar public setting. | Lecture at the Boekentoren during Open Monumentendag; talk at a science festival; community lecture at a public library; public-facing TED-style talk at a non-academic venue | An invited seminar at a university (→ `conference_presentation`); a TV/radio appearance (→ `broadcast_appearance`); a recorded online lecture for general audiences (→ `broadcast_appearance` if released as a broadcast) | CSL `speech`. Maps to COAR `≈ other`. Required fields: venue, date. A recording of a public lecture is a related output — attach as a file linked to this record. |
+| **Broadcast appearance** `broadcast_appearance` | A research-derived appearance on radio, television, or in a podcast — a recorded broadcast where the researcher communicates research to a general audience. | Guest appearance on Canvas; interview on Radio 1; weekly podcast episode on climate policy; TED talk recording released as broadcast | A presentation at any venue, scholarly or public (→ `conference_presentation`); a research-output video that is not a broadcast (→ attach as a file on the parent record, see "What is not a type") | CSL `broadcast`. Maps to COAR `≈ other`. DataCite `≈ Audiovisual` (video) or `≈ Sound` (audio). Required fields: channel/platform, programme name, air date. Not VABB-eligible. Absorbs research-communication video forms. |
 | **Popular book** `popular_book` | A research-derived book aimed at a general audience, published with an ISBN through a trade publisher rather than a scholarly press. | Popular-science book; trade book aimed at general readers; popular history written for a non-academic audience | A scholarly monograph (→ `book`); a textbook for university students (→ `book`); a popular article in a periodical (→ `popular_article`); a children's educational book unrelated to specific research (→ out of scope) | CSL `book`. Maps to COAR `≈ book`. Required: ISBN, publisher. Not VABB-eligible (popular venues do not qualify for VABB). The boundary with scholarly `book` is publisher and intended audience: a scholarly press publishing for academics is `book`; a trade press publishing for general readers is `popular_book`. |
 
 ---
@@ -335,7 +341,7 @@ subtype is replaced by this field. See "What is not a type" below.
 not apply to types without a peer-review lifecycle: `dataset`, `software`,
 `dissertation`, `conference_abstract`, `conference_poster`,
 `conference_presentation`, `annotation`, `popular_article`,
-`online_publication`, `broadcast_appearance`, `public_lecture`, `popular_book`.
+`online_publication`, `broadcast_appearance`, `popular_book`.
 
 **A note on `report` and document iterations.** A `report` issued in a
 series (what was historically called a "working paper") may go through
@@ -417,18 +423,17 @@ Required for all `conference_paper` records. Field shape — see Open questions 
 raven for the raven-side representation choice.
 Owner: researcher-provided at deposit, curator-correctable.
 
-**Per-type fields for the five popular-bucket types**
+**Per-type fields for the four popular-bucket types**
 
 Each of `popular_article`, `online_publication`, `broadcast_appearance`,
-`public_lecture`, and `popular_book` carries its own structured fields
-appropriate to its medium, replacing the free-text `medium` field on the
-now-removed `research_communication` type.
+and `popular_book` carries its own structured fields appropriate to its
+medium, replacing the free-text `medium` field on the now-removed
+`research_communication` type.
 
 - `popular_article`: required `publication_name`; optional page reference.
 - `online_publication`: required `url`, `site_name`.
 - `broadcast_appearance`: required `channel_or_platform`, `programme_name`,
   `air_date`; optional duration; optional recording link.
-- `public_lecture`: required `venue_name`, `date`; optional recording link.
 - `popular_book`: required `isbn`, `publisher`, `edition`.
 
 Field shapes are the responsibility of the per-type fields document, not this
@@ -436,13 +441,13 @@ one. The list above is the type-design commitment to *which* fields each type
 requires; *how* each field is represented in raven is decided in the field
 workshop.
 
-Note: a recording of a `conference_presentation`, `public_lecture`, or
-`broadcast_appearance` is a related output — attach the recording as a file
-linked to the parent record. The recording is not a separate `video` deposit.
+Note: a recording of a `conference_presentation` or `broadcast_appearance`
+is a related output — attach the recording as a file linked to the parent
+record. The recording is not a separate `video` deposit.
 
 **Why granular types rather than a single bucket**
 
-The v1 design splits the popular-communication territory into five
+The v1 design splits the popular-communication territory into four
 medium-specific top-level types. This reverses the v0.3 single-bucket
 design (`research_communication`). The rationale and the path that led there:
 
@@ -455,7 +460,6 @@ actually carry:
 - `popular_article` has publication name, page reference — article-shaped record.
 - `online_publication` has URL, site name — web-shaped record.
 - `broadcast_appearance` has channel, programme name, air date — broadcast-shaped record.
-- `public_lecture` has venue, date — event-shaped record.
 
 These ARE meaningfully different schemas, not just different labels for an
 identical structure. Test 1 passes. Test 2 also passes (COAR / CSL / DataCite
@@ -469,16 +473,16 @@ differences are real — ISBN vs URL vs channel vs venue vs publisher are
 genuinely different fields. The earlier reasoning dismissed those differences
 too quickly. The single bucket was a Principle 3 misjudgment, now corrected.
 
-**The cost.** The catalogue grew from 17 to 20 v1 types. Researchers see
-five additional options on the deposit picker. We accept that cost — with
-the caveat that the workshop should revisit whether five medium-specific
+**The cost.** The catalogue grew from 17 to 19 v1 types. Researchers see
+four additional options on the deposit picker. We accept that cost — with
+the caveat that the workshop should revisit whether four medium-specific
 types is the right granularity (see Open questions § "Granular popular-bucket
-types: keep five, or simplify?"). Researchers already distinguish `book`
+types: keep four, or simplify?"). Researchers already distinguish `book`
 from `book_chapter` from `journal_article` without hesitation; "a magazine
-piece vs a podcast vs a public lecture" is at least as clear an everyday
-distinction. The principle-6 trash-bucket risk is mitigated because each new
-type has a tight positive definition tied to a specific venue-shape, not a
-residual catch-all.
+piece vs a blog post vs a podcast vs a popular book" is at least as clear
+an everyday distinction. The principle-6 trash-bucket risk is mitigated
+because each new type has a tight positive definition tied to a specific
+venue-shape, not a residual catch-all.
 
 **Decision history**
 
@@ -496,16 +500,17 @@ Recording the path so future readers understand the reasoning.
    field for letter / note — a closed-vocabulary subdivision dressed as a
    property field, violating "no subtypes."
 
-3. **Granular split into five top-level types** (current). Each medium
-   is a first-class type choice on the deposit picker, with its own
-   appropriate fields. **Adopted.** Researchers self-classify into a
-   medium-specific type the same way they choose between `book` and
-   `book_chapter`.
+3. **Granular split into four top-level types** (current, after
+   `public_lecture` was later collapsed into `conference_presentation` —
+   see Resolved decisions). Each medium is a first-class type choice on
+   the deposit picker, with its own appropriate fields. **Adopted.**
+   Researchers self-classify into a medium-specific type the same way
+   they choose between `book` and `book_chapter`.
 
 **Resolved on option 3 (granular split).** The single-bucket Plan A is held
 in reserve only as a documentation artefact — if researcher cognitive load
 proves too high in user testing and people consistently misclassify across
-the five types, the fallback is a single `popular_communication` parent type
+the four types, the fallback is a single `popular_communication` parent type
 with required medium fields. That fallback is not currently planned.
 
 **Context** (specification deferred to the per-type fields project)
@@ -668,7 +673,6 @@ What each source system calls the type when Biblio imports a record from it.
 | **Popular article** ⚠️ | `popular_article` | — | — | — | — | ≈ `@article` |
 | **Online publication** ⚠️ | `online_publication` | — | — | — | — | ≈ `@misc` |
 | **Broadcast appearance** ⚠️ | `broadcast_appearance` | — | — | — | — | ≈ `@misc` |
-| **Public lecture** ⚠️ | `public_lecture` | — | — | — | — | ≈ `@misc` |
 | **Popular book** ⚠️ | `popular_book` | — | — | — | — | ≈ `@book` |
 
 **Note on life sciences repositories (EGA, ENA, BioStudies, ENA BioProject, Ensembl, Handle):**
@@ -707,12 +711,11 @@ What label Biblio sends when exporting a record to each target system.
 | **Popular article** ⚠️ | `popular_article` | ≈ `other (text)` | ≈ `Text / Other` | ≈ other research product | ✅ `article-magazine` | — | publication |
 | **Online publication** ⚠️ | `online_publication` | ✅ `blog post` (`c_6947`) | ≈ `Text / Other` | ≈ other research product | ✅ `post-weblog` | — | publication |
 | **Broadcast appearance** ⚠️ | `broadcast_appearance` | ≈ `other` | ≈ `Audiovisual` / `Sound` | ≈ other research product | ✅ `broadcast` | — | publication |
-| **Public lecture** ⚠️ | `public_lecture` | ≈ `other` | ≈ `Event` | ≈ other research product | ✅ `speech` | — | publication |
 | **Popular book** ⚠️ | `popular_book` | ≈ `book` | ✅ `Text / Book` | ≈ literature | ✅ `book` | — | publication |
 
-⚠️ **Weak-fit types are Biblio-owned.** The five popular-bucket types
+⚠️ **Weak-fit types are Biblio-owned.** The four popular-bucket types
 (`popular_article`, `online_publication`, `broadcast_appearance`,
-`public_lecture`, `popular_book`), `policy_report`, `annotation`, and `review`
+`popular_book`), `policy_report`, `annotation`, and `review`
 have limited or no import pipeline support and approximate external schema
 mappings outside CSL. This is intentional — these types exist because Biblio's
 completeness mission extends beyond what funding systems reward.
@@ -762,12 +765,12 @@ rather than research-output types.
   more permissive than our framework; we do not adopt it as a type.
 - **Video** — not a type, same reasoning as `image`. A research-output video
   is the recording of something else: a `broadcast_appearance` (TV / podcast),
-  a recording of a `public_lecture` or `conference_presentation`, footage
-  attached to a `dataset` (microscopy, observational data), or accompanying
-  material on a `journal_article`. The video is the *medium*; the research
-  activity is the broadcast, the lecture, the data collection, or the paper.
-  Attach the video file to the parent record. COAR `video` (`c_12ce`) is not
-  adopted as a Biblio type.
+  a recording of a `conference_presentation`, footage attached to a `dataset`
+  (microscopy, observational data), or accompanying material on a
+  `journal_article`. The video is the *medium*; the research activity is the
+  broadcast, the lecture, the data collection, or the paper. Attach the video
+  file to the parent record. COAR `video` (`c_12ce`) is not adopted as a
+  Biblio type.
 - **Website** — not a type. A research-output "website" is either a
   `dataset` (a database, corpus exploration interface, structured data
   collection accessible via the web), `software` (an interactive tool with
@@ -949,59 +952,26 @@ to items resolved elsewhere come at the bottom.*
   the `working_paper` merge unless the workshop surfaces a strong reason to
   preserve the type-level split.
 
-- **Public lecture as a separate type vs. derivable from venue.** The current
-  design has `public_lecture` (popular venue) and `conference_presentation`
-  (scholarly venue) as two distinct types. The distinction at deposit
-  requires the researcher to pick the right type, which means knowing the
-  category boundary ("is the Boekentoren a popular venue? Is a community
-  library popular even when I'm there for a research talk?"). If we can't
-  *derive* the venue category from venue metadata, asking the researcher
-  to make the call is friction for the 90% case where it's obvious and
-  confusion for the 10% where it isn't.
-
-  Three options:
-  1. Keep both types as currently designed. Researcher self-classifies into
-     scholarly-venue versus popular-venue at deposit. Cost: extra picker
-     option, occasional misclassification.
-  2. Collapse both into `conference_presentation` (or rename to a more
-     generic `presentation` / `talk` type) with a venue-category field that
-     is *derived* from the venue lookup where possible (museum / library /
-     festival → popular; university / conference / scholarly society →
-     scholarly), only asked of the researcher when derivation fails. The
-     export then routes COAR `presentation` vs `≈ other` based on the
-     resolved category, same mapping-layer pattern as `working_paper`
-     merged into `report`.
-  3. Keep both types, but add explicit guidance in the deposit form ("if in
-     doubt, pick `conference_presentation`; curator will reclassify") and
-     accept some misclassification at the edges.
-
-  Principle 3 reads weak for the split: the metadata schema is venue +
-  date + (recording) for both, and the external world (COAR, CSL, DataCite)
-  approximates both to similar terms. The distinction is real but it is
-  carried by the venue, not by the activity.
-
-  ⚠️ TBD — confirm with faculty librarians and check whether venue lookup
-  is reliable enough to support derivation in option 2.
-
-- **Granular popular-bucket types: keep five, or simplify?** The current
-  design splits popular-communication into five types: `popular_article`,
-  `online_publication`, `broadcast_appearance`, `public_lecture`,
-  `popular_book`. The split was made because the schemas differ
-  meaningfully (ISBN versus URL versus channel versus venue versus
-  publication name) and the COAR/CSL/DataCite vocabularies distinguish
-  most of them — see Resolved decisions § "`research_communication` split
-  into five medium-specific types".
+- **Granular popular-bucket types: keep four, or simplify?** The current
+  design splits popular-communication into four types: `popular_article`,
+  `online_publication`, `broadcast_appearance`, `popular_book`. The split
+  was made because the schemas differ meaningfully (ISBN versus URL versus
+  channel versus publication name) and the COAR/CSL/DataCite vocabularies
+  distinguish most of them — see Resolved decisions § "`research_communication`
+  split into four medium-specific types". (Originally five; `public_lecture`
+  was later collapsed into `conference_presentation` — see Resolved decisions
+  § "`public_lecture` collapsed into `conference_presentation`".)
 
   Reopening question: now that the design has matured and other splits
   have been folded back into fields (`working_paper` into `report`,
-  `lecture` and `commentary` into Open questions), is the five-way split
-  still proportionate?
+  `public_lecture` into `conference_presentation`, `lecture` and `commentary`
+  into Open questions), is the four-way split still proportionate?
 
-  - The export-mapping argument is genuinely thin. Four of the five
+  - The export-mapping argument is genuinely thin. Three of the four
     popular types map to `≈ other` in COAR; only `online_publication`
     gets `✅ blog post`. The CSL distinction is real but CSL is a
     rendering vocabulary, not an external classifier.
-  - The deposit-picker cost is real. Five additional types (six counting
+  - The deposit-picker cost is real. Four additional types (five counting
     `popular_book` as the boundary case with `book`) is a lot of cognitive
     load for output that is not VABB- or FWO-eligible — i.e. output where
     misclassification has low downstream consequences.
@@ -1009,16 +979,16 @@ to items resolved elsewhere come at the bottom.*
     fields each type requires *are* genuinely different.
 
   Three options to evaluate:
-  1. Keep the five-way split as designed (current).
+  1. Keep the four-way split as designed (current).
   2. Collapse to a single `popular_communication` type with a required
-     `medium` field (closed vocabulary: article, blog, broadcast,
-     lecture, book) that drives the medium-specific field set
-     conditionally. Same pattern as `series_indicator` on `report`. Risk:
-     looks like the rejected `medium_kind` field, but is operationally a
-     conditional field-set, not a hidden subtype.
+     `medium` field (closed vocabulary: article, blog, broadcast, book)
+     that drives the medium-specific field set conditionally. Same pattern
+     as `series_indicator` on `report`. Risk: looks like the rejected
+     `medium_kind` field, but is operationally a conditional field-set,
+     not a hidden subtype.
   3. Collapse to two types: `popular_book` (which has the strong
      book-shape and ISBN identifier, distinct enough to stand alone) and
-     a single `popular_communication` for the other four, with a `medium`
+     a single `popular_communication` for the other three, with a `medium`
      field driving the field set.
 
   ⚠️ TBD — worth a focused discussion in the workshop. Researcher
@@ -1030,9 +1000,10 @@ to items resolved elsewhere come at the bottom.*
 - **Lecture VS `conference_presentation`:** A *standalone academic lecture*
   (an invited lecture at another university outside any conference,
   an online masterclass for a discipline-specific audience) sits awkwardly
-  between `conference_presentation` (part of a conference event) and
-  `public_lecture` (popular venue). The colleague's
-  2024 mapping preserves COAR `lecture` (`c_8544`) as distinct.
+  inside `conference_presentation` as currently defined — neither a
+  conference event nor a popular-venue talk, but using the same fields
+  (venue, date). The colleague's 2024 mapping preserves COAR `lecture`
+  (`c_8544`) as distinct.
 
   Curator-routing is not an option. Letting the researcher pick
   `conference_presentation` and relying on a curator to flag and
@@ -1041,19 +1012,30 @@ to items resolved elsewhere come at the bottom.*
   must let the researcher land on the correct type without curator
   intervention.
 
+  Note: `public_lecture` was previously a third type covering popular
+  venues. It has since been collapsed into `conference_presentation` —
+  see Resolved decisions § "`public_lecture` collapsed into
+  `conference_presentation`". This question now sits inside
+  `conference_presentation`, not at its boundary with `public_lecture`.
+
   Two options to evaluate:
-  1. Add `lecture` as a third type alongside `conference_presentation` and
-     `public_lecture`. Researcher self-classifies into
-     part-of-conference / standalone-academic / public, with each having
-     its own type. The colleague's 2024 mapping supports this.
+  1. Add `lecture` as a second type alongside `conference_presentation`.
+     Researcher self-classifies into part-of-conference
+     (`conference_presentation`) versus standalone-academic (`lecture`).
+     The colleague's 2024 mapping supports this distinction.
   2. Generalise `conference_presentation` into a broader `academic_talk`
-     type with a venue-context field that includes "conference",
-     "seminar", "masterclass", "invited talk". Single type, field-driven.
-     Risks the no-subtypes rule depending on field shape.
+     or `talk` type with a venue-context field that includes "conference",
+     "seminar", "masterclass", "invited talk", "public engagement".
+     Single type, field-driven. Drives both COAR derivation and UB2030
+     reporting filtering. Risks the no-subtypes rule depending on field
+     shape.
 
   ⚠️ TBD — confirm whether the standalone-academic-lecture case is common
   enough to warrant its own type, or whether the field-driven
-  `academic_talk` approach is preferable.
+  `academic_talk` approach is preferable. A third position — keep the
+  status quo (everything is `conference_presentation`) and accept the
+  COAR-imprecision cost — is also viable now that curator-routing is off
+  the table.
 
 - **Commentary as a sub-question on `journal_article`:** A *commentary*
   is an in-depth analytical piece about an existing work, distinct from
@@ -1138,6 +1120,10 @@ to items resolved elsewhere come at the bottom.*
   "`working_paper` merged into `report`". The distinction is now
   field-driven (series indicator + series ISBN/ISSN), with VABB R1
   classification computed at export time.
+- **Public lecture vs. conference presentation:** Resolved — see Resolved
+  decisions § "`public_lecture` collapsed into `conference_presentation`".
+  Both venue cases (scholarly and public) now use `conference_presentation`;
+  the popular/scholarly framing is field-shaped, not type-shaped.
 
 ---
 
@@ -1247,28 +1233,30 @@ insufficient. To be confirmed with the curator team. If confirmed, the question
 returns as: "is this distinction load-bearing enough to deserve a type, or can the
 queue filter run on the source-type audit field?"
 
-### `research_communication` split into five medium-specific types
+### `research_communication` split into four medium-specific types
 
 An earlier draft used a single `research_communication` type with a
 free-text `medium` field, applying generic CSL `article-magazine` citation
-regardless of medium. The current design uses five top-level types:
+regardless of medium. The current design uses four top-level types:
 `popular_article`, `online_publication`, `broadcast_appearance`,
-`public_lecture`, `popular_book`.
+`popular_book`. (Originally split into five; `public_lecture` was later
+collapsed into `conference_presentation` — see § "`public_lecture`
+collapsed into `conference_presentation`".)
 
 **Reasoning.** Principle 3 requires both tests to pass for a type split. An
 earlier draft claimed test 1 (schema) failed because all media share `title +
 author + date + venue/medium name`. On review with the colleague's 2024
 mapping work, the schemas DO differ meaningfully — ISBN/publisher/edition
 for a popular book; URL/site name for an online publication;
-channel/programme/air date for a broadcast appearance; venue/date for a
-public lecture; publication name/page for a popular article. Test 1 passes.
-Test 2 also passes (COAR / CSL / DataCite distinguish each). Per Principle 3,
-granular types are the rule-consistent answer.
+channel/programme/air date for a broadcast appearance; publication
+name/page for a popular article. Test 1 passes. Test 2 also passes
+(COAR / CSL / DataCite distinguish each). Per Principle 3, granular types
+are the rule-consistent answer.
 
 **Consequences.**
-- Catalogue grows from 17 to 20 v1 types.
+- Catalogue grows from 17 to 19 v1 types.
 - Each new type cites with the correct medium-specific CSL type
-  (`article-magazine`, `post-weblog`, `broadcast`, `speech`, `book`).
+  (`article-magazine`, `post-weblog`, `broadcast`, `book`).
 - COAR export becomes more accurate: `online_publication` exports as
   `blog post` (`c_6947`); the rest still approximate to `≈ other`.
 - Migration matrix updates: `blogPost` → `online_publication`;
@@ -1277,7 +1265,7 @@ granular types are the rule-consistent answer.
   structured fields.
 
 **Reopening criteria.** If user testing shows researchers consistently
-misclassify across the five new types — picking `popular_article` for
+misclassify across the four new types — picking `popular_article` for
 podcasts or `online_publication` for printed magazine pieces, etc. — the
 fallback is a single `popular_communication` parent type with required
 medium fields. That fallback is documented but not currently planned.
@@ -1431,6 +1419,67 @@ negatives at the curator-review stage), revisit whether the field-based
 approach is sufficient or whether a separate type is needed for
 classification clarity.
 
+### `public_lecture` collapsed into `conference_presentation`
+
+An earlier draft had `public_lecture` (popular venue) and
+`conference_presentation` (scholarly venue) as two distinct types, with
+the venue category as the distinguishing field. The current design folds
+`public_lecture` into `conference_presentation` and drops the venue-based
+type split.
+
+**Reasoning.** Principle 3 fails for the split. Test 1 (substantially
+different metadata schema): the schemas are identical — venue + date for
+both. Test 2 (external world treats them as distinct): COAR has a
+distinct `lecture` term (`c_8544`), but the current export already
+approximated `public_lecture` to `≈ other`, so there is no clean COAR
+gain to lose; CSL maps both to `speech`. Funding systems do not
+distinguish: VABB does not recognise either as eligible, FWO does not
+pull either automatically (both are supplementary, manually reported in
+the FWO portal), FRIS routes both to the broad publications category.
+
+The distinguishing field — popular venue vs. scholarly venue — is also
+unreliable in practice. The same researcher giving a talk at the
+Boekentoren might be addressing heritage librarians (scholarly framing)
+or Open Monumentendag visitors (popular framing); same building, same
+researcher, different framing. Asking the researcher to make this call
+at deposit is friction without a payoff. Deriving from a venue lookup
+works for clean cases (university, conference centre, museum) but fails
+on the boundary cases that matter (research-meets-festival, public
+library research talk, Boekentoren). Curator-routing is also off the
+table — see the hard rule on curator workload.
+
+UB2030 §3.1 reporting on outreach activity is field-shaped, not
+type-shaped: an audience or context field on `conference_presentation`
+captures the public-engagement framing without forcing a type split.
+
+**Consequences.**
+- One fewer v1 type (now four medium-specific popular types, not five).
+- `conference_presentation` broadens to cover academic and public-venue
+  talks — the activity is the same (presenting research orally), the
+  venue is metadata.
+- COAR export becomes imprecise for public-venue talks: all
+  `conference_presentation` records export as COAR `conference
+  presentation`, which is technically incorrect for public-venue cases
+  (COAR has a distinct `lecture` term, `c_8544`). The imprecision is
+  accepted as the cost of the simplification. If COAR-level accuracy
+  proves to matter for downstream consumers, the fix is a render-time
+  derivation rule based on an audience or context field — same pattern
+  as preprint export derivation. Adding it would be the second such
+  rule, which the doc has flagged as the trigger for revisiting whether
+  a top-level type is warranted; that flag stands.
+- Migration: legacy `lectureSpeech` records all route to
+  `conference_presentation` mechanically. The standalone-academic-lecture
+  sub-case (currently still an open question — see Open questions §
+  "Lecture VS `conference_presentation`") is unaffected; that question
+  lives on inside `conference_presentation`, not at the boundary with a
+  popular type.
+
+**Reopening criteria.** If venue-based distinction proves load-bearing
+for UB2030 reporting and a context field cannot carry the weight (e.g.
+researchers do not consistently fill it in, or downstream queries treat
+the field as unreliable), revisit whether `public_lecture` should
+return as a distinct type.
+
 ---
 
 ## Migration matrix
@@ -1485,6 +1534,7 @@ curator-review rows are uncertain by design.
 | `miscellaneous_types.magazinePiece` | `popular_article` | Magazine name captured in `publication_name`. |
 | `miscellaneous_types.newsArticle` | `popular_article` | Publication name captured in `publication_name`. |
 | `miscellaneous_types.newspaperPiece` | `popular_article` | Newspaper name captured in `publication_name`. |
+| `miscellaneous_types.lectureSpeech` | `conference_presentation` | All academic and public-venue talks route to `conference_presentation` after the `public_lecture` collapse. The standalone-academic-lecture sub-case is still open — see Open question on Lecture VS `conference_presentation` — but the migration default is unambiguous. |
 
 ### Role-only migrations (record stays, type does not split)
 
@@ -1526,7 +1576,6 @@ encode.
 | `miscellaneous_types.biography` | `book` (standalone scholarly biography), `journal_article` (biographical sketch in a journal), or `popular_book` / `popular_article` (general-audience biographical piece) | Form, venue, and intended audience. |
 | `miscellaneous_types.bibliography` | `book` (standalone published bibliography), `journal_article` (short list in a journal), or `report` (institutional bibliography) | Form and venue. |
 | `miscellaneous_types.manual` | `report` (institutional / technical manual) or `book` (published with ISBN) | Whether it has an ISBN and was issued through a publisher. |
-| `miscellaneous_types.lectureSpeech` | `conference_presentation` (scholarly venue) or `public_lecture` (museum / festival / community event) | Was the venue scholarly or public? See Open question on `conference_presentation` for the standalone-academic-lecture case. |
 | `miscellaneous_types.musicEdition` | `book` (published score), or eventually `musical_notation` / `critical_edition` if those TBD types land | If the TBD types land, re-classify; otherwise default to `book` when ISBN is present. |
 | `miscellaneous_types.textEdition` | `book` (published edition), or eventually `critical_edition` (TBD) | Same logic. |
 | `miscellaneous_types.textTranslation` | `book` (standalone published translation) or `journal_article` (translation embedded in an article) | Form. Note: translation is the work, not a separate type. |
@@ -1683,7 +1732,8 @@ state:
 - `workflow` — COAR `c_393c`, FaBiO Workflow. Still in "To be discussed" as
   a candidate v1+ type.
 - `lecture` — COAR `c_8544`. Open question on `conference_presentation`
-  rather than a standalone TBD candidate; three resolution options recorded.
+  rather than a standalone TBD candidate; two resolution options recorded
+  (curator-routing is no longer viable per the curator hard rule).
 - `commentary` — COAR `D97F-VB57`. Open question on `journal_article`
   rather than a standalone TBD candidate.
 - `image`, `video`, `website` — COAR `c_c513`, `c_12ce`, `c_7ad9`.
@@ -1714,17 +1764,19 @@ state:
   funding-agency-specific; the broader policy report term is in COAR
   3.2). The colleague did not surface it as distinct from `report`. The case
   for separation is contested in Open questions.
-- The five medium-specific popular-bucket types (`popular_article`,
-  `online_publication`, `broadcast_appearance`, `public_lecture`,
-  `popular_book`). The colleague preserved granular `Newsclipping`,
-  `MagazineArticle`, `Radio/TVProgram` distinctions; the v1 design picks up
-  those distinctions and elevates them to first-class types with
-  medium-specific field requirements. An earlier draft tried a single
-  `research_communication` bucket with a free-text `medium` field on
-  Principle 3 grounds (claimed schema identity); that was retired when
-  rigorous review showed the schemas DO differ meaningfully (ISBN vs URL vs
-  channel vs venue vs publisher). See Resolved decisions § "`research_communication`
-  split into five medium-specific types" for full reasoning.
+- The four medium-specific popular-bucket types (`popular_article`,
+  `online_publication`, `broadcast_appearance`, `popular_book`). The
+  colleague preserved granular `Newsclipping`, `MagazineArticle`,
+  `Radio/TVProgram` distinctions; the v1 design picks up those
+  distinctions and elevates them to first-class types with medium-specific
+  field requirements. An earlier draft tried a single `research_communication`
+  bucket with a free-text `medium` field on Principle 3 grounds (claimed
+  schema identity); that was retired when rigorous review showed the
+  schemas DO differ meaningfully (ISBN vs URL vs channel vs publisher).
+  See Resolved decisions § "`research_communication` split into four
+  medium-specific types" for full reasoning. (Originally split into
+  five; `public_lecture` was later collapsed into
+  `conference_presentation` — see Resolved decisions for that change.)
 
 ### Concepts that this design considered and retired
 
@@ -1741,8 +1793,8 @@ state:
   bucket with a free-text `medium` field, on the assumption that all
   popular-communication output shared the same metadata schema. Retired —
   schemas DO differ meaningfully across media, the assumption was a Principle 3
-  misjudgment. The territory is now five medium-specific types as listed
-  above. See Resolved decisions § "`research_communication` split into five
+  misjudgment. The territory is now four medium-specific types as listed
+  above. See Resolved decisions § "`research_communication` split into four
   medium-specific types."
 
 ### Curator uncertainty in the colleague's table that this design resolves
@@ -1757,9 +1809,9 @@ This design takes positions on each:
 - *"PhD thesis also exists in cerif, not clear if there is a difference"*:
   `dissertation` covers both. CERIF redundancy eliminated.
 - *"not sure whether mapping between cerif and coar is ok"* (MagazineArticle
-  vs periodical): magazine pieces → `popular_article` (one of the five
-  medium-specific types that replaced the retired `research_communication`
-  bucket); periodical is a container, not a work.
+  (MagazineArticle vs periodical): magazine pieces → `popular_article` (one
+  of the four medium-specific types that replaced the retired
+  `research_communication` bucket); periodical is a container, not a work.
 - *"not sure whether mapping between cerif and coar is ok"*
   (ResearchReportForExternalBody vs report to funding agency): both → `report`;
   the funder relationship is captured by `funding_reference`, not by type.
