@@ -20,6 +20,25 @@ const crypto  = require('crypto');
 const PORT    = 3111;
 const WS_PORT = 3001;
 const ROOT    = __dirname;
+
+// ─── Bootstrap delivery: jsDelivr CDN, pinned to 5.3.3 ───────────────────────
+//
+// IMPORTANT, read before "harmonising" with Raven:
+//   booktower-ui-library is a static prototype environment with no bundler.
+//   Bootstrap is loaded from jsDelivr, pinned to a specific version in the URL.
+//   Pinning gives us reproducibility; CDN gives us zero-machinery delivery.
+//
+//   Raven uses a pinned npm package (bootstrap@5.3.3, --save-exact) resolved
+//   by esbuild from node_modules. That is the correct choice there because
+//   Raven already has a bundler and ships production app code.
+//
+//   The two repos solve the same problem (pinned Bootstrap, no drift) with
+//   different mechanisms because they have different runtime shapes. Do not
+//   try to unify them by adding npm-Bootstrap here without first agreeing on
+//   how it would be served (static-mount of node_modules? postinstall copy
+//   into assets/vendor/?) and why the added machinery is worth it.
+//
+// To update Bootstrap: bump the version in BOTH URLs below (CSS + JS bundle).
 const DEFAULT_CSS = [
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
   '/assets/booktower.css',
