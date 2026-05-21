@@ -141,16 +141,18 @@ See [/foundations/icons.html](http://localhost:3000/foundations/icons.html) for 
 
 ## Using the design system in another app
 
-Copy `assets/booktower.css` and `assets/fonts/` into your app and load them after Bootstrap:
+See [`docs/CONSUMING-BOOKTOWER.md`](docs/CONSUMING-BOOKTOWER.md) for the full integration contract: which files to copy, where to place fonts, Bootstrap as a peer dependency, and the surface attribute.
 
-```html
-<link rel="stylesheet" href="bootstrap.min.css">
-<link rel="stylesheet" href="booktower.css">
+### No `dist` build step
+
+Booktower has no `npm run dist` or `make export` command that bundles the consumer artifacts. The update path is manual:
+
+```bash
+cp assets/booktower.css                  <consumer>/path/to/css/
+cp assets/fonts/icon-font.woff{,2}       <consumer>/path/to/css/fonts/
 ```
 
-The icon font expects to be served from `/assets/fonts/`. If your app serves static files differently, adjust the font paths in `booktower.css` after copying, or set a different `fontsUrl` in `.fantasticonrc.json` before rebuilding.
-
-For surface-aware components, add `data-surface="public"` or `data-surface="backoffice"` to your `<body>` or layout container.
+This is deliberate. Updates happen on a low cadence, by a small group, and a missing font file fails loudly — broken icons render as empty squares within seconds of loading the page. A build step would add machinery for a problem that doesn't exist yet. Revisit when the update cadence increases, more people start doing updates, or a real second consumer deployment exists.
 
 ---
 

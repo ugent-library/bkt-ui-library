@@ -18,6 +18,60 @@ Do not treat it as a second utility framework layered on top of Bootstrap.
 
 ---
 
+## Files to ship in your consuming project
+
+Three files travel together. All three must be present, or the icon font breaks.
+
+| File | Source | Destination in your app |
+|------|--------|-------------------------|
+| `booktower.css` | `assets/booktower.css` | next to your other CSS |
+| `icon-font.woff` | `assets/fonts/icon-font.woff` | a `fonts/` directory **next to** `booktower.css` |
+| `icon-font.woff2` | `assets/fonts/icon-font.woff2` | same `fonts/` directory |
+
+`booktower.css` references the icon font with a relative URL (`fonts/icon-font.woff?HASH`). The fonts must sit in a `fonts/` directory **next to the CSS file** — not at the server root, not at `/assets/fonts/`. The relative URL resolves against the CSS file's own location.
+
+Example layouts that work:
+
+```
+your-app/
+  static/
+    booktower.css
+    fonts/
+      icon-font.woff
+      icon-font.woff2
+```
+
+```
+your-app/
+  assets/
+    css/
+      booktower.css       ← if your build bundles CSS, place fonts next to this source
+      fonts/
+        icon-font.woff
+        icon-font.woff2
+```
+
+If your build pipeline bundles CSS (esbuild, webpack, Vite, Parcel), place the fonts alongside the CSS source. The bundler will copy them into the output directory and rewrite the URLs to match.
+
+### Bootstrap is a peer dependency
+
+Booktower is an **override layer**, not a full stylesheet. It assumes Bootstrap 5.3 is already loaded. Without Bootstrap, classes like `btn`, `card`, `container`, `row`, `col-*`, `d-flex`, `gap-*`, and `dropdown-menu` do not exist and your page will render largely unstyled.
+
+Load order in your HTML is non-negotiable:
+
+```html
+<link rel="stylesheet" href="bootstrap.min.css">  <!-- 1. Bootstrap first -->
+<link rel="stylesheet" href="booktower.css">     <!-- 2. Booktower overrides -->
+```
+
+If your build pipeline concatenates CSS, the same order applies inside the bundle.
+
+Bootstrap version compatibility: Booktower is built against **Bootstrap 5.3.3**. Earlier 5.x versions may work but are not tested. Bootstrap 4.x will not work.
+
+How you obtain Bootstrap is your project's choice (npm dependency, vendored copy under `vendor/`, CDN link). Booktower has no preference — it only requires the loaded result.
+
+---
+
 ## Non-negotiable rules
 
 1. Use only documented classes.
