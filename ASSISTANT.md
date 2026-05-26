@@ -481,8 +481,11 @@ bt-title-toolbar
 **Avatar**
 ```
 bt-avatar               bt-avatar--xsmall       bt-avatar--small
-bt-avatar--large        bt-avatar--outline
+bt-avatar--large        bt-avatar--outline      bt-avatar--dark
 ```
+Note: `bt-avatar` combined with a Bootstrap background utility (`.bg-primary`,
+`.bg-success`, `.bg-warning`, `.bg-danger`) automatically forces white text and
+icon colour. No extra class needed for coloured initials chips.
 
 **Hero (public surface)**
 ```
@@ -541,6 +544,9 @@ Note: the old custom facet classes (`bt-facets`, `bt-facet-name`, `bt-facet-sepa
 bt-sidebar               bt-sidebar--bordered    bt-sidebar--slim
 bt-sidebar__toggle       bt-sidebar__label       bt-sidebar__group-label
 ```
+Note: `.bt-sidebar a.nav-link` already applies `display:flex`, `align-items:center`,
+`gap`, and padding. Do not add `d-flex`/`align-items-center`/`gap-*`/`p-*`
+utilities on nav links inside `bt-sidebar` — they are redundant.
 
 **Backoffice list layout**
 Note: `bt-sidebar` is the sticky `<aside>` wrapping the facet groups. Results layouts now use `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header`, and `u-main__content-body`.
@@ -635,6 +641,46 @@ badge--total
 ```
 nav-title
 ```
+
+**Typography helpers** ⚠️ TBD — may not survive review
+```
+bt-meta-text            bt-text-xsmall          ff-sans
+```
+`bt-meta-text` is the standard "caption / muted secondary line" style.
+`ff-sans` forces system-UI sans inside a context that would otherwise inherit
+the heading or display font (e.g. inside a styled `<h*>` wrapper).
+
+**Custom utilities**
+```
+bt-border
+bt-bg                   bt-bg-alt               bt-bg-dark              bt-bg-white
+bg-danger-light
+```
+These are the only custom utilities. Everything else (spacing, sizing, alignment,
+text colour, display) comes from Bootstrap. Do not invent further `bt-*` utility
+classes — reference the token directly in SCSS instead.
+
+**Alert modifiers** (on top of Bootstrap `.alert` and `.alert-*` variants) ⚠️ TBD — `--seamless-inbox` and `--dashed` may not survive review
+```
+alert--sm               alert--seamless-inbox   alert--dashed
+```
+`alert--seamless-inbox` is a borderless flat alert used inside the researcher
+inbox; `alert--dashed` swaps the solid border for a 2px dashed one.
+
+**Form variants** ⚠️ TBD — may not survive review
+```
+form-control-search
+```
+Pill-shaped search input with an inset magnifier glyph. Use on standalone
+search fields outside of `bt-toolbar` and outside of `input-group--hero`.
+
+**Dark-surface button variant** ⚠️ TBD — may not survive review
+```
+btn-outline-white
+```
+Exists alongside the Bootstrap-aligned outline variants. Use only on dark
+backgrounds (hero overlays, dark surface sections). All other `btn-outline-*`
+use Booktower-token colours.
 
 ### Classes that no longer exist — do not use
 
