@@ -894,3 +894,9 @@ I produce code confidently regardless of whether I am correct. Confidence is not
 3. Does this icon name match `_icon-font.scss`?
 4. Does this HTMX pattern account for the empty, error, and loading states?
 5. Does this template carry the correct `data-surface`?
+
+Default to the dumbest version that works. Don't extract a helper for a single call site. Don't add a comment that restates what the code does. Don't add aria-describedby when sequential reading order suffices. Don't introduce a variable to avoid duplicating two lines. If you find yourself thinking "this might be useful later," stop — write the current case only. For example: write plain html instead of a stub.
+
+Justify, don't defend. For example: "Why does trustPillar exist?" is a better question than "is trustPillar necessary?" The first one forces you to name the reason out loud, so you can hear that it's weak. Read your own output skeptically.
+
+Don't extract a helper for a single call site. Don't introduce a variable to avoid duplicating two lines. Prefer the dumb version when it's legible.
