@@ -463,6 +463,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--bt-gray-300) transparent;
 }
 
 body {
@@ -2069,14 +2071,8 @@ img.bt-navbar__logo {
 /* Strip Bootstrap card box chrome -- list items use border-bottom only */
 .bt-work-card.card {
   background: transparent;
-  border: none;
-  border-bottom: var(--bt-border);
   border-radius: 0;
   box-shadow: none;
-}
-
-.bt-work-card.card:first-of-type {
-  border-top: var(--bt-border);
 }
 
 .bt-work-card .card-header {
@@ -2419,10 +2415,10 @@ img.bt-navbar__logo {
 
 /* ── 2. u-layout--app ────────────────────────────────────────────────────────── */
 .u-layout--app {
-  --u-main-head-pad-x: var(--bt-sp-12);
-  --u-main-head-pad-y: var(--bt-sp-6);
-  --u-main-pad-x: var(--bt-sp-12);
-  --u-main-pad-y: var(--bt-sp-8);
+  --u-main-head-pad-x: var(--bt-sp-6);
+  --u-main-head-pad-y: var(--bt-sp-4);
+  --u-main-pad-x: var(--bt-sp-6);
+  --u-main-pad-y: var(--bt-sp-4);
   --u-main-panel-width: 21rem;
   --u-main-split-sidebar-width: 15.625rem;
   display: grid;
@@ -2431,7 +2427,7 @@ img.bt-navbar__logo {
   grid-template-areas: "navbar  navbar navbar" "sidebar main   panel";
   height: 100vh;
   overflow: hidden;
-  background: var(--bt-bg-white);
+  background: var(--bt-white);
 }
 
 .u-layout--app > .bt-navbar {
@@ -2461,7 +2457,7 @@ img.bt-navbar__logo {
   max-width: min(24rem, 100vw);
   overflow-y: auto;
   border-left: var(--bt-border);
-  background: var(--bt-bg-white);
+  background: var(--bt-white);
 }
 
 /* ── Main area blocks (semantic naming, no utilities needed) ──────────────────── */
@@ -2472,7 +2468,7 @@ img.bt-navbar__logo {
   overflow-x: hidden;
   border-bottom: var(--bt-border);
   padding: var(--u-main-head-pad-y) var(--u-main-head-pad-x);
-  background: var(--bt-bg-white);
+  background: var(--bt-white);
   overflow: visible;
 }
 
@@ -2535,7 +2531,6 @@ img.bt-navbar__logo {
 
 .u-main__content-header {
   min-width: 0;
-  background: var(--bt-bg-white);
   border-bottom: var(--bt-border);
   padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
@@ -2550,7 +2545,7 @@ img.bt-navbar__logo {
 
 .u-main__content-footer {
   min-width: 0;
-  background: var(--bt-bg-white);
+  background: var(--bt-white);
   border-top: var(--bt-border);
   padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
