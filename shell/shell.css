@@ -22,13 +22,8 @@ body {
 .bt-shell {
   display: grid;
   grid-template-columns: var(--bt-nav-width) 1fr;
-  /* No min-height/height/overflow here — the viewport scrolls the document.
-     The shell exists to give templates a sidebar, NOT to control their scroll
-     behavior. A template inside the shell renders identically to the same
-     template standalone: position:sticky on .bt-navbar resolves against the
-     viewport, not against a fake inner scroll container. */
+  min-height: 100vh;
   transition: grid-template-columns var(--bt-dur-base) var(--bt-ease);
-  align-items: start;
 }
 
 .bt-shell.prototype-mode {
@@ -50,10 +45,7 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
-  /* Outer container doesn't scroll — .bt-nav-body below is the scrollable
-     inner region for long nav lists. Keeping the outer non-scrolling lets
-     the sticky header and footer (.bt-nav-header / .bt-nav-footer) stay
-     anchored while only the middle scrolls. */
+  overflow-y: auto;
   background: var(--bt-gray-900);
   color: var(--bt-white);
   display: flex;
@@ -340,21 +332,20 @@ body {
 
 /* ─── Content area ───────────────────────────────────────────────────────────── */
 .bt-content {
-  /* Passthrough cell. Does NOT create a scroll container, does NOT set
-     a height, does NOT switch behavior by data-surface. The template
-     inside scrolls with the viewport — exactly as if rendered standalone.
-     Anything that styles the template's flow from here is leakage.
-
-     Only allowed properties: ones that affect the cell itself.
-       outline:none      — tabindex=-1 skip-link target
-       background        — fallback colour behind templates that don't paint
-                           their own background
-       min-width:0       — grid cell hygiene; without it, a wide child (e.g.
-                           a horizontally scrolling code block) can force the
-                           1fr column to overflow rather than constrain. */
-  outline: none;
+  min-height: 100vh;
+  overflow-x: hidden;
+  outline: none; /* tabindex=-1, focus for skip links */
   background: var(--bt-white);
-  min-width: 0;
+}
+
+body[data-surface=backoffice] .bt-content {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+body[data-surface=public] .bt-content {
+  height: auto;
+  overflow-y: visible;
 }
 
 /* ─── Design system page chrome (inside bt-content) ─────────────────────────── */
