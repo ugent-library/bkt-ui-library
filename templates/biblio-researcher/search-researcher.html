@@ -212,10 +212,10 @@
         <div id="results-list" class="u-main__content-body">
           <span id="search-indicator" class="htmx-indicator text-muted small px-4 py-3 d-block" aria-live="polite">Searching…</span>
 
-          <!-- Card view — researcher: no Review button, no tier, Edit is primary -->
-          <div id="view-cards">
+          <!-- Backoffice work cards: titles are <p>, not headings. See ASSISTANT.md → "Work card". -->
+          <ol class="list-unstyled mb-0" id="view-cards">
 
-            <article class="card bt-work-card" aria-labelledby="r-card-title-01">
+            <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="r-card-title-01">
               <div class="card-header bt-work-card__head">
                 <div class="bt-meta-list pt-1">
                   <span class="badge bg-success">Published</span>
@@ -230,19 +230,19 @@
                 </div>
               </div>
               <div class="card-body bt-work-card__body">
-                <h2 id="r-card-title-01" class="bt-work-card__title">
+                <p id="r-card-title-01" class="bt-work-card__title">
                   <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
-                </h2>
+                </p>
                 <p class="bt-work-card__authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
                 <p class="bt-work-card__pub">
-                  <span>2025</span>
-                  <span class="text-muted mx-1">·</span>
+                  <time datetime="2025">2025</time>
+                  <span class="text-muted mx-1" aria-hidden="true">·</span>
                   <a href="#">Physical Review B</a>
                 </p>
               </div>
-            </article>
+            </article></li>
 
-            <article class="card bt-work-card" aria-labelledby="r-card-title-02">
+            <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="r-card-title-02">
               <div class="card-header bt-work-card__head">
                 <div class="bt-meta-list pt-1">
                   <span class="badge bg-info">Submitted</span>
@@ -257,19 +257,19 @@
                 </div>
               </div>
               <div class="card-body bt-work-card__body">
-                <h2 id="r-card-title-02" class="bt-work-card__title">
+                <p id="r-card-title-02" class="bt-work-card__title">
                   <a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
-                </h2>
+                </p>
                 <p class="bt-work-card__authors">Hendrickx, E., Verhasselt, A.</p>
                 <p class="bt-work-card__pub">
-                  <span>2025</span>
-                  <span class="text-muted mx-1">·</span>
+                  <time datetime="2025">2025</time>
+                  <span class="text-muted mx-1" aria-hidden="true">·</span>
                   <a href="#">Nature Computational Science</a>
                 </p>
               </div>
-            </article>
+            </article></li>
 
-            <article class="card bt-work-card" aria-labelledby="r-card-title-03">
+            <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="r-card-title-03">
               <div class="card-header bt-work-card__head">
                 <div class="bt-meta-list pt-1">
                   <span class="badge bg-warning text-dark">Draft</span>
@@ -287,15 +287,15 @@
                 </div>
               </div>
               <div class="card-body bt-work-card__body">
-                <h2 id="r-card-title-03" class="bt-work-card__title">
+                <p id="r-card-title-03" class="bt-work-card__title">
                   <a href="#">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
-                </h2>
+                </p>
                 <p class="bt-work-card__authors">Goossens, C., Termonia, P.</p>
-                <p class="bt-work-card__pub"><span>2025</span></p>
+                <p class="bt-work-card__pub"><time datetime="2025">2025</time></p>
               </div>
-            </article>
+            </article></li>
 
-          </div><!-- /view-cards -->
+          </ol><!-- /view-cards -->
 
           <div id="view-table" hidden>
             <table class="table table-hover align-middle" aria-label="My research output">

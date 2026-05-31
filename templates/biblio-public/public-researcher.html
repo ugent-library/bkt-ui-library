@@ -48,15 +48,15 @@
           <div class="row g-4 align-items-start">
 
             <!-- Avatar + identity -->
-            <div class="col-auto">
-              <div class="bt-avatar bt-avatar--large" aria-hidden="true">KD</div>
-            </div>
+            <!-- <div class="col-auto">
+              <div class="bt-avatar bt-avatar--large bt-avatar--dark" aria-hidden="true">KD</div>
+            </div> -->
 
             <div class="col">
-              <h1 id="person-name" class="mb-1">Karen De Pauw</h1>
+              <h1 id="person-name" class="mb-3">Karen De Pauw</h1>
 
               <!-- Affiliation -->
-              <p class="lead text-muted mb-3">
+              <p class="mb-1">
                 Associate Professor ·
                 <a href="/organisations/faculty-bioscience-engineering">Faculty of Bioscience Engineering</a> ·
                 <a href="/organisations/dept-environment">Department of Environment</a>
@@ -74,7 +74,7 @@
                   </a>
                 </li>
                 <li>
-                  <span class="text-muted">UGent ID:</span>
+                  <span>UGent ID:</span>
                   <span>802001234567</span>
                 </li>
               </ul>
@@ -97,20 +97,11 @@
             </div>
 
             <!-- Actions -->
-            <div class="col-auto d-flex flex-column gap-2 align-items-end">
-              <button type="button" class="btn btn-secondary btn-sm"
-                hx-post="/lists/add-person"
-                hx-vals='{"id":"01K9XTVXD41Z"}'
-                hx-swap="none"
-                hx-indicator="#list-indicator">
-                <i class="if if-list-check" aria-hidden="true"></i>
-                Follow
-                <span id="list-indicator" class="htmx-indicator ms-1" aria-live="polite">Saving…</span>
-              </button>
-              <a href="#" class="btn btn-ghost btn-sm">
+            <div class="col justify-content-end d-flex gap-2">
+              <button href="#" class="btn btn-secondary btn-sm">
                 <i class="if if-download" aria-hidden="true"></i>
                 Export publications
-              </a>
+              </button>
             </div>
 
           </div>
@@ -121,16 +112,17 @@
     <!-- Main content -->
     <div class="u-main__body">
     <div class="container py-5">
-      <div class="row g-5">
+      <div class="row g-5 justify-content-between">
 
         <!-- Left: publications list -->
-        <div class="col-lg-8">
+        <div class="col-lg-7">
 
           <section aria-labelledby="publications-heading">
             <div class="bt-toolbar mb-3">
               <div class="bt-toolbar__left">
-                <h2 id="publications-heading" class="h4 mb-0">Research output</h2>
-                <span class="text-muted" aria-live="polite" id="pub-result-count">147 works</span>
+                <div class="bt-toolbar__item">
+                  <h2 id="publications-heading" class="h4">Research output <small class="fw-light" aria-live="polite" id="pub-result-count">&mdash; 147 works</small></h2>
+                </div>
               </div>
               <div class="bt-toolbar__right">
                 <div class="bt-toolbar__item">
@@ -155,44 +147,45 @@
               <div class="my-5">
                 <h3 class="h6 text-uppercase text-muted pb-2 mb-3">2026</h3>
 
-                <article class="card bt-work-card" aria-labelledby="card-title-kd-01">
-                  <div class="card-header bt-work-card__head">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
+                <div class="list-group list-group-flush">
+                  <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-kd-01">
+                    <div class="card-header bt-work-card__head">
+                      <div class="bt-meta-list pt-1">
+                        <span class="badge bg-success">Open access</span>
+                        <span class="bt-meta-list__item-bordered">Journal article</span>
+                      </div>
+                      <div class="bt-btn-toolbar">
+                        <a href="/research/01K9XTVXD41Z" class="btn btn-ghost btn-sm"
+                          aria-label="View: Urban forests as essential infrastructure">
+                          <i class="if if-eye" aria-hidden="true"></i> View
+                        </a>
+                      </div>
                     </div>
-                    <div class="bt-btn-toolbar">
-                      <a href="/research/01K9XTVXD41Z" class="btn btn-ghost btn-sm"
-                        aria-label="View: Urban forests as essential infrastructure">
-                        <i class="if if-eye" aria-hidden="true"></i> View
-                      </a>
+                    <div class="card-body bt-work-card__body">
+                      <h4 id="card-title-kd-01" class="bt-work-card__title">
+                        <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
+                      </h4>
+                      <p class="bt-work-card__authors">
+                        Esperon‑Rodriguez, M., Arndt, S., <strong>De Pauw, K.</strong>
+                        <span class="text-muted">et al.</span>
+                      </p>
+                      <p class="bt-work-card__pub">
+                        <time datetime="2026">2026</time>
+                        <span class="text-muted mx-1" aria-hidden="true">·</span>
+                        <a href="#">Plants People Planet</a>
+                        <span class="text-muted mx-1" aria-hidden="true">·</span>
+                        <span>8(1) · pp. 14–19</span>
+                      </p>
                     </div>
-                  </div>
-                  <div class="card-body bt-work-card__body">
-                    <h4 id="card-title-kd-01" class="bt-work-card__title">
-                      <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
-                    </h4>
-                    <p class="bt-work-card__authors">
-                      Esperon‑Rodriguez, M., Arndt, S., <strong>De Pauw, K.</strong>
-                      <span class="text-muted">et al.</span>
-                    </p>
-                    <p class="bt-work-card__pub">
-                      <span>2026</span>
-                      <span class="text-muted mx-1">·</span>
-                      <a href="#">Plants People Planet</a>
-                      <span class="text-muted mx-1">·</span>
-                      <span>8(1) · pp. 14–19</span>
-                    </p>
-                  </div>
-                </article>
-
+                  </article>
+                </div>
               </div>
 
               <!-- Year group: 2025 -->
               <div class="mb-5">
                 <h3 class="h6 text-uppercase text-muted pb-2 mb-3">2025</h3>
 
-                <article class="card bt-work-card" aria-labelledby="card-title-kd-02">
+                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-kd-02">
                   <div class="card-header bt-work-card__head">
                     <div class="bt-meta-list pt-1">
                       <span class="badge bg-success">Open access</span>
@@ -213,16 +206,16 @@
                       <strong>De Pauw, K.</strong>, Vanderhaegen, S.
                     </p>
                     <p class="bt-work-card__pub">
-                      <span>2025</span>
-                      <span class="text-muted mx-1">·</span>
+                      <time datetime="2025">2025</time>
+                      <span class="text-muted mx-1" aria-hidden="true">·</span>
                       <a href="#">Urban Forestry &amp; Urban Greening</a>
-                      <span class="text-muted mx-1">·</span>
+                      <span class="text-muted mx-1" aria-hidden="true">·</span>
                       <span>89 · p.128421</span>
                     </p>
                   </div>
                 </article>
 
-                <article class="card bt-work-card" aria-labelledby="card-title-kd-03">
+                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-kd-03">
                   <div class="card-header bt-work-card__head">
                     <div class="bt-meta-list pt-1">
                       <span class="bt-meta-list__item-bordered">Dataset</span>
@@ -243,8 +236,8 @@
                       <strong>De Pauw, K.</strong>, Maes, J.
                     </p>
                     <p class="bt-work-card__pub">
-                      <span>2025</span>
-                      <span class="text-muted mx-1">·</span>
+                      <time datetime="2025">2025</time>
+                      <span class="text-muted mx-1" aria-hidden="true">·</span>
                       <a href="#">Zenodo</a>
                     </p>
                   </div>

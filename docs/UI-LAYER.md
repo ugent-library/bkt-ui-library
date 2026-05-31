@@ -140,6 +140,8 @@ The most critical rules for Go templ work:
 - Every `<nav>` has a distinct `aria-label`
 - Icon-only buttons: `aria-label` on the `<button>`, `aria-hidden="true"` on the `<i>`
 - Row action buttons must include the record name in their label
+- Work card titles: `<h2>` on public surface, `<p class="bt-work-card__title">` on backoffice. Both get `aria-labelledby` from the surrounding `<article>` pointing at the title `id`.
+- Result lists are `<ol>` with `<li><article>` children, not a `<section>` wrapper.
 - Every `<input>` has an associated `<label for>` — `placeholder` is not a label
 - `aria-current="page"` on the active nav link
 

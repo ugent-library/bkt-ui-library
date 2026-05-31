@@ -329,7 +329,7 @@ function renderBackofficeResultsRows() {
 
 function renderSearchResultCards() {
   return `
-<article class="card bt-work-card" aria-labelledby="search-result-1">
+<article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="search-result-1">
   <div class="card-header bt-work-card__head">
     <div class="bt-meta-list pt-1">
       <span class="badge bg-success">Open access</span>
@@ -355,7 +355,7 @@ function renderSearchResultCards() {
     <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Plants People Planet</a></p>
   </div>
 </article>
-<article class="card bt-work-card" aria-labelledby="search-result-2">
+<article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="search-result-2">
   <div class="card-header bt-work-card__head">
     <div class="bt-meta-list pt-1">
       <span class="bt-meta-list__item-bordered">Dataset</span>

@@ -338,13 +338,20 @@ selectAll.setAttribute('aria-label', 'Some records selected — click to select 
 
 The public site is read by researchers, students, and automated agents (crawlers, citation managers, accessibility overlays). Semantic correctness here is both an accessibility and an interoperability concern.
 
-**H1. Research output cards are `<article>` elements.** Give each an accessible name via `aria-labelledby` pointing to its `card-title` heading. When dynamic IDs are impractical, `aria-label` with the title string is acceptable.
+**H1. Research output cards are `<article>` elements.** On the **public surface**, the title is an `<h2>` — each card is a self-contained document fragment (it gets indexed, cited, shared). On the **backoffice surface**, the title is a `<p class="bt-work-card__title">` — the page is a list of records, not a stack of mini-documents, and 12–100 `<h2>`s under one `<h1>` mis-describes the page structure. Both variants get an accessible name via `aria-labelledby` pointing at the title's `id` (this works on any element with an id, not just headings). The backoffice list-item navigation (NVDA `I`, JAWS list mode) replaces heading-jump as the way to traverse records.
 
 ```html
-<!-- ✓ Preferred -->
+<!-- ✓ Public surface -->
 <article aria-labelledby="card-title-01k9">
-  <h2 id="card-title-01k9" class="card-title"><a href="…">Urban forests…</a></h2>
+  <h2 id="card-title-01k9" class="bt-work-card__title"><a href="…">Urban forests…</a></h2>
 </article>
+
+<!-- ✓ Backoffice surface -->
+<li>
+  <article aria-labelledby="card-title-01k9">
+    <p id="card-title-01k9" class="bt-work-card__title"><a href="…">Urban forests…</a></p>
+  </article>
+</li>
 ```
 
 **H2. Detail page sections use `<section aria-labelledby="…">`.** The heading `id` must exactly match the `aria-labelledby` value. This lets screen reader users navigate by region.
@@ -534,6 +541,10 @@ bt-meta-list            bt-meta-list__item      bt-meta-list__item-bordered
 Note: `bt-work-card` uses Bootstrap's `.card` as the structural base. Internal regions
 use Bootstrap's own `.card-header`, `.card-body`, and `.card-footer` — not BEM elements.
 `bt-work-card--researcher` and `bt-work-card__head`/`__body`/`__foot` do NOT exist in SCSS.
+
+**Title element — surface-dependent.** On `data-surface="public"` the title is `<h2 class="bt-work-card__title">`; on `data-surface="backoffice"` it is `<p class="bt-work-card__title">`. See rule H1 above. The class is purely visual styling — SCSS does not require any specific tag.
+
+**List wrapper.** Cards rendered as a list of results belong inside `<ol class="list-group list-group-flush list-unstyled mb-0">` with each card wrapped in `<li>`. A plain `<section>` wrapper is wrong: it is an unlabelled landmark and AT cannot announce a count.
 
 **Facets sidebar**
 Use Bootstrap structure directly: `fieldset`, `legend`, `form-check`, `form-check-input`, `form-check-label`, spacing utilities, and Collapse where needed.

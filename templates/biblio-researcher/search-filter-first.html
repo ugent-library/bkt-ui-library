@@ -39,9 +39,9 @@
           </h1>
             <p class="text-muted">
               <span class="small">Scope: Faculty of Sciences, Faculty of Engineering, Datasets, Dissertations</span>
-              <a class="text-decoration-none">
+              <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Edit scope">
                 <i class="if if-edit text-muted" aria-hidden="true"></i>
-              </a>
+              </button>
             </p>
           </div>
         </div>
@@ -126,101 +126,108 @@
             <!-- Card view -->
             <div id="view-cards" class="p-4">
 
-              <section class="card rounded-3 list-group list-group-flush">
+              <ol class="card rounded-3 list-group list-group-flush list-unstyled mb-0">
 
-                <article class="card px-4 py-2 bt-work-card list-group-item" aria-labelledby="card-title-ff01">
-                  <div class="card-header bt-work-card__head">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge bg-info">Submitted</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
-                      <span class="bt-meta-list__item-bordered">Restricted access</span>
+                <!-- Backoffice work card: title is <p>, not a heading. See ASSISTANT.md → "Work card". -->
+                <li class="list-group-item">
+                  <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-ff01">
+                    <div class="card-header bt-work-card__head">
+                      <div class="bt-meta-list pt-1">
+                        <span class="badge bg-info">Submitted</span>
+                        <span class="bt-meta-list__item-bordered">Journal article</span>
+                        <span class="bt-meta-list__item-bordered">Restricted access</span>
+                      </div>
+                      <div class="bt-btn-toolbar">
+                        <a href="#" class="btn btn-primary btn-sm"
+                          aria-label="Review: Entanglement entropy in quantum spin chains">
+                          <i class="if if-check if--sm" aria-hidden="true"></i> Review
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-sm"
+                          aria-label="Edit: Entanglement entropy in quantum spin chains">
+                          <i class="if if-edit" aria-hidden="true"></i> Edit
+                        </a>
+                      </div>
                     </div>
-                    <div class="bt-btn-toolbar">
-                      <a href="#" class="btn btn-primary btn-sm"
-                        aria-label="Review: Entanglement entropy in quantum spin chains">
-                        <i class="if if-check if--sm" aria-hidden="true"></i> Review
-                      </a>
-                      <a href="#" class="btn btn-ghost btn-sm"
-                        aria-label="Edit: Entanglement entropy in quantum spin chains">
-                        <i class="if if-edit" aria-hidden="true"></i> Edit
-                      </a>
+                    <div class="card-body bt-work-card__body">
+                      <p id="card-title-ff01" class="bt-work-card__title">
+                        <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
+                      </p>
+                      <p class="bt-work-card__authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
+                      <p class="bt-work-card__pub">
+                        <time datetime="2025">2025</time>
+                        <span class="text-muted mx-1" aria-hidden="true">·</span>
+                        <a href="#">Physical Review B</a>
+                      </p>
                     </div>
-                  </div>
-                  <div class="card-body bt-work-card__body">
-                    <h2 id="card-title-ff01" class="bt-work-card__title">
-                      <a href="#">Entanglement entropy in quantum spin chains with long-range interactions</a>
-                    </h2>
-                    <p class="bt-work-card__authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
-                    <p class="bt-work-card__pub">
-                      <span>2025</span>
-                      <span class="text-muted mx-1">·</span>
-                      <a href="#">Physical Review B</a>
-                    </p>
-                  </div>
-                </article>
+                  </article>
+                </li>
 
-                <article class="card px-4 py-2 bt-work-card list-group-item" aria-labelledby="card-title-ff02">
-                  <div class="card-header bt-work-card__head">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge bg-info">Submitted</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
-                      <span class="bt-meta-list__item-bordered">Open access</span>
+                <li class="list-group-item">
+                  <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-ff02">
+                    <div class="card-header bt-work-card__head">
+                      <div class="bt-meta-list pt-1">
+                        <span class="badge bg-info">Submitted</span>
+                        <span class="bt-meta-list__item-bordered">Journal article</span>
+                        <span class="bt-meta-list__item-bordered">Open access</span>
+                      </div>
+                      <div class="bt-btn-toolbar">
+                        <a href="#" class="btn btn-primary btn-sm"
+                          aria-label="Review: Machine learning approaches to protein folding">
+                          <i class="if if-check if--sm" aria-hidden="true"></i> Review
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-sm"
+                          aria-label="Edit: Machine learning approaches to protein folding">
+                          <i class="if if-edit" aria-hidden="true"></i> Edit
+                        </a>
+                      </div>
                     </div>
-                    <div class="bt-btn-toolbar">
-                      <a href="#" class="btn btn-primary btn-sm"
-                        aria-label="Review: Machine learning approaches to protein folding">
-                        <i class="if if-check if--sm" aria-hidden="true"></i> Review
-                      </a>
-                      <a href="#" class="btn btn-ghost btn-sm"
-                        aria-label="Edit: Machine learning approaches to protein folding">
-                        <i class="if if-edit" aria-hidden="true"></i> Edit
-                      </a>
+                    <div class="card-body bt-work-card__body">
+                      <p id="card-title-ff02" class="bt-work-card__title">
+                        <a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
+                      </p>
+                      <p class="bt-work-card__authors">Hendrickx, E., Verhasselt, A.</p>
+                      <p class="bt-work-card__pub">
+                        <time datetime="2025">2025</time>
+                        <span class="text-muted mx-1" aria-hidden="true">·</span>
+                        <a href="#">Nature Computational Science</a>
+                      </p>
                     </div>
-                  </div>
-                  <div class="card-body bt-work-card__body">
-                    <h2 id="card-title-ff02" class="bt-work-card__title">
-                      <a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
-                    </h2>
-                    <p class="bt-work-card__authors">Hendrickx, E., Verhasselt, A.</p>
-                    <p class="bt-work-card__pub">
-                      <span>2025</span>
-                      <span class="text-muted mx-1">·</span>
-                      <a href="#">Nature Computational Science</a>
-                    </p>
-                  </div>
-                </article>
+                  </article>
+                </li>
 
-                <article class="card px-4 py-2 bt-work-card list-group-item" aria-labelledby="card-title-ff03">
-                  <div class="card-header bt-work-card__head">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge bg-info">Submitted</span>
-                      <span class="bt-meta-list__item-bordered">Dataset</span>
-                      <span class="bt-meta-list__item-bordered">Restricted access</span>
+                <li class="list-group-item">
+                  <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-ff03">
+                    <div class="card-header bt-work-card__head">
+                      <div class="bt-meta-list pt-1">
+                        <span class="badge bg-info">Submitted</span>
+                        <span class="bt-meta-list__item-bordered">Dataset</span>
+                        <span class="bt-meta-list__item-bordered">Restricted access</span>
+                      </div>
+                      <div class="bt-btn-toolbar">
+                        <a href="#" class="btn btn-primary btn-sm"
+                          aria-label="Review: Climate forcing data over Belgium 1950–2023">
+                          <i class="if if-check if--sm" aria-hidden="true"></i> Review
+                        </a>
+                        <a href="#" class="btn btn-ghost btn-sm"
+                          aria-label="Edit: Climate forcing data over Belgium 1950–2023">
+                          <i class="if if-edit" aria-hidden="true"></i> Edit
+                        </a>
+                      </div>
                     </div>
-                    <div class="bt-btn-toolbar">
-                      <a href="#" class="btn btn-primary btn-sm"
-                        aria-label="Review: Climate forcing data over Belgium 1950–2023">
-                        <i class="if if-check if--sm" aria-hidden="true"></i> Review
-                      </a>
-                      <a href="#" class="btn btn-ghost btn-sm"
-                        aria-label="Edit: Climate forcing data over Belgium 1950–2023">
-                        <i class="if if-edit" aria-hidden="true"></i> Edit
-                      </a>
+                    <div class="card-body bt-work-card__body">
+                      <p id="card-title-ff03" class="bt-work-card__title">
+                        <a href="#">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
+                      </p>
+                      <p class="bt-work-card__authors">Goossens, C., Termonia, P.</p>
+                      <p class="bt-work-card__pub">
+                        <time datetime="2025">2025</time>
+                        <span class="text-muted mx-1" aria-hidden="true">·</span>
+                        <a href="#">Zenodo</a>
+                      </p>
                     </div>
-                  </div>
-                  <div class="card-body bt-work-card__body">
-                    <h2 id="card-title-ff03" class="bt-work-card__title">
-                      <a href="#">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
-                    </h2>
-                    <p class="bt-work-card__authors">Goossens, C., Termonia, P.</p>
-                    <p class="bt-work-card__pub">
-                      <span>2025</span>
-                      <span class="text-muted mx-1">·</span>
-                      <a href="#">Zenodo</a>
-                    </p>
-                  </div>
-                </article>
-              </section>
+                  </article>
+                </li>
+              </ol>
             </div><!-- /view-cards -->
 
             <!-- Table view (hidden by default) -->
