@@ -132,6 +132,8 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Prototype-only:** no
 
+**TBD — persist collapsed state.** The toggle currently resets on every page load. In a server-rendered multi-page app that means the sidebar re-expands on every navigation, which is wrong for the users who prefer it folded in most of the time. The collapsed state must be remembered across page loads — and ideally read server-side (e.g. a cookie) so the first paint already renders collapsed, with no expand-then-collapse flash. Decide the mechanism (localStorage vs server-read cookie) before wiring this into a real deployment. Not yet implemented.
+
 ---
 
 ### `people-search-stub.js` (prototype only)

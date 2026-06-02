@@ -209,6 +209,12 @@ Minimal split example:
 </div>
 ```
 
+#### `u-main__panel` is a shell-level cell, not a page region
+
+`u-main__panel` is a sibling of `<main>` (see its position in the split example above), so it belongs to whatever owns the shell. If a consuming app funnels all pages through one shared `<main>`, a page can't render into the panel — it's reserved for cross-cutting shell chrome. A page-level side pane (e.g. a contextual/notes aside) instead goes inside `u-main__content-body` as a two-pane layout.
+
+**Under-specified — revisit before the first real occupant:** decide whether `u-main__panel` is shell-only, or whether the shell contract should grow a sanctioned way for a page to contribute panel content. Until then, treat it as shell-level only.
+
 Minimal single-column app example:
 
 ```html
