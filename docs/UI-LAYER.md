@@ -165,6 +165,34 @@ When a style is missing from the system, flag it and add it to the correct SCSS 
 
 ---
 
+## Z-index scale
+
+Stacking order is tokenised in `foundation/_tokens.scss`. Reference a token; never
+write a bare `z-index` in component code, so every collision is visible in one
+place. The tiers align to Bootstrap's own z-index values (booktower is
+Bootstrap-based) so booktower overlays interleave predictably with Bootstrap
+components (dropdown 1000, sticky 1020, fixed 1030, modal 1055, popover 1070,
+tooltip 1080).
+
+| Token | Value | Used for |
+|-------|-------|----------|
+| `--bt-z-panel` | 1000 | Floating panels: suggest panel, token suggestions |
+| `--bt-z-sticky` | 1020 | Sticky chrome: app navbar, sticky headers |
+| `--bt-z-overlay` | 1080 | Notifications / toasts — sits above modal (1055) |
+| `--bt-z-skip-link` | 1090 | Must beat everything to stay reachable |
+
+**Exception — local stacking stays local.** Small `z-index` values *inside* a
+component that establishes its own stacking context (e.g. `.bt-hero` with
+`isolation: isolate`, where the background sits at `0` and content at `1`) do
+not participate in the global order and stay as bare numbers. Only values that
+compete in the page-level stacking order use a token.
+
+A consumer adding its own overlay above the shell (e.g. a notification tray)
+references the matching tier — `--bt-z-overlay` — rather than guessing a number
+that happens to clear the navbar.
+
+---
+
 ## Distributing updates
 
 After SCSS changes in `booktower-ui-library`:
