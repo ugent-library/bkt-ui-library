@@ -186,6 +186,21 @@
 }
 
 
+/* ── u-notifications ──────────────────────────────────────────────────────────── */
+/* Fixed top-right overlay stack. Structure only — contents bring their own
+   styling and dismissal. Owns the overlay z-tier so consumers never set it. */
+.u-notifications {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: var(--bt-z-overlay);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-2);
+  padding: var(--bt-sp-3);
+}
+
+
 /* ── bt-sidebar ───────────────────────────────────────────────────────────────── */
 
 .bt-sidebar {

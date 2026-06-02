@@ -641,6 +641,15 @@ u-main__footer
 u-main__panel
 ```
 
+**Overlay regions (body-level, outside the shell grid)**
+```
+u-notifications
+```
+Fixed top-right stack for transient notifications. Structural only — it positions,
+stacks, and z-indexes (`--bt-z-overlay`) whatever fragments land in it; the
+contents (e.g. `.alert`) bring their own styling and dismissal. The consumer never
+sets `z-index`.
+
 **App nav sidebar**
 ```
 bt-sidebar              bt-sidebar--bordered    bt-sidebar--slim    bt-sidebar--flush
@@ -856,10 +865,22 @@ Two CSS grid shells live in `patterns/_layouts.scss`. Both use `--s-topbar-heigh
 | Prefix | Meaning | Examples |
 |--------|---------|----------|
 | `bt-` | Bootstrap Custom — extends/wraps Bootstrap | `bt-navbar`, `bt-toolbar`, `bt-avatar`, `bt-btn-check__group`  |
-| `bt-` | Component — no Bootstrap base | `bt-blank-slate`|
-| `u-` | Utility — single-purpose helpers and layout shells | `u-layout--app`, `u-layout--public` |
+| `bt-` | Component — a styled widget, no Bootstrap base | `bt-blank-slate`, `bt-work-card` |
+| `u-` | Layout — structural regions and layout shells, not visual styling | `u-layout--app`, `u-main__panel`, `u-notifications` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.
+
+`u-` is the layout prefix: a `u-` class positions or structures a region of the
+page (shell, grid cell, fixed overlay region) and carries no visual personality
+of its own — the contents bring that. `bt-` is for styled things (widgets that
+wrap Bootstrap, or standalone components). The split is structure vs. styling,
+not custom vs. Bootstrap.
+
+Known inconsistency: the single-purpose utilities (`bt-bg`, `bt-bg-alt`,
+`bt-bg-dark`, `bt-bg-white`, `bt-border`) carry `bt-`, not `u-`. They predate
+this rule. Do not re-prefix them ad hoc — that is a separate, deliberate cleanup
+pass. Until then, treat the existing `bt-*` utility names as ground truth and do
+not invent new ones (reference the token directly in SCSS instead).
 
 Bootstrap utilities (`d-flex`, `gap-3`, `text-muted`, `mb-4`) are used directly without wrapping.
 
