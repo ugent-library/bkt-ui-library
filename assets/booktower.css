@@ -2572,6 +2572,22 @@ img.bt-navbar__logo {
   padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
 
+/* ── u-notifications ──────────────────────────────────────────────────────────── */
+/* Fixed top-right overlay stack. Structure only — contents bring their own
+   styling and dismissal. Owns the overlay z-tier so consumers never set it. */
+.u-notifications {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: var(--bt-z-overlay);
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-2);
+  padding: var(--bt-sp-3);
+  max-height: 100%;
+  overflow: auto;
+}
+
 /* ── bt-sidebar ───────────────────────────────────────────────────────────────── */
 .bt-sidebar {
   --u-nav-sidebar-width: 14rem;
