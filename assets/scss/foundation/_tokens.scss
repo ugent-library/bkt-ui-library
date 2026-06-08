@@ -114,16 +114,9 @@
 
   /* ── Z-index scale ────────────────────────────────────────────────── */
   /*
-    Single source of truth for stacking order. Booktower is Bootstrap-based, so
-    these align to Bootstrap's z-index tiers (dropdown 1000, sticky 1020,
-    fixed 1030, modal 1055, popover 1070, tooltip 1080) so booktower overlays
-    interleave predictably with Bootstrap components. If booktower ever drops
-    Bootstrap, re-base against whatever replaces those tiers.
-
-    Never write a bare z-index in component code — reference a token so every
-    collision is visible in one place. Exception: local stacking inside an
-    isolated component (e.g. .bt-hero with isolation:isolate) stays local —
-    those small values don't participate in the global order.
+    Stacking order, aligned to Bootstrap's tiers. Reference a token, never a bare
+    z-index. Local stacking inside an isolated component stays local.
+    See docs/UI-LAYER.md.
   */
   --bt-z-panel:     1000;  /* floating panels: suggest, token suggestions */
   --bt-z-sticky:    1020;  /* sticky chrome: app navbar, sticky headers    */
