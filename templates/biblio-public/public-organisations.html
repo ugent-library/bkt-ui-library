@@ -1,0 +1,819 @@
+<!-- @title: Organisations — Biblio UGent -->
+<!-- @surface: public -->
+<!--
+  Public organisation directory — institutional org tree (index, not detail).
+  Companion to public-researchers.html. The problem is the inverse of person
+  browse: hierarchical data, not flat. So NO A–Z bar and NO pagination.
+
+  SCOPE: trimmed PROTOTYPE slice. UGent carries 3 faculties (LW / WE / LA) with
+  their real departments; all 9 partner institutions are shown as root cards.
+  The live directory has 13 faculties / 179 departments / 9 partners.
+
+  LAYOUT: each root is a Bootstrap .card in a list-group. The card-header is the
+  root row; the card-body holds children. UGent's faculties each render a
+  faculty row (large faculty avatar + bg-faculty-<code> + SVG glyph, code chip
+  in bg-faculty-<code>-light) followed by their departments under
+  ms-5 ps-5 border-start (the vertical connector). Every row splits col-7
+  (marker + name + identifiers) / col-5 pe-4 (stats as row row-cols-4,
+  right-aligned; pe-4 keeps the last cell clear of the card edge).
+
+  DATA: faculty + department names, codes and research-output counts are REAL
+  (biblio.ugent.be/organization). Partner roots: UZ Gent, VIB and Global Campus
+  Korea (+ its KR01 dept) carry real counts; HOGENT, HOWEST, Artevelde, Imec,
+  iMinds and Flanders Make use PLACEHOLDER research-output counts (real totals
+  not captured) — see the prototype-stats note below. Hierarchy derives from the
+  org code prefix: UGent -> faculty (2-letter) -> department (LW01...).
+
+  Deliberately NOT role="tree": expand-all document outline, read more than
+  operated; a tree widget's roving-tabindex would fight a page of links.
+
+  ORG TYPE (prototype): each ROOT carries a muted type label beside its name.
+  This mocks Raven's DEFERRED custom_organization_types -- Raven's live catalog
+  is only faculty/department/research_group (raven design doc, Open questions),
+  so university / university_hospital / university_college / research_center /
+  branch_campus do NOT exist in the backend yet. Root tier only: faculty and
+  department levels are conveyed by nesting, so no tag there. Partner types:
+  UZ Gent = university_hospital; HOGENT/HOWEST/Artevelde = university_college;
+  VIB/Imec/iMinds/Flanders Make = research_center; GUK = branch_campus.
+  UGent uses the if-ghent-university emblem; all other roots use if-building.
+
+  PROTOTYPE STATS: research-output count is real EXCEPT for the six partners
+  noted above. researchers / alumni / projects are NOT on the live page --
+  placeholder values scaled off the count. A stat that rounds to 0 is omitted
+  (graceful degradation) -- see Zoology Museum (WE63): research output +
+  researchers only. ROR is a placeholder (same fake id on every row). Wire real
+  per-unit sources before production (open Q1).
+
+  Partials:
+    @include: templates/partials/public-header.html
+    @include: templates/partials/public-footer.html
+-->
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+  <main id="main-content">
+
+    <!-- Header -->
+    <div class="u-main__header border-bottom pt-5 pb-5">
+      <div class="container">
+
+        <nav aria-label="Breadcrumb" class="mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Organisations</li>
+          </ol>
+        </nav>
+
+        <h1 class="mb-3">Organisations</h1>
+        <p class="lead mb-0 col-lg-7">
+          Browse the institutional tree: Ghent University and partner institutions,
+          their faculties and departments. Each unit links to its research output,
+          researchers and projects.
+        </p>
+
+      </div>
+    </div>
+
+    <!-- Body: org tree -->
+    <div class="u-main__body">
+      <div class="container py-5">
+
+        <ul class="list-group gap-3" aria-label="Organisation tree">
+          <li class="card" data-organisation-type="university">
+            <div class="card-header ps-4">
+              <div class="d-flex align-items-top gap-3">
+                <span class="bt-avatar bt-avatar--large bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
+                  <i class="if if-ghent-university if--lg text-white flex-shrink-0" aria-hidden="true"></i>
+                </span>
+                <div class="row py-3 align-items-center flex-grow-1">
+                  <div class="col-12 col-lg-4 col-xl-5 d-flex align-items-center gap-3">
+                    <div>
+                      <div class="d-flex flex-wrap align-items-baseline gap-2">
+                        <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-1 text-decoration-none">Ghent University</a>
+                        <span class="text-muted small">University</span>
+                      </div>
+                      <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Ghent University">
+                        <li><code>UGent</code></li>
+                        <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-8 col-xl-7 mt-2 pe-4 ps-3" aria-label="Activity for Ghent University">
+                    <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">381&thinsp;829</span> <span class="text-muted">works</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;942</span> <span class="text-muted">researchers</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">27&thinsp;274</span> <span class="text-muted">alumni</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;121</span> <span class="text-muted">projects</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0 pb-3">
+              <ul class="list-unstyled">
+                <li data-organisation-type="faculty">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bt-avatar--large bg-faculty-lw flex-shrink-0" aria-hidden="true">
+                        <img class="bt-avatar__img" src="/assets/images/faculty-lw.svg" alt="">
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Arts and Philosophy</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Faculty of Arts and Philosophy">
+                              <li><code class="bg-faculty-lw-light">LW</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Faculty of Arts and Philosophy">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">55&thinsp;720</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;013</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">3&thinsp;980</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">310</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul class="list-unstyled ms-5 ps-5 border-start mb-2">
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Philosophy and moral sciences</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Philosophy and moral sciences">
+                              <li><code class="bg-faculty-lw-light">LW01</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Philosophy and moral sciences">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;145</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">112</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">439</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">34</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of History</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of History">
+                              <li><code class="bg-faculty-lw-light">LW03</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of History">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8&thinsp;890</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">162</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">635</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">49</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Linguistics</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Linguistics">
+                              <li><code class="bg-faculty-lw-light">LW06</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Linguistics">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5&thinsp;038</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">92</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">360</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">28</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Languages and cultures</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Languages and cultures">
+                              <li><code class="bg-faculty-lw-light">LW21</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Languages and cultures">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;969</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">127</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">498</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">39</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <li data-organisation-type="faculty">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bt-avatar--large bg-faculty-we flex-shrink-0" aria-hidden="true">
+                        <img class="bt-avatar__img" src="/assets/images/faculty-we.svg" alt="">
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Sciences</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Faculty of Sciences">
+                              <li><code class="bg-faculty-we-light">WE</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Faculty of Sciences">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">65&thinsp;822</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;197</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">4&thinsp;702</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">366</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul class="list-unstyled ms-5 ps-5 border-start mb-2">
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Physics and astronomy</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Physics and astronomy">
+                              <li><code class="bg-faculty-we-light">WE05</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Physics and astronomy">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8&thinsp;703</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">158</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">622</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">48</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Biology</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Biology">
+                              <li><code class="bg-faculty-we-light">WE11</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Biology">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8&thinsp;722</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">159</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">623</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">48</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Chemistry</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Chemistry">
+                              <li><code class="bg-faculty-we-light">WE06</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Chemistry">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;130</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">39</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">152</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">12</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Geography</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Geography">
+                              <li><code class="bg-faculty-we-light">WE12</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Geography">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5&thinsp;433</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">99</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">388</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">30</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Zoology Museum</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Zoology Museum">
+                              <li><code class="bg-faculty-we-light">WE63</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Zoology Museum">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">3</span> <span class="text-muted">researchers</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+                <li data-organisation-type="faculty">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bt-avatar--large bg-faculty-la flex-shrink-0" aria-hidden="true">
+                        <img class="bt-avatar__img" src="/assets/images/faculty-bw.svg" alt="">
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Bioscience Engineering</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Faculty of Bioscience Engineering">
+                              <li><code class="bg-faculty-la-light">LA</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Faculty of Bioscience Engineering">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">37&thinsp;375</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">680</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;670</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">208</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul class="list-unstyled ms-5 ps-5 border-start mb-2">
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Environment</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Environment">
+                              <li><code class="bg-faculty-la-light">LA20</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Environment">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;311</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">42</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">165</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">13</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Plants and Crops</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Plants and Crops">
+                              <li><code class="bg-faculty-la-light">LA21</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Plants and Crops">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;743</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">32</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">124</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">10</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Green Chemistry and Technology</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Green Chemistry and Technology">
+                              <li><code class="bg-faculty-la-light">LA24</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Green Chemistry and Technology">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">3&thinsp;073</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">56</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">220</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">17</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                    <li data-organisation-type="department" class="pt-2 pb-3">
+                      <div class="row me-2">
+                        <div class="col-12 col-lg-6 d-flex ps-0">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Biotechnology</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Biotechnology">
+                              <li><code class="bg-faculty-la-light">LA25</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Biotechnology">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;636</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">48</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">188</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">15</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="card" data-organisation-type="university_hospital">
+            <div class="card-header ps-4 border-bottom-0">
+              <div class="d-flex align-items-top gap-3">
+                <span class="bt-avatar bt-avatar--large bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
+                  <img class="bt-avatar__img" src="/assets/images/emblem-uzgent.svg" alt="">
+                </span>
+                <div class="row py-3 align-items-center flex-grow-1">
+                  <div class="col-12 col-lg-4 col-xl-5 d-flex align-items-center gap-3">
+                    <div>
+                      <div class="d-flex flex-wrap align-items-baseline gap-2">
+                        <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-0 text-decoration-none">Ghent University Hospital</a>
+                        <span class="text-muted small">University hospital</span>
+                      </div>
+                      <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Ghent University Hospital">
+                        <li><code>UZGent</code></li>
+                        <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-8 col-xl-7 mt-2 pe-4 ps-3" aria-label="Activity for Ghent University Hospital">
+                    <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">12&thinsp;420</span> <span class="text-muted">works</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">226</span> <span class="text-muted">researchers</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">887</span> <span class="text-muted">alumni</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">69</span> <span class="text-muted">projects</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="card" data-organisation-type="branch_campus">
+            <div class="card-header ps-4">
+              <div class="d-flex align-items-top gap-3">
+                <span class="bt-avatar bt-avatar--large bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
+                  <i class="if if-ghent-university text-white if--lg flex-shrink-0" aria-hidden="true"></i>
+                </span>
+                <div class="row py-3 align-items-center flex-grow-1">
+                  <div class="col-12 col-lg-4 col-xl-5 d-flex align-items-center gap-3">
+                    <div>
+                      <div class="d-flex flex-wrap align-items-baseline gap-2">
+                        <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-0 text-decoration-none">Global Campus Korea</a>
+                        <span class="text-muted small">Branch campus</span>
+                      </div>
+                      <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Global Campus Korea">
+                        <li><code>GUK</code></li>
+                        <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-8 col-xl-7 mt-2 pe-4 ps-3" aria-label="Activity for Global Campus Korea">
+                    <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">864</span> <span class="text-muted">works</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">16</span> <span class="text-muted">researchers</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">62</span> <span class="text-muted">alumni</span></li>
+                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">5</span> <span class="text-muted">projects</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0 pb-3">
+              <ul class="list-unstyled">
+                <li data-organisation-type="department" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-ghent-university text-white if--lg flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Department of Environmental Technology, Food Technology and Molecular Biotechnology</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Department of Environmental Technology, Food Technology and Molecular Biotechnology">
+                              <li><code>KR01</code></li>
+                              <li><code>ROR <a href="https://ror.org/04r1mr385" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Department of Environmental Technology, Food Technology and Molecular Biotechnology">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">845</span> <span class="text-muted">research output</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">15</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">60</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="card" data-organisation-type="university_college">
+            <div class="card-header ps-4">
+              <div class="d-flex align-items-top gap-3">
+                <span class="bt-avatar bt-avatar--large bt-avatar--outline bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
+                  <i class="if if-building if--lg flex-shrink-0" aria-hidden="true"></i>
+                </span>
+                <div class="row py-3 align-items-center flex-grow-1">
+                  <div class="col-12 col-lg-4 col-xl-5 d-flex align-items-center gap-3">
+                    <div>
+                      <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-0 text-decoration-none">University colleges</a>
+                      <p class="text-muted small mb-0">Hogescholen affiliated with Ghent University</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0 pb-3">
+              <ul class="list-unstyled">
+                <li data-organisation-type="university_college" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">University College Ghent</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for University College Ghent">
+                              <li><code>HOGENT</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for University College Ghent">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">4&thinsp;820</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">88</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">344</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">27</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li data-organisation-type="university_college" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">University College West Flanders</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for University College West Flanders">
+                              <li><code>HOWEST</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for University College West Flanders">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;960</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">36</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">140</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">11</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li data-organisation-type="university_college" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Artevelde University College</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Artevelde University College">
+                              <li><code>HOART</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Artevelde University College">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;310</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">42</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">165</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">13</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="card" data-organisation-type="research_center">
+            <div class="card-header ps-4">
+              <div class="d-flex align-items-top gap-3">
+                <span class="bt-avatar bt-avatar--large bt-avatar--outline bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
+                  <i class="if if-building if--lg flex-shrink-0" aria-hidden="true"></i>
+                </span>
+                <div class="row py-3 align-items-center flex-grow-1">
+                  <div class="col-12 col-lg-4 col-xl-5 d-flex align-items-center gap-3">
+                    <div>
+                      <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-0 text-decoration-none">Partner institutions</a>
+                      <p class="text-muted small mb-0">Research centres affiliated with Ghent University</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0 pb-3">
+              <ul class="list-unstyled">
+                <li data-organisation-type="research_center" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">VIB</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for VIB">
+                              <li><code>VIB</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for VIB">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">9&thinsp;516</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">173</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">680</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">53</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li data-organisation-type="research_center" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Imec</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Imec">
+                              <li><code>IMEC</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Imec">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;740</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">123</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">481</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">37</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li data-organisation-type="research_center" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">iMinds</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for iMinds">
+                              <li><code>IBBT</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for iMinds">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;450</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">26</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">104</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li data-organisation-type="research_center" class="py-1">
+                  <div class="p-3 ps-4">
+                    <div class="d-flex">
+                      <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
+                        <i class="if if-building if--lg text-dark flex-shrink-0" aria-hidden="true"></i>
+                      </span>
+                      <div class="row align-items-center ps-3 flex-grow-1">
+                        <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
+                          <div>
+                            <a href="/templates/biblio-public/public-organisation-detail.html" class="mb-0 text-decoration-none fw-semibold">Flanders Make</a>
+                            <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Flanders Make">
+                              <li><code>FlandersMake</code></li>
+                              <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Flanders Make">
+                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">980</span> <span class="text-muted">works</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">18</span> <span class="text-muted">researchers</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">70</span> <span class="text-muted">alumni</span></li>
+                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5</span> <span class="text-muted">projects</span></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- @include: templates/partials/public-footer.html -->
