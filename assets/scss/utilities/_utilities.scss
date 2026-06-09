@@ -28,3 +28,43 @@
 .bt-bg-white { background-color: var(--bt-white); }
 
 .bg-danger-light      { background-color: var(--bt-red-50); }
+
+
+/* ── Faculty backgrounds ─────────────────────────────────────────────────────── */
+/* Background + readable foreground, keyed by live Biblio org code.
+   White text where the brand colour clears 3:1; dark ink on the lighter
+   faculties (lw, tw, eb, pp, la, ps) where white would fail. Reused by
+   bt-avatar faculty chips and the organisation directory. */
+
+.bg-faculty-lw { background-color: var(--bt-faculty-lw); color: var(--bt-blue-900); }
+.bg-faculty-re { background-color: var(--bt-faculty-re); color: var(--bt-white); }
+.bg-faculty-we { background-color: var(--bt-faculty-we); color: var(--bt-white); }
+.bg-faculty-ge { background-color: var(--bt-faculty-ge); color: var(--bt-white); }
+.bg-faculty-tw { background-color: var(--bt-faculty-tw); color: var(--bt-blue-900); }
+.bg-faculty-eb { background-color: var(--bt-faculty-eb); color: var(--bt-blue-900); }
+.bg-faculty-di { background-color: var(--bt-faculty-di); color: var(--bt-white); }
+.bg-faculty-pp { background-color: var(--bt-faculty-pp); color: var(--bt-blue-900); }
+.bg-faculty-la { background-color: var(--bt-faculty-la); color: var(--bt-blue-900); }
+.bg-faculty-fw { background-color: var(--bt-faculty-fw); color: var(--bt-white); }
+.bg-faculty-ps { background-color: var(--bt-faculty-ps); color: var(--bt-blue-900); }
+
+.bg-faculty-lw i, .bg-faculty-tw i, .bg-faculty-eb i,
+.bg-faculty-pp i, .bg-faculty-la i, .bg-faculty-ps i { color: var(--bt-blue-900); }
+.bg-faculty-re i, .bg-faculty-we i, .bg-faculty-ge i,
+.bg-faculty-di i, .bg-faculty-fw i { color: var(--bt-white); }
+
+/* Light faculty tints — 12% of the brand colour into white, computed so the
+   tint always tracks the brand hex (no second token to keep in sync). Holds
+   body text: --bt-text clears 4.5:1 on every faculty at this mix. Muted text
+   sits close to the floor — use --bt-text, not --bt-text-muted, on these. */
+.bg-faculty-lw-light { background-color: color-mix(in srgb, var(--bt-faculty-lw) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-re-light { background-color: color-mix(in srgb, var(--bt-faculty-re) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-we-light { background-color: color-mix(in srgb, var(--bt-faculty-we) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-ge-light { background-color: color-mix(in srgb, var(--bt-faculty-ge) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-tw-light { background-color: color-mix(in srgb, var(--bt-faculty-tw) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-eb-light { background-color: color-mix(in srgb, var(--bt-faculty-eb) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-di-light { background-color: color-mix(in srgb, var(--bt-faculty-di) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-pp-light { background-color: color-mix(in srgb, var(--bt-faculty-pp) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-la-light { background-color: color-mix(in srgb, var(--bt-faculty-la) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-fw-light { background-color: color-mix(in srgb, var(--bt-faculty-fw) 12%, #fff); color: var(--bt-text); }
+.bg-faculty-ps-light { background-color: color-mix(in srgb, var(--bt-faculty-ps) 12%, #fff); color: var(--bt-text); }

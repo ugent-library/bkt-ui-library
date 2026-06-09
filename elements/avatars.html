@@ -2,22 +2,136 @@
 <!-- @surface: public -->
 
 <div class="ds-page">
-  <header class="ds-page-header">
+  <header class="ds-page-header col-8">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Avatars</h1>
-    <p class="lead">User avatars display initials or profile images. They appear in author lists, contributor rows, and user profiles. Always include meaningful alt text or aria-label for screen readers.</p>
+    <p class="lead">Avatars display initials in a round chip. They appear as the account-menu trigger in the backoffice topbar and in author and contributor rows. When an avatar is a static label its name lives in adjacent text; when it is the interactive control, the accessible name goes on the control.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Sizes</h2>
 
     <div class="ds-demo">
-      <div class="ds-demo-label">Default (medium), small, large</div>
+      <div class="ds-demo-label">xsmall (20px), small (28px), default (36px), large (48px)</div>
       <div class="ds-demo-body">
         <div class="d-flex align-items-center gap-3">
-          <span class="bt-avatar">JD</span>
+          <span class="bt-avatar bt-avatar--xsmall">JD</span>
           <span class="bt-avatar bt-avatar--small">JD</span>
+          <span class="bt-avatar">JD</span>
           <span class="bt-avatar bt-avatar--large">JD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Style variants</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Outline and dark — both carry hover and active states for use as a button</div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-3">
+          <span class="bt-avatar bt-avatar--outline">JD</span>
+          <span class="bt-avatar bt-avatar--dark">JD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">
+        <p>Coloured chips — pair <code>bt-avatar</code> with a Bootstrap background utility; white text and icon colour are forced automatically.
+        </p>
+      </div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-3">
+          <span class="bt-avatar bg-primary">JD</span>
+          <span class="bt-avatar bg-success">MV</span>
+          <span class="bt-avatar bg-warning">ER</span>
+          <span class="bt-avatar bg-danger">KL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Icon instead of initials — the icon inherits the forced white colour</div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-3">
+          <span class="bt-avatar bg-primary">
+            <i class="if if-user" aria-hidden="true"></i>
+          </span>
+          <span class="bt-avatar bt-avatar--dark">
+            <i class="if if-user" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">
+        <p>Square — <code>bt-avatar--square</code> swaps the round shape for a small radius; works at every size and with any background.</p>
+      </div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-3">
+          <span class="bt-avatar bt-avatar--square bt-avatar--xsmall bt-avatar--dark">JD</span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--small bt-avatar--dark">JD</span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--dark">JD</span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bt-avatar--dark">JD</span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--outline">JD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">
+        <p>Faculty colours — pair <code>bt-avatar</code> with a <code>bg-faculty-*</code> utility, keyed by Biblio org code.</p>
+      </div>
+      <div class="ds-demo-body">
+        <div class="d-flex flex-wrap align-items-center gap-3 pb-3">
+          <span class="bt-avatar bt-avatar--square bg-faculty-lw">LW</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-re">RE</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-we">WE</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-ge">GE</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-tw">TW</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-eb">EB</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-di">DI</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-pp">PP</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-la">LA</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-fw">FW</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-ps">PS</span>
+        </div>
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <span class="bt-avatar bt-avatar--square bg-faculty-lw-light">LW</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-re-light">RE</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-we-light">WE</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-ge-light">GE</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-tw-light">TW</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-eb-light">EB</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-di-light">DI</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-pp-light">PP</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-la-light">LA</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-fw-light">FW</span>
+          <span class="bt-avatar bt-avatar--square bg-faculty-ps-light">PS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">
+        <p>Faculty SVG — the faculty's white book glyph on its colour chip with an <code>&lt;img class="bt-avatar__img"&gt;</code> inside.</p>
+      </div>
+      <div class="ds-demo-body">
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-lw"><img class="bt-avatar__img" src="/assets/images/faculty-lw.svg" alt="Faculty of Arts and Philosophy"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-re"><img class="bt-avatar__img" src="/assets/images/faculty-re.svg" alt="Faculty of Law and Criminology"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-we"><img class="bt-avatar__img" src="/assets/images/faculty-we.svg" alt="Faculty of Sciences"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-ge"><img class="bt-avatar__img" src="/assets/images/faculty-ge.svg" alt="Faculty of Medicine and Health Sciences"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-tw"><img class="bt-avatar__img" src="/assets/images/faculty-ea.svg" alt="Faculty of Engineering and Architecture"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-eb"><img class="bt-avatar__img" src="/assets/images/faculty-eb.svg" alt="Faculty of Economics and Business Administration"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-di"><img class="bt-avatar__img" src="/assets/images/faculty-di.svg" alt="Faculty of Veterinary Medicine"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-pp"><img class="bt-avatar__img" src="/assets/images/faculty-pp.svg" alt="Faculty of Psychology and Educational Sciences"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-la"><img class="bt-avatar__img" src="/assets/images/faculty-bw.svg" alt="Faculty of Bioscience Engineering"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-fw"><img class="bt-avatar__img" src="/assets/images/faculty-fw.svg" alt="Faculty of Pharmaceutical Sciences"></span>
+          <span class="bt-avatar bt-avatar--square bt-avatar--large bg-faculty-ps"><img class="bt-avatar__img" src="/assets/images/faculty-ps.svg" alt="Faculty of Political and Social Sciences"></span>
         </div>
       </div>
     </div>
@@ -27,10 +141,17 @@
     <h2 class="h4 mb-3">Usage in context</h2>
 
     <div class="ds-demo">
-      <div class="ds-demo-label">Author row (backoffice)</div>
+      <div class="ds-demo-label">Account-menu trigger (backoffice topbar) — the avatar is the button, so the label goes on the button</div>
+      <div class="ds-demo-body">
+        <button type="button" class="bt-avatar bt-avatar--dark" aria-label="Account menu, Miet Claes">MC</button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Author row (backoffice) — the avatar is a static label; the name is in the adjacent text</div>
       <div class="ds-demo-body">
         <div class="d-flex align-items-center gap-2 p-3 bg-white border rounded">
-          <span class="bt-avatar bt-avatar--small">ER</span>
+          <span class="bt-avatar bt-avatar--small bg-primary" aria-hidden="true">ER</span>
           <div class="flex-grow-1">
             <div>Esperon-Rodriguez, Manuel</div>
             <div class="text-muted">Author · External</div>
@@ -42,6 +163,19 @@
         </div>
       </div>
     </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">
+        <p>Faculty row (public) — the SVG avatar is decorative here; the faculty name is the adjacent link, so the <code>img</code> takes <code>alt=""</code>.</p>
+      </div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+          <span class="bt-avatar bt-avatar--square bg-faculty-we"><img class="bt-avatar__img" src="/assets/images/faculty-we.svg" alt=""></span>
+          <a href="#" class="fw-semibold text-decoration-none flex-grow-1">Faculty of Sciences</a>
+          <code class="small">WE</code>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="ds-section">
@@ -49,10 +183,12 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <ul>
-          <li>Avatars are decorative — they do not need <code>alt</code> text</li>
-          <li>The user's name appears in adjacent text content</li>
-          <li>If the avatar is interactive (clickable), add appropriate ARIA labels</li>
+          <li>When the avatar is a static label and the name is in adjacent text, mark it <code>aria-hidden="true"</code> so the initials are not announced twice</li>
+          <li>When the avatar is the interactive control (account-menu trigger), put the accessible name on the control with <code>aria-label</code></li>
+          <li>An icon inside an avatar is decorative — give it <code>aria-hidden="true"</code></li>
+          <li>A faculty SVG glyph carries the faculty identity: give the <code>img</code> a real <code>alt</code> when the chip stands alone, or <code>alt=""</code> when the faculty name is already in adjacent text</li>
           <li>Initials should be 2 characters maximum for readability</li>
+          <li>Colour is never the only signal — a coloured chip still carries initials or an icon</li>
         </ul>
       </div>
     </div>

@@ -7,14 +7,18 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: var(--bt-heading-color);
   font-size: var(--bt-text-sm);
   font-weight: 600;
   flex-shrink: 0;
   line-height: 1;
   padding: 0;
   border: none;
-  cursor: pointer;
+  background-color: var(--bt-blue-700);
+  color: var(--bt-white);
+}
+button.bt-avatar:hover:not(:disabled),
+a.bt-avatar:hover:not(:disabled) {
+  background-color: var(--bt-blue-500);
 }
 .bt-avatar--xsmall {
   width: 20px;
@@ -32,12 +36,31 @@
   font-size: 1rem;
 }
 
+.bt-avatar--square {
+  border-radius: var(--bt-radius);
+}
+
+/* Glyph slot — holds a faculty SVG (or other mark) centred in the chip.
+   Sized to a share of the chip so varied SVG aspect ratios sit inset,
+   not edge-to-edge; object-fit keeps them undistorted. */
+.bt-avatar__img {
+  object-fit: contain;
+  width: 50%;
+  height: 50%;
+}
+
+.bt-avatar__square.bt-avatar__img {
+  width: 65%;
+  height: 65%;
+}
+
 .bt-avatar--outline {
   border: 1px solid var(--bt-blue-800);
   background-color: var(--s-bg);
   color: var(--bt-blue-800);
 }
-.bt-avatar--outline:hover:not(:disabled) {
+button.bt-avatar--outline:hover:not(:disabled),
+a.bt-avatar--outline:hover:not(:disabled) {
   background: var(--bt-gray-50);
   color: var(--bt-blue-700);
   border: 1px solid var(--bt-blue-700);
@@ -52,7 +75,8 @@
   background-color: var(--bt-blue-800);
   color: var(--bt-white);
 }
-.bt-avatar--dark:hover:not(:disabled) {
+button.bt-avatar--dark:hover:not(:disabled),
+a.bt-avatar--dark:hover:not(:disabled) {
   background-color: var(--bt-blue-700);
   border: 1px solid var(--bt-blue-700);
   color: var(--bt-white);
