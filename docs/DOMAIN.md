@@ -300,8 +300,7 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | Partial | Used by |
 |---------|---------|
 | `backoffice-header.html` | All backoffice templates |
-| `backoffice-sidebar.html` | Researcher templates |
-| `curator-sidebar.html` | Curator / team templates |
+| `main-sidebar.html` | All backoffice templates (researcher, curator, proxy) |
 | `backoffice-facet-sidebar.html` | Search pages with filter sidebar |
 | `search-filter-bar.html` | Search results header |
 | `search-suggest-panel.html` | Search autocomplete panel |

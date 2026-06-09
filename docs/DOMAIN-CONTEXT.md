@@ -75,7 +75,7 @@ The backoffice has two distinct starting points depending on the user:
 
 **Curator / librarian view** — institution-wide. Scoped to all works the curator has rights over (their org, their assigned projects, or globally). Navigation includes additional admin sections.
 
-Templates should not conflate these. The sidebar navigation (`bt-sidebar`) differs between the two contexts.
+Templates should not conflate these. All backoffice pages include one sidebar partial (`main-sidebar.html`); the nav groups it shows (My research output, Curation, Proxy) vary by the user's grants. In the prototype every group renders unconditionally to demonstrate the multi-role shell.
 
 ---
 

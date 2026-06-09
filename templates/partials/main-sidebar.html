@@ -1,0 +1,178 @@
+<!-- @title: Main sidebar partial -->
+<!-- @surface: backoffice -->
+<!--
+  main-sidebar.html: the single backoffice navigation sidebar.
+
+  One sidebar for every backoffice surface (researcher, curator, proxy). It
+  carries all role groups: Curation, Proxy, My research output. In the
+  prototype every group renders unconditionally — this demonstrates the shell
+  handling multiple roles. In Go these groups are gated by Grants; a researcher
+  without curation rights never sees Curation or Proxy.
+
+  HOW TO USE IN PROTOTYPES
+  Do not copy this nav block into page templates. Place the include directive
+  at the injection point, followed by an active key comment:
+
+    @include templates/partials/main-sidebar.html
+    @active dashboard | review | suggestions | incomplete | my-research | queue | curate | all-research | overview | proxy-inbox | proxy-all
+
+  The local prototype renderer consumes the active key and adds active plus
+  aria-current="page" to the matching data-nav-key link.
+
+  HOW TO USE IN GO TEMPL
+  templ MainSidebar(currentPage string, grants Grants, counts NavCounts) {
+    <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" ...>
+      Render the Curation group only when grants allow curation,
+      the Proxy group only when grants allow proxy, the My-research group always.
+      Repeat the nav-link pattern for each link. Omit a badge span when its count is 0.
+    </nav>
+  }
+
+  Valid currentPage values:
+    "overview" | "queue" | "curate" | "all-research"      (Curation)
+    "proxy-inbox" | "proxy-all"                            (Proxy)
+    "dashboard" | "review" | "suggestions" | "incomplete" | "my-research"  (My research output)
+
+  BADGE COLOUR LOGIC (queue)
+  bg-danger  — any Tier-3 or deadline-flagged item exists within 30 days
+  bg-primary — items waiting, no immediate deadline
+  Omit the badge span entirely when a count is 0.
+-->
+
+<nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation" id="bt-sidebar">
+
+  <div class="bt-sidebar__toggle"
+    aria-controls="bt-sidebar"
+    aria-expanded="true"
+    aria-label="Collapse sidebar">
+    <button type="button" class="btn btn-ghost btn-sm">
+      <i class="if if-arrow-left" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <p class="bt-sidebar__group-label">Curation</p>
+
+  <a href="/templates/biblio-team/overview-team.html" class="nav-link" data-nav-key="overview"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Overview">
+    <i class="if if-service" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Team overview</span>
+  </a>
+
+  <a href="/templates/biblio-team/team-queue.html" class="nav-link position-relative" data-nav-key="queue"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Queue">
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-list-check" aria-hidden="true"></i>
+    </span>
+    <span class="bt-sidebar__label">My Queue</span>
+    <!-- bg-danger when hasDeadline = true, bg-primary otherwise -->
+    <span class="badge bg-primary badge--total">
+      14
+      <span class="visually-hidden">waiting items</span>
+    </span>
+  </a>
+
+  <a href="/templates/biblio-team/search-team.html" class="nav-link" data-nav-key="curate"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="All research output">
+    <i class="if if-article" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Curate</span>
+  </a>
+
+  <a href="#" class="nav-link" data-nav-key="all-research"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="All research output">
+    <i class="if if-list-unordered" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">All research</span>
+  </a>
+
+  <hr class="c-divider">
+
+  <p class="bt-sidebar__group-label">Proxy</p>
+
+  <a href="#" class="nav-link position-relative" data-nav-key="proxy-inbox"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Queue">
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-home" aria-hidden="true"></i>
+    </span>
+    <span class="bt-sidebar__label">Proxy Inbox</span>
+    <!-- bg-danger when hasDeadline = true, bg-primary otherwise -->
+    <span class="badge bg-primary badge--total">
+      14
+      <span class="visually-hidden">waiting items</span>
+    </span>
+  </a>
+
+  <a href="#" class="nav-link" data-nav-key="proxy-all"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="All research output">
+    <i class="if if-list-unordered" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">All proxied research</span>
+  </a>
+
+  <hr class="c-divider">
+
+  <p class="bt-sidebar__group-label">My research output</p>
+
+  <a href="/templates/biblio-researcher/dashboard.html" class="nav-link" data-nav-key="dashboard" aria-label="Dashboard"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Inbox">
+    <i class="if if-home" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Inbox</span>
+  </a>
+
+  <!-- Badge count is server-rendered; omit the <span> entirely when count is 0 -->
+  <!-- @state: filled message -->
+  <a href="#" class="nav-link position-relative" data-nav-key="review"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Review deadlines">
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-error-circle" aria-hidden="true"></i>
+    </span>
+    <span class="bt-sidebar__label">Review</span>
+    <span class="badge bg-danger badge--total">
+      2
+      <span class="visually-hidden">overdue deadlines</span>
+    </span>
+  </a>
+  <!-- @state -->
+
+  <!-- @state: filled message -->
+  <a href="#" class="nav-link position-relative" data-nav-key="suggestions"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Suggestions">
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-notification" aria-hidden="true"></i>
+    </span>
+    <span class="bt-sidebar__label">Suggestions</span>
+    <span class="badge bg-primary badge--total">
+      2
+      <span class="visually-hidden">new suggestions</span>
+    </span>
+  </a>
+  <!-- @state -->
+
+
+  <!-- @state: filled message -->
+  <a href="#" class="nav-link position-relative" data-nav-key="incomplete"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="Incomplete">
+    <span class="bt-sidebar__icon d-inline-flex flex-shrink-0">
+      <i class="if if-draft" aria-hidden="true"></i>
+    </span>
+    <span class="bt-sidebar__label">Incomplete</span>
+    <span class="badge bg-warning badge--total">
+      3
+      <span class="visually-hidden">drafts</span>
+    </span>
+  </a>
+  <!-- @state -->
+
+  <a href="/templates/biblio-researcher/search-researcher.html" class="nav-link" data-nav-key="my-research" aria-label="Research output"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="All research">
+    <i class="if if-list-unordered" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">All my research</span>
+  </a>
+
+  <div class="d-grid mx-2 mt-3">
+    <a href="/templates/biblio-researcher/deposit-1-0-find.html" class="btn btn-outline-primary btn-xs justify-content-center">
+      <i class="if if-add" aria-hidden="true"></i>
+      <span class="btn-text">Add research output</span>
+    </a>
+  </div>
+
+</nav>
+
+<script src="/assets/js/sidebar-toggle.js"></script>

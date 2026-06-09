@@ -123,7 +123,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync.
 
-**Loaded by:** backoffice pages via `templates/partials/backoffice-sidebar.html`
+**Loaded by:** backoffice pages via `templates/partials/main-sidebar.html`
 
 **Listens for:**
 - Click on `.bt-sidebar__toggle`
