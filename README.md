@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Done.
+Open [http://localhost:3111](http://localhost:3111). Done.
 
 `npm run dev` builds icons and CSS once, starts the server, and watches for CSS changes. Editing any `.scss` file recompiles and the browser reloads automatically.
 
@@ -135,7 +135,7 @@ Pages without a surface declaration default to `backoffice`. To set a page to pu
 
 The font and CSS update automatically. SVGs must use filled paths only — no strokes, single colour, square viewBox.
 
-See [/foundations/icons.html](http://localhost:3000/foundations/icons.html) for all icons. Click any icon to copy its class name.
+See [/foundations/icons.html](http://localhost:3111/foundations/icons.html) for all icons. Click any icon to copy its class name.
 
 ---
 

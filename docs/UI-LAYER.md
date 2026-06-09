@@ -18,7 +18,7 @@ For cross-project consumption rules, read `docs/CONSUMING-BOOKTOWER.md` before c
 **Running it locally:**
 ```bash
 cd Sites/booktower-ui-library
-npm run dev   # builds and serves on http://localhost:3000
+npm run dev   # builds and serves on http://localhost:3111
 ```
 
 ---
@@ -90,7 +90,7 @@ One icon system only: the UGent icon font.
 <i class="if if-edit" aria-hidden="true"></i>
 ```
 
-The full icon list is at `http://localhost:3000/foundations/icons.html` (UI kit running locally). Do not guess icon names — use a placeholder and flag it if uncertain.
+The full icon list is at `http://localhost:3111/foundations/icons.html` (UI kit running locally). Do not guess icon names — use a placeholder and flag it if uncertain.
 
 ---
 
