@@ -1,0 +1,451 @@
+<!-- @title: Researchers — Biblio UGent -->
+<!-- @surface: public -->
+<!--
+  Public people directory — A–Z browse (scenario A: alphabet bar + compact
+  pagination, no sub-letter fractionation). Each card links to
+  public-researcher-detail.html.
+
+  Partials:
+    @include: templates/partials/public-header.html
+    @include: templates/partials/public-footer.html
+
+  HTMX URLs (browse=, start=, limit=) are stubs — documentation of intent.
+  Crawl-reach (sitemap, rel=next/prev) is a backend concern, not this surface.
+-->
+
+<!-- @include: templates/partials/public-header.html -->
+
+<div class="u-layout--public" data-surface="public">
+  <main id="main-content">
+
+    <!-- ── Header: title + A–Z browse ─────────────────────────────────────── -->
+    <div class="u-main__header border-bottom pt-5 pb-4">
+      <div class="container">
+
+        <nav aria-label="Breadcrumb" class="mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Researchers</li>
+          </ol>
+        </nav>
+
+        <h1 class="mb-4">Researchers</h1>
+
+        <!-- A–Z browse. Letters with results are links; letters with no
+             results render disabled (no href, aria-disabled) to avoid dead
+             ends. The current letter carries aria-current + active state. -->
+        <nav aria-label="Browse researchers by surname" class="mb-2">
+          <ul class="pagination flex-wrap mb-0">
+            <li class="page-item"><a class="page-link" href="?browse=A">A</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=B">B</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=C">C</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="?browse=D" aria-current="page">D</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?browse=E">E</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=F">F</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=G">G</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=H">H</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=I">I</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=J">J</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=K">K</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=L">L</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=M">M</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=N">N</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=O">O</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=P">P</a></li>
+            <li class="page-item disabled">
+              <a class="page-link" aria-disabled="true">Q</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?browse=R">R</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=S">S</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=T">T</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=U">U</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=V">V</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=W">W</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=X">X</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=Y">Y</a></li>
+            <li class="page-item"><a class="page-link" href="?browse=Z">Z</a></li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+    <!-- ── Body: result count + people list + pagination ──────────────────── -->
+    <div class="u-main__body">
+      <div class="container py-4">
+
+        <div class="bt-toolbar mb-4">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <!-- ── Pagination within the letter (compact: first · current ±1 · … · last) -->
+              <nav aria-label="Researchers pagination">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="?browse=D&amp;start=480&amp;limit=10" aria-label="Previous page">‹</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=0&amp;limit=10">1</a></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=480&amp;limit=10">49</a></li>
+                  <li class="page-item active">
+                    <a class="page-link" href="?browse=D&amp;start=490&amp;limit=10" aria-current="page">50</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=500&amp;limit=10">51</a></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=510&amp;limit=10">52</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="?browse=D&amp;start=500&amp;limit=10" aria-label="Next page">›</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item">
+              <p class="text-muted" aria-live="polite" id="people-count">
+                Researchers with surnames starting “D”, page 50 of 52, showing 491–500 of 517
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <ol class="list-unstyled mb-4">
+
+          <!-- ── Researcher card: Karen De Pauw ───────────────────────────── -->
+          <li>
+            <article class="card mb-3" aria-labelledby="person-kd">
+              <div class="card-body p-4">
+                <h2 class="h4 mb-1 fw-semibold">
+                  <a href="/templates/biblio-public/public-researcher-detail.html"
+                    id="person-kd" class="text-decoration-none">Karen De Pauw</a>
+                </h2>
+
+                <!-- Identifiers -->
+                <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small"
+                  aria-label="Identifiers for Karen De Pauw">
+                  <li>
+                    <i class="if if-ghent-university"></i>
+                    <span>802001234567</span>
+                  </li>
+                  <li>
+                    <a href="https://orcid.org/0000-0002-1234-5678"
+                      class="d-inline-flex align-items-center gap-1 text-decoration-none"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      aria-label="ORCID: 0000-0002-1234-5678">
+                      <i class="if if-orcid" aria-hidden="true"></i>
+                      <span>0000-0002-1234-5678</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="row g-3">
+                  <!-- Identity: name, identifiers, affiliations -->
+                  <div class="col-lg-8">
+                    <!-- Affiliations — temporal: active member vs alumni.
+                        Status uses badge + text (never colour alone). -->
+                    <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                      <li>
+                        <div class="d-flex flex-wrap align-items-baseline gap-2">
+                          <i class="if if-building if--sm me-1" aria-hidden="true"></i>
+                          <div>
+                            <p class="mb-0">
+                              <a href="https://biblio.ugent.be/organization/dept-environment"
+                                class="text-decoration-none">
+                                Department of Environment
+                              </a>
+                              <span class="badge bg-success-light">2018&mdash; Current</span>
+                            </p>
+                            <p class="text-muted small mb-0">Faculty of Bioscience Engineering</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="d-flex flex-wrap align-items-baseline gap-2">
+                          <i class="if if-building if--sm me-1" aria-hidden="true"></i>
+                          <div>
+                            <p class="mb-0">
+                              <a href="https://biblio.ugent.be/organization/dept-applied-ecology"
+                                class="text-decoration-none">
+                                Department of Applied Ecology and Environmental Biology
+                              </a>
+                              <span class="badge bg-secondary">2012&mdash;2018 Alumni</span>
+                            </p>
+                            <p class="text-muted small mb-0 ms-1">Faculty of Bioscience Engineering</p>
+                          </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <!-- Counts + keywords -->
+                    <ul class="list-unstyled d-flex gap-4 mb-3"
+                      aria-label="Activity for Karen De Pauw">
+                      <li>
+                        <a href="/templates/biblio-public/public-researcher-detail.html"
+                          class="text-decoration-none">
+                          <span class="fw-bold">147</span>
+                          <span class="text-muted">research output</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="text-decoration-none">
+                          <span class="fw-bold">4</span>
+                          <span class="text-muted">projects</span>
+                        </a>
+                      </li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap gap-1 mb-3" aria-label="Research topics">
+                      <a href="/search?q=urban+forests"
+                        class="badge bg-primary text-decoration-none">Urban forests</a>
+                      <a href="/search?q=climate+resilience"
+                        class="badge bg-primary text-decoration-none">Climate resilience</a>
+                      <a href="/search?q=green+infrastructure"
+                        class="badge bg-primary text-decoration-none">Green infrastructure</a>
+                      <a href="/search?q=biodiversity"
+                        class="badge bg-primary text-decoration-none">Biodiversity</a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Researcher card ──────────────────────────────────────────── -->
+          <li>
+            <article class="card mb-3" aria-labelledby="person-tc">
+              <div class="card-body p-4">
+                <h2 class="h4 mb-1 fw-semibold">
+                  <a href="/templates/biblio-public/public-researcher-detail.html"
+                    id="person-tc" class="text-decoration-none">Dr. Tristan Dumolyn</a>
+                </h2>
+
+                <!-- Identifiers -->
+                <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small"
+                  aria-label="Identifiers for Tristan Dumolyn">
+                  <li>
+                    <i class="if if-ghent-university"></i>
+                    <span>000120666986</span>
+                    <span aria-hidden="true">·</span>
+                    <span>802003074128</span>
+                  </li>
+                  <li>
+                    <a href="https://orcid.org/0000-0003-3940-7919"
+                      class="d-inline-flex align-items-center gap-1 text-decoration-none"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      aria-label="ORCID: 0000-0003-3940-7919">
+                      <i class="if if-orcid" aria-hidden="true"></i>
+                      <span>0000-0003-3940-7919</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="row g-3">
+                  <!-- Identity: name, identifiers, affiliations -->
+                  <div class="col-lg-8">
+
+                    <!-- Affiliations — temporal: active member vs alumni.
+                        Status uses badge + text (never colour alone). -->
+                    <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                      <li>
+                        <div class="d-flex flex-wrap align-items-baseline gap-2">
+                          <i class="if if-building if--sm me-1" aria-hidden="true"></i>
+                          <div>
+                            <p class="mb-0">
+                              <a href="https://biblio.ugent.be/organization/TW15"
+                                class="text-decoration-none">
+                                Department of Civil Engineering
+                              </a>
+                              <span class="badge bg-success-light">2018&mdash; Current</span>
+                            </p>
+                            <p class="text-muted small mb-0 ms-1">Faculty of Engineering and Architecture</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="d-flex flex-wrap align-items-baseline gap-2">
+                          <i class="if if-building if--sm me-1" aria-hidden="true"></i>
+                          <div>
+                            <p class="mb-0">
+                              <a href="https://biblio.ugent.be/organization/WE05"
+                                class="text-decoration-none">
+                                Department of Physics and Astronomy
+                              </a>
+                              <span class="badge bg-secondary">2012&mdash;2018 Alumni</span>
+                            </p>
+                            <p class="text-muted small mb-0 ms-1">Faculty of Sciences</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <!-- Counts + keywords -->
+                    <div>
+                      <ul class="list-unstyled d-flex gap-4 mb-3"
+                        aria-label="Activity for Tristan Dumolyn">
+                        <li>
+                          <a href="/templates/biblio-public/public-researcher-detail.html"
+                            class="text-decoration-none">
+                            <span class="fw-bold">128</span>
+                            <span class="text-muted">research output</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#" class="text-decoration-none">
+                            <span class="fw-bold">6</span>
+                            <span class="text-muted">projects</span>
+                          </a>
+                        </li>
+                      </ul>
+
+                      <div class="d-flex flex-wrap gap-1 mb-3" aria-label="Research topics">
+                        <a href="/search?q=structural+engineering"
+                          class="badge bg-primary text-decoration-none">Structural engineering</a>
+                        <a href="/search?q=concrete"
+                          class="badge bg-primary text-decoration-none">Concrete</a>
+                        <a href="/search?q=seismic+design"
+                          class="badge bg-primary text-decoration-none">Seismic design</a>
+                        <a href="/search?q=finite+element+analysis"
+                          class="badge bg-primary text-decoration-none">FEA</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Second card: minimal data ─────────────────────────────────── -->
+          <li>
+            <article class="card mb-3" aria-labelledby="person-qa">
+              <div class="card-body p-4">
+                <h2 class="h4 mb-1 fw-semibold">
+                  <a href="#" id="person-qa" class="text-decoration-none">Qurrotul Dyson</a>
+                </h2>
+
+                <!-- Identifiers -->
+                <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small"
+                  aria-label="Identifiers for Qurrotul Dyson">
+                  <li>
+                    <i class="if if-ghent-university"></i>
+                    <span>002101998774</span>
+                  </li>
+                  <li>
+                    <a href="https://orcid.org/0000-0002-0646-0054"
+                      class="d-inline-flex align-items-center gap-1 text-decoration-none"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      aria-label="ORCID: 0000-0002-0646-0054">
+                      <i class="if if-orcid" aria-hidden="true"></i>
+                      <span>0000-0002-0646-0054</span>
+                    </a>
+                  </li>
+                </ul>
+
+                <div class="row g-3">
+                  <!-- Identity: name, identifiers, affiliations -->
+                  <div class="col-lg-8">
+                    <!-- Affiliations — temporal: active member vs alumni.
+                        Status uses badge + text (never colour alone). -->
+                    <ul class="list-unstyled mb-0">
+                      <li>
+                        <div class="d-flex flex-wrap align-items-baseline gap-2">
+                          <i class="if if-building if--sm me-1" aria-hidden="true"></i>
+                          <div>
+                            <p class="mb-0">
+                              <a href="https://biblio.ugent.be/organization/LW01"
+                                class="text-decoration-none">
+                                Department of Green Chemistry and Technology
+                              </a>
+                              <span class="badge bg-secondary">2019&mdash;2023 Alumni</span>
+                            </p>
+                            <p class="text-muted small">Faculty of Bioscience Engineering</p>
+                          </div>
+                        </div>
+
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <!-- Counts + keywords -->
+                    <ul class="list-unstyled d-flex gap-4 mb-3"
+                      aria-label="Activity for Qurrotul Dyson">
+                      <li>
+                        <a href="#" class="text-decoration-none">
+                          <span class="fw-bold">8</span>
+                          <span class="text-muted">research output</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#" class="text-decoration-none">
+                          <span class="fw-bold">1</span>
+                          <span class="text-muted">project</span>
+                        </a>
+                      </li>
+                    </ul>
+
+                    <div class="d-flex flex-wrap gap-1 mb-2" aria-label="Research topics">
+                      <a href="/search?q=phonology"
+                        class="badge bg-primary text-decoration-none">Phonology</a>
+                      <a href="/search?q=second+language+acquisition"
+                        class="badge bg-primary text-decoration-none">L2 acquisition</a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </article>
+          </li>
+
+        </ol>
+
+
+
+        <div class="bt-toolbar mb-4">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <!-- ── Pagination within the letter (compact: first · current ±1 · … · last) -->
+              <nav aria-label="Researchers pagination">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="?browse=D&amp;start=480&amp;limit=10" aria-label="Previous page">‹</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=0&amp;limit=10">1</a></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=480&amp;limit=10">49</a></li>
+                  <li class="page-item active">
+                    <a class="page-link" href="?browse=D&amp;start=490&amp;limit=10" aria-current="page">50</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=500&amp;limit=10">51</a></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;start=510&amp;limit=10">52</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="?browse=D&amp;start=500&amp;limit=10" aria-label="Next page">›</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item">
+              <p class="text-muted" aria-live="polite" id="people-count">
+                Researchers with surnames starting “D” <span aria-hidden="true">·</span> page 50 of 52 <span aria-hidden="true">·</span> showing 491–500 of 517
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- @include: templates/partials/public-footer.html -->
