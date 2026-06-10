@@ -1,0 +1,116 @@
+<!-- @title: Settings — Profile — Biblio -->
+<!-- @surface: backoffice -->
+<!--
+  EXPLORATION: Profile settings
+  ─────────────────────────────
+  The account holder's own profile. Display name, contact email, preferred
+  language. Available to every authenticated user regardless of role.
+
+  Identity facts that come from authoritative sources are read-only here:
+  - Name and UGent affiliation flow from LDAP / the PersonIdentity golden record.
+  - ORCID is linked on the Connected accounts page, not entered free-text here.
+  What the user owns on this page is presentation and contact preference, not
+  the canonical identity record.
+
+  Backend implications:
+  - Editable fields persist to user_settings.
+  - Read-only fields render from the linked PersonIdentity; no form control.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/main-sidebar.html -->
+
+  <main id="main-content" class="bt-bg">
+
+    <!-- Page header -->
+    <div class="u-main__header bg-white border-bottom">
+      <h1 class="h4 fw-semibold mb-1">Settings</h1>
+    </div>
+
+    <div class="u-main__body u-main__body--split">
+
+      <aside class="u-main__sidebar u-main__sidebar--border-right">
+        <!-- @include: templates/partials/settings-sidebar.html -->
+        <!-- @active: profile -->
+      </aside>
+
+      <section class="u-main__content">
+        <div class="u-main__content-header">
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <h2 class="h5 fw-semibold mb-1">Profile</h2>
+                <p class="small text-muted mb-0">
+                  How your name and contact details appear, and your language preference.
+                </p>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <a href="/settings" class="btn btn-ghost btn-sm text-muted">Cancel</a>
+                <span id="profile-save-status" role="status" aria-live="polite"
+                  class="text-muted small ms-auto visually-hidden">Saved</span>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="submit" form="profile-form" class="btn btn-primary">Save profile</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-main__content-body">
+          <form method="post" action="/settings/profile" id="profile-form">
+
+            <!-- ── Identity (read-only) ──────────────────────────────────────
+                 Sourced from the PersonIdentity / LDAP. Shown for context,
+                 not editable here.
+            ──────────────────────────────────────────────────────────────── -->
+            <section aria-labelledby="identity-heading" class="card mb-4">
+              <div class="card-header p-3">
+                <h2 id="identity-heading" class="h6 mb-0">Identity</h2>
+                <p class="text-muted small mb-0 mt-1">
+                  Maintained from UGent records. To correct these, contact your
+                  faculty library.
+                </p>
+              </div>
+              <dl class="row mb-0 card-body small">
+                <dt class="col-sm-4 fw-semibold">Name</dt>
+                <dd class="col-sm-8 mb-2">Marie Curator</dd>
+                <dt class="col-sm-4 fw-semibold">UGent affiliation</dt>
+                <dd class="col-sm-8 mb-2">CA20 University Library</dd>
+                <dt class="col-sm-4 fw-semibold">Contact email</dt>
+                <dd class="col-sm-8 mb-0">Marie.Curator@ugent.be</dd>
+              </dl>
+            </section>
+
+            <!-- ── Display & contact ─────────────────────────────────────── -->
+            <section aria-labelledby="display-heading" class="card mb-4">
+              <div class="card-header p-3">
+                <h2 id="display-heading" class="h6 mb-0">Display and contact</h2>
+              </div>
+
+              <div class="card-body border-bottom">
+                <label for="display-name" class="form-label small">Display name</label>
+                <input type="text" id="display-name" name="display_name"
+                  class="form-control" value="Miet Claes" autocomplete="name">
+                <p class="form-text">Shown on records you deposit and in your activity.</p>
+              </div>
+
+              <div class="card-body">
+                <label for="language" class="form-label small">Interface language</label>
+                <select id="language" name="language" class="form-select">
+                  <option value="en" selected>English</option>
+                  <option value="nl">Nederlands</option>
+                </select>
+              </div>
+            </section>
+
+          </form>
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>

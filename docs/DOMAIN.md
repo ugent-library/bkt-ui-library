@@ -176,11 +176,11 @@ Two distinct user contexts. Must never be conflated. Determined by `data-surface
 
 ## Page types — prototyped and still to do
 
-### ~~Researcher profile page (public)~~ ✓ `templates/biblio-public/public-researcher.html`
-A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked works, ORCID and other identifiers.
+### ~~Researcher profile page (public)~~ ✓ `templates/biblio-public/public-researcher-detail.html`
+A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked works, ORCID and other identifiers. The A–Z researcher directory that links to these is `public-researchers.html`.
 
-### ~~Organisation page (public)~~ ✓ `templates/biblio-public/public-organisation.html`
-A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people.
+### ~~Organisation page (public)~~ ✓ `templates/biblio-public/public-organisation-detail.html`
+A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. The organisation directory that links to these is `public-organisations.html`.
 
 ### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project.html`
 A page for a funded research project. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer.
@@ -262,8 +262,10 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `public-index.html` | Public homepage |
 | `public-search.html` | Work search + results |
 | `public-research-detail.html` | Work detail page |
-| `public-researcher.html` | Researcher profile (PersonIdentity) |
-| `public-organisation.html` | Organisation landing page |
+| `public-researchers.html` | Researcher directory (A–Z browse) |
+| `public-researcher-detail.html` | Researcher profile (PersonIdentity) |
+| `public-organisations.html` | Organisation directory |
+| `public-organisation-detail.html` | Organisation landing page |
 | `public-project.html` | Project detail page |
 
 ### Researcher — `templates/biblio-researcher/`
@@ -275,7 +277,9 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `search-filter-first.html` | Filter-first search exploration |
 | `search-advanced-builder.html` | Advanced filter builder |
 | `search-advanced-token.html` | Advanced filter token variant |
-| `settings-scope.html` | Scope configuration (Settings) |
+| `settings-profile.html` | Settings — own profile (display name, contact, language) |
+| `settings-accounts.html` | Settings — connected accounts (ORCID, UGent login, WoS ResearcherID) |
+| `settings-scope.html` | Settings — curation work scope (orgs + output types); curator/proxy only in production |
 | `deposit-1-0-find.html` | Deposit step 1a — entry (blank) |
 | `deposit-1-1-find.html` | Deposit step 1b — entry (pre-filled from import) |
 | `deposit-2-upload.html` | Deposit step 2 — upload full text |
@@ -311,6 +315,7 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `people-search-widget.html` | Deposit author search |
 | `people-search-results.html` | Deposit author search results |
 | `add-author-form.html` | Deposit author add form |
+| `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
 
 **Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge (`Dataset`, `Journal article`, etc.) is how type is communicated, not separate nav sections.
 

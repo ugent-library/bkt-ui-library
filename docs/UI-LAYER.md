@@ -106,6 +106,7 @@ The `templates/` directory in `booktower-ui-library` contains full-page prototyp
 | `templates/biblio-researcher/dashboard.html` | Researcher | Researcher inbox |
 | `templates/biblio-researcher/deposit-*.html` | Researcher | Deposit flow steps |
 | `templates/biblio-researcher/search-researcher.html` | Researcher | My research output list |
+| `templates/biblio-researcher/settings-*.html` | Researcher | Settings (profile, accounts, scope) — split-body shell, section nav in `u-main__sidebar` |
 | `templates/biblio-team/my-queue.html` | Curator | Queue overview (Wachtrij) |
 | `templates/biblio-team/curate-detail.html` | Curator | Single-record review |
 | `templates/biblio-team/curate.html` | Curator | All research output (curator) |

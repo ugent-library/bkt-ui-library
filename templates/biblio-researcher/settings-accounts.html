@@ -1,0 +1,118 @@
+<!-- @title: Settings — Connected accounts — Biblio -->
+<!-- @surface: backoffice -->
+<!--
+  EXPLORATION: Connected accounts
+  ───────────────────────────────
+  External identifiers and services linked to this account. ORCID is the
+  primary one: linking it lets Biblio harvest candidate works and attribute
+  authorship. UGent login is the authoritative account and cannot be unlinked
+  here.
+
+  This is where external IDs are linked — not the Profile page. A linked ORCID
+  becomes part of the PersonIdentity and feeds the candidate harvester.
+
+  Connection states per row:
+  - connected     → show identifier + "Disconnect"
+  - not connected → show "Connect" (OAuth handshake, stubbed here)
+
+  Backend implications:
+  - Connect kicks off an OAuth flow; the callback writes the external id onto
+    the PersonIdentity and may enqueue a harvest.
+  - Disconnect removes the link but never deletes already-attributed works.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/main-sidebar.html -->
+
+  <main id="main-content" class="bt-bg">
+
+    <!-- Page header -->
+    <div class="u-main__header bg-white border-bottom">
+      <h1 class="h4 fw-semibold mb-1">Settings</h1>
+    </div>
+
+    <div class="u-main__body u-main__body--split">
+
+      <aside class="u-main__sidebar u-main__sidebar--border-right">
+        <!-- @include: templates/partials/settings-sidebar.html -->
+        <!-- @active: accounts -->
+      </aside>
+
+      <section class="u-main__content">
+
+        <div class="u-main__content-header">
+          <h2 class="h5 fw-semibold mb-1">Connected accounts</h2>
+          <p class="small text-muted mb-0">
+            Link external identifiers so Biblio can find and attribute your work.
+          </p>
+        </div>
+        <div class="u-main__content-body">
+
+          <section aria-labelledby="accounts-heading" class="card mb-4">
+            <div class="card-header p-3">
+              <h2 id="accounts-heading" class="h6 mb-0">Linked services</h2>
+            </div>
+
+            <ul class="list-unstyled mb-0 card-body p-0">
+
+              <!-- ORCID — connected -->
+              <li class="px-4 py-3 border-bottom d-flex align-items-center gap-3">
+                <i class="if if-orcid if--lg text-muted flex-shrink-0" aria-hidden="true"></i>
+                <div class="min-w-0">
+                  <div class="small fw-semibold">ORCID</div>
+                  <div class="small text-muted">0000-0002-1825-0097</div>
+                </div>
+                <button type="button" class="btn btn-ghost btn-sm text-muted ms-auto flex-shrink-0"
+                  aria-label="Disconnect ORCID 0000-0002-1825-0097"
+                  hx-delete="/settings/accounts/orcid"
+                  hx-target="closest li"
+                  hx-swap="outerHTML"
+                  hx-confirm="Disconnect ORCID? Works already attributed to you stay linked.">
+                  Disconnect
+                </button>
+              </li>
+
+              <!-- UGent login — authoritative, cannot unlink -->
+              <li class="px-4 py-3 border-bottom d-flex align-items-center gap-3">
+                <i class="if if-user if--lg text-muted flex-shrink-0" aria-hidden="true"></i>
+                <div class="min-w-0">
+                  <div class="small fw-semibold">UGent login</div>
+                  <div class="small text-muted">mclaes · primary account</div>
+                </div>
+                <span class="badge bg-success ms-auto flex-shrink-0">Connected</span>
+              </li>
+
+              <!-- Web of Science ResearcherID — not connected -->
+              <!-- TODO icon: no link/chain glyph in the icon font — if-external-link is a placeholder, confirm choice -->
+              <li class="px-4 py-3 d-flex align-items-center gap-3">
+                <i class="if if-external-link if--lg text-muted flex-shrink-0" aria-hidden="true"></i>
+                <div class="min-w-0">
+                  <div class="small fw-semibold">Web of Science ResearcherID</div>
+                  <div class="small text-muted">Not connected</div>
+                </div>
+                <button type="button" class="btn btn-outline-primary btn-sm ms-auto flex-shrink-0"
+                  aria-label="Connect Web of Science ResearcherID"
+                  hx-post="/settings/accounts/wos"
+                  hx-target="closest li"
+                  hx-swap="outerHTML">
+                  Connect
+                </button>
+              </li>
+
+            </ul>
+          </section>
+
+          <p class="form-text">
+            Linking ORCID lets Biblio match new publications to you automatically.
+            Disconnecting never removes works already attributed to you.
+          </p>
+
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>

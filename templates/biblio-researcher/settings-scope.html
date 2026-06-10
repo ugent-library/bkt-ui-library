@@ -1,0 +1,502 @@
+<!-- @title: Settings — Work scope — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: filled, empty -->
+<!--
+  EXPLORATION: Curator / proxy scope configuration
+  ─────────────────────────────────────────────────
+  Available to: Librarian role (curators) and proxies.
+  Not available to: Researcher role (their view is already naturally scoped
+  to their own work).
+
+  Scope = a named, persistent constraint on what you work with.
+  It narrows default views across search, dashboard, and candidate queue —
+  within the limits of your Grants.
+
+  A user can have MULTIPLE org scopes simultaneously.
+  Examples:
+  - "Faculty of Sciences + Faculty of Engineering" (cross-faculty curator)
+  - "Department of Physics + Department of Biology" (two departments)
+  - "Faculty of Sciences · Datasets + Dissertations" (org + type filter)
+
+  Scope is NOT:
+  - A permission system (that's Grants — scope cannot exceed grants)
+  - A session filter (those are cleared per query)
+  - A role (Librarian vs. Researcher vs Proxy is a separate concern)
+
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/main-sidebar.html -->
+
+  <main id="main-content" class="bt-bg">
+
+    <!-- Page header -->
+    <div class="u-main__header bg-white border-bottom">
+      <h1 class="h4 fw-semibold mb-1">Settings</h1>
+    </div>
+
+    <div class="u-main__body u-main__body--split">
+
+      <aside class="u-main__sidebar u-main__sidebar--border-right">
+        <!-- @include: templates/partials/settings-sidebar.html -->
+        <!-- @active: scope -->
+      </aside>
+
+      <section class="u-main__content">
+        <div class="u-main__content-header">
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <h2 class="h5 fw-semibold mb-1">Curation work scope</h2>
+                <p class="small text-muted mb-0">
+                  Narrow your default view to the research output you're responsible for.
+                </p>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <a href="/settings" class="btn btn-ghost btn-sm text-muted">Cancel</a>
+                <span id="scope-save-status" role="status" aria-live="polite"
+                  class="text-muted small ms-auto visually-hidden">Saved</span>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="submit" class="btn btn-primary">Save scope</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="u-main__content-body">
+          <form method="post" action="/settings/scope" id="scope-form">
+
+            <!-- State (c): orgs + types active — shown in prototype -->
+            <div class="card mb-4">
+              <div class="card-header p-3">
+                <h2 class="h6 mb-0">Your current scope</h2>
+              </div>
+              <div class="card-body">
+                <!-- @state: filled -->
+                  <div class="d-flex flex-wrap gap-1 align-items-center mb-3">
+                    <!-- Org pills — all shown in summary, truncated in sidebar indicator -->
+                    <span class="badge bg-light text-dark border fw-normal">Faculty of Sciences</span>
+                    <span class="badge bg-light text-dark border fw-normal">Faculty of Engineering</span>
+                    <span class="text-muted small px-1" aria-hidden="true">·</span>
+                    <span class="badge bg-primary">Dataset</span>
+                    <span class="badge bg-primary">Dissertation</span>
+                  </div>
+                <!-- @state -->
+
+                <!-- @state: empty -->
+                  <p class="text-muted">No scope set. You're currently seeing everything your access rights allow.</p>
+                <!-- @state -->
+
+
+                <ul class="list-unstyled mb-0">
+                  <li class="d-flex align-items-center mb-1 gap-2">
+                    <i class="if if-check text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="small text-muted">
+                      <span class="fw-semibold">Search</span>
+                      <span>&mdash; Opens with scope applied by default. Override with any filter.</span>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-center mb-1 gap-2">
+                    <i class="if if-check text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="small text-muted">
+                      <span class="fw-semibold">Dashboard inbox</span>
+                      <span>&mdash; Suggestions, returned items, and review queue filtered to your scope.</span>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-center mb-1 gap-2">
+                    <i class="if if-check text-success flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="small text-muted">
+                      <span class="fw-semibold">Candidate queue</span>
+                      <span>&mdash; Harvested candidates matched to your scoped organisations and types.</span>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-center mb-1 gap-2">
+                    <i class="if if-close text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="small text-muted">
+                      <span class="fw-semibold">Bulk exports and API</span>
+                      <span>&mdash; Scope does not apply — use query parameters explicitly.</span>
+                    </p>
+                  </li>
+                </ul>
+
+              </div>
+            </div>
+
+            <!-- ── Organisations ──────────────────────────────────────────────
+                Multiple orgs allowed. Each added as a pill.
+                Picker is a select of all grant-covered orgs (the set is finite
+                and known at render; no autocomplete endpoint needed). Selected
+                orgs are omitted from the select on re-render. Grouped by faculty
+                via <optgroup>.
+
+                Optional todo: make select list searchable.
+            ──────────────────────────────────────────────────────────────────── -->
+            <section aria-labelledby="org-scope-heading" class="card mb-4">
+
+              <div class="card-header p-3">
+                <h2 id="org-scope-heading" class="h6 mb-0">Organisations</h2>
+                <p class="text-muted small mb-0 mt-1">
+                  Add one or more faculties, departments, or research groups.
+                </p>
+              </div>
+
+              <!-- Active org pills — server-rendered. Prototype: populated state shown.
+                   When empty, #org-scope-list instead contains the prose:
+                   "You can see all records for all organisations your grants
+                   allow. Add an organisation to narrow your scope." -->
+              <div class="card-body border-bottom" id="org-scope-list"
+                aria-label="Selected organisations" aria-live="polite">
+                <div class="d-flex flex-wrap gap-2">
+
+                  <!-- @state: filled -->
+                    <button type="button" class="filter-tag" aria-label="Remove Faculty of Sciences from scope">
+                      Faculty of Sciences
+                      <i class="if if-close" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="filter-tag" aria-label="Remove Faculty of Engineering and Architecture from scope">
+                      Faculty of Engineering and Architecture
+                      <i class="if if-close" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="filter-tag" aria-label="Remove Department of Physics and astronomy from scope">
+                      Department of Physics and astronomy
+                      <i class="if if-close" aria-hidden="true"></i>
+                    </button>
+                  <!-- @state -->
+                  <!-- @state: empty -->
+                    <p class="text-muted">No organisations selected.</p>
+                  <!-- @state -->
+                </div>
+              </div>
+
+              <!-- Org picker — select + Add. Prototype: no wiring. Real impl posts
+                   the chosen org and re-renders #org-scope-list with the new pill. -->
+              <div class="card-body">
+                <label for="org-select" class="form-label small">Add an organisation</label>
+                <div class="input-group">
+                  <select class="form-select" id="org-select" name="org_id">
+                    <option value="" selected>Choose an organisation…</option>
+                    <optgroup label="Faculty of Arts and Philosophy (LW)">
+                      <option value="LW">Faculty of Arts and Philosophy</option>
+                      <option value="LW01">Department of Philosophy and moral sciences (LW01)</option>
+                      <option value="LW02">Department of Archaeology (LW02)</option>
+                      <option value="LW03">Department of History (LW03)</option>
+                      <option value="LW06">Department of Linguistics (LW06)</option>
+                      <option value="LW07">Department of Literary studies (LW07)</option>
+                      <option value="LW17">Department of Art, music and theatre sciences (LW17)</option>
+                      <option value="LW18">Department of Comparative sciences of culture (LW18)</option>
+                      <option value="LW20">Department of Language and communication (LW20)</option>
+                      <option value="LW21">Department of Languages and cultures (LW21)</option>
+                      <option value="LW22">Department of Translation, Interpreting and Communication (LW22)</option>
+                      <option value="LW51">Dean's Office of the Faculty of Arts and Philosophy (LW51)</option>
+                      <option value="LW53">Logistic Department for Teaching at the Faculty Arts and Philosophy (LW53)</option>
+                      <option value="LW54">PC-Lab of the Faculty of Arts and Philosophy (LW54)</option>
+                      <option value="LW55">Library of the Faculty of Arts and Philosophy (LW55)</option>
+                      <option value="LW58">Faculty Education Services Arts and Philosophy (LW58)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Law and Criminology (RE)">
+                      <option value="RE">Faculty of Law and Criminology</option>
+                      <option value="RE21">Department of Interdisciplinary Study of Law, Private Law and Business Law (RE21)</option>
+                      <option value="RE22">Department of European, Public and International Law (RE22)</option>
+                      <option value="RE23">Department of Criminology, Criminal Law and Social Law (RE23)</option>
+                      <option value="RE51">Dean's Office of the Faculty of Law and Criminology (RE51)</option>
+                      <option value="RE54">PC-Lab of the Faculty of Law and Criminology (RE54)</option>
+                      <option value="RE55">Library of the Faculty of Law and Criminology (RE55)</option>
+                      <option value="RE58">Faculty Education Services Law and Criminology (RE58)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Sciences (WE)">
+                      <option value="WE">Faculty of Sciences</option>
+                      <option value="WE02">Department of Mathematics, Computer Science and Statistics (WE02)</option>
+                      <option value="WE04">Department of Solid state sciences (WE04)</option>
+                      <option value="WE05">Department of Physics and astronomy (WE05)</option>
+                      <option value="WE06">Department of Chemistry (WE06)</option>
+                      <option value="WE07">Department of Organic and Macromolecular Chemistry (WE07)</option>
+                      <option value="WE09">Department of Plant Biotechnology and Bioinformatics (WE09)</option>
+                      <option value="WE10">Department of Biochemistry and microbiology (WE10)</option>
+                      <option value="WE11">Department of Biology (WE11)</option>
+                      <option value="WE12">Department of Geography (WE12)</option>
+                      <option value="WE13">Department of Geology (WE13)</option>
+                      <option value="WE14">Department of Biomedical molecular biology (WE14)</option>
+                      <option value="WE16">Department of Mathematics: Analysis, Logic and Discrete Mathematics (WE16)</option>
+                      <option value="WE51">Dean's Office of the Faculty of Science (WE51)</option>
+                      <option value="WE55">Science Faculty Library (WE55)</option>
+                      <option value="WE56">Institute for Continuing Education in Science - ICES (WE56)</option>
+                      <option value="WE58">Faculty Education Services Sciences (WE58)</option>
+                      <option value="WE61">Botanical Garden (WE61)</option>
+                      <option value="WE62">Workshop of the Faculty of Science (WE62)</option>
+                      <option value="WE63">Zoology Museum (WE63)</option>
+                      <option value="WE64">Museum of the History of Sciences (WE64)</option>
+                      <option value="WE65">Honeybee Valley (WE65)</option>
+                      <option value="WE15">Department of Physiology (ceased) (WE15)</option>
+                      <option value="WE53">Logistic Department for Teaching at the Faculty of Sciences (ceased) (WE53)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Medicine and Health Sciences (GE)">
+                      <option value="GE">Faculty of Medicine and Health Sciences</option>
+                      <option value="GE30">Department of Movement and Sports Sciences (GE30)</option>
+                      <option value="GE31">Department of Biomolecular Medicine (GE31)</option>
+                      <option value="GE32">Department of Diagnostic Sciences (GE32)</option>
+                      <option value="GE33">Department of Basic and Applied Medical Sciences (GE33)</option>
+                      <option value="GE34">Department of Head and Skin (GE34)</option>
+                      <option value="GE35">Department of Internal Medicine and Pediatrics (GE35)</option>
+                      <option value="GE36">Department of Oral Health Sciences (GE36)</option>
+                      <option value="GE37">Department of Rehabilitation Sciences (GE37)</option>
+                      <option value="GE38">Department of Human Structure and Repair (GE38)</option>
+                      <option value="GE39">Department of Public Health and Primary Care (GE39)</option>
+                      <option value="GE51">Dean's Office of the Faculty of Medicine and Health Sciences (GE51)</option>
+                      <option value="GE54">PC-Lab of the Faculty of Medicine and Health Sciences (GE54)</option>
+                      <option value="GE55">Knowledge Centre for Health Ghent (GE55)</option>
+                      <option value="GE56">The GHALL (Ghent Health Academy for Lifelong Learning) (GE56)</option>
+                      <option value="GE58">Faculty Education Services Medicine and Health Sciences (GE58)</option>
+                      <option value="GE61">Animalarium (GE61)</option>
+                      <option value="GE63">Center for Healthy and Safe Working Conditions (GE63)</option>
+                      <option value="GE64">Center for Prevention and Early Detection of Cancer (GE64)</option>
+                      <option value="GE53">Logistic Department for Teaching (ceased) (GE53)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Engineering and Architecture (TW)">
+                      <option value="TW">Faculty of Engineering and Architecture</option>
+                      <option value="TW01">Department of Architecture and urban planning (TW01)</option>
+                      <option value="TW03">Department of Flow, heat and combustion mechanics (TW03)</option>
+                      <option value="TW04">Department of Mechanical construction and production (TW04)</option>
+                      <option value="TW05">Department of Information technology (TW05)</option>
+                      <option value="TW06">Department of Electronics and information systems (TW06)</option>
+                      <option value="TW07">Department of Telecommunications and information processing (TW07)</option>
+                      <option value="TW08">Department of Electromechanical, Systems and Metal Engineering (TW08)</option>
+                      <option value="TW11">Department of Materials, Textiles and Chemical Engineering (TW11)</option>
+                      <option value="TW14">Department of Structural Engineering and Building Materials (TW14)</option>
+                      <option value="TW15">Department of Civil engineering (TW15)</option>
+                      <option value="TW16">Department of Mathematical analysis (TW16)</option>
+                      <option value="TW17">Department of Applied physics (TW17)</option>
+                      <option value="TW18">Department of Industrial Systems Engineering and Product Design (TW18)</option>
+                      <option value="TW19">Department of Industrial System and Product Design (TW19)</option>
+                      <option value="TW20">Department of Industrial Technology and Construction (TW20)</option>
+                      <option value="TW51">Dean's Office of the Faculty of Engineering and Architecture (TW51)</option>
+                      <option value="TW53">Logistic Department for Teaching at the Faculty of Engineering and Architecture (TW53)</option>
+                      <option value="TW54">PC-Lab of the Faculty of Engineering and Architecture (TW54)</option>
+                      <option value="TW55">Facultaire bibliotheek Ingenieurswetenschappen en Architectuur (TW55)</option>
+                      <option value="TW56">Instituut permanente vorming van de faculteit Ingenieurswetenschappen en Architectuur (IVPV) (TW56)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Economics and Business Administration (EB)">
+                      <option value="EB">Faculty of Economics and Business Administration</option>
+                      <option value="EB21">Department of Economics (EB21)</option>
+                      <option value="EB22">Department of Accounting, Corporate Finance and Taxation (EB22)</option>
+                      <option value="EB23">Department of Marketing, Innovation and Organisation (EB23)</option>
+                      <option value="EB24">Department of Business Informatics and Operations Management (EB24)</option>
+                      <option value="EB25">Department of Public Governance and Management (EB25)</option>
+                      <option value="EB51">Dean's Office of the Faculty of Economics and Business Administration (EB51)</option>
+                      <option value="EB54">PC-Lab of the Faculty of Economics and Business Administration (EB54)</option>
+                      <option value="EB55">Library of the Faculty of Economics and Business Administration (EB55)</option>
+                      <option value="EB57">Institute of Higher Education in Accounting and Tax (EB57)</option>
+                      <option value="EB58">Faculty Education Services Economics and Business Administration (EB58)</option>
+                      <option value="EB61">Technique and Budget (EB61)</option>
+                      <option value="EB01">Department of General economics (ceased) (EB01)</option>
+                      <option value="EB02">Department of Financial economics (ceased) (EB02)</option>
+                      <option value="EB03">Department of Social economics (ceased) (EB03)</option>
+                      <option value="EB05">Department of Accountancy and Corporate Finance (ceased) (EB05)</option>
+                      <option value="EB07">Department of Marketing (ceased) (EB07)</option>
+                      <option value="EB08">Department of Business Informatics and Operations Management (ceased) (EB08)</option>
+                      <option value="EB09">Department of Innovation, Entrepreneurship and Service Management (ceased) (EB09)</option>
+                      <option value="EB10">Department of Public Governance, Management and Finance (ceased) (EB10)</option>
+                      <option value="EB11">Department of Human Resource Management and Organizational Behaviour (ceased) (EB11)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Veterinary Medicine (DI)">
+                      <option value="DI">Faculty of Veterinary Medicine</option>
+                      <option value="DI01">Department of Comparative physiology and biometrics (DI01)</option>
+                      <option value="DI04">Department of Translational Physiology, Infectiology and Public Health (DI04)</option>
+                      <option value="DI05">Department of Pathobiology, Pharmacology and Zoological Medicine (DI05)</option>
+                      <option value="DI07">Department of Veterinary and Biosciences (DI07)</option>
+                      <option value="DI08">Department of Internal Medicine, Reproduction and Population Medicine (DI08)</option>
+                      <option value="DI09">Department of Small animals (DI09)</option>
+                      <option value="DI10">Department of Large Animal Surgery, Anaesthesia and Orthopaedics (DI10)</option>
+                      <option value="DI11">Department of Morphology, Imaging, Orthopedics, Rehabilitation and Nutrition (DI11)</option>
+                      <option value="DI51">Dean's Office of the Faculty of Veterinary Medicine (DI51)</option>
+                      <option value="DI54">PC-Lab of the faculty of Veterinary Medicine (DI54)</option>
+                      <option value="DI62">Biocenter AgriVet (DI62)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Psychology and Educational Sciences (PP)">
+                      <option value="PP">Faculty of Psychology and Educational Sciences</option>
+                      <option value="PP01">Department of Data-analysis (PP01)</option>
+                      <option value="PP02">Department of Experimental psychology (PP02)</option>
+                      <option value="PP03">Department of Pedagogy (PP03)</option>
+                      <option value="PP04">Department of Social Work and Social Pedagogy (PP04)</option>
+                      <option value="PP05">Department of Experimental clinical and health psychology (PP05)</option>
+                      <option value="PP06">Department of Educational Studies (PP06)</option>
+                      <option value="PP07">Department of developmental, personality and social psychology (PP07)</option>
+                      <option value="PP08">Department of Psycho-analysis and clinical consulting (PP08)</option>
+                      <option value="PP09">Department of Work, Organisation and Society (PP09)</option>
+                      <option value="PP10">Department of Special Needs Education (PP10)</option>
+                      <option value="PP11">Department of Human Resource Management and Organisational Psychology (PP11)</option>
+                      <option value="PP51">Dean's Office of the Faculty of Psychology and Educational Sciences (PP51)</option>
+                      <option value="PP54">PC-Lab of the Faculty of Psychology and Educational Sciences (PP54)</option>
+                      <option value="PP55">Library of the Faculty of Psychology and Educational Sciences (PP55)</option>
+                      <option value="PP58">Faculty Education Services Psychology and Educational Sciences (PP58)</option>
+                      <option value="PP59">Research Support Office FPPW (PP59)</option>
+                      <option value="PP61">Testing Laboratory at the Faculty of Psychology and Pedagogical Sciences (PP61)</option>
+                      <option value="PP62">Management Common Infrastructure of the Faculty PP (ceased) (PP62)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Bioscience Engineering (LA)">
+                      <option value="LA">Faculty of Bioscience Engineering</option>
+                      <option value="LA20">Department of Environment (LA20)</option>
+                      <option value="LA21">Department of Plants and Crops (LA21)</option>
+                      <option value="LA22">Department of Animal Sciences and Aquatic Ecology (LA22)</option>
+                      <option value="LA23">Department of Food technology, Safety and Health (LA23)</option>
+                      <option value="LA24">Department of Green Chemistry and Technology (LA24)</option>
+                      <option value="LA25">Department of Biotechnology (LA25)</option>
+                      <option value="LA26">Department of Data analysis and mathematical modelling (LA26)</option>
+                      <option value="LA27">Department of Agricultural Economics (LA27)</option>
+                      <option value="LA51">Dean's Office of the Faculty of Agricultural and Applied Biological Sciences (LA51)</option>
+                      <option value="LA55">Library faculty of Bioscience Engineering (LA55)</option>
+                      <option value="LA59">Research Services of the Faculty Bioscience Engineering (LA59)</option>
+                      <option value="LA60">Internationalization Services of the Faculty Bioscience Engineering (LA60)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Pharmaceutical Sciences (FW)">
+                      <option value="FW">Faculty of Pharmaceutical Sciences</option>
+                      <option value="FW01">Department of Pharmaceutics (FW01)</option>
+                      <option value="FW02">Department of Pharmaceutical analysis (FW02)</option>
+                      <option value="FW03">Department of Bio-analysis (FW03)</option>
+                      <option value="FW51">Dean's Office of the Faculty of Pharmaceutical Sciences (FW51)</option>
+                      <option value="FW61">Laboratories of the Faculty of Pharmaceutical Sciences (FW61)</option>
+                    </optgroup>
+                    <optgroup label="Faculty of Political and Social Sciences (PS)">
+                      <option value="PS">Faculty of Political and Social Sciences</option>
+                      <option value="PS01">Department of Communication studies (PS01)</option>
+                      <option value="PS03">Department of Political science (PS03)</option>
+                      <option value="PS04">Department of Sociology (PS04)</option>
+                      <option value="PS05">Department of Conflict and Development Studies (PS05)</option>
+                      <option value="PS51">Dean's Office of the Faculty of Political and Social Sciences (PS51)</option>
+                      <option value="PS53">Service for Educational Support Faculty PS (PS53)</option>
+                      <option value="PS54">PC-Lab of the Faculty of Political and Social Sciences (PS54)</option>
+                      <option value="PS56">Faculty of Political and Social Sciences - Institute for Permanent Education (PS56)</option>
+                      <option value="PS58">Faculty Education Services Political and Social Sciences (PS58)</option>
+                    </optgroup>
+                    <optgroup label="Doctoral Schools (DS)">
+                      <option value="DS">Doctoral Schools</option>
+                      <option value="DS10">Doctoral School of Arts, Humanities and Law (DS10)</option>
+                      <option value="DS30">Doctoral School of Natural Sciences (DS30)</option>
+                    </optgroup>
+                    <optgroup label="Central Administration (CA)">
+                      <option value="CA">Central Administration</option>
+                      <option value="CA01">Rector's Office (CA01)</option>
+                      <option value="CA02">Vice-rector's Office (CA02)</option>
+                      <option value="CA03">Chief Academic Administrator (CA03)</option>
+                      <option value="CA04">Chief Logistics Administrator (CA04)</option>
+                      <option value="CA05">Secretariat of the Board of Governors (CA05)</option>
+                      <option value="CA08">Academic Director of Internationalization (CA08)</option>
+                      <option value="CA09">Centre for Academic Heritage and Archives (CA09)</option>
+                      <option value="CA10">Department of Educational Affairs (CA10)</option>
+                      <option value="CA20">Department of Research Affairs (CA20)</option>
+                      <option value="CA30">Department of Administrative Affairs (CA30)</option>
+                      <option value="CA40">Department of Personnel and Organization (CA40)</option>
+                      <option value="CA50">Financial Department (CA50)</option>
+                      <option value="CA60">Information and Communication Technology Department (CA60)</option>
+                      <option value="CA70">Department of Infrastructure and Facility Management (CA70)</option>
+                      <option value="CA80">Department of Student Facilities (CA80)</option>
+                      <option value="CA95">Ghent University Association (CA95)</option>
+                      <option value="CA06">Department UCBO-UCRO (CA06)</option>
+                    </optgroup>
+                    <optgroup label="Partner institutions">
+                      <option value="UZGent">Ghent University Hospital</option>
+                      <option value="HOGENT">University College Ghent</option>
+                      <option value="HOWEST">University College West Flanders</option>
+                      <option value="HOART">University College Artevelde</option>
+                      <option value="VIB">VIB</option>
+                      <option value="IMEC">Imec</option>
+                      <option value="IBBT">iMinds</option>
+                      <option value="FlandersMake">Flanders Make</option>
+                      <option value="GUK">Global Campus Korea</option>
+                    </optgroup>
+                  </select>
+                  <a href="#" class="btn btn-outline-primary">Add</a>
+                </div>
+                <p class="form-text">
+                  Only organisations covered by your access rights are shown.
+                </p>
+              </div>
+
+            </section>
+
+            <!-- ── Output types ───────────────────────────────────────────────
+                Optional. Empty = all types within org scope.
+                Useful for institution-wide type specialists (e.g. a data
+                librarian who handles all datasets regardless of faculty).
+
+                TODO: add actual output types
+            ──────────────────────────────────────────────────────────────────── -->
+            <section aria-labelledby="type-scope-heading" class="card mb-4">
+
+              <div class="card-header p-3">
+                <h2 id="type-scope-heading" class="h6 mb-0">Output types</h2>
+                <p class="text-muted small mb-0 mt-1">
+                  Focus on specific kinds of research output.
+                  Leave all unchecked to see every type.
+                </p>
+              </div>
+
+              <div class="card-body">
+                <div class="row g-2">
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-journal" name="scope_type[]" value="journal_article">
+                      <label class="form-check-label" for="scope-journal">Journal article</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-dataset" name="scope_type[]" value="dataset" checked>
+                      <label class="form-check-label" for="scope-dataset">Dataset</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-dissertation" name="scope_type[]" value="dissertation" checked>
+                      <label class="form-check-label" for="scope-dissertation">Dissertation</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-conference" name="scope_type[]" value="conference_paper">
+                      <label class="form-check-label" for="scope-conference">Conference paper</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-book" name="scope_type[]" value="book">
+                      <label class="form-check-label" for="scope-book">Book</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-chapter" name="scope_type[]" value="book_chapter">
+                      <label class="form-check-label" for="scope-chapter">Book chapter</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-software" name="scope_type[]" value="software">
+                      <label class="form-check-label" for="scope-software">Software</label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="scope-misc" name="scope_type[]" value="miscellaneous">
+                      <label class="form-check-label" for="scope-misc">Miscellaneous</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </section>
+
+          </form>
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>
