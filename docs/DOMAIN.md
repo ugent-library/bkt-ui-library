@@ -275,7 +275,7 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `search-filter-first.html` | Filter-first search exploration |
 | `search-advanced-builder.html` | Advanced filter builder |
 | `search-advanced-token.html` | Advanced filter token variant |
-| `search-settings-scope.html` | Scope configuration (Settings) |
+| `settings-scope.html` | Scope configuration (Settings) |
 | `deposit-1-0-find.html` | Deposit step 1a — entry (blank) |
 | `deposit-1-1-find.html` | Deposit step 1b — entry (pre-filled from import) |
 | `deposit-2-upload.html` | Deposit step 2 — upload full text |
@@ -286,10 +286,10 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 
 | Template | Entity / concept |
 |----------|------------------|
-| `team-queue.html` | Queue overview (Wachtrij) — personal scoped waiting list |
-| `team-review.html` | Single-record review — inline edit, AI suggestions, return modal |
-| `search-team.html` | All research output (curator scope + flags) |
-| `overview-team.html` | Team health overview — entry point for head of curation |
+| `my-queue.html` | Queue overview (Wachtrij) — personal scoped waiting list |
+| `curate-detail.html` | Single-record review — inline edit, AI suggestions, return modal |
+| `curate.html` | All research output (curator scope + flags) |
+| `team-overview.html` | Team health overview — entry point for head of curation |
 
 ### Proxy — `templates/biblio-proxy/`
 

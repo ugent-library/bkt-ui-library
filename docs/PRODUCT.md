@@ -24,7 +24,7 @@ The existing `dashboard.html` is a partial researcher view only.
 |------|-----------|--------|
 | Dashboard — researcher | `biblio-researcher/dashboard.html` | Nearing completion, with filled, empty and message state. |
 | Dashboard — proxy | ✗ | **Not designed** |
-| Dashboard — curator | `biblio-team/team-queue.html` | ✓ Prototyped |
+| Dashboard — curator | `biblio-team/my-queue.html` | ✓ Prototyped |
 
 **Curator review queue**
 After a researcher submits, the work is automatically published. The curator sees it
@@ -35,9 +35,9 @@ finished, they mark it as reviewed. This closes the deposit loop.
 
 | What | Prototype | Status |
 |------|-----------|--------|
-| Curator review queue (list of submitted works) | `biblio-team/team-queue.html` | ✓ Prototyped |
-| Curator review: mark as reviewed | `biblio-team/team-review.html` | ✓ Prototyped |
-| Curator review: return with reason | `biblio-team/team-review.html` | ✓ Prototyped (modal) |
+| Curator review queue (list of submitted works) | `biblio-team/my-queue.html` | ✓ Prototyped |
+| Curator review: mark as reviewed | `biblio-team/curate-detail.html` | ✓ Prototyped |
+| Curator review: return with reason | `biblio-team/curate-detail.html` | ✓ Prototyped (modal) |
 
 **Deposit flow**
 The four-step flow is structurally prototyped. The field content is illustrative —
@@ -60,9 +60,9 @@ Filter-first is the committed approach.
 | What | Prototype | Status |
 |------|-----------|--------|
 | Search, filter-first | `biblio-researcher/search-filter-first.html` | ✓ Exploration |
-| Search settings / scope | `biblio-researcher/search-settings-scope.html` | ✓ Exploration |
+| Search settings / scope | `biblio-researcher/settings-scope.html` | ✓ Exploration |
 | Search — researcher | `biblio-researcher/search-researcher.html` | ✓ Done |
-| Search — curator | `biblio-team/search-team.html` | ✓ Done |
+| Search — curator | `biblio-team/curate.html` | ✓ Done |
 
 **Public surface**
 All primary detail pages exist. Overview/browse pages are missing — no way for
@@ -234,7 +234,7 @@ that scope. Scope can vary per curator — not everyone covers the same departme
 - Otherwise: oldest submitted first (FIFO)
 - Curators can override sort
 
-**Risk tiers (from RESPONSIBILITY.md):**
+**NOT YET Risk tiers (from RESPONSIBILITY.md):**
 
 | Tier | Label | Conditions |
 |------|-------|-----------|
@@ -259,7 +259,7 @@ Tier 3 items are visually distinct — not just a badge.
 - At-risk flags: both system-generated and curator-set
 - Dashboard must not require manual maintenance — everything derived from record state
 
-**Current prototype:** `biblio-team/team-queue.html` — ✓ Prototyped.
+**Current prototype:** `biblio-team/my-queue.html` — ✓ Prototyped.
 
 **Open questions:**
 - Trusted import definition: when a WoS harvest creates a record without researcher
@@ -351,7 +351,7 @@ Two dimensions:
 
 Scope ≠ Grant (what you *can* access). Scope ≠ filter (session-level).
 
-**Prototype:** `biblio-researcher/search-settings-scope.html` + sidebar of `biblio-researcher/search-filter-first.html`
+**Prototype:** `biblio-researcher/settings-scope.html` + sidebar of `biblio-researcher/search-filter-first.html`
 
 **Still open:**
 - Overlap with saved views: scope = persistent org/type constraint;
@@ -394,7 +394,7 @@ Resolve before handing a template to the dev for implementation.
 | Saved views nav | `biblio-researcher/search-filter-first.html` | ⚠ Bootstrap utilities only |
 | `--bt-text-muted` token mismatch | `_surfaces.scss` | ⚠ Not yet resolved |
 | `style=` on year range inputs | `biblio-researcher/search-filter-first.html` | ⚠ Needs SCSS token |
-| `style=` on `max-width: 680px` | `biblio-researcher/search-settings-scope.html` | ⚠ Needs layout token or utility |
+| `style=` on `max-width: 680px` | `biblio-researcher/settings-scope.html` | ⚠ Needs layout token or utility |
 | Risk tier Tier-3 visual treatment | `biblio-team/team-*` | ⚠ Not yet designed |
 | Scope indicator in dashboard header | `biblio-team/team-*` | ⚠ Bootstrap utilities only |
 
