@@ -248,8 +248,10 @@ function stripHtmlComments(html) {
 
 function renderBodyTemplate(raw, filePath, activeState) {
   const { meta, body: rawBody } = parseMetaAndBody(raw, filePath);
+  // No explicit state → first declared @states value is the default.
+  const state = activeState || meta.stateList?.[0] || null;
   const resolved = resolveIncludes(rawBody, filePath);
-  const stateFiltered = filterStateContent(resolved, activeState);
+  const stateFiltered = filterStateContent(resolved, state);
   const body = stripHtmlComments(stateFiltered);
   const surface = meta.surface ? ` data-surface="${meta.surface}"` : '';
   const headCss = DEFAULT_CSS.map(href => `  <link rel="stylesheet" href="${href}">`).join('\n');
@@ -472,7 +474,7 @@ function renderScopeList(names) {
     ${names.map(name => `
       <span class="d-inline-flex align-items-center gap-1 badge bg-light text-dark border fw-normal py-2 px-3">
         ${name}
-        <button type="button" class="btn-close btn-close-sm ms-1" aria-label="Remove ${name} from scope" hx-delete="/settings/scope/org/${slugify(name)}" hx-target="#org-scope-list" hx-swap="outerHTML"></button>
+        <button type="button" class="btn-close btn-sm ms-1" aria-label="Remove ${name} from scope" hx-delete="/settings/scope/org/${slugify(name)}" hx-target="#org-scope-list" hx-swap="outerHTML"></button>
       </span>`).join('')}
   </div>
 </div>`;
@@ -881,8 +883,9 @@ async function handleTemplateHtmx(req, res, urlPath, params) {
 function renderNavLink(f, currentPath, activeState) {
   const active = currentPath === f.path;
   if (f.isTemplate) {
-    const stateBtns = (f.stateList || []).map(s => {
-      const isCurrent = active && activeState === s;
+    const stateBtns = (f.stateList || []).map((s, idx) => {
+      // Bare URL (no ?state) defaults to the first declared state.
+      const isCurrent = active && (activeState === s || (!activeState && idx === 0));
       return `<a href="${f.path}?state=${encodeURIComponent(s)}" class="bt-nav-state-btn${isCurrent ? ' is-active' : ''}" title="State: ${s}">${s}</a>`;
     }).join('');
     const stateSection = (stateBtns && active) ? `<span class="bt-nav-state-list">${stateBtns}</span>` : '';
