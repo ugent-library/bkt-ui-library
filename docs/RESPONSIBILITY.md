@@ -173,18 +173,6 @@ Risk level drives review intensity — not field type. A page number and an FWO 
 
 ---
 
-## Risk-based review tiers
-
-Tier is assigned at submission time based on automation signals. Display thresholds for probabilistic suggestions are set by development and design, informed by reviewer experience.
-
-| Tier | Conditions | Examples | Escalation trigger | Curator effort |
-|---|---|---|---|---|
-| **1 — Fast Pass** | Clean import, no funding ambiguity, no duplicate flag, no file issue | Standard journal article with consistent DOI metadata | Any automation flag | Seconds |
-| **2 — Standard** | Grant needs confirmation, affiliation mismatch, duplicate warning, missing project/author link | Research output with unclear FWO link, author identity ambiguity | Unresolved after curator review | Moderate |
-| **3 — Deep Curation** | VABB-sensitive, FWO attribution critical, books/chapters, legal/embargo complexity, authorship dispute | Dissertation, disputed authorship, dataset with policy complexity | N/A — expert handling | Expert |
-
----
-
 ## Curator override policy
 
 - Curators have the highest authority on any field
