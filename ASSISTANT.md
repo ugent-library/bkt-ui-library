@@ -529,8 +529,9 @@ people-result__meta-item people-result.is-selected
 
 **Scroll utility**
 ```
-bt-scroll-frame          bt-code-block
+bt-scroll-frame          bt-code-block            bt-table-sticky-col
 ```
+`bt-table-sticky-col` on a `.table` inside `.table-responsive` pins the first column while the rest scrolls horizontally.
 
 **Work card**
 ```
@@ -978,3 +979,5 @@ Default to the dumbest version that works. Don't extract a helper for a single c
 Justify, don't defend. For example: "Why does trustPillar exist?" is a better question than "is trustPillar necessary?" The first one forces you to name the reason out loud, so you can hear that it's weak. Read your own output skeptically.
 
 Don't extract a helper for a single call site. Don't introduce a variable to avoid duplicating two lines. Prefer the dumb version when it's legible.
+
+Placeholder data must be announced as placeholder. Any claim about the real domain (funders, classifications, faculty behaviour) is sourced or flagged as a guess — never asserted.
