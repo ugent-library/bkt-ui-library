@@ -140,6 +140,33 @@
   overflow-y: auto;
 }
 
+// Sticky first column for wide matrix tables. The table sits inside a
+// Bootstrap .table-responsive (horizontal scroll); this pins the outer-left
+// label column — the leading cell of thead, every tbody row, and tfoot — so
+// row labels stay visible while the remaining columns scroll sideways. The
+// opaque background is required so scrolled cells don't show through the
+// pinned column; first column is unstriped (odd) so white matches the base.
+//
+// border-right marks where the pinned column ends; the directional box-shadow
+// casts rightward onto the scrolling columns, reading as a soft drop-shadow on
+// the left of the second column — a scrolling affordance that content tucks
+// under the pinned column. Shadow colour matches the --bt-shadow-* token base.
+.bt-table-sticky-col {
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--bt-white);
+    box-shadow: inset -2px -1px 0px -1px var(--bt-border-color);
+  }
+
+  th:nth-child(2),
+  td:nth-child(2) {
+    box-shadow: inset 3px 0px 4px -2px var(--bt-border-color);
+  }
+}
+
 .bt-code-block {
   max-height: 220px;
 }
