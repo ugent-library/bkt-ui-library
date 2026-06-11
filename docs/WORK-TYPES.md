@@ -48,26 +48,10 @@ Distinctions that matter for mapping or reporting are shown as first-class type
 choices — not hidden in secondary metadata fields. What we show to a researcher can
 differ from what we export to external systems. The mapping layer handles translation.
 
-**No Miscellaneous.** If a type cannot be positively defined — by what it is, not by
-what it isn't — it does not ship. A residual catch-all corrupts every analysis that
-uses the type field and becomes impossible to clean up retroactively.
-
-**Types are not classifications.** A VABB classification (A1, A2, B1, B2, C1) is a
+**Types are not classifications.** A classification (A1, A2, B1, B2, C1) is a
 curator-owned field applied after deposit. It is not a type. A type describes what
 the output is. A classification describes how an external system values it.
 Do not conflate them.
-
-**Types are not states.** A preprint is a state of an article (submitted version),
-not a separate type. Publication version is captured as a per-record field — see
-Fields to be defined. The legacy system treated `preprint` as a `miscellaneous_types`
-subtype; that was a misclassification, corrected in this design. The
-never-advancing preprint case (a submitted-version record that is never
-followed by an accepted or published version) does not break this rule: it
-is a long-lived `journal_article` in `submitted version` state, and the
-COAR export already emits `preprint` for it via the publication-version
-derivation rule. The re-engagement question — whether researchers actually
-update the record when the article eventually publishes — is empirical and
-tracked in Open questions, not as an exception to the rule itself.
 
 **Required fields at deposit are not optional curator cleanup.** If a field matters
 for citation, discovery, or external export – and a researcher only knows the correct
@@ -84,10 +68,12 @@ metadata completion — applies as much to historical data as to new deposits. T
 implications of this constraint for the migration matrix are deferred; the rule
 itself stands now.
 
+
+
 **Biblio is a primary source.** Type decisions have long-term consequences. External
 systems (OpenAlex, WoS, FRIS, DataCite) index from Biblio. Getting type wrong means
 wrong data in every downstream system, permanently, until someone corrects it record
-by record.
+by record. This also means deriving data from unstructured fields to create structured data is not durable. We can not invent reliable information.
 
 ---
 
