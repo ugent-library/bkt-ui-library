@@ -66,11 +66,67 @@
         </nav>
 
         <h1 class="mb-3">Organisations</h1>
-        <p class="lead mb-0 col-lg-7">
+        <p class="lead mb-4 col-lg-7">
           Browse the institutional tree: Ghent University and partner institutions,
           their faculties and departments. Each unit links to its research output,
           researchers and projects.
         </p>
+
+        <!-- ── Scoped search + typeahead ──────────────────────────────────────
+             Searches WITHIN this directory only. The typeahead below is a
+             working prototype: directory-search.js filters the inline example
+             dataset as you type (it does not filter the org tree below). In
+             production this becomes GET /organisations/suggest?q=… -->
+        <form role="search" aria-label="Search organisations"
+          action="/templates/biblio-public/public-organisations.html" class="mb-0">
+          <div class="position-relative col-lg-7" id="organisation-search" data-directory-search="organisations">
+
+            <label for="organisation-q" class="visually-hidden">
+              Search organisations by name, code, or type
+            </label>
+
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0" aria-hidden="true">
+                <i class="if if-search text-muted"></i>
+              </span>
+              <input
+                type="search"
+                id="organisation-q"
+                name="q"
+                class="form-control border-start-0 ps-0"
+                placeholder="Search organisations by name, code, or type…"
+                autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="organisation-search-panel"
+                aria-expanded="false">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+
+            <!-- Typeahead panel — populated client-side by directory-search.js. -->
+            <div id="organisation-search-panel" class="bt-suggest-panel"
+              role="listbox" aria-label="Organisation suggestions" hidden></div>
+
+            <!-- Example dataset powering the typeahead (prototype only). -->
+            <script type="application/json" data-suggest-source>
+            [
+              { "label": "Ghent University",                                  "meta": "University · UGent · ROR 04r1mr385", "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-ghent-university" },
+              { "label": "Faculty of Sciences",                               "meta": "Faculty · WE",                       "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Faculty of Bioscience Engineering",                 "meta": "Faculty · LA",                       "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Faculty of Arts and Philosophy",                    "meta": "Faculty · LW",                       "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Department of Environment",                         "meta": "Department · Faculty of Bioscience Engineering", "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Department of Civil Engineering",                   "meta": "Department · TW15",                  "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Department of Physics and Astronomy",               "meta": "Department · WE05",                  "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Department of Green Chemistry and Technology",      "meta": "Department · LW01",                  "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "UZ Gent",                                           "meta": "University hospital · partner",      "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "VIB",                                               "meta": "Research center · partner",          "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "Global Campus Korea",                               "meta": "Branch campus · KR01",               "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" },
+              { "label": "HOGENT",                                            "meta": "University college · partner",       "href": "/templates/biblio-public/public-organisation-detail.html", "icon": "if-building" }
+            ]
+            </script>
+
+          </div>
+        </form>
 
       </div>
     </div>
@@ -99,14 +155,6 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-8 col-xl-7 mt-2 pe-4 ps-3" aria-label="Activity for Ghent University">
-                    <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">381&thinsp;829</span> <span class="text-muted">works</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;942</span> <span class="text-muted">researchers</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">27&thinsp;274</span> <span class="text-muted">alumni</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;121</span> <span class="text-muted">projects</span></li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
@@ -128,14 +176,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Faculty of Arts and Philosophy">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">55&thinsp;720</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;013</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">3&thinsp;980</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">310</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -151,14 +191,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Philosophy and moral sciences">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;145</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">112</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">439</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">34</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -171,14 +203,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of History">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8&thinsp;890</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">162</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">635</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">49</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </li>
@@ -193,14 +217,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Linguistics">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5&thinsp;038</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">92</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">360</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">28</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -213,14 +229,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Languages and cultures">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;969</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">127</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">498</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">39</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </li>
@@ -242,14 +250,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Faculty of Sciences">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">65&thinsp;822</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;197</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">4&thinsp;702</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">366</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -265,14 +265,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Physics and astronomy">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8&thinsp;703</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">158</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">622</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">48</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -285,14 +277,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Biology">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8&thinsp;722</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">159</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">623</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">48</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </li>
@@ -307,14 +291,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Chemistry">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;130</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">39</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">152</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">12</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -328,14 +304,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Geography">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5&thinsp;433</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">99</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">388</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">30</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -348,12 +316,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Zoology Museum">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">3</span> <span class="text-muted">researchers</span></li>
-                          </ul>
                         </div>
                       </div>
                     </li>
@@ -375,14 +337,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Faculty of Bioscience Engineering">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">37&thinsp;375</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">680</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;670</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">208</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -398,14 +352,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Environment">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;311</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">42</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">165</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">13</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -418,14 +364,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Plants and Crops">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;743</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">32</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">124</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">10</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </li>
@@ -440,14 +378,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Green Chemistry and Technology">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">3&thinsp;073</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">56</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">220</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">17</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </li>
                     <li data-organisation-type="department" class="pt-2 pb-3">
@@ -460,14 +390,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-0" aria-label="Activity for Department of Biotechnology">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;636</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">48</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">188</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">15</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </li>
@@ -495,14 +417,6 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-8 col-xl-7 mt-2 pe-4 ps-3" aria-label="Activity for Ghent University Hospital">
-                    <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">12&thinsp;420</span> <span class="text-muted">works</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">226</span> <span class="text-muted">researchers</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">887</span> <span class="text-muted">alumni</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">69</span> <span class="text-muted">projects</span></li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
@@ -526,14 +440,6 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-8 col-xl-7 mt-2 pe-4 ps-3" aria-label="Activity for Global Campus Korea">
-                    <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">864</span> <span class="text-muted">works</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">16</span> <span class="text-muted">researchers</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">62</span> <span class="text-muted">alumni</span></li>
-                      <li class="list-inline-item"><span class="fw-semibold d-inline-block">5</span> <span class="text-muted">projects</span></li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>
@@ -555,14 +461,7 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Department of Environmental Technology, Food Technology and Molecular Biotechnology">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">845</span> <span class="text-muted">research output</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">15</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">60</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
+                        <div cl
                       </div>
                     </div>
                   </div>
@@ -604,14 +503,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for University College Ghent">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">4&thinsp;820</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">88</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">344</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">27</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -632,14 +523,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for University College West Flanders">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;960</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">36</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">140</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">11</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -659,14 +542,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Artevelde University College">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">2&thinsp;310</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">42</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">165</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">13</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </div>
@@ -709,14 +584,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for VIB">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">9&thinsp;516</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">173</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">680</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">53</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -736,14 +603,6 @@
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                             </ul>
                           </div>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Imec">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">6&thinsp;740</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">123</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">481</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">37</span> <span class="text-muted">projects</span></li>
-                          </ul>
                         </div>
                       </div>
                     </div>
@@ -765,14 +624,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for iMinds">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">1&thinsp;450</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">26</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">104</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">8</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -793,14 +644,6 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-12 col-lg-6 mt-2 pe-4 ps-3" aria-label="Activity for Flanders Make">
-                          <ul class="list-unstyled list-inline small d-flex gap-lg-4 gap-2 justify-content-lg-end">
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">980</span> <span class="text-muted">works</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">18</span> <span class="text-muted">researchers</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">70</span> <span class="text-muted">alumni</span></li>
-                            <li class="list-inline-item"><span class="fw-semibold d-inline-block">5</span> <span class="text-muted">projects</span></li>
-                          </ul>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -815,5 +658,7 @@
 
   </main>
 </div>
+
+<script src="/assets/js/directory-search.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
