@@ -1,0 +1,350 @@
+<!-- @title: Output type by faculty — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: active-team -->
+<!--
+  All faculties by output type.
+
+  Two matrices, lifted off the Team overview onto their own page. Reached
+  from the "Faculty status" section on Team overview.
+
+  Layout: faculty down the side (rows), output type across the top
+  (columns) — same orientation as the per-faculty cards. ALL COUNTS FAKE.
+
+  Table 1 — Unreviewed: the ALL UNREVIEWED queue (submitted, awaiting
+  review). Row total matches the per-faculty cards on Team overview;
+  grand total 95.
+  Table 2 — Accepted: works whose publication status is "accepted",
+  REGARDLESS of curation/review status. A broader corpus, so the numbers
+  are much larger; grand total 1726.
+
+  23 type columns: the 22 work_types.md catalog types + book_review
+  (prototype-only; book_review is not a catalog type — it migrates to
+  'other' in raven). Each .table-responsive gives horizontal overflow
+  (NOT bt-scroll-frame — that is a 280px vertical scroller). Column total
+  = that type across faculties; row total = that faculty across types.
+  Note: a work can appear under multiple faculties, so a grand total is
+  not a clean institutional sum — same caveat the legacy dashboard carries.
+
+  Every cell number links to the curate queue filtered by faculty + type;
+  row and column headers + totals link to their respective filtered queues.
+  The "Publication year" dropdown is a stub (prototype shows all years);
+  selecting a year would re-filter both matrices server-side. HTMX URLs
+  are stubs.
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="bt-navbar" role="banner">
+    <a href="#" class="bt-navbar__brand" aria-label="Biblio — go to dashboard">
+      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" width="auto" height="70">
+      Biblio
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <div class="dropdown">
+        <button class="bt-avatar btn" type="button" data-bs-toggle="dropdown"
+          aria-label="Account menu for Marie Curator">MC</button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><span class="dropdown-item-text fw-semibold">Marie Curator</span></li>
+          <li><span class="dropdown-item-text text-muted small">MarieCurator@UGent.be</span></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Settings</a></li>
+          <li><a class="dropdown-item" href="#">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- @include: templates/partials/main-sidebar.html -->
+  <!-- @active: overview -->
+
+  <main id="main-content">
+
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <a href="team-overview.html" class="btn btn-ghost btn-sm px-0"
+              aria-label="Back to Team overview">
+              <i class="if if-arrow-left if--xs" aria-hidden="true"></i> Team overview
+            </a>
+          </div>
+          <div class="bt-toolbar__item">
+            <h1 class="h5 mb-0 fw-semibold">All faculties by output type</h1>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="text-muted small">All faculties · Updated just now</span>
+          </div>
+        </div>
+
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <!-- Stub: in raven this re-filters both matrices by publication year (hx-get). -->
+            <label for="year-filter" class="form-label small text-muted mb-0 me-2">Publication year</label>
+            <select id="year-filter" name="year"
+              class="form-select form-select-sm w-auto d-inline-block"
+              aria-label="Filter works by publication year">
+              <option value="all" selected>All years</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="older">2021 and earlier</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body p-4 p-lg-5">
+
+          <section aria-labelledby="unreviewed-heading" class="mb-5">
+            <h2 id="unreviewed-heading" class="small fw-semibold text-uppercase text-muted mb-3">
+              Unreviewed — all faculties by output type
+            </h2>
+            <p class="small text-muted">
+              Works submitted and awaiting review. A work linked to more than one faculty is counted in each, so the total is not a unique-work sum.
+            </p>
+            <div class="card rounded-0">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped-columns align-middle mb-0 bt-table-sticky-col" aria-label="Unreviewed queue — all faculties by output type">
+                  <thead class="text-uppercase text-muted small">
+                    <tr>
+                      <th scope="col" class="text-nowrap">Faculty</th>
+                      <th scope="col" class="text-center">Total</th>
+                          <th scope="col" class="text-center text-nowrap">Journal article</th>
+                          <th scope="col" class="text-center text-nowrap">Book</th>
+                          <th scope="col" class="text-center text-nowrap">Book chapter</th>
+                          <th scope="col" class="text-center text-nowrap">Reference entry</th>
+                          <th scope="col" class="text-center text-nowrap">Special issue</th>
+                          <th scope="col" class="text-center text-nowrap">Conference paper</th>
+                          <th scope="col" class="text-center text-nowrap">Conference abstract</th>
+                          <th scope="col" class="text-center text-nowrap">Conference poster</th>
+                          <th scope="col" class="text-center text-nowrap">Conference presentation</th>
+                          <th scope="col" class="text-center text-nowrap">Preprint</th>
+                          <th scope="col" class="text-center text-nowrap">Working paper</th>
+                          <th scope="col" class="text-center text-nowrap">Report</th>
+                          <th scope="col" class="text-center text-nowrap">Doctoral thesis</th>
+                          <th scope="col" class="text-center text-nowrap">Magazine article</th>
+                          <th scope="col" class="text-center text-nowrap">Newspaper article</th>
+                          <th scope="col" class="text-center text-nowrap">Online post</th>
+                          <th scope="col" class="text-center text-nowrap">Media appearance</th>
+                          <th scope="col" class="text-center text-nowrap">Lecture</th>
+                          <th scope="col" class="text-center text-nowrap">Patent</th>
+                          <th scope="col" class="text-center text-nowrap">Dataset</th>
+                          <th scope="col" class="text-center text-nowrap">Software</th>
+                          <th scope="col" class="text-center text-nowrap">Book review</th>
+                          <th scope="col" class="text-center text-nowrap">Other</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=sciences" class="text-reset text-decoration-none">Faculty of Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=sciences&type=journal-article" class="text-reset text-decoration-none">8</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=sciences&type=book-chapter" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=sciences&type=conference-paper" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=sciences&type=dataset" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=sciences" class="text-reset text-decoration-none">14</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=veterinary" class="text-reset text-decoration-none">Faculty of Veterinary Medicine</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=veterinary&type=journal-article" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=veterinary&type=dataset" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=veterinary" class="text-reset text-decoration-none">3</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=arts" class="text-reset text-decoration-none">Faculty of Arts and Philosophy</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=arts&type=journal-article" class="text-reset text-decoration-none">9</a></td><td class="text-center"><a href="curate.html?status=submitted&faculty=arts&type=book" class="text-reset text-decoration-none">2</a></td><td class="text-center"><a href="curate.html?status=submitted&faculty=arts&type=book-chapter" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=submitted&faculty=arts&type=reference-entry" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=arts&type=conference-paper" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=arts&type=book-review" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=arts" class="text-reset text-decoration-none">22</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=medicine" class="text-reset text-decoration-none">Faculty of Medicine and Health Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=medicine&type=journal-article" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=medicine&type=conference-paper" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=medicine&type=dataset" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=medicine" class="text-reset text-decoration-none">8</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=engineering" class="text-reset text-decoration-none">Faculty of Engineering and Architecture</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=engineering&type=journal-article" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=engineering&type=conference-paper" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=engineering&type=report" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=engineering&type=dataset" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=engineering" class="text-reset text-decoration-none">12</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=law" class="text-reset text-decoration-none">Faculty of Law and Criminology</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=law&type=journal-article" class="text-reset text-decoration-none">4</a></td><td class="text-center"><a href="curate.html?status=submitted&faculty=law&type=book" class="text-reset text-decoration-none">1</a></td><td class="text-center"><a href="curate.html?status=submitted&faculty=law&type=book-chapter" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=law&type=conference-paper" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=law&type=book-review" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=law" class="text-reset text-decoration-none">10</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=economics" class="text-reset text-decoration-none">Faculty of Economics and Business Administration</a>
+                          </th>
+                          <td class="text-center fw-semibold"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3">0</td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=bioscience" class="text-reset text-decoration-none">Faculty of Bioscience Engineering</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=bioscience&type=journal-article" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=bioscience&type=conference-paper" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=bioscience&type=dataset" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=bioscience" class="text-reset text-decoration-none">7</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=psychology" class="text-reset text-decoration-none">Faculty of Psychology and Educational Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=psychology&type=journal-article" class="text-reset text-decoration-none">5</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=psychology&type=conference-paper" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=psychology&type=report" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=psychology&type=dataset" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=psychology&type=book-review" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=psychology" class="text-reset text-decoration-none">9</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=polsoc" class="text-reset text-decoration-none">Faculty of Political and Social Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=polsoc&type=journal-article" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=polsoc&type=conference-paper" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=polsoc&type=online-post" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=polsoc" class="text-reset text-decoration-none">6</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=submitted&faculty=pharma" class="text-reset text-decoration-none">Faculty of Pharmaceutical Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=submitted&faculty=pharma&type=journal-article" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=submitted&faculty=pharma&type=dataset" class="text-reset text-decoration-none">1</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center pe-3"><a href="curate.html?status=submitted&faculty=pharma" class="text-reset text-decoration-none">4</a></td>
+                        </tr>
+                  </tbody>
+                  <tfoot class="border-top">
+                    <tr class="fw-semibold">
+                      <th scope="row" class="text-nowrap">All faculties</th>
+                      <td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=journal-article" class="text-reset text-decoration-none">49</a></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=book" class="text-reset text-decoration-none">3</a></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=book-chapter" class="text-reset text-decoration-none">9</a></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=reference-entry" class="text-reset text-decoration-none">1</a></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=conference-paper" class="text-reset text-decoration-none">17</a></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=report" class="text-reset text-decoration-none">2</a></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=online-post" class="text-reset text-decoration-none">1</a></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=dataset" class="text-reset text-decoration-none">9</a></td><td class="text-center fw-semibold"></td><td class="text-center fw-semibold"><a href="curate.html?status=submitted&type=book-review" class="text-reset text-decoration-none">4</a></td><td class="text-center fw-semibold"></td><td class="text-center pe-3"><a href="curate.html?status=submitted" class="text-reset text-decoration-none">95</a></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section aria-labelledby="accepted-heading" class="mb-4">
+            <h2 id="accepted-heading" class="small fw-semibold text-uppercase text-muted mb-3">
+              Accepted — all faculties by output type
+            </h2>
+            <p class="small text-muted">
+              Works with an "accepted" publication status, regardless of review status. A work linked to more than one faculty is counted in each, so the total is not a unique-work sum.
+            </p>
+            <div class="card rounded-0">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped-columns align-middle mb-0 bt-table-sticky-col" aria-label="Accepted works — all faculties by output type">
+                  <thead class="text-uppercase text-muted small">
+                    <tr>
+                      <th scope="col" class="text-nowrap">Faculty</th>
+                      <th scope="col" class="text-center">Total</th>
+                          <th scope="col" class="text-center text-nowrap">Journal article</th>
+                          <th scope="col" class="text-center text-nowrap">Book</th>
+                          <th scope="col" class="text-center text-nowrap">Book chapter</th>
+                          <th scope="col" class="text-center text-nowrap">Reference entry</th>
+                          <th scope="col" class="text-center text-nowrap">Special issue</th>
+                          <th scope="col" class="text-center text-nowrap">Conference paper</th>
+                          <th scope="col" class="text-center text-nowrap">Conference abstract</th>
+                          <th scope="col" class="text-center text-nowrap">Conference poster</th>
+                          <th scope="col" class="text-center text-nowrap">Conference presentation</th>
+                          <th scope="col" class="text-center text-nowrap">Preprint</th>
+                          <th scope="col" class="text-center text-nowrap">Working paper</th>
+                          <th scope="col" class="text-center text-nowrap">Report</th>
+                          <th scope="col" class="text-center text-nowrap">Doctoral thesis</th>
+                          <th scope="col" class="text-center text-nowrap">Magazine article</th>
+                          <th scope="col" class="text-center text-nowrap">Newspaper article</th>
+                          <th scope="col" class="text-center text-nowrap">Online post</th>
+                          <th scope="col" class="text-center text-nowrap">Media appearance</th>
+                          <th scope="col" class="text-center text-nowrap">Lecture</th>
+                          <th scope="col" class="text-center text-nowrap">Patent</th>
+                          <th scope="col" class="text-center text-nowrap">Dataset</th>
+                          <th scope="col" class="text-center text-nowrap">Software</th>
+                          <th scope="col" class="text-center text-nowrap">Book review</th>
+                          <th scope="col" class="text-center text-nowrap">Other</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=veterinary" class="text-reset text-decoration-none">Faculty of Veterinary Medicine</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=veterinary&type=journal-article" class="text-reset text-decoration-none">40</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=book-chapter" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=conference-paper" class="text-reset text-decoration-none">8</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=conference-abstract" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=conference-poster" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=preprint" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=doctoral-thesis" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=dataset" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=veterinary&type=other" class="text-reset text-decoration-none">2</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=veterinary" class="text-reset text-decoration-none">72</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=sciences" class="text-reset text-decoration-none">Faculty of Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=sciences&type=journal-article" class="text-reset text-decoration-none">120</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=book" class="text-reset text-decoration-none">2</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=book-chapter" class="text-reset text-decoration-none">8</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=conference-paper" class="text-reset text-decoration-none">30</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=conference-abstract" class="text-reset text-decoration-none">10</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=conference-poster" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=preprint" class="text-reset text-decoration-none">14</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=doctoral-thesis" class="text-reset text-decoration-none">5</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=dataset" class="text-reset text-decoration-none">18</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=software" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=sciences&type=other" class="text-reset text-decoration-none">3</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=sciences" class="text-reset text-decoration-none">220</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=arts" class="text-reset text-decoration-none">Faculty of Arts and Philosophy</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=arts&type=journal-article" class="text-reset text-decoration-none">60</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=book" class="text-reset text-decoration-none">18</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=book-chapter" class="text-reset text-decoration-none">45</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=reference-entry" class="text-reset text-decoration-none">8</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=special-issue" class="text-reset text-decoration-none">3</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=conference-paper" class="text-reset text-decoration-none">12</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=conference-presentation" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=magazine-article" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=newspaper-article" class="text-reset text-decoration-none">4</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=online-post" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=lecture" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=book-review" class="text-reset text-decoration-none">14</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=arts&type=other" class="text-reset text-decoration-none">6</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=arts" class="text-reset text-decoration-none">188</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=medicine" class="text-reset text-decoration-none">Faculty of Medicine and Health Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=medicine&type=journal-article" class="text-reset text-decoration-none">150</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=book-chapter" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=conference-paper" class="text-reset text-decoration-none">22</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=conference-abstract" class="text-reset text-decoration-none">18</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=conference-poster" class="text-reset text-decoration-none">12</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=preprint" class="text-reset text-decoration-none">10</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=doctoral-thesis" class="text-reset text-decoration-none">7</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=dataset" class="text-reset text-decoration-none">14</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=medicine&type=other" class="text-reset text-decoration-none">4</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=medicine" class="text-reset text-decoration-none">243</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=engineering" class="text-reset text-decoration-none">Faculty of Engineering and Architecture</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=engineering&type=journal-article" class="text-reset text-decoration-none">70</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=book-chapter" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=conference-paper" class="text-reset text-decoration-none">60</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=conference-abstract" class="text-reset text-decoration-none">14</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=conference-poster" class="text-reset text-decoration-none">8</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=conference-presentation" class="text-reset text-decoration-none">10</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=preprint" class="text-reset text-decoration-none">8</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=report" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=patent" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=dataset" class="text-reset text-decoration-none">12</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=software" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=engineering&type=other" class="text-reset text-decoration-none">3</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=engineering" class="text-reset text-decoration-none">206</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=law" class="text-reset text-decoration-none">Faculty of Law and Criminology</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=law&type=journal-article" class="text-reset text-decoration-none">48</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=book" class="text-reset text-decoration-none">9</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=book-chapter" class="text-reset text-decoration-none">30</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=reference-entry" class="text-reset text-decoration-none">5</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=conference-paper" class="text-reset text-decoration-none">8</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=working-paper" class="text-reset text-decoration-none">6</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=report" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=online-post" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=book-review" class="text-reset text-decoration-none">9</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=law&type=other" class="text-reset text-decoration-none">4</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=law" class="text-reset text-decoration-none">125</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=economics" class="text-reset text-decoration-none">Faculty of Economics and Business Administration</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=economics&type=journal-article" class="text-reset text-decoration-none">55</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=book" class="text-reset text-decoration-none">4</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=book-chapter" class="text-reset text-decoration-none">12</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=conference-paper" class="text-reset text-decoration-none">18</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=working-paper" class="text-reset text-decoration-none">14</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=report" class="text-reset text-decoration-none">5</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=dataset" class="text-reset text-decoration-none">6</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=software" class="text-reset text-decoration-none">2</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=economics&type=other" class="text-reset text-decoration-none">3</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=economics" class="text-reset text-decoration-none">119</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=bioscience" class="text-reset text-decoration-none">Faculty of Bioscience Engineering</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=bioscience&type=journal-article" class="text-reset text-decoration-none">90</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=book-chapter" class="text-reset text-decoration-none">5</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=conference-paper" class="text-reset text-decoration-none">20</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=conference-abstract" class="text-reset text-decoration-none">8</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=conference-poster" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=preprint" class="text-reset text-decoration-none">9</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=doctoral-thesis" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=patent" class="text-reset text-decoration-none">3</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=dataset" class="text-reset text-decoration-none">16</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=software" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=bioscience&type=other" class="text-reset text-decoration-none">2</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=bioscience" class="text-reset text-decoration-none">166</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=psychology" class="text-reset text-decoration-none">Faculty of Psychology and Educational Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=psychology&type=journal-article" class="text-reset text-decoration-none">80</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=book" class="text-reset text-decoration-none">3</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=book-chapter" class="text-reset text-decoration-none">10</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=conference-paper" class="text-reset text-decoration-none">16</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=conference-poster" class="text-reset text-decoration-none">9</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=preprint" class="text-reset text-decoration-none">7</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=report" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=dataset" class="text-reset text-decoration-none">11</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=software" class="text-reset text-decoration-none">2</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=book-review" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=psychology&type=other" class="text-reset text-decoration-none">3</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=psychology" class="text-reset text-decoration-none">150</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=polsoc" class="text-reset text-decoration-none">Faculty of Political and Social Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=polsoc&type=journal-article" class="text-reset text-decoration-none">50</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=book" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=book-chapter" class="text-reset text-decoration-none">18</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=conference-paper" class="text-reset text-decoration-none">12</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=working-paper" class="text-reset text-decoration-none">8</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=report" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=newspaper-article" class="text-reset text-decoration-none">6</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=online-post" class="text-reset text-decoration-none">5</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=media-appearance" class="text-reset text-decoration-none">4</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=book-review" class="text-reset text-decoration-none">4</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=polsoc&type=other" class="text-reset text-decoration-none">3</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=polsoc" class="text-reset text-decoration-none">121</a></td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="text-nowrap">
+                            <a href="curate.html?status=accepted&faculty=pharma" class="text-reset text-decoration-none">Faculty of Pharmaceutical Sciences</a>
+                          </th>
+                          <td class="text-center fw-semibold"><a href="curate.html?status=accepted&faculty=pharma&type=journal-article" class="text-reset text-decoration-none">65</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=book-chapter" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=conference-paper" class="text-reset text-decoration-none">14</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=conference-abstract" class="text-reset text-decoration-none">6</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=conference-poster" class="text-reset text-decoration-none">5</a></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=preprint" class="text-reset text-decoration-none">6</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=doctoral-thesis" class="text-reset text-decoration-none">3</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=patent" class="text-reset text-decoration-none">4</a></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=dataset" class="text-reset text-decoration-none">8</a></td><td class="text-center"></td><td class="text-center"></td><td class="text-center"><a href="curate.html?status=accepted&faculty=pharma&type=other" class="text-reset text-decoration-none">2</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted&faculty=pharma" class="text-reset text-decoration-none">116</a></td>
+                        </tr>
+                  </tbody>
+                  <tfoot class="border-top">
+                    <tr class="fw-semibold">
+                      <th scope="row" class="text-nowrap">All faculties</th>
+                      <td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=journal-article" class="text-reset text-decoration-none">828</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=book" class="text-reset text-decoration-none">41</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=book-chapter" class="text-reset text-decoration-none">143</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=reference-entry" class="text-reset text-decoration-none">13</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=special-issue" class="text-reset text-decoration-none">3</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=conference-paper" class="text-reset text-decoration-none">220</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=conference-abstract" class="text-reset text-decoration-none">61</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=conference-poster" class="text-reset text-decoration-none">50</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=conference-presentation" class="text-reset text-decoration-none">16</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=preprint" class="text-reset text-decoration-none">57</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=working-paper" class="text-reset text-decoration-none">28</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=report" class="text-reset text-decoration-none">25</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=doctoral-thesis" class="text-reset text-decoration-none">21</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=magazine-article" class="text-reset text-decoration-none">5</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=newspaper-article" class="text-reset text-decoration-none">10</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=online-post" class="text-reset text-decoration-none">10</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=media-appearance" class="text-reset text-decoration-none">4</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=lecture" class="text-reset text-decoration-none">4</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=patent" class="text-reset text-decoration-none">12</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=dataset" class="text-reset text-decoration-none">91</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=software" class="text-reset text-decoration-none">17</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=book-review" class="text-reset text-decoration-none">32</a></td><td class="text-center fw-semibold"><a href="curate.html?status=accepted&type=other" class="text-reset text-decoration-none">35</a></td><td class="text-center pe-3"><a href="curate.html?status=accepted" class="text-reset text-decoration-none">1726</a></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </section>
+    </div>
+  </main>
+
+</div>
+
+<script src="/assets/js/sidebar-toggle.js"></script>
