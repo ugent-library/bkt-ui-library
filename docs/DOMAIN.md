@@ -18,22 +18,11 @@ The central entity. A publication, dataset, software, or other research output p
 ### Work kind
 The publication type. Determines which fields are active in the deposit form (profile-driven — see The profile system).
 
-> ⚠️ **Out of sync with `raven/docs/raven-design.md`.** The `Known kinds` list below
-> predates the type-system redesign captured in `raven/docs/raven-design.md`.
-> raven-design.md has 20 v1 types and explicitly removes `preprint` as a
-> type — a preprint is now a `journal_article` (or other peer-review-lifecycle
-> type) with `publication_version = submitted version`. Treat raven-design.md as
-> authoritative pending workshop confirmation; this section and the Content
-> categories table below will be re-synced once the type list is committed.
-> This is not a commitment to that list — it is a pointer so that anyone
-> reading DOMAIN.md does not mistake the legacy 9-kind list for the working
-> design.
+The authoritative list of work kinds lives in `raven/docs/raven-design.md`. It is not duplicated here, to avoid drift.
 
-Known kinds: `journal_article`, `book`, `book_chapter`, `dataset`, `software`, `conference_paper`, `dissertation`, `report`, `preprint`
+All kinds are collectively referred to as **research output** — not "publications" or "publications and datasets". The term "publications" is not used in the UI. This is intentional: new kinds may be added in the future without requiring a UI redesign.
 
-All kinds are collectively referred to as **research output** — not "publications" or "publications and datasets". The term "publications" is not used in the UI. This is intentional: new kinds (e.g. `educational_material`, `patent`) may be added in the future without requiring a UI redesign.
-
-In the UI: shown as a `badge bg-primary` badge (`Journal article`, `Dataset`, etc.) and controls which form fields appear.
+In the UI: shown as a `badge bg-primary` badge and controls which form fields appear.
 
 ### Work status
 The lifecycle state of a Work.
@@ -218,34 +207,7 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 
 ## Content categories and their display differences
 
-> ⚠️ **Same sync caveat as the Work kind section above.** This table predates
-> the `raven/docs/raven-design.md` redesign. The `preprint` row is the most obvious stale
-> entry — preprint is no longer a kind. Several raven-design.md kinds are missing here
-> entirely (`review_article`, `reference_entry`, `conference_abstract`, `conference_poster`,
-> `conference_presentation`, `policy_report`, `annotation`, `review`,
-> `popular_article`, `broadcast_appearance`, `popular_book`). Note that
-> `online_publication` was briefly a kind but has since been collapsed
-> back into `popular_article` (with an internal `venue_form = web`
-> discriminator) — see raven-design.md § "`online_publication` collapsed into
-> `popular_article`". Display specifics for the new kinds are deferred until
-> the type list is committed; do not invent display-specific rows for them
-> here until then.
-
-All research output is modelled as a `Work` with a `kind`, but some categories have meaningfully different display needs:
-
-| Work kind | Display specifics |
-|-----------|------------------|
-| `journal_article` | Journal title, volume, issue, pages, DOI prominent |
-| `book`, `book_chapter` | ISBN, publisher, edition; chapter shows parent book |
-| `dataset` | Repository link, data format, licence, reuse instructions |
-| `software` | Repository URL (GitHub etc.), version, language |
-| `dissertation` | Degree, supervisor, institution, embargo common |
-| `conference_paper` | Conference name, location, proceedings |
-| `report` | Issuing body, report number |
-| `preprint` | Server (arXiv, bioRxiv), version number |
-| Heritage object kinds | Physical location, digitisation status, image viewer, loan request |
-
-All of the above are **research output**. The table shows display differences within a single unified entity — not separate categories with separate UI sections.
+All research output is modelled as a single `Work` entity with a `kind` — not separate categories with separate UI sections. Some kinds have meaningfully different display needs. The authoritative list of kinds and their definitions lives in `raven/docs/raven-design.md`; it is not duplicated here.
 
 Heritage objects in particular may need a distinct template — the Boekentoren erfgoedcollectie includes manuscripts, maps, and archival items where the primary experience is visual and physical provenance matters more than bibliographic metadata.
 
@@ -316,7 +278,7 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `add-author-form.html` | Deposit author add form |
 | `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
 
-**Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge (`Dataset`, `Journal article`, etc.) is how type is communicated, not separate nav sections.
+**Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge is how type is communicated, not separate nav sections.
 
 ---
 
