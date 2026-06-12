@@ -10,6 +10,15 @@
  * - HTMX partial responses: ?partial=true strips shell
  * - Template HTML view: ?view=html shows source with copy button
  * - Template states: @states meta + <!-- @state: name --> blocks + ?state= param
+ *
+ * Ports are configurable via env vars (defaults preserve the original
+ * behaviour when unset):
+ *   PORT       HTTP port            (default 3111)
+ *   WS_PORT    live-reload socket   (default 3001; when PORT is set it
+ *                                    defaults to PORT+1 so a second instance
+ *                                    can run alongside the first without a
+ *                                    socket clash). This lets tooling launch
+ *                                    a parallel instance on a free port.
  */
 
 const http    = require('http');
@@ -17,8 +26,8 @@ const fs      = require('fs');
 const path    = require('path');
 const crypto  = require('crypto');
 
-const PORT    = 3111;
-const WS_PORT = 3001;
+const PORT    = process.env.PORT || 3111;
+const WS_PORT = process.env.WS_PORT || (process.env.PORT ? Number(PORT) + 1 : 3001);
 const ROOT    = __dirname;
 
 // ─── Bootstrap delivery: jsDelivr CDN, pinned to 5.3.3 ───────────────────────
@@ -334,15 +343,15 @@ function renderSearchResultCards() {
 <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="search-result-1">
   <div class="card-header bt-work-card__head">
     <div class="bt-meta-list pt-1">
-      <span class="badge bg-success">Open access</span>
       <span class="bt-meta-list__item-bordered">Journal article</span>
+      <span class="badge bg-success">Open access</span>
     </div>
     <div class="bt-btn-toolbar">
       <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure">
         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
       </button>
       <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban forests as essential infrastructure">
-        <i class="if if-list-check" aria-hidden="true"></i> Save
+        <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
       <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-primary btn-sm">
         <i class="if if-book" aria-hidden="true"></i> Read
@@ -360,14 +369,14 @@ function renderSearchResultCards() {
 <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="search-result-2">
   <div class="card-header bt-work-card__head">
     <div class="bt-meta-list pt-1">
-      <span class="bt-meta-list__item-bordered">Dataset</span>
+      <span class="bt-meta-list__item">Dataset</span>
     </div>
     <div class="bt-btn-toolbar">
       <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
       </button>
       <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban tree canopy cover measurements Belgium 2020–2025">
-        <i class="if if-list-check" aria-hidden="true"></i> Save
+        <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
       <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-primary btn-sm" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-download" aria-hidden="true"></i> Download
@@ -642,47 +651,204 @@ function renderUploadList() {
 </div>`;
 }
 
-function renderWorksFeed(label) {
+function renderWorksFeed() {
   return `
 <div class="my-5">
-  <h3 class="h6 text-uppercase text-muted pb-2 mb-3">${label}</h3>
   ${renderSearchResultCards()}
 </div>`;
 }
 
 function renderPeopleList() {
+  // Cards mirror the public-researchers.html examples (identifiers, activity
+  // counts, research-topic badges) but omit the affiliations/organisations
+  // block — the organisation is implied by this page. Card names are <h3>
+  // because they sit under the letter-group <h2>; see ASSISTANT.md rule A1.
   return `
 <div class="mb-4">
   <h2 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">D</h2>
-  <ul class="list-unstyled d-flex flex-column gap-2">
-    <li class="d-flex align-items-center gap-3 py-2 border-bottom">
-      <span class="bt-avatar bt-avatar--small" aria-hidden="true">KD</span>
-      <div>
-        <a href="/persons/01K9XTVXD41Z" class="fw-semibold">De Pauw, Karen</a>
-        <div class="small text-muted">Associate Professor · Department of Environment</div>
-      </div>
+  <ol class="list-unstyled mb-0">
+
+    <li>
+      <article class="card mb-3" aria-labelledby="person-kd">
+        <div class="card-body p-4">
+          <h3 class="h5 mb-1">
+            <a href="/persons/01K9XTVXD41Z" id="person-kd" class="text-decoration-none">De Pauw, Karen</a>
+          </h3>
+
+          <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small" aria-label="Identifiers for Karen De Pauw">
+            <li>
+              <i class="if if-ghent-university"></i>
+              <span>802001234567</span>
+            </li>
+            <li>
+              <a href="https://orcid.org/0000-0002-1234-5678"
+                class="d-inline-flex align-items-center gap-1 text-decoration-none"
+                rel="noopener noreferrer" target="_blank" aria-label="ORCID: 0000-0002-1234-5678">
+                <i class="if if-orcid" aria-hidden="true"></i>
+                <span>0000-0002-1234-5678</span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="list-unstyled d-flex gap-4 mb-3" aria-label="Activity for Karen De Pauw">
+            <li>
+              <span class="fw-bold">147</span>
+              <span class="text-muted">research output</span>
+            </li>
+            <li>
+              <span class="fw-bold">4</span>
+              <span class="text-muted">projects</span>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap gap-1" aria-label="Research topics">
+            <a href="/search?q=urban+forests" class="badge bg-primary text-decoration-none">Urban forests</a>
+            <a href="/search?q=climate+resilience" class="badge bg-primary text-decoration-none">Climate resilience</a>
+            <a href="/search?q=green+infrastructure" class="badge bg-primary text-decoration-none">Green infrastructure</a>
+            <a href="/search?q=biodiversity" class="badge bg-primary text-decoration-none">Biodiversity</a>
+          </div>
+        </div>
+      </article>
     </li>
-    <li class="d-flex align-items-center gap-3 py-2 border-bottom">
-      <span class="bt-avatar bt-avatar--small" aria-hidden="true">LD</span>
-      <div>
-        <a href="/persons/01K9XTVXD42A" class="fw-semibold">Desmet, Lore</a>
-        <div class="small text-muted">PhD researcher · Department of Food Technology</div>
-      </div>
+
+    <li>
+      <article class="card mb-3" aria-labelledby="person-ld">
+        <div class="card-body p-4">
+          <h3 class="h5 mb-1">
+            <a href="/persons/01K9XTVXD42A" id="person-ld" class="text-decoration-none">Desmet, Lore</a>
+          </h3>
+
+          <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small" aria-label="Identifiers for Lore Desmet">
+            <li>
+              <i class="if if-ghent-university"></i>
+              <span>002101887766</span>
+            </li>
+            <li>
+              <a href="https://orcid.org/0000-0001-5566-7788"
+                class="d-inline-flex align-items-center gap-1 text-decoration-none"
+                rel="noopener noreferrer" target="_blank" aria-label="ORCID: 0000-0001-5566-7788">
+                <i class="if if-orcid" aria-hidden="true"></i>
+                <span>0000-0001-5566-7788</span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="list-unstyled d-flex gap-4 mb-3" aria-label="Activity for Lore Desmet">
+            <li>
+              <span class="fw-bold">12</span>
+              <span class="text-muted">research output</span>
+            </li>
+            <li>
+              <span class="fw-bold">2</span>
+              <span class="text-muted">projects</span>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap gap-1" aria-label="Research topics">
+            <a href="/search?q=food+technology" class="badge bg-primary text-decoration-none">Food technology</a>
+            <a href="/search?q=fermentation" class="badge bg-primary text-decoration-none">Fermentation</a>
+          </div>
+        </div>
+      </article>
     </li>
-  </ul>
+
+  </ol>
+</div>
+<div class="mb-4">
+  <h2 class="h6 text-uppercase text-muted border-bottom pb-2 mb-3">R</h2>
+  <ol class="list-unstyled mb-0">
+
+    <li>
+      <article class="card mb-3" aria-labelledby="person-kr">
+        <div class="card-body p-4">
+          <h3 class="h5 mb-1">
+            <a href="/persons/01K9XTVXD43B" id="person-kr" class="text-decoration-none">Raes, Katleen</a>
+          </h3>
+
+          <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small" aria-label="Identifiers for Katleen Raes">
+            <li>
+              <i class="if if-ghent-university"></i>
+              <span>801998123456</span>
+            </li>
+            <li>
+              <a href="https://orcid.org/0000-0002-9988-7766"
+                class="d-inline-flex align-items-center gap-1 text-decoration-none"
+                rel="noopener noreferrer" target="_blank" aria-label="ORCID: 0000-0002-9988-7766">
+                <i class="if if-orcid" aria-hidden="true"></i>
+                <span>0000-0002-9988-7766</span>
+              </a>
+            </li>
+          </ul>
+
+          <ul class="list-unstyled d-flex gap-4 mb-3" aria-label="Activity for Katleen Raes">
+            <li>
+              <span class="fw-bold">96</span>
+              <span class="text-muted">research output</span>
+            </li>
+            <li>
+              <span class="fw-bold">7</span>
+              <span class="text-muted">projects</span>
+            </li>
+          </ul>
+
+          <div class="d-flex flex-wrap gap-1" aria-label="Research topics">
+            <a href="/search?q=food+chemistry" class="badge bg-primary text-decoration-none">Food chemistry</a>
+            <a href="/search?q=antioxidants" class="badge bg-primary text-decoration-none">Antioxidants</a>
+            <a href="/search?q=lipid+oxidation" class="badge bg-primary text-decoration-none">Lipid oxidation</a>
+          </div>
+        </div>
+      </article>
+    </li>
+
+  </ol>
 </div>`;
 }
 
 function renderProjectsList() {
+  // Project cards carry the field set documented in public-projects.html:
+  // title, description, period, "Read more on GISMO" link, Project ID,
+  // IWETO ID, GISMO ID, other IDs (none for these examples), and a link to
+  // the project detail page. Kept identical to the static fallback in
+  // public-organisation-detail.html so the card is the same before/after swap.
+  // PLACEHOLDER: GISMO IDs and the gismo.ugent.be URLs are invented — not
+  // sourced from the directory. Project 1's description is taken from
+  // public-project.html; project 2's description is a placeholder.
   return `
 <ul class="list-unstyled d-flex flex-column gap-3">
-  <li class="p-3 border rounded">
-    <div class="d-flex align-items-start gap-3">
-      <div class="flex-grow-1">
-        <a href="/projects/fwo-g001234n" class="fw-semibold text-decoration-none d-block mb-1">Urban green infrastructure and climate adaptation in Flemish cities</a>
-        <div class="small text-muted">FWO · G001234N · 2023–2027</div>
+  <li class="card">
+    <div class="card-body">
+      <div class="d-flex align-items-start gap-3 mb-2">
+        <a href="/projects/fwo-g001234n" class="flex-grow-1 fw-semibold text-decoration-none">Urban green infrastructure and climate adaptation in Flemish cities</a>
+        <span class="badge bg-success flex-shrink-0">Active</span>
       </div>
-      <span class="badge bg-success flex-shrink-0">Active</span>
+      <p class="mb-3">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
+      <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
+        <li>Period <time datetime="2023-01-01">2023</time>–<time datetime="2027-12-31">2027</time></li>
+        <li>Project ID <code>G001234N</code></li>
+        <li>IWETO ID <code>G001234N</code></li>
+        <li>GISMO ID <code>000123456</code></li>
+      </ul>
+      <div class="d-flex flex-wrap gap-3 small">
+        <a href="https://gismo.ugent.be/project/fwo-g001234n" rel="noopener noreferrer" class="text-decoration-none">Read more on GISMO <i class="if if-external-link if--xs" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </li>
+  <li class="card">
+    <div class="card-body">
+      <div class="d-flex align-items-start gap-3 mb-2">
+        <a href="/projects/h2020-101012345" class="flex-grow-1 fw-semibold text-decoration-none">Sustainable biorefinery valorisation of agricultural side streams</a>
+        <span class="badge bg-secondary flex-shrink-0">Ended</span>
+      </div>
+      <p class="mb-3">Agricultural processing generates large volumes of side streams that remain underused. This project develops biorefinery routes to valorise these streams into food ingredients, biomaterials and energy carriers.</p>
+      <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
+        <li>Period <time datetime="2021-01-01">2021</time>–<time datetime="2025-12-31">2025</time></li>
+        <li>Project ID <code>101012345</code></li>
+        <li>IWETO ID <code>101012345</code></li>
+        <li>GISMO ID <code>000654321</code></li>
+      </ul>
+      <div class="d-flex flex-wrap gap-3 small">
+        <a href="https://gismo.ugent.be/project/h2020-101012345" rel="noopener noreferrer" class="text-decoration-none">Read more on GISMO <i class="if if-external-link if--xs" aria-hidden="true"></i></a>
+      </div>
     </div>
   </li>
 </ul>`;
@@ -765,7 +931,7 @@ async function handleTemplateHtmx(req, res, urlPath, params) {
   if (urlPath === '/search' && method === 'GET') {
     if (target === 'token-results') return respond(renderTokenResults(), 280);
     if (target === 'results-body') return respond(renderBackofficeResultsRows(), 280);
-    if (target === 'results-list') return respond(renderWorksFeed('Matching records'), 320);
+    if (target === 'results-list') return respond(renderWorksFeed(), 320);
     if (target === 'search-results') return respond(renderSearchResultCards(), 320);
     return respond('<div class="small text-muted">Results updated.</div>', 220);
   }
@@ -845,7 +1011,7 @@ async function handleTemplateHtmx(req, res, urlPath, params) {
   }
 
   if (/^\/organisations\/.+\/works$/.test(urlPath) && method === 'GET') {
-    return respond(renderWorksFeed('2026'), 450);
+    return respond(renderWorksFeed(), 450);
   }
 
   if (/^\/organisations\/.+\/persons$/.test(urlPath) && method === 'GET') {
@@ -857,11 +1023,11 @@ async function handleTemplateHtmx(req, res, urlPath, params) {
   }
 
   if (/^\/projects\/.+\/works$/.test(urlPath) && method === 'GET') {
-    return respond(renderWorksFeed('2026'), 450);
+    return respond(renderWorksFeed(), 450);
   }
 
   if (/^\/persons\/.+\/works$/.test(urlPath) && method === 'GET') {
-    return respond(renderWorksFeed('2026'), 450);
+    return respond(renderWorksFeed(), 450);
   }
 
   if (urlPath === '/partials/authors-full' && method === 'GET') {

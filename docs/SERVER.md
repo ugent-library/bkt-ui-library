@@ -11,6 +11,20 @@ npm run dev  # Build + start server + watch CSS
 
 Server runs on `http://localhost:3111`.
 
+### Choosing a different port
+
+Both ports read from environment variables, falling back to the defaults when unset — so `npm start` behaves exactly as before:
+
+```bash
+PORT=3500 npm start               # HTTP on 3500, live-reload socket on 3501
+PORT=3500 WS_PORT=4001 npm start  # override both explicitly
+```
+
+- `PORT` — HTTP port (default `3111`).
+- `WS_PORT` — live-reload WebSocket port. Defaults to `3001`; when `PORT` is set but `WS_PORT` is not, it defaults to `PORT + 1`.
+
+This makes it possible to run a **second instance alongside a server you already have running** (e.g. a preview/automation tool launching its own copy) without colliding on the HTTP or the WebSocket port. The repo's `.claude/launch.json` sets `"autoPort": true` for exactly this reason: tooling may pick a free port and pass it through `PORT`.
+
 ## Features
 
 - **Static File Serving**: Serves all files from the project root.
@@ -27,7 +41,7 @@ Server runs on `http://localhost:3111`.
 
 ## Configuration
 
-- **Port**: 3111 (HTTP), 3001 (WebSocket)
+- **Port**: 3111 (HTTP), 3001 (WebSocket) — both overridable via `PORT` / `WS_PORT` env vars (see [Choosing a different port](#choosing-a-different-port)).
 - **Root Directory**: Project root
 - **Default CSS**: Bootstrap 5.3.3 + `/assets/booktower.css`
 - **Default Scripts**: HTMX 1.9.12, Bootstrap JS bundle
