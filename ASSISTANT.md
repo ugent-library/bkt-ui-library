@@ -17,7 +17,6 @@ When a new session begins on this project, execute these steps before writing an
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
    - `docs/CONSUMING-BOOKTOWER.md` — how to use this UI library correctly inside another project
    - `docs/JAVASCRIPT.md` — JS file registry, event contract, loading order
-   - `docs/DEPOSIT-FLOW.md` — if working on the deposit flow
 
 2. **Check the verified class list** — the complete class list in this file (ASSISTANT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
 

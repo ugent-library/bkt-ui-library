@@ -2,8 +2,6 @@
 
 This file defines the shared language between the backend (`raven`) and the UI layer (`booktower-ui-library`). When working on either side, use these terms consistently. Do not invent synonyms.
 
-For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
-
 ---
 
 ## Core entities

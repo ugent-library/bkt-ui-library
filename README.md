@@ -40,7 +40,6 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [Integration](base/integration.html) — Using the design system in apps
 - [AI-assistent guidelines](ASSISTANT.md) — Working guidelines for AI-assisted development on this project
-- [Deposit flow](docs/DEPOSIT-FLOW.md) — Researcher deposit flow: steps, fields, JS, and Go templ params
 
 ## Browser Support
 
