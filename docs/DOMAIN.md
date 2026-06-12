@@ -182,7 +182,7 @@ A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked
 ### ~~Organisation page (public)~~ ✓ `templates/biblio-public/public-organisation-detail.html`
 A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. The organisation directory that links to these is `public-organisations.html`.
 
-### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project.html`
+### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project-detail.html`
 A page for a funded research project. In progress. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. The project directory that links to these is `public-projects.html` (in progress).
 
 ### Curated list / collection page (public) — not yet prototyped
@@ -260,13 +260,13 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | Template | Entity / concept |
 |----------|------------------|
 | `public-index.html` | Public homepage |
-| `public-search.html` | Work search + results |
+| `public-research.html` | Work search + results |
 | `public-research-detail.html` | Work detail page |
 | `public-researchers.html` | Researcher directory (A–Z browse) |
 | `public-researcher-detail.html` | Researcher profile (PersonIdentity) |
 | `public-organisations.html` | Organisation directory |
 | `public-organisation-detail.html` | Organisation landing page |
-| `public-project.html` | Project detail page (in progress) |
+| `public-project-detail.html` | Project detail page (in progress) |
 | `public-projects.html` | Project directory (in progress) |
 
 ### Researcher — `templates/biblio-researcher/`

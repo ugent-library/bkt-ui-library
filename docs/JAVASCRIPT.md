@@ -51,7 +51,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Manages the filter picker, editor panel, and active filter chips. Owns the filter state and fires search requests when a filter changes.
 
-**Loaded by:** `public-search.html`, `search-filter-first.html`
+**Loaded by:** `public-research.html`, `search-filter-first.html`
 
 **Listens for:**
 - `biblio:filter-add` — adds a chip without opening the editor (used by autocomplete selections)
@@ -70,7 +70,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup, handles keyboard navigation within the panel, and dispatches `biblio:filter-add` when the user selects an Org, Project, Keyword, or Tag suggestion.
 
-**Loaded by:** `public-search.html`
+**Loaded by:** `public-research.html`
 
 **Listens for:**
 - `focus` and `keyup` on `#q`
@@ -107,7 +107,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used inside the filter editor (Author filter) and the deposit flow add-author form.
 
-**Loaded by:** `public-search.html`, `search-filter-first.html`, deposit flow templates (when add-author form is active)
+**Loaded by:** `public-research.html`, `search-filter-first.html`, deposit flow templates (when add-author form is active)
 
 **Listens for:**
 - `keyup` on `[data-ps-input]` inputs
@@ -158,7 +158,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Provides mock person data for `people-search.js` when the real `/people/search` endpoint does not exist.
 
-**Loaded by:** `public-search.html`, `search-filter-first.html` (prototype builds only)
+**Loaded by:** `public-research.html`, `search-filter-first.html` (prototype builds only)
 
 **Remove when:** the real `/people/search` endpoint is wired up.
 
@@ -168,7 +168,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Provides mock autocomplete suggestions for text filter fields (used by `suggest-panel.js` and `filter-editor.js` in prototypes).
 
-**Loaded by:** `public-search.html`, `search-filter-first.html` (prototype builds only)
+**Loaded by:** `public-research.html`, `search-filter-first.html` (prototype builds only)
 
 **Remove when:** real server endpoints for autocomplete exist.
 

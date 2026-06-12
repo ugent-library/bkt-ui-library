@@ -77,7 +77,7 @@ The design system supports modern browsers that Bootstrap 5 supports:
 For common page layouts, copy from `templates/partials/` and customize. These use only existing CSS classes from the design system:
 
 - `backoffice-overview.html` — Backoffice list view with sidebar, toolbar, filters, facets, and table results (uses `u-layout--app`, `u-main__sidebar`, etc.)
-- `public-search.html` — Public search page with hero, filters, facets, and card results
+- `public-research.html` — Public search page with hero, filters, facets, and card results
 
 These include placeholder content and comments showing where to customize. The full HTML output remains copy-paste friendly for developers.
 

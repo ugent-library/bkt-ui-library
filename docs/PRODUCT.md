@@ -71,10 +71,10 @@ a user to browse to an organisation, project, or researcher page without a direc
 | What | Prototype | Status |
 |------|-----------|--------|
 | Homepage | `biblio-public/public-index.html` | ✓ |
-| Search | `biblio-public/public-search.html` | ✓ |
+| Search | `biblio-public/public-research.html` | ✓ |
 | Work detail | `biblio-public/public-research-detail.html` | ✓ |
 | Organisation detail | `biblio-public/public-organisation.html` | ✓ |
-| Project detail | `biblio-public/public-project.html` | ✓ |
+| Project detail | `biblio-public/public-project-detail.html` | ✓ |
 | Researcher profile | `biblio-public/public-researcher.html` | ✓ |
 | Organisations overview | ✗ | Not prototyped |
 | Projects overview | ✗ | Not prototyped |

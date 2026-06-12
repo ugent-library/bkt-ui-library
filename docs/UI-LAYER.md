@@ -100,9 +100,9 @@ The `templates/` directory in `booktower-ui-library` contains full-page prototyp
 
 | Prototype | Role | Go templ equivalent |
 |-----------|------|--------------------|
-| `templates/biblio-public/public-search.html` | Public | Public search page |
+| `templates/biblio-public/public-research.html` | Public | Public search page |
 | `templates/biblio-public/public-research-detail.html` | Public | Work detail page |
-| `templates/biblio-public/public-project.html` | Public | Project detail page |
+| `templates/biblio-public/public-project-detail.html` | Public | Project detail page |
 | `templates/biblio-researcher/dashboard.html` | Researcher | Researcher inbox |
 | `templates/biblio-researcher/deposit-*.html` | Researcher | Deposit flow steps |
 | `templates/biblio-researcher/search-researcher.html` | Researcher | My research output list |

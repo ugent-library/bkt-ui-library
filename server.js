@@ -812,7 +812,7 @@ function renderProjectsList() {
   // public-organisation-detail.html so the card is the same before/after swap.
   // PLACEHOLDER: GISMO IDs and the gismo.ugent.be URLs are invented — not
   // sourced from the directory. Project 1's description is taken from
-  // public-project.html; project 2's description is a placeholder.
+  // public-project-detail.html; project 2's description is a placeholder.
   return `
 <ul class="list-unstyled d-flex flex-column gap-3">
   <li class="card">
