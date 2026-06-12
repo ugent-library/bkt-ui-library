@@ -1809,20 +1809,6 @@ a.bt-avatar--dark:hover:not(:disabled) {
 }
 
 /* -- filter-tag -- */
-/*
-  Three variants:
-    .filter-tag               -- simple removable chip (x inside the button)
-    .filter-tag--editable     -- left half of a split chip; click opens editor
-    .filter-tag--static       -- display-only, used in saved search previews
-
-  Split chip pattern:
-    <div class="filter-tag-group">
-      <button class="filter-tag filter-tag--editable">Type: Journal article</button>
-      <button class="filter-tag__remove" aria-label="Remove filter...">
-        <i class="if if-close if--xs" aria-hidden="true"></i>
-      </button>
-    </div>
-*/
 .filter-tag {
   display: inline-flex;
   align-items: center;
@@ -1933,61 +1919,69 @@ a.bt-avatar--dark:hover:not(:disabled) {
   border: var(--bt-border);
   border-radius: var(--bt-radius-lg);
   box-shadow: var(--bt-shadow-md);
-  padding: var(--bt-sp-4);
   max-width: 480px;
-  /* The overlay anchor can be a narrow flex slot (e.g. the search toolbar's
-     Add-filter button). Guarantee a usable popover width regardless, capped to
-     the viewport on small screens. */
   min-width: min(480px, 100vw - 2rem);
+  z-index: var(--bt-z-panel);
+}
+
+.filter-editor__title {
+  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
+  margin-bottom: 0;
+  font-weight: var(--s-display-weight);
+  border-bottom: 1px solid var(--bt-border);
 }
 
 .filter-editor__actions {
   display: flex;
   gap: var(--bt-sp-2);
   margin-top: var(--bt-sp-3);
-  padding-top: var(--bt-sp-3);
+  padding: var(--bt-sp-4);
   border-top: var(--bt-border);
 }
 
+.filter-editor__form {
+  padding: var(--bt-sp-4);
+}
+
 /* -- Filter editor -- checklist -- */
-.filter-checklist {
+.filter-editor__checklist {
   display: flex;
   flex-direction: column;
   gap: var(--bt-sp-1);
   max-height: 240px;
   overflow-y: auto;
+  padding: var(--bt-sp-2) 0;
 }
 
-.filter-checklist .form-check {
+.filter-editor__checklist .form-check {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
   margin: 0;
-  padding: var(--bt-sp-2) var(--bt-sp-4) 0 0; /* match picker row padding (8px 16px) */
+  padding: var(--bt-sp-2) var(--bt-sp-4);
   border-radius: var(--bt-radius-sm);
 }
 
-.filter-checklist .form-check-input {
+.filter-editor__checklist .form-check-input {
   float: none;
   margin: 0;
   flex: 0 0 auto;
 }
 
-.filter-checklist .form-check:hover {
+.filter-editor__checklist .form-check:hover {
   background-color: var(--bt-gray-50);
 }
 
-.filter-checklist .form-check-label {
-  font-size: var(--bt-text-base); /* match picker (1rem) */
-  color: var(--bt-gray-700); /* resting label, like the picker */
+.filter-editor__checklist .form-check-label {
+  font-size: var(--bt-text-base);
+  color: var(--bt-gray-700);
   cursor: pointer;
   flex: 1;
 }
 
 /* -- Filter editor -- boolean toggle (Bootstrap .btn-check radio group) --
-   Dedicated component (native single-select + a11y); the soft look is preserved
-   purely through --bs-btn-* variables: white/outline at rest, blue-100 fill when
-   selected. No custom selected-state CSS or JS toggling. */
+   Soft look comes entirely from --bs-btn-* vars; no custom selected-state
+   CSS or JS toggling. */
 .filter-boolean {
   display: flex;
   gap: var(--bt-sp-2);

@@ -1,19 +1,6 @@
 /**
- * filter-editor.js
- * Filter chip interaction for all search pages.
- *
- * Requires in the page:
- *   #active-chips          — container where chips are rendered
- *   #filter-editor         — panel where the editor renders (hidden by default)
- *   #clear-all-btn         — "Clear all" button (hidden by default)
- *   #filter-search         — search input inside the filter picker
- *   #filter-picker-list    — list of buttons with data-filter="<id>"
- *   #add-filter-btn        — the Bootstrap dropdown trigger
- *   #add-filter-dropdown   — the Bootstrap dropdown wrapper
- *
- * Cooperates with people-search.js for the people-search editor type.
- * Load people-search.js before this file.
- * In prototypes also load people-search-stub.js.
+ * filter-editor.js — filter chip + editor interaction for search pages.
+ * Load after people-search.js (and people-search-stub.js in prototypes).
  */
 
 (function () {
@@ -127,7 +114,6 @@
     filterEditor.innerHTML = renderEditor(filterId, def, existingValue);
     filterEditor.hidden    = false;
 
-    // Init any people-search widget that just landed in the editor
     if (window.PeopleSearch) window.PeopleSearch.initAll();
 
     filterEditor.querySelector('input')?.focus();
@@ -136,14 +122,14 @@
 
   // ── Render editor ─────────────────────────────────────────────────────────
   function renderEditor(filterId, def, existing) {
-    const title = `<p class="h6" id="filter-editor-title">${def.label}</p>`;
+    const title = `<p class="filter-editor__title" id="filter-editor-title">${def.label}</p>`;
     let body = '';
 
     switch (def.type) {
 
       case 'checklist': {
         const checked = existing?.rawValue || [];
-        body = `<div class="filter-checklist" role="group" aria-label="Select ${def.label}">` +
+        body = `<div class="filter-editor__checklist" role="group" aria-label="Select ${def.label}">` +
           def.values.map(v => `
             <div class="form-check">
               <input class="form-check-input" type="checkbox"
@@ -180,7 +166,7 @@
 
       case 'date': {
         const val = existing?.rawValue || '';
-        body = `<div>
+        body = `<div class="filter-editor__form">
           <label for="date-val" class="visually-hidden">${def.label}</label>
           <input type="date" id="date-val" class="form-control form-control-sm" value="${val}">
         </div>`;
@@ -189,7 +175,7 @@
 
       case 'text': {
         const val = existing?.rawValue || '';
-        body = `<div>
+        body = `<div class="filter-editor__form">
           <label for="text-val" class="visually-hidden">${def.label}</label>
           <input type="text" id="text-val" class="form-control form-control-sm"
             placeholder="${def.placeholder || ''}" value="${val}" autocomplete="off">
@@ -199,7 +185,7 @@
 
       case 'people-search': {
         const sel = existing?.rawValue;
-        body = `<div data-people-search>
+        body = `<div class="filter-editor__form" data-people-search>
           <label for="people-search-input" class="visually-hidden">Search by name or ORCID</label>
           <input type="search" id="people-search-input" data-ps-input
             class="form-control form-control-sm"
@@ -242,16 +228,12 @@
     // Boolean uses native .btn-check radios — no JS selection toggle needed.
 
     if (def.type === 'people-search') {
-      // Use a named handler so it can be removed on close (prevents accumulation)
       const onPersonSelect = e => { editorPendingValue = e.detail; };
       filterEditor.addEventListener('people-search:select', onPersonSelect);
-      // Also listen on document as a fallback — the event bubbles from the
-      // [data-people-search] container inside filterEditor, but the container
-      // is replaced on each openEditor() call so bubbling may miss the listener
-      // if the event fires during the same tick as initWidget.
+      // Fallback: the [data-people-search] container is replaced on each
+      // openEditor(), so a same-tick event can miss the container listener.
       const onPersonSelectDoc = e => { editorPendingValue = e.detail; };
       document.addEventListener('people-search:select', onPersonSelectDoc);
-      // Store cleanup on the editor element for closeEditor()
       filterEditor._cleanupPeopleSelect = () => {
         filterEditor.removeEventListener('people-search:select', onPersonSelect);
         document.removeEventListener('people-search:select', onPersonSelectDoc);

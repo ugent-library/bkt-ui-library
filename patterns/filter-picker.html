@@ -150,13 +150,13 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for enumerable values: Type, Subtype, Status, Publication status. Multiple selections produce a chip like "Journal article +2". The <code>.filter-checklist</code> container scrolls when the list is long.</p>
+    <p class="mb-4">Used for enumerable values: Type, Subtype, Status, Publication status. Multiple selections produce a chip like "Journal article +2". The <code>.filter-editor__checklist</code> container scrolls when the list is long.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-checklist-title" aria-modal="false">
-          <p class="h6" id="fe-checklist-title">Type</p>
-          <div class="filter-checklist" role="group" aria-label="Select Type">
+          <p class="filter-editor__title" id="fe-checklist-title">Type</p>
+          <div class="filter-editor__checklist" role="group" aria-label="Select Type">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="fv-journal" checked>
               <label class="form-check-label" for="fv-journal">Journal article</label>
@@ -198,7 +198,7 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-bool-title" aria-modal="false">
-          <p class="h6" id="fe-bool-title">Open access</p>
+          <p class="filter-editor__title" id="fe-bool-title">Open access</p>
           <div class="filter-boolean" role="group" aria-label="Open access">
             <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-true" autocomplete="off" checked>
             <label class="btn" for="fe-bool-demo-true">Yes — open access only</label>
@@ -224,7 +224,7 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-year-title" aria-modal="false">
-          <p class="h6" id="fe-year-title">Publication year</p>
+          <p class="filter-editor__title" id="fe-year-title">Publication year</p>
           <div class="filter-year">
             <label for="demo-year-from" class="visually-hidden">From year</label>
             <input type="number" id="demo-year-from" class="form-control form-control-sm filter-year__input"
@@ -253,7 +253,7 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-text-title" aria-modal="false">
-          <p class="h6" id="fe-text-title">Journal / venue</p>
+          <p class="filter-editor__title" id="fe-text-title">Journal / venue</p>
           <label for="demo-text-val" class="visually-hidden">Journal / venue</label>
           <input type="text" id="demo-text-val" class="form-control form-control-sm"
             placeholder="Journal title, publisher, or conference…"
@@ -278,7 +278,7 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-people-title" aria-modal="false">
-          <p class="h6" id="fe-people-title">Author</p>
+          <p class="filter-editor__title" id="fe-people-title">Author</p>
 
           <!-- people-search widget — see patterns/people-search.html for full states -->
           <div data-people-search>
@@ -324,7 +324,7 @@
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor as overlay</h2>
     <p class="mb-3">By default the editor panel sits inline and pushes the content below it down when it opens. In dense result views (e.g. the entity result filter bar) that shift is jarring. Wrap the bar and editor in a <code>position-relative</code> container and give the panel Bootstrap's position utilities so it <strong>floats over</strong> the result list instead.</p>
-    <p class="mb-4">No custom CSS required — wrap the bar and panel in a <code>position-relative</code> container, then give the <code>#filter-editor</code> panel <code>position-absolute top-100 start-0 w-100 z-3 mt-2</code>: it anchors to the bottom edge of the bar at full width, above the results, with a small gap.</p>
+    <p class="mb-4">Wrap the bar and panel in a <code>position-relative</code> container, then give the <code>#filter-editor</code> panel <code>position-absolute top-100 start-0 w-100 mt-2</code>: it anchors to the bottom edge of the bar at full width, above the results, with a small gap. The popover <code>z-index</code> (and a <code>min-width</code> floor for narrow anchors) lives on <code>.filter-editor</code> itself — Bootstrap's <code>z-3</code> utility maxes at 3, which ties with the active <code>.page-link</code> in pagination.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════

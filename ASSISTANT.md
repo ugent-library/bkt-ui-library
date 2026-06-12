@@ -595,7 +595,7 @@ bt-filter-picker__menu   bt-filter-picker__menu--narrow  bt-filter-picker__list
 **Filter editor panel**
 ```
 filter-editor            filter-editor__actions
-filter-checklist
+filter-editor__checklist
 filter-boolean           filter-boolean__option   filter-boolean__option.is-selected
 filter-year              filter-year__input
 ```

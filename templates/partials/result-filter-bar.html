@@ -22,16 +22,13 @@
 <div class="position-relative">
 
 <!-- ── Active chips + Add filter ──────────────────────────────────────────── -->
-<div class="d-flex gap-2 flex-wrap align-items-center" id="entity-filter-bar">
+<div class="d-flex flex-wrap align-items-center" id="entity-filter-bar">
 
-  <!-- Active chips — populated as filters are applied -->
   <div role="group" aria-label="Active filters"
     class="d-flex gap-2 flex-wrap align-items-center"
     id="entity-active-chips">
-    <!-- empty on load — chips injected by JS -->
   </div>
 
-  <!-- Add filter -->
   <div class="dropdown" id="entity-add-filter-dropdown">
     <button class="btn btn-ghost btn-sm" type="button"
       id="entity-add-filter-btn"
@@ -78,30 +75,24 @@
       </div>
     </div>
 
-    <!-- Clear all — hidden until at least one chip is active -->
     <button type="button" class="btn btn-ghost btn-sm text-muted"
       id="entity-clear-all" hidden>
       <i class="if if-close" aria-hidden="true"></i>
       Clear all
     </button>
-
-    <a href="/organisations/01H8BXJKD5XZ/export" class="btn btn-secondary btn-sm">
-      <i class="if if-download" aria-hidden="true"></i>
-      Export results
-    </a>
   </div>
 
-</div><!-- /filter-bar -->
+</div>
 
 <!-- ── Filter editor panel ────────────────────────────────────────────────── -->
 <div id="entity-filter-editor" hidden
-  class="filter-editor position-absolute top-100 start-0 w-100 z-3 mt-2"
+  class="filter-editor position-absolute top-100 start-0 w-100 mt-2"
   role="dialog"
   aria-modal="false"
   aria-labelledby="entity-filter-editor-title">
 </div>
 
-</div><!-- /position-relative wrapper -->
+</div>
 
 <script>
 // ── Entity result filter bar ──────────────────────────────────────────────────
@@ -193,12 +184,12 @@
   }
 
   function renderEditor(filterId, def, existing) {
-    const title = `<p class="h6" id="entity-filter-editor-title">${def.label}</p>`;
+    const title = `<p class="filter-editor__title" id="entity-filter-editor-title">${def.label}</p>`;
     let body = '';
     switch (def.type) {
       case 'checklist': {
         const checked = existing?.rawValue || [];
-        body = `<div class="filter-checklist" role="group" aria-label="Select ${def.label}">` +
+        body = `<div class="filter-editor__checklist" role="group" aria-label="Select ${def.label}">` +
           def.values.map(v => `
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="efv-${v.value}" name="efv" value="${v.value}" ${checked.includes(v.value) ? 'checked' : ''}>
@@ -406,7 +397,7 @@
     document.querySelectorAll('#entity-filter-picker-list button[data-filter]').forEach(btn => {
       // "Selected" = already applied, or currently being edited in the panel.
       const selected = !!activeFilters[btn.dataset.filter] || editingFilter === btn.dataset.filter;
-      btn.classList.toggle('active', selected);            // Bootstrap's selected-item state
+      btn.classList.toggle('active', selected);
       if (selected) btn.setAttribute('aria-current', 'true');
       else btn.removeAttribute('aria-current');
       let check = btn.querySelector('.bt-filter-picker__check');
