@@ -86,7 +86,7 @@ How you obtain Bootstrap is your project's choice (npm dependency, vendored copy
 3. Copy patterns before composing your own.
    - Use `patterns/layout-shells.html` for shell structure
    - Use `templates/biblio-public/*.html` for public pages
-   - Use `templates/biblio-backoffice/*.html` for app pages
+   - Use `templates/biblio-researcher/*.html` and `templates/biblio-team/*.html` for app pages
 
 4. Let Bootstrap own utility work.
    - spacing

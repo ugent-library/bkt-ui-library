@@ -67,7 +67,6 @@ The design system supports modern browsers that Bootstrap 5 supports:
 | `patterns/` | UI kit docs: components |
 | `templates/` | Full-page prototype templates |
 | `templates/partials/` | Reusable HTML templates for common layouts |
-| `product/` | Product-facing notes and concept pages |
 | `shell/` | UI kit navigation chrome (not part of the design system) |
 
 ---

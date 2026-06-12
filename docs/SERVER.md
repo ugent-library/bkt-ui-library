@@ -51,7 +51,7 @@ This makes it possible to run a **second instance alongside a server you already
 The server automatically generates navigation from the folder structure:
 
 - `foundations/`, `elements/`, `patterns/` → UI kit documentation
-- `templates/` → Prototypes, grouped by subdirectory (e.g., `biblio-backoffice/`, `biblio-public/`)
+- `templates/` → Prototypes, grouped by subdirectory (e.g., `biblio-public/`, `biblio-researcher/`, `biblio-team/`)
 - Other folders as needed
 
 ## File Serving

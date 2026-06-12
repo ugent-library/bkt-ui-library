@@ -12,7 +12,6 @@ Add it to the root of any project where I'm a regular collaborator.
 When a new session begins on this project, execute these steps before writing any code or HTML:
 
 1. **Read the docs folder** — read all relevant files before writing code:
-   - `docs/STRATEGY.md` — product strategy, UB2030 context, prioritisation principles
    - `docs/DOMAIN.md` — entity vocabulary, status values, badge mappings, profile system, review workflow
    - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `raven` backend, data flow, what is out of scope
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
@@ -32,8 +31,8 @@ When a new session begins on this project, execute these steps before writing an
 
 ```
 Read /Users/mietclaes/Sites/booktower-ui-library/ASSISTANT.md and follow
-the session start instructions. Then read the three files in docs/.
-You're working on the booktower-ui-library.
+the session start instructions, including reading the docs/ files listed in
+step 1 below. You're working on the booktower-ui-library.
 ```
 
 ---
@@ -619,7 +618,6 @@ badge.bg-danger         badge.bg-danger-light
 badge.bg-secondary      badge.bg-transparent
 badge.badge--outline    badge--total
 ```
-Note: `badge-oa` and `badge-restricted` do NOT exist — use `badge bg-success` (open) and `badge bg-warning` (restricted).
 
 **Buttons**
 `btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap

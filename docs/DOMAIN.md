@@ -72,7 +72,7 @@ A Person as they appear on a specific Work. Carries: display name, role (`author
 
 Ordered by `pos` (fracdex) — order is semantically meaningful (author order on a paper matters).
 
-In the UI: rendered in `card-authors` on cards, and as the editable people list in the deposit flow. UGent-affiliated contributors are distinguished from external ones.
+In the UI: rendered in `bt-work-card__authors` on cards, and as the editable people list in the deposit flow. UGent-affiliated contributors are distinguished from external ones.
 
 ### Organisation
 An institutional entity (faculty, department, research group, university). Hierarchical — an org can be `part_of` another, with temporal bounds on that relationship.
@@ -213,7 +213,7 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 
 **In search and discovery:**
 - OA status should be a prominent, early filter — not buried
-- `badge-oa` should be visually distinct and positive, not neutral
+- the open-access badge (`badge bg-success`) should be visually distinct and positive, not neutral
 - Works without full-text access should not look broken — restricted access is sometimes correct, but the UI should make open access feel like the norm
 
 ---

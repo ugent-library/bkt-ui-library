@@ -235,7 +235,7 @@ should match urgency, and the layout should not make someone want to print a spr
 
 ## Prototype scope
 
-**Template to build:** `templates/biblio-backoffice/team-dashboard.html.html`
+**Template to build:** `templates/biblio-team/team-dashboard.html`
 
 **States to cover:**
 - Filled: queue has items, at-risk has items, candidates pending
