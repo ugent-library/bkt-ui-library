@@ -14,7 +14,7 @@ When a new session begins on this project, execute these steps before writing an
 1. **Read the docs folder** — read all relevant files before writing code:
    - `docs/STRATEGY.md` — product strategy, UB2030 context, prioritisation principles
    - `docs/DOMAIN.md` — entity vocabulary, status values, badge mappings, profile system, review workflow
-   - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `bbl` backend, data flow, what is out of scope
+   - `docs/DOMAIN-CONTEXT.md` — how this repo connects to the `raven` backend, data flow, what is out of scope
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
    - `docs/CONSUMING-BOOKTOWER.md` — how to use this UI library correctly inside another project
    - `docs/JAVASCRIPT.md` — JS file registry, event contract, loading order

@@ -3,10 +3,9 @@
 
 <!--
   Organisation page (public surface)
-  Entity: Organisation (bbl_organizations + bbl_organization_rels + bbl_organization_identifiers)
+  Entity: Organisation (organizations + organization relations + organization identifiers)
   Shows: name, hierarchy, child units, linked research output, projects, people
   Audience: researchers browsing by unit, external readers, citation managers
-  Vocabulary: "research output" for all Work kinds — not "publications" or "datasets"
 -->
 
 <script type="application/ld+json">
@@ -77,13 +76,6 @@
         <!-- Left: tabbed content -->
         <div class="col-lg-7">
 
-          <!--
-            Three tabs: Research output / Researchers / Projects
-            No separate "Datasets" tab — datasets are research output with kind=dataset,
-            filtered via the type dropdown within the Research output tab.
-            Bootstrap tab pattern: aria-controls and aria-selected required.
-            Keyboard: Arrow keys between tabs, Tab into panel content.
-          -->
           <div class="mb-4">
             <ul class="nav nav-tabs" role="tablist" aria-label="Organisation content">
               <li class="nav-item" role="presentation">

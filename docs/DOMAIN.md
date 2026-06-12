@@ -1,6 +1,6 @@
-# Domain vocabulary for bbl / biblio.ugent.be
+# Domain vocabulary for raven / biblio.ugent.be
 
-This file defines the shared language between the backend (`bbl`) and the UI layer (`booktower-ui-library`). When working on either side, use these terms consistently. Do not invent synonyms.
+This file defines the shared language between the backend (`raven`) and the UI layer (`booktower-ui-library`). When working on either side, use these terms consistently. Do not invent synonyms.
 
 For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
 
@@ -11,7 +11,7 @@ For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.
 ### Work
 The central entity. A publication, dataset, software, or other research output produced by one or more people. Every card, row, or detail page in the UI represents a Work.
 
-- Stored in `bbl_works`
+- Stored in the works table
 - Has a `kind` (see Work kind) and a `status` (see Work status)
 - Metadata lives in `attrs jsonb` on the database row
 - Display data (contributors, files, organisations, projects) is aggregated into `doc jsonb` — this is what the UI renders, no joins required
@@ -88,7 +88,7 @@ In the UI: linked from Work detail pages. Searchable as a filter in the backoffi
 An application account. May be linked to a PersonIdentity (most staff users) or not (admin/service accounts). Has a global role: `admin` or `user`. Curation rights are expressed through Grants, not the role field alone.
 
 ### Grant
-A permission record. One row = one permission for one user over one scope. A user's full access picture is one query on `bbl_grants`. Grants can be global, org-scoped, project-scoped, or entity-level.
+A permission record. One row = one permission for one user over one scope. A user's full access picture is one query on the grants table. Grants can be global, org-scoped, project-scoped, or entity-level.
 
 In the UI: not directly visible to end users, but determines which action buttons appear (edit, submit, publish, delete).
 
@@ -186,7 +186,7 @@ A landing page for a faculty, department, or research group. Shows: name, hierar
 A page for a funded research project. In progress. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. The project directory that links to these is `public-projects.html` (in progress).
 
 ### Curated list / collection page (public) — not yet prototyped
-A named set of Works, editable by curators. Used for OAI-PMH sets, open access subsets, faculty publication feeds, heritage object collections, and reading lists. Backed by `bbl_lists` (user-curated) and `bbl_work_collections` (administratively defined).
+A named set of Works, editable by curators. Used for OAI-PMH sets, open access subsets, faculty publication feeds, heritage object collections, and reading lists. Backed by lists (user-curated) and work collections (administratively defined).
 
 ### Heritage / erfgoed object page (public) — not yet prototyped
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.

@@ -1,6 +1,6 @@
-# UI layer — reference for bbl Go developers
+# UI layer — reference for raven Go developers
 
-This document describes the design system and HTML prototype environment that produces the CSS and component patterns consumed by the `bbl` Go application.
+This document describes the design system and HTML prototype environment that produces the CSS and component patterns consumed by the `raven` Go application.
 
 For entity definitions and shared vocabulary, see `DOMAIN.md` in `booktower-ui-library`.
 For cross-project consumption rules, read `docs/CONSUMING-BOOKTOWER.md` before copying layouts or classes into another repo.
@@ -12,7 +12,7 @@ For cross-project consumption rules, read `docs/CONSUMING-BOOKTOWER.md` before c
 **Repository:** `booktower-ui-library` (local: `Sites/booktower-ui-library`)
 
 **What it produces:**
-- `assets/booktower.css` — the stylesheet. Copy this + `assets/fonts/` into `bbl/app/assets/` to update.
+- `assets/booktower.css` — the stylesheet. Copy this + `assets/fonts/` into raven's assets directory to update.
 - HTML prototype templates in `templates/` — reference implementations for Go templ work.
 
 **Running it locally:**
@@ -112,7 +112,7 @@ The `templates/` directory in `booktower-ui-library` contains full-page prototyp
 | `templates/biblio-team/curate.html` | Curator | All research output (curator) |
 | `templates/biblio-team/team-overview.html` | Curator | Team health overview (head of curation) |
 
-HTMX URLs in prototypes are stubs (`hx-get="/search"`, etc.). The corresponding real endpoints in `bbl/app/*_handlers.go` are the production wiring.
+HTMX URLs in prototypes are stubs (`hx-get="/search"`, etc.). The corresponding real endpoints in `raven` are the production wiring.
 
 ---
 
@@ -198,7 +198,7 @@ that happens to clear the navbar.
 
 After SCSS changes in `booktower-ui-library`:
 1. Run `npm run build` in `booktower-ui-library`
-2. Copy `assets/booktower.css` and `assets/fonts/` to `bbl/app/assets/`
+2. Copy `assets/booktower.css` and `assets/fonts/` to raven's assets directory
 
 A future npm package will replace the manual copy step.
 

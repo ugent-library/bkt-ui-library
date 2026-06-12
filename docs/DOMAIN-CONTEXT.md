@@ -1,6 +1,6 @@
 # Domain context for the UI layer
 
-This file explains how the booktower-ui-library relates to the `bbl` backend — what the templates represent, how data flows into the UI, and what backend constraints shape UI decisions.
+This file explains how the booktower-ui-library relates to the `raven` backend — what the templates represent, how data flows into the UI, and what backend constraints shape UI decisions.
 
 For entity definitions and shared vocabulary, see `DOMAIN.md`.
 For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.md`.
@@ -10,16 +10,16 @@ For who is responsible for which fields and workflow steps, see `RESPONSIBILITY.
 ## What this repo is
 
 A design system and HTML prototype environment. It produces:
-1. `assets/booktower.css` — the design system stylesheet, consumed by the `bbl` Go application
+1. `assets/booktower.css` — the design system stylesheet, consumed by the `raven` Go application
 2. HTML templates — living prototypes of real application pages, used for design and accessibility review before Go/templ implementation
 
-The templates in `templates/` are **prototypes**, not production code. HTMX URLs are stubs. Data is hardcoded. They document intent and structure — the Go templ templates in `bbl/app/views/` are the production implementation.
+The templates in `templates/` are **prototypes**, not production code. HTMX URLs are stubs. Data is hardcoded. They document intent and structure — the Go templ templates in `raven` are the production implementation.
 
 ---
 
-## How CSS gets into bbl
+## How CSS gets into raven
 
-Current process: copy `assets/booktower.css` and `assets/fonts/` into `bbl/app/assets/`. The CSS references the font by a relative URL (`fonts/icon-font.woff?HASH`), so the fonts must sit in a `fonts/` directory next to `booktower.css` — see `docs/CONSUMING-BOOKTOWER.md` for the exact layout.
+Current process: copy `assets/booktower.css` and `assets/fonts/` into raven's assets directory. The CSS references the font by a relative URL (`fonts/icon-font.woff?HASH`), so the fonts must sit in a `fonts/` directory next to `booktower.css` — see `docs/CONSUMING-BOOKTOWER.md` for the exact layout.
 
 Future: npm package (not yet set up).
 
@@ -29,7 +29,7 @@ When you change SCSS here, the Go app needs an updated CSS file before the chang
 
 ## How templates map to Go templ components
 
-Each HTML template in this repo has a corresponding templ template in `bbl/app/views/`. The HTML prototype is the reference for structure, class names, accessibility attributes, and HTMX patterns. The Go templ template is the production rendering.
+Each HTML template in this repo has a corresponding templ template in `raven`. The HTML prototype is the reference for structure, class names, accessibility attributes, and HTMX patterns. The Go templ template is the production rendering.
 
 When the prototype and the Go template diverge, the prototype is the design authority for HTML structure and accessibility. The Go template is the authority for data bindings and URL patterns.
 
@@ -37,7 +37,7 @@ When the prototype and the Go template diverge, the prototype is the design auth
 
 ## What the backend provides to templates
 
-The `bbl` backend provides data to templates through the `doc jsonb` field on `bbl_works`. This is a pre-aggregated snapshot written on every save — contributors, files, organisations, projects — so templates do not need to make extra requests for this data.
+The `raven` backend provides data to templates through the `doc jsonb` field on the works table. This is a pre-aggregated snapshot written on every save — contributors, files, organisations, projects — so templates do not need to make extra requests for this data.
 
 For the backoffice list and public search, data comes from OpenSearch (eventually consistent — there is a short lag after a save before search results update). Post-save redirects go to the detail page, which is served directly from PostgreSQL and is always consistent.
 
@@ -47,7 +47,7 @@ For the backoffice list and public search, data comes from OpenSearch (eventuall
 
 ## Profile-driven forms
 
-The deposit form does not have a fixed field list. Which fields appear, in what order, and whether they are required is determined by the work kind's profile (a YAML config file in `bbl`).
+The deposit form does not have a fixed field list. Which fields appear, in what order, and whether they are required is determined by the work kind's profile (a YAML config file in `raven`).
 
 When prototyping a deposit form for a specific work kind:
 - The fields shown in the prototype are illustrative — they represent a plausible profile for that kind
@@ -71,9 +71,9 @@ Facet counts (the numbers next to filter checkboxes) also come from OpenSearch a
 
 The backoffice has two distinct starting points depending on the user:
 
-**Researcher / submitter view** — "My work". Scoped to the current user's own works and candidates suggested for them. Navigation: Research output, Datasets, Suggestions.
+**Researcher / submitter view** — "My work". Scoped to the current user's own works and candidates suggested for them.
 
-**Curator / librarian view** — institution-wide. Scoped to all works the curator has rights over (their org, their assigned projects, or globally). Navigation includes additional admin sections.
+**Curator / librarian view** — institution-wide. Scoped to all works the curator has rights over (their org, their assigned projects, or globally).
 
 Templates should not conflate these. All backoffice pages include one sidebar partial (`main-sidebar.html`); the nav groups it shows (My research output, Curation, Proxy) vary by the user's grants. In the prototype every group renders unconditionally to demonstrate the multi-role shell.
 
@@ -148,8 +148,8 @@ The Boekentoren has approximately 187,000 digitised items and 225,000 Google-dig
 
 ## What is not in scope for this repo
 
-- Go templ template implementation (lives in `bbl/app/views/`)
-- HTMX endpoint logic (lives in `bbl/app/*_handlers.go`)
+- Go templ template implementation (lives in `raven`)
+- HTMX endpoint logic (lives in `raven`)
 - Database queries or mutations
 - Authentication and permission enforcement
 - Background job scheduling (Catbird)

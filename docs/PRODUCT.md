@@ -103,7 +103,7 @@ resolving (merge, dismiss, confirm distinct) is not yet designed.
 
 ### Later — wait for backend contracts before designing
 
-- Ingestion pipeline monitoring — depends on `bbl` implementation
+- Ingestion pipeline monitoring — depends on `raven` implementation
 - OA policy guidance in deposit (Sherpa Romeo or equivalent) — external data source
 - Bulk operations on candidate review — after single-item flow is validated
 
@@ -356,7 +356,7 @@ Scope ≠ Grant (what you *can* access). Scope ≠ filter (session-level).
 **Still open:**
 - Overlap with saved views: scope = persistent org/type constraint;
   saved views = named URL presets. Related but not the same.
-- Storage in `bbl`: proposed `user_settings.scope_orgs[]` + `scope_types[]`. Backend decision needed.
+- Storage in `raven`: proposed `user_settings.scope_orgs[]` + `scope_types[]`. Backend decision needed.
 - Applied server-side: proposed as default query params injected before handler runs.
 - Proxies: org picker limited to orgs they have proxy rights for — confirm derivable from Grant table.
 
