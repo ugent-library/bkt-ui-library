@@ -124,16 +124,53 @@
     <div class="container py-5">
       <div class="row g-5 justify-content-between">
 
-        <!-- Left: publications list -->
+        <!-- Left: tabbed content -->
         <div class="col-lg-7">
 
-          <section aria-labelledby="publications-heading">
+          <!--
+            Tabs
+          -->
+          <div class="mb-4">
+            <ul class="nav nav-tabs" role="tablist" aria-label="Researcher content">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-output"
+                  type="button" role="tab"
+                  data-bs-toggle="tab" data-bs-target="#panel-output"
+                  aria-controls="panel-output" aria-selected="true">
+                  Research output
+                  <span class="badge bg-secondary ms-1 fw-normal">147</span>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-projects"
+                  type="button" role="tab"
+                  data-bs-toggle="tab" data-bs-target="#panel-projects"
+                  aria-controls="panel-projects" aria-selected="false">
+                  Projects
+                  <span class="badge bg-secondary ms-1 fw-normal">4</span>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-coauthors"
+                  type="button" role="tab"
+                  data-bs-toggle="tab" data-bs-target="#panel-coauthors"
+                  aria-controls="panel-coauthors" aria-selected="false">
+                  Co-authors
+                  <span class="badge bg-secondary ms-1 fw-normal">3</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tab-content">
+
+          <!-- Research output panel -->
+          <div class="tab-pane fade show active" id="panel-output"
+            role="tabpanel" aria-labelledby="tab-output" tabindex="0">
+
+            <h2 class="visually-hidden">Research output</h2>
+
             <div class="bt-toolbar mb-3">
-              <div class="bt-toolbar__left">
-                <div class="bt-toolbar__item">
-                  <h2 id="publications-heading" class="h4">Research output <small class="fw-light" aria-live="polite" id="pub-result-count">&mdash; 147 works</small></h2>
-                </div>
-              </div>
               <div class="bt-toolbar__right">
                 <div class="bt-toolbar__item">
                   <!-- @include: templates/partials/result-filter-bar.html -->
@@ -278,8 +315,123 @@
               </ul>
             </nav>
 
-          </section>
-        </div>
+          </div><!-- /research output panel -->
+
+          <!-- Projects panel -->
+          <div class="tab-pane fade" id="panel-projects"
+            role="tabpanel" aria-labelledby="tab-projects" tabindex="0">
+
+            <h2 class="visually-hidden">Projects</h2>
+
+            <span id="projects-loading" class="htmx-indicator" aria-live="polite">Loading projects…</span>
+
+            <div id="projects-list"
+              hx-get="/persons/01K9XTVXD41Z/projects"
+              hx-trigger="intersect once"
+              hx-target="#projects-list"
+              hx-indicator="#projects-loading">
+
+              <!--
+                Project cards mirror public-organisation-detail.html / public-projects.html:
+                title link + status badge, period, IDs, detail + GISMO links.
+                Static fallback for #projects-list — replaced on htmx swap.
+                PLACEHOLDER: GISMO IDs and gismo.ugent.be URLs are invented.
+              -->
+              <ul class="list-unstyled d-flex flex-column gap-3">
+                <li class="card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-start gap-3 mb-2">
+                      <a href="/projects/fwo-g001234n" class="flex-grow-1 fw-semibold text-decoration-none">Urban green infrastructure and climate adaptation in Flemish cities</a>
+                      <span class="badge bg-success flex-shrink-0">Active</span>
+                    </div>
+                    <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
+                      <li>Role PI</li>
+                      <li>Period <time datetime="2023-01-01">2023</time>–<time datetime="2027-12-31">2027</time></li>
+                      <li>Funder FWO</li>
+                      <li>Project ID <code>G001234N</code></li>
+                    </ul>
+                    <div class="d-flex flex-wrap gap-3 small">
+                      <a href="/projects/fwo-g001234n" class="text-decoration-none">Project detail</a>
+                      <a href="https://gismo.ugent.be/project/fwo-g001234n" rel="noopener noreferrer" class="text-decoration-none">Read more on GISMO <i class="if if-external-link if--xs" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </li>
+                <li class="card">
+                  <div class="card-body">
+                    <div class="d-flex align-items-start gap-3 mb-2">
+                      <a href="/projects/bof-01d04124" class="flex-grow-1 fw-semibold text-decoration-none">Tree species diversity and urban ecosystem services</a>
+                      <span class="badge bg-success flex-shrink-0">Active</span>
+                    </div>
+                    <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
+                      <li>Role Researcher</li>
+                      <li>Period <time datetime="2024-01-01">2024</time>–<time datetime="2026-12-31">2026</time></li>
+                      <li>Funder BOF</li>
+                      <li>Project ID <code>01D04124</code></li>
+                    </ul>
+                    <div class="d-flex flex-wrap gap-3 small">
+                      <a href="/projects/bof-01d04124" class="text-decoration-none">Project detail</a>
+                      <a href="https://gismo.ugent.be/project/bof-01d04124" rel="noopener noreferrer" class="text-decoration-none">Read more on GISMO <i class="if if-external-link if--xs" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div><!-- /#projects-list -->
+
+          </div><!-- /projects panel -->
+
+          <!-- Co-authors panel -->
+          <div class="tab-pane fade" id="panel-coauthors"
+            role="tabpanel" aria-labelledby="tab-coauthors" tabindex="0">
+
+            <h2 class="visually-hidden">Co-authors</h2>
+
+            <span id="coauthors-loading" class="htmx-indicator" aria-live="polite">Loading co-authors…</span>
+
+            <div id="coauthors-list"
+              hx-get="/persons/01K9XTVXD41Z/coauthors"
+              hx-trigger="intersect once"
+              hx-target="#coauthors-list"
+              hx-indicator="#coauthors-loading">
+
+              <!-- Static fallback for #coauthors-list — replaced on htmx swap.
+                   PLACEHOLDER: shared-work counts are invented. -->
+              <ul class="list-unstyled d-flex flex-column gap-3">
+                <li class="card">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bt-avatar" aria-hidden="true">SA</span>
+                    <div>
+                      <a href="/persons/stefan-arndt" class="fw-semibold text-decoration-none d-block">Arndt, Stefan</a>
+                      <span class="small text-muted">18 shared works</span>
+                    </div>
+                  </div>
+                </li>
+                <li class="card">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bt-avatar" aria-hidden="true">JM</span>
+                    <div>
+                      <a href="/persons/jonas-maes" class="fw-semibold text-decoration-none d-block">Maes, Jonas</a>
+                      <span class="small text-muted">11 shared works</span>
+                    </div>
+                  </div>
+                </li>
+                <li class="card">
+                  <div class="card-body d-flex align-items-center gap-3">
+                    <span class="bt-avatar" aria-hidden="true">SV</span>
+                    <div>
+                      <a href="/persons/sander-vanderhaegen" class="fw-semibold text-decoration-none d-block">Vanderhaegen, Sander</a>
+                      <span class="small text-muted">7 shared works</span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div><!-- /#coauthors-list -->
+
+          </div><!-- /co-authors panel -->
+
+          </div><!-- /tab-content -->
+        </div><!-- /col-lg-7 -->
 
         <!-- Right: sidebar -->
         <div class="col-lg-4">
@@ -296,47 +448,6 @@
               <code class="small overflow-auto">https://biblio.ugent.be/person/01K9XTVXD41Z</code>
             </div>
           </div>
-
-          <!-- Active projects -->
-          <section aria-labelledby="projects-heading" class="mb-5">
-            <h2 id="projects-heading" class="h5 mb-3">Active projects</h2>
-            <ul class="list-unstyled d-flex flex-column gap-3">
-              <li class="p-3 bg-white border rounded">
-                <a href="/projects/fwo-g001234n" class="fw-semibold text-decoration-none d-block mb-1">
-                  Urban green infrastructure and climate adaptation in Flemish cities
-                </a>
-                <div class="small text-muted">FWO · G001234N · 2023–2027 · PI</div>
-              </li>
-              <li class="p-3 bg-white border rounded">
-                <a href="/projects/bof-01d04124" class="fw-semibold text-decoration-none d-block mb-1">
-                  Tree species diversity and urban ecosystem services
-                </a>
-                <div class="small text-muted">BOF · 01D04124 · 2024–2026 · Researcher</div>
-              </li>
-            </ul>
-            <a href="/persons/01K9XTVXD41Z/projects" class="btn btn-ghost btn-sm mt-2">
-              All projects <i class="if if-arrow-right" aria-hidden="true"></i>
-            </a>
-          </section>
-
-          <!-- Co-authors — useful for network discovery -->
-          <section aria-labelledby="coauthors-heading" class="mb-5">
-            <h2 id="coauthors-heading" class="h5 mb-3">Frequent co-authors</h2>
-            <ul class="list-unstyled d-flex flex-column gap-2">
-              <li class="d-flex align-items-center gap-2">
-                <span class="bt-avatar bt-avatar--small" aria-hidden="true">SA</span>
-                <a href="/persons/stefan-arndt">Arndt, Stefan</a>
-              </li>
-              <li class="d-flex align-items-center gap-2">
-                <span class="bt-avatar bt-avatar--small" aria-hidden="true">JM</span>
-                <a href="/persons/jonas-maes">Maes, Jonas</a>
-              </li>
-              <li class="d-flex align-items-center gap-2">
-                <span class="bt-avatar bt-avatar--small" aria-hidden="true">SV</span>
-                <a href="/persons/sander-vanderhaegen">Vanderhaegen, Sander</a>
-              </li>
-            </ul>
-          </section>
 
           <!-- Keywords — helps readers understand research focus -->
           <section aria-labelledby="keywords-heading" class="mb-5">
