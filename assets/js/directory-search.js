@@ -1,25 +1,8 @@
 /**
- * directory-search.js
- * Scoped typeahead for a single directory page (Researchers, Organisations).
- *
- * This is a SELF-CONTAINED prototype: it filters a static example dataset
- * embedded in the page and renders matching suggestion rows as you type.
- * It does NOT filter the result list on the page — only the typeahead helps.
- *
- * Requires, per directory, a wrapper carrying [data-directory-search] with:
- *   input[type="search"]                — the query field
- *   .bt-suggest-panel                   — the dropdown shell (hidden at load)
- *   script[type="application/json"][data-suggest-source]
- *                                       — the example dataset that powers it
- *
- * Each dataset entry: { label, meta, href, icon }
- *   label — primary text (name / org name); the matched run is <mark>ed
- *   meta  — secondary line (department, identifier, type…)
- *   href  — where the row navigates on click / Enter
- *   icon  — booktower icon class, e.g. "if-user" or "if-building"
- *
- * In production, replace the inline dataset + this client-side filter with a
- * GET /{directory}/suggest?q=… endpoint that returns the rendered rows.
+ * directory-search.js — scoped typeahead for one directory page.
+ * Prototype: filters an inline JSON dataset client-side and renders
+ * suggestion rows; does not filter the page's result list.
+ * Production: replace with GET /{directory}/suggest?q=… returning rows.
  */
 
 (function () {
@@ -139,7 +122,7 @@
       if (!wrapper.contains(e.target)) hide();
     });
 
-    // Hide on submit (the form would navigate to the directory in production)
+    // Production: the form would navigate to the directory.
     const form = input.closest('form');
     if (form) form.addEventListener('submit', hide);
   }

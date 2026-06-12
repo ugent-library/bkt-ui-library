@@ -85,6 +85,24 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `directory-search.js`
+
+**Purpose:** Scoped typeahead for a single directory page (Researchers, Organisations). Filters an inline JSON dataset client-side and renders suggestion rows; does not filter the page's result list.
+
+**Loaded by:** `public-researchers.html`, `public-organisations.html`
+
+**Listens for:**
+- `input` and `focus` on the directory `input[type="search"]`
+- `keydown` for Arrow/Enter/Escape navigation (input and panel)
+- Click on `document` (outside-click close)
+- `submit` on the enclosing form
+
+**Dispatches:** nothing
+
+**Prototype-only:** no (typeahead behaviour is real; the inline JSON dataset is the stub). Replace the inline data + client-side filter with `GET /{directory}/suggest?q=…` when the endpoint exists.
+
+---
+
 ### `people-search.js`
 
 **Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used inside the filter editor (Author filter) and the deposit flow add-author form.

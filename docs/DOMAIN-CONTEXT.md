@@ -19,7 +19,7 @@ The templates in `templates/` are **prototypes**, not production code. HTMX URLs
 
 ## How CSS gets into bbl
 
-Current process: copy `assets/booktower.css` and `assets/fonts/` into `bbl/app/assets/`. The font path in CSS is `/assets/fonts/` — the Go app must serve fonts there.
+Current process: copy `assets/booktower.css` and `assets/fonts/` into `bbl/app/assets/`. The CSS references the font by a relative URL (`fonts/icon-font.woff?HASH`), so the fonts must sit in a `fonts/` directory next to `booktower.css` — see `docs/CONSUMING-BOOKTOWER.md` for the exact layout.
 
 Future: npm package (not yet set up).
 
