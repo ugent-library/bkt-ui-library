@@ -1835,20 +1835,18 @@ a.bt-avatar--dark:hover:not(:disabled) {
   outline-offset: 2px;
 }
 
-/* Editable variant -- right radius flattened to join remove button */
+/* Editable variant */
 .filter-tag--editable {
   border-radius: var(--bt-radius-pill) 0 0 var(--bt-radius-pill);
   padding-right: var(--bt-sp-2);
 }
 
-/* Lift the focus ring above the remove button so the right edge isn't clipped
-   (parity with .filter-tag__remove:focus-visible). */
 .filter-tag--editable:focus-visible {
   position: relative;
   z-index: 1;
 }
 
-/* Remove button -- right half of split chip */
+/* Remove button */
 .filter-tag__remove {
   display: inline-flex;
   align-items: center;
@@ -1875,20 +1873,17 @@ a.bt-avatar--dark:hover:not(:disabled) {
   z-index: 1;
 }
 
-/* Wrapper keeping editable + remove visually joined */
 .filter-tag-group {
   display: inline-flex;
   align-items: center;
 }
 
-/* Hovering either half highlights the whole pill, so the split chip reads as
-   one unit instead of two halves reacting independently. */
 .filter-tag-group:hover .filter-tag--editable,
 .filter-tag-group:hover .filter-tag__remove {
   background-color: var(--bt-blue-100);
 }
 
-/* Static/display-only variant */
+/* Static variant */
 .filter-tag--static {
   display: inline-flex;
   align-items: center;
@@ -1980,8 +1975,7 @@ a.bt-avatar--dark:hover:not(:disabled) {
 }
 
 /* -- Filter editor -- boolean toggle (Bootstrap .btn-check radio group) --
-   Soft look comes entirely from --bs-btn-* vars; no custom selected-state
-   CSS or JS toggling. */
+   No custom selected-state CSS or JS toggling. */
 .filter-boolean {
   display: flex;
   gap: var(--bt-sp-2);

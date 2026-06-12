@@ -260,8 +260,8 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | Template | Entity / concept |
 |----------|------------------|
 | `public-index.html` | Public homepage |
-| `public-research.html` | Work search + results |
-| `public-research-detail.html` | Work detail page |
+| `public-works.html` | Work search + results |
+| `public-work-detail.html` | Work detail page |
 | `public-researchers.html` | Researcher directory (A–Z browse) |
 | `public-researcher-detail.html` | Researcher profile (PersonIdentity) |
 | `public-organisations.html` | Organisation directory |

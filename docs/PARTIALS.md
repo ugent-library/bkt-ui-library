@@ -17,7 +17,7 @@ The left-side `<aside>` on backoffice search pages. Contains:
 - Facet groups (Status, Type, Year, Access, + More filters dropdown)
 
 **Surface:** backoffice only. The public search sidebar is structurally simpler
-(no scope, no saved views) and lives inline in `public-research.html` for now.
+(no scope, no saved views) and lives inline in `public-works.html` for now.
 
 **Parameters the Go templ component needs:**
 ```
@@ -150,7 +150,7 @@ views both work.
 Do these in order — each step unblocks the next.
 
 1. **Extract `search-filter-bar.html` partial** from `backoffice-search.html`
-   and `public-research.html`. These are currently near-identical inline blocks.
+   and `public-works.html`. These are currently near-identical inline blocks.
    Parameterise by surface for the filter list.
 
 2. **Extract `backoffice-facet-sidebar.html`** from `backoffice-search-filter-first.html`.

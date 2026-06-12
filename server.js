@@ -353,14 +353,14 @@ function renderSearchResultCards() {
       <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban forests as essential infrastructure">
         <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
-      <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-primary btn-sm">
+      <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-sm">
         <i class="if if-book" aria-hidden="true"></i> Read
       </a>
     </div>
   </div>
   <div class="card-body bt-work-card__body">
     <h3 id="search-result-1" class="bt-work-card__title">
-      <a href="/templates/biblio-public/public-research-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+      <a href="/templates/biblio-public/public-work-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
     </h3>
     <p class="bt-work-card__authors">Esperon-Rodriguez, M., Arndt, S., De Pauw, K. <span class="text-muted">et al.</span></p>
     <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Plants People Planet</a></p>
@@ -378,14 +378,14 @@ function renderSearchResultCards() {
       <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
-      <a href="/templates/biblio-public/public-research-detail.html" class="btn btn-primary btn-sm" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
+      <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-sm" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-download" aria-hidden="true"></i> Download
       </a>
     </div>
   </div>
   <div class="card-body bt-work-card__body">
     <h3 id="search-result-2" class="bt-work-card__title">
-      <a href="/templates/biblio-public/public-research-detail.html">Urban tree canopy cover measurements Belgium 2020–2025</a>
+      <a href="/templates/biblio-public/public-work-detail.html">Urban tree canopy cover measurements Belgium 2020–2025</a>
     </h3>
     <p class="bt-work-card__authors">De Pauw, K., Maes, J.</p>
     <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Zenodo</a></p>

@@ -72,6 +72,6 @@ Components communicate via custom events:
 ## Testing
 
 Search components are tested through:
-- Template integration in `templates/biblio-public/public-research.html`
+- Template integration in `templates/biblio-public/public-works.html`
 - Template integration in `templates/biblio-backoffice/backoffice-search-filter-first.html`
 - Prototype data in `filter-stubs.js` (remove when real APIs exist)
