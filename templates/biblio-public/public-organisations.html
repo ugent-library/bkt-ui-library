@@ -9,14 +9,6 @@
   their real departments; all 9 partner institutions are shown as root cards.
   The live directory has 13 faculties / 179 departments / 9 partners.
 
-  LAYOUT: each root is a Bootstrap .card in a list-group. The card-header is the
-  root row; the card-body holds children. UGent's faculties each render a
-  faculty row (large faculty avatar + bg-faculty-<code> + SVG glyph, code chip
-  in bg-faculty-<code>-light) followed by their departments under
-  ms-5 ps-5 border-start (the vertical connector). Every row splits col-7
-  (marker + name + identifiers) / col-5 pe-4 (stats as row row-cols-4,
-  right-aligned; pe-4 keeps the last cell clear of the card edge).
-
   DATA: faculty + department names, codes and research-output counts are REAL
   (biblio.ugent.be/organization). Partner roots: UZ Gent, VIB and Global Campus
   Korea (+ its KR01 dept) carry real counts; HOGENT, HOWEST, Artevelde, Imec,
@@ -37,13 +29,6 @@
   VIB/Imec/iMinds/Flanders Make = research_center; GUK = branch_campus.
   UGent uses the if-ghent-university emblem; all other roots use if-building.
 
-  PROTOTYPE STATS: research-output count is real EXCEPT for the six partners
-  noted above. researchers / alumni / projects are NOT on the live page --
-  placeholder values scaled off the count. A stat that rounds to 0 is omitted
-  (graceful degradation) -- see Zoology Museum (WE63): research output +
-  researchers only. ROR is a placeholder (same fake id on every row). Wire real
-  per-unit sources before production (open Q1).
-
   Partials:
     @include: templates/partials/public-header.html
     @include: templates/partials/public-footer.html
@@ -58,19 +43,14 @@
     <div class="u-main__header border-bottom pt-5 pb-5">
       <div class="container">
 
-        <nav aria-label="Breadcrumb" class="mb-4">
+        <nav aria-label="Breadcrumb">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
             <li class="breadcrumb-item active" aria-current="page">Organisations</li>
           </ol>
         </nav>
 
-        <h1 class="mb-3">Organisations</h1>
-        <p class="lead mb-4 col-lg-7">
-          Browse the institutional tree: Ghent University and partner institutions,
-          their faculties and departments. Each unit links to its research output,
-          researchers and projects.
-        </p>
+        <h1 class="mb-4">Organisations</h1>
 
         <!-- ── Scoped search + typeahead ──────────────────────────────────────
              Searches WITHIN this directory only. The typeahead below is a
@@ -79,21 +59,18 @@
              production this becomes GET /organisations/suggest?q=… -->
         <form role="search" aria-label="Search organisations"
           action="/templates/biblio-public/public-organisations.html" class="mb-0">
-          <div class="position-relative col-lg-7" id="organisation-search" data-directory-search="organisations">
+          <div class="position-relative" id="organisation-search" data-directory-search="organisations">
 
             <label for="organisation-q" class="visually-hidden">
               Search organisations by name, code, or type
             </label>
 
-            <div class="input-group">
-              <span class="input-group-text bg-white border-end-0" aria-hidden="true">
-                <i class="if if-search text-muted"></i>
-              </span>
+            <div class="input-group input-group-lg">
               <input
                 type="search"
                 id="organisation-q"
                 name="q"
-                class="form-control border-start-0 ps-0"
+                class="form-control"
                 placeholder="Search organisations by name, code, or type…"
                 autocomplete="off"
                 role="combobox"
