@@ -8,6 +8,8 @@ The Booktower UI Library uses vanilla JavaScript with custom events for componen
 
 **All JavaScript that runs on real pages belongs in a named file in `assets/js/`.** Each file handles one concern. Inline `<script>` blocks are never acceptable in templates or partials.
 
+> **Current state:** ~19 templates still carry inline behavioral `<script>`. Each must be extracted into a named `assets/js/` file and registered below.
+
 In UI kit documentation pages (`foundations/`, `elements/`, `patterns/`), inline scripts are permitted only to demonstrate a JS interaction pattern — never to provide actual working behaviour.
 
 Every file in `assets/js/` must be listed in this document with:
@@ -46,6 +48,20 @@ Remove the `-stub.js` files when wiring real endpoints.
 ---
 
 ## Files
+
+### `clipboard.js`
+
+**Purpose:** Copies the Biblio ID (the `<code>` next to a `[data-clipboard]` button) to the clipboard; shows "Copied!" for 2s.
+
+**Loaded by:** all pages (global footer script, injected by the dev server).
+
+**Listens for:** click on `[data-clipboard]`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
+
+---
 
 ### `filter-editor.js`
 
