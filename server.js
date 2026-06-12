@@ -982,10 +982,6 @@ async function handleTemplateHtmx(req, res, urlPath, params) {
     return respond('', 80);
   }
 
-  if (urlPath === '/people/search' && method === 'GET') {
-    return respond(loadFragment('templates/partials/people-search-results.html'), 260);
-  }
-
   if (urlPath === '/deposit/authors' && method === 'POST') {
     const selected = bodyParams.get('author_display_name');
     const externalFirst = bodyParams.get('external_first_name');
