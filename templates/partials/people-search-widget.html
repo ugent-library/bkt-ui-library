@@ -10,13 +10,12 @@
   The widget is initialised automatically by people-search.js via the
   data-people-search attribute. No per-page JS needed for the widget itself.
 
-  Parameters passed via the surrounding context:
-    - The input's hx-get points to /people/search — no change needed per use.
-    - The unique IDs (data-ps-input, data-ps-results, etc.) are scoped to the
-      container via data-* attributes, so multiple widgets on one page work.
+  Prototype: results come from people-search-stub.js (local PEOPLE array),
+  which is the single data source. The input carries no hx-get.
 
-  In production: remove the people-search-stub.js script tag. The hx-get
-  on the input will call the real endpoint instead.
+  In production: add hx-get="/people/search" (+ hx-trigger/hx-target/
+  hx-indicator) to the input to call the real endpoint, and remove the
+  people-search-stub.js script tag.
 -->
 
 <div data-people-search>
@@ -28,11 +27,7 @@
     data-ps-input
     class="form-control form-control-sm"
     placeholder="Search by name or ORCID…"
-    autocomplete="off"
-    hx-get="/people/search"
-    hx-trigger="keyup changed delay:300ms"
-    hx-target="next [data-ps-results]"
-    hx-indicator="next [data-ps-hint]">
+    autocomplete="off">
 
   <div
     data-ps-results

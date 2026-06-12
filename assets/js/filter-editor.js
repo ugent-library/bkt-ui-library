@@ -187,15 +187,14 @@
         const sel = existing?.rawValue;
         body = `<div class="filter-editor__form" data-people-search>
           <label for="people-search-input" class="visually-hidden">Search by name or ORCID</label>
+          <!-- Prototype: results come from people-search-stub.js (local data).
+               Production: add hx-get="/people/search" (+ hx-trigger/target/
+               indicator) here to call the real endpoint. -->
           <input type="search" id="people-search-input" data-ps-input
             class="form-control form-control-sm"
             placeholder="Search by name or ORCID…"
             autocomplete="off"
-            value="${sel?.name || ''}"
-            hx-get="/people/search"
-            hx-trigger="keyup changed delay:300ms"
-            hx-target="next [data-ps-results]"
-            hx-indicator="next [data-ps-hint]">
+            value="${sel?.name || ''}">
           <div data-ps-results class="people-results" role="listbox"
             aria-label="People matching your search" ${sel ? '' : 'hidden'}>
             ${sel ? renderPersonSelected(sel) : ''}

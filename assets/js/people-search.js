@@ -24,15 +24,16 @@
  *   is chosen. event.detail = { id, name, affiliation }.
  *   Host contexts listen for this to store state or advance the form.
  *
- * In production:
- *   hx-get="/people/search" on the input returns people-search-results.html.
- *   This script handles click/keyboard selection on those results via event
- *   delegation — it works after every HTMX swap.
- *
  * In prototypes:
  *   Include people-search-stub.js after this file. It intercepts the input
- *   event and populates the results from a local PEOPLE array instead of
- *   calling the server. Nothing in this file changes.
+ *   event and populates the results from a local PEOPLE array — the single
+ *   data source. This script handles click/keyboard selection on those rows
+ *   via event delegation.
+ *
+ * In production:
+ *   Add hx-get="/people/search" to the input so it returns a partial of
+ *   .people-result rows. This script's delegation works after every HTMX
+ *   swap, so nothing here changes; remove people-search-stub.js.
  */
 
 (function () {

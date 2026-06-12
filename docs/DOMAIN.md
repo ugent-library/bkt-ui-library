@@ -274,7 +274,6 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `public-footer.html` | Public templates |
 | `backoffice-footer.html` | Backoffice templates |
 | `people-search-widget.html` | Deposit author search |
-| `people-search-results.html` | Deposit author search results |
 | `add-author-form.html` | Deposit author add form |
 | `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
 
