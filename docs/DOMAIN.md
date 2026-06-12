@@ -20,14 +20,14 @@ The central entity. A publication, dataset, software, or other research output p
 ### Work kind
 The publication type. Determines which fields are active in the deposit form (profile-driven — see The profile system).
 
-> ⚠️ **Out of sync with WORK-TYPES.md v0.4.** The `Known kinds` list below
-> predates the type-system redesign captured in `docs/WORK-TYPES.md`.
-> WORK-TYPES.md v0.4 has 20 v1 types and explicitly removes `preprint` as a
+> ⚠️ **Out of sync with `raven/docs/raven-design.md`.** The `Known kinds` list below
+> predates the type-system redesign captured in `raven/docs/raven-design.md`.
+> raven-design.md has 20 v1 types and explicitly removes `preprint` as a
 > type — a preprint is now a `journal_article` (or other peer-review-lifecycle
-> type) with `publication_version = submitted version`. Treat WORK-TYPES.md as
+> type) with `publication_version = submitted version`. Treat raven-design.md as
 > authoritative pending workshop confirmation; this section and the Content
 > categories table below will be re-synced once the type list is committed.
-> This is not a commitment to the v0.4 list — it is a pointer so that anyone
+> This is not a commitment to that list — it is a pointer so that anyone
 > reading DOMAIN.md does not mistake the legacy 9-kind list for the working
 > design.
 
@@ -221,14 +221,14 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 ## Content categories and their display differences
 
 > ⚠️ **Same sync caveat as the Work kind section above.** This table predates
-> the WORK-TYPES.md v0.4 redesign. The `preprint` row is the most obvious stale
-> entry — preprint is no longer a kind. Several v0.4 kinds are missing here
+> the `raven/docs/raven-design.md` redesign. The `preprint` row is the most obvious stale
+> entry — preprint is no longer a kind. Several raven-design.md kinds are missing here
 > entirely (`review_article`, `reference_entry`, `conference_abstract`, `conference_poster`,
 > `conference_presentation`, `policy_report`, `annotation`, `review`,
 > `popular_article`, `broadcast_appearance`, `popular_book`). Note that
-> `online_publication` was briefly a v0.4 kind but has since been collapsed
+> `online_publication` was briefly a kind but has since been collapsed
 > back into `popular_article` (with an internal `venue_form = web`
-> discriminator) — see WORK-TYPES.md § "`online_publication` collapsed into
+> discriminator) — see raven-design.md § "`online_publication` collapsed into
 > `popular_article`". Display specifics for the new kinds are deferred until
 > the type list is committed; do not invent display-specific rows for them
 > here until then.

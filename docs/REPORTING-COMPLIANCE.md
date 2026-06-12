@@ -97,7 +97,7 @@ a fixed weight from the BOF-besluit:
 
 **The "boek als editor" row is a mapping hazard.** VABB counts book editorship
 as a distinct countable type (weight 1). Biblio deliberately does **not** have
-`book_editor`/`issue_editor` as output types (see `WORK-TYPES.md`) — editorship
+`book_editor`/`issue_editor` as output types (see `raven/docs/raven-design.md`) — editorship
 is a contributor role on a `book`. The role must be preserved through to the
 VABB delivery so this output stays countable. This is an open mapping question
 (see [Open questions](#open-questions)).
@@ -267,7 +267,7 @@ anything above, but not in the two verified files either.
 - **DataCite Metadata Schema** — applies when minting dataset DOIs. Mandatory
   properties: Identifier, Creator, Title, Publisher, PublicationYear,
   ResourceType (= Dataset). Whether UGent is the minting party (directly bound)
-  or downstream is an open question — see `WORK-TYPES.md` dataset notes.
+  or downstream is an open question — see `raven/docs/raven-design.md` dataset notes.
 - **OpenAIRE Guidelines (Literature / Data Repository Managers)** — applies if
   EU/Horizon-funded output is harvested. Funding stream as
   `info:eu-repo/grantAgreement/…`.
