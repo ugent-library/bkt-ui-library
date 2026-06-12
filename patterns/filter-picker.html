@@ -32,8 +32,8 @@
     <p class="mb-4">Used in <code>backoffice-search.html</code> and <code>filter-editor.html</code>. Includes a search input that filters the list live and hides empty groups. The scrollable <code>.bt-filter-picker__list</code> keeps the dropdown bounded regardless of list length.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-body">
-        <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block" style="min-width: 260px;">
+      <div class="ds-demo-body" style="min-height: 450px;">
+        <div class="dropdown-menu show">
           <div class="p-2">
             <label for="demo-filter-search" class="visually-hidden">Search filters</label>
             <input type="search" id="demo-filter-search" class="form-control form-control-sm"
@@ -71,41 +71,6 @@
         </div>
       </div>
     </div>
-
-    <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="dropdown" id="add-filter-dropdown"&gt;
-  &lt;button class="btn btn-ghost btn-sm" type="button"
-    id="add-filter-btn"
-    data-bs-toggle="dropdown"
-    data-bs-auto-close="outside"
-    aria-expanded="false"&gt;
-    &lt;i class="if if-add if--xs" aria-hidden="true"&gt;&lt;/i&gt;
-    Add filter
-  &lt;/button&gt;
-
-  &lt;div class="dropdown-menu p-0" aria-labelledby="add-filter-btn"&gt;
-
-    &lt;!-- Search — optional, include when list is long --&gt;
-    &lt;div class="p-2"&gt;
-      &lt;label for="filter-search" class="visually-hidden"&gt;Search filters&lt;/label&gt;
-      &lt;input type="search" id="filter-search"
-        class="form-control form-control-sm"
-        placeholder="Find a filter…" autocomplete="off"&gt;
-    &lt;/div&gt;
-
-    &lt;div class="bt-filter-picker__list" id="filter-picker-list"&gt;
-      &lt;p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1"&gt;People&lt;/p&gt;
-      &lt;button class="dropdown-item py-2" type="button" data-filter="author"&gt;Author&lt;/button&gt;
-      &lt;button class="dropdown-item py-2" type="button" data-filter="affiliation"&gt;Affiliation / faculty&lt;/button&gt;
-      &lt;hr class="dropdown-divider my-1"&gt;
-      &lt;p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1"&gt;Time&lt;/p&gt;
-      &lt;button class="dropdown-item py-2" type="button" data-filter="year"&gt;Publication year&lt;/button&gt;
-    &lt;/div&gt;
-
-  &lt;/div&gt;
-&lt;/div&gt;</pre>
-    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -141,6 +106,43 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       2b. PICKER — SELECTED / APPLIED ITEMS
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Picker — selected / applied items</h2>
+    <p class="mb-3">When a filter is already applied (or is the one currently being edited), its picker item is marked with Bootstrap's <code>.active</code> state plus a trailing check icon. Reopening the picker then shows at a glance which dimensions are in play — without this, an applied filter looks identical to an unused one.</p>
+    <p class="mb-4">The <code>.active</code> fill is recoloured to the theme chip blue with dark text (rather than Bootstrap's solid primary) so it reads as a soft selection consistent with the active chips. Add <code>d-flex align-items-center</code> to the item so the check sits at the trailing edge via <code>ms-auto</code>. Driven by <code>aria-current="true"</code> for assistive tech.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block" style="min-width: 240px;">
+          <div class="bt-filter-picker__list">
+            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
+            <button class="dropdown-item d-flex align-items-center py-2 active" type="button" aria-current="true">
+              Type
+              <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
+            </button>
+            <button class="dropdown-item d-flex align-items-center py-2" type="button">Identifier (DOI, handle…)</button>
+            <hr class="dropdown-divider my-1">
+            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
+            <button class="dropdown-item d-flex align-items-center py-2 active" type="button" aria-current="true">
+              Publication year
+              <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
+            </button>
+            <hr class="dropdown-divider my-1">
+            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access</p>
+            <button class="dropdown-item d-flex align-items-center py-2" type="button">Open access</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="small mt-4 mb-0">The <code>.active</code> fill is recoloured via <code>--bs-dropdown-link-active-bg: var(--bt-blue-200)</code> and <code>--bs-dropdown-link-active-color: rgba(var(--bs-dark-rgb), 1)</code> (text-dark) — scoped to <code>.bt-filter-picker__list .dropdown-item.active</code> in <code>_booktower-filter-tags.scss</code>.</p>
+
+    <p class="small text-muted mt-3 mb-0">In the entity result filter bar (<code>templates/partials/result-filter-bar.html</code>) this is toggled from the active-filter state on every apply / remove / clear, and also while a filter is being edited. Picking an item closes the picker and opens the editor, so the highlight is what you see when you reopen <strong>Add filter</strong>.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -184,34 +186,6 @@
         </div>
       </div>
     </div>
-
-    <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="filter-editor" role="dialog"
-  aria-labelledby="filter-editor-title" aria-modal="false"&gt;
-
-  &lt;p class="h6" id="filter-editor-title"&gt;Type&lt;/p&gt;
-
-  &lt;div class="filter-checklist" role="group" aria-label="Select Type"&gt;
-    &lt;div class="form-check"&gt;
-      &lt;input class="form-check-input" type="checkbox" id="fv-journal" name="fv" value="journal_article"&gt;
-      &lt;label class="form-check-label" for="fv-journal"&gt;Journal article&lt;/label&gt;
-    &lt;/div&gt;
-    &lt;div class="form-check"&gt;
-      &lt;input class="form-check-input" type="checkbox" id="fv-dataset" name="fv" value="dataset"&gt;
-      &lt;label class="form-check-label" for="fv-dataset"&gt;Dataset&lt;/label&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;div class="filter-editor__actions"&gt;
-    &lt;button type="button" class="btn btn-primary btn-sm" id="editor-apply"&gt;Apply&lt;/button&gt;
-    &lt;button type="button" class="btn btn-ghost btn-sm" id="editor-cancel"&gt;Cancel&lt;/button&gt;
-    &lt;!-- When editing an existing filter: --&gt;
-    &lt;button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" id="editor-remove"&gt;Remove filter&lt;/button&gt;
-  &lt;/div&gt;
-
-&lt;/div&gt;</pre>
-    </div>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -219,19 +193,17 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — boolean</h2>
-    <p class="mb-4">Used for yes/no filters: Open access, Has file. Two large buttons — no ambiguity about what's being toggled. <code>.is-selected</code> is toggled by <code>filter-editor.js</code> on click.</p>
+    <p class="mb-4">Used for yes/no filters: Open access, Has file. A Bootstrap <code>.btn-check</code> radio toggle group — native single-select semantics, themed via <code>--bs-btn-active-*</code>. No JS selection handling needed.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-bool-title" aria-modal="false">
           <p class="h6" id="fe-bool-title">Open access</p>
           <div class="filter-boolean" role="group" aria-label="Open access">
-            <button type="button" class="filter-boolean__option is-selected" data-bool="true">
-              Yes — open access only
-            </button>
-            <button type="button" class="filter-boolean__option" data-bool="false">
-              No — restricted only
-            </button>
+            <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-true" autocomplete="off" checked>
+            <label class="btn" for="fe-bool-demo-true">Yes — open access only</label>
+            <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-false" autocomplete="off">
+            <label class="btn" for="fe-bool-demo-false">No — restricted only</label>
           </div>
           <div class="filter-editor__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
@@ -347,6 +319,15 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
+       7b. EDITOR AS OVERLAY
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Editor as overlay</h2>
+    <p class="mb-3">By default the editor panel sits inline and pushes the content below it down when it opens. In dense result views (e.g. the entity result filter bar) that shift is jarring. Wrap the bar and editor in a <code>position-relative</code> container and give the panel Bootstrap's position utilities so it <strong>floats over</strong> the result list instead.</p>
+    <p class="mb-4">No custom CSS required — wrap the bar and panel in a <code>position-relative</code> container, then give the <code>#filter-editor</code> panel <code>position-absolute top-100 start-0 w-100 z-3 mt-2</code>: it anchors to the bottom edge of the bar at full width, above the results, with a small gap.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
        8. ACTIVE CHIPS
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
@@ -359,7 +340,7 @@
           <div class="filter-tag-group">
             <button type="button" class="filter-tag filter-tag--editable"
               aria-label="Edit filter: Type is Journal article">
-              <span class="text-muted me-1">Type:</span>Journal article
+              Type: <span class="fw-bold">Journal article</span>
             </button>
             <button type="button" class="filter-tag__remove"
               aria-label="Remove filter: Type is Journal article">
@@ -369,7 +350,7 @@
           <div class="filter-tag-group">
             <button type="button" class="filter-tag filter-tag--editable"
               aria-label="Edit filter: Author is Jane Doe">
-              <span class="text-muted me-1">Author:</span>Jane Doe
+              Author: <span class="fw-bold">Jane Doe</span>
             </button>
             <button type="button" class="filter-tag__remove"
               aria-label="Remove filter: Author is Jane Doe">
@@ -379,7 +360,7 @@
           <div class="filter-tag-group">
             <button type="button" class="filter-tag filter-tag--editable"
               aria-label="Edit filter: Publication year is 2020–2024">
-              <span class="text-muted me-1">Year:</span>2020–2024
+              Year: <span class="fw-bold">2020–2024</span>
             </button>
             <button type="button" class="filter-tag__remove"
               aria-label="Remove filter: Publication year is 2020–2024">

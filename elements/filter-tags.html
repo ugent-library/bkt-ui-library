@@ -44,6 +44,84 @@
   </section>
 
   <section class="ds-section">
+    <h2 class="h4 mb-3">Split filter tag (editable + remove)</h2>
+    <p class="mb-3">A split chip pairs an <strong>editable</strong> left half — clicking it reopens the filter editor — with a dedicated <strong>remove</strong> button on the right. Wrap both in <code>.filter-tag-group</code> so they read as one pill. Used by the filter picker for each applied filter (see <a href="/patterns/filter-picker.html">Filter picker &amp; editor</a>).</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Single split tag</div>
+      <div class="ds-demo-body">
+        <div class="filter-tag-group">
+          <button type="button" class="filter-tag filter-tag--editable"
+            aria-label="Edit filter: Type is Journal article">
+            Type: <span class="fw-bold">Journal article</span>
+          </button>
+          <button type="button" class="filter-tag__remove"
+            aria-label="Remove filter: Type is Journal article">
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Multiple split tags + Clear all</div>
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <div class="filter-tag-group">
+            <button type="button" class="filter-tag filter-tag--editable"
+              aria-label="Edit filter: Type is Journal article">
+              Type: <span class="fw-bold">Journal article</span>
+            </button>
+            <button type="button" class="filter-tag__remove"
+              aria-label="Remove filter: Type is Journal article">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="filter-tag-group">
+            <button type="button" class="filter-tag filter-tag--editable"
+              aria-label="Edit filter: Author is Jane Doe">
+              Author: <span class="fw-bold">Jane Doe</span>
+            </button>
+            <button type="button" class="filter-tag__remove"
+              aria-label="Remove filter: Author is Jane Doe">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="filter-tag-group">
+            <button type="button" class="filter-tag filter-tag--editable"
+              aria-label="Edit filter: Publication year is 2020–2024">
+              Year: <span class="fw-bold">2020–2024</span>
+            </button>
+            <button type="button" class="filter-tag__remove"
+              aria-label="Remove filter: Publication year is 2020–2024">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm text-muted">
+            <i class="if if-close" aria-hidden="true"></i>
+            Clear all
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Static filter tag</h2>
+    <p class="mb-3">Display-only variant — no remove button, no interaction. Used in saved-search previews and other read-only summaries of filter state.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <span class="filter-tag--static">Type: Dataset</span>
+          <span class="filter-tag--static">Open access: yes</span>
+          <span class="filter-tag--static">Year: 2024</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
     <h2 class="h4 mb-3">With icons</h2>
 
     <div class="ds-demo">
@@ -85,5 +163,4 @@
       </div>
     </div>
   </section>
-</div></content>
-<parameter name="filePath">/Users/mietclaes/Sites/booktower-ui-library/elements/filter-tags.html
+</div>

@@ -17,7 +17,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--bt-sp-1);
-  background: var(--bt-blue-200);
+  background-color: var(--bt-blue-200);
   color: var(--bt-blue-900);
   font-size: var(--bt-text-xs);
   font-weight: 500;
@@ -25,12 +25,12 @@
   border-radius: var(--bt-radius-pill);
   cursor: pointer;
   border: none;
-  transition: background var(--bt-dur-fast);
+  transition: background-color var(--bt-dur-fast), color var(--bt-dur-fast);
   white-space: nowrap;
-  height: 24px;
+  height: var(--bt-sp-6);
 }
 .filter-tag:hover {
-  background: var(--bt-blue-300);
+  background-color: var(--bt-blue-100);
 }
 .filter-tag:focus-visible {
   outline: 3px solid var(--bt-focus-ring);
@@ -42,25 +42,30 @@
   border-radius: var(--bt-radius-pill) 0 0 var(--bt-radius-pill);
   padding-right: var(--bt-sp-2);
 }
+/* Lift the focus ring above the remove button so the right edge isn't clipped
+   (parity with .filter-tag__remove:focus-visible). */
+.filter-tag--editable:focus-visible {
+  position: relative;
+  z-index: 1;
+}
 
 /* Remove button -- right half of split chip */
 .filter-tag__remove {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--bt-blue-200);
-  color: var(--bt-blue-700);
+  background-color: var(--bt-blue-200);
+  color: var(--bt-blue-900);
   border: none;
   border-radius: 0 var(--bt-radius-pill) var(--bt-radius-pill) 0;
   padding: .2em var(--bt-sp-2) .2em var(--bt-sp-1);
   cursor: pointer;
-  transition: background var(--bt-dur-fast), color var(--bt-dur-fast);
+  transition: background-color var(--bt-dur-fast), color var(--bt-dur-fast);
   line-height: 1;
-  height: 24px;
+  height: var(--bt-sp-6);
 }
 .filter-tag__remove:hover {
-  background: var(--bt-blue-300);
-  color: var(--bt-blue-900);
+  background-color: var(--bt-blue-100);
 }
 .filter-tag__remove:focus-visible {
   outline: 3px solid var(--bt-focus-ring);
@@ -73,6 +78,13 @@
 .filter-tag-group {
   display: inline-flex;
   align-items: center;
+}
+
+/* Hovering either half highlights the whole pill, so the split chip reads as
+   one unit instead of two halves reacting independently. */
+.filter-tag-group:hover .filter-tag--editable,
+.filter-tag-group:hover .filter-tag__remove {
+  background-color: var(--bt-blue-100);
 }
 
 /* Static/display-only variant */
@@ -91,19 +103,16 @@
 }
 
 /* -- bt-filter-picker -- scrollable filter list -- */
-.bt-filter-picker__menu {
-  min-width: 260px;
-}
-
-.bt-filter-picker__menu--narrow {
-  min-width: 240px;
-}
 
 .bt-filter-picker__list {
   max-height: 320px;
   overflow-y: auto;
   overflow-x: hidden;
+  min-width: 260px;
 }
+
+/* Dropdown selected/hover theming (blue-200 active, grey-50 hover) is a global
+   --bs-dropdown-* override on .dropdown-menu — see foundation/_bootstrap-overrides.scss. */
 
 /* -- Filter editor panel -- */
 .filter-editor {
@@ -113,6 +122,10 @@
   box-shadow: var(--bt-shadow-md);
   padding: var(--bt-sp-4);
   max-width: 480px;
+  /* The overlay anchor can be a narrow flex slot (e.g. the search toolbar's
+     Add-filter button). Guarantee a usable popover width regardless, capped to
+     the viewport on small screens. */
+  min-width: min(480px, 100vw - 2rem);
 }
 .filter-editor__actions {
   display: flex;
@@ -131,41 +144,48 @@
   overflow-y: auto;
 }
 .filter-checklist .form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
   margin: 0;
-  padding: var(--bt-sp-1) var(--bt-sp-2);
+  padding: var(--bt-sp-2) var(--bt-sp-4) 0 0;   /* match picker row padding (8px 16px) */
   border-radius: var(--bt-radius-sm);
 }
-.filter-checklist .form-check:hover { background: var(--bt-gray-50); }
+.filter-checklist .form-check-input {
+  float: none;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.filter-checklist .form-check:hover { background-color: var(--bt-gray-50); }
 .filter-checklist .form-check-label {
-  font-size: var(--bt-text-sm);
+  font-size: var(--bt-text-base);           /* match picker (1rem) */
+  color: var(--bt-gray-700);                /* resting label, like the picker */
   cursor: pointer;
-  width: 100%;
+  flex: 1;
 }
 
-/* -- Filter editor -- boolean toggle -- */
+/* -- Filter editor -- boolean toggle (Bootstrap .btn-check radio group) --
+   Dedicated component (native single-select + a11y); the soft look is preserved
+   purely through --bs-btn-* variables: white/outline at rest, blue-100 fill when
+   selected. No custom selected-state CSS or JS toggling. */
 .filter-boolean { display: flex; gap: var(--bt-sp-2); }
-.filter-boolean__option {
+.filter-boolean .btn {
   flex: 1;
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-  border: 1.5px solid var(--bt-gray-150);
-  border-radius: var(--bt-radius-md);
-  font-size: var(--bt-text-sm);
-  font-weight: 500;
-  color: var(--bt-gray-700);
-  background: var(--bt-white);
-  cursor: pointer;
-  text-align: center;
-  transition: border-color var(--bt-dur-fast), background var(--bt-dur-fast), color var(--bt-dur-fast);
-}
-.filter-boolean__option:hover { border-color: var(--bt-blue-500); }
-.filter-boolean__option.is-selected {
-  border-color: var(--bt-blue-700);
-  background: var(--bt-blue-100);
-  color: var(--bt-blue-900);
-}
-.filter-boolean__option:focus-visible {
-  outline: 3px solid var(--bt-focus-ring);
-  outline-offset: 2px;
+  --bs-btn-color:               var(--bt-gray-700);
+  --bs-btn-bg:                  var(--bt-white);
+  --bs-btn-border-color:        var(--bt-gray-150);
+  --bs-btn-border-width:        1.5px;
+  --bs-btn-border-radius:       var(--bt-radius-md);
+  --bs-btn-padding-y:           var(--bt-sp-2);
+  --bs-btn-padding-x:           var(--bt-sp-3);
+  --bs-btn-font-size:           var(--bt-text-sm);
+  --bs-btn-font-weight:         500;
+  --bs-btn-hover-color:         var(--bt-gray-700);
+  --bs-btn-hover-bg:            var(--bt-white);
+  --bs-btn-hover-border-color:  var(--bt-blue-500);
+  --bs-btn-active-color:        var(--bt-blue-900);
+  --bs-btn-active-bg:           var(--bt-blue-100);
+  --bs-btn-active-border-color: var(--bt-blue-700);
 }
 
 /* -- Filter editor -- year range -- */

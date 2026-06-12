@@ -80,8 +80,14 @@
 }
 
 .form-check-input {
-  accent-color: var(--bt-blue-900);
   cursor: pointer;
+}
+/* Bootstrap sets `appearance: none` on the control, which makes `accent-color`
+   a no-op, and the checked fill is baked from a Sass var (no runtime
+   --bs-form-check-* exists). So recolour the checked state directly. */
+.form-check-input:checked {
+  background-color: var(--bt-blue-900);
+  border-color: var(--bt-blue-900);
 }
 .form-check-input:focus-visible {
   outline: 3px solid var(--bt-focus-ring);

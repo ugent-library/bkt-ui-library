@@ -34,6 +34,10 @@
     }));
 -->
 
+<!-- position-relative anchors the editor overlay so it floats over the results
+     (position-absolute) instead of pushing them down when it opens. -->
+<div class="position-relative">
+
 <!-- ── Chips row ───────────────────────────────────────────────────────────── -->
 <div class="d-flex gap-2 flex-wrap align-items-center">
 
@@ -55,7 +59,7 @@
       Add filter
     </button>
 
-    <div class="dropdown-menu p-0 bt-filter-picker__menu" aria-labelledby="add-filter-btn">
+    <div class="dropdown-menu p-0" aria-labelledby="add-filter-btn">
 
       <div class="p-2 border-bottom">
         <label for="filter-search" class="visually-hidden">Search filters</label>
@@ -122,11 +126,14 @@
 
 </div><!-- /chips row -->
 
-<!-- Filter editor panel — must exist in DOM at page load, never HTMX-injected -->
+<!-- Filter editor panel — must exist in DOM at page load, never HTMX-injected.
+     Overlays the results (position-absolute) rather than pushing them down. -->
 <div id="filter-editor"
-  class="filter-editor mt-2"
+  class="filter-editor position-absolute top-100 start-0 w-100 z-3 mt-2"
   role="dialog"
   aria-modal="false"
   aria-labelledby="filter-editor-title"
   hidden>
 </div>
+
+</div><!-- /position-relative wrapper -->

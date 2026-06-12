@@ -130,7 +130,7 @@
     // Init any people-search widget that just landed in the editor
     if (window.PeopleSearch) window.PeopleSearch.initAll();
 
-    filterEditor.querySelector('input, button.filter-boolean__option')?.focus();
+    filterEditor.querySelector('input')?.focus();
     attachEditorEvents(filterId, def);
   }
 
@@ -157,8 +157,10 @@
       case 'boolean': {
         const cur = existing?.rawValue;
         body = `<div class="filter-boolean" role="group" aria-label="${def.label}">
-          <button type="button" class="filter-boolean__option ${cur === 'true'  ? 'is-selected' : ''}" data-bool="true">${def.yesLabel}</button>
-          <button type="button" class="filter-boolean__option ${cur === 'false' ? 'is-selected' : ''}" data-bool="false">${def.noLabel}</button>
+          <input type="radio" class="btn-check" name="ef-bool" id="ef-bool-true" value="true" autocomplete="off" ${cur === 'true' ? 'checked' : ''}>
+          <label class="btn" for="ef-bool-true">${def.yesLabel}</label>
+          <input type="radio" class="btn-check" name="ef-bool" id="ef-bool-false" value="false" autocomplete="off" ${cur === 'false' ? 'checked' : ''}>
+          <label class="btn" for="ef-bool-false">${def.noLabel}</label>
         </div>`;
         break;
       }
@@ -237,12 +239,7 @@
     document.getElementById('editor-cancel')?.addEventListener('click', closeEditor);
     document.getElementById('editor-remove')?.addEventListener('click', () => { removeFilter(filterId); closeEditor(); });
 
-    filterEditor.querySelectorAll('.filter-boolean__option').forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterEditor.querySelectorAll('.filter-boolean__option').forEach(b => b.classList.remove('is-selected'));
-        btn.classList.add('is-selected');
-      });
-    });
+    // Boolean uses native .btn-check radios — no JS selection toggle needed.
 
     if (def.type === 'people-search') {
       // Use a named handler so it can be removed on close (prevents accumulation)
@@ -293,9 +290,9 @@
         break;
       }
       case 'boolean': {
-        const sel = filterEditor.querySelector('.filter-boolean__option.is-selected');
+        const sel = filterEditor.querySelector('input[name="ef-bool"]:checked');
         if (!sel) { closeEditor(); return; }
-        rawValue = sel.dataset.bool; displayValue = rawValue === 'true' ? 'Yes' : 'No';
+        rawValue = sel.value; displayValue = rawValue === 'true' ? 'Yes' : 'No';
         break;
       }
       case 'year-range': {
