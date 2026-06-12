@@ -18,7 +18,7 @@ The researcher describes their work. There are three entry paths:
 
 All three paths converge on the same form. The form fields are:
 
-- **Work type** (required) — `bt-btn-check__group` radio buttons: Journal article, Book, Book chapter, Conference contribution, Dataset, Dissertation, Report, Software, Other
+- **Work type** (required) — `bt-btn-check__group` radio buttons. The intended set (`raven/docs/raven-design.md`): Journal article, Book, Book chapter, Reference entry, Special issue, Conference paper, Conference abstract, Conference poster, Conference presentation, Preprint, Working paper, Report, Doctoral thesis, Magazine article, Newspaper article, Online post, Media appearance, Lecture, Patent, Dataset, Software, Book review, Other. Raven is the single source of truth for the type vocabulary; the implemented catalog (`raven/work_type.go`) is a subset that grows toward this list.
 - **Title** (required) — text input with optional language select. Multiple titles supported via "Add title".
 - **Abstract** — textarea, optional
 - **Authors** — editable list. Each author row shows name, affiliation (UGent department or "External"), and a remove button. "Add author" triggers an HTMX swap loading `add-author-form.html`.
