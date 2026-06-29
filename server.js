@@ -856,24 +856,45 @@ function renderProjectsList() {
 
 function renderExpandedAuthors() {
   return `
-<ul class="list-unstyled small text-muted mb-0">
-  <li>Esperon-Rodriguez, Manuel — Western Sydney University</li>
-  <li>Arndt, Stefan — University of Melbourne</li>
-  <li>De Pauw, Karen — Ghent University</li>
-  <li>Van den Berg, Judith — Wageningen University</li>
-</ul>`;
+    <a href="#">Esperon‑Rodriguez, M.</a>,
+    <a href="#">Arndt, S.</a>,
+    <a href="#">De Pauw, K.</a>,
+    <a href="#">Curie, S.</a>,
+    <span>Van den Berg, A.</span>,
+    <span>Vandeurzen, B.</span>,
+    <span>Van de Walle, C.</span>,
+    <span>Vanput, D.</span>,
+    <span>Putzeys, E.</span>,
+    <span>Pourry Montgomery, F.</span>
+    <span id="authors-loading" class="htmx-indicator">Loading…</span>
+    <button type="button" class="btn btn-ghost btn-xs">
+      Show less
+    </button>
+  `;
 }
 
 function renderRelatedWorks() {
   return `
 <div class="d-flex flex-column gap-3">
-  <article class="border rounded p-3 bg-white">
-    <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Cooling co-benefits of urban tree networks in compact European cities</a>
-    <p class="small text-muted mb-0">Journal article · 2025</p>
+  <article class="card">
+    <div class="card-body">
+      <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Cooling co-benefits of urban tree networks in compact European cities</a>
+      <p class="small text-muted">Journal article · 2025</p>
+      <div class="d-flex flex-wrap gap-1">
+        <a href="#" class="badge bg-primary-light text-decoration-none">Green infrastructure</a>
+        <a href="#" class="badge bg-secondary text-decoration-none">Trees</a>
+      </div>
+    </div>
   </article>
-  <article class="border rounded p-3 bg-white">
-    <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Planning biodiversity corridors through urban green infrastructure</a>
-    <p class="small text-muted mb-0">Journal article · 2024</p>
+  <article class="card">
+    <div class="card-body">
+      <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Planning biodiversity corridors through urban green infrastructure</a>
+      <p class="small text-muted">Journal article · 2024</p>
+      <div class="d-flex flex-wrap gap-1">
+        <a href="#" class="badge bg-secondary text-decoration-none">Biodiversity</a>
+        <a href="#" class="badge bg-primary-light text-decoration-none">Urban climate</a>
+      </div>
+    </div>
   </article>
 </div>`;
 }

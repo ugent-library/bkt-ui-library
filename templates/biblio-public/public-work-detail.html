@@ -44,9 +44,9 @@
           <span class="badge bg-success">
             <i class="if if-open-access"></i> Open access
           </span>
-          <span class="badge bg-success">
+          <!-- Hide for now <span class="badge bg-success">
             <i class="if if-check"></i> Methodology certified
-          </span>
+          </span> -->
         </div>
 
         <!-- Title -->
@@ -55,20 +55,21 @@
         </h1>
 
         <!-- Authors -->
-        <p class="mb-1">
+        <p class="mb-1" id="authors-expanded">
           <a href="#">Esperon‑Rodriguez, M.</a>,
           <a href="#">Arndt, S.</a>,
           <a href="#">De Pauw, K.</a>
-          <button type="button" class="btn btn-ghost btn-sm py-0 px-1"
+          <span id="authors-loading" class="htmx-indicator">Loading…</span>
+          <button type="button" class="btn btn-ghost btn-xs"
             hx-get="/partials/authors-full?id=01K9XTVXD41Z"
             hx-target="#authors-expanded"
             hx-swap="innerHTML"
-            hx-indicator="#authors-loading">
+            hx-indicator="#authors-loading"
+            id="authors-expanded-button">
             + 6 more
           </button>
-          <span id="authors-loading" class="htmx-indicator">Loading…</span>
         </p>
-        <div id="authors-expanded"></div>
+
 
         <!-- Journal info -->
         <p class="mb-4">
@@ -92,10 +93,10 @@
             <i class="if if-double-quotes" aria-hidden="true"></i>
             Cite
           </button>
-          <button type="button" class="btn btn-ghost">
+          <!-- <button type="button" class="btn btn-ghost">
             <i class="if if-share" aria-hidden="true"></i>
             Share
-          </button>
+          </button> -->
         </div>
         <p class="bt-text-xsmall mt-2">PDF &middot; Open Access &middot; 158.71 KB</p>
       </div>
@@ -143,13 +144,14 @@
             hx-get="/partials/related?id=01K9XTVXD41Z&partial=true"
             hx-trigger="revealed"
             hx-swap="innerHTML">
-            <div class="text-muted">Loading related output…</div>
+            <div class="text-muted">Loading related research output…</div>
           </div>
         </section>
       </div>
 
       <!-- Sidebar column: content -->
-      <div class="col-lg-4">
+      <div class="col-lg-4 col-lg-4 d-flex flex-column gap-3">
+
         <!-- Metadata -->
         <div class="mb-4">
           <h2 class="form-label d-block mb-3">Metadata</h2>
@@ -192,8 +194,18 @@
           </ul>
         </div>
 
+        <!-- Curation note -->
+        <div class="d-flex gap-3 p-3 border rounded-3 justify-content-center">
+          <span class="bt-avatar bt-avatar--md bg-danger text-white flex-shrink-0 mt-1">
+            <i class="if if-service if--lg" aria-hidden="true"></i>
+          </span>
+          <p>
+            This research output has been carefully curated at Ghent University Library.
+          </p>
+        </div>
+
         <!-- Certificates -->
-        <div class="mb-5">
+        <!-- hide for now <div class="mb-5">
           <h3 class="form-label d-block mb-2">Certification</h3>
           <ul class="list-unstyled mb-0">
             <li>
@@ -203,17 +215,7 @@
               <a href="#">Methodology certificate</a>
             </li>
           </ul>
-        </div>
-
-        <!-- Curation note -->
-        <div class="d-flex gap-3 p-3 border rounded mb-5 justify-content-center">
-          <span class="bt-avatar bt-avatar--md bg-danger text-white flex-shrink-0 mt-1">
-            <i class="if if-service if--lg" aria-hidden="true"></i>
-          </span>
-          <p>
-            This research output has been carefully curated at Ghent University Library.
-          </p>
-        </div>
+        </div> -->
 
       </div>
     </div>
