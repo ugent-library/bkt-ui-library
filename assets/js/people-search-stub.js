@@ -85,7 +85,7 @@
       return;
     }
 
-    if (hint) hint.textContent = 'Searching…';
+    if (hint) hint.textContent = 'Searching&hellip;';
 
     timer = setTimeout(() => {
       const matches = PEOPLE.filter(p =>

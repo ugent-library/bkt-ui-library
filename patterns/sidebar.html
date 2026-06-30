@@ -129,7 +129,7 @@
 <pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
 
   &lt;!-- Grid area: navbar --&gt;
-  &lt;header class="bt-navbar" role="banner"&gt;…&lt;/header&gt;
+  &lt;header class="bt-navbar" role="banner"&gt;&hellip;&lt;/header&gt;
 
   &lt;!-- Grid area: sidebar --&gt;
   &lt;nav class="bt-sidebar" aria-label="Section navigation"&gt;
@@ -138,20 +138,20 @@
 
   &lt;!-- Grid area: main --&gt;
   &lt;main id="main-content"&gt;
-    &lt;div class="u-main__header"&gt;…&lt;/div&gt;
+    &lt;div class="u-main__header"&gt;&hellip;&lt;/div&gt;
     &lt;div class="u-main__body u-main__body--split"&gt;
-      &lt;aside class="u-main__sidebar" aria-label="Filter by"&gt;…&lt;/aside&gt;
+      &lt;aside class="u-main__sidebar" aria-label="Filter by"&gt;&hellip;&lt;/aside&gt;
       &lt;section class="u-main__content"&gt;
-        &lt;div class="u-main__content-header"&gt;…&lt;/div&gt;
-        &lt;div class="u-main__content-body"&gt;…&lt;/div&gt;
-        &lt;div class="u-main__content-footer"&gt;…&lt;/div&gt;
+        &lt;div class="u-main__content-header"&gt;&hellip;&lt;/div&gt;
+        &lt;div class="u-main__content-body"&gt;&hellip;&lt;/div&gt;
+        &lt;div class="u-main__content-footer"&gt;&hellip;&lt;/div&gt;
       &lt;/section&gt;
     &lt;/div&gt;
-    &lt;div class="u-main__footer"&gt;…&lt;/div&gt;
+    &lt;div class="u-main__footer"&gt;&hellip;&lt;/div&gt;
   &lt;/main&gt;
 
   &lt;!-- Grid area: panel (optional) --&gt;
-  &lt;aside class="u-main__panel" aria-label="Record detail"&gt;…&lt;/aside&gt;
+  &lt;aside class="u-main__panel" aria-label="Record detail"&gt;&hellip;&lt;/aside&gt;
 
 &lt;/div&gt;</pre>
     </div>
@@ -223,7 +223,7 @@
     <p class="mb-3">Set both <code>aria-current="page"</code> and <code>class="nav-link active"</code> on the active link. <code>aria-current</code> is what screen readers use; <code>.active</code> handles the visual background. In server-rendered templates, set both explicitly.</p>
 
     <p class="fw-semibold mb-1">Tooltips</p>
-    <p class="mb-3">Add <code>data-bs-toggle="tooltip" data-bs-placement="right" title="…"</code> to every link. Bootstrap reads the <code>title</code> attribute — no extra markup needed. <code>sidebar-toggle.js</code> initialises all tooltips at page load by querying <code>.bt-sidebar a.nav-link[data-bs-toggle="tooltip"]</code>. Tooltips are present at all times but become essential when the label is hidden in slim mode.</p>
+    <p class="mb-3">Add <code>data-bs-toggle="tooltip" data-bs-placement="right" title="&hellip;"</code> to every link. Bootstrap reads the <code>title</code> attribute — no extra markup needed. <code>sidebar-toggle.js</code> initialises all tooltips at page load by querying <code>.bt-sidebar a.nav-link[data-bs-toggle="tooltip"]</code>. Tooltips are present at all times but become essential when the label is hidden in slim mode.</p>
 
     <p class="fw-semibold mb-1">Mobile — consider Offcanvas</p>
     <p class="mb-0">Bootstrap's <a href="https://getbootstrap.com/docs/5.3/components/offcanvas/" class="link-primary">Offcanvas</a> handles mobile drawers that slide over content. If the sidebar needs to become a drawer on small screens, wrap it in an Offcanvas body rather than building a custom mobile variant. <code>bt-sidebar</code> styles remain usable inside the Offcanvas body with no changes.</p>

@@ -10,7 +10,7 @@ module.exports = function renderExpandedAuthors() {
     <span>Vanput, D.</span>,
     <span>Putzeys, E.</span>,
     <span>Pourry Montgomery, F.</span>
-    <span id="authors-loading" class="htmx-indicator">Loading…</span>
+    <span id="authors-loading" class="htmx-indicator">Loading&hellip;</span>
     <button type="button" class="btn btn-ghost btn-xs">
       Show less
     </button>

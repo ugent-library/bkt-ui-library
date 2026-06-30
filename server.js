@@ -380,7 +380,7 @@ function injectShell(filePath, html, currentPath, activeState) {
       </a>
       <div class="bt-search-wrap" role="search">
         <label for="bt-search" class="visually-hidden">Search components</label>
-        <input type="search" id="bt-search" class="bt-search" placeholder="Search…" autocomplete="off" aria-controls="bt-nav-body">
+        <input type="search" id="bt-search" class="bt-search" placeholder="Search&hellip;" autocomplete="off" aria-controls="bt-nav-body">
       </div>
     </div>
     <div class="bt-nav-body" id="bt-nav-body">

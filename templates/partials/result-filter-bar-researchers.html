@@ -1,0 +1,65 @@
+<!--
+  HTMX partial: researcher directory filter bar (people-scoped)
+  Used on: public-researchers.html
+
+  @include: templates/partials/result-filter-bar-researchers.html
+
+  Same chip + "Add filter" interaction as result-filter-bar.html, but the
+  filter set is scoped to PEOPLE — Faculty/department, Membership (current /
+  alumni), Public research output. The works-scoped result-filter-bar.html
+  is for entity *detail* pages (a researcher/org/project's own output list).
+
+  Behaviour lives in assets/js/directory-filters.js (no inline script — see
+  docs/JAVASCRIPT.md). Chips are client-side only in the prototype; they do not
+  refilter the list yet. Faculty values and the public-output rollup are stubs.
+-->
+
+<!-- position-relative anchors the editor overlay so it floats over the result
+     list (position-absolute) instead of pushing it down when it opens. -->
+<div class="position-relative">
+
+  <!-- ── Active chips + Add filter ────────────────────────────────────────── -->
+  <div class="d-flex flex-wrap align-items-center" id="rdir-filter-bar">
+
+    <div role="group" aria-label="Active filters"
+      class="d-flex gap-2 flex-wrap align-items-center"
+      id="rdir-active-chips">
+    </div>
+
+    <div class="dropdown" id="rdir-add-filter-dropdown">
+      <button class="btn btn-ghost btn-sm" type="button"
+        id="rdir-add-filter-btn"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        aria-expanded="false">
+        <i class="if if-add if--xs" aria-hidden="true"></i>
+        Add filter
+      </button>
+
+      <div class="dropdown-menu p-0" aria-labelledby="rdir-add-filter-btn">
+
+        <div class="bt-filter-picker__list" id="rdir-filter-picker-list">
+          <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="faculty">Faculty or department</button>
+          <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="status">Current or alumni</button>
+          <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="has_output">Has public research output</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-ghost btn-sm text-muted"
+        id="rdir-clear-all" hidden>
+        <i class="if if-close" aria-hidden="true"></i>
+        Clear all
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── Filter editor panel ──────────────────────────────────────────────── -->
+  <div id="rdir-filter-editor" hidden
+    class="filter-editor position-absolute top-100 start-0 w-100 mt-2"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="rdir-filter-editor-title">
+  </div>
+
+</div>

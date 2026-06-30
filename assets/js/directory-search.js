@@ -2,7 +2,7 @@
  * directory-search.js — scoped typeahead for one directory page.
  * Prototype: filters an inline JSON dataset client-side and renders
  * suggestion rows; does not filter the page's result list.
- * Production: replace with GET /{directory}/suggest?q=… returning rows.
+ * Production: replace with GET /{directory}/suggest?q=&hellip; returning rows.
  */
 
 (function () {

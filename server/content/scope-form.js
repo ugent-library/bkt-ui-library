@@ -53,7 +53,7 @@ module.exports = function renderScopeForm({ scoped = true, names = ['Faculty of 
           type="search"
           id="org-search"
           class="form-control"
-          placeholder="Search by faculty, department, or research group…"
+          placeholder="Search by faculty, department, or research group&hellip;"
           autocomplete="off"
           aria-autocomplete="list"
           aria-controls="org-suggest"
@@ -71,7 +71,7 @@ module.exports = function renderScopeForm({ scoped = true, names = ['Faculty of 
           hidden></div>
       </div>
       <span id="org-suggest-indicator" class="htmx-indicator text-muted small mt-1 d-block" aria-live="polite">
-        Searching organisations…
+        Searching organisations&hellip;
       </span>
     </div>
   </section>

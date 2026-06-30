@@ -55,7 +55,7 @@ Two-layer model:
 In the UI: a contributor in the deposit form is a Person. They may be **linked** (has a `person_identity_id`, shown as a UGent-identified person) or **unlinked** (known by name only — valid and expected for external co-authors). The distinction matters for person-centric queries but not for display rendering.
 
 ### Contributor
-A Person as they appear on a specific Work. Carries: display name, role (`author`, `editor`, `translator`, …), affiliation at time of work, and optionally a link to a PersonIdentity.
+A Person as they appear on a specific Work. Carries: display name, role (`author`, `editor`, `translator`, &hellip;), affiliation at time of work, and optionally a link to a PersonIdentity.
 
 Ordered by `pos` (fracdex) — order is semantically meaningful (author order on a paper matters).
 
