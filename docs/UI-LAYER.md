@@ -47,7 +47,7 @@ Both surfaces share `--bt-blue-800` (`#132e53`) as the heading colour.
 
 ## CSS class names
 
-The class list in `booktower-ui-library/ASSISTANT.md` is the authoritative ground truth. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
+The class list in `booktower-ui-library/AGENT.md` is the authoritative ground truth. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
 
 If this library is being consumed from another project, also follow `docs/CONSUMING-BOOKTOWER.md`. That file defines the shell contract, Bootstrap vs Booktower responsibilities, and the scroll rules that are easiest to get wrong.
 
@@ -146,7 +146,7 @@ The most critical rules for Go templ work:
 - Every `<input>` has an associated `<label for>` — `placeholder` is not a label
 - `aria-current="page"` on the active nav link
 
-The full accessibility reference is in `booktower-ui-library/ASSISTANT.md`.
+The full accessibility reference is in `booktower-ui-library/AGENT.md`.
 
 ---
 

@@ -75,7 +75,7 @@ How you obtain Bootstrap is your project's choice (npm dependency, vendored copy
 ## Non-negotiable rules
 
 1. Use only documented classes.
-   - `ASSISTANT.md` is the class reference.
+   - `AGENT.md` is the class reference.
    - `assets/booktower.css` is the final ground truth.
    - Do not invent plausible BEM names.
 
@@ -313,7 +313,7 @@ Every consuming project should preserve these:
 - `aria-current="page"` on active navigation
 - no visual-only state changes without accessible feedback
 
-See `ASSISTANT.md` for the full checklist.
+See `AGENT.md` for the full checklist.
 
 ---
 
@@ -323,7 +323,7 @@ If you are using this library inside another repository, do this in order:
 
 1. Read `docs/CONSUMING-BOOKTOWER.md`
 2. Read `docs/UI-LAYER.md`
-3. Read `ASSISTANT.md`
+3. Read `AGENT.md`
 4. Open `patterns/layout-shells.html`
 5. Open the closest matching template in `templates/`
 6. Copy the structure first, then adapt the content

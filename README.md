@@ -39,7 +39,7 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 - [Consuming Booktower](docs/CONSUMING-BOOKTOWER.md) — Integration contract for using this library in another app
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [Integration](base/integration.html) — Using the design system in apps
-- [AI-assistent guidelines](ASSISTANT.md) — Working guidelines for AI-assisted development on this project
+- [AI-assistent guidelines](AGENT.md) — Working guidelines for AI-assisted development on this project
 
 ## Browser Support
 

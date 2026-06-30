@@ -60,7 +60,7 @@ is unchanged.
 
 ## Status key
 
-**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in `ASSISTANT.md` as the verified class list.
+**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in `AGENT.md` as the verified class list.
 
 | Symbol | Meaning |
 |--------|---------|

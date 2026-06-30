@@ -1,4 +1,4 @@
-# ASSISTANT.md
+# AGENT.md
 # Working guidelines for AI-assisted development on this project
 
 This file is written by AI, for AI.
@@ -18,7 +18,7 @@ When a new session begins on this project, execute these steps before writing an
    - `docs/CONSUMING-BOOKTOWER.md` — how to use this UI library correctly inside another project
    - `docs/JAVASCRIPT.md` — JS file registry, event contract, loading order
 
-2. **Check the verified class list** — the complete class list in this file (ASSISTANT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
+2. **Check the verified class list** — the complete class list in this file (AGENT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.
 
 3. **Identify the surface** — before writing the first line of HTML, confirm whether this is a `public` or `backoffice` page. If uncertain, ask.
 
@@ -29,7 +29,7 @@ When a new session begins on this project, execute these steps before writing an
 ### Recommended session-start prompt (paste this at the start of a new conversation)
 
 ```
-Read /Users/mietclaes/Sites/booktower-ui-library/ASSISTANT.md and follow
+Read /Users/mietclaes/Sites/booktower-ui-library/AGENT.md and follow
 the session start instructions, including reading the docs/ files listed in
 step 1 below. You're working on the booktower-ui-library.
 ```
