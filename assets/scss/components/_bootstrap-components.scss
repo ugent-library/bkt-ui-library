@@ -39,6 +39,22 @@
   box-shadow: 0 0 0 3px var(--bt-focus-ring-invalid);
 }
 
+/* Defined here so they beat the base .form-control/.form-select rules above,
+   which otherwise override Bootstrap's own -sm classes (equal specificity,
+   later in the cascade). */
+.form-control-sm {
+  font-size: var(--bt-text-sm);
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  border-radius: var(--bt-radius-sm);
+}
+.form-select-sm {
+  font-size: var(--bt-text-sm);
+  padding-top: var(--bt-sp-1);
+  padding-bottom: var(--bt-sp-1);
+  padding-left: var(--bt-sp-2);
+  border-radius: var(--bt-radius-sm);
+}
+
 .form-label {
   font-size: var(--bt-text-sm);
   font-weight: 500;

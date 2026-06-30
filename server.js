@@ -78,6 +78,7 @@ const MIME = {
 
 // ─── Nav sections — order matters ─────────────────────────────────────────────
 const SECTIONS = [
+  { dir: 'getting-started', label: 'Getting started' },
   { dir: 'foundations', label: 'Foundations' },
   { dir: 'elements',    label: 'Elements'    },
   { dir: 'patterns',    label: 'Patterns'    },
@@ -347,13 +348,13 @@ function renderSearchResultCards() {
       <span class="badge bg-success">Open access</span>
     </div>
     <div class="bt-btn-toolbar">
-      <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure">
+      <button type="button" class="btn btn-ghost btn-xs" aria-label="Cite: Urban forests as essential infrastructure">
         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
       </button>
-      <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban forests as essential infrastructure">
+      <button type="button" class="btn btn-ghost btn-xs" aria-label="Save: Urban forests as essential infrastructure">
         <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
-      <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-sm">
+      <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-xs">
         <i class="if if-book" aria-hidden="true"></i> Read
       </a>
     </div>
@@ -372,13 +373,13 @@ function renderSearchResultCards() {
       <span class="bt-meta-list__item">Dataset</span>
     </div>
     <div class="bt-btn-toolbar">
-      <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
+      <button type="button" class="btn btn-ghost btn-xs" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
       </button>
-      <button type="button" class="btn btn-ghost btn-sm" aria-label="Save: Urban tree canopy cover measurements Belgium 2020–2025">
+      <button type="button" class="btn btn-ghost btn-xs" aria-label="Save: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
-      <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-sm" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
+      <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-xs" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-download" aria-hidden="true"></i> Download
       </a>
     </div>
@@ -653,7 +654,7 @@ function renderUploadList() {
 
 function renderWorksFeed() {
   return `
-<div class="my-5">
+<div>
   ${renderSearchResultCards()}
 </div>`;
 }
@@ -1076,7 +1077,7 @@ function renderNavLink(f, currentPath, activeState) {
           <div class="bt-nav-template-item${active ? ' active' : ''}">
             <a href="${f.path}" class="bt-nav-link${active ? ' active' : ''}">${f.name}</a>
             <span class="bt-nav-template-actions">
-              <a href="${f.path}" class="bt-nav-action" title="View template">⊙</a>
+              <a href="${f.path}" class="bt-nav-action" title="View template"><i class="if if-eye"></i></a>
               <a href="${f.path}?view=html" class="bt-nav-action" title="Show HTML">&lt;/&gt;</a>
             </span>
           </div>
