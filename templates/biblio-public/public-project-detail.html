@@ -31,20 +31,22 @@
 
 <div class="u-layout--public" data-surface="public">
   <main id="main-content">
+    <div class="container pt-2 pb-5">
 
-    <!-- Project header -->
-    <div class="u-main__header border-bottom">
-      <div class="container py-5">
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="public-index.html">Biblio UGent</a></li>
+          <li class="breadcrumb-item"><a href="public-projects.html">Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Urban green infrastructure…</li>
+        </ol>
+      </nav>
 
-        <nav aria-label="Breadcrumb" class="mb-4">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Biblio UGent</a></li>
-            <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Urban green infrastructure…</li>
-          </ol>
-        </nav>
+      <!-- Heading -->
+      <article aria-labelledby="project-title" class="row g-md-4 g-0 align-items-end border-bottom bt-section-detail">
 
-        <article aria-labelledby="project-title">
+        <!-- Main column: heading -->
+        <div class="col-lg-12 col-xl-8">
 
           <!-- Type label + status -->
           <div class="d-flex flex-wrap gap-2 mb-3">
@@ -52,7 +54,7 @@
             <span class="badge bg-success">Active</span>
           </div>
 
-          <h1 id="project-title" class="mb-3 col-lg-8">
+          <h1 id="project-title" class="mb-3">
             Urban green infrastructure and climate adaptation in Flemish cities
           </h1>
 
@@ -71,38 +73,89 @@
               <span class="text-muted">team members</span>
             </li>
           </ul>
+        </div>
 
-        </article>
-      </div>
-    </div>
+        <!-- Sidebar column: heading -->
+        <div class="col-lg-8 col-xl-4">
 
-    <!-- Main content -->
-    <div class="u-main__body">
-    <div class="container py-5">
-      <div class="row g-5">
+          <!-- Persistent link -->
+          <div class="alert alert-light mb-1">
+            <h2 class="form-label mb-2">Link to this record</h2>
+            <div class="btn-group mb-2">
+              <code class="small overflow-auto fw-800 p-2 bg-white border">https://biblio.ugent.be/project/fwo-g001234n</code>
+              <button type="button" class="btn btn-light btn-sm"
+                aria-label="Copy persistent link to person page"
+                onclick="navigator.clipboard.writeText('https://biblio.ugent.be/project/fwo-g001234n');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                <i class="if if-copy" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="small fst-italic">This persistent links guarantees, even when the location changes, your citations will always lead to the right place.</p>
+          </div>
+        </div>
+      </article>
 
-        <!-- Left: description + research output -->
-        <div class="col-lg-8">
+      <!-- Content -->
+      <div class="row justify-content-between mb-5">
 
-          <!-- Abstract / description -->
+        <!-- Main column: description + tabbed content -->
+        <div class="col-lg-7">
+
+          <!-- Abstract / description — intro above the tabs -->
           <section aria-labelledby="description-heading" class="mb-5">
             <h2 id="description-heading" class="h4 mb-3">About this project</h2>
             <p class="lead">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
             <p>The project combines field measurements, remote sensing data and urban climate modelling to quantify the cooling, flood mitigation and biodiversity co-benefits of diverse urban green infrastructure typologies. Outcomes include evidence-based planning guidelines and open datasets for policymakers and urban designers.</p>
-            <p>TODO: FUNDER LOGOS SOMEWHERE</p>
-            <p>TODO: ACRONYM</p>
           </section>
 
-          <!-- Research output -->
-          <section aria-labelledby="output-heading">
-            <div class="bt-toolbar mb-3">
+          <!--
+            Tabs
+          -->
+          <div class="mb-4">
+            <ul class="nav nav-tabs" role="tablist" aria-label="Project content">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tab-output"
+                  type="button" role="tab"
+                  data-bs-toggle="tab" data-bs-target="#panel-output"
+                  aria-controls="panel-output" aria-selected="true">
+                  Research output
+                  <span class="badge bg-secondary ms-1 fw-normal">23</span>
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tab-team"
+                  type="button" role="tab"
+                  data-bs-toggle="tab" data-bs-target="#panel-team"
+                  aria-controls="panel-team" aria-selected="false">
+                  Project team
+                  <span class="badge bg-secondary ms-1 fw-normal">4</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <div class="tab-content">
+
+          <!-- Research output panel -->
+          <div class="tab-pane fade show active" id="panel-output"
+            role="tabpanel" aria-labelledby="tab-output" tabindex="0">
+
+            <h2 class="visually-hidden">Research output</h2>
+
+            <div class="bt-toolbar mt-2 align-items-start">
               <div class="bt-toolbar__left">
-                <h2 id="output-heading" class="h4 mb-0">Research output</h2>
-                <span class="text-muted" aria-live="polite" id="project-output-count">23 works</span>
+                <div class="bt-toolbar__item">
+                  <!-- @include: templates/partials/result-filter-bar.html -->
+                </div>
               </div>
               <div class="bt-toolbar__right">
                 <div class="bt-toolbar__item">
-                  <!-- @include: templates/partials/result-filter-bar.html -->
+                  <label for="sort-by" class="visually-hidden">Sort by</label>
+                  <select id="sort-by" class="form-select form-select-sm">
+                    <option value="relevance">Relevance</option>
+                    <option value="year-desc" selected>Year (new to old)</option>
+                    <option value="year-asc">Year (old to new)</option>
+                    <option value="title-asc">Title (A–Z)</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -222,59 +275,40 @@
 
             </div><!-- /project-output-list -->
 
-            <!-- Pagination -->
-            <nav aria-label="Research output pagination" class="mt-4">
-              <ul class="pagination">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="#" aria-current="page">1</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next page">›</a>
-                </li>
-              </ul>
-            </nav>
+            <div class="bt-toolbar mt-4">
+              <div class="bt-toolbar__left">
+                <div class="bt-toolbar__item">
+                  <!-- Pagination -->
+                  <nav aria-label="Research output pagination">
+                    <ul class="pagination pagination-sm">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link" href="#" aria-current="page">1</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next page">›</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="bt-toolbar__item">
+                  <span class="text-muted small" aria-live="polite">Showing 1–20 of 23</span>
+                </div>
+              </div>
+            </div>
 
-          </section>
+          </div><!-- /research output panel -->
 
-        </div>
+          <!-- Project team panel -->
+          <div class="tab-pane fade" id="panel-team"
+            role="tabpanel" aria-labelledby="tab-team" tabindex="0">
 
-        <!-- Right: sidebar -->
-        <div class="col-lg-4">
+            <h2 class="visually-hidden">Project team</h2>
 
-          <!-- Funder metadata -->
-          <section aria-labelledby="funding-heading" class="mb-5">
-            <h2 id="funding-heading" class="h5 mb-3">Funding</h2>
-            <dl class="row g-2 mb-0 small">
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Funder</dt>
-              <dd class="col-sm-9 mb-0">
-                <a href="https://www.fwo.be" rel="noopener noreferrer">
-                  Research Foundation – Flanders (FWO)
-                </a>
-              </dd>
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Acronym</dt>
-              <dd class="col-sm-9 mb-0"><code>ManureEcoMine</code></dd>
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Project ID</dt>
-              <dd class="col-sm-9 mb-0"><code>G001234N</code></dd>
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">IWETO ID</dt>
-              <dd class="col-sm-9 mb-0"><code>G001234N</code></dd>
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Programme</dt>
-              <dd class="col-sm-9 mb-0">FWO Research project</dd>
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Period</dt>
-              <dd class="col-sm-9 mb-0">
-                <time datetime="2023-01-01">January 2023</time>
-                –
-                <time datetime="2027-12-31">December 2027</time>
-              </dd>
-            </dl>
-          </section>
-
-          <!-- Team — roles are semantically meaningful (PI vs researcher matters for grant reporting) -->
-          <section aria-labelledby="team-heading" class="mb-5">
-            <h2 id="team-heading" class="h5 mb-3">Project team</h2>
+            <!-- Team — roles are semantically meaningful (PI vs researcher matters for grant reporting) -->
             <ul class="list-unstyled d-flex flex-column gap-3">
 
               <li class="d-flex align-items-start gap-2">
@@ -322,11 +356,50 @@
               </li>
 
             </ul>
+
+          </div><!-- /project team panel -->
+
+          </div><!-- /tab-content -->
+
+        </div>
+
+        <!-- Sidebar column: content -->
+        <div class="col-lg-4">
+
+          <!-- Funder metadata -->
+          <section aria-labelledby="funding-heading" class="mb-5">
+            <h2 id="funding-heading" class="form-label d-block mb-3">Metadata</h2>
+            <dl class="row g-2 mb-4 small">
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Funder</dt>
+              <dd class="col-sm-9 mb-0">
+                <a href="https://www.fwo.be" rel="noopener noreferrer">
+                  Research Foundation – Flanders (FWO)
+                </a>
+              </dd>
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Acronym</dt>
+              <dd class="col-sm-9 mb-0"><code>ManureEcoMine</code></dd>
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Project ID</dt>
+              <dd class="col-sm-9 mb-0"><code>G001234N</code></dd>
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">IWETO ID</dt>
+              <dd class="col-sm-9 mb-0"><code>G001234N</code></dd>
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Programme</dt>
+              <dd class="col-sm-9 mb-0">FWO Research project</dd>
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Period</dt>
+              <dd class="col-sm-9 mb-0">
+                <time datetime="2023-01-01">January 2023</time>
+                –
+                <time datetime="2027-12-31">December 2027</time>
+              </dd>
+            </dl>
+
+            <ul class="list-unstyled mb-0">
+              <li><img src="/assets/images/logo-ugent-en.svg" alt="Funder: Ghent University" width="auto" height="70"></li>
+            </ul>
           </section>
 
           <!-- Host organisation -->
           <section aria-labelledby="host-heading" class="mb-5">
-            <h2 id="host-heading" class="h5 mb-3">Host organisation</h2>
+            <h2 id="host-heading" class="form-label d-block mb-3">Host organisation</h2>
             <ul class="list-unstyled mb-0">
               <li><a href="/organisations/ghent-university">Ghent University</a></li>
               <li><a href="/organisations/faculty-bioscience-engineering">Faculty of Bioscience Engineering</a></li>
@@ -334,25 +407,10 @@
             </ul>
           </section>
 
-          <!-- Persistent link -->
-          <div class="p-3 bg-white border rounded mb-4">
-            <span class="form-label d-block mb-2">Persistent link</span>
-            <div class="d-flex align-items-start">
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Copy persistent link to person page"
-                onclick="navigator.clipboard.writeText('https://biblio.ugent.be/project/fwo-g001234n');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
-                <i class="if if-copy" aria-hidden="true"></i>
-              </button>
-              <code class="small overflow-auto">https://biblio.ugent.be/project/fwo-g001234n</code>
-            </div>
-          </div>
-
         </div><!-- /sidebar -->
 
       </div>
     </div>
-    </div>
-
   </main>
 </div>
 
