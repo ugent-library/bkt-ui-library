@@ -35,13 +35,13 @@
              Searches WITHIN this directory only. The typeahead below is a
              working prototype: directory-search.js filters the inline example
              dataset as you type (it does not filter the list further down the
-             page). In production this becomes GET /researchers/suggest?q=… -->
+             page). In production this becomes GET /researchers/suggest?q=&hellip; -->
         <form role="search" aria-label="Search researchers"
           action="/templates/biblio-public/public-researchers.html" class="mb-4">
           <div class="position-relative" id="researcher-search" data-directory-search="researchers">
 
             <label for="researcher-q" class="visually-hidden">
-              Search researchers by name, ORCID, or department
+              Search researchers by name, ID, or organisation...
             </label>
 
             <div class="input-group input-group-lg">
@@ -50,7 +50,7 @@
                 id="researcher-q"
                 name="q"
                 class="form-control"
-                placeholder="Search researchers by name, ORCID, or department…"
+                placeholder="Search researchers by name, ORCID, or department&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
@@ -79,13 +79,12 @@
 
           </div>
 
-          <!-- ── Filters ──────────────────────────────────────────────────────
-               "Add filter" chip bar. NOTE: NOT YET SCOPED to this directory.
-               result-filter-bar.html ships the generic works/entity filter set
-               (Type, Author, Year, Open access…); its chips do not yet filter
-               the researcher list. Researcher-scoped filters are TBD. -->
+          <!-- ── Filters — researcher-directory scope ─────────────────────────
+               People-scoped "Add filter" chip bar (Faculty/department,
+               Membership, Public research output, ORCID). Same interaction as
+               the works result-filter-bar; engine in directory-filters.js. -->
           <div class="mt-3">
-            <!-- @include: templates/partials/result-filter-bar.html -->
+            <!-- @include: templates/partials/result-filter-bar-researchers.html -->
           </div>
 
         </form>
@@ -148,20 +147,20 @@
               <i class="if if-corner-down-right-line"></i>
             </div>
             <div class="bt-toolbar__item">
-              <!-- ── Pagination within the letter (compact: first · current ±1 · … · last) -->
+              <!-- ── Pagination within the letter (compact: first · current ±1 · &hellip; · last) -->
               <nav aria-label="Researchers pagination">
                 <ul class="pagination">
                   <li class="page-item">
                     <a class="page-link" href="?browse=D&amp;start=480&amp;limit=10" aria-label="Previous page">‹</a>
                   </li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=0&amp;limit=10">1</a></li>
-                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=480&amp;limit=10">49</a></li>
                   <li class="page-item active">
                     <a class="page-link" href="?browse=D&amp;start=490&amp;limit=10" aria-current="page">50</a>
                   </li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=500&amp;limit=10">51</a></li>
-                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=510&amp;limit=10">52</a></li>
                   <li class="page-item">
                     <a class="page-link" href="?browse=D&amp;start=500&amp;limit=10" aria-label="Next page">›</a>
@@ -177,7 +176,7 @@
           </div>
         </div>
 
-        <ol class="list-unstyled mb-4 g-4">
+        <ol class="list-unstyled mb-4 d-flex flex-column gap-2">
 
           <!-- ── Researcher card: Karen De Pauw ───────────────────────────── -->
           <li>
@@ -455,20 +454,20 @@
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <div class="bt-toolbar__item">
-              <!-- ── Pagination within the letter (compact: first · current ±1 · … · last) -->
+              <!-- ── Pagination within the letter (compact: first · current ±1 · &hellip; · last) -->
               <nav aria-label="Researchers pagination">
                 <ul class="pagination">
                   <li class="page-item">
                     <a class="page-link" href="?browse=D&amp;start=480&amp;limit=10" aria-label="Previous page">‹</a>
                   </li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=0&amp;limit=10">1</a></li>
-                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=480&amp;limit=10">49</a></li>
                   <li class="page-item active">
                     <a class="page-link" href="?browse=D&amp;start=490&amp;limit=10" aria-current="page">50</a>
                   </li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=500&amp;limit=10">51</a></li>
-                  <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                  <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
                   <li class="page-item"><a class="page-link" href="?browse=D&amp;start=510&amp;limit=10">52</a></li>
                   <li class="page-item">
                     <a class="page-link" href="?browse=D&amp;start=500&amp;limit=10" aria-label="Next page">›</a>
@@ -490,5 +489,6 @@
 </div>
 
 <script src="/assets/js/directory-search.js"></script>
+<script src="/assets/js/directory-filters.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

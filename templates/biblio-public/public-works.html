@@ -6,13 +6,13 @@
   Partials:
     @include: templates/partials/public-header.html
     @include: templates/partials/search-suggest-panel.html  ← swappable panel content
-    @include: templates/partials/search-filter-bar.html     ← chips + add filter
 
-  Scripts (load order matters):
-    people-search.js    — people widget (used inside filter editor)
-    people-search-stub.js — prototype data, remove when real endpoint exists
-    filter-editor.js    — chip management, biblio:filter-add listener
-    suggest-panel.js    — panel show/hide, keyboard nav, biblio:filter-add dispatch
+  Scripts:
+    suggest-panel.js    — panel show/hide, keyboard nav
+
+  The "Add filter" builder (search-filter-bar.html + filter-editor.js) lives on
+  the Advanced search surface, not here. Applied filters are shown as the static
+  chip row above the results.
 -->
 
 <!-- @include: templates/partials/public-header.html -->
@@ -51,7 +51,7 @@
                 name="q"
                 class="form-control"
                 value="Quantum computing"
-                placeholder="Search by title, author, DOI, or topic…"
+                placeholder="Search by title, author, DOI, or keyword&hellip;"
                 autocomplete="off"
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
@@ -79,7 +79,7 @@
               <div id="suggest-indicator"
                 class="htmx-indicator p-3 text-muted small text-center"
                 aria-live="polite">
-                Searching…
+                Searching&hellip;
               </div>
 
               <!-- @include: templates/partials/search-suggest-panel.html -->
@@ -89,14 +89,9 @@
           </div><!-- /#suggest-wrapper -->
 
           <div class="bt-toolbar">
-            <div class="bt-toolbar__left">
-
-              <!-- ── Filter chips + Add filter ────────────────────────────────── -->
-              <!-- @include: templates/partials/search-filter-bar.html -->
-            </div>
-            <div class="bt-toolbar__right">
+            <div class="bt-toolbar__right ms-auto">
               <div class="bt-toolbar__item">
-                <a href="/advanced-search" class="btn btn-ghost btn-sm ms-auto">
+                <a href="/advanced-search" class="btn btn-ghost btn-sm">
                   Advanced search
                 </a>
               </div>
@@ -114,9 +109,9 @@
 
       <aside class="col-lg-3" aria-label="Filter results">
 
-        <!-- Access -->
+        <!-- Access and files -->
         <fieldset>
-          <legend class="form-label h6 mb-2">Access</legend>
+          <legend class="form-label h6 mb-2">Access and files</legend>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-oa" checked
               aria-label="Open access (142 results)">
@@ -124,10 +119,22 @@
             <span class="text-muted small" aria-hidden="true">142</span>
           </div>
           <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-embargo"
+              aria-label="Under embargo (11 results)">
+            <label class="form-check-label flex-grow-1" for="f-embargo">Under embargo</label>
+            <span class="text-muted small" aria-hidden="true">11</span>
+          </div>
+          <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-restricted"
               aria-label="Restricted (37 results)">
             <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
             <span class="text-muted small" aria-hidden="true">37</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-hasfile"
+              aria-label="Has full text (166 results)">
+            <label class="form-check-label flex-grow-1" for="f-hasfile">Has full text</label>
+            <span class="text-muted small" aria-hidden="true">166</span>
           </div>
         </fieldset>
 
@@ -269,6 +276,37 @@
       <!-- ── Results ─────────────────────────────────────────────────────── -->
       <div class="col-lg-9" id="search-results">
 
+        <!-- Applied filters — output only: a summary of current query state
+             (sidebar facets + suggest-panel selections). Clicking a chip removes
+             that filter. Prototype uses <button>; production = <a> param-drop. -->
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-4"
+          role="group" aria-label="Active filters">
+
+          <button type="button" class="filter-tag"
+            aria-label="Remove filter: Access is Open access">
+            <span class="fw-light">Access:</span>Open access
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
+
+          <button type="button" class="filter-tag"
+            aria-label="Remove filter: Year is 2024">
+            <span class="fw-light">Year:</span>2024
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
+
+          <button type="button" class="filter-tag"
+            aria-label="Remove filter: Language is English">
+            <span class="fw-light">Language:</span>English
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
+
+          <!-- Clear all: stub link dropping facet params, keeping the query. -->
+          <a href="/search?q=Quantum+computing" class="btn btn-ghost btn-sm text-muted ms-1">
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+            Clear all
+          </a>
+        </div>
+
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <nav aria-label="Results pagination" class="d-flex align-items-center gap-3">
@@ -279,7 +317,7 @@
                 <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+                <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
                 <li class="page-item"><a class="page-link" href="#">18</a></li>
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Next page">›</a>
@@ -486,7 +524,7 @@
               <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
               <li class="page-item"><a class="page-link" href="#">2</a></li>
               <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item" aria-hidden="true"><span class="page-link">…</span></li>
+              <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
               <li class="page-item"><a class="page-link" href="#">18</a></li>
               <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next page">›</a>
@@ -504,12 +542,6 @@
   </main>
 </div>
 
-<script src="/assets/js/people-search.js"></script>
-<script src="/assets/js/people-search-stub.js"></script>
-<script src="/assets/js/filter-editor.js"></script>
-<script src="/assets/js/filter-stubs.js"></script>
 <script src="/assets/js/suggest-panel.js"></script>
-<!-- suggest-panel.js must load after filter-editor.js -->
-<!-- Remove people-search-stub.js and filter-stubs.js when wiring real endpoints -->
 
 <!-- @include: templates/partials/public-footer.html -->

@@ -24,10 +24,63 @@
           </ol>
         </nav>
 
-        <h1 class="mb-3">Projects</h1>
-        <p class="lead mb-0 col-lg-7">
-          Todo
-        </p>
+        <h1 class="mb-4">Projects</h1>
+
+        <!-- ── Scoped search + typeahead ──────────────────────────────────────
+             Searches WITHIN this directory only. The typeahead below is a
+             working prototype: directory-search.js filters the inline example
+             dataset as you type (it does not filter the list below). In
+             production this becomes GET /projects/suggest?q=&hellip; -->
+        <form role="search" aria-label="Search projects"
+          action="/templates/biblio-public/public-projects.html" class="mb-0">
+          <div class="position-relative" id="project-search" data-directory-search="projects">
+
+            <label for="project-q" class="visually-hidden">
+              Search projects by title, description, acronym, funder, or ID
+            </label>
+
+            <div class="input-group input-group-lg">
+              <input
+                type="search"
+                id="project-q"
+                name="q"
+                class="form-control"
+                placeholder="Search projects by title, acronym, funder, or ID&hellip;"
+                autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="project-search-panel"
+                aria-expanded="false">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+
+            <!-- Typeahead panel — populated client-side by directory-search.js. -->
+            <div id="project-search-panel" class="bt-suggest-panel"
+              role="listbox" aria-label="Project suggestions" hidden></div>
+
+            <!-- Example dataset powering the typeahead (prototype only).
+                 icon: if-calendar is a placeholder — there is no project-
+                 specific icon in the icon font yet (flag for icon set). -->
+            <script type="application/json" data-suggest-source>
+            [
+              { "label": "Urban green infrastructure and climate adaptation in Flemish cities", "meta": "FWO · G001234N · 2023–2027", "href": "/templates/biblio-public/public-project-detail.html", "icon": "if-calendar" },
+              { "label": "ManureEcoMine",                                                        "meta": "EU · Horizon 2020 · 2015–2019", "href": "/templates/biblio-public/public-project-detail.html", "icon": "if-calendar" },
+              { "label": "Diamond open access publishing infrastructure",                        "meta": "BOF · 2021–current",            "href": "/templates/biblio-public/public-project-detail.html", "icon": "if-calendar" },
+              { "label": "Seismic retrofitting of historic masonry",                             "meta": "FWO · G005678N · 2019–2023",    "href": "/templates/biblio-public/public-project-detail.html", "icon": "if-calendar" }
+            ]
+            </script>
+
+          </div>
+
+          <!-- ── Filters — project-directory scope ─────────────────────────────
+               Project-scoped "Add filter" chip bar (Host faculty, Status,
+               Period). Same interaction as the researcher directory; engine in
+               directory-filters-projects.js. -->
+          <div class="mt-3">
+            <!-- @include: templates/partials/result-filter-bar-projects.html -->
+          </div>
+
+        </form>
 
       </div>
     </div>
@@ -52,5 +105,8 @@
 
   </main>
 </div>
+
+<script src="/assets/js/directory-search.js"></script>
+<script src="/assets/js/directory-filters-projects.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
