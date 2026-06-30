@@ -67,7 +67,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Manages the filter picker, editor panel, and active filter chips. Owns the filter state and fires search requests when a filter changes.
 
-**Loaded by:** `public-works.html`, `search-filter-first.html`
+**Loaded by:** none currently — removed from `public-works.html`. Retained for the Advanced search / backoffice filter builder (not yet on a live page); documented in the `patterns/filter-picker.html` UI-kit page.
 
 **Listens for:**
 - `biblio:filter-add` — adds a chip without opening the editor (used by autocomplete selections)
@@ -84,7 +84,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `suggest-panel.js`
 
-**Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup, handles keyboard navigation within the panel, and dispatches `biblio:filter-add` when the user selects an Org, Project, Keyword, or Tag suggestion.
+**Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup and handles keyboard navigation within the panel. Suggestion rows navigate via their own `href` ("type decides"); the panel no longer mutates filter state.
 
 **Loaded by:** `public-works.html`
 
@@ -92,10 +92,8 @@ Remove the `-stub.js` files when wiring real endpoints.
 - `focus` and `keyup` on `#q`
 - `keydown` for Arrow/Enter/Escape navigation
 - `htmx:afterSwap` on `#suggest-panel` (updates panel visibility after content loads)
-- Click on suggestion rows
 
-**Dispatches:**
-- `biblio:filter-add` — when a non-navigating suggestion (Org, Project, Keyword, Tag) is selected
+**Dispatches:** nothing
 
 **Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub data is in `filter-stubs.js`)
 
@@ -105,7 +103,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Scoped typeahead for a single directory page (Researchers, Organisations). Filters an inline JSON dataset client-side and renders suggestion rows; does not filter the page's result list.
 
-**Loaded by:** `public-researchers.html`, `public-organisations.html`
+**Loaded by:** `public-researchers.html`, `public-organisations.html`, `public-projects.html`
 
 **Listens for:**
 - `input` and `focus` on the directory `input[type="search"]`
@@ -115,7 +113,49 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Dispatches:** nothing
 
-**Prototype-only:** no (typeahead behaviour is real; the inline JSON dataset is the stub). Replace the inline data + client-side filter with `GET /{directory}/suggest?q=…` when the endpoint exists.
+**Prototype-only:** no (typeahead behaviour is real; the inline JSON dataset is the stub). Replace the inline data + client-side filter with `GET /{directory}/suggest?q=&hellip;` when the endpoint exists.
+
+---
+
+### `directory-filters.js`
+
+**Purpose:** People-scoped chip + editor filter bar for the researcher directory. Same interaction as `filter-editor.js`, but the filter set is Faculty/department, Membership (current / alumni), and Public research output — not works. Owns its own filter state and chips.
+
+**Loaded by:** `public-researchers.html` (via `templates/partials/result-filter-bar-researchers.html`)
+
+**Listens for:**
+- `input` on `#rdir-filter-search` (picker search)
+- Click on `[data-filter]` items in the `#rdir-filter-picker-list` dropdown
+- Click on `.filter-tag--editable` chips (reopens editor)
+- Click on `.filter-tag__remove` buttons
+- Click on `#rdir-clear-all`
+- `keydown` Escape inside the editor; outside-click close
+
+**Dispatches:** nothing
+
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty values and the public-output rollup are stubs). Wire to real query params when the directory endpoint exists.
+
+---
+
+### `directory-filters-projects.js`
+
+**Purpose:** Project-scoped chip + editor filter bar for the project directory. Same interaction as `directory-filters.js`, plus a year-range editor. Filter set is Host faculty, Status (active / completed), and Period. Owns its own filter state and chips.
+
+**Loaded by:** `public-projects.html` (via `templates/partials/result-filter-bar-projects.html`)
+
+**Listens for:**
+- `input` on `#pdir-filter-search` (picker search)
+- Click on `[data-filter]` items in the `#pdir-filter-picker-list` dropdown
+- Click on `.filter-tag--editable` chips (reopens editor)
+- Click on `.filter-tag__remove` buttons
+- Click on `#pdir-clear-all`
+- `keydown` Escape inside the editor; outside-click close
+
+**Dispatches:** nothing
+
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty values, status and period are stubs). Wire to real query params when the directory endpoint exists.
+
+**Note:** Near-duplicate of `directory-filters.js` (filter set, the `pdir-` id prefix, and the added year-range editor differ). When a real endpoint lands, consider consolidating the directory filter engines into one config-driven module.
 
 ---
 
@@ -123,7 +163,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used inside the filter editor (Author filter) and the deposit flow add-author form.
 
-**Loaded by:** `public-works.html`, `search-filter-first.html`, deposit flow templates (when add-author form is active)
+**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`); also embedded in the `patterns/filter-picker.html` UI-kit demo. (Removed from `public-works.html` with the filter builder.)
 
 **Listens for:**
 - `keyup` on `[data-ps-input]` inputs
@@ -174,7 +214,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Provides mock person data for `people-search.js` when the real `/people/search` endpoint does not exist.
 
-**Loaded by:** `public-works.html`, `search-filter-first.html` (prototype builds only)
+**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`) (prototype builds only)
 
 **Remove when:** the real `/people/search` endpoint is wired up.
 
@@ -184,7 +224,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Provides mock autocomplete suggestions for text filter fields (used by `suggest-panel.js` and `filter-editor.js` in prototypes).
 
-**Loaded by:** `public-works.html`, `search-filter-first.html` (prototype builds only)
+**Loaded by:** none currently — was `public-works.html`; unused since the suggest panel renders rows server-side (prototype builds only)
 
 **Remove when:** real server endpoints for autocomplete exist.
 
@@ -206,7 +246,7 @@ document.dispatchEvent(new CustomEvent('biblio:filter-add', {
 }));
 ```
 
-Fired by: `suggest-panel.js`
+Fired by: nothing currently — the public suggest panel now navigates instead of dispatching. Retained for the filter builder (`filter-editor.js`) on the Advanced search / backoffice surfaces.
 Handled by: `filter-editor.js`
 
 ---

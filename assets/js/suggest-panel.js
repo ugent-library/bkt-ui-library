@@ -10,15 +10,10 @@
  * The panel inner content is swapped by HTMX on every keyup.
  * This script handles only the visibility state and keyboard navigation.
  *
- * Connection to filter-editor.js:
- *   Org, Project, and Keyword suggestion rows carry data-filter-* attributes.
- *   On click this script dispatches biblio:filter-add, which filter-editor.js
- *   listens for to add a chip — no editor panel opens.
- *
- *   Rows that trigger a chip addition:
- *     data-filter-id    — matches a key in FILTERS in filter-editor.js
- *     data-filter-value — the raw value
- *     data-filter-label — the display label shown in the chip
+ * Row routing — "type decides":
+ *   Every row navigates via its href. People → profile, Works → detail,
+ *   Org/Project/Keyword → filtered search (/search?…). Applied filters appear
+ *   in the server-rendered chip row above the results, not added from here.
  */
 
 (function () {
@@ -96,38 +91,6 @@
     } else if (e.key === 'Escape') {
       hidePanel();
       input.focus();
-    }
-  });
-
-  // ── biblio:filter-add — Org / Project / Keyword rows ──────────────────────
-  // Rows that should add a filter chip (rather than navigate) carry:
-  //   data-filter-id, data-filter-value, data-filter-label
-  // On click: dispatch the event for filter-editor.js, then hide the panel.
-  // The href on the row still works as a fallback if JS is absent.
-
-  panel.addEventListener('click', (e) => {
-    const row = e.target.closest('a[role="option"][data-filter-id]');
-    if (!row) return;
-
-    const filterId    = row.dataset.filterId;
-    const filterValue = row.dataset.filterValue;
-    const filterLabel = row.dataset.filterLabel;
-
-    if (filterId && filterValue) {
-      // Only prevent default if filter-editor.js is present to handle it
-      if (typeof window !== 'undefined' && document.getElementById('active-chips')) {
-        e.preventDefault();
-        document.dispatchEvent(new CustomEvent('biblio:filter-add', {
-          detail: {
-            filterId,
-            displayValue: filterLabel || filterValue,
-            rawValue:     filterValue,
-          }
-        }));
-        hidePanel();
-        input.focus();
-      }
-      // If no chip container — let the href navigate normally
     }
   });
 
