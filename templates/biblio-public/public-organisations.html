@@ -19,6 +19,15 @@
   Deliberately NOT role="tree": expand-all document outline, read more than
   operated; a tree widget's roving-tabindex would fight a page of links.
 
+  COLLAPSE (prototype): faculty departments collapse by default; faculty roots
+  and the partner cards (few children) stay visible. Each faculty has a Bootstrap
+  Collapse toggle (.collapsed + aria-expanded authored so first paint / no-JS is
+  correct); the whole tree is server-rendered, so crawlers and no-JS users see
+  every department. The "Expand all" control (org-tree.js) is the Ctrl-F /
+  screen-reader escape hatch.
+  COUNTS: "N departments" is the count listed here (faculties carry more live);
+  research-output totals were never captured, shown as a provisional marker.
+
   ORG TYPE (prototype): each ROOT carries a muted type label beside its name.
   This mocks Raven's DEFERRED custom_organization_types -- Raven's live catalog
   is only faculty/department/research_group (raven design doc, Open questions),
@@ -56,13 +65,13 @@
              Searches WITHIN this directory only. The typeahead below is a
              working prototype: directory-search.js filters the inline example
              dataset as you type (it does not filter the org tree below). In
-             production this becomes GET /organisations/suggest?q=… -->
+             production this becomes GET /organisations/suggest?q=&hellip; -->
         <form role="search" aria-label="Search organisations"
           action="/templates/biblio-public/public-organisations.html" class="mb-0">
           <div class="position-relative" id="organisation-search" data-directory-search="organisations">
 
             <label for="organisation-q" class="visually-hidden">
-              Search organisations by name, code, or type
+              Search organisations by name, ID, or type
             </label>
 
             <div class="input-group input-group-lg">
@@ -71,7 +80,7 @@
                 id="organisation-q"
                 name="q"
                 class="form-control"
-                placeholder="Search organisations by name, code, or type…"
+                placeholder="Search organisations by name, code, or type&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
@@ -104,15 +113,6 @@
 
           </div>
 
-          <!-- ── Filters ──────────────────────────────────────────────────────
-               "Add filter" chip bar. NOTE: NOT YET SCOPED to this directory.
-               result-filter-bar.html ships the generic works/entity filter set
-               (Type, Author, Year, Open access…); its chips do not yet filter
-               the organisation tree. Organisation-scoped filters are TBD. -->
-          <div class="mt-3">
-            <!-- @include: templates/partials/result-filter-bar.html -->
-          </div>
-
         </form>
 
       </div>
@@ -121,6 +121,18 @@
     <!-- Body: org tree -->
     <div class="u-main__body">
       <div class="container py-5">
+
+        <div class="bt-toolbar mb-3">
+          <div class="bt-toolbar__right">
+            <button type="button" id="org-tree-toggle-all"
+              class="btn btn-ghost btn-sm"
+              aria-expanded="false"
+              aria-controls="dept-lw dept-we dept-la">
+              <span data-toggle-label>Expand all departments</span>
+              <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
 
         <ul class="list-group gap-3" aria-label="Organisation tree">
           <li class="card" data-organisation-type="university">
@@ -140,6 +152,7 @@
                         <li><code>UGent</code></li>
                         <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                       </ul>
+                      <p class="small text-muted mb-0 mt-1">3 of 13 faculties shown</p>
                     </div>
                   </div>
                 </div>
@@ -156,7 +169,7 @@
                       <div class="row align-items-center ps-3 flex-grow-1">
                         <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
                           <div>
-                            <a href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Arts and Philosophy</a>
+                            <a id="org-lw" href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Arts and Philosophy</a>
                             <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Faculty of Arts and Philosophy">
                               <li><code class="bg-faculty-lw-light">LW</code></li>
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
@@ -164,9 +177,17 @@
                           </div>
                         </div>
                       </div>
+                      <button type="button"
+                        class="btn btn-ghost btn-sm align-self-center ms-auto collapsed"
+                        data-bs-toggle="collapse" data-bs-target="#dept-lw"
+                        aria-expanded="false" aria-controls="dept-lw"
+                        aria-labelledby="org-lw org-lw-count">
+                        <span id="org-lw-count" class="fw-normal">4 departments</span>
+                        <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+                      </button>
                     </div>
                   </div>
-                  <ul class="list-unstyled ms-5 ps-5 border-start mb-2">
+                  <ul id="dept-lw" class="list-unstyled ms-5 ps-5 border-start mb-2 collapse">
                     <li data-organisation-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
@@ -230,7 +251,7 @@
                       <div class="row align-items-center ps-3 flex-grow-1">
                         <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
                           <div>
-                            <a href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Sciences</a>
+                            <a id="org-we" href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Sciences</a>
                             <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Faculty of Sciences">
                               <li><code class="bg-faculty-we-light">WE</code></li>
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
@@ -238,9 +259,17 @@
                           </div>
                         </div>
                       </div>
+                      <button type="button"
+                        class="btn btn-ghost btn-sm align-self-center ms-auto collapsed"
+                        data-bs-toggle="collapse" data-bs-target="#dept-we"
+                        aria-expanded="false" aria-controls="dept-we"
+                        aria-labelledby="org-we org-we-count">
+                        <span id="org-we-count" class="fw-normal">5 departments</span>
+                        <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+                      </button>
                     </div>
                   </div>
-                  <ul class="list-unstyled ms-5 ps-5 border-start mb-2">
+                  <ul id="dept-we" class="list-unstyled ms-5 ps-5 border-start mb-2 collapse">
                     <li data-organisation-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
@@ -317,7 +346,7 @@
                       <div class="row align-items-center ps-3 flex-grow-1">
                         <div class="col-12 col-lg-6 d-flex align-items-center gap-3">
                           <div>
-                            <a href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Bioscience Engineering</a>
+                            <a id="org-la" href="/templates/biblio-public/public-organisation-detail.html" class="h6 fw-semibold mb-0 text-decoration-none">Faculty of Bioscience Engineering</a>
                             <ul class="list-unstyled mb-0 small d-flex flex-inline gap-3" aria-label="Identifiers for Faculty of Bioscience Engineering">
                               <li><code class="bg-faculty-la-light">LA</code></li>
                               <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
@@ -325,9 +354,17 @@
                           </div>
                         </div>
                       </div>
+                      <button type="button"
+                        class="btn btn-ghost btn-sm align-self-center ms-auto collapsed"
+                        data-bs-toggle="collapse" data-bs-target="#dept-la"
+                        aria-expanded="false" aria-controls="dept-la"
+                        aria-labelledby="org-la org-la-count">
+                        <span id="org-la-count" class="fw-normal">4 departments</span>
+                        <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+                      </button>
                     </div>
                   </div>
-                  <ul class="list-unstyled ms-5 ps-5 border-start mb-2">
+                  <ul id="dept-la" class="list-unstyled ms-5 ps-5 border-start mb-2 collapse">
                     <li data-organisation-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
@@ -425,6 +462,10 @@
                         <li><code>GUK</code></li>
                         <li><code class="bg-white border">ROR <a href="https://ror.org/04r1mr385" class="text-decoration-none" rel="noopener noreferrer">04r1mr385</a></code></li>
                       </ul>
+                      <p class="small text-muted mb-0 mt-1">
+                        1 department
+                        · <span>200 research outputs</span>
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -467,6 +508,7 @@
                     <div>
                       <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-0 text-decoration-none">University colleges</a>
                       <p class="text-muted small mb-0">Hogescholen affiliated with Ghent University</p>
+                      <p class="small text-muted mb-0 mt-1">3 university colleges</p>
                     </div>
                   </div>
                 </div>
@@ -548,6 +590,7 @@
                     <div>
                       <a href="/templates/biblio-public/public-organisation-detail.html" class="h5 fw-semibold mb-0 text-decoration-none">Partner institutions</a>
                       <p class="text-muted small mb-0">Research centres affiliated with Ghent University</p>
+                      <p class="small text-muted mb-0 mt-1">4 research centres</p>
                     </div>
                   </div>
                 </div>
@@ -647,5 +690,6 @@
 </div>
 
 <script src="/assets/js/directory-search.js"></script>
+<script src="/assets/js/org-tree.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
