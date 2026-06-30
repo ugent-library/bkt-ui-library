@@ -5,7 +5,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Filter picker &amp; editor</h1>
-    <p class="lead">One connected interaction: a grouped filter menu (the picker) and an inline editor panel that opens when a filter is chosen. Together they replace the traditional sidebar-only facet approach with something that scales to any number of filter dimensions without adding layout complexity.</p>
+    <p class="lead">One connected interaction: a grouped filter menu (the picker) and an inline editor panel that opens when a filter is chosen. It complements the sidebar facets — handling high-cardinality dimensions (author, venue, project) that don't fit a fixed checklist — and scales to any number of filter dimensions without adding layout complexity.</p>
   </header>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -21,7 +21,7 @@
       <li>User clicks a chip → editor reopens pre-populated for editing</li>
       <li>User clicks × on a chip → filter removed</li>
     </ol>
-    <p>All wired by <code>filter-editor.js</code>. The people-search editor type also requires <code>people-search.js</code> and (in prototypes) <code>people-search-stub.js</code>.</p>
+    <p>Wired by <code>filter-editor.js</code> (the <code>search-filter-bar.html</code> partial), or by the <code>directory-filters*.js</code> variants on the public directory result bars (<code>result-filter-bar*.html</code>). The people-search editor type also requires <code>people-search.js</code> and (in prototypes) <code>people-search-stub.js</code>.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -29,15 +29,16 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker — backoffice</h2>
-    <p class="mb-4">Used in <code>backoffice-search.html</code> and <code>filter-editor.html</code>. Includes a search input that filters the list live and hides empty groups. The scrollable <code>.bt-filter-picker__list</code> keeps the dropdown bounded regardless of list length.</p>
+    <p class="mb-4">The full filter set with a search input — the <code>search-filter-bar.html</code> partial driven by <code>filter-editor.js</code>. Intended for the backoffice and Advanced search surfaces; not yet wired into a live page. The search input filters the list live and hides empty groups, and the scrollable <code>.bt-filter-picker__list</code> keeps the dropdown bounded regardless of list length.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Backoffice picker</h3>
       <div class="ds-demo-body" style="min-height: 450px;">
         <div class="dropdown-menu show">
           <div class="p-2">
             <label for="demo-filter-search" class="visually-hidden">Search filters</label>
             <input type="search" id="demo-filter-search" class="form-control form-control-sm"
-              placeholder="Find a filter…" autocomplete="off">
+              placeholder="Find a filter&hellip;" autocomplete="off">
           </div>
           <div class="bt-filter-picker__list">
             <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
@@ -78,15 +79,16 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker — public</h2>
-    <p class="mb-4">Used in <code>public-works.html</code>. Fewer filters, no search input — the list is short enough to scan. The structure is identical; the search wrapper is simply omitted.</p>
+    <p class="mb-4">Used on the public directory and entity pages — <code>public-researchers.html</code>, <code>public-projects.html</code>, and the <code>*-detail</code> pages — via the <code>result-filter-bar*.html</code> partials. Fewer filters, no search input: the list is short enough to scan. (<code>public-works.html</code> no longer uses this picker — it filters via the sidebar facets, the suggest panel, and a static chip row.)</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Public picker</h3>
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block" style="min-width: 240px;">
           <div class="bt-filter-picker__list">
             <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
             <button class="dropdown-item py-2" type="button">Type</button>
-            <button class="dropdown-item py-2" type="button">Identifier (DOI, handle…)</button>
+            <button class="dropdown-item py-2" type="button">Identifier (DOI, handle&hellip;)</button>
             <hr class="dropdown-divider my-1">
             <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
             <button class="dropdown-item py-2" type="button">Author</button>
@@ -117,6 +119,7 @@
     <p class="mb-4">The <code>.active</code> fill is recoloured to the theme chip blue with dark text (rather than Bootstrap's solid primary) so it reads as a soft selection consistent with the active chips. Add <code>d-flex align-items-center</code> to the item so the check sits at the trailing edge via <code>ms-auto</code>. Driven by <code>aria-current="true"</code> for assistive tech.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Selected / applied items</h3>
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block" style="min-width: 240px;">
           <div class="bt-filter-picker__list">
@@ -125,7 +128,7 @@
               Type
               <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
             </button>
-            <button class="dropdown-item d-flex align-items-center py-2" type="button">Identifier (DOI, handle…)</button>
+            <button class="dropdown-item d-flex align-items-center py-2" type="button">Identifier (DOI, handle&hellip;)</button>
             <hr class="dropdown-divider my-1">
             <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
             <button class="dropdown-item d-flex align-items-center py-2 active" type="button" aria-current="true">
@@ -150,13 +153,14 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for enumerable values: Type, Subtype, Status, Publication status. Multiple selections produce a chip like "Journal article +2". The <code>.filter-editor__checklist</code> container scrolls when the list is long.</p>
+    <p class="mb-4">Used for enumerable values: Type, Subtype, Status, Publication status. Multiple selections produce a chip like "Journal article +2". The <code>.filter-editor__body--checklist</code> container scrolls when the list is long.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Checklist</h3>
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-checklist-title" aria-modal="false">
           <p class="filter-editor__title" id="fe-checklist-title">Type</p>
-          <div class="filter-editor__checklist" role="group" aria-label="Select Type">
+          <div class="filter-editor__body filter-editor__body--checklist" role="group" aria-label="Select Type">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="fv-journal" checked>
               <label class="form-check-label" for="fv-journal">Journal article</label>
@@ -195,11 +199,15 @@
     <h2 class="h4 mb-3">Editor — boolean</h2>
     <p class="mb-4">Used for yes/no filters: Open access, Has file. A Bootstrap <code>.btn-check</code> radio toggle group — native single-select semantics, themed via <code>--bs-btn-active-*</code>. No JS selection handling needed.</p>
 
+    <!-- TODO (pattern alignment): this demo shows the .btn-check toggle, but the live
+         implementations (filter-editor.js, directory-filters*.js, result-filter-bar.html)
+         render plain .form-check radios. The two should be aligned — deferred, not now. -->
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Boolean</h3>
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-bool-title" aria-modal="false">
           <p class="filter-editor__title" id="fe-bool-title">Open access</p>
-          <div class="filter-boolean" role="group" aria-label="Open access">
+          <div class="filter-editor__body filter-editor__body--boolean" role="group" aria-label="Open access">
             <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-true" autocomplete="off" checked>
             <label class="btn" for="fe-bool-demo-true">Yes — open access only</label>
             <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-false" autocomplete="off">
@@ -222,10 +230,11 @@
     <p class="mb-4">Used for Publication year. Either bound is optional — "from 2020" and "to 2024" are both valid alone. Chip reads "2020–2024", "from 2020", or "to 2024" accordingly.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Year range</h3>
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-year-title" aria-modal="false">
           <p class="filter-editor__title" id="fe-year-title">Publication year</p>
-          <div class="filter-year">
+          <div class="filter-editor__body filter-editor__body--year">
             <label for="demo-year-from" class="visually-hidden">From year</label>
             <input type="number" id="demo-year-from" class="form-control form-control-sm filter-year__input"
               placeholder="From" value="2020">
@@ -251,14 +260,17 @@
     <p class="mb-4">Used for free-text filters: Affiliation, Journal / venue, Project, Identifier, Tags. The placeholder is filter-specific and comes from the <code>FILTERS</code> definition in <code>filter-editor.js</code>.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Text</h3>
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-text-title" aria-modal="false">
           <p class="filter-editor__title" id="fe-text-title">Journal / venue</p>
-          <label for="demo-text-val" class="visually-hidden">Journal / venue</label>
-          <input type="text" id="demo-text-val" class="form-control form-control-sm"
-            placeholder="Journal title, publisher, or conference…"
-            value="Nature Climate Change"
-            autocomplete="off">
+          <div class="filter-editor__body">
+            <label for="demo-text-val" class="visually-hidden">Journal / venue</label>
+            <input type="text" id="demo-text-val" class="form-control form-control-sm"
+              placeholder="Journal title, publisher, or conference&hellip;"
+              value="Nature Climate Change"
+              autocomplete="off">
+          </div>
           <div class="filter-editor__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
             <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
@@ -276,36 +288,39 @@
     <p class="mb-4">Used for the Author filter. The people-search widget is embedded inside the editor panel. See <a href="/patterns/people-search.html">People search</a> for the full interaction states (results, selected, no results). The widget is initialised by <code>people-search.js</code> on any <code>[data-people-search]</code> container — including one rendered dynamically by <code>filter-editor.js</code>.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">People search</h3>
       <div class="ds-demo-body">
         <div class="filter-editor" role="dialog" aria-labelledby="fe-people-title" aria-modal="false">
           <p class="filter-editor__title" id="fe-people-title">Author</p>
 
           <!-- people-search widget — see patterns/people-search.html for full states -->
-          <div data-people-search>
-            <label for="demo-ps-input" class="visually-hidden">Search by name or ORCID</label>
-            <input type="search" id="demo-ps-input" data-ps-input
-              class="form-control form-control-sm"
-              value="Jane Doe"
-              autocomplete="off">
-            <div data-ps-results class="people-results" role="listbox" aria-label="People matching your search">
-              <div class="people-result is-selected" role="option" tabindex="0"
-                aria-label="Jane Doe, Faculty of Performing Arts" aria-selected="true">
-                <span class="people-result__icon" aria-hidden="true">
-                  <i class="if if-user if--sm"></i>
-                </span>
-                <div>
-                  <div class="people-result__name">Jane Doe</div>
-                  <div class="people-result__meta">
-                    <span class="people-result__meta-item">
-                      <i class="if if-building if--xs" aria-hidden="true"></i>
-                      Faculty of Performing Arts
-                    </span>
+          <div data-people-search class="filter-editor__body">
+            <div class="w-100">
+              <label for="demo-ps-input" class="visually-hidden">Search by name or ORCID</label>
+              <input type="search" id="demo-ps-input" data-ps-input
+                class="form-control form-control-sm"
+                value="Jane Doe"
+                autocomplete="off">
+              <div data-ps-results class="people-results" role="listbox" aria-label="People matching your search">
+                <div class="people-result is-selected" role="option" tabindex="0"
+                  aria-label="Jane Doe, Faculty of Performing Arts" aria-selected="true">
+                  <span class="people-result__icon" aria-hidden="true">
+                    <i class="if if-user if--sm"></i>
+                  </span>
+                  <div>
+                    <div class="people-result__name">Jane Doe</div>
+                    <div class="people-result__meta">
+                      <span class="people-result__meta-item">
+                        <i class="if if-building if--xs" aria-hidden="true"></i>
+                        Faculty of Performing Arts
+                      </span>
+                    </div>
                   </div>
+                  <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
                 </div>
-                <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
               </div>
+              <p data-ps-hint class="text-muted small mt-2 mb-0"></p>
             </div>
-            <p data-ps-hint class="text-muted small mt-2 mb-0"></p>
           </div>
 
           <div class="filter-editor__actions">
@@ -332,48 +347,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Active chips</h2>
-    <p class="mb-4">Each applied filter becomes a split chip. The left part (editable) reopens the editor. The × removes the filter. Rendered by <code>filter-editor.js</code> into <code>#active-chips</code>. See <a href="/patterns/filter-tags.html">Filter tags</a> for the chip component in isolation.</p>
-
-    <div class="ds-demo">
-      <div class="ds-demo-body">
-        <div class="d-flex gap-2 flex-wrap align-items-center">
-          <div class="filter-tag-group">
-            <button type="button" class="filter-tag filter-tag--editable"
-              aria-label="Edit filter: Type is Journal article">
-              Type: <span class="fw-bold">Journal article</span>
-            </button>
-            <button type="button" class="filter-tag__remove"
-              aria-label="Remove filter: Type is Journal article">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div class="filter-tag-group">
-            <button type="button" class="filter-tag filter-tag--editable"
-              aria-label="Edit filter: Author is Jane Doe">
-              Author: <span class="fw-bold">Jane Doe</span>
-            </button>
-            <button type="button" class="filter-tag__remove"
-              aria-label="Remove filter: Author is Jane Doe">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-          <div class="filter-tag-group">
-            <button type="button" class="filter-tag filter-tag--editable"
-              aria-label="Edit filter: Publication year is 2020–2024">
-              Year: <span class="fw-bold">2020–2024</span>
-            </button>
-            <button type="button" class="filter-tag__remove"
-              aria-label="Remove filter: Publication year is 2020–2024">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-          <button type="button" class="btn btn-ghost btn-sm text-muted">
-            <i class="if if-close" aria-hidden="true"></i>
-            Clear all
-          </button>
-        </div>
-      </div>
-    </div>
+    <p class="mb-0">Applied filters surface as chips — the visible output of the picker/editor flow. The directory result bars render the <strong>editable split chip</strong> (the label reopens the editor, the × removes it); <code>public-works.html</code> uses the <strong>basic single-button chip</strong> (the whole chip removes the filter). Both — plus the display-only static variant — are documented as a component on the <a href="/elements/filter-tags.html">Filter tags</a> element page; this pattern just composes them.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════

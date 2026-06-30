@@ -113,70 +113,55 @@
   border-bottom: 1px solid var(--bt-border);
 }
 
+.filter-editor__body {
+  border-top: var(--bt-border);
+  padding: var(--bt-sp-6) var(--bt-sp-4);
+  gap: var(--bt-sp-4);
+  display: flex;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
 .filter-editor__actions {
   display: flex;
   gap: var(--bt-sp-2);
-  margin-top: var(--bt-sp-3);
   padding: var(--bt-sp-4);
   border-top: var(--bt-border);
 }
 
-.filter-editor__form {
+.filter-editor__body--form {
   padding: var(--bt-sp-4);
 }
 
-/* -- Filter editor -- checklist -- */
-.filter-editor__checklist {
-  display: flex;
+/* -- Filter editor -- option rows (checklist + boolean radios) --
+   Both use standard Bootstrap .form-check controls; no custom radio styling. */
+.filter-editor__body--checklist,
+.filter-editor__body--boolean {
   flex-direction: column;
-  gap: var(--bt-sp-1);
-  max-height: 240px;
-  overflow-y: auto;
-  padding: var(--bt-sp-2) 0;
 }
-.filter-editor__checklist .form-check {
+.filter-editor__body .form-check {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
   margin: 0;
-  padding: var(--bt-sp-2) var(--bt-sp-4);
+  padding: 0;
   border-radius: var(--bt-radius-sm);
 }
-.filter-editor__checklist .form-check-input {
+.filter-editor__body .form-check-input {
   float: none;
   margin: 0;
   flex: 0 0 auto;
 }
-.filter-editor__checklist .form-check:hover { background-color: var(--bt-gray-50); }
-.filter-editor__checklist .form-check-label {
+.filter-editor__body .form-check:hover { background-color: var(--bt-gray-50); }
+.filter-editor__body .form-check-label {
   font-size: var(--bt-text-base);
   color: var(--bt-gray-700);
   cursor: pointer;
   flex: 1;
 }
 
-/* -- Filter editor -- boolean toggle (Bootstrap .btn-check radio group) --
-   No custom selected-state CSS or JS toggling. */
-.filter-boolean { display: flex; gap: var(--bt-sp-2); }
-.filter-boolean .btn {
-  flex: 1;
-  --bs-btn-color:               var(--bt-gray-700);
-  --bs-btn-bg:                  var(--bt-white);
-  --bs-btn-border-color:        var(--bt-gray-150);
-  --bs-btn-border-width:        1.5px;
-  --bs-btn-border-radius:       var(--bt-radius-md);
-  --bs-btn-padding-y:           var(--bt-sp-2);
-  --bs-btn-padding-x:           var(--bt-sp-3);
-  --bs-btn-font-size:           var(--bt-text-sm);
-  --bs-btn-font-weight:         500;
-  --bs-btn-hover-color:         var(--bt-gray-700);
-  --bs-btn-hover-bg:            var(--bt-white);
-  --bs-btn-hover-border-color:  var(--bt-blue-500);
-  --bs-btn-active-color:        var(--bt-blue-900);
-  --bs-btn-active-bg:           var(--bt-blue-100);
-  --bs-btn-active-border-color: var(--bt-blue-700);
-}
-
 /* -- Filter editor -- year range -- */
-.filter-year { display: flex; align-items: center; gap: var(--bt-sp-3); }
+.filter-editor__body--year {
+  align-items: center;
+}
 .filter-year__input { width: 120px; }

@@ -30,8 +30,8 @@
       ]
     },
     author:          { label: 'Author',                   type: 'people-search' },
-    affiliation:     { label: 'Affiliation / faculty',    type: 'text',      placeholder: 'Faculty or organisation name…' },
-    research_group:  { label: 'Research group',           type: 'text',      placeholder: 'Research group or department…' },
+    affiliation:     { label: 'Affiliation / faculty',    type: 'text',      placeholder: 'Faculty or organisation name&hellip;' },
+    research_group:  { label: 'Research group',           type: 'text',      placeholder: 'Research group or department&hellip;' },
     year:            { label: 'Publication year',         type: 'year-range' },
     created_since:   { label: 'Created since',            type: 'date' },
     updated_since:   { label: 'Updated since',            type: 'date' },
@@ -54,12 +54,12 @@
         { value: 'inprep',    label: 'In preparation' },
       ]
     },
-    tags:       { label: 'Tags',              type: 'text', placeholder: 'Librarian tag…' },
-    venue:      { label: 'Journal / venue',   type: 'text', placeholder: 'Journal title, publisher, or conference…' },
-    project:    { label: 'Project / funding', type: 'text', placeholder: 'Project name or grant ID…' },
-    identifier: { label: 'Identifier',        type: 'text', placeholder: 'DOI, handle, ISBN, record ID…' },
-    language:   { label: 'Language',          type: 'text', placeholder: 'e.g. English, Dutch…' },
-    keywords:   { label: 'Keywords',          type: 'text', placeholder: 'Subject or keyword…' },
+    tags:       { label: 'Tags',              type: 'text', placeholder: 'Librarian tag&hellip;' },
+    venue:      { label: 'Journal / venue',   type: 'text', placeholder: 'Journal title, publisher, or conference&hellip;' },
+    project:    { label: 'Project / funding', type: 'text', placeholder: 'Project name or grant ID&hellip;' },
+    identifier: { label: 'Identifier',        type: 'text', placeholder: 'DOI, handle, ISBN, record ID&hellip;' },
+    language:   { label: 'Language',          type: 'text', placeholder: 'e.g. English, Dutch&hellip;' },
+    keywords:   { label: 'Keywords',          type: 'text', placeholder: 'Subject or keyword&hellip;' },
   };
 
   // ── State ─────────────────────────────────────────────────────────────────
@@ -129,7 +129,7 @@
 
       case 'checklist': {
         const checked = existing?.rawValue || [];
-        body = `<div class="filter-editor__checklist" role="group" aria-label="Select ${def.label}">` +
+        body = `<div class="filter-editor__body filter-editor__body--checklist" role="group" aria-label="Select ${def.label}">` +
           def.values.map(v => `
             <div class="form-check">
               <input class="form-check-input" type="checkbox"
@@ -142,11 +142,15 @@
 
       case 'boolean': {
         const cur = existing?.rawValue;
-        body = `<div class="filter-boolean" role="group" aria-label="${def.label}">
-          <input type="radio" class="btn-check" name="ef-bool" id="ef-bool-true" value="true" autocomplete="off" ${cur === 'true' ? 'checked' : ''}>
-          <label class="btn" for="ef-bool-true">${def.yesLabel}</label>
-          <input type="radio" class="btn-check" name="ef-bool" id="ef-bool-false" value="false" autocomplete="off" ${cur === 'false' ? 'checked' : ''}>
-          <label class="btn" for="ef-bool-false">${def.noLabel}</label>
+        body = `<div class="filter-editor__body filter-editor__body--boolean" role="group" aria-label="${def.label}">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="ef-bool" id="ef-bool-true" value="true" ${cur === 'true' ? 'checked' : ''}>
+            <label class="form-check-label" for="ef-bool-true">${def.yesLabel}</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="ef-bool" id="ef-bool-false" value="false" ${cur === 'false' ? 'checked' : ''}>
+            <label class="form-check-label" for="ef-bool-false">${def.noLabel}</label>
+          </div>
         </div>`;
         break;
       }
@@ -154,7 +158,7 @@
       case 'year-range': {
         const from = existing?.rawValue?.from || '';
         const to   = existing?.rawValue?.to   || '';
-        body = `<div class="filter-year">
+        body = `<div class="filter-editor__body filter-editor__body--year">
           <label for="year-from" class="visually-hidden">From year</label>
           <input type="number" id="year-from" class="form-control filter-year__input" placeholder="From" value="${from}">
           <span class="text-muted small">to</span>
@@ -166,7 +170,7 @@
 
       case 'date': {
         const val = existing?.rawValue || '';
-        body = `<div class="filter-editor__form">
+        body = `<div class="filter-editor__body filter-editor__body--form">
           <label for="date-val" class="visually-hidden">${def.label}</label>
           <input type="date" id="date-val" class="form-control form-control-sm" value="${val}">
         </div>`;
@@ -175,7 +179,7 @@
 
       case 'text': {
         const val = existing?.rawValue || '';
-        body = `<div class="filter-editor__form">
+        body = `<div class="filter-editor__body filter-editor__body--form">
           <label for="text-val" class="visually-hidden">${def.label}</label>
           <input type="text" id="text-val" class="form-control form-control-sm"
             placeholder="${def.placeholder || ''}" value="${val}" autocomplete="off">
@@ -185,14 +189,14 @@
 
       case 'people-search': {
         const sel = existing?.rawValue;
-        body = `<div class="filter-editor__form" data-people-search>
+        body = `<div class="filter-editor__body filter-editor__body--form" data-people-search>
           <label for="people-search-input" class="visually-hidden">Search by name or ORCID</label>
           <!-- Prototype: results come from people-search-stub.js (local data).
                Production: add hx-get="/people/search" (+ hx-trigger/target/
                indicator) here to call the real endpoint. -->
           <input type="search" id="people-search-input" data-ps-input
             class="form-control form-control-sm"
-            placeholder="Search by name or ORCID…"
+            placeholder="Search by name or ORCID&hellip;"
             autocomplete="off"
             value="${sel?.name || ''}">
           <div data-ps-results class="people-results" role="listbox"
@@ -314,7 +318,10 @@
         <button type="button" class="filter-tag filter-tag--editable"
           aria-label="Edit filter: ${f.label} is ${f.displayValue}"
           data-filter-id="${id}">
-          <span class="text-muted small me-1">${f.label}:</span>${f.displayValue}
+          <span class="fw-light me-1">${f.label}:</span>
+          <span>
+          ${f.displayValue}
+          </span>
         </button>
         <button type="button" class="filter-tag__remove"
           aria-label="Remove filter: ${f.label} is ${f.displayValue}"

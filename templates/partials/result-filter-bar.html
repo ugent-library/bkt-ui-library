@@ -44,14 +44,14 @@
       <div class="p-2">
         <label for="entity-filter-search" class="visually-hidden">Search filters</label>
         <input type="search" id="entity-filter-search" class="form-control form-control-sm"
-          placeholder="Find a filter…" autocomplete="off">
+          placeholder="Find a filter&hellip;" autocomplete="off">
       </div>
 
       <div class="bt-filter-picker__list" id="entity-filter-picker-list">
 
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
         <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="type">Type</button>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="identifier">Identifier (DOI, handle…)</button>
+        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="identifier">Identifier (DOI, handle&hellip;)</button>
 
         <hr class="dropdown-divider my-1">
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
@@ -125,14 +125,14 @@
         { value: 'miscellaneous',   label: 'Miscellaneous' },
       ]
     },
-    identifier: { label: 'Identifier', type: 'text', placeholder: 'DOI, handle, ISBN…' },
+    identifier: { label: 'Identifier', type: 'text', placeholder: 'DOI, handle, ISBN&hellip;' },
     author:     { label: 'Author',     type: 'people-search' },
-    affiliation:{ label: 'Affiliation / faculty', type: 'text', placeholder: 'Faculty or organisation name…' },
+    affiliation:{ label: 'Affiliation / faculty', type: 'text', placeholder: 'Faculty or organisation name&hellip;' },
     year:       { label: 'Publication year', type: 'year-range' },
     open_access:{ label: 'Open access', type: 'boolean', yesLabel: 'Yes — open access only', noLabel: 'No — restricted only' },
     has_file:   { label: 'Has file',    type: 'boolean', yesLabel: 'Yes — has file', noLabel: 'No — no file' },
-    venue:      { label: 'Journal / venue', type: 'text', placeholder: 'Journal title, publisher, or conference…' },
-    keywords:   { label: 'Keywords',   type: 'text', placeholder: 'Keyword or subject term…' },
+    venue:      { label: 'Journal / venue', type: 'text', placeholder: 'Journal title, publisher, or conference&hellip;' },
+    keywords:   { label: 'Keywords',   type: 'text', placeholder: 'Keyword or subject term&hellip;' },
   };
 
   // ── People dataset (same as filter-editor.html) ─────────────────────────────
@@ -189,7 +189,7 @@
     switch (def.type) {
       case 'checklist': {
         const checked = existing?.rawValue || [];
-        body = `<div class="filter-editor__checklist" role="group" aria-label="Select ${def.label}">` +
+        body = `<div class="filter-editor__body filter-editor__body--checklist" role="group" aria-label="Select ${def.label}">` +
           def.values.map(v => `
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="efv-${v.value}" name="efv" value="${v.value}" ${checked.includes(v.value) ? 'checked' : ''}>
@@ -199,18 +199,22 @@
       }
       case 'boolean': {
         const cur = existing?.rawValue;
-        body = `<div class="filter-boolean" role="group" aria-label="${def.label}">
-          <input type="radio" class="btn-check" name="ef-bool" id="ef-bool-true" value="true" autocomplete="off" ${cur === 'true' ? 'checked' : ''}>
-          <label class="btn" for="ef-bool-true">${def.yesLabel}</label>
-          <input type="radio" class="btn-check" name="ef-bool" id="ef-bool-false" value="false" autocomplete="off" ${cur === 'false' ? 'checked' : ''}>
-          <label class="btn" for="ef-bool-false">${def.noLabel}</label>
+        body = `<div class="filter-editor__body filter-editor__body--boolean" role="group" aria-label="${def.label}">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="ef-bool" id="ef-bool-true" value="true" ${cur === 'true' ? 'checked' : ''}>
+            <label class="form-check-label" for="ef-bool-true">${def.yesLabel}</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="ef-bool" id="ef-bool-false" value="false" ${cur === 'false' ? 'checked' : ''}>
+            <label class="form-check-label" for="ef-bool-false">${def.noLabel}</label>
+          </div>
         </div>`;
         break;
       }
       case 'year-range': {
         const from = existing?.rawValue?.from || '';
         const to   = existing?.rawValue?.to   || '';
-        body = `<div class="filter-year">
+        body = `<div class="filter-editor__body filter-editor__body--year">
           <label for="e-year-from" class="visually-hidden">From year</label>
           <input type="number" id="e-year-from" class="form-control form-control-sm filter-year__input" placeholder="From" min="1800" max="2030" value="${from}">
           <span class="text-muted small">to</span>
@@ -233,7 +237,7 @@
           <div>
             <label for="e-people-search" class="visually-hidden">Search for a person</label>
             <input type="search" id="e-people-search" class="form-control form-control-sm"
-              placeholder="Search by name or ORCID…" autocomplete="off" value="${sel?.name || ''}">
+              placeholder="Search by name or ORCID&hellip;" autocomplete="off" value="${sel?.name || ''}">
           </div>
           <div id="e-people-results" class="people-results" ${sel ? '' : 'hidden'}
             role="listbox" aria-label="People matching your search">
