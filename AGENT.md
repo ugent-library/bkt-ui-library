@@ -95,7 +95,7 @@ We build two things: a **public research repository** (anonymous users, read-hea
 <a href="#main-content" class="skip-link">Skip to main content</a>
 ```
 
-**A4. `lang` attribute on `<html>`.** Always `<html lang="en">` for English content. For Dutch fragments: `<span lang="nl">…</span>`.
+**A4. `lang` attribute on `<html>`.** Always `<html lang="en">` for English content. For Dutch fragments: `<span lang="nl">&hellip;</span>`.
 
 **A5. Every `<nav>` has a distinct `aria-label`.** When multiple navigation landmarks exist on one page, each must be uniquely named so a screen reader user can distinguish them.
 
@@ -112,7 +112,7 @@ Results pagination       ← pagination nav
 - `<main>` for primary content
 - `<nav>` for navigation (with label — see A5)
 - `<aside>` for facets and supplementary sidebars (with label)
-- `<section aria-labelledby="…">` for named content sections on detail pages
+- `<section aria-labelledby="&hellip;">` for named content sections on detail pages
 - `<article>` for self-contained records (search result cards)
 - Never use `<div>` where a semantic element applies
 
@@ -182,7 +182,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 <!-- ✓ Correct — visually-hidden label for search -->
 <form role="search" aria-label="Search research output">
   <label for="q" class="visually-hidden">Search by title, author, or DOI</label>
-  <input type="search" id="q" name="q" placeholder="Search…">
+  <input type="search" id="q" name="q" placeholder="Search&hellip;">
   <button type="submit">Search</button>
 </form>
 ```
@@ -243,7 +243,7 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 <!-- ✓ Correct -->
 <input hx-get="/search" hx-trigger="keyup changed delay:300ms"
   hx-target="#results" hx-indicator="#search-indicator">
-<span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching…</span>
+<span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching&hellip;</span>
 ```
 
 **D2. Live regions must be in the DOM before the swap.** HTMX cannot inject an `aria-live` region and have it work immediately — screen readers only observe regions that existed at page load. The result count, status messages, and error regions must be present (even if empty) in the initial HTML.
@@ -341,18 +341,18 @@ The public site is read by researchers, students, and automated agents (crawlers
 ```html
 <!-- ✓ Public surface -->
 <article aria-labelledby="card-title-01k9">
-  <h2 id="card-title-01k9" class="bt-work-card__title"><a href="…">Urban forests…</a></h2>
+  <h2 id="card-title-01k9" class="bt-work-card__title"><a href="&hellip;">Urban forests&hellip;</a></h2>
 </article>
 
 <!-- ✓ Backoffice surface -->
 <li>
   <article aria-labelledby="card-title-01k9">
-    <p id="card-title-01k9" class="bt-work-card__title"><a href="…">Urban forests…</a></p>
+    <p id="card-title-01k9" class="bt-work-card__title"><a href="&hellip;">Urban forests&hellip;</a></p>
   </article>
 </li>
 ```
 
-**H2. Detail page sections use `<section aria-labelledby="…">`.** The heading `id` must exactly match the `aria-labelledby` value. This lets screen reader users navigate by region.
+**H2. Detail page sections use `<section aria-labelledby="&hellip;">`.** The heading `id` must exactly match the `aria-labelledby` value. This lets screen reader users navigate by region.
 
 **H3. Breadcrumb: `<nav aria-label="Breadcrumb">` + `<ol>` + `aria-current="page"` on the last item.** `<ol>` because position in the hierarchy is meaningful.
 
@@ -593,14 +593,14 @@ bt-filter-picker__menu   bt-filter-picker__menu--narrow  bt-filter-picker__list
 **Filter editor panel**
 ```
 filter-editor            filter-editor__actions
-filter-editor__checklist
-filter-boolean           filter-boolean__option   filter-boolean__option.is-selected
+filter-editor__body--checklist
+filter-editor__body--boolean           filter-editor__body--boolean__option   filter-editor__body--boolean__option.is-selected
 filter-year              filter-year__input
 ```
 
 **Surface-aware filter group visibility**
 ```
-filter-group--backoffice-only    filter-group--public-only
+filter-group--backoffice-only
 ```
 
 **HTMX state classes**
@@ -916,7 +916,7 @@ Before creating a new page in `foundations/`, `elements/`, or `patterns/`, read 
       <span class="ds-code-lang">html</span>
       <button class="ds-code-copy">Copy</button>
     </div>
-    <pre>…</pre>
+    <pre>&hellip;</pre>
   </div>
 </section>
 ```

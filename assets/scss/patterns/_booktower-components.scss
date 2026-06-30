@@ -213,8 +213,16 @@
 
 // -- Filter bar: surface-aware filter picker --
 // Controls which filter groups appear in the Add filter dropdown.
-// The partial (search-filter-bar.html) includes both sets; these rules hide
-// the surface-irrelevant ones based on the data-surface ancestor.
-// Applied to: .filter-group--backoffice-only and .filter-group--public-only
+// The backoffice-only groups in search-filter-bar.html are hidden on the
+// public surface via the data-surface ancestor.
+// Applied to: .filter-group--backoffice-only
 [data-surface="public"]     .filter-group--backoffice-only { display: none; }
-[data-surface="backoffice"] .filter-group--public-only     { display: none; }
+
+[data-bs-toggle="collapse"] .if-chevron-down,
+#org-tree-toggle-all .if-chevron-down {
+  transition: rotate var(--bt-dur-fast) ease;
+}
+[data-bs-toggle="collapse"]:not(.collapsed) .if-chevron-down,
+#org-tree-toggle-all[aria-expanded="true"] .if-chevron-down {
+  rotate: -180deg;
+}

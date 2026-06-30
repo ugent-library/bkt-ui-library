@@ -16,11 +16,10 @@
   real endpoint.
 
   ── Surface-aware filter list ──────────────────────────────────────────────
-  Both surface filter groups live in the DOM. CSS hides the irrelevant ones
-  based on data-surface on the layout ancestor:
+  Backoffice-only filter groups live in the DOM but are hidden on the public
+  surface via data-surface on the layout ancestor:
 
-    [data-surface="public"]     .filter-group--backoffice-only { display: none }
-    [data-surface="backoffice"] .filter-group--public-only     { display: none }
+    [data-surface="public"] .filter-group--backoffice-only { display: none }
 
   These rules currently live in the shared pattern partial
   assets/scss/patterns/_booktower-components.scss.
@@ -64,7 +63,7 @@
       <div class="p-2 border-bottom">
         <label for="filter-search" class="visually-hidden">Search filters</label>
         <input type="search" id="filter-search" class="form-control form-control-sm"
-          placeholder="Find a filter…" autocomplete="off">
+          placeholder="Find a filter&hellip;" autocomplete="off">
       </div>
 
       <div id="filter-picker-list" class="bt-filter-picker__list">
@@ -73,11 +72,9 @@
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type</p>
         <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
         <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="subtype">Subtype</button>
-        <button class="dropdown-item py-2" type="button" data-filter="identifier">Identifier (DOI, handle…)</button>
 
         <hr class="dropdown-divider my-1">
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-        <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
         <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
         <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="research_group">Research group</button>
 
@@ -107,7 +104,6 @@
         <hr class="dropdown-divider my-1">
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Classification</p>
         <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
-        <button class="dropdown-item py-2 filter-group--public-only" type="button" data-filter="language">Language</button>
 
       </div>
     </div>
@@ -121,7 +117,7 @@
 
   <!-- HTMX indicator — must exist in DOM at page load for aria-live -->
   <span id="search-indicator" class="htmx-indicator text-muted small" aria-live="polite">
-    Searching…
+    Searching&hellip;
   </span>
 
 </div><!-- /chips row -->
