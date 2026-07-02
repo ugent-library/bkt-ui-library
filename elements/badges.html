@@ -8,29 +8,61 @@
   </header>
 
   <section class="ds-section">
+    <h2 class="h4 mb-3">Badge types</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-label">Existing bootstrap and new booktower badges</div>
+      <div class="ds-demo-body d-flex flex-wrap align-items-center gap-3">
+        <div class="text-center">
+          <span class="badge text-bg-success">text-bg-success</span>
+        </div>
+        <div class="text-center">
+          <span class="badge text-bg-warning">text-bg-warning</span>
+        </div>
+        <div class="text-center">
+          <span class="badge text-bg-info">text-bg-info</span>
+        </div>
+        <div class="text-center">
+          <span class="badge text-bg-danger">text-bg-danger</span>
+        </div>
+        <div class="text-center">
+          <span class="badge text-bg-secondary">text-bg-secondary</span>
+        </div>
+        <div class="text-center">
+          <span class="badge text-bg-primary">text-bg-primary</span>
+        </div>
+        <div class="text-center">
+          <span class="badge badge--outline">badge--outline</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Soft variants — low-emphasis labels (topic tags, completeness hints), not loud status</div>
+      <div class="ds-demo-body d-flex flex-wrap align-items-center gap-3">
+        <span class="badge text-bg-primary-light">text-bg-primary-light</span>
+        <span class="badge text-bg-info-light">text-bg-info-light</span>
+        <span class="badge text-bg-success-light">text-bg-success-light</span>
+        <span class="badge text-bg-warning-light">text-bg-warning-light</span>
+        <span class="badge text-bg-danger-light">text-bg-danger-light</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
     <h2 class="h4 mb-3">Semantic variants</h2>
     <div class="ds-demo">
       <div class="ds-demo-label">Status — direct Bootstrap semantic colours, remapped to Booktower tokens</div>
-      <div class="ds-demo-body d-flex flex-wrap align-items-center gap-3">
-        <div class="text-center">
-          <span class="badge bg-success d-block mb-2">Published</span>
-          <code class="d-block">bg-success</code>
+      <div class="ds-demo-body">
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+          <span class="badge text-bg-success">Published</span>
+          <span class="badge text-bg-warning">Draft</span>
+          <span class="badge text-bg-info">Submitted</span>
+          <span class="badge text-bg-danger">Withdrawn</span>
+          <span class="badge text-bg-secondary">Hidden</span>
         </div>
-        <div class="text-center">
-          <span class="badge bg-warning d-block mb-2">Draft</span>
-          <code class="d-block">bg-warning</code>
-        </div>
-        <div class="text-center">
-          <span class="badge bg-danger d-block mb-2">Retracted</span>
-          <code class="d-block">bg-danger</code>
-        </div>
-        <div class="text-center">
-          <span class="badge bg-secondary d-block mb-2">Archived</span>
-          <code class="d-block">bg-secondary</code>
-        </div>
-        <div class="text-center">
-          <span class="badge bg-primary d-block mb-2">Journal article</span>
-          <code class="d-block">bg-primary</code>
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <span class="badge text-bg-primary">Journal article</span>
+          <span class="badge badge--outline">Preprint</span>
         </div>
       </div>
     </div>
@@ -38,92 +70,20 @@
     <div class="ds-demo">
       <div class="ds-demo-label">Access status — domain-specific badges, not generic Bootstrap</div>
       <div class="ds-demo-body d-flex flex-wrap align-items-center gap-3">
-        <div class="text-center">
-          <span class="badge bg-success d-block mb-2">● Open access</span>
-          <code class="d-block">badge bg-success</code>
-        </div>
-        <div class="text-center">
-          <span class="badge bg-warning d-block mb-2">⚿ Restricted</span>
-          <code class="d-block">badge bg-warning</code>
-        </div>
-        <div class="text-center">
-          <span class="badge bg-warning d-block mb-2">Embargo until 2026</span>
-          <code class="d-block">bg-warning</code>
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+          <span class="badge text-bg-success">Open access</span>
+          <span class="badge text-bg-warning">Embargo</span>
+          <span class="badge text-bg-secondary">Closed access</span>
         </div>
       </div>
     </div>
 
     <div class="ds-demo">
-      <div class="ds-demo-label">With icon — only when icon adds meaning beyond the text</div>
+      <div class="ds-demo-label">With icon</div>
       <div class="ds-demo-body d-flex flex-wrap align-items-center gap-2">
-        <span class="badge bg-secondary">
-          <i class="ri-lock-line me-1" aria-hidden="true"></i>Locked
+        <span class="badge text-bg-secondary">
+          <i class="if if-lock me-1" aria-hidden="true"></i>Locked
         </span>
-        <span class="badge bg-primary">
-          <i class="ri-shield-check-line me-1" aria-hidden="true"></i>Peer reviewed
-        </span>
-        <span class="badge bg-success">
-          <i class="ri-check-line me-1" aria-hidden="true"></i>Completed
-        </span>
-      </div>
-    </div>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">In context — record list row</h2>
-    <div class="ds-demo">
-      <div class="ds-demo-label">How badges stack in a real table cell and card</div>
-      <div class="ds-demo-body">
-        <div class="d-flex flex-column gap-3">
-
-          <!-- In a table row -->
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Access</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Urban forests as essential&hellip;</td>
-                  <td><span class="badge bg-primary">Journal article</span></td>
-                  <td><span class="badge bg-success">Published</span></td>
-                  <td><span class="badge bg-success">● Open access</span></td>
-                </tr>
-                <tr>
-                  <td>De Leuvense Codex&hellip;</td>
-                  <td><span class="badge bg-primary">Book chapter</span></td>
-                  <td><span class="badge bg-warning">Draft</span></td>
-                  <td><span class="badge bg-warning">⚿ Restricted</span></td>
-                </tr>
-                <tr>
-                  <td>Water-sensitive urban design&hellip;</td>
-                  <td><span class="badge bg-primary">Journal article</span></td>
-                  <td>
-                    <span class="badge bg-secondary d-inline-flex align-items-center gap-1">
-                      <i class="ri-lock-line" aria-hidden="true"></i>Locked
-                    </span>
-                  </td>
-                  <td><span class="badge bg-success">● Open access</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- In a card header -->
-          <div>
-            <div class="d-flex flex-wrap gap-2 mb-2">
-              <span class="badge bg-success">● Open access</span>
-              <span class="badge bg-primary">Journal article</span>
-              <span class="badge bg-success">Peer reviewed</span>
-            </div>
-            <p>Urban forests as essential infrastructure for climate resilience&hellip;</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -136,16 +96,16 @@
           <div class="col-6">
             <p class="form-label text-success mb-2">✓ Do</p>
             <ul>
-              <li>Use <code>badge bg-success</code> and <code>badge bg-warning</code> for access status — not generic Bootstrap colours</li>
-              <li>Use <code>bg-success</code> for "Published" — the semantic meaning matters</li>
-              <li>Use <code>bg-warning</code> for states that need attention</li>
+              <li>Use <code>badge text-bg-success</code> and <code>badge text-bg-warning</code> for access status — not generic Bootstrap colours</li>
+              <li>Use <code>text-bg-success</code> for "Published" — the semantic meaning matters</li>
+              <li>Use <code>text-bg-warning</code> or <code>text-bg-danger</code> for states that need attention</li>
               <li>Keep badge text to 1–3 words</li>
             </ul>
           </div>
           <div class="col-6">
             <p class="form-label text-danger mb-2">✗ Don't</p>
             <ul>
-              <li>Use <code>bg-danger</code> for "Restricted" — restricted isn't an error</li>
+              <li>Use <code>text-bg-danger</code> for "Restricted" — restricted isn't an error</li>
               <li>Stack more than 3 badges in a card header</li>
               <li>Use colour alone to convey meaning (always include text)</li>
               <li>Use badges as buttons or links</li>

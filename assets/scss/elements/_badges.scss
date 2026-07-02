@@ -1,76 +1,85 @@
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
 
 /*
-  Font size: --bt-text-xs (12px).
-  12px is the practical minimum for badge text — compact enough for dense
-  tables, accessible enough without zoom. Padding is tightened accordingly
-  so badges stay narrow at this size.
+  Colour: use Bootstrap's text-bg-* helper, not bg-* + text-*. text-bg-*
+  pairs background with a contrasting foreground in one class; the overrides
+  below swap in Booktower tokens. Bootstrap's .text-bg-* helper sets its
+  background and (auto-contrast) colour with !important, so the overrides must
+  use !important too — otherwise Bootstrap's stock colours win. Icons inherit
+  colour from the badge, so no per-icon rule is required.
+
+  All solid badges carry white text; backgrounds are stepped dark enough to
+  clear WCAG AA (4.5:1) against white.
 */
 
 .badge {
-  font-family: var(--bt-font-sans);
-  font-size: var(--bt-text-xs);      /* 12px */
-  font-weight: 700;
-  padding: var(--bt-sp-1) var(--bt-sp-2); /* 4px 8px — neat pill shape at 12px */
-  line-height: 1;
-  border-radius: var(--bt-radius-pill);
+  --bs-badge-border-radius: var(--bt-radius-pill);
+  --bs-badge-font-size: var(--bt-text-xs);
   display: inline-flex;
   align-items: center;
-  gap: var(--bt-sp-1);
-  white-space: nowrap;
+  gap: .35em;
 }
 
-/* Bootstrap semantic badges — remapped to Booktower tokens */
-.badge.bg-primary,
-.badge.bg-primary i {
+.badge.text-bg-primary {       /* white on blue-800 — 13.6:1 */
   background: var(--bt-blue-800) !important;
-  color: var(--bt-white);
+  color: var(--bt-white) !important;
 }
-.badge.bg-primary-light {
-  background: var(--bt-blue-100) !important;
-  color: var(--bt-blue-900);
+.badge.text-bg-info {          /* submitted status; white on blue-600 — 5.7:1 */
+  background: var(--bt-blue-600) !important;
+  color: var(--bt-white) !important;
 }
-
-.badge.bg-success,
-.badge.bg-success i {
-  background: var(--bt-green-600) !important;
-  color: var(--bt-white);
+.badge.text-bg-success {       /* white on green-700 — 6.6:1 (green-600 fails) */
+  background: var(--bt-green-700) !important;
+  color: var(--bt-white) !important;
 }
-.badge.bg-success-light {
-  background: var(--bt-green-200) !important;
-  color: var(--bt-dark-green);
+.badge.text-bg-warning {       /* dark text on bright amber — 8.7:1. White can't pass on amber, so warning is the one dark-text solid (as Bootstrap does). */
+  background: var(--bt-orange-500) !important;
+  color: var(--bt-gray-1000) !important;
 }
-
-.badge.bg-warning,
-.badge.bg-warning i {
-  background: var(--bt-orange-600) !important;
-  color: var(--bt-white);
+.badge.text-bg-danger {        /* white on red-600 — 5.8:1 (red-500 fails) */
+  background: var(--bt-red-600) !important;
+  color: var(--bt-white) !important;
 }
-.badge.bg-warning-light {
-  background: var(--bt-orange-100) !important;
-  color: var(--bt-dark-orange);
-}
-
-.badge.bg-danger,
-.badge.bg-danger i {
-  background: var(--bt-red-500) !important;
-  color: var(--bt-white);
-}
-.badge.bg-danger-light {
-  background: var(--bt-red-100) !important;
-  color: var(--bt-dark-red);
-}
-
-.badge.bg-secondary {
+.badge.text-bg-secondary {
   background: var(--bt-gray-100) !important;
-  color: var(--bt-gray-700);
+  color: var(--bt-gray-700) !important;
 }
+.badge.text-bg-light {         /* neutral: pale fill, dark text */
+  background: var(--bt-gray-50) !important;
+  color: var(--bt-gray-700) !important;
+}
+
+/* Soft variants — pale background, dark on-tone text. No Bootstrap equivalent. */
+.badge.text-bg-primary-light {
+  background: var(--bt-blue-100) !important;
+  color: var(--bt-blue-900) !important;
+}
+.badge.text-bg-info-light {    /* paler blue than primary-light — same ramp, one step lighter */
+  background: var(--bt-blue-50) !important;
+  color: var(--bt-blue-900) !important;
+}
+.badge.text-bg-success-light {
+  background: var(--bt-green-200) !important;
+  color: var(--bt-dark-green) !important;
+}
+.badge.text-bg-warning-light {
+  background: var(--bt-orange-100) !important;
+  color: var(--bt-dark-orange) !important;
+}
+.badge.text-bg-danger-light {
+  background: var(--bt-red-100) !important;
+  color: var(--bt-dark-red) !important;
+}
+
 .badge.bg-transparent {
   background: transparent !important;
   color: var(--bt-gray-500);
 }
 
+/* Outline — transparent fill, token border + text. Mirrors Bootstrap's outline
+   approach (border + colour, no fill) for the badge context. */
 .badge.badge--outline {
   background: transparent !important;
-  border: 1px solid var(--bt-gray-500);
+  border: 1px solid var(--bt-blue-900);
+  color: var(--bt-blue-900) !important;
 }

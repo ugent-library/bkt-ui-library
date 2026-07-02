@@ -215,8 +215,8 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.badge` | `.badge` | ✅ Carried over | Active in `elements/_badges.scss`. |
-| `.badge.bg-primary`, `.bg-success`, etc. | Same | 🔧 Revised | Token colours are remapped in `elements/_badges.scss`. |
+| `.badge` | `.badge` | ✅ Carried over | Active in `elements/_badges.scss`. Fixed size via `--bs-badge-font-size: var(--bt-text-xs)` (12px) — predictable regardless of parent font-size. |
+| `.badge.bg-primary` + `text-*` | `.badge.text-bg-primary` (etc.) | 🔧 Revised | Colour a badge with Bootstrap's `text-bg-*` helper, not `bg-*` + `text-*`. Token colours (incl. new `text-bg-info` and the `text-bg-*-light` soft set) are remapped in `elements/_badges.scss` with `!important` to beat Bootstrap's helper. All variants clear WCAG AA. |
 
 ---
 

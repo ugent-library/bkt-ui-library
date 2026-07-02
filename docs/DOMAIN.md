@@ -22,7 +22,7 @@ The authoritative list of work kinds lives in `raven/docs/raven-design.md`. It i
 
 All kinds are collectively referred to as **research output** — not "publications" or "publications and datasets". The term "publications" is not used in the UI. This is intentional: new kinds may be added in the future without requiring a UI redesign.
 
-In the UI: shown as a `badge bg-primary` badge and controls which form fields appear.
+In the UI: shown as a `badge text-bg-primary` badge and controls which form fields appear.
 
 ### Work status
 The lifecycle state of a Work.
@@ -34,7 +34,7 @@ The lifecycle state of a Work.
 | `public` | Published and visible | Everyone |
 | `deleted` | Withdrawn, retracted, or taken down | Curators only (tombstone) |
 
-In the UI: shown as a badge. `draft` → `badge bg-warning` (yellow). `submitted` → `badge bg-info` (blue). `public` → `badge bg-success` (green). `deleted` is not shown in normal lists.
+In the UI: shown as a badge. `draft` → `badge text-bg-warning` (yellow). `submitted` → `badge text-bg-info` (blue). `public` → `badge text-bg-success` (green). `deleted` is not shown in normal lists.
 
 ### Work delete_kind
 Only set when `status = 'deleted'`. Distinguishes the reason.
@@ -101,8 +101,8 @@ Describes who can access the full text of a file. Access is **per-file**, not pe
 
 | Value | Label | Badge |
 |-------|-------|-------|
-| `open` | Open access | `badge bg-success` |
-| `restricted` | Restricted | `badge bg-warning` |
+| `open` | Open access | `badge text-bg-success` |
+| `restricted` | Restricted | `badge text-bg-warning` |
 | `closed` | Closed | no badge shown |
 
 In summary views (cards, table rows), show the most permissive access level across all files on the work.
@@ -200,7 +200,7 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 
 **In search and discovery:**
 - OA status should be a prominent, early filter — not buried
-- the open-access badge (`badge bg-success`) should be visually distinct and positive, not neutral
+- the open-access badge (`badge text-bg-success`) should be visually distinct and positive, not neutral
 - Works without full-text access should not look broken — restricted access is sometimes correct, but the UI should make open access feel like the norm
 
 ---
@@ -285,18 +285,18 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 
 | `status` | Badge | Colour |
 |----------|-------|--------|
-| `public` | `badge bg-success` | Green |
-| `submitted` | `badge bg-info` | Blue |
-| `draft` | `badge bg-warning` | Yellow |
+| `public` | `badge text-bg-success` | Green |
+| `submitted` | `badge text-bg-info` | Blue |
+| `draft` | `badge text-bg-warning` | Yellow |
 | `deleted` | not rendered in normal lists | — |
 
 | Access kind | Badge |
 |-------------|-------|
-| `open` | `badge bg-success` |
-| `restricted` | `badge bg-warning` |
+| `open` | `badge text-bg-success` |
+| `restricted` | `badge text-bg-warning` |
 | `closed` | no badge |
 
-Work kind is always `badge bg-primary` (blue).
+Work kind is always `badge text-bg-primary` (blue).
 
 ### Heritage / diamond OA badges
 

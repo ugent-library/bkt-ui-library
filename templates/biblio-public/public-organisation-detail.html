@@ -135,7 +135,7 @@
                   data-bs-toggle="tab" data-bs-target="#panel-output"
                   aria-controls="panel-output" aria-selected="true">
                   Research output
-                  <span class="badge bg-secondary ms-1 fw-normal">13&thinsp;189</span>
+                  <span class="badge text-bg-secondary ms-1 fw-normal">13&thinsp;189</span>
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -144,7 +144,7 @@
                   data-bs-toggle="tab" data-bs-target="#panel-people"
                   aria-controls="panel-people" aria-selected="false">
                   Researchers
-                  <span class="badge bg-secondary ms-1 fw-normal">214</span>
+                  <span class="badge text-bg-secondary ms-1 fw-normal">214</span>
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -153,7 +153,7 @@
                   data-bs-toggle="tab" data-bs-target="#panel-projects"
                   aria-controls="panel-projects" aria-selected="false">
                   Projects
-                  <span class="badge bg-secondary ms-1 fw-normal">89</span>
+                  <span class="badge text-bg-secondary ms-1 fw-normal">89</span>
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -162,7 +162,7 @@
                   data-bs-toggle="tab" data-bs-target="#panel-units"
                   aria-controls="panel-units" aria-selected="false">
                   Departments &amp; units
-                  <span class="badge bg-secondary ms-1 fw-normal">5</span>
+                  <span class="badge text-bg-secondary ms-1 fw-normal">5</span>
                 </button>
               </li>
             </ul>
@@ -272,58 +272,6 @@
                 hx-trigger="intersect once"
                 hx-target="#projects-list"
                 hx-indicator="#projects-loading">
-
-                <!--
-                  Project cards carry the field set documented in
-                  public-projects.html: title, description, period,
-                  "Read more on GISMO" link, Project ID, IWETO ID, GISMO ID,
-                  other IDs (none here), and a link to the project detail page.
-                  Kept identical to renderProjectsList() in server.js — this
-                  static markup is the pre-swap fallback for #projects-list.
-                  PLACEHOLDER: GISMO IDs and gismo.ugent.be URLs are invented;
-                  project 2's description is a placeholder.
-                -->
-                <ul class="list-unstyled d-flex flex-column gap-3">
-                  <li class="card">
-                    <div class="card-body">
-                      <div class="d-flex align-items-start gap-3 mb-2">
-                        <a href="/projects/fwo-g001234n" class="flex-grow-1 fw-semibold text-decoration-none">Urban green infrastructure and climate adaptation in Flemish cities</a>
-                        <span class="badge bg-success flex-shrink-0">Active</span>
-                      </div>
-                      <p class="mb-3">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
-                      <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
-                        <li>Period <time datetime="2023-01-01">2023</time>–<time datetime="2027-12-31">2027</time></li>
-                        <li>Project ID <code>G001234N</code></li>
-                        <li>IWETO ID <code>G001234N</code></li>
-                        <li>GISMO ID <code>000123456</code></li>
-                      </ul>
-                      <div class="d-flex flex-wrap gap-3 small">
-                        <a href="/projects/fwo-g001234n" class="text-decoration-none">Project detail</a>
-                        <a href="https://gismo.ugent.be/project/fwo-g001234n" rel="noopener noreferrer" class="text-decoration-none">Read more on GISMO <i class="if if-external-link if--xs" aria-hidden="true"></i></a>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="card">
-                    <div class="card-body">
-                      <div class="d-flex align-items-start gap-3 mb-2">
-                        <a href="/projects/h2020-101012345" class="flex-grow-1 fw-semibold text-decoration-none">Sustainable biorefinery valorisation of agricultural side streams</a>
-                        <span class="badge bg-secondary flex-shrink-0">Ended</span>
-                      </div>
-                      <p class="mb-3">Agricultural processing generates large volumes of side streams that remain underused. This project develops biorefinery routes to valorise these streams into food ingredients, biomaterials and energy carriers.</p>
-                      <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
-                        <li>Period <time datetime="2021-01-01">2021</time>–<time datetime="2025-12-31">2025</time></li>
-                        <li>Project ID <code>101012345</code></li>
-                        <li>IWETO ID <code>101012345</code></li>
-                        <li>GISMO ID <code>000654321</code></li>
-                      </ul>
-                      <div class="d-flex flex-wrap gap-3 small">
-                        <a href="/projects/h2020-101012345" class="text-decoration-none">Project detail</a>
-                        <a href="https://gismo.ugent.be/project/h2020-101012345" rel="noopener noreferrer" class="text-decoration-none">Read more on GISMO <i class="if if-external-link if--xs" aria-hidden="true"></i></a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-
               </div><!-- /#projects-list -->
 
             </div>

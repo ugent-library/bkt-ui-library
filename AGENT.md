@@ -609,14 +609,38 @@ htmx-indicator          htmx-swapping           htmx-settling
 ```
 
 **Badges**
+
+Colour a badge with Bootstrap's `text-bg-*` helper, never `bg-*` + `text-*`.
+`text-bg-*` sets background and a contrasting foreground together; the overrides
+in `_badges.scss` swap in Booktower tokens. Using bare `bg-info` (etc.) on a
+badge skips the override and falls back to stock Bootstrap colour — a silent bug.
+Do not add `text-white`/`text-dark` to a badge; the `text-bg-*` class owns the
+foreground. Icons inherit the badge colour — no per-icon rule needed. The token
+overrides in `_badges.scss` use `!important` because Bootstrap's `.text-bg-*`
+helper sets its colour/background with `!important`; do not remove it or the
+stock Bootstrap colours reappear.
 ```
-badge.bg-primary        badge.bg-primary-light
-badge.bg-success        badge.bg-success-light
-badge.bg-warning        badge.bg-warning-light
-badge.bg-danger         badge.bg-danger-light
-badge.bg-secondary      badge.bg-transparent
-badge.badge--outline    badge--total
+badge.text-bg-primary        badge.text-bg-primary-light
+badge.text-bg-success        badge.text-bg-success-light
+badge.text-bg-warning        badge.text-bg-warning-light
+badge.text-bg-danger         badge.text-bg-danger-light
+badge.text-bg-info           badge.text-bg-info-light      (submitted status — blue-600)
+badge.text-bg-secondary      badge.text-bg-light           (neutral: gray-50 fill, dark text — needs .border to be visible on white)
+badge.bg-transparent         badge.badge--outline          badge--total
 ```
+Solid badges use white text on dark-enough backgrounds to clear WCAG AA
+(success = green-700, danger = red-600 — their 500/600 steps fail with white).
+Warning is the one exception: white can't pass on any amber, so it uses dark
+text (gray-1000) on bright orange-500 — the same dark-on-amber pattern Bootstrap
+uses. Badge size is fixed at `--bt-text-xs` (12px) via `--bs-badge-font-size`,
+not Bootstrap's default `.75em` — the em default shrinks to 9px inside small
+containers like `bt-meta-list` and drifts when standalone.
+
+The neutral / metadata badge (counts, affiliation labels, codes, roles) is
+`badge text-bg-light border`, used ~36×. Left as a utility composition, not a
+dedicated class. `text-bg-light` stays borderless by default (deliberate — do
+not bake a border into the class); add `.border` per use when the gray-50 chip
+needs to stand out on a white background.
 
 **Buttons**
 `btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap
