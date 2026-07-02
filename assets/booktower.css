@@ -3206,24 +3206,11 @@ img.bt-navbar__logo {
 }
 /* ── Reduced motion ──────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .edge, .pulse, .shimmer, .shimmerSmall,
-  .pinShoot, .pinDot, .shoot, .travDot {
-    animation: none !important;
-  }
-  .edge {
-    opacity: 0.35;
-    stroke-dashoffset: 0;
-  }
-  .pinShoot {
-    opacity: 0.5;
-    stroke-dashoffset: 0;
-  }
-  .pinDot {
-    opacity: 1;
-  }
-  .shoot,
-  .travDot {
-    opacity: 0.22;
+  /* SMIL animations (travelling particles, wheels, spines) run on their own
+     timeline and can't be stopped by CSS. The graph is decorative and
+     aria-hidden, so drop the whole layer rather than freeze each piece. */
+  .bt-hero__bg {
+    display: none;
   }
 }
 @font-face {
