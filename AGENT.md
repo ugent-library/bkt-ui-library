@@ -716,14 +716,6 @@ form-control-search
 Pill-shaped search input with an inset magnifier glyph. Use on standalone
 search fields outside of `bt-toolbar` and outside of `input-group--hero`.
 
-**Dark-surface button variant** ⚠️ TBD — may not survive review
-```
-btn-outline-white
-```
-Exists alongside the Bootstrap-aligned outline variants. Use only on dark
-backgrounds (hero overlays, dark surface sections). All other `btn-outline-*`
-use Booktower-token colours.
-
 ### Classes that no longer exist — do not use
 
 ```
