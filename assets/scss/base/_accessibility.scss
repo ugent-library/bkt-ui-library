@@ -45,5 +45,8 @@
   *, *::before, *::after {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
+    /* without this, infinite animations (Bootstrap spinners) blur at
+       .01ms per rotation instead of stopping */
+    animation-iteration-count: 1 !important;
   }
 }
