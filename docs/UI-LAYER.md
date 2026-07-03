@@ -2,7 +2,7 @@
 
 This document describes the design system and HTML prototype environment that produces the CSS and component patterns consumed by the `raven` Go application.
 
-For entity definitions and shared vocabulary, see `DOMAIN.md` in `booktower-ui-library`.
+For entity definitions and shared vocabulary, see `DOMAIN-VOCABULARY.md` in `booktower-ui-library`.
 For cross-project consumption rules, read `docs/CONSUMING-BOOKTOWER.md` before copying layouts or classes into another repo.
 
 ---
