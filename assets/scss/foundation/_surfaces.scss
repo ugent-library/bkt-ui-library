@@ -58,6 +58,15 @@ body {
   --s-link-hover-color:     var(--bt-blue);
   --s-bg-dark:              var(--bt-bg-dark);
   --s-topbar-height:        var(--bt-sp-12);
+
+  /* Bridge to Bootstrap: reboot renders body text from --bs-body-*, and
+     Bootstrap components (dropdowns, offcanvas) read --bs-body-color.
+     Bridging here means they always agree with the surface. */
+  --bs-body-color:       var(--s-body-color);
+  --bs-body-color-rgb:   var(--bt-blue-900-rgb);
+  --bs-body-font-family: var(--s-body-font);
+  --bs-body-font-size:   var(--s-body-size);
+  --bs-body-line-height: var(--s-body-leading);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */

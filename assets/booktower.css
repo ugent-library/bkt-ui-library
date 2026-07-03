@@ -340,6 +340,14 @@ body {
   --s-link-hover-color: var(--bt-blue);
   --s-bg-dark: var(--bt-bg-dark);
   --s-topbar-height: var(--bt-sp-12);
+  /* Bridge to Bootstrap: reboot renders body text from --bs-body-*, and
+     Bootstrap components (dropdowns, offcanvas) read --bs-body-color.
+     Bridging here means they always agree with the surface. */
+  --bs-body-color: var(--s-body-color);
+  --bs-body-color-rgb: var(--bt-blue-900-rgb);
+  --bs-body-font-family: var(--s-body-font);
+  --bs-body-font-size: var(--s-body-size);
+  --bs-body-line-height: var(--s-body-leading);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
@@ -382,8 +390,8 @@ body {
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
   --bs-font-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-color: var(--bt-text);
-  --bs-body-color-rgb: var(--bt-gray-700-rgb);
+  /* --bs-body-color and friends are bridged from the surface tokens on body —
+     see _surfaces.scss. One source of truth for body text. */
   /* Backgrounds */
   --bs-body-bg: var(--bt-white);
   --bs-body-bg-rgb: var(--bt-white-rgb);
@@ -505,11 +513,9 @@ html {
   scrollbar-color: var(--bt-gray-300) transparent;
 }
 
+/* font, size, leading, and colour come from Bootstrap's reboot via the
+   --bs-body-* bridge in _surfaces.scss — no property overrides here */
 body {
-  font-family: var(--s-body-font);
-  font-size: var(--s-body-size);
-  line-height: var(--s-body-leading);
-  color: var(--s-body-color);
   overflow-x: clip;
 }
 
