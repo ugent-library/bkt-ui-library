@@ -321,7 +321,12 @@
      --s-btn-pad-y/x       button padding
 */
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
-body {
+/* Also on [data-surface="backoffice"] so a backoffice container nested in a
+   public page gets its own tokens — without it, "mix within a page" only
+   worked in one direction. */
+body,
+[data-surface=backoffice],
+.s-backoffice {
   --s-heading-font: var(--bt-font-sans);
   --s-heading-weight: 600;
   --s-heading-color: var(--bt-blue-900);
@@ -369,7 +374,16 @@ body {
   --s-topbar-height: var(--bt-sp-16);
 }
 
-/* ── Backoffice — explicit alias, no overrides needed ───────────────────────── */
+/* ── Surface boundaries apply their own text properties ─────────────────────── */
+/* Body gets these via the --bs-body-* bridge and reboot; nested surface
+   containers need them applied directly or body size/leading/colour would
+   inherit straight through the boundary. */
+[data-surface] {
+  font-size: var(--s-body-size);
+  line-height: var(--s-body-leading);
+  color: var(--s-body-color);
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════════
    BOOTSTRAP VARIABLE OVERRIDES
    ═══════════════════════════════════════════════════════════════════════════════
