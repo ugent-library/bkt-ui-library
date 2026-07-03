@@ -126,6 +126,10 @@ Rules that must hold in Go templ templates:
 2. **`hx-target` selectors must exist in the DOM at request time** — not injected by HTMX. Place empty containers in the initial render.
 3. **`aria-live` regions must be in the initial HTML** — screen readers only observe regions present at page load. Place `<span aria-live="polite" id="result-count">` in the layout, not in a swapped partial.
 4. **Progressive enhancement:** forms must be submittable without HTMX. Real `action` attribute, real `<button type="submit">`.
+5. **Stable URLs:** every significant view is bookmarkable — detail pages, filtered search results, paginated lists. Use `hx-push-url` whenever a user would expect Back to work or want to bookmark the current state.
+6. **`hx-boost` only on real links and forms** — never on elements without underlying navigation semantics.
+
+What HTMX is *not* for — reach for something else here: real-time collaboration (WebSockets/SSE), complex client-side state like drag-and-drop with optimistic UI (a small isolated component), file-upload progress (the native progress API), high-frequency polling under ~30s (SSE). Any JavaScript beyond HTMX stays small, isolated, and framework-free.
 
 ---
 

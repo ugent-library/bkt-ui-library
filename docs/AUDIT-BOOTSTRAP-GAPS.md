@@ -231,3 +231,4 @@ Items deliberately out of this audit's scope, queued for the next one:
 - `search-my-research.html` is broken — likely the removed `bt-facet-*` classes it still uses (batch 3 worklist); verify while fixing ghosts there.
 - Revisit `btn-warning` hover: now orange-500 with white text (family convention, M 2026-07-03) — fails AA on the transient hover state. Options when revisiting: darker step, dark text, or accept.
 - `patterns/htmx-patterns.html` removed (M, 2026-07-03) — the page was outdated end to end. Rebuild it as part of the JavaScript audit (next-audit item 6): the HTMX loading/error/confirm patterns it documented should come back verified against the real JS rules, not restored from the old page.
+- `bt-btn-toolbar`: M uses it as a pattern — the §4.1 deletion recommendation is on hold, to be discussed later.
