@@ -459,7 +459,8 @@ body {
 .nav {
   --bs-nav-link-color: var(--bt-blue-800);
   --bs-nav-link-hover-color: var(--bt-blue-700);
-  --bs-nav-link-padding-x: var(--bt-sp-1);
+  /* link padding stays Bootstrap's 1rem — an sp-1 override here (never active
+     until the batch-2 rename) makes tabs unusably tight */
 }
 
 .nav-tabs {
@@ -1093,7 +1094,9 @@ code, kbd, pre, samp {
   --bs-btn-hover-bg: var(--bt-gray-50);
   --bs-btn-hover-border-color: transparent;
   --bs-btn-hover-color: var(--bt-blue-800);
-  --bs-btn-active-bg: transparent;
+  /* keep the hover bg through press and focus — transparent here makes the
+     background vanish mid-click */
+  --bs-btn-active-bg: var(--bt-gray-50);
   --bs-btn-active-border-color: transparent;
   --bs-btn-active-color: var(--bt-gray-700);
   --bs-btn-disabled-bg: transparent;
@@ -1118,9 +1121,11 @@ a.btn-warning,
   --bs-btn-bg: var(--bt-orange-600);
   --bs-btn-color: white; /* override Bootstrap's compiled dark text */
   --bs-btn-border-color: var(--bt-orange-600);
-  --bs-btn-hover-bg: var(--bt-warning);
+  /* hover was var(--bt-warning) = orange-600 = the rest colour — no visible
+     hover. Darker step; lighter (orange-500) can't carry white text. */
+  --bs-btn-hover-bg: var(--bt-orange-700);
   --bs-btn-hover-color: white;
-  --bs-btn-hover-border-color: var(--bt-warning);
+  --bs-btn-hover-border-color: var(--bt-orange-700);
   --bs-btn-active-bg: var(--bt-dark-warning);
   --bs-btn-active-color: white;
   --bs-btn-active-border-color: var(--bt-dark-warning);
@@ -1166,21 +1171,22 @@ a.btn-danger,
   --bs-btn-bg: var(--bt-gray-1000);
   --bs-btn-color: white;
   --bs-btn-border-color: var(--bt-gray-1000);
-  --bs-btn-hover-bg: var(--bt-gray-900);
+  /* gray-900 was near-identical to the gray-1000 rest colour */
+  --bs-btn-hover-bg: var(--bt-gray-800);
   --bs-btn-hover-color: white;
-  --bs-btn-hover-border-color: var(--bt-gray-900);
+  --bs-btn-hover-border-color: var(--bt-gray-800);
   --bs-btn-active-bg: var(--bt-black);
   --bs-btn-active-color: white;
   --bs-btn-active-border-color: var(--bt-black);
 }
 
 /* ── .btn-link override ──────────────────────────────────────────────────────── */
-.btn-link:hover {
-  background: var(--bt-gray-50);
-}
-
-.btn-link:active:not(:disabled) {
-  background: var(--bt-gray-50);
+.btn-link {
+  --bs-btn-color: var(--bt-blue-800);
+  --bs-btn-hover-color: var(--bt-blue-700);
+  --bs-btn-hover-bg: var(--bt-gray-50);
+  --bs-btn-active-color: var(--bt-blue-900);
+  --bs-btn-active-bg: var(--bt-gray-50);
 }
 
 /* ── Loading state ─────────────────────────────────────────────────────────── */
@@ -1278,9 +1284,11 @@ a.btn-danger,
   --bs-btn-hover-bg: var(--bt-gray-50);
   --bs-btn-hover-color: var(--bt-gray-700);
   --bs-btn-hover-border-color: var(--bt-gray-400);
-  --bs-btn-active-bg: var(--bt-gray-100);
-  --bs-btn-active-color: var(--bt-gray-800);
-  --bs-btn-active-border-color: var(--bt-gray-400);
+  /* checked/active = primary: view toggles use this variant, and a gray
+     fill read as disabled */
+  --bs-btn-active-bg: var(--bt-blue-800);
+  --bs-btn-active-color: white;
+  --bs-btn-active-border-color: var(--bt-blue-800);
 }
 
 .btn-outline-dark {
@@ -1289,9 +1297,10 @@ a.btn-danger,
   --bs-btn-hover-bg: var(--bt-gray-50);
   --bs-btn-hover-color: var(--bt-gray-1000);
   --bs-btn-hover-border-color: var(--bt-gray-1000);
-  --bs-btn-active-bg: var(--bt-gray-1000);
+  /* checked/active = primary, same reasoning as btn-outline-light */
+  --bs-btn-active-bg: var(--bt-blue-800);
   --bs-btn-active-color: white;
-  --bs-btn-active-border-color: var(--bt-black);
+  --bs-btn-active-border-color: var(--bt-blue-800);
 }
 
 /* ── Button group ───────────────────────────────────────────────────────────── */

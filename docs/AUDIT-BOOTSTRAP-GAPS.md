@@ -223,3 +223,9 @@ Items deliberately out of this audit's scope, queued for the next one:
 4. **Class drift** — run `npm run check:classes` and drive both directions to zero: undefined classes in HTML, unused classes in CSS.
 5. **Kit completeness** — for each file in `foundations/`, `elements/`, `patterns/`: compare what the kit page documents against what actually exists in the compiled CSS and what templates actually use. Components, variants, and states present in CSS or templates but missing from their kit page are documentation gaps.
 6. **JavaScript audit** — check `assets/js/` and inline scripts against the written rules (AGENT.md JS section, `docs/JAVASCRIPT.md`): no inline `<script>` outside kit demos, every file documented, no style mutation. Known violation to start from: the copy button.
+
+## Open design notes (M, 2026-07-03)
+
+- Should `text-muted` mix in a little blue, so muted text sits in the same temperature as the blue-900 body text?
+- Filter tags appear too blue. Should a filter tag just be a clickable badge instead of its own component?
+- `search-my-research.html` is broken — likely the removed `bt-facet-*` classes it still uses (batch 3 worklist); verify while fixing ghosts there.
