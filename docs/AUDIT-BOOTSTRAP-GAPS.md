@@ -69,7 +69,7 @@ Verified against the 5.3.3 dist: each "doesn't exist" below has zero occurrences
 | 2.9 | `_buttons.scss:131` | `--bs-btn-color: white !important` — `!important` on a custom-property declaration only affects the cascade *of the custom property itself*, and both competing declarations are same-specificity with booktower loading later. It wins anyway. | Drop `!important`. Same for `_reset.scss` `scrollbar-width: thin !important`. |
 | 2.10 | `base/_accessibility.scss:33` | `.sr-only` defined, used nowhere — Bootstrap 5 renamed it `visually-hidden`, which is what the codebase actually uses. | Delete unless it's a deliberate compat shim for pasted code; then say so in a comment. |
 | 2.11 | `patterns/_svg-animations.scss` (265 lines) | The partial and the actual SVGs have desynced in both directions: CSS animates `pinDot`, `pinTall`, `gLat`, `gMer`, `shimmer`, `axis`, `travDot`… — **no SVG, template, or JS anywhere in the repo carries these classes**. Meanwhile `patterns/hero.html` uses `frontSoft`, which no CSS defines. | Rebuild the partial against the SVGs that actually exist, or delete it. Currently it's ~250 lines of dead weight shipping in every page load. |
-| 2.12 | Defined in CSS, used in no HTML/JS: `bt-toolbar__middle`, `bt-meta-text`, `bt-btn-toolbar--vertical`, `bt-avatar__square`, `bg-danger-light`, `btn-outline-white`, `alert-primary`, `u-main__sidebar--border-left`, `.bt-toolbar.h-auto`, `u-notifications`. Several are in AGENT.md's verified list, so they may be intentional API surface. | Decide per class: documented API (keep, note it) or leftovers (delete). `u-notifications` is documented infrastructure — keep. `.bt-toolbar.h-auto` piggybacks a Bootstrap utility name as a state hook and is used nowhere — delete. |
+| 2.12 | Defined in CSS, used in no HTML/JS: `bt-toolbar__middle`, `bt-meta-text`, `bt-btn-toolbar--vertical`, `bt-avatar__square`, `bg-danger-light`, `alert-primary`, `u-main__sidebar--border-left`, `.bt-toolbar.h-auto`, `u-notifications`. Several are in AGENT.md's verified list, so they may be intentional API surface. | Decide per class: documented API (keep, note it) or leftovers (delete). `u-notifications` is documented infrastructure — keep. `.bt-toolbar.h-auto` piggybacks a Bootstrap utility name as a state hook and is used nowhere — delete. |
 
 ---
 
@@ -144,7 +144,7 @@ Full machine-generated list at the end of this section's source scan; the ones t
 
 **Undefined modifiers that look real:** `bt-avatar--primary` (5 files), `bt-avatar--md` (the system has `--small`/`--large`, no `--md`), `form-label-sm`, `alert--small` (real name: `alert--sm`).
 
-**Invented Bootstrap utilities — silently render as nothing:** `mb-6`, `mb-8`, `my-6`, `py-8`, `pb-8`, `g-6` (Bootstrap's spacing scale ends at 5), `min-w-0`, `flex-inline`, `align-items-top` (Tailwind vocabulary; Bootstrap: nothing / `d-inline-flex` / `align-items-start`). These are exactly the "plausible-looking classes" AGENT.md warns about, but in the utility namespace where the verified-class-list discipline doesn't currently look.
+**Invented Boots  trap utilities — silently render as nothing:** `mb-6`, `mb-8`, `my-6`, `py-8`, `pb-8`, `g-6` (Bootstrap's spacing scale ends at 5), `min-w-0`, `flex-inline`, `align-items-top` (Tailwind vocabulary; Bootstrap: nothing / `d-inline-flex` / `align-items-start`). These are exactly the "plausible-looking classes" AGENT.md warns about, but in the utility namespace where the verified-class-list discipline doesn't currently look.
 
 **Icon system violation:** `ri-checkbox-circle-line`, `ri-delete-bin-line` (Remix Icons) in `patterns/htmx-patterns.html` — the one-icon-system rule says these can't exist.
 
@@ -210,3 +210,16 @@ AGENT.md's class list is the project's ground truth, but it currently asserts cl
 ## Verification notes
 
 Every "variable doesn't exist" and "same as Bootstrap default" claim above was grep-verified against `bootstrap@5.3.3/dist/css/bootstrap.css` — the exact version pinned in `server.js`. The class-usage scan is static: classes composed at runtime in JS would be missed (only `htmx-*` state classes and Bootstrap's own JS-injected classes fall in that category here; they were excluded from the dead list). The `.form-select` caret bug (§1.1) was verified in the compiled `booktower.css` cascade, not just the source. Findings in §4 involving design intent (navbar, blank-slate) are judgment calls and marked as such; everything in §1–§2 is mechanical.
+
+---
+
+## Next audit — scope for a follow-up pass
+
+Items deliberately out of this audit's scope, queued for the next one:
+
+1. **Token usage** — find every place a raw value was written where an existing variable should have been used (`--bt-*`, `--s-*`): colours, spacing, radii, durations. Rule agreed 2026-07-03: raw colour values only in `_colors.scss`, `_tokens.scss`, and SVG data URIs.
+2. **Inline code demos** — remove `ds-code` blocks that duplicate what the "Show HTML" toggle generates (the AGENT.md UI-kit rule already declares these deletable; nobody has swept for them).
+3. **Stale context** — scan for comments, doc claims, and TODO markers that no longer match the code (the "Active surface tokens" header listing dead tokens was one; there will be more).
+4. **Class drift** — run `npm run check:classes` and drive both directions to zero: undefined classes in HTML, unused classes in CSS.
+5. **Kit completeness** — for each file in `foundations/`, `elements/`, `patterns/`: compare what the kit page documents against what actually exists in the compiled CSS and what templates actually use. Components, variants, and states present in CSS or templates but missing from their kit page are documentation gaps.
+6. **JavaScript audit** — check `assets/js/` and inline scripts against the written rules (AGENT.md JS section, `docs/JAVASCRIPT.md`): no inline `<script>` outside kit demos, every file documented, no style mutation. Known violation to start from: the copy button.
