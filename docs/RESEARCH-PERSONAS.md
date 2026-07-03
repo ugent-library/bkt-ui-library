@@ -1,8 +1,8 @@
-# Personas — Biblio deposit & curation
+# Personas — Biblio deposit, curation & discovery
 
-From user testing. Sources: Plato testing (2023 depth interviews + 2023–24 proxy/researcher tasks), Dashboard testing, Librarian interviews and testing` (2022).
+From user testing. Sources: Plato testing (2023 depth interviews + 2023–24 proxy/researcher tasks), Dashboard testing, Librarian interviews and testing (2022).
 
-Evidence: proxies + curators well-grounded. Researchers = enthusiast profs + a few self-depositing researchers (over-represents skill). Untested: PhD candidate depositing own thesis.
+Evidence: proxies + curators well-grounded. Researchers = enthusiast profs + a few self-depositing researchers (over-represents skill). Untested: PhD candidate depositing own thesis. The **public / discovery** profiles below were *not* tested locally — they come from external discovery-UX literature + raven `public-site-semantics.md`, and are flagged as such.
 
 ## Depositor competence axis
 Who enters records, and whether they *verify* — the strongest predictor of data quality.
@@ -67,6 +67,7 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 - **Tools:** Biblio, WoS/Clarivate, Sherpa, ISSN portal, VABB/GPRC, doi.org, IEEE/CEUR, Zammad. "A lot of clicking."
 - **Lives in filters:** status, publication status, classification (esp. *unclassified*), faculty, type, year, locked. Wants year ranges, filter-on-missing, **export to Excel**.
 - **Pain/needs:** old app = too many click-to-open fields, not compact; **split-screen** is the real mode → narrow detail must stay usable; status names too long, workflow unclear; "withdrawn" is overloaded as a completion lever but breaks flows → wants an **"unlisted"** state; auto-lock on complete (+ unlock); list should show completeness ("complete ≠ correct"); search all fields + combined/CQL; drop reviewer clutter (ORCID/cite/PubMed); shares filters via **bookmarked URLs**; dup detection.
+- **Also checks the public page** to verify how a record actually renders — curators cross into Sue Kerr's surface, so the public record page is a curation tool too.
 - *"Not user-friendly — lots of little fields to click open, not compact, things far away."*
 
 ## Rhea View — "review coordinator / team lead"
@@ -77,6 +78,30 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 - **Goals:** overview per record-type per department to divide work; triage all records by key markers; motivate researchers to complete metadata (recognition: academic + financial + social); clean role-switch.
 - **Pain/needs:** dashboard showing **who picks up what** (e.g. "no department" column); messaging with templates + assignment but **no notification firehose** — surface in workflow, one message at a time; responsibility expressible per project/user (corresponding author, delegates); internal comms need own history; dream: pull from WoS like Aleph.
 - *"I motivate researchers to complete records, so research, researcher, dept and university get the recognition it deserves."*
+
+## Sue Kerr — "public discovery visitor"
+**Public / discovery profile** · *consumes the record, off the deposit axis*
+*Not from Biblio testing — external discovery-UX literature (Ithaka S+R; CIBER/Nicholas, "Google Generation"; OCLC "Perceptions"; Connaway, JISC "Digital Information Seeker"; White & Le Cornu, "Visitors & Residents") + raven `public-site-semantics.md`.*
+
+- **Is:** anyone reaching a record from the open web — mostly researchers + students; also practitioners (clinician, teacher, policy, journalist) and the curious public (heritage, local, patient/family).
+- **Arrives:** via Google / Google Scholar on a **deep link to one record** — the record page is the entry point, often the only page seen (rarely the homepage).
+- **Does:** scans, grabs the PDF, leaves. Power-browsing, short visits, "viewing not reading," downloads to read later; satisficing — "good enough" beats exhaustive.
+- **Wants:** full text fast (ideally OA); confidence in version (VoR/AAM) and trust (peer-reviewed, who/where/when); easy cite/export.
+- **Pain:** paywalls elsewhere → hunts the OA copy; "is this the final version?"; restricted records that look broken; login/redirect dead-ends.
+- **Needs:** prominent OA + version + license signals; one-click cite (CSL/export); a self-contained record page (title, authors, affiliations, date, DOI); accessible, machine-readable markup — the same markup overlays and reference managers read.
+- *Lands on one record from a search engine, judges it in seconds, downloads or bounces.*
+
+**Variant — the author checking their own footprint.** Bridges public + backoffice: is my record correct, is it OA, how many downloads? (ties to Claire Searcher's "search own records").
+
+> **Too broad — extend later.** Sue Kerr is a composite. Once we test the public surface, the sub-audiences (researcher, student, practitioner, citizen/heritage) likely each need their own profile — their goals and trust signals differ.
+
+## Cody Crawley — "machine reader" (first-class user)
+**Machine / discovery profile**
+*Per COAR Next Generation Repositories + raven `public-site-semantics.md`.*
+
+- **Is:** Google Scholar / Highwire indexing, web crawlers, OAI-PMH / Dublin Core harvesters, ORCID, citation managers (Zotero/CSL), discovery indexes.
+- **Needs:** Schema.org / JSON-LD + `citation_*` meta; Signposting (`cite-as`, `license`, `rel="me"` → ORCID); canonical URLs + sitemaps; `?format=` alternates; clean stable deep links; `nofollow` on combinatorial/short-lived URLs.
+- **Design implication:** semantic markup is a *user requirement*, not compliance polish — the record page is the hub for humans and machines alike.
 
 ---
 
@@ -94,3 +119,4 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 - **Status/workflow legibility** — long names, overloaded "withdrawn"; reconcile with `draft/submitted/public/deleted` in `DOMAIN-VOCABULARY.md`.
 - **Too much clicking** — batch, keybindings, compact + single-screen forms.
 - **One page beats tabs** — repeatedly: tabbed deposit forms hide fields, force scrolling; users preferred the old everything-on-one-page layout.
+- **The record is the front door** (public) — visitors arrive deep-linked to one record, not the homepage; each record page must stand alone with OA/version/cite signals + semantic markup for humans and machines.
