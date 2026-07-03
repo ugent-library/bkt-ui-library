@@ -478,10 +478,9 @@ Note: `bt-navbar__brand` is used (backoffice logo link). `bt-navbar__mark` does 
 bt-toolbar              bt-toolbar--bordered
 bt-toolbar__left        bt-toolbar__right       bt-toolbar__middle
 bt-toolbar__item        bt-toolbar__title
-bt-btn-toolbar          bt-btn-toolbar--wide-spacing  bt-btn-toolbar--vertical
 bt-title-toolbar
 ```
-`bt-toolbar__item` elements are siblings within `bt-toolbar__left`/`bt-toolbar__right`/`bt-toolbar__middle` and get automatic padding between them.
+`bt-toolbar__item` elements are siblings within `bt-toolbar__left`/`bt-toolbar__right`/`bt-toolbar__middle` and get automatic padding between them. Give each toolbar action its own `bt-toolbar__item` rather than wrapping actions in a flex group.
 `bt-title-toolbar` is a flex row for pairing a heading with a right-aligned action button.
 
 **Avatar**
@@ -726,6 +725,8 @@ bt-blank-slate-default   (replaced by bt-blank-slate--default)
 bt-blank-slate-muted     (replaced by bt-blank-slate--muted)
 bt-blank-slate-primary   (replaced by bt-blank-slate--primary)
 bt-table                 (use Bootstrap .table .table-hover .align-middle)
+bt-btn-toolbar           bt-btn-toolbar--wide-spacing  bt-btn-toolbar--vertical
+                         (removed — one bt-toolbar__item per action, or d-flex gap-2)
 bt-filter-bar            (use bt-toolbar)
 bt-bulk-bar              (use bt-toolbar)
 bt-pagination-bar        (use bt-toolbar)

@@ -6,7 +6,7 @@ module.exports = function renderSearchResultCards() {
       <span class="bt-meta-list__item-bordered">Journal article</span>
       <span class="badge text-bg-success">Open access</span>
     </div>
-    <div class="bt-btn-toolbar">
+    <div class="d-flex align-items-center gap-2">
       <button type="button" class="btn btn-ghost btn-xs" aria-label="Cite: Urban forests as essential infrastructure">
         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
       </button>
@@ -31,7 +31,7 @@ module.exports = function renderSearchResultCards() {
     <div class="bt-meta-list pt-1">
       <span class="bt-meta-list__item">Dataset</span>
     </div>
-    <div class="bt-btn-toolbar">
+    <div class="d-flex align-items-center gap-2">
       <button type="button" class="btn btn-ghost btn-xs" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
       </button>
