@@ -255,9 +255,6 @@
 .bt-sidebar .badge--total {
   position: absolute;
   top: 50%;
-  --bs-badge-font-size: .625rem;
-  --bs-badge-padding-x: .4em;
-  --bs-badge-padding-y: .25em;
   right: var(--bt-sp-3) !important;
   transform: translateY(-50%) !important;
 }
@@ -286,9 +283,10 @@
     width: .5rem;
     height: .5rem;
     padding: 0 !important;
-    overflow: hidden;
-    color: transparent;
-    border: var(--bs-border-width) var(--bs-border-style);
+    /* hide the count via the font-size var — color:transparent loses to the
+       !important colour the text-bg-* system needs */
+    --bs-badge-font-size: 0;
+    border: none;
     border-radius: var(--bs-border-radius-pill);
     top: calc(var(--bt-sp-1)/0.45) !important;
     left: var(--bt-sp-5) !important;

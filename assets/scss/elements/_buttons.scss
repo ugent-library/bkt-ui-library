@@ -142,11 +142,12 @@ a.btn-warning,
   --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
   --bs-btn-border-color:        var(--bt-orange-600);
 
-  /* hover was var(--bt-warning) = orange-600 = the rest colour — no visible
-     hover. Darker step; lighter (orange-500) can't carry white text. */
-  --bs-btn-hover-bg:            var(--bt-orange-700);
+  /* lightens on hover to match the danger/success family convention.
+     M's call 2026-07-03, to be revisited: white on orange-500 fails AA —
+     accepted for the transient hover state for now. */
+  --bs-btn-hover-bg:            var(--bt-orange-500);
   --bs-btn-hover-color:         white;
-  --bs-btn-hover-border-color:  var(--bt-orange-700);
+  --bs-btn-hover-border-color:  var(--bt-orange-500);
 
   --bs-btn-active-bg:           var(--bt-dark-warning);
   --bs-btn-active-color:        white;

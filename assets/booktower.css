@@ -1121,11 +1121,12 @@ a.btn-warning,
   --bs-btn-bg: var(--bt-orange-600);
   --bs-btn-color: white; /* override Bootstrap's compiled dark text */
   --bs-btn-border-color: var(--bt-orange-600);
-  /* hover was var(--bt-warning) = orange-600 = the rest colour — no visible
-     hover. Darker step; lighter (orange-500) can't carry white text. */
-  --bs-btn-hover-bg: var(--bt-orange-700);
+  /* lightens on hover to match the danger/success family convention.
+     M's call 2026-07-03, to be revisited: white on orange-500 fails AA —
+     accepted for the transient hover state for now. */
+  --bs-btn-hover-bg: var(--bt-orange-500);
   --bs-btn-hover-color: white;
-  --bs-btn-hover-border-color: var(--bt-orange-700);
+  --bs-btn-hover-border-color: var(--bt-orange-500);
   --bs-btn-active-bg: var(--bt-dark-warning);
   --bs-btn-active-color: white;
   --bs-btn-active-border-color: var(--bt-dark-warning);
@@ -2660,9 +2661,6 @@ img.bt-navbar__logo {
 .bt-sidebar .badge--total {
   position: absolute;
   top: 50%;
-  --bs-badge-font-size: .625rem;
-  --bs-badge-padding-x: .4em;
-  --bs-badge-padding-y: .25em;
   right: var(--bt-sp-3) !important;
   transform: translateY(-50%) !important;
 }
@@ -2690,9 +2688,10 @@ img.bt-navbar__logo {
   width: 0.5rem;
   height: 0.5rem;
   padding: 0 !important;
-  overflow: hidden;
-  color: transparent;
-  border: var(--bs-border-width) var(--bs-border-style);
+  /* hide the count via the font-size var — color:transparent loses to the
+     !important colour the text-bg-* system needs */
+  --bs-badge-font-size: 0;
+  border: none;
   border-radius: var(--bs-border-radius-pill);
   top: calc(var(--bt-sp-1) / 0.45) !important;
   left: var(--bt-sp-5) !important;
