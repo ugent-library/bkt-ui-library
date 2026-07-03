@@ -16,13 +16,11 @@
   font-family: var(--bt-font-sans);
   font-weight: 600;
   font-size: var(--bt-text-sm);         /* 14px */
-  line-height: 1.5;                      /* 21px line box */
   border-radius: var(--bt-radius);
   padding: var(--bt-btn-pad-y) var(--bt-btn-pad-x);   /* 7px 14px → ~38px tall */
   display: inline-flex;
   align-items: center;
   gap: var(--bt-sp-2);
-  cursor: pointer;
   transition:
     background-color var(--bt-dur-fast) var(--bt-ease),
     border-color     var(--bt-dur-fast) var(--bt-ease),
@@ -49,11 +47,12 @@
   outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
+/* pointer-events: none is Bootstrap's default for :disabled but not for
+   [aria-disabled] — kept for that case */
 .btn:disabled,
 .btn[aria-disabled="true"] {
   opacity: .6;
   pointer-events: none;
-  cursor: not-allowed;
   filter: saturate(0.4);
 }
 
@@ -128,7 +127,7 @@
 a.btn-warning,
 .btn-warning {
   --bs-btn-bg:                  var(--bt-orange-600);
-  --bs-btn-color:               white !important;                   /* override Bootstrap's compiled dark text */
+  --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
   --bs-btn-border-color:        var(--bt-orange-600);
 
   --bs-btn-hover-bg:            var(--bt-warning);
@@ -279,19 +278,6 @@ a.btn-danger,
   --bs-btn-active-bg:           var(--bt-red-700);
   --bs-btn-active-color:        white;
   --bs-btn-active-border-color: var(--bt-red-700);
-}
-
-.btn-outline-info {
-  --bs-btn-color:               var(--bt-blue-700);
-  --bs-btn-border-color:        var(--bt-blue);
-
-  --bs-btn-hover-bg:            var(--bt-blue-50);
-  --bs-btn-hover-color:         var(--bt-blue-700);
-  --bs-btn-hover-border-color:  var(--bt-blue);
-
-  --bs-btn-active-bg:           var(--bt-blue-700);
-  --bs-btn-active-color:        white;
-  --bs-btn-active-border-color: var(--bt-blue-800);
 }
 
 .btn-outline-info {

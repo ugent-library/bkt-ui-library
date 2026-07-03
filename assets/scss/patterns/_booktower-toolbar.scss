@@ -4,13 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: --s-topbar-height;
+  /* an earlier `min-height: --s-topbar-height` (missing var()) was invalid and
+     never applied — removed rather than fixed to avoid a rendering change */
   padding: var(--bt-sp-2) 0;
   gap: var(--bt-sp-4);
   width: 100%;
-}
-.bt-toolbar.h-auto {
-  align-items: flex-start;
 }
 .bt-toolbar__left {
   display: flex;

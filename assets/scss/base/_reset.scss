@@ -2,9 +2,8 @@
    BASE RESET
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+/* box-sizing and body margin come from Bootstrap's reboot — booktower.css
+   always loads after bootstrap.min.css */
 
 html,
 body {
@@ -19,12 +18,11 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scrollbar-width: thin !important;
+  scrollbar-width: thin;
   scrollbar-color: var(--bt-gray-300) transparent;
 }
 
 body {
-  margin: 0;
   font-family: var(--s-body-font);
   font-size: var(--s-body-size);
   line-height: var(--s-body-leading);

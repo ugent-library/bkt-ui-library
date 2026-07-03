@@ -14,10 +14,8 @@
    _surfaces.scss alongside the other surface tokens.
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* System-UI has native 700 — no bold synthesis risk. */
 :root {
   /* Typography */
-  --bs-font-weight-bold: 700;
   --bs-font-sans-serif:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
   --bs-font-monospace:   'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
@@ -40,25 +38,21 @@
   --bs-secondary-color:     var(--bt-text-muted);
   --bs-secondary-color-rgb: 115, 115, 115;
 
-  /* Theme colours */
-  --bs-primary:          var(--bt-blue-800);
-  --bs-primary-rgb:      19, 46, 83;
-  --bs-danger:           var(--bt-danger);
-  --bs-danger-rgb:       220, 78, 40;
-  --bs-success:          var(--bt-green);
-  --bs-success-rgb:      113, 168, 96;
-  --bs-warning:          var(--bt-warning);
-  --bs-warning-rgb:      218, 132, 11;
-  --bs-info:             var(--bt-blue);
-  --bs-info-rgb:         0, 63, 163;
+  /* Theme colours — only the -rgb triplets: the prebuilt CSS reads them in
+     utilities (.text-*, .bg-*); the non-rgb --bs-primary etc. are consumed by
+     nothing and compiled component colours can't be changed here. */
+  --bs-primary-rgb:      19, 46, 83;    /* --bt-blue-800  #132e53 */
+  --bs-danger-rgb:       220, 78, 40;   /* --bt-red-500   #dc4e28 */
+  --bs-success-rgb:      113, 168, 96;  /* --bt-green-500 #71a860 */
+  --bs-warning-rgb:      218, 132, 11;  /* --bt-orange-600 #da840b */
+  --bs-info-rgb:         30, 100, 200;  /* --bt-blue-600  #1e64c8 */
 
   /* Focus */
   --bs-focus-ring-color: var(--bt-focus-ring-sm);
   --bs-focus-ring-width: 3px;
 
   /* Misc */
-  --bs-mark-padding: 0px;
-  --bs-mark-bg:      var(--bt-light-yellow);
+  --bs-highlight-bg: var(--bt-light-yellow);  /* mark background */
 }
 
 /* ── Component-scoped overrides ─────────────────────────────────────────────── */
@@ -103,7 +97,7 @@
 .nav {
   --bs-nav-link-color: var(--bt-blue-800);
   --bs-nav-link-hover-color: var(--bt-blue-700);
-  --bs-nav-padding-x: var(--bt-sp-1) !important;
+  --bs-nav-link-padding-x: var(--bt-sp-1);
 }
 
 .breadcrumb {

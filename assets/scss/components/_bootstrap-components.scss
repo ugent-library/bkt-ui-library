@@ -5,12 +5,12 @@
   font-family: var(--bt-font-sans);
   font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
-  background: var(--bt-white);
+  /* background-color, not the shorthand — background: wipes Bootstrap's
+     .form-select caret image */
+  background-color: var(--bt-white);
   border: 1px solid var(--bt-gray-300);
   border-radius: var(--bt-radius);
-  padding: var(--s-input-pad-y, .4375rem) var(--s-input-pad-x, .75rem);
-  line-height: 1.5;
-  width: 100%;
+  padding: .4375rem .75rem;
   transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
 }
 .form-control:focus,
@@ -18,11 +18,11 @@
   border-color: var(--bt-blue-700);
   box-shadow: 0 0 0 3px var(--bt-focus-ring-sm);
   outline: none;
-  background: var(--bt-white);
+  background-color: var(--bt-white);
 }
 .form-control:disabled,
 .form-select:disabled {
-  background: var(--bt-bg-alt);
+  background-color: var(--bt-bg-alt);
   opacity: .65;
   cursor: not-allowed;
 }
@@ -115,7 +115,6 @@
 
 .alert {
   padding: var(--bt-sp-6) var(--bt-sp-6);
-  border: 1px solid transparent;
   border-radius: var(--bt-radius-lg);
   margin-bottom: var(--bt-sp-4);
   font-size: var(--bt-text-base);
@@ -140,7 +139,6 @@
   margin-bottom: 0;
   padding: var(--bt-sp-2) var(--bt-sp-12) var(--bt-sp-2) var(--bt-sp-12);
   font-size: var(--bt-text-xs);
-  border-radius: 0;
 }
 
 .alert--dashed {

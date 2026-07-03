@@ -13,9 +13,11 @@
   "scripts": {
     "start": "node server.js",
     "dev": "npm run build && node server.js & npm run watch:css",
-    "build": "npm run build:icons && npm run build:css",
+    "build": "npm run check:partials && npm run build:icons && npm run build:css",
     "build:icons": "fantasticon",
     "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css",
+    "check:partials": "node scripts/check-partials.js",
+    "check:classes": "node scripts/check-classes.js",
     "watch:css": "sass --watch --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css"
   },
   "dependencies": {},
