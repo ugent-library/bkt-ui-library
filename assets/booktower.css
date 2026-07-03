@@ -202,6 +202,23 @@
   --bt-olive: #aeb050;
   /* Background */
   --bt-bg-paper: #faf8f6; /* warm off-white, faintly rosy — editorial, not clinical */
+  /* ── RGB triplets ──────────────────────────────────────────────────────────── */
+  /*
+    Bootstrap utilities (.text-*, .bg-*) read colours as bare triplets
+    (rgba(var(--bs-primary-rgb), opacity)). Only the steps Bootstrap consumes
+    get a triplet, defined next to nothing else so hex and triplet can be
+    updated together. Keep in sync with the hex above.
+  */
+  --bt-white-rgb: 255, 255, 255;
+  --bt-gray-150-rgb: 222, 222, 222;
+  --bt-gray-550-rgb: 115, 115, 115;
+  --bt-gray-700-rgb: 77, 77, 77;
+  --bt-blue-600-rgb: 30, 100, 200;
+  --bt-blue-800-rgb: 19, 46, 83;
+  --bt-blue-900-rgb: 9, 23, 42;
+  --bt-green-500-rgb: 113, 168, 96;
+  --bt-red-500-rgb: 220, 78, 40;
+  --bt-orange-600-rgb: 218, 132, 11;
   /* ── Semantic aliases ──────────────────────────────────────────────────────── */
   /*
     Name by role, not by colour.
@@ -366,28 +383,28 @@ body {
   --bs-font-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-color: var(--bt-text);
-  --bs-body-color-rgb: 77, 77, 77;
+  --bs-body-color-rgb: var(--bt-gray-700-rgb);
   /* Backgrounds */
   --bs-body-bg: var(--bt-white);
-  --bs-body-bg-rgb: 255, 255, 255;
+  --bs-body-bg-rgb: var(--bt-white-rgb);
   /* Borders */
   --bs-border-color: var(--bt-border-color);
-  --bs-border-color-rgb: 222, 222, 222;
+  --bs-border-color-rgb: var(--bt-gray-150-rgb);
   --bs-border-radius: var(--bt-radius);
   --bs-border-radius-sm: var(--bt-radius-sm);
   --bs-border-radius-lg: var(--bt-radius-lg);
   --bs-border-radius-xl: var(--bt-radius-xl);
   /* Secondary / muted text */
   --bs-secondary-color: var(--bt-text-muted);
-  --bs-secondary-color-rgb: 115, 115, 115;
+  --bs-secondary-color-rgb: var(--bt-gray-550-rgb);
   /* Theme colours — only the -rgb triplets: the prebuilt CSS reads them in
      utilities (.text-*, .bg-*); the non-rgb --bs-primary etc. are consumed by
      nothing and compiled component colours can't be changed here. */
-  --bs-primary-rgb: 19, 46, 83; /* --bt-blue-800  #132e53 */
-  --bs-danger-rgb: 220, 78, 40; /* --bt-red-500   #dc4e28 */
-  --bs-success-rgb: 113, 168, 96; /* --bt-green-500 #71a860 */
-  --bs-warning-rgb: 218, 132, 11; /* --bt-orange-600 #da840b */
-  --bs-info-rgb: 30, 100, 200; /* --bt-blue-600  #1e64c8 */
+  --bs-primary-rgb: var(--bt-blue-800-rgb);
+  --bs-danger-rgb: var(--bt-red-500-rgb);
+  --bs-success-rgb: var(--bt-green-500-rgb);
+  --bs-warning-rgb: var(--bt-orange-600-rgb);
+  --bs-info-rgb: var(--bt-blue-600-rgb);
   /* Focus */
   --bs-focus-ring-color: var(--bt-focus-ring-sm);
   --bs-focus-ring-width: 3px;
@@ -409,7 +426,7 @@ body {
   /* Selected item: theme blue chip colour + dark text (matches filter-tag chips).
      Hover row: design-token grey rather than Bootstrap's near-identical default. */
   --bs-dropdown-link-active-bg: var(--bt-blue-200);
-  --bs-dropdown-link-active-color: rgba(var(--bs-dark-rgb), 1);
+  --bs-dropdown-link-active-color: var(--bt-gray-1000);
   --bs-dropdown-link-hover-bg: var(--bt-gray-50);
 }
 
@@ -3940,56 +3957,56 @@ i[class^=if-]:before, i[class*=" if-"]:before {
    body text: --bt-text clears 4.5:1 on every faculty at this mix. Muted text
    sits close to the floor — use --bt-text, not --bt-text-muted, on these. */
 .bg-faculty-lw-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-lw) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-lw) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-re-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-re) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-re) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-we-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-we) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-we) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-ge-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-ge) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-ge) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-tw-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-tw) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-tw) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-eb-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-eb) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-eb) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-di-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-di) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-di) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-pp-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-pp) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-pp) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-la-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-la) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-la) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-fw-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-fw) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-fw) 12%, var(--bt-white));
   color: var(--bt-text);
 }
 
 .bg-faculty-ps-light {
-  background-color: color-mix(in srgb, var(--bt-faculty-ps) 12%, #fff);
+  background-color: color-mix(in srgb, var(--bt-faculty-ps) 12%, var(--bt-white));
   color: var(--bt-text);
 }
