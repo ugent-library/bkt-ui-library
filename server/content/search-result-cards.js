@@ -4,7 +4,7 @@ module.exports = function renderSearchResultCards() {
   <div class="card-header bt-work-card__head">
     <div class="bt-meta-list pt-1">
       <span class="bt-meta-list__item-bordered">Journal article</span>
-      <span class="badge bg-success">Open access</span>
+      <span class="badge text-bg-success">Open access</span>
     </div>
     <div class="bt-btn-toolbar">
       <button type="button" class="btn btn-ghost btn-xs" aria-label="Cite: Urban forests as essential infrastructure">

@@ -40,6 +40,12 @@ for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', '
   for (const m of read(f).matchAll(/class=["']([^"']+)["']/g))
     for (const c of m[1].split(/\s+/)) if (c && !used.has(c)) used.set(c, f);
 }
+// HTMX partials are HTML strings inside server/content/*.js — scan those too
+for (const f of fs.readdirSync(path.join(root, 'server/content'))) {
+  if (!f.endsWith('.js')) continue;
+  for (const m of read(`server/content/${f}`).matchAll(/class=["']([^"'$]+)["']/g))
+    for (const c of m[1].split(/\s+/)) if (c && !used.has(c)) used.set(c, `server/content/${f}`);
+}
 let js = '';
 for (const d of ['assets/js', 'shell']) {
   const abs = path.join(root, d);

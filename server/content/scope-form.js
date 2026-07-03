@@ -8,10 +8,10 @@ module.exports = function renderScopeForm({ scoped = true, names = ['Faculty of 
     <div class="min-w-0">
       <p class="fw-semibold mb-2 small">Your current scope</p>
       <div class="d-flex flex-wrap gap-1 align-items-center">
-        ${names.map(name => `<span class="badge bg-light text-dark border fw-normal">${name}</span>`).join('')}
+        ${names.map(name => `<span class="badge text-bg-light border fw-normal">${name}</span>`).join('')}
         <span class="text-muted small px-1" aria-hidden="true">·</span>
-        <span class="badge bg-primary">Dataset</span>
-        <span class="badge bg-primary">Dissertation</span>
+        <span class="badge text-bg-primary">Dataset</span>
+        <span class="badge text-bg-primary">Dissertation</span>
       </div>
     </div>
     <button type="button" class="btn btn-ghost btn-sm ms-auto text-muted flex-shrink-0"

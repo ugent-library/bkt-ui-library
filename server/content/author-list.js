@@ -26,6 +26,6 @@ module.exports = function renderAuthorList(name = 'Baker, Josephine') {
     <div class="small fw-semibold">${name}</div>
     <div class="text-muted small">Added just now</div>
   </div>
-  <span class="badge bg-success-subtle text-success-emphasis">New</span>
+  <span class="badge text-bg-success-light">New</span>
 </div>`;
 };

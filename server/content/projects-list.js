@@ -13,7 +13,7 @@ module.exports = function renderProjectsList() {
     <div class="card-body">
       <div class="d-flex align-items-start gap-3 mb-2">
         <a href="/projects/fwo-g001234n" class="flex-grow-1 fw-semibold text-decoration-none">Urban green infrastructure and climate adaptation in Flemish cities</a>
-        <span class="badge bg-success flex-shrink-0">Active</span>
+        <span class="badge text-bg-success flex-shrink-0">Active</span>
       </div>
       <p class="mb-3">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
       <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
@@ -31,7 +31,7 @@ module.exports = function renderProjectsList() {
     <div class="card-body">
       <div class="d-flex align-items-start gap-3 mb-2">
         <a href="/projects/h2020-101012345" class="flex-grow-1 fw-semibold text-decoration-none">Sustainable biorefinery valorisation of agricultural side streams</a>
-        <span class="badge bg-secondary flex-shrink-0">Ended</span>
+        <span class="badge text-bg-secondary flex-shrink-0">Ended</span>
       </div>
       <p class="mb-3">Agricultural processing generates large volumes of side streams that remain underused. This project develops biorefinery routes to valorise these streams into food ingredients, biomaterials and energy carriers.</p>
       <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted" aria-label="Project metadata">
