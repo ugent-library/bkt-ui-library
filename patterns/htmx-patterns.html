@@ -90,7 +90,7 @@
 <pre>&lt;!-- This is what the server returns — raw HTML fragment, no shell --&gt;
 &lt;p class="text-muted"&gt;12 results for "urban"&lt;/p&gt;
 
-&lt;article class="card card-research"&gt;
+&lt;article class="bt-work-card card"&gt;
   &lt;div class="card-body"&gt;
     &lt;h2 class="card-title"&gt;
       &lt;a href="/research/01K9..."&gt;Urban forests as essential infrastructure&hellip;&lt;/a&gt;
@@ -178,16 +178,16 @@
           <div class="ms-auto d-flex align-items-center gap-2">
             <div id="delete-actions" class="d-flex gap-1">
               <button type="button" class="btn btn-ghost btn-sm"
-                onclick="document.getElementById('delete-actions').style.display='none';document.getElementById('delete-confirm').classList.add('visible')">
+                onclick="document.getElementById('delete-actions').style.display='none';document.getElementById('delete-confirm').style.display='flex'">
                 <i class="if if-delete" aria-hidden="true"></i>
                 <span class="visually-hidden">Delete</span>
               </button>
             </div>
-            <div id="delete-confirm" class="inline-confirm align-items-center gap-2">
+            <div id="delete-confirm" class="align-items-center gap-2" style="display:none">
               <span>Delete this record?</span>
               <button type="button" class="btn btn-danger btn-sm">Yes, delete</button>
               <button type="button" class="btn btn-ghost btn-sm"
-                onclick="document.getElementById('delete-confirm').classList.remove('visible');document.getElementById('delete-actions').style.display='flex'">
+                onclick="document.getElementById('delete-confirm').style.display='none';document.getElementById('delete-actions').style.display='flex'">
                 Cancel
               </button>
             </div>
@@ -262,9 +262,9 @@
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html — server partial (/research?page=2 response)</span><button class="ds-code-copy">Copy</button></div>
 <pre>&lt;!-- These cards get appended to #results --&gt;
-&lt;article class="card card-research" role="listitem"&gt;&hellip;&lt;/article&gt;
-&lt;article class="card card-research" role="listitem"&gt;&hellip;&lt;/article&gt;
-&lt;article class="card card-research" role="listitem"&gt;&hellip;&lt;/article&gt;
+&lt;article class="bt-work-card card" role="listitem"&gt;&hellip;&lt;/article&gt;
+&lt;article class="bt-work-card card" role="listitem"&gt;&hellip;&lt;/article&gt;
+&lt;article class="bt-work-card card" role="listitem"&gt;&hellip;&lt;/article&gt;
 
 &lt;!-- OOB swap replaces the Load more button --&gt;
 &lt;div id="load-more" hx-swap-oob="true"&gt;
@@ -323,16 +323,16 @@
   &lt;!-- Hidden: carry forward other active filters --&gt;
   &lt;input type="hidden" name="q" value="{{ current_query }}"&gt;
 
-  &lt;div class="c-facet-title"&gt;Type&lt;/div&gt;
-  &lt;div class="c-facet-check"&gt;
+  &lt;div class="form-label"&gt;Type&lt;/div&gt;
+  &lt;div class="d-flex form-check"&gt;
     &lt;input class="form-check-input mt-0" type="checkbox"
       id="f-journal" name="type" value="journal-article"
       {{ 'checked' if 'journal-article' in selected_types }}&gt;
   &lt;/div&gt;
-  &lt;div class="c-facet-name"&gt;
+  &lt;div class="form-check-label flex-grow-1"&gt;
     &lt;label for="f-journal"&gt;Journal article&lt;/label&gt;
   &lt;/div&gt;
-  &lt;div class="c-facet-count"&gt;1,234&lt;/div&gt;
+  &lt;div class="badge bg-transparent pe-1"&gt;1,234&lt;/div&gt;
 
   &lt;!-- More facets&hellip; --&gt;
 &lt;/form&gt;</pre>

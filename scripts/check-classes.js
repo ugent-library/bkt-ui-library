@@ -36,8 +36,12 @@ const defined = new Set([
 const runtime = /^(htmx-|if$|if-)/;
 
 const used = new Map(); // class -> first file seen
+let rawCorpus = '';
 for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', 'getting-started'])) {
-  for (const m of read(f).matchAll(/class=["']([^"']+)["']/g))
+  const raw = read(f);
+  rawCorpus += raw;
+  const html = raw.replace(/<!--[\s\S]*?-->/g, ''); // ignore commented-out markup
+  for (const m of html.matchAll(/class=["']([^"']+)["']/g))
     for (const c of m[1].split(/\s+/)) if (c && !used.has(c)) used.set(c, f);
 }
 // HTMX partials are HTML strings inside server/content/*.js — scan those too
@@ -54,7 +58,11 @@ for (const d of ['assets/js', 'shell']) {
     if (String(f).endsWith('.js')) js += read(path.join(d, String(f)));
 }
 
-const undef = [...used].filter(([c]) => !defined.has(c) && !runtime.test(c));
+// classes referenced as JS hooks (querySelector etc. in any script, incl.
+// inline <script> blocks) are behaviour hooks, not missing styles
+const isJsHook = c => new RegExp(`['"\`(\\s]\\.${c}\\b`).test(rawCorpus + js);
+
+const undef = [...used].filter(([c]) => !defined.has(c) && !runtime.test(c) && !isJsHook(c));
 const unused = [...btClasses].filter(c =>
   !used.has(c) && !runtime.test(c) && !new RegExp(`['"\` .]${c}['"\` )]`).test(js));
 
