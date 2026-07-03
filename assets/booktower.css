@@ -708,13 +708,25 @@ code.fw-800 {
   border: 0 !important;
 }
 
+/* Reduced-motion policy. Duration handling lives here and only here —
+   component partials never re-tune durations under prefers-reduced-motion.
+   Components may ship their own block only to swap in a replacement
+   rendering (e.g. _svg-animations.scss hides the SMIL layer, which CSS
+   can't pause). */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-    /* without this, infinite animations (Bootstrap spinners) blur at
-       .01ms per rotation instead of stopping */
+    /* without this, infinite animations blur at .01ms/turn instead of stopping */
     animation-iteration-count: 1 !important;
+  }
+  /* Exception: Bootstrap's own reduced-motion rule slows spinners to 1.5s
+     instead of stopping them — a frozen spinner reads as "stuck". Restore
+     that upstream behaviour, which the universal rule above overrides. */
+  .spinner-border,
+  .spinner-grow {
+    animation-duration: 1.5s !important;
+    animation-iteration-count: infinite !important;
   }
 }
 /* ── Forms & inputs ─────────────────────────────────────────────────────────── */
