@@ -41,11 +41,7 @@
   border: 0 !important;
 }
 
-/* Reduced-motion policy. Duration handling lives here and only here —
-   component partials never re-tune durations under prefers-reduced-motion.
-   Components may ship their own block only to swap in a replacement
-   rendering (e.g. _svg-animations.scss hides the SMIL layer, which CSS
-   can't pause). */
+/* Reduced-motion policy. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: .01ms !important;
