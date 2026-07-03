@@ -1052,7 +1052,6 @@ code, kbd, pre, samp {
     .btn      → 38px
     .btn-lg   → 44px
 */
-.btn[type=submit],
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 600;
@@ -1102,58 +1101,53 @@ code, kbd, pre, samp {
 }
 
 /* ── Variants ───────────────────────────────────────────────────────────────── */
-.btn-primary[type=submit],
+/* All variants feed --bs-btn-* so Bootstrap's own state machinery
+   (:hover, :active, .active, .btn-check:checked, :disabled) applies the
+   right colours. Property overrides miss the .active and checked states. */
 .btn-primary {
-  background: var(--bt-blue-800);
-  border: 1px solid var(--bt-blue-800);
-  color: var(--bt-white);
-}
-
-.btn-primary[type=submit]:hover:not(:disabled),
-.btn-primary:hover:not(:disabled) {
-  background: var(--bt-blue-700);
-  border-color: var(--bt-blue-700);
-  color: var(--bt-white);
-}
-
-.btn-primary[type=submit]:active:not(:disabled),
-.btn-primary:active:not(:disabled) {
-  background: var(--bt-blue-900);
-  border-color: var(--bt-blue-900);
-  color: var(--bt-white);
+  --bs-btn-bg: var(--bt-blue-800);
+  --bs-btn-border-color: var(--bt-blue-800);
+  --bs-btn-color: var(--bt-white);
+  --bs-btn-hover-bg: var(--bt-blue-700);
+  --bs-btn-hover-border-color: var(--bt-blue-700);
+  --bs-btn-hover-color: var(--bt-white);
+  --bs-btn-active-bg: var(--bt-blue-900);
+  --bs-btn-active-border-color: var(--bt-blue-900);
+  --bs-btn-active-color: var(--bt-white);
+  --bs-btn-disabled-bg: var(--bt-blue-800);
+  --bs-btn-disabled-border-color: var(--bt-blue-800);
+  --bs-btn-disabled-color: var(--bt-white);
 }
 
 .btn-secondary {
-  background: transparent;
-  border: 1px solid var(--bt-blue-800);
-  color: var(--bt-blue-800);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--bt-blue-800);
+  --bs-btn-color: var(--bt-blue-800);
+  --bs-btn-hover-bg: var(--bt-blue-50);
+  --bs-btn-hover-border-color: var(--bt-blue-700);
+  --bs-btn-hover-color: var(--bt-blue-800);
+  --bs-btn-active-bg: var(--bt-blue-900);
+  --bs-btn-active-border-color: var(--bt-blue-900);
+  --bs-btn-active-color: var(--bt-white);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--bt-blue-800);
+  --bs-btn-disabled-color: var(--bt-blue-800);
 }
 
-.btn-secondary:hover:not(:disabled) {
-  background: var(--bt-blue-50);
-  border-color: var(--bt-blue-700);
-  color: var(--bt-blue-800);
-}
-
-.btn-secondary:active:not(:disabled) {
-  background: var(--bt-blue-900);
-  border-color: var(--bt-blue-900);
-  color: var(--bt-white);
-}
-
+/* Not a Bootstrap variant, but .btn reads the same vars for any class */
 .btn-ghost {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--bt-blue-800);
-}
-
-.btn-ghost:hover:not(:disabled) {
-  background: var(--bt-gray-50);
-  color: var(--bt-blue-800);
-}
-
-.btn-ghost:active:not(:disabled) {
-  color: var(--bt-gray-700);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: transparent;
+  --bs-btn-color: var(--bt-blue-800);
+  --bs-btn-hover-bg: var(--bt-gray-50);
+  --bs-btn-hover-border-color: transparent;
+  --bs-btn-hover-color: var(--bt-blue-800);
+  --bs-btn-active-bg: transparent;
+  --bs-btn-active-border-color: transparent;
+  --bs-btn-active-color: var(--bt-gray-700);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: transparent;
+  --bs-btn-disabled-color: var(--bt-blue-800);
 }
 
 .btn-success {
