@@ -454,6 +454,16 @@ body {
   --bs-nav-link-padding-x: var(--bt-sp-1);
 }
 
+.nav-tabs {
+  --bs-nav-tabs-link-active-bg: transparent;
+}
+
+/* no Bootstrap var for the bottom border alone — the classic tab illusion
+   needs it to match the page background */
+.nav-tabs .nav-link.active {
+  border-bottom-color: var(--s-bg);
+}
+
 .breadcrumb a {
   text-decoration: none;
 }
@@ -877,15 +887,23 @@ code, kbd, pre, samp {
 
 /* ── Alerts ───────────────────────────────────────────────────────────────── */
 .alert {
-  padding: var(--bt-sp-6) var(--bt-sp-6);
-  border-radius: var(--bt-radius-lg);
-  margin-bottom: var(--bt-sp-4);
+  --bs-alert-padding-x: var(--bt-sp-6);
+  --bs-alert-padding-y: var(--bt-sp-6);
+  --bs-alert-border-radius: var(--bt-radius-lg);
+  --bs-alert-margin-bottom: var(--bt-sp-4);
   font-size: var(--bt-text-base);
   line-height: 1.6;
+  /* headings otherwise take --s-heading-color; inherit follows the variant */
 }
 .alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
   margin: 0 0 var(--bt-sp-2) 0;
-  color: var(--bt-gray-1000);
+  color: inherit;
+}
+.alert a:not(.btn) {
+  color: var(--bs-alert-link-color);
+}
+.alert a:not(.btn):hover {
+  text-decoration: underline;
 }
 
 .alert--sm {
@@ -908,117 +926,61 @@ code, kbd, pre, samp {
   border-width: 2px;
 }
 
-/* Alert variants — semantic colors + light backgrounds + borders */
+/* Alert variants — feed Bootstrap's per-variant vars. Icons and text inside
+   inherit --bs-alert-color; links take --bs-alert-link-color via the shared
+   rule on .alert above. */
 .alert-success {
-  background-color: var(--bt-light-success);
-  border-color: var(--bt-green-200);
-  color: var(--bt-dark-success);
-}
-.alert-success h2, .alert-success h3, .alert-success h4, .alert-success h5, .alert-success h6, .alert-success p {
-  color: var(--bt-dark-success);
-}
-.alert-success > .btn-close,
-.alert-success > i {
-  color: var(--bt-dark-success);
-}
-.alert-success a:not(.btn) {
-  color: var(--bt-dark-success);
-}
-.alert-success a:not(.btn):hover {
-  text-decoration: underline;
-}
-.alert-success .alert-dismissible .btn-close {
-  color: var(--bt-dark-success);
+  --bs-alert-bg: var(--bt-light-success);
+  --bs-alert-border-color: var(--bt-green-200);
+  --bs-alert-color: var(--bt-dark-success);
+  --bs-alert-link-color: var(--bt-dark-success);
 }
 
 .alert-danger {
-  background-color: var(--bt-light-danger);
-  border-color: var(--bt-red-200);
-  color: var(--bt-dark-danger);
-}
-.alert-danger h2, .alert-danger h3, .alert-danger h4, .alert-danger h5, .alert-danger h6, .alert-danger p {
-  color: var(--bt-dark-danger);
-}
-.alert-danger > .btn-close,
-.alert-danger > i {
-  color: var(--bt-dark-danger);
-}
-.alert-danger a:not(.btn) {
-  color: var(--bt-dark-danger);
-}
-.alert-danger a:not(.btn):hover {
-  text-decoration: underline;
+  --bs-alert-bg: var(--bt-light-danger);
+  --bs-alert-border-color: var(--bt-red-200);
+  --bs-alert-color: var(--bt-dark-danger);
+  --bs-alert-link-color: var(--bt-dark-danger);
 }
 
 .alert-warning {
-  background-color: var(--bt-light-warning);
-  border-color: var(--bt-orange-200);
-  color: var(--bt-dark-warning);
-}
-.alert-warning h2, .alert-warning h3, .alert-warning h4, .alert-warning h5, .alert-warning h6, .alert-warning p {
-  color: var(--bt-dark-warning);
-}
-.alert-warning > .btn-close,
-.alert-warning > i {
-  color: var(--bt-dark-warning);
+  --bs-alert-bg: var(--bt-light-warning);
+  --bs-alert-border-color: var(--bt-orange-200);
+  --bs-alert-color: var(--bt-dark-warning);
+  --bs-alert-link-color: var(--bt-dark-warning);
 }
 .alert-warning a:not(.btn) {
-  color: var(--bt-dark-warning);
   font-weight: 500;
-}
-.alert-warning a:not(.btn):hover {
-  text-decoration: underline;
 }
 
 .alert-info {
-  background-color: var(--bt-light-blue);
-  border-color: var(--bt-blue-200);
-  color: var(--bt-dark-blue);
-}
-.alert-info h2, .alert-info h3, .alert-info h4, .alert-info h5, .alert-info h6, .alert-info p {
-  color: var(--bt-blue-800);
-}
-.alert-info > .btn-close,
-.alert-info > i {
-  color: var(--bt-dark-blue);
-}
-.alert-info a:not(.btn) {
-  color: var(--bt-dark-blue);
-}
-.alert-info a:not(.btn):hover {
-  text-decoration: underline;
+  --bs-alert-bg: var(--bt-light-blue);
+  --bs-alert-border-color: var(--bt-blue-200);
+  --bs-alert-color: var(--bt-dark-blue);
+  --bs-alert-link-color: var(--bt-dark-blue);
 }
 
 .alert-secondary {
-  background-color: var(--bt-bg-alt);
-  border-color: var(--bt-gray-200);
-  color: var(--bt-gray-1000);
-}
-.alert-secondary > .btn-close,
-.alert-secondary > i {
-  color: var(--bt-gray-600);
-}
-.alert-secondary a:not(.btn) {
-  color: var(--bt-blue-700);
-}
-.alert-secondary a:not(.btn):hover {
-  text-decoration: underline;
+  --bs-alert-bg: var(--bt-bg-alt);
+  --bs-alert-border-color: var(--bt-gray-200);
+  --bs-alert-color: var(--bt-gray-1000);
+  --bs-alert-link-color: var(--bt-blue-700);
 }
 
 .alert-light {
-  border-color: var(--bt-gray-100);
+  --bs-alert-border-color: var(--bt-gray-100);
 }
 
 .alert-dark {
-  background-color: var(--bt-gray-900);
-  border-color: var(--bt-gray-1000);
-  color: var(--bt-white);
+  --bs-alert-bg: var(--bt-gray-900);
+  --bs-alert-border-color: var(--bt-gray-1000);
+  --bs-alert-color: var(--bt-white);
 }
 
-/* Dismissible alerts */
 /* ── Progress ────────────────────────────────────────────────────────────── */
 .progress {
-  height: 8px;
+  /* the var also sizes the striped background correctly */
+  --bs-progress-height: 8px;
 }
 
 /* ── btn-check-group ───────────────────────────────────────────────────────────── */
@@ -1029,16 +991,6 @@ code, kbd, pre, samp {
   gap: var(--bt-sp-3);
   margin-bottom: var(--bt-sp-4);
   margin-top: var(--bt-sp-2);
-}
-
-/* ── nav-tabs ───────────────────────────────────────────────────────────── */
-.nav-tabs .nav-link.active {
-  background-color: transparent;
-  border-bottom-color: var(--s-bg);
-}
-
-.nav-tabs .nav-link {
-  color: var(--s-link-color);
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
