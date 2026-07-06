@@ -124,7 +124,7 @@
 
 .btn-success {
   --bs-btn-bg:                  var(--bt-green-700);
-  --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
+  --bs-btn-color:               white;
   --bs-btn-border-color:        var(--bt-green-700);
 
   --bs-btn-hover-bg:            var(--bt-green-600);
@@ -136,8 +136,6 @@
   --bs-btn-active-border-color: var(--bt-dark-success);
 }
 
-/* Dark text on amber, like badge.text-bg-warning — white can't pass AA on
-   any amber (rest was 2.9:1, hover 2.1:1). Rest 8.7:1, active 6.3:1. */
 .btn-warning {
   --bs-btn-bg:                  var(--bt-orange-500);
   --bs-btn-color:               var(--bt-gray-1000);
@@ -153,8 +151,8 @@
 }
 
 .btn-info {
-  --bs-btn-bg:                  var(--bt-blue);          /* blue-600, 5.7:1 on white */
-  --bs-btn-color:               white;                   /* override Bootstrap's compiled dark text */
+  --bs-btn-bg:                  var(--bt-blue);
+  --bs-btn-color:               white;
   --bs-btn-border-color:        var(--bt-blue);
 
   --bs-btn-hover-bg:            var(--bt-blue-500);
@@ -199,7 +197,6 @@ a.btn-danger,
   --bs-btn-color:               white;
   --bs-btn-border-color:        var(--bt-gray-1000);
 
-  /* gray-900 was near-identical to the gray-1000 rest colour */
   --bs-btn-hover-bg:            var(--bt-gray-800);
   --bs-btn-hover-color:         white;
   --bs-btn-hover-border-color:  var(--bt-gray-800);
@@ -219,11 +216,7 @@ a.btn-danger,
 }
 
 /* ── Loading state ─────────────────────────────────────────────────────────── */
-/*
-  During an HTMX request, .htmx-request is added to the triggering button.
-  Show the .htmx-indicator (spinner + loading text), hide the idle icon and label.
-  The idle label is wrapped in a plain <span> so CSS can target it.
-*/
+
 .btn.htmx-request > i,
 .btn.htmx-request > span:not(.htmx-indicator) {
   display: none;
@@ -234,11 +227,6 @@ a.btn-danger,
 }
 
 /* ── Bootstrap outline variants ─────────────────────────────────────────────── */
-/*
-  Override Bootstrap's generated btn-outline-* with Booktower tokens.
-  Hover: subtle tint, text stays dark.
-  Active: filled with semantic colour + white text (all pass WCAG AA).
-*/
 
 .btn-outline-primary {
   --bs-btn-color:               var(--bt-blue-800);
@@ -275,7 +263,7 @@ a.btn-danger,
   --bs-btn-hover-color:         var(--bt-dark-success);
   --bs-btn-hover-border-color:  var(--bt-success);
 
-  --bs-btn-active-bg:           var(--bt-green-700);       /* green-500, 4.6:1 on white */
+  --bs-btn-active-bg:           var(--bt-green-700);
   --bs-btn-active-color:        white;
   --bs-btn-active-border-color: var(--bt-green-700);
 }
