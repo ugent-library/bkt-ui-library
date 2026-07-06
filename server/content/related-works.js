@@ -5,9 +5,9 @@ module.exports = function renderRelatedWorks() {
     <div class="card-body">
       <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Cooling co-benefits of urban tree networks in compact European cities</a>
       <p class="small text-muted mb-0">
-        <span>Esperon‑Rodriguez, M.</span>,
-        <span>Arndt, S.</span>,
-        <span>De Pauw, K.</span>,
+        <span>Manuel Esperon‑Rodriguez</span>,
+        <span>Stefan Arndt</span>,
+        <span>Karen De Pauw</span>,
         <span>+ 6 more</span>
       </p>
       <p class="small text-muted">Journal article · 2025</p>
@@ -21,9 +21,9 @@ module.exports = function renderRelatedWorks() {
     <div class="card-body">
       <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Planning biodiversity corridors through urban green infrastructure</a>
       <p class="small text-muted mb-0">
-        <span>Esperon‑Rodriguez, M.</span>,
-        <span>Arndt, S.</span>,
-        <span>De Pauw, K.</span>,
+        <span>Manuel Esperon‑Rodriguez</span>,
+        <span>Stefan Arndt</span>,
+        <span>Karen De Pauw</span>,
         <span>+ 6 more</span>
       </p>
       <p class="small text-muted">Journal article · 2024</p>
@@ -37,9 +37,9 @@ module.exports = function renderRelatedWorks() {
     <div class="card-body">
       <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Community-led climate adaptation in Flemish mid-sized cities</a>
       <p class="small text-muted mb-0">
-        <span>Esperon‑Rodriguez, M.</span>,
-        <span>Arndt, S.</span>,
-        <span>De Pauw, K.</span>,
+        <span>Manuel Esperon‑Rodriguez</span>,
+        <span>Stefan Arndt</span>,
+        <span>Karen De Pauw</span>,
         <span>+ 6 more</span>
       </p>
       <p class="small text-muted">Book chapter · 2023</p>

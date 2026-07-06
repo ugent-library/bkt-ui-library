@@ -9,20 +9,33 @@
     "type": "git",
     "url": "https://github.com/ugent-library/booktower-ui-library"
   },
-  "keywords": ["design-system", "css", "bootstrap", "ui-library", "biblio", "repository", "research-output", "bibliography"],
+  "keywords": [
+    "design-system",
+    "css",
+    "bootstrap",
+    "ui-library",
+    "biblio",
+    "repository",
+    "research-output",
+    "bibliography"
+  ],
   "scripts": {
     "start": "node server.js",
     "dev": "npm run build && node server.js & npm run watch:css",
     "build": "npm run check:partials && npm run build:icons && npm run build:css",
     "build:icons": "fantasticon",
     "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css",
+    "test": "npm run check:partials && npm run check:classes && npm run check:html && npm run check:a11y",
     "check:partials": "node scripts/check-partials.js",
     "check:classes": "node scripts/check-classes.js",
+    "check:html": "html-validate 'templates/**/*.html' 'elements/*.html' 'patterns/*.html' 'foundations/*.html' 'getting-started/*.html'",
+    "check:a11y": "node scripts/check-a11y.js",
+    "check:a11y-browser": "pa11y-ci",
     "watch:css": "sass --watch --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css"
   },
-  "dependencies": {},
   "devDependencies": {
     "fantasticon": "^4.1.0",
+    "html-validate": "^11.5.5",
     "sass": "^1.94.0"
   }
 }

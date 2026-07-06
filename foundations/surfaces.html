@@ -195,21 +195,21 @@
         <p>Apply the attribute to the outermost layout element. Everything inside inherits the surface variables. You can nest surfaces — a backoffice shell can contain a public-facing preview.</p>
 
         <div class="ds-code">
-          <div class="ds-code-bar"><span class="ds-code-lang">html — public layout</span><button class="ds-code-copy">Copy</button></div>
+          <div class="ds-code-bar"><span class="ds-code-lang">html — public layout</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;body data-surface="public"&gt;
   &lt;!-- all components render with light-weight headings, generous spacing --&gt;
 &lt;/body&gt;</pre>
         </div>
 
         <div class="ds-code mt-3">
-          <div class="ds-code-bar"><span class="ds-code-lang">html — backoffice layout</span><button class="ds-code-copy">Copy</button></div>
+          <div class="ds-code-bar"><span class="ds-code-lang">html — backoffice layout</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;body data-surface="backoffice"&gt;
   &lt;!-- all components render compact, sans headings --&gt;
 &lt;/body&gt;</pre>
         </div>
 
         <div class="ds-code mt-3">
-          <div class="ds-code-bar"><span class="ds-code-lang">html — mixed: backoffice with public preview panel</span><button class="ds-code-copy">Copy</button></div>
+          <div class="ds-code-bar"><span class="ds-code-lang">html — mixed: backoffice with public preview panel</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;body data-surface="backoffice"&gt;
   &lt;!-- curator toolbar and record form --&gt;
   &lt;div class="bt-toolbar"&gt;...&lt;/div&gt;
@@ -222,7 +222,7 @@
         </div>
 
         <div class="ds-code mt-3">
-          <div class="ds-code-bar"><span class="ds-code-lang">css — reading surface variables in a custom component</span><button class="ds-code-copy">Copy</button></div>
+          <div class="ds-code-bar"><span class="ds-code-lang">css — reading surface variables in a custom component</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>/* Component reads from surface — works in both contexts */
 .my-component-title {
   font-family: var(--s-heading-font);      /* system-UI on both surfaces */
@@ -327,7 +327,7 @@
               <p class="form-label mb-2">✓ Icon + visible text (most common)</p>
               <p>Icon is decorative. <code>aria-hidden="true"</code> hides it from screen readers. The visible text carries the meaning.</p>
               <div class="ds-code">
-                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;button type="button" class="btn btn-primary"&gt;
   &lt;i class="if if-download" aria-hidden="true"&gt;&lt;/i&gt;
   Download PDF
@@ -339,7 +339,7 @@
               <p class="form-label mb-2">✓ Icon alone — label on the button</p>
               <p>The <code>aria-label</code> goes on the <strong>button</strong>, never on the <code>&lt;i&gt;</code>. Screen readers announce the button's label, then its role ("Close dialog, button"). VoiceOver and NVDA both read this correctly.</p>
               <div class="ds-code">
-                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;!-- ✓ Correct: aria-label on the button --&gt;
 &lt;button type="button" class="btn btn-ghost" aria-label="Close dialog"&gt;
   &lt;i class="if if-close" aria-hidden="true"&gt;&lt;/i&gt;
@@ -363,7 +363,7 @@
               <p class="form-label mb-2">✓ Status icon alongside text</p>
               <p>When the icon reinforces visible text, hide it. The text is sufficient.</p>
               <div class="ds-code">
-                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button class="ds-code-copy">Copy</button></div>
+                <div class="ds-code-bar"><span class="ds-code-lang">html</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;span class="badge text-bg-success"&gt;
   &lt;i class="if if-unlock if--xs" aria-hidden="true"&gt;&lt;/i&gt;
   Open access

@@ -1,15 +1,15 @@
 module.exports = function renderExpandedAuthors() {
   return `
-    <a href="#">Esperon‑Rodriguez, M.</a>,
-    <a href="#">Arndt, S.</a>,
-    <a href="#">De Pauw, K.</a>,
-    <a href="#">Curie, S.</a>,
-    <span>Van den Berg, A.</span>,
-    <span>Vandeurzen, B.</span>,
-    <span>Van de Walle, C.</span>,
-    <span>Vanput, D.</span>,
-    <span>Putzeys, E.</span>,
-    <span>Pourry Montgomery, F.</span>
+    <a href="#">Manuel Esperon‑Rodriguez</a>,
+    <a href="#">Stefan Arndt</a>,
+    <a href="#">Karen De Pauw</a>,
+    <a href="#">Sofie Curie</a>,
+    <span>Anna Van den Berg</span>,
+    <span>Bart Vandeurzen</span>,
+    <span>Charlotte Van de Walle</span>,
+    <span>Dries Vanput</span>,
+    <span>Els Putzeys</span>,
+    <span>Fien Pourry Montgomery</span>
     <span id="authors-loading" class="htmx-indicator">Loading&hellip;</span>
     <button type="button" class="btn btn-ghost btn-xs">
       Show less
