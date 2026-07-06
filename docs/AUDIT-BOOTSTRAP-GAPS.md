@@ -231,7 +231,7 @@ Items deliberately out of this audit's scope, queued for the next one:
 - Should `text-muted` mix in a little blue, so muted text sits in the same temperature as the blue-900 body text?
 - Filter tags appear too blue. Should a filter tag just be a clickable badge instead of its own component?
 - `search-my-research.html` is broken — likely the removed `bt-facet-*` classes it still uses (batch 3 worklist); verify while fixing ghosts there.
-- Revisit `btn-warning` hover: now orange-500 with white text (family convention, M 2026-07-03) — fails AA on the transient hover state. Options when revisiting: darker step, dark text, or accept.
+- ~~Revisit `btn-warning` hover~~ Resolved (M, 2026-07-03): the rest state also failed AA (white on orange-600, 2.9:1). Now dark text on amber like the warning badge — rest 8.7:1, active 6.3:1.
 - `patterns/htmx-patterns.html` removed (M, 2026-07-03) — the page was outdated end to end. Rebuild it as part of the JavaScript audit (next-audit item 6): the HTMX loading/error/confirm patterns it documented should come back verified against the real JS rules, not restored from the old page.
 - `bt-btn-toolbar`: M uses it as a pattern — the §4.1 deletion recommendation is on hold, to be discussed later.
 - `bt-btn-toolbar` removed (M, same day). Of 42 usages only 5 sat inside a `bt-toolbar` — those are now one `bt-toolbar__item` per action (M's pattern). The other ~34 are work-card action rows inside `card-header` (plus a few alerts/columns): no toolbar parent, so they keep `d-flex align-items-center gap-2`. Open design question: does the work-card action row deserve its own pattern, or are utilities fine there?
