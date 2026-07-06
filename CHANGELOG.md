@@ -12,7 +12,7 @@ Full findings in `docs/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
 
 **Fixed bugs:** `.form-select` caret restored (a `background:` shorthand had erased it); `bt-blank-slate` compiled again (its partial was never `@use`d); `--bs-info-rgb` matched to `--bt-blue`; disabled/toggled primary buttons no longer fall back to stock Bootstrap blue; slim-sidebar badge counts hide properly; reduced-motion no longer makes spinners blur.
 
-**Removed:** `bt-btn-toolbar` family (one `bt-toolbar__item` per action inside toolbars, `d-flex gap-2` elsewhere), `bt-avatar--dark`, `btn-outline-white`, `.sr-only`, the `bt-facet-*` classes still lingering in templates, all no-op Bootstrap overrides, `patterns/research-card-backup.html`, `patterns/htmx-patterns.html` (rebuilds with the JS audit), duplicate `elements/toolbar.html`.
+**Removed:** see the migration map below for classes. Also removed: all no-op Bootstrap overrides, `patterns/research-card-backup.html`, `patterns/htmx-patterns.html` (rebuilds with the JS audit), and the duplicate `elements/toolbar.html`.
 
 ### Removed during v2 development — migration map
 

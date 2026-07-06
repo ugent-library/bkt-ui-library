@@ -450,10 +450,11 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 - Grouped radio/checkbox controls use `<fieldset>` and `<legend>`
 
 ### HTMX
-- Every `hx-post` / `hx-get` has an `hx-indicator` — no silent loading states
-- `hx-target` selectors must exist in the DOM at request time, not just at page load
-- All `hx-get` / `hx-post` URLs in templates are stubs until connected to real endpoints — treat them as documentation of intent, not working code
-- Progressive enhancement: the form must be submittable without HTMX (a real `action` attribute, a real `<button type="submit">`)
+The behavioural rules live in section D above (indicators, live regions,
+focus management, targets) and C6 (progressive enhancement). One fact unique
+to this repo: all `hx-get` / `hx-post` URLs in templates are stubs until
+connected to real endpoints — treat them as documentation of intent, not
+working code.
 
 ### Structured data
 Public-facing record pages must include `<script type="application/ld+json">` with schema.org markup. Minimum for a research output:
@@ -971,7 +972,9 @@ The design system documentation uses the same CSS it produces. If a component ca
 
 ## Distributing the design system
 
-Current: copy `assets/booktower.css` + `assets/fonts/` to the consumer app. Font path in CSS is `/assets/fonts/` — the consumer must serve fonts there.
+`docs/CONSUMING-BOOKTOWER.md` is the single source of truth for which files to
+copy and where fonts go (short version: fonts sit in a `fonts/` directory next
+to the CSS file — the font URL in the compiled CSS is relative).
 
 Future: npm package. Not set up yet. Don't suggest symlinks or git submodules.
 

@@ -202,7 +202,9 @@ that happens to clear the navbar.
 
 After SCSS changes in `booktower-ui-library`:
 1. Run `npm run build` in `booktower-ui-library`
-2. Copy `assets/booktower.css` and `assets/fonts/` to raven's assets directory
+2. Copy the files into raven — `docs/CONSUMING-BOOKTOWER.md` is the source of
+   truth for which files and where (fonts go in a `fonts/` directory next to
+   the CSS file)
 
 A future npm package will replace the manual copy step.
 
