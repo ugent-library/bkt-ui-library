@@ -60,7 +60,6 @@ View at `localhost:3111/<template path>`
 ## Acceptance criteria
 
 - [ ] Matches the prototype at the source-of-truth path
-- [ ] Visual and UI copy review by the product manager before merge
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/AGENT.md`,
       plus these component-specific concerns:
 - [ ] `make build` passes
