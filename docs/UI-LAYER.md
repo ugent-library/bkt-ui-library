@@ -39,7 +39,7 @@ Public:     system-UI headings weight 700, blue-800 · 16px body · 1.6 leading 
 Backoffice: system-UI headings weight 600, blue-900 · 15px body · 1.5 leading · upright lead · white bg
 ```
 
-`foundation/_surfaces.scss` is the source of truth for these values. Surfaces mix within a page: both surface attributes carry their own tokens, and every `[data-surface]` boundary applies its own body text size, leading, and colour.
+`foundation/_surfaces.scss` wins when this table disagrees with it. Surfaces mix within a page: every `[data-surface]` boundary applies its own tokens and body text size/leading/colour.
 
 **In Go templ templates:** set `data-surface` in the layout shell, not in individual partials. The layout shell owns the surface declaration for the whole page.
 

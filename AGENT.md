@@ -57,9 +57,7 @@ Public:     system-UI headings weight 700, blue-800 · 16px body · 1.6 leading 
 Backoffice: system-UI headings weight 600, blue-900 · 15px body · 1.5 leading · upright .lead · white bg
 ```
 
-No web fonts are loaded — all typefaces are OS-native. `foundation/_surfaces.scss` is the source of truth for these values; when this table and that file disagree, the file wins.
-
-Surfaces mix within a page: backoffice tokens bind to `body` and `[data-surface="backoffice"]`, public to `[data-surface="public"]`, and every `[data-surface]` boundary applies its own body text size/leading/colour.
+No web fonts — all typefaces are OS-native. `foundation/_surfaces.scss` wins when this table disagrees with it. Surfaces mix within a page: both surface attributes carry their own tokens, and every `[data-surface]` boundary applies its own body size/leading/colour.
 
 **When I forget this, I produce inconsistent UIs.** Check every new template has the attribute on `<body>` or the outermost layout element.
 
@@ -400,7 +398,7 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 
 **J2. SVG ink animations** in `_svg-animations.scss` are suppressed correctly by the global reduced-motion rule — no extra work needed there. Do not add `@keyframes` that are not caught by the universal selector override.
 
-**J3. Reduced-motion has one owner.** Duration handling lives in `base/_accessibility.scss` and only there — component partials never re-tune durations under `prefers-reduced-motion`. A component may carry its own `prefers-reduced-motion` block only to swap in a *replacement rendering* (e.g. `_svg-animations.scss` hides the SMIL layer, which CSS cannot pause). The global rule also sets `animation-iteration-count: 1` (without it, infinite animations blur at `.01ms` per turn instead of stopping) and carries a named exception restoring Bootstrap's slow-spinner behaviour — a frozen spinner reads as "stuck".
+**J3. Reduced-motion has one owner.** Durations are handled only in `base/_accessibility.scss` — never re-tuned in component partials. A component may carry its own `prefers-reduced-motion` block only to swap in a replacement rendering (`_svg-animations.scss` hides the SMIL layer). Named exceptions live next to the global rule.
 
 ---
 
@@ -450,11 +448,9 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 - Grouped radio/checkbox controls use `<fieldset>` and `<legend>`
 
 ### HTMX
-The behavioural rules live in section D above (indicators, live regions,
-focus management, targets) and C6 (progressive enhancement). One fact unique
-to this repo: all `hx-get` / `hx-post` URLs in templates are stubs until
-connected to real endpoints — treat them as documentation of intent, not
-working code.
+Behavioural rules: section D above, plus C6 (progressive enhancement).
+Unique here: all `hx-*` URLs in templates are stubs — documentation of
+intent, not working code.
 
 ### Structured data
 Public-facing record pages must include `<script type="application/ld+json">` with schema.org markup. Minimum for a research output:
@@ -471,12 +467,9 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 ### Complete verified class list (ground truth — cross-checked against SCSS source)
 
-This list is machine-checkable: `npm test` runs all static checks (see the
-README's Tests section). The two that guard this list: `check:classes` reports
-classes used in HTML that no stylesheet defines and booktower classes used
-nowhere — drive both to zero. `check:partials` also runs inside `npm run build`
-and fails it when an SCSS partial exists that `booktower.scss` doesn't `@use`,
-so a component can no longer silently vanish from the compiled CSS.
+Machine-checkable via `npm test` (see the README). `check:classes` reports
+undefined and unused classes — keep both at zero. `check:partials` runs inside
+the build and fails it on any partial `booktower.scss` doesn't `@use`.
 
 **Navigation & topbar**
 ```
@@ -504,8 +497,8 @@ bt-avatar__img
 Note: `bt-avatar` combined with a Bootstrap background utility (`.bg-primary`,
 `.bg-success`, `.bg-warning`, `.bg-danger`) automatically forces white text and
 icon colour. No extra class needed for coloured initials chips.
-On a `<button>`, use `bt-avatar` alone — never together with `.btn`; the
-avatar owns its own button reset. `bt-avatar--dark` was removed.
+On a `<button>`, use `bt-avatar` alone — never with `.btn`; the avatar owns
+its own button reset.
 
 **Hero (public surface)**
 ```
@@ -719,15 +712,14 @@ min-w-0
 These are the only custom utilities. Everything else (spacing, sizing, alignment,
 text colour, display) comes from Bootstrap. Do not invent further `bt-*` utility
 classes — reference the token directly in SCSS instead. `min-w-0` exists because
-Bootstrap has no min-width utility and flex children need it to allow text
-truncation; it follows Bootstrap's naming, not `bt-*`.
+Bootstrap has no min-width utility and flex truncation needs it.
 
 **Faculty colours** — keyed by live Biblio org code, defined in `_utilities.scss`:
 ```
 bg-faculty-lw … bg-faculty-ps          (brand fill + readable foreground)
-bg-faculty-lw-light … bg-faculty-ps-light  (12% tint via color-mix, holds body text)
+bg-faculty-lw-light … bg-faculty-ps-light  (12% tint, holds body text)
 ```
-Codes: lw re we ge tw eb di pp la fw ps. Never inline a faculty hex.
+Never inline a faculty hex.
 
 **Alert modifiers** (on top of Bootstrap `.alert` and `.alert-*` variants) ⚠️ TBD — `--seamless-inbox` and `--dashed` may not survive review
 ```
@@ -745,11 +737,9 @@ search fields outside of `bt-toolbar` and outside of `input-group--hero`.
 
 ### Classes that no longer exist
 
-Old and removed classes are not documented here — that is old knowledge, and
-it lives where history lives: `CHANGELOG.md` has the OLD→v2 migration tables
-and the "Removed during v2 development" map with replacements. If I write a
-class that no stylesheet defines, `npm test` fails and the changelog tells me
-what replaced it.
+Not documented here — old knowledge lives in `CHANGELOG.md` (OLD→v2 tables
+and the v2 removals map). `npm test` fails on any undefined class; the
+changelog says what replaced it.
 
 ### Icon names — verified source of truth
 Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any `if-[name]` not present in that file.
@@ -788,13 +778,13 @@ If you proceed with a new class, state in a comment: which Bootstrap component y
 
 ## Overriding Bootstrap safely
 
-Three rules, each earned by a real bug in this codebase (see `docs/AUDIT-BOOTSTRAP-GAPS.md`):
+Three rules, each earned by a real bug (see `docs/AUDIT-BOOTSTRAP-GAPS.md`):
 
-**Feed variables, don't fight selectors.** Bootstrap 5.3 scopes runtime variables to each component (`--bs-btn-*`, `--bs-alert-*`, `--bs-progress-*`, …). Where a variable exists, set it — you inherit all of Bootstrap's state handling (`:hover`, `.active`, `btn-check:checked`, `:disabled`) instead of re-implementing the subset you remembered. Verify a variable exists in the Bootstrap dist before overriding it; several past overrides targeted variables that were never real and silently did nothing.
+**Feed variables, don't fight selectors.** Where a `--bs-*` component variable exists, set it — you inherit Bootstrap's state handling (`:hover`, `.active`, `btn-check:checked`, `:disabled`) instead of re-implementing part of it. Verify the variable exists in the dist first; several past overrides targeted variables that were never real.
 
-**Longhands, never shorthands across grouped selectors.** A shorthand resets every sub-property you didn't mention: `background:` on `.form-control, .form-select` erased the select caret image; a `padding:` shorthand on the same group erased the caret gutter. Group selectors only for declarations identical in *consequence* for every member, and prefer `background-color`, `padding-left`, etc.
+**Longhands, never shorthands across grouped selectors.** A shorthand resets every sub-property you didn't mention: `background:` erased the select caret, `padding:` erased its gutter. Group selectors only when the declaration is identical in consequence for every member.
 
-**Raw colour values live in three places only:** `foundation/_colors.scss` (palette, including the `--bt-*-rgb` triplets defined next to their hex), `foundation/_tokens.scss` (shadows, focus rings), and SVG data URIs. Everywhere else references variables. Bootstrap's utilities read the `--bs-*-rgb` triplets; those reference the `--bt-*-rgb` tokens so hex and triplet cannot drift apart again.
+**Raw colours live in three places only:** `_colors.scss` (palette + `--bt-*-rgb` triplets), `_tokens.scss` (shadows, focus rings), and SVG data URIs. Everything else references variables.
 
 ---
 
@@ -972,9 +962,8 @@ The design system documentation uses the same CSS it produces. If a component ca
 
 ## Distributing the design system
 
-`docs/CONSUMING-BOOKTOWER.md` is the single source of truth for which files to
-copy and where fonts go (short version: fonts sit in a `fonts/` directory next
-to the CSS file — the font URL in the compiled CSS is relative).
+`docs/CONSUMING-BOOKTOWER.md` is the source of truth for which files to copy
+and where (fonts sit in `fonts/` next to the CSS file).
 
 Future: npm package. Not set up yet. Don't suggest symlinks or git submodules.
 

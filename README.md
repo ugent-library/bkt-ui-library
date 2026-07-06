@@ -61,7 +61,7 @@ npm run check:a11y-browser   # terminal 2 — page list lives in .pa11yci
 
 ## Dependencies
 
-`node_modules/` is not committed — `package-lock.json` is the source of truth, and `npm install` reproduces the exact dependency tree from it. If git ever shows changes inside `node_modules/`, something is wrong; don't commit them. Always install dev tools with `npm install -D <pkg>` so they're declared in `package.json` — undeclared packages get deleted by the next `npm install`.
+`node_modules/` is not committed — `package-lock.json` is the source of truth; `npm install` reproduces it. Install dev tools with `npm install -D <pkg>`: undeclared packages are deleted by the next install.
 
 ---
 
