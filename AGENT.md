@@ -53,11 +53,13 @@ The system is HTMX-first, Bootstrap-based, semantically correct HTML, progressiv
 Every layout container must carry `data-surface="public"` or `data-surface="backoffice"`. This is not optional decoration — it activates surface tokens that change typography, density, and visual weight throughout the component tree.
 
 ```
-Public:     system-UI headings weight 300 · 16px body · 1.75 leading · italic .lead · warm off-white bg (#f9f7f4)
-Backoffice: system-UI headings weight 600 · 15px body · 1.5 leading  · upright .lead · white bg
+Public:     system-UI headings weight 700, blue-800 · 16px body · 1.6 leading · italic .lead · warm off-white bg (--bt-bg-paper #faf8f6)
+Backoffice: system-UI headings weight 600, blue-900 · 15px body · 1.5 leading · upright .lead · white bg
 ```
 
-Both surfaces share `--bt-blue-800` (`#132e53`) as the heading and display colour. No web fonts are loaded — all typefaces are OS-native.
+No web fonts are loaded — all typefaces are OS-native. `foundation/_surfaces.scss` is the source of truth for these values; when this table and that file disagree, the file wins.
+
+Surfaces mix within a page: backoffice tokens bind to `body` and `[data-surface="backoffice"]`, public to `[data-surface="public"]`, and every `[data-surface]` boundary applies its own body text size/leading/colour.
 
 **When I forget this, I produce inconsistent UIs.** Check every new template has the attribute on `<body>` or the outermost layout element.
 
@@ -398,6 +400,8 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 
 **J2. SVG ink animations** in `_svg-animations.scss` are suppressed correctly by the global reduced-motion rule — no extra work needed there. Do not add `@keyframes` that are not caught by the universal selector override.
 
+**J3. Reduced-motion has one owner.** Duration handling lives in `base/_accessibility.scss` and only there — component partials never re-tune durations under `prefers-reduced-motion`. A component may carry its own `prefers-reduced-motion` block only to swap in a *replacement rendering* (e.g. `_svg-animations.scss` hides the SMIL layer, which CSS cannot pause). The global rule also sets `animation-iteration-count: 1` (without it, infinite animations blur at `.01ms` per turn instead of stopping) and carries a named exception restoring Bootstrap's slow-spinner behaviour — a frozen spinner reads as "stuck".
+
 ---
 
 ### Pre-flight checklist — run before finalising any template
@@ -466,6 +470,12 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 ### Complete verified class list (ground truth — cross-checked against SCSS source)
 
+This list is machine-checkable: `npm run check:classes` reports classes used in
+HTML that no stylesheet defines and booktower classes used nowhere (drive both
+to zero). `npm run check:partials` runs inside `npm run build` and fails it when
+an SCSS partial exists that `booktower.scss` doesn't `@use` — a component can no
+longer silently vanish from the compiled CSS.
+
 **Navigation & topbar**
 ```
 bt-navbar               bt-navbar__brand        bt-navbar__nav
@@ -486,11 +496,15 @@ bt-title-toolbar
 **Avatar**
 ```
 bt-avatar               bt-avatar--xsmall       bt-avatar--small
-bt-avatar--large        bt-avatar--outline      bt-avatar--dark
+bt-avatar--large        bt-avatar--outline      bt-avatar--square
+bt-avatar__img
 ```
 Note: `bt-avatar` combined with a Bootstrap background utility (`.bg-primary`,
 `.bg-success`, `.bg-warning`, `.bg-danger`) automatically forces white text and
 icon colour. No extra class needed for coloured initials chips.
+On a `<button>`, use `bt-avatar` alone — never together with `.btn`; the
+avatar owns its own button reset. `bt-avatar--dark` was removed (it was one
+blue step from the base avatar plus an invisible border).
 
 **Hero (public surface)**
 ```
@@ -523,6 +537,7 @@ token-bar__input         token-bar__clear          token-bar__indicator
 ```
 people-results           people-result             people-result__meta
 people-result__meta-item people-result.is-selected
+people-result__icon      people-result__name
 ```
 
 **Scroll utility**
@@ -533,7 +548,7 @@ bt-scroll-frame          bt-code-block            bt-table-sticky-col
 
 **Work card**
 ```
-bt-work-card
+bt-work-card            bt-work-card--border-bottom
 bt-work-card__title     bt-work-card__authors   bt-work-card__pub
 bt-meta-list            bt-meta-list__item      bt-meta-list__item-bordered
 ```
@@ -587,15 +602,16 @@ bt-file-drop__hint
 ```
 filter-tag               filter-tag--editable     filter-tag--static
 filter-tag__remove       filter-tag-group
-bt-filter-picker__menu   bt-filter-picker__menu--narrow  bt-filter-picker__list
+bt-filter-picker__list
 ```
+Note: `bt-filter-picker__menu` and `--narrow` do NOT exist — only `__list` is defined.
 
 **Filter editor panel**
 ```
-filter-editor            filter-editor__actions
-filter-editor__body--checklist
-filter-editor__body--boolean           filter-editor__body--boolean__option   filter-editor__body--boolean__option.is-selected
-filter-year              filter-year__input
+filter-editor            filter-editor__title     filter-editor__actions
+filter-editor__body      filter-editor__body--checklist
+filter-editor__body--boolean           filter-editor__body--form
+filter-editor__body--year              filter-year__input
 ```
 
 **Surface-aware filter group visibility**
@@ -696,11 +712,21 @@ the heading or display font (e.g. inside a styled `<h*>` wrapper).
 ```
 bt-border
 bt-bg                   bt-bg-alt               bt-bg-dark              bt-bg-white
-bg-danger-light
+bg-danger-light         bg-success-light
+min-w-0
 ```
 These are the only custom utilities. Everything else (spacing, sizing, alignment,
 text colour, display) comes from Bootstrap. Do not invent further `bt-*` utility
-classes — reference the token directly in SCSS instead.
+classes — reference the token directly in SCSS instead. `min-w-0` exists because
+Bootstrap has no min-width utility and flex children need it to allow text
+truncation; it follows Bootstrap's naming, not `bt-*`.
+
+**Faculty colours** — keyed by live Biblio org code, defined in `_utilities.scss`:
+```
+bg-faculty-lw … bg-faculty-ps          (brand fill + readable foreground)
+bg-faculty-lw-light … bg-faculty-ps-light  (12% tint via color-mix, holds body text)
+```
+Codes: lw re we ge tw eb di pp la fw ps. Never inline a faculty hex.
 
 **Alert modifiers** (on top of Bootstrap `.alert` and `.alert-*` variants) ⚠️ TBD — `--seamless-inbox` and `--dashed` may not survive review
 ```
@@ -721,6 +747,12 @@ search fields outside of `bt-toolbar` and outside of `input-group--hero`.
 ```
 app-sidebar             app-sidebar-link        app-sidebar-label
 bt-navbar__mark
+bt-avatar--dark          (removed — base bt-avatar is already the dark chip)
+btn-outline-white        (removed — design a dark-surface button when one is needed)
+sr-only                  (use Bootstrap's visually-hidden)
+bt-facet-check  bt-facet-name  bt-facet-count  bt-facet-separator
+                         (removed — d-flex form-check rows inside fieldset/legend,
+                          count as badge bg-transparent, plain <hr> between groups)
 bt-blank-slate-default   (replaced by bt-blank-slate--default)
 bt-blank-slate-muted     (replaced by bt-blank-slate--muted)
 bt-blank-slate-primary   (replaced by bt-blank-slate--primary)
@@ -782,6 +814,18 @@ A new Booktower class is only justified when:
 2. The pattern is domain-specific to Biblio and meaningfully reused across multiple templates
 
 If you proceed with a new class, state in a comment: which Bootstrap component you checked, and the specific reason it did not fit.
+
+---
+
+## Overriding Bootstrap safely
+
+Three rules, each earned by a real bug in this codebase (see `docs/AUDIT-BOOTSTRAP-GAPS.md`):
+
+**Feed variables, don't fight selectors.** Bootstrap 5.3 scopes runtime variables to each component (`--bs-btn-*`, `--bs-alert-*`, `--bs-progress-*`, …). Where a variable exists, set it — you inherit all of Bootstrap's state handling (`:hover`, `.active`, `btn-check:checked`, `:disabled`) instead of re-implementing the subset you remembered. Verify a variable exists in the Bootstrap dist before overriding it; several past overrides targeted variables that were never real and silently did nothing.
+
+**Longhands, never shorthands across grouped selectors.** A shorthand resets every sub-property you didn't mention: `background:` on `.form-control, .form-select` erased the select caret image; a `padding:` shorthand on the same group erased the caret gutter. Group selectors only for declarations identical in *consequence* for every member, and prefer `background-color`, `padding-left`, etc.
+
+**Raw colour values live in three places only:** `foundation/_colors.scss` (palette, including the `--bt-*-rgb` triplets defined next to their hex), `foundation/_tokens.scss` (shadows, focus rings), and SVG data URIs. Everywhere else references variables. Bootstrap's utilities read the `--bs-*-rgb` triplets; those reference the `--bt-*-rgb` tokens so hex and triplet cannot drift apart again.
 
 ---
 

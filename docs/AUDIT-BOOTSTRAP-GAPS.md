@@ -2,6 +2,8 @@
 
 **Date:** 2026-07-03
 **Bootstrap:** 5.3.3 (jsDelivr CDN, pinned in `server.js`)
+**Status (2026-07-03):** batches 1–4 executed and merged. §1–§2 fixed; §3 done hybrid-style; §4 resolved per decisions below; §5 at zero (guarded); §6.1 deferred (spike on `spike/bootstrap-sass`), §6.2–§6.5 done. Open items live in the two lists at the end of this file.
+
 **Method:** every SCSS partial read; every claim about Bootstrap defaults and variable names verified against the `bootstrap@5.3.3` dist CSS (same version the server injects); class usage cross-checked by scanning all HTML in `templates/`, `elements/`, `patterns/`, `foundations/`, `getting-started/` and all JS in `assets/js/`.
 
 ---

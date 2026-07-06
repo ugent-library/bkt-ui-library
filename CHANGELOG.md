@@ -6,6 +6,20 @@ system, or do I reach for something new?"
 
 ---
 
+## Bootstrap gap audit (v2.2, 2026-07-03)
+
+Full findings in `docs/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
+
+**Fixed bugs:** `.form-select` caret restored (a `background:` shorthand had erased it); `bt-blank-slate` compiled again (its partial was never `@use`d); `--bs-info-rgb` matched to `--bt-blue`; disabled/toggled primary buttons no longer fall back to stock Bootstrap blue; slim-sidebar badge counts hide properly; reduced-motion no longer makes spinners blur.
+
+**Removed:** `bt-btn-toolbar` family (one `bt-toolbar__item` per action inside toolbars, `d-flex gap-2` elsewhere), `bt-avatar--dark`, `btn-outline-white`, `.sr-only`, the `bt-facet-*` classes still lingering in templates, all no-op Bootstrap overrides, `patterns/research-card-backup.html`, `patterns/htmx-patterns.html` (rebuilds with the JS audit), duplicate `elements/toolbar.html`.
+
+**New rules (see AGENT.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
+
+**Added:** `min-w-0`, `bg-success-light`, `--bt-*-rgb` triplet tokens; backoffice surface tokens now work on nested `[data-surface]` containers.
+
+---
+
 ## Breaking change — unified `bt-` prefix (v2.1)
 
 All component classes now use a single `bt-` prefix. The old `bc-` and `c-`
