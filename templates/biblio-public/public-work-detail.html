@@ -1,6 +1,6 @@
 <!-- @title: Urban forests as essential infrastructure — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: files, logged-in, external, no-files -->
+<!-- @states: files, logged-in, restricted, embargo, external, no-files -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,6 +48,16 @@
               <i class="if if-open-access"></i> Open access
             </span>
             <!-- @state -->
+            <!-- @state: restricted -->
+            <span class="badge text-bg-warning">
+              <i class="if if-lock" aria-hidden="true"></i> Restricted
+            </span>
+            <!-- @state -->
+            <!-- @state: embargo -->
+            <span class="badge text-bg-warning">
+              <i class="if if-time" aria-hidden="true"></i> Embargo
+            </span>
+            <!-- @state -->
             <!-- Hide for now <span class="badge text-bg-success">
               <i class="if if-check"></i> Methodology certified
             </span> -->
@@ -84,7 +94,7 @@
                Header download selected server-side (fullText candidates only):
                open+accepted > open+published > open > restricted, PDF-first.
                Shown here: accessible state. Locked variants replace the button with
-               a lock icon + a "Log in for access" login link
+               a lock icon + a "Log in to access" login link
                (restricted, not signed in) or "Available from <date>" (embargoed).
                Login links carry the post-login return URL.
                No fullText file: external full-text link when we have one, else no button. -->
@@ -100,6 +110,17 @@
               <i class="if if-external-link" aria-hidden="true"></i>
               Full Text at Publisher
             </a>
+            <!-- @state -->
+            <!-- @state: restricted -->
+            <button class="btn btn-warning" aria-label="Log in to access: Full text">
+              <i class="if if-lock" aria-hidden="true"></i> Log in to access
+            </button>
+            <!-- @state -->
+            <!-- @state: embargo -->
+            <button class="btn btn-primary" disabled>
+              <i class="if if-time" aria-hidden="true"></i>
+              Under embargo
+            </button>
             <!-- @state -->
             <button type="button" class="btn btn-secondary"
               hx-post="/lists/add"
@@ -118,12 +139,21 @@
             </button> -->
           </div>
           <!-- @state: files logged-in -->
-          <p class="bt-text-xsmall text-muted mt-2">Accepted manuscript &middot; PDF &middot; Open Access &middot; 158.71 KB</p>
+          <p class="small text-muted mt-2">Accepted manuscript &middot; PDF &middot; Open Access &middot; 158.71 KB</p>
+          <!-- @state -->
+          <!-- @state: restricted -->
+          <p class="small text-muted mt-2">Accepted manuscript &middot; PDF &middot; Restricted &middot; 158.71 KB</p>
+          <!-- @state -->
+          <!-- @state: embargo -->
+          <p class="small text-muted mt-2">Full text available from <time datetime="2027-05-01">1.05.2027</time></p>
           <!-- @state -->
           <!-- @state: external -->
           <!-- @state -->
+          <!-- No files, or all files private: same state. The private count
+               renders only when private files exist — visitors learn files
+               exist, never what they are. -->
           <!-- @state: no-files -->
-          <p class="bt-text-xsmall text-muted mt-2">No full text available in Biblio.</p>
+          <p class="small text-muted mt-2">No full text available in Biblio &middot; 2 private files</p>
           <!-- @state -->
         </div>
 
@@ -178,7 +208,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB
+                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB &middot; CC BY 4.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -199,8 +229,8 @@
                       Restricted, embargo
                     </span>
                     Full text &middot; PDF &middot;
-                    <a href="#" aria-label="Log in to access: Published version">Log in for access</a> &middot;
-                    open access from <time datetime="2027-05-01">1 May 2027</time></p>
+                    <a href="#" aria-label="Log in to access: Published version">Log in to access</a> &middot;
+                    open access from <time datetime="2027-05-01">1.05.2027</time></p>
                 </div>
               </li>
 
@@ -213,7 +243,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Supplementary material &middot; XLSX &middot; 2.4 MB
+                    Supplementary material &middot; XLSX &middot; 2.4 MB &middot; CC0 1.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -225,7 +255,7 @@
 
               <!-- restricted, off-campus -->
               <li class="list-group-item d-flex align-items-center gap-3 px-0">
-                <i class="if if-lock" aria-hidden="true"></i>
+                <i class="if if-time" aria-hidden="true"></i>
                 <div class="flex-grow-1 min-w-0">
                   <span>Peer review report</span>
                   <p class="bt-meta-list">
@@ -234,9 +264,15 @@
                       Restricted
                     </span>
                     PDF &middot;
-                    <a href="#" aria-label="Log in to access: Peer review report">Log in for access</a>
+                    <a href="#" aria-label="Log in to access: Peer review report">Log in to access</a>
                   </p>
                 </div>
+              </li>
+
+              <!-- private files: count only — no name, link, size, or type -->
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-lock" aria-hidden="true"></i>
+                <p class="mb-0">1 private file</p>
               </li>
             </ul>
           </section>
@@ -259,7 +295,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB
+                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB &middot; CC BY 4.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -280,7 +316,7 @@
                       Restricted, embargo
                     </span>
                     Full text &middot; Published version &middot; PDF &middot; 1.2 MB &middot;
-                    open access from <time datetime="2027-05-01">1 May 2027</time>
+                    open access from <time datetime="2027-05-01">1.05.2027</time>
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -299,7 +335,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Supplementary material &middot; XLSX &middot; 2.4 MB
+                    Supplementary material &middot; XLSX &middot; 2.4 MB &middot; CC0 1.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -327,6 +363,57 @@
                   <i class="if if-download" aria-hidden="true"></i>
                   Download
                 </a>
+              </li>
+
+              <!-- private files: count only, also for logged-in public visitors -->
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-lock" aria-hidden="true"></i>
+                <p class="mb-0">1 private file</p>
+              </li>
+            </ul>
+          </section>
+          <!-- @state -->
+
+          <!-- Only file is restricted, anonymous viewer: name redacted, login nudge -->
+          <!-- @state: restricted -->
+          <section aria-labelledby="files-heading" class="mb-5">
+            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+            <ul class="list-group list-group-flush list-unstyled mb-0">
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-lock" aria-hidden="true"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <span>Accepted manuscript</span>
+                  <p class="bt-meta-list">
+                    <span class="badge text-bg-warning-light">
+                      <i class="if if-lock" aria-hidden="true"></i>
+                      Restricted
+                    </span>
+                    Full text &middot; PDF &middot;
+                    <a href="#" aria-label="Log in to access: Accepted manuscript">Log in to access</a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </section>
+          <!-- @state -->
+
+          <!-- File is private now, embargo opens it later: type + date, never the name -->
+          <!-- @state: embargo -->
+          <section aria-labelledby="files-heading" class="mb-5">
+            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+            <ul class="list-group list-group-flush list-unstyled mb-0">
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-time" aria-hidden="true"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <span>Full text</span>
+                  <p class="bt-meta-list">
+                    <span class="badge text-bg-warning-light">
+                      <i class="if if-time" aria-hidden="true"></i>
+                      Embargo
+                    </span>
+                    PDF &middot; available from <time datetime="2027-05-01">1.05.2027</time>
+                  </p>
+                </div>
               </li>
             </ul>
           </section>
