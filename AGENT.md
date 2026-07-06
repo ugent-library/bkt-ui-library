@@ -753,6 +753,8 @@ Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any 
 
 ## What to do when uncertain
 
+**About a domain or policy decision:** never invent a rule. Record it as an open question naming the concrete options. These decisions are made with business and development — who exactly (Open Science Policy, reviewers and curators, the dev team) depends on the question; don't assume the route. A prototype with an honest open question beats one with a plausible invented rule.
+
 **About a class name:** search the existing `booktower.css`, the SCSS source and Bootstrap. If I can't confirm it exists, say so and add it to the correct SCSS partial rather than guessing.
 
 **About an icon name:** do not guess. Use a placeholder (`if-[placeholder]`) and flag it explicitly.
