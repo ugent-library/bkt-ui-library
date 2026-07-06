@@ -70,7 +70,7 @@ A template represents its data-dependent variants as **states in one file** — 
 - The `@states` declaration must sit in the leading meta-comment block (with `@title`, `@surface`).
 - A block cannot span another `@state` block; the closing marker is `<!-- @state -->`.
 - The sidebar automatically shows a state button per declared state under the active template.
-- Existing examples: `biblio-researcher/dashboard.html` (`filled, empty, message`), `biblio-public/public-work-detail.html` (`files, no-files`).
+- Existing examples: `biblio-researcher/dashboard.html`, `biblio-public/public-work-detail.html`.
 
 ## Configuration
 
