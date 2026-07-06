@@ -73,6 +73,7 @@ npm run check:a11y-browser   # terminal 2 — page list lives in .pa11yci
 - [Consuming Booktower](docs/CONSUMING-BOOKTOWER.md) — Integration contract for using this library in another app
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [Integration](base/integration.html) — Using the design system in apps
+- [Bootstrap gap audit](docs/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
 - [Coding conventions & AI guidelines](AGENT.md) — **Read before your first change.** HTML/CSS/JS rules, naming ([`bt-`/`u-` prefixes](AGENT.md#naming-conventions)), [Bootstrap-first](AGENT.md#bootstrap-first-check-before-creating-any-new-class), [CSS architecture](AGENT.md#css-architecture--where-styles-live), and the [accessibility checklist](AGENT.md#accessibility-rules). Written AI-first, but the rules apply to everyone.
 
 ## Browser Support
@@ -109,7 +110,7 @@ The design system supports modern browsers that Bootstrap 5 supports:
 For common page layouts, copy from `templates/partials/` and customize. These use only existing CSS classes from the design system:
 
 - `backoffice-overview.html` — Backoffice list view with sidebar, toolbar, filters, facets, and table results (uses `u-layout--app`, `u-main__sidebar`, etc.)
-- `public-works.html` — Public search page with hero, filters, facets, and card results
+- `templates/biblio-public/public-works.html` — Public search page with hero, filters, facets, and card results
 
 These include placeholder content and comments showing where to customize. The full HTML output remains copy-paste friendly for developers.
 
