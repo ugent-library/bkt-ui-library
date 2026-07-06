@@ -23,11 +23,45 @@ Open [http://localhost:3111](http://localhost:3111). Done.
 |---------|-------------|
 | `npm run dev` | Build everything, start server, watch CSS |
 | `npm start` | Start server only (assumes already built) |
-| `npm run build` | Full one-time build: icons + CSS |
+| `npm run build` | Full one-time build: icons + CSS (fails if an SCSS partial isn't imported) |
 | `npm run build:icons` | Rebuild icon font from SVG sources only |
 | `npm run build:css` | Recompile SCSS to CSS only |
+| `npm test` | Run all static checks (see below) |
 
 You only need `build:icons` when you've added or changed an SVG in `assets/icon-font-source/`. Otherwise `npm run dev` is all you ever run.
+
+---
+
+## Tests
+
+```bash
+npm test
+```
+
+Runs four static checks; run it after any template or SCSS editing session:
+
+| Check | Catches |
+|-------|---------|
+| `check:partials` | SCSS partials that exist but aren't `@use`d in `booktower.scss` (component would silently vanish from the compiled CSS) |
+| `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
+| `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
+| `check:a11y` | The house rules from AGENT.md: one `<h1>` per template, `main#main-content`, distinct `aria-label` on every `<nav>`, accessible names on icon-only buttons |
+
+Each check also runs on its own: `npm run check:classes`, etc.
+
+For a browser-grade WCAG scan (contrast, ARIA validity — things static checks can't see):
+
+```bash
+npm i -D pa11y-ci        # once, on your machine
+npm run dev              # terminal 1
+npm run check:a11y-browser   # terminal 2 — page list lives in .pa11yci
+```
+
+---
+
+## Dependencies
+
+`node_modules/` is not committed — `package-lock.json` is the source of truth, and `npm install` reproduces the exact dependency tree from it. If git ever shows changes inside `node_modules/`, something is wrong; don't commit them. Always install dev tools with `npm install -D <pkg>` so they're declared in `package.json` — undeclared packages get deleted by the next `npm install`.
 
 ---
 
