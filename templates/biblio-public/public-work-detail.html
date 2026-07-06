@@ -1,5 +1,6 @@
 <!-- @title: Urban forests as essential infrastructure — Biblio UGent -->
 <!-- @surface: public -->
+<!-- @states: files, no-files -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -42,9 +43,11 @@
           <!-- Status badges -->
           <div class="d-flex flex-wrap gap-2 mb-3">
             <span class="badge text-bg-primary">Journal article</span>
+            <!-- @state: files -->
             <span class="badge text-bg-success">
               <i class="if if-open-access"></i> Open access
             </span>
+            <!-- @state -->
             <!-- Hide for now <span class="badge text-bg-success">
               <i class="if if-check"></i> Methodology certified
             </span> -->
@@ -77,12 +80,20 @@
             <em>Plants People Planet</em> · Vol. 8, No. 1 · 2026 · pp. 14–19
           </p>
 
-          <!-- Primary actions -->
+          <!-- Primary actions.
+               Primary file selected server-side (fullText candidates only):
+               primary flag > open+accepted > open+published > open > restricted, PDF-first.
+               Shown here: accessible state. Locked variants replace the button with
+               a lock icon + a "Log in for access" login link
+               (restricted, not signed in) or "Available from <date>" (embargoed).
+               Login links carry the post-login return URL. No fullText file: no button. -->
           <div class="d-flex align-items-center gap-3">
-            <a href="#" class="btn btn-primary">
+            <!-- @state: files -->
+            <a href="#" class="btn btn-primary" download>
               <i class="if if-download" aria-hidden="true"></i>
               Download Full Text
             </a>
+            <!-- @state -->
             <button type="button" class="btn btn-secondary"
               hx-post="/lists/add"
               hx-vals='{"id":"01K9XTVXD41Z"}'
@@ -99,7 +110,12 @@
               Share
             </button> -->
           </div>
-          <p class="bt-text-xsmall mt-2">PDF &middot; Open Access &middot; 158.71 KB</p>
+          <!-- @state: files -->
+          <p class="bt-text-xsmall text-muted mt-2">Accepted manuscript &middot; PDF &middot; Open Access &middot; 158.71 KB</p>
+          <!-- @state -->
+          <!-- @state: no-files -->
+          <p class="bt-text-xsmall text-muted mt-2">No full text available in Biblio.</p>
+          <!-- @state -->
         </div>
 
         <!-- Sidebar column: heading -->
@@ -138,6 +154,85 @@
             </p>
           </section>
 
+          <!-- Order: fullText first (primary-selection ranking), then other kinds, open before restricted -->
+          <!-- @state: files -->
+          <section aria-labelledby="files-heading" class="mb-5">
+            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+            <ul class="list-group list-group-flush list-unstyled mb-0">
+
+              <!-- fullText, primary (also served by the header download button) -->
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-file" aria-hidden="true"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <span>depauw-2026-urban-forests-accepted.pdf</span>
+                  <p class="bt-meta-list">
+                    <span class="badge text-bg-success-light">
+                      <i class="if if-open-access"></i> Open access
+                    </span>
+                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB
+                  </p>
+                </div>
+                <a href="#" download class="btn btn-secondary btn-sm"
+                  aria-label="Download: depauw-2026-urban-forests-accepted.pdf">
+                  <i class="if if-download" aria-hidden="true"></i>
+                  Download
+                </a>
+              </li>
+
+              <!-- fullText, lost primary selection; embargoed: restricted until change.on, then open -->
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-time" aria-hidden="true"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <span>Published version</span>
+                  <p class="bt-meta-list">
+                    <span class="badge text-bg-warning-light">
+                      <i class="if if-time" aria-hidden="true"></i>
+                      Restricted, embargo
+                    </span>
+                    Full text &middot; PDF &middot;
+                    <a href="#" aria-label="Log in to access: Published version">Log in for access</a> &middot;
+                    open access from <time datetime="2027-05-01">1 May 2027</time></p>
+                </div>
+              </li>
+
+              <!-- open -->
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-file" aria-hidden="true"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <span>urban-forests-supplementary-data.xlsx</span>
+                  <p class="bt-meta-list">
+                    <span class="badge text-bg-success-light">
+                      <i class="if if-open-access"></i> Open access
+                    </span>
+                    Supplementary material &middot; XLSX &middot; 2.4 MB
+                  </p>
+                </div>
+                <a href="#" download class="btn btn-secondary btn-sm"
+                  aria-label="Download: urban-forests-supplementary-data.xlsx">
+                  <i class="if if-download" aria-hidden="true"></i>
+                  Download
+                </a>
+              </li>
+
+              <!-- restricted, off-campus -->
+              <li class="list-group-item d-flex align-items-center gap-3 px-0">
+                <i class="if if-lock" aria-hidden="true"></i>
+                <div class="flex-grow-1 min-w-0">
+                  <span>Peer review report</span>
+                  <p class="bt-meta-list">
+                    <span class="badge text-bg-warning-light">
+                      <i class="if if-time" aria-hidden="true"></i>
+                      Restricted
+                    </span>
+                    PDF &middot;
+                    <a href="#" aria-label="Log in to access: Peer review report">Log in for access</a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </section>
+          <!-- @state -->
+
           <!-- Related research — HTMX loaded
            Top 3 matches by keyword similarity. Similar keywords are highlighted in the list. Clicking the "More" link takes the user to a filtered search results page with all related research output. TBD: can we filter by "or" in the search results page?-->
           <section aria-labelledby="related-heading" class="mb-5">
@@ -161,8 +256,10 @@
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
               <dd class="col-sm-9 mb-0"><a href="https://doi.org/10.1002/ppp3.70125">10.1002/ppp3.70125</a></dd>
 
+              <!-- @state: files -->
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">License</dt>
               <dd class="col-sm-9 mb-0"><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></dd>
+              <!-- @state -->
 
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Language</dt>
               <dd class="col-sm-9 mb-0">English</dd>
