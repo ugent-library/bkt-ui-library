@@ -12,7 +12,7 @@ module.exports = function renderPeopleList() {
       <article class="card mb-3" aria-labelledby="person-kd">
         <div class="card-body p-4">
           <h3 class="h5 mb-1">
-            <a href="/persons/01K9XTVXD41Z" id="person-kd" class="text-decoration-none">De Pauw, Karen</a>
+            <a href="/templates/biblio-public/public-researcher-detail.html" id="person-kd" class="text-decoration-none">Karen De Pauw</a>
           </h3>
 
           <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small" aria-label="Identifiers for Karen De Pauw">
@@ -55,7 +55,7 @@ module.exports = function renderPeopleList() {
       <article class="card mb-3" aria-labelledby="person-ld">
         <div class="card-body p-4">
           <h3 class="h5 mb-1">
-            <a href="/persons/01K9XTVXD42A" id="person-ld" class="text-decoration-none">Desmet, Lore</a>
+            <a href="/templates/biblio-public/public-researcher-detail.html" id="person-ld" class="text-decoration-none">Lore Desmet</a>
           </h3>
 
           <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small" aria-label="Identifiers for Lore Desmet">
@@ -102,7 +102,7 @@ module.exports = function renderPeopleList() {
       <article class="card mb-3" aria-labelledby="person-kr">
         <div class="card-body p-4">
           <h3 class="h5 mb-1">
-            <a href="/persons/01K9XTVXD43B" id="person-kr" class="text-decoration-none">Raes, Katleen</a>
+            <a href="/templates/biblio-public/public-researcher-detail.html" id="person-kr" class="text-decoration-none">Katleen Raes</a>
           </h3>
 
           <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4 small" aria-label="Identifiers for Katleen Raes">

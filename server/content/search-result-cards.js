@@ -22,7 +22,7 @@ module.exports = function renderSearchResultCards() {
     <h3 id="search-result-1" class="bt-work-card__title">
       <a href="/templates/biblio-public/public-work-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
     </h3>
-    <p class="bt-work-card__authors">Esperon-Rodriguez, M., Arndt, S., De Pauw, K. <span class="text-muted">et al.</span></p>
+    <p class="bt-work-card__authors">Karen De Pauw, Manuel Esperon-Rodriguez, Stefan K. Arndt <span class="text-muted">et al.</span></p>
     <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Plants People Planet</a></p>
   </div>
 </article>
@@ -47,7 +47,7 @@ module.exports = function renderSearchResultCards() {
     <h3 id="search-result-2" class="bt-work-card__title">
       <a href="/templates/biblio-public/public-work-detail.html">Urban tree canopy cover measurements Belgium 2020–2025</a>
     </h3>
-    <p class="bt-work-card__authors">De Pauw, K., Maes, J.</p>
+    <p class="bt-work-card__authors">Karen De Pauw, Jonas Maes</p>
     <p class="bt-work-card__pub"><span>2026</span><span class="text-muted mx-1">·</span><a href="#">Zenodo</a></p>
   </div>
 </article>`;

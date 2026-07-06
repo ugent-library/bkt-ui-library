@@ -65,16 +65,11 @@
 .if--xxl { font-size: var(--bt-text-2xl);  }   /* 36px — hero / illustration icons  */
 
 /*
-  Icons inside plain <a> links
-  ─────────────────────────────
-  Handled automatically via a:has(> .if) in _typography.scss.
-  Any <a> with a direct .if child becomes inline-flex — no extra class needed.
+  Icons inside plain <a> links — styled by a > .if in _typography.scss.
+  Keep icon and text flush; whitespace inside an underlined link gets underlined.
 
   Example:
-    <a href="/download">
-      <i class="if if-download" aria-hidden="true"></i>
-      Download PDF
-    </a>
+    <a href="/download"><i class="if if-download" aria-hidden="true"></i>Download PDF</a>
 
   Do NOT add .if to .btn — buttons are already inline-flex.
 */

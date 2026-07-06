@@ -671,20 +671,9 @@ p.small {
   font-size: var(--bt-text-xs);
 }
 
-/*
-  Icons inside links — automatic alignment via :has()
-  ───────────────────────────────────────────────
-  <a> is display:inline by default. An icon inside it sits on the text
-  baseline and can’t be vertically centred. :has() lets us fix this
-  automatically — any <a> containing a direct .if child gets inline-flex.
-  No extra class needed on the HTML.
-
-  Baseline 2023: Chrome 105+, Firefox 121+, Safari 15.4+
-*/
-a:has(> .if) {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--bt-sp-1);
+a > .if {
+  vertical-align: middle;
+  margin-right: var(--bt-sp-1);
 }
 
 code {
@@ -3789,16 +3778,11 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   font-size: var(--bt-text-2xl);
 } /* 36px — hero / illustration icons  */
 /*
-  Icons inside plain <a> links
-  ─────────────────────────────
-  Handled automatically via a:has(> .if) in _typography.scss.
-  Any <a> with a direct .if child becomes inline-flex — no extra class needed.
+  Icons inside plain <a> links — styled by a > .if in _typography.scss.
+  Keep icon and text flush; whitespace inside an underlined link gets underlined.
 
   Example:
-    <a href="/download">
-      <i class="if if-download" aria-hidden="true"></i>
-      Download PDF
-    </a>
+    <a href="/download"><i class="if if-download" aria-hidden="true"></i>Download PDF</a>
 
   Do NOT add .if to .btn — buttons are already inline-flex.
 */

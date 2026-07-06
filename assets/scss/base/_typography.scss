@@ -137,20 +137,10 @@ p.small {
   font-size: var(--bt-text-xs);
 }
 
-/*
-  Icons inside links — automatic alignment via :has()
-  ───────────────────────────────────────────────
-  <a> is display:inline by default. An icon inside it sits on the text
-  baseline and can’t be vertically centred. :has() lets us fix this
-  automatically — any <a> containing a direct .if child gets inline-flex.
-  No extra class needed on the HTML.
-
-  Baseline 2023: Chrome 105+, Firefox 121+, Safari 15.4+
-*/
-a:has(> .if) {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--bt-sp-1);
+// Inline <a> + margin, not flex + whitespace: both paint the underline under icons
+a > .if {
+  vertical-align: middle;
+  margin-right: var(--bt-sp-1);
 }
 
 // Code
