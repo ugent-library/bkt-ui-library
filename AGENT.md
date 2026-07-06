@@ -452,6 +452,11 @@ Behavioural rules: section D above, plus C6 (progressive enhancement).
 Unique here: all `hx-*` URLs in templates are stubs — documentation of
 intent, not working code.
 
+### Template states
+Data-dependent variants of a template (empty, no-files, filled&hellip;) are **states
+inside the one template file**, never separate files. Syntax and behaviour:
+`docs/SERVER.md` → Template states.
+
 ### Structured data
 Public-facing record pages must include `<script type="application/ld+json">` with schema.org markup. Minimum for a research output:
 - `@type: "ScholarlyArticle"` (or `Dataset`, `SoftwareSourceCode` etc.)

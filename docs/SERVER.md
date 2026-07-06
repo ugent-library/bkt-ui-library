@@ -49,6 +49,28 @@ This makes it possible to run a **second instance alongside a server you already
 
 - `?partial=true`: Returns HTML without shell chrome (for HTMX swaps).
 - `?view=html`: Displays the page's HTML source code with syntax highlighting and a copy button.
+- `?state=<name>`: Renders one named state of a template (see Template states).
+
+## Template states
+
+A template represents its data-dependent variants as **states in one file** — never as separate template files.
+
+```html
+<!-- @states: files, no-files -->        ← declared once at the top of the file
+
+<!-- @state: files -->
+&hellip;markup shown only in the files state&hellip;
+<!-- @state -->
+
+<!-- @state: files message -->           ← a block can belong to several states
+```
+
+- `?state=<name>` keeps matching `@state` blocks (wrapper comments stripped) and removes the rest.
+- Without `?state=`, the **first declared state** renders — declare the default state first.
+- The `@states` declaration must sit in the leading meta-comment block (with `@title`, `@surface`).
+- A block cannot span another `@state` block; the closing marker is `<!-- @state -->`.
+- The sidebar automatically shows a state button per declared state under the active template.
+- Existing examples: `biblio-researcher/dashboard.html` (`filled, empty, message`), `biblio-public/public-work-detail.html` (`files, no-files`).
 
 ## Configuration
 

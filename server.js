@@ -93,14 +93,11 @@ const SECTIONS = [
   { dir: 'product',     label: 'product'     },
 ];
 
-// ─── Read @states from top of a template file (cheap, first few lines only) ──
+// ─── Read @states from a template file (nav scan) ────────────────────────────
 function getStateList(filePath) {
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
-    const lines = content.split('\n').slice(0, 10).join('\n');
-    const m = lines.match(/<!--\s*@states\s*:\s*([^\-]+?)\s*-->/);
-    if (!m) return [];
-    return m[1].split(',').map(s => s.trim()).filter(Boolean);
+    const raw = fs.readFileSync(filePath, 'utf8');
+    return parseMetaAndBody(raw, filePath).meta.stateList || [];
   } catch {
     return [];
   }
