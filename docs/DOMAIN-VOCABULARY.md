@@ -96,19 +96,19 @@ A named, serializable unit of state change within a Revision. Examples: `SetTitl
 
 ## Access and file concepts
 
-### Access kind
-Describes who can access the full text of a file. Access is **per-file**, not per-work.
+### Visibility
+Describes who can access a file. Per-file, not per-work. Field and values are raven's (`raven/docs/metadata-work-fields.md` → Files); records carry their own `visibility` with the same values.
 
 | Value | Label | Badge |
 |-------|-------|-------|
-| `open` | Open access | `badge text-bg-success` |
+| `public` | Open access | `badge text-bg-success` |
 | `restricted` | Restricted | `badge text-bg-warning` |
-| `closed` | Closed | no badge shown |
+| `private` | — | never listed publicly |
 
-In summary views (cards, table rows), show the most permissive access level across all files on the work.
+In summary views (cards, table rows), show the most permissive visibility across all files on the work.
 
 ### Embargo
-A file can be under embargo: restricted now, automatically becoming open after `embargo_until`. The transition is applied by a background job. In the deposit form: the submitter chooses "Under embargo" as the OA status and sets a release date. After the embargo lifts, the dates are kept as a bibliographic record.
+A file can be under embargo: `lift_embargo_on` (release date) paired with `visibility_after_embargo` — restricted now, switching automatically on the date. The transition is applied by a background job. In the deposit form: the submitter chooses "Under embargo" as the OA status and sets a release date. After the embargo lifts, the dates are kept as a bibliographic record.
 
 ---
 
@@ -290,11 +290,11 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `draft` | `badge text-bg-warning` | Yellow |
 | `deleted` | not rendered in normal lists | — |
 
-| Access kind | Badge |
-|-------------|-------|
-| `open` | `badge text-bg-success` |
+| Visibility | Badge |
+|------------|-------|
+| `public` | `badge text-bg-success` |
 | `restricted` | `badge text-bg-warning` |
-| `closed` | no badge |
+| `private` | never listed publicly |
 
 Work kind is always `badge text-bg-primary` (blue).
 
