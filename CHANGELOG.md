@@ -14,6 +14,32 @@ Full findings in `docs/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
 
 **Removed:** `bt-btn-toolbar` family (one `bt-toolbar__item` per action inside toolbars, `d-flex gap-2` elsewhere), `bt-avatar--dark`, `btn-outline-white`, `.sr-only`, the `bt-facet-*` classes still lingering in templates, all no-op Bootstrap overrides, `patterns/research-card-backup.html`, `patterns/htmx-patterns.html` (rebuilds with the JS audit), duplicate `elements/toolbar.html`.
 
+### Removed during v2 development — migration map
+
+Classes that existed at some point in v2 (or were documented as if they did) and are gone. `npm test` fails on any use of an undefined class; this table answers "what do I use instead". The OLD→v2 tables below cover the old `bc-`/`c-` system; this covers v2's own churn.
+
+| Removed | Use instead |
+|---------|-------------|
+| `bt-btn-toolbar`, `--wide-spacing`, `--vertical` | One `bt-toolbar__item` per action inside `bt-toolbar`; `d-flex align-items-center gap-2` elsewhere |
+| `bt-facets`, `bt-facet-name`, `bt-facet-check`, `bt-facet-count`, `bt-facet-separator`, `bt-facet-sep` | `fieldset`/`legend` + `d-flex form-check` rows, count as `badge bg-transparent`, plain `<hr>` between groups |
+| `bt-avatar--dark` | Base `bt-avatar` (already the dark chip) |
+| `btn-outline-white` | Nothing — design a dark-surface button when one is needed |
+| `sr-only` | Bootstrap's `visually-hidden` |
+| `bt-navbar__mark` | `bt-navbar__brand` |
+| `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` | `bt-sidebar` and its elements |
+| `bt-blank-slate-default/-muted/-primary` (single dash) | `bt-blank-slate--default/--muted/--primary` |
+| `bt-table` | Bootstrap `.table .table-hover .align-middle` |
+| `bt-filter-bar`, `bt-bulk-bar`, `bt-pagination-bar` | `bt-toolbar` |
+| `bt-results-toolbar` | `bt-toolbar bt-toolbar--bordered` |
+| `bt-results-col`, `bt-content-area`, `bt-facets-col` | `u-main__content` / `u-main__body--split` layout contract |
+| `bt-sub-sidebar`, `--bordered`, `--slim` | `bt-sidebar` and its modifiers |
+| `bt-stepper` family | Not part of this library |
+| `card--work`, `card-research`, `card-meta`, `card-actions`, `card-title`, `card-authors`, `card-publication` | `bt-work-card` with Bootstrap `card-header`/`card-body`/`card-footer` |
+| `is-selected` on `<tr>` | Bootstrap `.table-active` |
+| `td-title`, `td-meta`, `td-actions`, `td-actions-inner`, `row-actions` | Bootstrap utilities directly |
+| `u-scroll-wrapper`, `u-scroll-wrapper__body`, `u-maximize-height` | The `u-layout--app` / `u-main__*` shell |
+| `.bt-toolbar.h-auto` state hook | `align-items-start` where needed |
+
 **New rules (see AGENT.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
 
 **Added:** `min-w-0`, `bg-success-light`, `--bt-*-rgb` triplet tokens; backoffice surface tokens now work on nested `[data-surface]` containers.
@@ -150,12 +176,10 @@ is unchanged.
 | `bc-toolbar-title` | `bt-toolbar__title` | 🔧 Revised | Surface-aware: light weight in public, sans 500 in backoffice. |
 | `bc-toolbar-item` | `bt-toolbar__item` | ✅ Carried over | Spacing unit within toolbar halves. Active in `_booktower-toolbar.scss`. |
 | `bc-toolbar-sm` | ⏳ | ⏳ Planned | Compact height variant. |
-| `bc-toolbar--auto` | Bootstrap `h-auto` | 🔄 Renamed | Use Bootstrap utility. |
+| `bc-toolbar--auto` | `align-items-start` | 🔄 Renamed | Use Bootstrap utility (the interim `.bt-toolbar.h-auto` hook was removed in v2.2). |
 | `bc-toolbar--top` | Bootstrap `align-items-start` | 🔄 Renamed | Use Bootstrap utility. |
 | `bc-toolbar-lg-responsive` etc. | ⏳ | ⏳ Planned | Responsive stack variants — may be handled differently in v2. |
-| `c-button-toolbar` | `bt-btn-toolbar` | ✅ Carried over | Active. |
-| `c-button-toolbar--wide-spacing` | `bt-btn-toolbar--wide-spacing` | ✅ Carried over | |
-| `c-button-toolbar--vertical` | `bt-btn-toolbar--vertical` | ✅ Carried over | |
+| `c-button-toolbar` family | — | ❌ Retired (v2.2) | Briefly lived on as `bt-btn-toolbar`, removed 2026-07-03. One `bt-toolbar__item` per action inside toolbars; `d-flex gap-2` elsewhere. |
 
 ---
 

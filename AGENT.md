@@ -504,8 +504,7 @@ Note: `bt-avatar` combined with a Bootstrap background utility (`.bg-primary`,
 `.bg-success`, `.bg-warning`, `.bg-danger`) automatically forces white text and
 icon colour. No extra class needed for coloured initials chips.
 On a `<button>`, use `bt-avatar` alone — never together with `.btn`; the
-avatar owns its own button reset. `bt-avatar--dark` was removed (it was one
-blue step from the base avatar plus an invisible border).
+avatar owns its own button reset. `bt-avatar--dark` was removed.
 
 **Hero (public surface)**
 ```
@@ -743,45 +742,13 @@ form-control-search
 Pill-shaped search input with an inset magnifier glyph. Use on standalone
 search fields outside of `bt-toolbar` and outside of `input-group--hero`.
 
-### Classes that no longer exist — do not use
+### Classes that no longer exist
 
-```
-app-sidebar             app-sidebar-link        app-sidebar-label
-bt-navbar__mark
-bt-avatar--dark          (removed — base bt-avatar is already the dark chip)
-btn-outline-white        (removed — design a dark-surface button when one is needed)
-sr-only                  (use Bootstrap's visually-hidden)
-bt-facet-check  bt-facet-name  bt-facet-count  bt-facet-separator
-                         (removed — d-flex form-check rows inside fieldset/legend,
-                          count as badge bg-transparent, plain <hr> between groups)
-bt-blank-slate-default   (replaced by bt-blank-slate--default)
-bt-blank-slate-muted     (replaced by bt-blank-slate--muted)
-bt-blank-slate-primary   (replaced by bt-blank-slate--primary)
-bt-table                 (use Bootstrap .table .table-hover .align-middle)
-bt-btn-toolbar           bt-btn-toolbar--wide-spacing  bt-btn-toolbar--vertical
-                         (removed — one bt-toolbar__item per action, or d-flex gap-2)
-bt-filter-bar            (use bt-toolbar)
-bt-bulk-bar              (use bt-toolbar)
-bt-pagination-bar        (use bt-toolbar)
-bt-results-toolbar       (use bt-toolbar bt-toolbar--bordered)
-bt-results-col           (removed — use u-main__content)
-bt-sub-sidebar           bt-sub-sidebar--bordered  bt-sub-sidebar--slim
-                         (removed — replaced by bt-sidebar and its modifiers)
-bt-stepper               bt-stepper__item         bt-stepper__item--done
-bt-stepper__num          bt-stepper__label        bt-stepper__required
-                         (stepper is not part of this library)
-card--work  card-research  card-meta  card-actions  card-title  card-authors  card-publication
-                         (replaced by bt-work-card)
-is-selected on <tr>     (use Bootstrap .table-active)
-td-title  td-meta  td-actions  td-actions-inner  row-actions   (use Bootstrap utilities directly)
-u-scroll-wrapper        u-scroll-wrapper__body  (OLD layout system, removed)
-u-maximize-height       (OLD layout utility removed)
-bt-facets                (removed — old custom CSS grid, replaced by Bootstrap fieldset/collapse)
-bt-facet-name            (removed)
-bt-facet-separator       (removed — use a plain <hr> and spacing utilities)
-bt-content-area          bt-facets-col            bt-results-col
-                         (removed — use u-main__body--split with u-main__sidebar / u-main__content)
-```
+Old and removed classes are not documented here — that is old knowledge, and
+it lives where history lives: `CHANGELOG.md` has the OLD→v2 migration tables
+and the "Removed during v2 development" map with replacements. If I write a
+class that no stylesheet defines, `npm test` fails and the changelog tells me
+what replaced it.
 
 ### Icon names — verified source of truth
 Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any `if-[name]` not present in that file.
