@@ -470,11 +470,12 @@ This is the most common mistake I make. I produce plausible-looking class names 
 
 ### Complete verified class list (ground truth — cross-checked against SCSS source)
 
-This list is machine-checkable: `npm run check:classes` reports classes used in
-HTML that no stylesheet defines and booktower classes used nowhere (drive both
-to zero). `npm run check:partials` runs inside `npm run build` and fails it when
-an SCSS partial exists that `booktower.scss` doesn't `@use` — a component can no
-longer silently vanish from the compiled CSS.
+This list is machine-checkable: `npm test` runs all static checks (see the
+README's Tests section). The two that guard this list: `check:classes` reports
+classes used in HTML that no stylesheet defines and booktower classes used
+nowhere — drive both to zero. `check:partials` also runs inside `npm run build`
+and fails it when an SCSS partial exists that `booktower.scss` doesn't `@use`,
+so a component can no longer silently vanish from the compiled CSS.
 
 **Navigation & topbar**
 ```
