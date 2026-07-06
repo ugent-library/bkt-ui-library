@@ -72,6 +72,12 @@ body,
   --bs-body-font-family: var(--s-body-font);
   --bs-body-font-size:   var(--s-body-size);
   --bs-body-line-height: var(--s-body-leading);
+
+  /* .text-muted reads --bs-secondary-color. Declared per surface block, not
+     inherited: var() resolves where the custom property is declared, so a
+     body-level bridge would freeze the backoffice value for nested surfaces. */
+  --bs-secondary-color:     var(--s-text-muted);
+  --bs-secondary-color-rgb: var(--bt-gray-550-rgb);
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
@@ -91,6 +97,9 @@ body,
   --s-link-hover-color:     var(--bt-blue-600);
   --s-bg-dark:              var(--bt-blue-800);
   --s-topbar-height:        var(--bt-sp-16);
+  --s-text-muted:           var(--bt-blue-gray-550); /* cool muted — gray with a hint of brand blue */
+  --bs-secondary-color:     var(--s-text-muted);
+  --bs-secondary-color-rgb: var(--bt-blue-gray-550-rgb);
 }
 
 /* ── Surface boundaries apply their own text properties ─────────────────────── */

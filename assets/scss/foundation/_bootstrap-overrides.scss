@@ -34,9 +34,8 @@
   --bs-border-radius-lg: var(--bt-radius-lg);
   --bs-border-radius-xl: var(--bt-radius-xl);
 
-  /* Secondary / muted text */
-  --bs-secondary-color:     var(--bt-text-muted);
-  --bs-secondary-color-rgb: var(--bt-gray-550-rgb);
+  /* Secondary / muted text (--bs-secondary-color) is surface-aware —
+     bridged per surface block in _surfaces.scss. */
 
   /* Theme colours — only the -rgb triplets: the prebuilt CSS reads them in
      utilities (.text-*, .bg-*); the non-rgb --bs-primary etc. are consumed by
@@ -128,4 +127,8 @@
   --bs-breadcrumb-margin-bottom: var(--bt-sp-2);
   --bs-breadcrumb-font-size: var(--bt-text-sm);
   --bs-breadcrumb-item-active-color: var(--bt-gray-900);
+}
+
+.list-group {
+  --bs-list-group-bg: transparent;
 }
