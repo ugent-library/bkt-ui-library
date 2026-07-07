@@ -48,6 +48,21 @@ The system is HTMX-first, Bootstrap-based, semantically correct HTML, progressiv
 
 ---
 
+## What lives where
+
+Four tools, one lane each. Don't duplicate one in another.
+
+| Tool | Owns |
+|------|------|
+| **ProductBoard** | Demand and priority — user needs and feedback, feature requests, the problem a page solves, roadmap status. The *why at the user-need level*. |
+| **booktower-ui-library** (this repo) | The prototype and the design system — HTML, CSS classes, layout and interaction, the UI *how*. Concepts are prototyped here, not defined here. |
+| **Raven** | The backend and the source of truth for the domain model — schema, field registry, work/organization/project catalogs, subtypes. What a concept *is*. |
+| **GitHub issues** (raven repo) | The build — implementation scope and acceptance criteria, following raven's issue → branch → commit → PR chain. Drafted with the `biblio-issue-writer` skill. |
+
+The flow: demand starts in ProductBoard → gets prototyped here → domain concepts get modelled in Raven → work is tracked as GitHub issues. See raven's `CLAUDE.md` for the backend and git rules.
+
+---
+
 ## The surface system
 
 Every layout container must carry `data-surface="public"` or `data-surface="backoffice"`. This is not optional decoration — it activates surface tokens that change typography, density, and visual weight throughout the component tree.
@@ -434,18 +449,10 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 ## HTML patterns I must follow
 
 ### Semantic structure
-- One `<h1>` per page, logical heading hierarchy underneath
-- `<main id="main-content">` on every page, targeted by the skip link
-- `<nav aria-label="...">` when multiple navs coexist on a page
-- `<article>` for self-contained records (a research output card is an article)
-- `<aside aria-label="...">` for facet sidebars and supplementary panels
+Rules: section A above (page structure), H1 (record cards).
 
 ### Forms
-- Every `<input>` has an associated `<label>` — `placeholder` is never the label
-- Required fields use the `required` attribute, not just a visual asterisk
-- Error messages use `aria-describedby` to associate with their field
-- Personal data fields carry appropriate `autocomplete` attributes
-- Grouped radio/checkbox controls use `<fieldset>` and `<legend>`
+Rules: section C above.
 
 ### HTMX
 Behavioural rules: section D above, plus C6 (progressive enhancement).
@@ -626,15 +633,11 @@ htmx-indicator          htmx-swapping           htmx-settling
 
 **Badges**
 
-Colour a badge with Bootstrap's `text-bg-*` helper, never `bg-*` + `text-*`.
-`text-bg-*` sets background and a contrasting foreground together; the overrides
-in `_badges.scss` swap in Booktower tokens. Using bare `bg-info` (etc.) on a
-badge skips the override and falls back to stock Bootstrap colour — a silent bug.
-Do not add `text-white`/`text-dark` to a badge; the `text-bg-*` class owns the
-foreground. Icons inherit the badge colour — no per-icon rule needed. The token
-overrides in `_badges.scss` use `!important` because Bootstrap's `.text-bg-*`
-helper sets its colour/background with `!important`; do not remove it or the
-stock Bootstrap colours reappear.
+Colour with `text-bg-*`, never `bg-*` + `text-*` — the latter skips the
+`_badges.scss` token overrides and silently falls back to stock Bootstrap colour.
+`text-bg-*` owns the foreground, so don't add `text-white`/`text-dark`; icons
+inherit it. The overrides use `!important` to beat Bootstrap's own `!important`
+on `.text-bg-*` — don't remove it.
 ```
 badge.text-bg-primary        badge.text-bg-primary-light
 badge.text-bg-success        badge.text-bg-success-light
@@ -644,19 +647,15 @@ badge.text-bg-info           badge.text-bg-info-light      (submitted status —
 badge.text-bg-secondary      badge.text-bg-light           (neutral: gray-50 fill, dark text — needs .border to be visible on white)
 badge.bg-transparent         badge.badge--outline          badge--total
 ```
-Solid badges use white text on dark-enough backgrounds to clear WCAG AA
-(success = green-700, danger = red-600 — their 500/600 steps fail with white).
-Warning is the one exception: white can't pass on any amber, so it uses dark
-text (gray-1000) on bright orange-500 — the same dark-on-amber pattern Bootstrap
-uses. Badge size is fixed at `--bt-text-xs` (12px) via `--bs-badge-font-size`,
-not Bootstrap's default `.75em` — the em default shrinks to 9px inside small
-containers like `bt-meta-list` and drifts when standalone.
+Solid badges need a dark-enough background to clear WCAG AA with white text —
+success uses green-700, danger red-600 (their 500/600 steps fail). Warning is the
+exception: no amber passes with white, so it's dark text on orange-500. Size is
+fixed at `--bt-text-xs` (12px), not Bootstrap's `.75em`, which shrinks to 9px
+inside `bt-meta-list`.
 
-The neutral / metadata badge (counts, affiliation labels, codes, roles) is
-`badge text-bg-light border`, used ~36×. Left as a utility composition, not a
-dedicated class. `text-bg-light` stays borderless by default (deliberate — do
-not bake a border into the class); add `.border` per use when the gray-50 chip
-needs to stand out on a white background.
+The neutral / metadata badge (counts, codes, roles) is `badge text-bg-light
+border` — a utility composition, not its own class. `text-bg-light` is borderless
+by default; add `.border` when the chip needs to stand out on white.
 
 **Buttons**
 `btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap
@@ -762,6 +761,8 @@ Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any 
 ## What to do when uncertain
 
 **About a domain or policy decision:** never invent a rule. Record it as an open question naming the concrete options. These decisions are made with business and development — who exactly (Open Science Policy, reviewers and curators, the dev team) depends on the question; don't assume the route. A prototype with an honest open question beats one with a plausible invented rule.
+
+**About whether a concept should be modelled:** the prototype is not where domain concepts get defined — Raven is. Before inventing a field, status, or entity in a prototype, check whether Raven's schema, field registry, or catalogs already cover it. If it's genuinely new or ambiguous, flag it as an open question for a design discussion so it lands in Raven, not ad hoc in the prototype.
 
 **About a class name:** search the existing `booktower.css`, the SCSS source and Bootstrap. If I can't confirm it exists, say so and add it to the correct SCSS partial rather than guessing.
 
