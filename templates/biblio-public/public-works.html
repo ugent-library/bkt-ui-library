@@ -109,37 +109,6 @@
 
       <aside class="col-lg-3" aria-label="Filter results">
 
-        <!-- Access and files -->
-        <fieldset>
-          <legend class="form-label h6 mb-2">Access and files</legend>
-          <div class="d-flex form-check">
-            <input class="form-check-input me-2" type="checkbox" id="f-oa" checked
-              aria-label="Open access (142 results)">
-            <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
-            <span class="text-muted small" aria-hidden="true">142</span>
-          </div>
-          <div class="d-flex form-check">
-            <input class="form-check-input me-2" type="checkbox" id="f-embargo"
-              aria-label="Under embargo (11 results)">
-            <label class="form-check-label flex-grow-1" for="f-embargo">Under embargo</label>
-            <span class="text-muted small" aria-hidden="true">11</span>
-          </div>
-          <div class="d-flex form-check">
-            <input class="form-check-input me-2" type="checkbox" id="f-restricted"
-              aria-label="Restricted (37 results)">
-            <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
-            <span class="text-muted small" aria-hidden="true">37</span>
-          </div>
-          <div class="d-flex form-check">
-            <input class="form-check-input me-2" type="checkbox" id="f-hasfile"
-              aria-label="Has full text (166 results)">
-            <label class="form-check-label flex-grow-1" for="f-hasfile">Has full text</label>
-            <span class="text-muted small" aria-hidden="true">166</span>
-          </div>
-        </fieldset>
-
-        <hr>
-
         <!-- Type -->
         <fieldset>
           <legend class="form-label h6 mb-2">Type</legend>
@@ -163,16 +132,10 @@
           </div>
           <div class="collapse" id="type-more">
             <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="f-book-chapter"
+              <input class="form-check-input me-2" type="checkbox" id="f-book-part"
                 aria-label="Book chapter (12 results)">
-              <label class="form-check-label flex-grow-1" for="f-book-chapter">Book chapter</label>
+              <label class="form-check-label flex-grow-1" for="f-book-part">Book chapter</label>
               <span class="text-muted small" aria-hidden="true">12</span>
-            </div>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="f-dissertation"
-                aria-label="Dissertation (8 results)">
-              <label class="form-check-label flex-grow-1" for="f-dissertation">Dissertation</label>
-              <span class="text-muted small" aria-hidden="true">8</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-book"
@@ -181,9 +144,21 @@
               <span class="text-muted small" aria-hidden="true">6</span>
             </div>
             <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="f-software"
-                aria-label="Software (4 results)">
-              <label class="form-check-label flex-grow-1" for="f-software">Software</label>
+              <input class="form-check-input me-2" type="checkbox" id="f-doctoral-thesis"
+                aria-label="Doctoral thesis (8 results)">
+              <label class="form-check-label flex-grow-1" for="f-doctoral-thesis">Doctoral thesis</label>
+              <span class="text-muted small" aria-hidden="true">8</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-preprint"
+                aria-label="Preprint (5 results)">
+              <label class="form-check-label flex-grow-1" for="f-preprint">Preprint</label>
+              <span class="text-muted small" aria-hidden="true">5</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-report"
+                aria-label="Report (4 results)">
+              <label class="form-check-label flex-grow-1" for="f-report">Report</label>
               <span class="text-muted small" aria-hidden="true">4</span>
             </div>
           </div>
@@ -192,6 +167,64 @@
             aria-expanded="false" aria-controls="type-more">
             More types <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
           </button>
+        </fieldset>
+
+        <hr>
+
+        <!-- Access -->
+        <fieldset>
+          <legend class="form-label h6 mb-2">Full text access</legend>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-oa" checked
+              aria-label="Open access (142 results)">
+            <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
+            <span class="text-muted small" aria-hidden="true">142</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-embargo"
+              aria-label="Under embargo (11 results)">
+            <label class="form-check-label flex-grow-1" for="f-embargo">Under embargo</label>
+            <span class="text-muted small" aria-hidden="true">11</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-restricted"
+              aria-label="Restricted (37 results)">
+            <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
+            <span class="text-muted small" aria-hidden="true">37</span>
+          </div>
+        </fieldset>
+
+        <hr>
+
+        <!-- Full text version — derived from the hosted full_text file's
+             publication_version (COAR). Describes what you can read here,
+             not the work's status at the publisher. -->
+        <fieldset>
+          <legend class="form-label h6 mb-2">Full text version</legend>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-fv-any"
+              aria-label="Has full text (166 results)">
+            <label class="form-check-label flex-grow-1" for="f-fv-any">Any</label>
+            <span class="text-muted small" aria-hidden="true">198</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-fv-published"
+              aria-label="Published version (121 results)">
+            <label class="form-check-label flex-grow-1" for="f-fv-published">Published version</label>
+            <span class="text-muted small" aria-hidden="true">121</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-fv-accepted"
+              aria-label="Accepted version (58 results)">
+            <label class="form-check-label flex-grow-1" for="f-fv-accepted">Accepted version</label>
+            <span class="text-muted small" aria-hidden="true">58</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-fv-author"
+              aria-label="Author version (19 results)">
+            <label class="form-check-label flex-grow-1" for="f-fv-author">Author version</label>
+            <span class="text-muted small" aria-hidden="true">19</span>
+          </div>
         </fieldset>
 
         <hr>
@@ -269,6 +302,37 @@
             <label class="form-check-label flex-grow-1" for="f-fr">French</label>
             <span class="text-muted small" aria-hidden="true">3</span>
           </div>
+          <div class="collapse" id="lang-more">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-es"
+                aria-label="Spanish (2 results)">
+              <label class="form-check-label flex-grow-1" for="f-es">Spanish</label>
+              <span class="text-muted small" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-it"
+                aria-label="Italian (2 results)">
+              <label class="form-check-label flex-grow-1" for="f-it">Italian</label>
+              <span class="text-muted small" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-ru"
+                aria-label="Russian (1 result)">
+              <label class="form-check-label flex-grow-1" for="f-ru">Russian</label>
+              <span class="text-muted small" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-zh"
+                aria-label="Chinese (1 result)">
+              <label class="form-check-label flex-grow-1" for="f-zh">Chinese</label>
+              <span class="text-muted small" aria-hidden="true">1</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm py-0 px-0 mt-1"
+            data-bs-toggle="collapse" data-bs-target="#lang-more"
+            aria-expanded="false" aria-controls="lang-more">
+            More languages <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </button>
         </fieldset>
 
       </aside>
@@ -309,6 +373,7 @@
 
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
+            <!-- Pagination is only styled, does not work. Make it work according to bootstrap patterns -->
             <nav aria-label="Results pagination" class="d-flex align-items-center gap-3">
               <ul class="pagination pagination-sm mb-0">
                 <li class="page-item disabled">
@@ -327,12 +392,20 @@
             </nav>
           </div>
           <div class="bt-toolbar__right">
+            <label for="page-size" class="visually-hidden">Results per page</label>
+            <select id="page-size" class="form-select form-select-sm">
+              <option value="10" selected>10 per page</option>
+              <option value="25">25 per page</option>
+              <option value="50">50 per page</option>
+              <option value="100">100 per page</option>
+            </select>
             <label for="sort-by" class="visually-hidden">Sort by</label>
-            <select id="sort-by" class="form-select">
+            <select id="sort-by" class="form-select form-select-sm">
               <option value="relevance">Relevance</option>
               <option value="year-desc" selected>Year (new to old)</option>
               <option value="year-asc">Year (old to new)</option>
               <option value="title-asc">Title (A–Z)</option>
+              <option value="author-asc">First author (A–Z)</option>
             </select>
             <div class="dropdown">
               <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
@@ -341,6 +414,7 @@
                 <i class="if if-more" aria-hidden="true"></i>
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
+                <!-- Save and export are not designed yet, show buttons, no functionality -->
                 <li><a class="dropdown-item" href="#">
                   <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
                   Save search
@@ -380,9 +454,9 @@
               <a href="/templates/biblio-public/public-work-detail.html">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html">Marieke J. Kiewiet</a>,
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Marieke J. Kiewiet<span class="visually-hidden"> (UGent)</span></a>,
               <a href="/templates/biblio-public/public-researcher-detail.html">Sam Cuyvers</a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet</a>,
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>,
               <a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a>
               <span class="text-muted">et al.</span>
             </p>
@@ -423,8 +497,8 @@
               <a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html">Dirk Verstraeten</a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Katrien De Wolf</a>
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Dirk Verstraeten<span class="visually-hidden"> (UGent)</span></a>,
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Katrien De Wolf<span class="visually-hidden"> (UGent)</span></a>
             </p>
             <p class="bt-work-card__pub">
               <time datetime="2024">2024</time>
@@ -462,8 +536,8 @@
               <a href="#">Benchmark results for variational quantum eigensolver across 14 molecular systems</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet</a>
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Jonas Maes<span class="visually-hidden"> (UGent)</span></a>,
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>
             </p>
             <p class="bt-work-card__pub">
               <time datetime="2024">2024</time>
@@ -499,7 +573,7 @@
               <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html">Tom Van Damme</a>,
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Tom Van Damme<span class="visually-hidden"> (UGent)</span></a>,
               <a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a>,
               <a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a>
               <span class="text-muted">et al.</span>
@@ -515,7 +589,7 @@
         </article></li>
         </ol>
 
-        <nav class="bt-toolbar mt-2 pt-3" aria-label="Results pagination">
+        <nav class="bt-toolbar mt-2 pt-3" aria-label="Results pagination, bottom">
           <div class="bt-toolbar__left">
             <ul class="pagination pagination-sm mb-0">
               <li class="page-item disabled">
