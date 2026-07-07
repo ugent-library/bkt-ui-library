@@ -793,6 +793,10 @@ code, kbd, pre, samp {
   padding-top: 0.4375rem;
   padding-bottom: 0.4375rem;
   padding-left: 0.75rem;
+  /* clip long option labels with … instead of a hard cut against the caret */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .form-control:focus,
@@ -1651,7 +1655,7 @@ a.btn-danger,
   transition: rotate var(--bt-dur-fast) ease;
 }
 
-[data-bs-toggle=collapse]:not(.collapsed) .if-chevron-down,
+[data-bs-toggle=collapse][aria-expanded=true] .if-chevron-down,
 #org-tree-toggle-all[aria-expanded=true] .if-chevron-down {
   rotate: -180deg;
 }

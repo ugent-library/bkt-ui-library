@@ -562,6 +562,7 @@ use Bootstrap's own `.card-header`, `.card-body`, and `.card-footer` — not BEM
 **Facets sidebar**
 Use Bootstrap structure directly: `fieldset`, `legend`, `form-check`, `form-check-input`, `form-check-label`, spacing utilities, and Collapse where needed.
 Note: the old custom facet classes (`bt-facets`, `bt-facet-name`, `bt-facet-separator`, `bt-results-col`) do not exist in this system.
+Show-more toggle: for a long facet list, put the overflow in `<div class="collapse">` and a `data-bs-toggle="collapse"` button with `if-chevron-down` after it. The caret rotates via `[aria-expanded="true"]`, so the button must carry `aria-expanded="false"` when the list starts collapsed (do not rely on `.collapsed`, which Bootstrap only adds after the first click). Documented at `/patterns/facets.html`.
 
 **Sub-sidebar navigation**
 ```

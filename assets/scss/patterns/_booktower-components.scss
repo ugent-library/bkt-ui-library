@@ -218,11 +218,14 @@
 // Applied to: .filter-group--backoffice-only
 [data-surface="public"]     .filter-group--backoffice-only { display: none; }
 
+// Show-more toggle caret. Keyed on aria-expanded, not :not(.collapsed):
+// Bootstrap adds .collapsed only after the first interaction, so a
+// collapsed-on-load toggle would otherwise start rotated.
 [data-bs-toggle="collapse"] .if-chevron-down,
 #org-tree-toggle-all .if-chevron-down {
   transition: rotate var(--bt-dur-fast) ease;
 }
-[data-bs-toggle="collapse"]:not(.collapsed) .if-chevron-down,
+[data-bs-toggle="collapse"][aria-expanded="true"] .if-chevron-down,
 #org-tree-toggle-all[aria-expanded="true"] .if-chevron-down {
   rotate: -180deg;
 }
