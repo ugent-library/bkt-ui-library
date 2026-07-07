@@ -733,6 +733,13 @@ alert--sm               alert--seamless-inbox   alert--dashed
 `alert--seamless-inbox` is a borderless flat alert used inside the researcher
 inbox; `alert--dashed` swaps the solid border for a 2px dashed one.
 
+**Popover modifiers** (applied via `data-bs-custom-class`, initialised by `assets/js/popovers.js`)
+```
+popover--sm             popover--dark
+```
+Both feed `--bs-popover-*` variables only. Combine for the identifier-icon
+hover pattern in author lists (see `elements/popovers.html`).
+
 **Form variants** ⚠️ TBD — may not survive review
 ```
 form-control-search

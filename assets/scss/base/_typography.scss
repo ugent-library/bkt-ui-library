@@ -137,9 +137,12 @@ p.small {
   font-size: var(--bt-text-xs);
 }
 
+// Icons in prose links only — buttons, nav-links etc. do their own alignment.
 // Inline <a> + margin, not flex + whitespace: both paint the underline under icons
-a > .if {
+p a > .if {
   vertical-align: middle;
+  position: relative;
+  top: -0.1em; // optical correction — glyphs sit low on middle alignment
   margin-right: var(--bt-sp-1);
 }
 

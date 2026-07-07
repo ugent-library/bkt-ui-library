@@ -685,8 +685,10 @@ p.small {
   font-size: var(--bt-text-xs);
 }
 
-a > .if {
+p a > .if {
   vertical-align: middle;
+  position: relative;
+  top: -0.1em;
   margin-right: var(--bt-sp-1);
 }
 
@@ -1008,6 +1010,24 @@ code, kbd, pre, samp {
   gap: var(--bt-sp-3);
   margin-bottom: var(--bt-sp-4);
   margin-top: var(--bt-sp-2);
+}
+
+/* ── Popovers ──────────────────────────────────────────────────────────────── */
+.popover--sm {
+  --bs-popover-font-size: var(--bt-text-xs);
+  --bs-popover-body-padding-x: var(--bt-sp-2);
+  --bs-popover-body-padding-y: var(--bt-sp-1);
+  --bs-popover-border-radius: var(--bt-radius);
+  --bs-popover-arrow-width: var(--bt-sp-3);
+  --bs-popover-arrow-height: calc(var(--bt-sp-3) / 2);
+}
+
+.popover--dark {
+  --bs-popover-bg: var(--bt-blue-800);
+  --bs-popover-border-color: var(--bt-blue-800);
+  --bs-popover-body-color: var(--bt-white);
+  --bs-popover-header-bg: var(--bt-blue-800);
+  --bs-popover-header-color: var(--bt-white);
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
@@ -3776,8 +3796,19 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 .if--xxl {
   font-size: var(--bt-text-2xl);
 } /* 36px — hero / illustration icons  */
+.if-orcid:hover {
+  color: var(--bt-success);
+  transition: color var(--bt-dur-fast);
+}
+
+.if-ghent-university:hover {
+  color: var(--bt-blue);
+  transition: color var(--bt-dur-fast);
+}
+
 /*
-  Icons inside plain <a> links — styled by a > .if in _typography.scss.
+  Icons inside prose links — styled by p a > .if in _typography.scss.
+  Buttons, nav-links and other flex components do their own alignment.
   Keep icon and text flush; whitespace inside an underlined link gets underlined.
 
   Example:

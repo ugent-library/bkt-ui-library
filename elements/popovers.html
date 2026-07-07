@@ -1,0 +1,69 @@
+<!-- @title: Popovers — Booktower Design System -->
+<!-- @surface: public -->
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Elements</p>
+    <h1 class="display-1">Popovers</h1>
+    <p class="lead">Bootstrap popovers, initialised globally by <code>popovers.js</code> — any element with <code>data-bs-toggle="popover"</code> works, including inside HTMX-swapped fragments. Triggers inside links need <code>data-bs-container="body"</code>, or the popover becomes part of the click target.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Variants</h2>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Default — click to toggle</div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-secondary"
+          data-bs-toggle="popover"
+          data-bs-title="Popover title"
+          data-bs-content="Default Bootstrap popover with a title and body.">
+          Default popover
+        </button>
+        <button type="button" class="btn btn-secondary"
+          data-bs-toggle="popover"
+          data-bs-content="Body only — no title.">
+          Without title
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Small — short metadata, identifier chips</div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-secondary"
+          data-bs-toggle="popover"
+          data-bs-custom-class="popover--sm"
+          data-bs-content="ORCID: 0000-0002-1234-5678">
+          Small popover
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Dark — tooltip-like emphasis on light backgrounds</div>
+      <div class="ds-demo-body">
+        <button type="button" class="btn btn-secondary"
+          data-bs-toggle="popover"
+          data-bs-custom-class="popover--dark"
+          data-bs-content="UGent ID: 802001234567">
+          Dark popover
+        </button>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Small + dark, hover trigger — identifier icons in author lists (public work detail)</div>
+      <div class="ds-demo-body">
+        <p data-surface="public">
+          <a href="#"><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><i class="if if-ghent-university" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="UGent ID: 802001234567" aria-hidden="true"></i>Karen De Pauw<span class="visually-hidden"> (ORCID 0000-0002-1234-5678, UGent ID 802001234567)</span></a>,
+          <a href="#"><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0001-8765-4321" aria-hidden="true"></i>Manuel Esperon‑Rodriguez<span class="visually-hidden"> (ORCID 0000-0001-8765-4321)</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <p>Hover-triggered popovers are invisible to keyboard and screen reader users. The information must also exist in the DOM — the author-list icons pair each popover with a <code>visually-hidden</code> span carrying the same ID.</p>
+  </section>
+</div>

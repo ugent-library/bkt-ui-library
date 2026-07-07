@@ -63,6 +63,20 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `popovers.js`
+
+**Purpose:** Initialises Bootstrap popovers (`[data-bs-toggle="popover"]`), e.g. the identifier IDs shown on hover over ORCID/UGent icons in author lists. Triggers inside links need `data-bs-container="body"`.
+
+**Loaded by:** all pages (global footer script, injected by the dev server).
+
+**Listens for:** `htmx:afterSwap` on `body` — re-initialises popovers inside swapped fragments.
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
+
+---
+
 ### `filter-editor.js`
 
 **Purpose:** Manages the filter picker, editor panel, and active filter chips. Owns the filter state and fires search requests when a filter changes.

@@ -64,8 +64,19 @@
 .if--xl  { font-size: var(--bt-text-xl);   }   /* 28px — feature icons              */
 .if--xxl { font-size: var(--bt-text-2xl);  }   /* 36px — hero / illustration icons  */
 
+// Identifier icons take their brand colour on hover; pair with title="…" showing the ID
+.if-orcid:hover {
+  color: var(--bt-success);
+  transition: color var(--bt-dur-fast);
+}
+.if-ghent-university:hover {
+  color: var(--bt-blue);
+  transition: color var(--bt-dur-fast);
+}
+
 /*
-  Icons inside plain <a> links — styled by a > .if in _typography.scss.
+  Icons inside prose links — styled by p a > .if in _typography.scss.
+  Buttons, nav-links and other flex components do their own alignment.
   Keep icon and text flush; whitespace inside an underlined link gets underlined.
 
   Example:
