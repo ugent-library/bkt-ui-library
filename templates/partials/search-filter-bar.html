@@ -66,7 +66,7 @@
           placeholder="Find a filter&hellip;" autocomplete="off">
       </div>
 
-      <div id="filter-picker-list" class="bt-filter-picker__list">
+      <div id="filter-picker-list" class="bt-dropdown-scroll">
 
         <!-- Shared: both surfaces -->
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type</p>
@@ -125,7 +125,7 @@
 <!-- Filter editor panel — must exist in DOM at page load, never HTMX-injected.
      Overlays the results (position-absolute) rather than pushing them down. -->
 <div id="filter-editor"
-  class="filter-editor position-absolute top-100 start-0 w-100 mt-2"
+  class="bt-panel bt-panel--wide position-absolute top-100 start-0 w-100 mt-2"
   role="dialog"
   aria-modal="false"
   aria-labelledby="filter-editor-title"

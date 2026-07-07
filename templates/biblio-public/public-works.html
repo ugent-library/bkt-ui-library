@@ -335,6 +335,34 @@
           </button>
         </fieldset>
 
+        <!-- Organisation facet — UNDER CONSTRUCTION. Hidden for now; do not remove.
+             Type-ahead filter (static example, behaviour not wired; resolves a faculty
+             or a department). Applied-state model still to settle (see PLAN). Browsing an
+             org's full output lives on the organisation detail pages, not this facet.
+        <hr>
+
+        <fieldset>
+          <legend class="form-label h6 mb-2">Organisation</legend>
+          <div class="input-group input-group-sm mb-2">
+            <span class="input-group-text"><i class="if if-search" aria-hidden="true"></i></span>
+            <input type="text" class="form-control" placeholder="Filter by faculty or department"
+              aria-label="Filter by faculty or department">
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-org-faculty" checked
+              aria-label="Faculty of Test (9 results)">
+            <label class="form-check-label flex-grow-1" for="f-org-faculty">Faculty of Test</label>
+            <span class="text-muted small" aria-hidden="true">9</span>
+          </div>
+          <div class="d-flex form-check ms-3">
+            <input class="form-check-input me-2" type="checkbox" id="f-org-dept"
+              aria-label="Department of Test (4 results)">
+            <label class="form-check-label flex-grow-1" for="f-org-dept">Department of Test</label>
+            <span class="text-muted small" aria-hidden="true">4</span>
+          </div>
+        </fieldset>
+        -->
+
       </aside>
 
       <!-- ── Results ─────────────────────────────────────────────────────── -->
@@ -346,26 +374,34 @@
         <div class="d-flex flex-wrap align-items-center gap-2 mb-4"
           role="group" aria-label="Active filters">
 
-          <button type="button" class="filter-tag"
+          <button type="button" class="badge badge--outline"
             aria-label="Remove filter: Access is Open access">
             <span class="fw-light">Access:</span>Open access
             <i class="if if-close if--xs" aria-hidden="true"></i>
           </button>
 
-          <button type="button" class="filter-tag"
+          <button type="button" class="badge badge--outline"
             aria-label="Remove filter: Year is 2024">
             <span class="fw-light">Year:</span>2024
             <i class="if if-close if--xs" aria-hidden="true"></i>
           </button>
 
-          <button type="button" class="filter-tag"
+          <button type="button" class="badge badge--outline"
             aria-label="Remove filter: Language is English">
             <span class="fw-light">Language:</span>English
             <i class="if if-close if--xs" aria-hidden="true"></i>
           </button>
 
+          <!-- Organisation chip — UNDER CONSTRUCTION, hidden with the facet; do not remove.
+          <button type="button" class="badge badge--outline"
+            aria-label="Remove filter: Organisation is Faculty of Test">
+            <span class="fw-light">Organisation:</span>Faculty of Test
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
+          -->
+
           <!-- Clear all: stub link dropping facet params, keeping the query. -->
-          <a href="/search?q=Quantum+computing" class="btn btn-ghost btn-sm text-muted ms-1">
+          <a href="#" class="btn btn-ghost btn-sm text-muted ms-1">
             <i class="if if-close if--xs" aria-hidden="true"></i>
             Clear all
           </a>
@@ -447,10 +483,43 @@
                 aria-label="Cite: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
               </button>
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Save: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks">
-                <i class="if if-bookmark-line" aria-hidden="true"></i> Save
-              </button>
+              <div class="dropdown">
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  aria-label="Add to list: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks">
+                  <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                </button>
+                <!-- Editor-checklist pattern (patterns/filter-picker.html). raven lazy-loads
+                     this via hx-get /b/works/{id}/lists; shown inline here. -->
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
+                  <p class="bt-panel__title">Add to list</p>
+                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s01-reading" checked
+                        hx-delete="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s01-reading">Reading list</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s01-quantum"
+                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s01-quantum">Quantum computing refs</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s01-review"
+                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s01-review">To cite in review</label>
+                    </div>
+                  </div>
+                  <div class="bt-panel__actions">
+                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label for="atl-s01-new" class="visually-hidden">New list name</label>
+                      <input type="text" id="atl-s01-new" name="name" class="form-control form-control-sm"
+                        placeholder="Create a new list&hellip;" required>
+                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-sm">
                 <i class="if if-download" aria-hidden="true"></i> Read
               </a>
@@ -489,10 +558,41 @@
                 aria-label="Cite: Quantum error correction in near-term devices">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
               </button>
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Save: Quantum error correction in near-term devices">
-                <i class="if if-bookmark-line" aria-hidden="true"></i> Save
-              </button>
+              <div class="dropdown">
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  aria-label="Add to list: Quantum error correction in near-term devices">
+                  <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                </button>
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
+                  <p class="bt-panel__title">Add to list</p>
+                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s02-reading"
+                        hx-put="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s02-reading">Reading list</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s02-quantum"
+                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s02-quantum">Quantum computing refs</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s02-review"
+                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s02-review">To cite in review</label>
+                    </div>
+                  </div>
+                  <div class="bt-panel__actions">
+                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label for="atl-s02-new" class="visually-hidden">New list name</label>
+                      <input type="text" id="atl-s02-new" name="name" class="form-control form-control-sm"
+                        placeholder="Create a new list&hellip;" required>
+                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <button type="button" class="btn btn-secondary btn-sm"
                 aria-label="Request access to: Quantum error correction in near-term devices">
                 <i class="if if-mail" aria-hidden="true"></i> Request access
@@ -528,10 +628,41 @@
                 aria-label="Cite: Benchmark results for variational quantum eigensolver">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
               </button>
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Save: Benchmark results for variational quantum eigensolver">
-                <i class="if if-bookmark-line" aria-hidden="true"></i> Save
-              </button>
+              <div class="dropdown">
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  aria-label="Add to list: Benchmark results for variational quantum eigensolver">
+                  <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                </button>
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
+                  <p class="bt-panel__title">Add to list</p>
+                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s03-reading"
+                        hx-put="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s03-reading">Reading list</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s03-quantum"
+                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s03-quantum">Quantum computing refs</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s03-review"
+                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s03-review">To cite in review</label>
+                    </div>
+                  </div>
+                  <div class="bt-panel__actions">
+                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label for="atl-s03-new" class="visually-hidden">New list name</label>
+                      <input type="text" id="atl-s03-new" name="name" class="form-control form-control-sm"
+                        placeholder="Create a new list&hellip;" required>
+                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <a href="#" class="btn btn-primary btn-sm"
                 aria-label="Download: Benchmark results for variational quantum eigensolver">
                 <i class="if if-download" aria-hidden="true"></i> Download
@@ -565,10 +696,41 @@
                 aria-label="Cite: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
               </button>
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Save: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
-                <i class="if if-bookmark-line" aria-hidden="true"></i> Save
-              </button>
+              <div class="dropdown">
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  aria-label="Add to list: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
+                  <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                </button>
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
+                  <p class="bt-panel__title">Add to list</p>
+                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s04-reading"
+                        hx-put="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s04-reading">Reading list</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s04-quantum"
+                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s04-quantum">Quantum computing refs</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="atl-s04-review"
+                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label class="form-check-label" for="atl-s04-review">To cite in review</label>
+                    </div>
+                  </div>
+                  <div class="bt-panel__actions">
+                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
+                      <label for="atl-s04-new" class="visually-hidden">New list name</label>
+                      <input type="text" id="atl-s04-new" name="name" class="form-control form-control-sm"
+                        placeholder="Create a new list&hellip;" required>
+                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
               <a href="#" class="btn btn-primary btn-sm"
                 aria-label="Read: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
                 <i class="if if-download" aria-hidden="true"></i> Read

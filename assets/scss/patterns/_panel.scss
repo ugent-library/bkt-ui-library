@@ -1,0 +1,81 @@
+/* -- bt-panel — generic popover panel: title + scrollable body + actions footer.
+   Used by add-to-list (in a dropdown, content-sized) and the filter editor
+   (bt-panel--wide, overlay). Body layouts (--checklist/--boolean/--year/--form)
+   are generic layouts — a column of radios, a two-input row — not filter concepts. */
+
+.bt-panel {
+  background: var(--bt-white);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-lg);
+  box-shadow: var(--bt-shadow-md);
+  z-index: var(--bt-z-panel);
+  width: max-content;
+  min-width: 16rem;
+  max-width: min(24rem, 100vw - 2rem);
+}
+
+/* Wider variant — year ranges, people search, long labels. The container's own
+   width utility (e.g. w-100 on the overlay) governs the actual width; this caps it. */
+.bt-panel--wide {
+  max-width: 480px;
+  min-width: min(480px, 100vw - 2rem);
+}
+
+.bt-panel__title {
+  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
+  margin-bottom: 0;
+  font-weight: var(--s-display-weight);
+  border-bottom: 1px solid var(--bt-border);
+}
+
+.bt-panel__body {
+  border-top: var(--bt-border);
+  padding: var(--bt-sp-6) var(--bt-sp-4);
+  gap: var(--bt-sp-4);
+  display: flex;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.bt-panel__actions {
+  display: flex;
+  gap: var(--bt-sp-2);
+  padding: var(--bt-sp-4);
+  border-top: var(--bt-border);
+}
+
+.bt-panel__body--form {
+  padding: var(--bt-sp-4);
+}
+
+/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio. */
+.bt-panel__body--checklist,
+.bt-panel__body--boolean {
+  flex-direction: column;
+}
+.bt-panel__body .form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  margin: 0;
+  padding: 0;
+  border-radius: var(--bt-radius-sm);
+}
+.bt-panel__body .form-check-input {
+  float: none;
+  margin: 0;
+  flex: 0 0 auto;
+}
+.bt-panel__body .form-check:hover { background-color: var(--bt-gray-50); }
+.bt-panel__body .form-check-label {
+  font-size: var(--bt-text-base);
+  color: var(--bt-gray-700);
+  cursor: pointer;
+  flex: 1;
+}
+
+/* Year range layout */
+.bt-panel__body--year {
+  align-items: center;
+}
+.bt-panel__year-input { width: 120px; }

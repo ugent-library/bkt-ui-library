@@ -83,3 +83,25 @@
   border: 1px solid var(--bt-blue-900);
   color: var(--bt-blue-900) !important;
 }
+
+/* Clickable badge — a badge that is a real button/link. Squared (vs the pill
+   status badge) is the affordance; pick the look with text-bg-* or badge--outline.
+   Bootstrap-first check: not a .btn (buttons carry padding/weight for primary
+   actions); this is a compact chip-scale control. */
+button.badge,
+a.badge {
+  --bs-badge-border-radius: var(--bt-radius);
+  cursor: pointer;
+  transition: background-color var(--bt-dur-fast), color var(--bt-dur-fast);
+}
+a.badge { text-decoration: none; }
+button.badge { border: 0; }
+button.badge--outline:hover,
+a.badge--outline:hover {
+  background-color: var(--bt-blue-100) !important;
+}
+button.badge:focus-visible,
+a.badge:focus-visible {
+  outline: 3px solid var(--bt-focus-ring);
+  outline-offset: 2px;
+}

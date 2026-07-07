@@ -388,7 +388,7 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 
 ```html
 <!-- ✓ Correct -->
-<button type="button" class="filter-tag"
+<button type="button" class="badge badge--outline"
   aria-label="Remove filter: Type is Journal article">
   Type: Journal article <i class="if if-close" aria-hidden="true"></i>
 </button>
@@ -549,8 +549,9 @@ people-result__icon      people-result__name
 **Scroll utility**
 ```
 bt-scroll-frame          bt-code-block            bt-table-sticky-col
+bt-dropdown-scroll
 ```
-`bt-table-sticky-col` on a `.table` inside `.table-responsive` pins the first column while the rest scrolls horizontally.
+`bt-table-sticky-col` on a `.table` inside `.table-responsive` pins the first column while the rest scrolls horizontally. `bt-dropdown-scroll` is the scrollable inner list for a dropdown-menu with a fixed header (e.g. the filter picker's search box); per-dropdown width via `--bs-dropdown-min-width`.
 
 **Work card**
 ```
@@ -605,21 +606,20 @@ bt-file-drop             bt-file-drop__icon       bt-file-drop__text
 bt-file-drop__hint
 ```
 
-**Filter tags**
+**Filter chips**
 ```
-filter-tag               filter-tag--editable     filter-tag--static
-filter-tag__remove       filter-tag-group
-bt-filter-picker__list
+filter-chip-group
 ```
-Note: `bt-filter-picker__menu` and `--narrow` do NOT exist — only `__list` is defined.
+Applied-filter chips are clickable badges — `badge badge--outline` on a `<button>`/`<a>` (see Badges). `filter-chip-group` joins two into a split label + remove pill. Display-only summaries use `badge text-bg-primary-light`. The "Add filter" dropdown's scrollable list uses the generic `bt-dropdown-scroll` (see Scroll utility). Defined in `patterns/_filters.scss`.
 
-**Filter editor panel**
+**Panel** (`bt-panel`: generic popover panel — title + scrollable body + actions footer)
 ```
-filter-editor            filter-editor__title     filter-editor__actions
-filter-editor__body      filter-editor__body--checklist
-filter-editor__body--boolean           filter-editor__body--form
-filter-editor__body--year              filter-year__input
+bt-panel                 bt-panel--wide           bt-panel__title
+bt-panel__actions        bt-panel__body           bt-panel__body--checklist
+bt-panel__body--boolean  bt-panel__body--form     bt-panel__body--year
+bt-panel__year-input
 ```
+Sizes to content by default; `bt-panel--wide` (480px cap) is the filter-editor case. Used by the add-to-list picker and the filter editor. Body layouts (`--checklist/--boolean/--year/--form`) are generic. Defined in `patterns/_panel.scss`.
 
 **Surface-aware filter group visibility**
 ```
@@ -656,6 +656,11 @@ inside `bt-meta-list`.
 The neutral / metadata badge (counts, codes, roles) is `badge text-bg-light
 border` — a utility composition, not its own class. `text-bg-light` is borderless
 by default; add `.border` when the chip needs to stand out on white.
+
+Clickable badge: a `<button>` or `<a>` carrying `.badge` is styled squared (vs the
+pill status badge) with pointer + hover + focus — element-based, no extra class.
+Pick the look with `badge--outline` or `text-bg-*`. This is the only case where a
+badge is interactive; a plain status badge stays a `<span>`. Used for filter chips.
 
 **Buttons**
 `btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap

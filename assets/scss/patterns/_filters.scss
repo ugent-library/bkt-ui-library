@@ -1,0 +1,22 @@
+/* -- Filter-domain composition. The chips are clickable badges (elements/_badges),
+   the editor is a bt-panel (patterns/_panel), the scrollable picker list is a
+   bt-dropdown-scroll (patterns/_booktower-components); only the filter-specific glue lives here. */
+
+/* Applied-filter chip with a split label / remove control: two clickable
+   outline badges joined into one pill (label edits, ✕ removes). */
+.filter-chip-group {
+  display: inline-flex;
+  align-items: center;
+}
+.filter-chip-group > .badge:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.filter-chip-group > .badge:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+.filter-chip-group:hover > .badge--outline {
+  background-color: var(--bt-blue-100) !important;
+}

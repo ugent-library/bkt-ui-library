@@ -47,7 +47,7 @@
           placeholder="Find a filter&hellip;" autocomplete="off">
       </div>
 
-      <div class="bt-filter-picker__list" id="entity-filter-picker-list">
+      <div class="bt-dropdown-scroll" id="entity-filter-picker-list">
 
         <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
         <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="type">Type</button>
@@ -86,7 +86,7 @@
 
 <!-- ── Filter editor panel ────────────────────────────────────────────────── -->
 <div id="entity-filter-editor" hidden
-  class="filter-editor position-absolute top-100 start-0 w-100 mt-2"
+  class="bt-panel bt-panel--wide position-absolute top-100 start-0 w-100 mt-2"
   role="dialog"
   aria-modal="false"
   aria-labelledby="entity-filter-editor-title">
@@ -184,12 +184,12 @@
   }
 
   function renderEditor(filterId, def, existing) {
-    const title = `<p class="filter-editor__title" id="entity-filter-editor-title">${def.label}</p>`;
+    const title = `<p class="bt-panel__title" id="entity-filter-editor-title">${def.label}</p>`;
     let body = '';
     switch (def.type) {
       case 'checklist': {
         const checked = existing?.rawValue || [];
-        body = `<div class="filter-editor__body filter-editor__body--checklist" role="group" aria-label="Select ${def.label}">` +
+        body = `<div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select ${def.label}">` +
           def.values.map(v => `
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="efv-${v.value}" name="efv" value="${v.value}" ${checked.includes(v.value) ? 'checked' : ''}>
@@ -199,7 +199,7 @@
       }
       case 'boolean': {
         const cur = existing?.rawValue;
-        body = `<div class="filter-editor__body filter-editor__body--boolean" role="group" aria-label="${def.label}">
+        body = `<div class="bt-panel__body bt-panel__body--boolean" role="group" aria-label="${def.label}">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ef-bool" id="ef-bool-true" value="true" ${cur === 'true' ? 'checked' : ''}>
             <label class="form-check-label" for="ef-bool-true">${def.yesLabel}</label>
@@ -214,12 +214,12 @@
       case 'year-range': {
         const from = existing?.rawValue?.from || '';
         const to   = existing?.rawValue?.to   || '';
-        body = `<div class="filter-editor__body filter-editor__body--year">
+        body = `<div class="bt-panel__body bt-panel__body--year">
           <label for="e-year-from" class="visually-hidden">From year</label>
-          <input type="number" id="e-year-from" class="form-control form-control-sm filter-year__input" placeholder="From" min="1800" max="2030" value="${from}">
+          <input type="number" id="e-year-from" class="form-control form-control-sm bt-panel__year-input" placeholder="From" min="1800" max="2030" value="${from}">
           <span class="text-muted small">to</span>
           <label for="e-year-to" class="visually-hidden">To year</label>
-          <input type="number" id="e-year-to" class="form-control form-control-sm filter-year__input" placeholder="To" min="1800" max="2030" value="${to}">
+          <input type="number" id="e-year-to" class="form-control form-control-sm bt-panel__year-input" placeholder="To" min="1800" max="2030" value="${to}">
         </div>`;
         break;
       }
@@ -250,7 +250,7 @@
     const removeBtn = editingFilter && activeFilters[editingFilter]
       ? `<button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" id="e-editor-remove">Remove filter</button>`
       : '';
-    return title + body + `<div class="filter-editor__actions">
+    return title + body + `<div class="bt-panel__actions">
       <button type="button" class="btn btn-primary btn-sm" id="e-editor-apply">Apply</button>
       <button type="button" class="btn btn-ghost btn-sm" id="e-editor-cancel">Cancel</button>
       ${removeBtn}
@@ -371,13 +371,13 @@
 
   function renderChips() {
     activeChips.innerHTML = Object.entries(activeFilters).map(([id, f]) => `
-      <div class="filter-tag-group">
-        <button type="button" class="filter-tag filter-tag--editable"
+      <div class="filter-chip-group">
+        <button type="button" class="badge badge--outline"
           aria-label="Edit filter: ${f.label} is ${f.displayValue}"
           data-filter-id="${id}">
           ${f.label}: <span class="fw-bold">${f.displayValue}</span>
         </button>
-        <button type="button" class="filter-tag__remove"
+        <button type="button" class="badge badge--outline"
           aria-label="Remove filter: ${f.label} is ${f.displayValue}"
           data-remove-id="${id}">
           <i class="if if-close if--xs" aria-hidden="true"></i>
@@ -404,10 +404,11 @@
       btn.classList.toggle('active', selected);
       if (selected) btn.setAttribute('aria-current', 'true');
       else btn.removeAttribute('aria-current');
-      let check = btn.querySelector('.bt-filter-picker__check');
+      let check = btn.querySelector('[data-picker-check]');
       if (selected && !check) {
         check = document.createElement('i');
-        check.className = 'if if-check if--xs ms-auto bt-filter-picker__check';
+        check.className = 'if if-check if--xs ms-auto';
+        check.dataset.pickerCheck = '';
         check.setAttribute('aria-hidden', 'true');
         btn.appendChild(check);
       } else if (!selected && check) {

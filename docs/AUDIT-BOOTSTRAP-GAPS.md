@@ -134,7 +134,7 @@ Judged against the repo's own Bootstrap-first rule ("does Bootstrap have a patte
 
 **4.4 `bt-navbar`** doesn't wrap Bootstrap's `.navbar` — it's a from-scratch sticky flex bar. Defensible (BS navbar drags in collapse plumbing), but it's an undocumented rejection of a Bootstrap component, and the templates betray the gap: `templates/partials/public-header.html` uses `bt-navbar__collapse` and `bt-navbar__actions`, which exist in no CSS — someone reached for responsive behaviour the component doesn't have. Either document the decision and build the missing responsive story, or rebase on BS navbar.
 
-**4.5 Legitimate customs** (checked, no Bootstrap equivalent): `bt-avatar`, `bt-toolbar` (region layout, not BS's `.btn-toolbar` use case), `bt-work-card` (wraps `.card` correctly), `bt-file-drop`, `token-bar`, `filter-tag`/`filter-editor`, `bt-hero`, `bt-sidebar`, layout shells. No action.
+**4.5 Legitimate customs** (checked, no Bootstrap equivalent): `bt-avatar`, `bt-toolbar` (region layout, not BS's `.btn-toolbar` use case), `bt-work-card` (wraps `.card` correctly), `bt-file-drop`, `token-bar`, `bt-panel`, `bt-hero`, `bt-sidebar`, layout shells. No action.
 
 ---
 

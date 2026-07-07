@@ -122,14 +122,14 @@
 
   // ── Render editor ─────────────────────────────────────────────────────────
   function renderEditor(filterId, def, existing) {
-    const title = `<p class="filter-editor__title" id="filter-editor-title">${def.label}</p>`;
+    const title = `<p class="bt-panel__title" id="filter-editor-title">${def.label}</p>`;
     let body = '';
 
     switch (def.type) {
 
       case 'checklist': {
         const checked = existing?.rawValue || [];
-        body = `<div class="filter-editor__body filter-editor__body--checklist" role="group" aria-label="Select ${def.label}">` +
+        body = `<div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select ${def.label}">` +
           def.values.map(v => `
             <div class="form-check">
               <input class="form-check-input" type="checkbox"
@@ -142,7 +142,7 @@
 
       case 'boolean': {
         const cur = existing?.rawValue;
-        body = `<div class="filter-editor__body filter-editor__body--boolean" role="group" aria-label="${def.label}">
+        body = `<div class="bt-panel__body bt-panel__body--boolean" role="group" aria-label="${def.label}">
           <div class="form-check">
             <input class="form-check-input" type="radio" name="ef-bool" id="ef-bool-true" value="true" ${cur === 'true' ? 'checked' : ''}>
             <label class="form-check-label" for="ef-bool-true">${def.yesLabel}</label>
@@ -158,19 +158,19 @@
       case 'year-range': {
         const from = existing?.rawValue?.from || '';
         const to   = existing?.rawValue?.to   || '';
-        body = `<div class="filter-editor__body filter-editor__body--year">
+        body = `<div class="bt-panel__body bt-panel__body--year">
           <label for="year-from" class="visually-hidden">From year</label>
-          <input type="number" id="year-from" class="form-control filter-year__input" placeholder="From" value="${from}">
+          <input type="number" id="year-from" class="form-control bt-panel__year-input" placeholder="From" value="${from}">
           <span class="text-muted small">to</span>
           <label for="year-to" class="visually-hidden">To year</label>
-          <input type="number" id="year-to" class="form-control filter-year__input" placeholder="To" value="${to}">
+          <input type="number" id="year-to" class="form-control bt-panel__year-input" placeholder="To" value="${to}">
         </div>`;
         break;
       }
 
       case 'date': {
         const val = existing?.rawValue || '';
-        body = `<div class="filter-editor__body filter-editor__body--form">
+        body = `<div class="bt-panel__body bt-panel__body--form">
           <label for="date-val" class="visually-hidden">${def.label}</label>
           <input type="date" id="date-val" class="form-control form-control-sm" value="${val}">
         </div>`;
@@ -179,7 +179,7 @@
 
       case 'text': {
         const val = existing?.rawValue || '';
-        body = `<div class="filter-editor__body filter-editor__body--form">
+        body = `<div class="bt-panel__body bt-panel__body--form">
           <label for="text-val" class="visually-hidden">${def.label}</label>
           <input type="text" id="text-val" class="form-control form-control-sm"
             placeholder="${def.placeholder || ''}" value="${val}" autocomplete="off">
@@ -189,7 +189,7 @@
 
       case 'people-search': {
         const sel = existing?.rawValue;
-        body = `<div class="filter-editor__body filter-editor__body--form" data-people-search>
+        body = `<div class="bt-panel__body bt-panel__body--form" data-people-search>
           <label for="people-search-input" class="visually-hidden">Search by name or ORCID</label>
           <!-- Prototype: results come from people-search-stub.js (local data).
                Production: add hx-get="/people/search" (+ hx-trigger/target/
@@ -215,7 +215,7 @@
       ? `<button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" id="editor-remove">Remove filter</button>`
       : '';
 
-    return title + body + `<div class="filter-editor__actions">
+    return title + body + `<div class="bt-panel__actions">
       <button type="button" class="btn btn-primary btn-sm" id="editor-apply">Apply</button>
       <button type="button" class="btn btn-ghost btn-sm" id="editor-cancel">Cancel</button>
       ${removeBtn}
@@ -314,8 +314,8 @@
 
   function renderChips() {
     activeChips.innerHTML = Object.entries(activeFilters).map(([id, f]) => `
-      <div class="d-inline-flex align-items-center">
-        <button type="button" class="filter-tag filter-tag--editable"
+      <div class="filter-chip-group">
+        <button type="button" class="badge badge--outline"
           aria-label="Edit filter: ${f.label} is ${f.displayValue}"
           data-filter-id="${id}">
           <span class="fw-light me-1">${f.label}:</span>
@@ -323,7 +323,7 @@
           ${f.displayValue}
           </span>
         </button>
-        <button type="button" class="filter-tag__remove"
+        <button type="button" class="badge badge--outline"
           aria-label="Remove filter: ${f.label} is ${f.displayValue}"
           data-remove-id="${id}">
           <i class="if if-close if--xs" aria-hidden="true"></i>

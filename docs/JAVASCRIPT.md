@@ -86,8 +86,8 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Listens for:**
 - `biblio:filter-add` — adds a chip without opening the editor (used by autocomplete selections)
 - Click on `[data-filter]` items in the picker dropdown
-- Click on `.filter-tag--editable` chips (reopens editor in edit mode)
-- Click on `.filter-tag__remove` buttons
+- Click on `[data-filter-id]` chip badges (reopens editor in edit mode)
+- Click on `[data-remove-id]` remove buttons
 - Click on `#clear-all-btn`
 
 **Dispatches:** nothing (fires HTMX GET directly via `htmx.ajax`)
@@ -140,8 +140,8 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Listens for:**
 - `input` on `#rdir-filter-search` (picker search)
 - Click on `[data-filter]` items in the `#rdir-filter-picker-list` dropdown
-- Click on `.filter-tag--editable` chips (reopens editor)
-- Click on `.filter-tag__remove` buttons
+- Click on `[data-filter-id]` chip badges (reopens editor)
+- Click on `[data-remove-id]` remove buttons
 - Click on `#rdir-clear-all`
 - `keydown` Escape inside the editor; outside-click close
 
@@ -160,8 +160,8 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Listens for:**
 - `input` on `#pdir-filter-search` (picker search)
 - Click on `[data-filter]` items in the `#pdir-filter-picker-list` dropdown
-- Click on `.filter-tag--editable` chips (reopens editor)
-- Click on `.filter-tag__remove` buttons
+- Click on `[data-filter-id]` chip badges (reopens editor)
+- Click on `[data-remove-id]` remove buttons
 - Click on `#pdir-clear-all`
 - `keydown` Escape inside the editor; outside-click close
 

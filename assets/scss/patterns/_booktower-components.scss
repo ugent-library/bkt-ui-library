@@ -140,6 +140,17 @@
   overflow-y: auto;
 }
 
+// Scrollable inner list for a dropdown-menu with a fixed header (e.g. the filter
+// picker's search box): sits inside .dropdown-menu so the header stays put while
+// items scroll. min-width keeps a bare list usable; per-dropdown width is set via
+// --bs-dropdown-min-width.
+.bt-dropdown-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 260px;
+}
+
 // Sticky first column for wide matrix tables. The table sits inside a
 // Bootstrap .table-responsive (horizontal scroll); this pins the outer-left
 // label column — the leading cell of thead, every tbody row, and tfoot — so
