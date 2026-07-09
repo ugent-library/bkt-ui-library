@@ -752,6 +752,22 @@ form-control-search
 Pill-shaped search input with an inset magnifier glyph. Use on standalone
 search fields outside of `bt-toolbar` and outside of `input-group--hero`.
 
+### Used straight from Bootstrap — no custom classes, do not invent any
+
+Like Table and Facets sidebar above, these components are plain Bootstrap. No `bt-*`
+class exists for them; getbootstrap.com is the reference:
+
+```
+Modal        modal, modal-dialog, modal-content, modal-header/-body/-footer
+Tabs         nav nav-tabs + tab-content/tab-pane (also drives the cite modal)
+Breadcrumb   nav > ol.breadcrumb > li.breadcrumb-item (see rule H3)
+Pagination   ul.pagination pagination-sm
+```
+
+Canonical compositions with project conventions (pagination + result count,
+cite modal) get kit recipes — see `notes/PLAN-kit-gaps-from-templates.md` —
+but the components themselves stay undocumented Bootstrap.
+
 ### Classes that no longer exist
 
 Not documented here — old knowledge lives in `CHANGELOG.md` (OLD→v2 tables
