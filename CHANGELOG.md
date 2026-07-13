@@ -66,6 +66,9 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `td-title`, `td-meta`, `td-actions`, `td-actions-inner`, `row-actions` | Bootstrap utilities directly |
 | `u-scroll-wrapper`, `u-scroll-wrapper__body`, `u-maximize-height` | The `u-layout--app` / `u-main__*` shell |
 | `.bt-toolbar.h-auto` state hook | `align-items-start` where needed |
+| `filter-editor`, `__title`, `__body`, `__body--checklist`, `__actions` | `bt-panel` and its elements/modifiers (see `notes/ARCHIVE-PROPOSAL-panel-unification.md`) |
+| `filter-tag` | Clickable badge: `<button>`/`<a>` with `badge badge--outline` |
+| `filter-year__input` | `bt-panel__year-input` |
 
 **New rules (see AGENT.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
 
