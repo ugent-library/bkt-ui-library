@@ -461,8 +461,13 @@ intent, not working code.
 
 ### Template states
 Data-dependent variants of a template (empty, no-files, filled&hellip;) are **states
-inside the one template file**, never separate files. Syntax and behaviour:
-`docs/SERVER.md` → Template states.
+inside the one template file**, never separate files.
+
+Syntax: declare `<!-- @states: default, other -->` in the leading meta-comment block
+(beside `@title`/`@surface`); wrap each variant in `<!-- @state: name -->` &hellip; `<!-- @state -->`;
+markup outside any wrapper shows in every state; the **first declared state is the
+default**; `?state=<name>` renders one, and the kit shows a button per state. Full
+behaviour: `docs/SERVER.md` → Template states. Example: `biblio-public/public-work-detail.html`.
 
 ### Structured data
 Public-facing record pages must include `<script type="application/ld+json">` with schema.org markup. Minimum for a research output:
