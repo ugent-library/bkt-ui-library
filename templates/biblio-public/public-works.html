@@ -335,10 +335,10 @@
           </button>
         </fieldset>
 
-        <!-- Organisation facet — UNDER CONSTRUCTION. Hidden for now; do not remove.
-             Type-ahead filter (static example, behaviour not wired; resolves a faculty
-             or a department). Applied-state model still to settle (see PLAN). Browsing an
-             org's full output lives on the organisation detail pages, not this facet.
+        <!-- Organisation facet — HIDDEN, do not remove. Decision (M): org filtering will
+             be handled via SEARCH, not a sidebar facet — revisit later. Kept here as a
+             static reference of the type-ahead facet we prototyped. Org browsing lives on
+             the organisation detail pages.
         <hr>
 
         <fieldset>
@@ -520,8 +520,10 @@
                   </div>
                 </div>
               </div>
-              <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-sm">
-                <i class="if if-download" aria-hidden="true"></i> Read
+              <!-- Access CTA per raven#141 -->
+              <a href="#" download class="btn btn-primary btn-sm"
+                aria-label="Download: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks">
+                <i class="if if-download" aria-hidden="true"></i> Download
               </a>
             </div>
           </div>
@@ -593,10 +595,11 @@
                   </div>
                 </div>
               </div>
-              <button type="button" class="btn btn-secondary btn-sm"
-                aria-label="Request access to: Quantum error correction in near-term devices">
-                <i class="if if-mail" aria-hidden="true"></i> Request access
-              </button>
+              <!-- Login link carries return URL. "Request access": future, no process yet -->
+              <a href="#" class="btn btn-warning btn-sm"
+                aria-label="Log in to access: Quantum error correction in near-term devices">
+                <i class="if if-lock" aria-hidden="true"></i> Log in
+              </a>
             </div>
           </div>
           <div class="card-body">
@@ -664,8 +667,8 @@
                 </div>
               </div>
               <a href="#" class="btn btn-primary btn-sm"
-                aria-label="Download: Benchmark results for variational quantum eigensolver">
-                <i class="if if-download" aria-hidden="true"></i> Download
+                aria-label="Access dataset at Zenodo: Benchmark results for variational quantum eigensolver">
+                <i class="if if-external-link" aria-hidden="true"></i> Access at Zenodo
               </a>
             </div>
           </div>
@@ -731,9 +734,9 @@
                   </div>
                 </div>
               </div>
-              <a href="#" class="btn btn-primary btn-sm"
-                aria-label="Read: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
-                <i class="if if-download" aria-hidden="true"></i> Read
+              <a href="#" download class="btn btn-primary btn-sm"
+                aria-label="Download: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
+                <i class="if if-download" aria-hidden="true"></i> Download
               </a>
             </div>
           </div>

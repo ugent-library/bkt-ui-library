@@ -14,7 +14,7 @@ module.exports = function renderSearchResultCards() {
         <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
       <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-xs">
-        <i class="if if-book" aria-hidden="true"></i> Read
+        <i class="if if-book" aria-hidden="true"></i> View
       </a>
     </div>
   </div>
@@ -39,7 +39,7 @@ module.exports = function renderSearchResultCards() {
         <i class="if if-bookmark-line" aria-hidden="true"></i> Save
       </button>
       <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-primary btn-xs" aria-label="View: Urban tree canopy cover measurements Belgium 2020–2025">
-        <i class="if if-download" aria-hidden="true"></i> Download
+        <i class="if if-book" aria-hidden="true"></i> View
       </a>
     </div>
   </div>

@@ -6,6 +6,33 @@ system, or do I reach for something new?"
 
 ---
 
+## Access CTA rules + formatting conventions (v2.3, 2026-07-13)
+
+No class changes. Behaviour and copy changes on the public surface;
+decision record is raven#141.
+
+**Access CTA (cards + detail header):** the card's action slot now
+mirrors the detail header — same action, icon, and button variant.
+Removed: the card **View** button (title navigates), **Request access**
+(future CTA, no process yet), per-row "Log in to access" links in the
+Files section (login appears once per page), and the disabled
+**Under embargo** button (embargo renders as text naming the
+post-embargo state). Labels: card "Log in", "Access at ⟨host⟩";
+detail "Log in to access", "Access dataset at ⟨host⟩". "Full Text at
+Publisher" dropped — external open full text is out of scope.
+
+**New kit page:** `patterns/work-actions.html` — CTA designs and
+styling (icon + button variant per CTA). Rules deliberately live in
+raven#141, not in the kit.
+
+**New doc rules:** file selection for the access CTA
+(`docs/DOMAIN-VOCABULARY.md`: full_text only, published > accepted >
+rest, format irrelevant; restricted = login-scoped) and formatting
+conventions (`docs/UI-LAYER.md`: dates dd/mm/yyyy, decimal comma,
+meta line version · access · format · size).
+
+---
+
 ## Bootstrap gap audit (v2.2, 2026-07-03)
 
 Full findings in `docs/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:

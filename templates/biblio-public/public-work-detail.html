@@ -1,6 +1,6 @@
 <!-- @title: Urban forests as essential infrastructure — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: files, logged-in, restricted, embargo, external, no-files -->
+<!-- @states: files, logged-in, restricted, embargo, no-files -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -90,14 +90,9 @@
             <em>Plants People Planet</em> · Vol. 8, No. 1 · 2026 · pp. 14–19
           </p>
 
-          <!-- Primary actions.
-               Header download selected server-side (fullText candidates only):
-               open+accepted > open+published > open > restricted, PDF-first.
-               Shown here: accessible state. Locked variants replace the button with
-               a lock icon + a "Log in to access" login link
-               (restricted, not signed in) or "Available from <date>" (embargoed).
+          <!-- Primary actions. CTA rules: raven#141; file selection: docs/DOMAIN-VOCABULARY.md.
                Login links carry the post-login return URL.
-               No fullText file: external full-text link when we have one, else no button. -->
+               No fullText file: no button (external full text out of scope). -->
           <div class="d-flex align-items-center gap-3">
             <!-- @state: files logged-in -->
             <a href="#" class="btn btn-primary" download>
@@ -105,22 +100,17 @@
               Download Full Text
             </a>
             <!-- @state -->
-            <!-- @state: external -->
-            <a href="https://doi.org/10.1002/ppp3.70125" class="btn btn-primary">
-              <i class="if if-external-link" aria-hidden="true"></i>
-              Full Text at Publisher
+            <!-- @state: restricted -->
+            <a href="#" class="btn btn-warning" aria-label="Log in to access: Full text">
+              <i class="if if-lock" aria-hidden="true"></i> Log in to access
             </a>
             <!-- @state -->
-            <!-- @state: restricted -->
-            <button class="btn btn-warning" aria-label="Log in to access: Full text">
-              <i class="if if-lock" aria-hidden="true"></i> Log in to access
-            </button>
-            <!-- @state -->
+            <!-- Embargo: text, never a disabled button -->
             <!-- @state: embargo -->
-            <button class="btn btn-primary" disabled>
+            <span class="text-muted">
               <i class="if if-time" aria-hidden="true"></i>
-              Under embargo
-            </button>
+              Open access from <time datetime="2027-05-01">01/05/2027</time>
+            </span>
             <!-- @state -->
             <button type="button" class="btn btn-secondary"
               hx-post="/lists/add"
@@ -139,15 +129,10 @@
             </button> -->
           </div>
           <!-- @state: files logged-in -->
-          <p class="small text-muted mt-2">Accepted manuscript &middot; PDF &middot; Open Access &middot; 158.71 KB</p>
+          <p class="small text-muted mt-2">Accepted manuscript &middot; Open Access &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
           <!-- @state: restricted -->
-          <p class="small text-muted mt-2">Accepted manuscript &middot; PDF &middot; Restricted &middot; 158.71 KB</p>
-          <!-- @state -->
-          <!-- @state: embargo -->
-          <p class="small text-muted mt-2">Full text available from <time datetime="2027-05-01">1.05.2027</time></p>
-          <!-- @state -->
-          <!-- @state: external -->
+          <p class="small text-muted mt-2">Accepted manuscript &middot; Restricted &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
           <!-- No files, or all files private: same state. The private count
                renders only when private files exist — visitors learn files
@@ -193,10 +178,18 @@
             </p>
           </section>
 
-          <!-- Order: fullText first (selection ranking), then other kinds, open before restricted -->
+          <!-- Order: fullText first (selection ranking), then other kinds, open before restricted.
+               Login line renders only when: anonymous + restricted rows + header CTA isn't the login button. -->
           <!-- @state: files -->
           <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+                <h2 id="files-heading" class="h4 mb-0">Files</h2>
+              </div>
+              <div class="bt-toolbar__right">
+                <p class="small"><a href="#">Log in</a> to download restricted files.</p>
+              </div>
+            </div>
             <ul class="list-group list-group-flush list-unstyled mb-0">
 
               <!-- fullText, selected for the header download button -->
@@ -208,7 +201,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB &middot; CC BY 4.0
+                    Full text &middot; Accepted manuscript &middot; CC BY 4.0 &middot; PDF &middot; 158,71 KB
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -229,8 +222,7 @@
                       Restricted, embargo
                     </span>
                     Full text &middot; PDF &middot;
-                    <a href="#" aria-label="Log in to access: Published version">Log in to access</a> &middot;
-                    open access from <time datetime="2027-05-01">1.05.2027</time></p>
+                    open access from <time datetime="2027-05-01">01/05/2027</time></p>
                 </div>
               </li>
 
@@ -243,7 +235,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Supplementary material &middot; XLSX &middot; 2.4 MB &middot; CC0 1.0
+                    Supplementary material &middot; XLSX &middot; 2,4 MB &middot; CC0 1.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -263,8 +255,7 @@
                       <i class="if if-time" aria-hidden="true"></i>
                       Restricted
                     </span>
-                    PDF &middot;
-                    <a href="#" aria-label="Log in to access: Peer review report">Log in to access</a>
+                    PDF
                   </p>
                 </div>
               </li>
@@ -295,7 +286,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB &middot; CC BY 4.0
+                    Full text &middot; Accepted manuscript &middot; CC BY 4.0 &middot; PDF &middot; 158,71 KB
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -315,8 +306,8 @@
                       <i class="if if-time" aria-hidden="true"></i>
                       Restricted, embargo
                     </span>
-                    Full text &middot; Published version &middot; PDF &middot; 1.2 MB &middot;
-                    open access from <time datetime="2027-05-01">1.05.2027</time>
+                    Full text &middot; Published version &middot; PDF &middot; 1,2 MB &middot;
+                    open access from <time datetime="2027-05-01">01/05/2027</time>
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -335,7 +326,7 @@
                     <span class="badge text-bg-success-light">
                       <i class="if if-open-access"></i> Open access
                     </span>
-                    Supplementary material &middot; XLSX &middot; 2.4 MB &middot; CC0 1.0
+                    Supplementary material &middot; XLSX &middot; 2,4 MB &middot; CC0 1.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -374,7 +365,7 @@
           </section>
           <!-- @state -->
 
-          <!-- Only file is restricted, anonymous viewer: name redacted, login nudge -->
+          <!-- Only file is restricted, anonymous viewer: name redacted; header CTA already handles login -->
           <!-- @state: restricted -->
           <section aria-labelledby="files-heading" class="mb-5">
             <h2 id="files-heading" class="h4 mb-3">Files</h2>
@@ -388,8 +379,7 @@
                       <i class="if if-lock" aria-hidden="true"></i>
                       Restricted
                     </span>
-                    Full text &middot; PDF &middot;
-                    <a href="#" aria-label="Log in to access: Accepted manuscript">Log in to access</a>
+                    Full text &middot; PDF
                   </p>
                 </div>
               </li>
@@ -411,7 +401,7 @@
                       <i class="if if-time" aria-hidden="true"></i>
                       Embargo
                     </span>
-                    PDF &middot; available from <time datetime="2027-05-01">1.05.2027</time>
+                    PDF &middot; open access from <time datetime="2027-05-01">01/05/2027</time>
                   </p>
                 </div>
               </li>

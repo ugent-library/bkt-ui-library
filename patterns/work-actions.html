@@ -1,0 +1,315 @@
+<!-- @title: Work actions — Booktower Design System -->
+<!-- @surface: public -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Work actions</h1>
+    <p class="lead">The action rows on research output — search result cards and the detail page header. Which CTA a work gets per access state is a workflow rule, not a kit rule: see <a href="https://github.com/ugent-library/raven/issues/141">raven#141</a>.</p>
+  </header>
+
+  <!-- CTA rules live in raven#141, not here — one copy, no sync rot -->
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Styling</h2>
+
+    <table class="table align-middle col-8" aria-label="CTA styling">
+      <thead class="text-uppercase text-muted small">
+        <tr>
+          <th scope="col">CTA</th>
+          <th scope="col">Icon</th>
+          <th scope="col">Button</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Download</td>
+          <td><code>if-download</code></td>
+          <td><code>btn-primary</code></td>
+        </tr>
+        <tr>
+          <td>Access (external)</td>
+          <td><code>if-external-link</code></td>
+          <td><code>btn-primary</code></td>
+        </tr>
+        <tr>
+          <td>Log in (restricted)</td>
+          <td><code>if-lock</code></td>
+          <td><code>btn-warning</code></td>
+        </tr>
+        <tr>
+          <td>Embargo date</td>
+          <td><code>if-time</code></td>
+          <td>none — plain text</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="col-8 text-muted small">One primary per context: the access CTA. <em>Add to list</em> is <code>btn-secondary</code> on the detail header, <code>btn-ghost</code> on cards; <em>Cite</em> is <code>btn-ghost</code> everywhere. A CTA that navigates (login, external, file) is an <code>&lt;a&gt;</code>, never a <code>&lt;button&gt;</code>.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">On a search result card</h2>
+    <p class="mb-4 text-muted small">Every card: Cite (ghost) + Add to list (ghost) + the access CTA. The Add to list picker panel is documented at <a href="/patterns/panel.html">Panel</a>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Open file in Biblio</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-open">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="badge text-bg-success">Open access</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Urban forests as essential infrastructure">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Urban forests as essential infrastructure">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <a href="#" download class="btn btn-primary btn-sm"
+                aria-label="Download: Urban forests as essential infrastructure">
+                <i class="if if-download" aria-hidden="true"></i> Download
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-open" class="bt-work-card__title">
+              <a href="#">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Stefan K. Arndt</a></p>
+            <p class="bt-work-card__pub"><time datetime="2026">2026</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Plants People Planet</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No file — external dataset</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-external">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="badge text-bg-success">Open access</span>
+              <span class="bt-meta-list__item-bordered">Dataset</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Ghent urban forest inventory">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Ghent urban forest inventory">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <a href="#" class="btn btn-primary btn-sm"
+                aria-label="Access dataset at Zenodo: Ghent urban forest inventory">
+                <i class="if if-external-link" aria-hidden="true"></i> Access at Zenodo
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-external" class="bt-work-card__title">
+              <a href="#">Ghent urban forest inventory and microclimate measurements 2020–2025</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Stefan K. Arndt</a></p>
+            <p class="bt-work-card__pub"><time datetime="2025">2025</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Zenodo</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Restricted — anonymous visitor</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-restricted">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="bt-meta-list__item-bordered">Book chapter</span>
+              <span class="bt-meta-list__item-bordered">Restricted access</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Quantum error correction in near-term devices">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Quantum error correction in near-term devices">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <a href="#" class="btn btn-warning btn-sm"
+                aria-label="Log in to access: Quantum error correction in near-term devices">
+                <i class="if if-lock" aria-hidden="true"></i> Log in
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-restricted" class="bt-work-card__title">
+              <a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Dirk Verstraeten</a>, <a href="#">Katrien De Wolf</a></p>
+            <p class="bt-work-card__pub"><time datetime="2024">2024</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Advances in Quantum Computing</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Embargo, private — text, not a button</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-embargo">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Hybrid classical–quantum algorithms">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Hybrid classical–quantum algorithms">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <span class="text-muted small text-nowrap">
+                <i class="if if-time" aria-hidden="true"></i>
+                Open access from <time datetime="2027-05-01">01/05/2027</time>
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-embargo" class="bt-work-card__title">
+              <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Tom Van Damme</a>, <a href="#">Konstantinos Akritidis</a></p>
+            <p class="bt-work-card__pub"><time datetime="2023">2023</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">npj Quantum Information</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">All files private — no access CTA</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-private">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="bt-meta-list__item-bordered">Report</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Annual biodiversity monitoring report Flanders">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Annual biodiversity monitoring report Flanders">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-private" class="bt-work-card__title">
+              <a href="#">Annual biodiversity monitoring report Flanders 2024</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Tom Van Damme</a></p>
+            <p class="bt-work-card__pub"><time datetime="2024">2024</time><span class="text-muted mx-1" aria-hidden="true">·</span><span>Ghent University</span></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">On the detail page header</h2>
+    <p class="mb-4 text-muted small">Access CTA (primary slot) + Add to list (secondary) + Cite (ghost), followed by the file meta line. Full context in <code>templates/biblio-public/public-work-detail.html</code>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Open file in Biblio</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="btn btn-primary" download>
+            <i class="if if-download" aria-hidden="true"></i> Download Full Text
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+        <p class="small text-muted mt-2 mb-0">Accepted manuscript &middot; Open Access &middot; PDF &middot; 158,71 KB</p>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No file — external dataset</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="btn btn-primary">
+            <i class="if if-external-link" aria-hidden="true"></i> Access dataset at Zenodo
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Restricted — anonymous visitor</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="btn btn-warning" aria-label="Log in to access: Full text">
+            <i class="if if-lock" aria-hidden="true"></i> Log in to access
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+        <p class="small text-muted mt-2 mb-0">Accepted manuscript &middot; Restricted &middot; PDF &middot; 158,71 KB</p>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Embargo, private — text, not a button</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <span class="text-muted">
+            <i class="if if-time" aria-hidden="true"></i>
+            Open access from <time datetime="2027-05-01">01/05/2027</time>
+          </span>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">All files private — no access CTA</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+        <p class="small text-muted mt-2 mb-0">No full text available in Biblio &middot; 2 private files</p>
+      </div>
+    </div>
+  </section>
+</div>
