@@ -1037,3 +1037,9 @@ Justify, don't defend. For example: "Why does trustPillar exist?" is a better qu
 Don't extract a helper for a single call site. Don't introduce a variable to avoid duplicating two lines. Prefer the dumb version when it's legible.
 
 Placeholder data must be announced as placeholder. Any claim about the real domain (funders, classifications, faculty behaviour) is sourced or flagged as a guess — never asserted.
+
+---
+
+## Writing in plans and docs
+
+Frame information active and positive: say what a thing **is**, not what it isn't. Lead with the affirmative statement. Reserve negation for genuine constraints where naming the rejected alternative is the point (e.g. "the query is not a chip").
