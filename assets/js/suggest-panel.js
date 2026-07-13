@@ -12,8 +12,8 @@
  *
  * Row routing — "type decides":
  *   Every row navigates via its href. People → profile, Works → detail,
- *   Org/Project/Keyword → filtered search (/search?…). Applied filters appear
- *   in the server-rendered chip row above the results, not added from here.
+ *   Org → org detail page, Project → project detail page, Keyword → filtered
+ *   search (/search?keyword=). The box navigates; it never applies filters.
  */
 
 (function () {
