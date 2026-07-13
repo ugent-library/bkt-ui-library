@@ -22,7 +22,10 @@ Anti-rot rules:
 
 ## Why
 
-<!-- 2–4 terse, self-contained sentences: the problem and the intent.
+<!-- 2–4 terse, self-contained sentences: the design intent — what the
+     region does for the user. Lead with that, never with a backend gap.
+     Whether raven models the data yet is a question to resolve while
+     finishing the issue (log it under Open questions), not the framing.
      Link a docs/ decision record if one exists. Add one overview
      screenshot of the prototype below the text when filing. -->
 
@@ -60,6 +63,7 @@ View at `localhost:3111/<template path>`
 ## Acceptance criteria
 
 - [ ] Matches the prototype at the source-of-truth path
+- [ ] Visual and UI copy review by the product manager before merge
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/AGENT.md`,
       plus these component-specific concerns:
 - [ ] `make build` passes
@@ -77,5 +81,7 @@ View at `localhost:3111/<template path>`
 
 ## Open questions
 
-<!-- Only questions that block implementation. Anything strategic goes
-     to docs/. Delete if none. -->
+<!-- Questions to resolve while doing the issue — including "does raven
+     model this, and if not do we build it or drop it?". Log the question
+     and the options; the answer comes from a conversation, not from
+     inventing a rule. Anything strategic goes to docs/. Delete if none. -->
