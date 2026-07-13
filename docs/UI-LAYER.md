@@ -133,6 +133,19 @@ What HTMX is *not* for — reach for something else here: real-time collaboratio
 
 ---
 
+## Formatting conventions
+
+Visible text is European-formatted; machine formats stay ISO.
+
+- Dates: dd/mm/yyyy (e.g. 01/05/2027).
+- Decimals: comma (e.g. 158,71 KB).
+- Machine formats stay ISO: `datetime` attributes, JSON-LD, date input
+  values, query syntax.
+- File meta line sequence, always: version · access · format · size
+  (e.g. Accepted manuscript · Restricted · PDF · 100,25 KB).
+
+---
+
 ## Accessibility requirements
 
 Target: WCAG 2.1 AA minimum on every template.
