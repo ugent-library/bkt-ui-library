@@ -1043,3 +1043,11 @@ Placeholder data must be announced as placeholder. Any claim about the real doma
 ## Writing in plans and docs
 
 Frame information active and positive: say what a thing **is**, not what it isn't. Lead with the affirmative statement. Reserve negation for genuine constraints where naming the rejected alternative is the point (e.g. "the query is not a chip").
+
+---
+
+## Working mode: build-and-show
+
+Default to **build-and-show, not ask-and-record.** Take the obvious option, implement it, and show the result for review — the user vetoes in review. Reserve questions for genuinely load-bearing forks.
+
+This is an HTML prototype, so keep process light: planning notes stay local (they're gitignored) and are updated only when a load-bearing decision changes; commit in coherent chunks without ceremony; verify by confirming the files you touched add no new errors, plus a browser eyeball. Keep strict only what has real downstream cost — the accessibility pre-flight, no invented CSS classes, and flagging raven-dependent work.
