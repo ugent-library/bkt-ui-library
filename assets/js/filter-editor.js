@@ -71,34 +71,14 @@
   const activeChips  = document.getElementById('active-chips');
   const filterEditor = document.getElementById('filter-editor');
   const clearAllBtn  = document.getElementById('clear-all-btn');
-  const filterSearch = document.getElementById('filter-search');
 
-  if (!activeChips || !filterEditor || !clearAllBtn || !filterSearch) return;
-
-  // ── Filter picker: search ─────────────────────────────────────────────────
-  filterSearch.addEventListener('input', () => {
-    const q = filterSearch.value.toLowerCase();
-    document.querySelectorAll('#filter-picker-list button[data-filter]').forEach(btn => {
-      btn.hidden = q && !btn.textContent.toLowerCase().includes(q);
-    });
-    document.querySelectorAll('#filter-picker-list p').forEach(p => {
-      let next = p.nextElementSibling;
-      let allHidden = true;
-      while (next && next.tagName !== 'P' && !next.classList.contains('dropdown-divider')) {
-        if (next.tagName === 'BUTTON' && !next.hidden) allHidden = false;
-        next = next.nextElementSibling;
-      }
-      p.hidden = allHidden;
-    });
-  });
+  if (!activeChips || !filterEditor || !clearAllBtn) return;
 
   // ── Filter picker: select ─────────────────────────────────────────────────
   document.querySelectorAll('#filter-picker-list button[data-filter]').forEach(btn => {
     btn.addEventListener('click', () => {
       const filterId = btn.dataset.filter;
       bootstrap.Dropdown.getInstance(document.getElementById('add-filter-btn'))?.hide();
-      filterSearch.value = '';
-      document.querySelectorAll('#filter-picker-list button[data-filter]').forEach(b => b.hidden = false);
       openEditor(filterId, null);
     });
   });

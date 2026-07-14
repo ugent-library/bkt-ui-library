@@ -39,43 +39,43 @@
       Add filter
     </button>
 
-    <div class="dropdown-menu p-0" aria-labelledby="entity-add-filter-btn">
-
-      <div class="p-2">
-        <label for="entity-filter-search" class="visually-hidden">Search filters</label>
-        <input type="search" id="entity-filter-search" class="form-control form-control-sm"
-          placeholder="Find a filter&hellip;" autocomplete="off">
-      </div>
+    <div class="dropdown-menu p-0">
 
       <div class="bt-dropdown-scroll" id="entity-filter-picker-list">
 
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="type">Type</button>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="identifier">Identifier (DOI, handle&hellip;)</button>
+        <div role="group" aria-label="Type &amp; identity">
+          <div class="dropdown-header" aria-hidden="true">Type &amp; identity</div>
+          <button class="dropdown-item" type="button" data-filter="type">Type</button>
+          <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI, handle&hellip;)</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="author">Author</button>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
+        <div role="group" aria-label="People">
+          <div class="dropdown-header" aria-hidden="true">People</div>
+          <button class="dropdown-item" type="button" data-filter="author">Author</button>
+          <button class="dropdown-item" type="button" data-filter="affiliation">Affiliation / faculty</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="year">Publication year</button>
+        <div role="group" aria-label="Time">
+          <div class="dropdown-header" aria-hidden="true">Time</div>
+          <button class="dropdown-item" type="button" data-filter="year">Publication year</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="open_access">Open access</button>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="has_file">Has file</button>
+        <div role="group" aria-label="Access &amp; files">
+          <div class="dropdown-header" aria-hidden="true">Access &amp; files</div>
+          <button class="dropdown-item" type="button" data-filter="open_access">Open access</button>
+          <button class="dropdown-item" type="button" data-filter="has_file">Has file</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">More</p>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="venue">Journal / venue</button>
-        <button class="dropdown-item d-flex align-items-center py-2" type="button" data-filter="keywords">Keywords</button>
+        <div role="group" aria-label="More">
+          <div class="dropdown-header" aria-hidden="true">More</div>
+          <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
+        </div>
 
       </div>
     </div>
 
-    <button type="button" class="btn btn-ghost btn-sm text-muted"
+    <button type="button" class="btn btn-ghost btn-sm"
       id="entity-clear-all" hidden>
       <i class="if if-close" aria-hidden="true"></i>
       Clear all
@@ -105,7 +105,6 @@
   const activeChips   = document.getElementById('entity-active-chips');
   const filterEditor  = document.getElementById('entity-filter-editor');
   const clearAllBtn   = document.getElementById('entity-clear-all');
-  const filterSearch  = document.getElementById('entity-filter-search');
 
   let activeFilters   = {};
   let editingFilter   = null;
@@ -150,19 +149,10 @@
     { id: 'p-dv1', name: 'Dita Von Teese',          affiliation: 'External', years: 'Neo-Burlesque Revival, 1992–current', orcid: '0000-0004-5555-9999' },
   ];
 
-  // ── Filter picker search ────────────────────────────────────────────────────
-  filterSearch.addEventListener('input', () => {
-    const q = filterSearch.value.toLowerCase();
-    document.querySelectorAll('#entity-filter-picker-list button[data-filter]').forEach(btn => {
-      btn.hidden = q && !btn.textContent.toLowerCase().includes(q);
-    });
-  });
-
   // ── Filter picker: select ───────────────────────────────────────────────────
   document.querySelectorAll('#entity-filter-picker-list button[data-filter]').forEach(btn => {
     btn.addEventListener('click', () => {
       const filterId = btn.dataset.filter;
-      filterSearch.value = '';
       // Close the selector so it doesn't overlap the configuration panel.
       // Re-clicking an applied filter edits it.
       hideDropdown();

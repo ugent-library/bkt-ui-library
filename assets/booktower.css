@@ -455,22 +455,24 @@ body,
 }
 
 .dropdown-menu {
-  /* Selected item: theme blue chip colour + dark text (matches the filter chips).
-     Hover row: design-token grey rather than Bootstrap's near-identical default. */
   --bs-dropdown-link-active-bg: var(--bt-blue-200);
   --bs-dropdown-link-active-color: var(--bt-gray-1000);
   --bs-dropdown-link-hover-bg: var(--bt-gray-50);
+  --bs-dropdown-item-padding-y: 0.5rem;
 }
 
 .dropdown-header {
-  /* Bootstrap's .dropdown-header markup is an <h6>, which base/_typography.scss
-     renders italic + light. Match the filter-picker group-label treatment instead:
-     uppercase, semibold, muted — the class beats the h6 element rule. */
+  padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
   font-style: normal;
   font-weight: 600;
   font-size: 0.875em;
   text-transform: uppercase;
   color: var(--bt-gray-500);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
 }
 
 .pagination {
@@ -502,8 +504,6 @@ body,
   --bs-nav-tabs-link-active-bg: transparent;
 }
 
-/* no Bootstrap var for the bottom border alone — the classic tab illusion
-   needs it to match the page background */
 .nav-tabs .nav-link.active {
   border-bottom-color: var(--s-bg);
 }

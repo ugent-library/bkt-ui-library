@@ -138,7 +138,6 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Loaded by:** `public-researchers.html` (via `templates/partials/result-filter-bar-researchers.html`)
 
 **Listens for:**
-- `input` on `#rdir-filter-search` (picker search)
 - Click on `[data-filter]` items in the `#rdir-filter-picker-list` dropdown
 - Click on `[data-filter-id]` chip badges (reopens editor)
 - Click on `[data-remove-id]` remove buttons
@@ -158,7 +157,6 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Loaded by:** `public-projects.html` (via `templates/partials/result-filter-bar-projects.html`)
 
 **Listens for:**
-- `input` on `#pdir-filter-search` (picker search)
 - Click on `[data-filter]` items in the `#pdir-filter-picker-list` dropdown
 - Click on `[data-filter-id]` chip badges (reopens editor)
 - Click on `[data-remove-id]` remove buttons

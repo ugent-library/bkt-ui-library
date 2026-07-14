@@ -58,59 +58,59 @@
       Add filter
     </button>
 
-    <div class="dropdown-menu p-0" aria-labelledby="add-filter-btn">
-
-      <div class="p-2 border-bottom">
-        <label for="filter-search" class="visually-hidden">Search filters</label>
-        <input type="search" id="filter-search" class="form-control form-control-sm"
-          placeholder="Find a filter&hellip;" autocomplete="off">
-      </div>
+    <div class="dropdown-menu p-0">
 
       <div id="filter-picker-list" class="bt-dropdown-scroll">
 
-        <!-- Shared: both surfaces -->
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type</p>
-        <button class="dropdown-item py-2" type="button" data-filter="type">Type</button>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="subtype">Subtype</button>
+        <div role="group" aria-label="Type">
+          <div class="dropdown-header" aria-hidden="true">Type</div>
+          <button class="dropdown-item" type="button" data-filter="type">Type</button>
+          <button class="dropdown-item filter-group--backoffice-only" type="button" data-filter="subtype">Subtype</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-        <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation / faculty</button>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="research_group">Research group</button>
+        <div role="group" aria-label="People">
+          <div class="dropdown-header" aria-hidden="true">People</div>
+          <button class="dropdown-item" type="button" data-filter="affiliation">Affiliation / faculty</button>
+          <button class="dropdown-item filter-group--backoffice-only" type="button" data-filter="research_group">Research group</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
-        <button class="dropdown-item py-2" type="button" data-filter="year">Publication year</button>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="created_since">Created since</button>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="updated_since">Updated since</button>
+        <div role="group" aria-label="Time">
+          <div class="dropdown-header" aria-hidden="true">Time</div>
+          <button class="dropdown-item" type="button" data-filter="year">Publication year</button>
+          <button class="dropdown-item filter-group--backoffice-only" type="button" data-filter="created_since">Created since</button>
+          <button class="dropdown-item filter-group--backoffice-only" type="button" data-filter="updated_since">Updated since</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="project">Project / funding</button>
-        <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
+        <div role="group" aria-label="Context">
+          <div class="dropdown-header" aria-hidden="true">Context</div>
+          <button class="dropdown-item filter-group--backoffice-only" type="button" data-filter="project">Project / funding</button>
+          <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
-        <button class="dropdown-item py-2" type="button" data-filter="open_access">Open access</button>
-        <button class="dropdown-item py-2" type="button" data-filter="has_file">Has file</button>
+        <div role="group" aria-label="Access &amp; files">
+          <div class="dropdown-header" aria-hidden="true">Access &amp; files</div>
+          <button class="dropdown-item" type="button" data-filter="open_access">Open access</button>
+          <button class="dropdown-item" type="button" data-filter="has_file">Has file</button>
+        </div>
 
-        <!-- Backoffice only -->
-        <hr class="dropdown-divider my-1 filter-group--backoffice-only">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1 filter-group--backoffice-only">Status &amp; workflow</p>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="status">Biblio status</button>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="pub_status">Publication status</button>
-        <button class="dropdown-item py-2 filter-group--backoffice-only" type="button" data-filter="tags">Librarian tags</button>
+        <div role="group" aria-label="Status &amp; workflow" class="filter-group--backoffice-only">
+          <div class="dropdown-header" aria-hidden="true">Status &amp; workflow</div>
+          <button class="dropdown-item" type="button" data-filter="status">Biblio status</button>
+          <button class="dropdown-item" type="button" data-filter="pub_status">Publication status</button>
+          <button class="dropdown-item" type="button" data-filter="tags">Librarian tags</button>
+        </div>
 
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Classification</p>
-        <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
+        <div role="group" aria-label="Classification">
+          <div class="dropdown-header" aria-hidden="true">Classification</div>
+          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
+        </div>
 
       </div>
     </div>
   </div>
 
   <!-- Clear all — hidden until chips are present -->
-  <button type="button" class="btn btn-ghost btn-sm text-muted" id="clear-all-btn" hidden>
+  <button type="button" class="btn btn-ghost btn-sm" id="clear-all-btn" hidden>
     <i class="if if-close if--xs" aria-hidden="true"></i>
     Clear all
   </button>

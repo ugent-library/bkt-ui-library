@@ -29,45 +29,47 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker — backoffice</h2>
-    <p class="mb-4">The full filter set with a search input — the <code>search-filter-bar.html</code> partial driven by <code>filter-editor.js</code>. Intended for the backoffice and Advanced search surfaces; not yet wired into a live page. The search input filters the list live and hides empty groups, and the scrollable <code>.bt-dropdown-scroll</code> keeps the dropdown bounded regardless of list length.</p>
+    <p class="mb-4">Full filter set with a search input — the <code>search-filter-bar.html</code> partial, driven by <code>filter-editor.js</code>. The search filters items live and hides whole empty groups; <code>bt-dropdown-scroll</code> caps the height. Each group is a <code>role="group"</code> with a <code>dropdown-header</code> label.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Backoffice picker</h3>
       <div class="ds-demo-body" style="min-height: 450px;">
         <div class="dropdown-menu show">
-          <div class="p-2">
-            <label for="demo-filter-search" class="visually-hidden">Search filters</label>
-            <input type="search" id="demo-filter-search" class="form-control form-control-sm"
-              placeholder="Find a filter&hellip;" autocomplete="off">
-          </div>
           <div class="bt-dropdown-scroll">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
-            <button class="dropdown-item py-2" type="button">Type</button>
-            <button class="dropdown-item py-2" type="button">Subtype</button>
-            <button class="dropdown-item py-2" type="button">Identifier</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-            <button class="dropdown-item py-2" type="button">Author</button>
-            <button class="dropdown-item py-2" type="button">Affiliation / faculty</button>
-            <button class="dropdown-item py-2" type="button">Research group</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
-            <button class="dropdown-item py-2" type="button">Publication year</button>
-            <button class="dropdown-item py-2" type="button">Created since</button>
-            <button class="dropdown-item py-2" type="button">Updated since</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access &amp; files</p>
-            <button class="dropdown-item py-2" type="button">Open access</button>
-            <button class="dropdown-item py-2" type="button">Has file</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Status &amp; workflow</p>
-            <button class="dropdown-item py-2" type="button">Biblio status</button>
-            <button class="dropdown-item py-2" type="button">Publication status</button>
-            <button class="dropdown-item py-2" type="button">Tags</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
-            <button class="dropdown-item py-2" type="button">Journal / venue</button>
-            <button class="dropdown-item py-2" type="button">Project / funding</button>
+            <div role="group" aria-label="Type &amp; identity">
+              <div class="dropdown-header" aria-hidden="true">Type &amp; identity</div>
+              <button class="dropdown-item" type="button">Type</button>
+              <button class="dropdown-item" type="button">Subtype</button>
+              <button class="dropdown-item" type="button">Identifier</button>
+            </div>
+            <div role="group" aria-label="People">
+              <div class="dropdown-header" aria-hidden="true">People</div>
+              <button class="dropdown-item" type="button">Author</button>
+              <button class="dropdown-item" type="button">Affiliation / faculty</button>
+              <button class="dropdown-item" type="button">Research group</button>
+            </div>
+            <div role="group" aria-label="Time">
+              <div class="dropdown-header" aria-hidden="true">Time</div>
+              <button class="dropdown-item" type="button">Publication year</button>
+              <button class="dropdown-item" type="button">Created since</button>
+              <button class="dropdown-item" type="button">Updated since</button>
+            </div>
+            <div role="group" aria-label="Access &amp; files">
+              <div class="dropdown-header" aria-hidden="true">Access &amp; files</div>
+              <button class="dropdown-item" type="button">Open access</button>
+              <button class="dropdown-item" type="button">Has file</button>
+            </div>
+            <div role="group" aria-label="Status &amp; workflow">
+              <div class="dropdown-header" aria-hidden="true">Status &amp; workflow</div>
+              <button class="dropdown-item" type="button">Biblio status</button>
+              <button class="dropdown-item" type="button">Publication status</button>
+              <button class="dropdown-item" type="button">Tags</button>
+            </div>
+            <div role="group" aria-label="Context">
+              <div class="dropdown-header" aria-hidden="true">Context</div>
+              <button class="dropdown-item" type="button">Journal / venue</button>
+              <button class="dropdown-item" type="button">Project / funding</button>
+            </div>
           </div>
         </div>
       </div>
@@ -86,24 +88,30 @@
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block" style="min-width: 240px;">
           <div class="bt-dropdown-scroll">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
-            <button class="dropdown-item py-2" type="button">Type</button>
-            <button class="dropdown-item py-2" type="button">Identifier (DOI, handle&hellip;)</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-            <button class="dropdown-item py-2" type="button">Author</button>
-            <button class="dropdown-item py-2" type="button">Affiliation / faculty</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
-            <button class="dropdown-item py-2" type="button">Publication year</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access</p>
-            <button class="dropdown-item py-2" type="button">Open access</button>
-            <button class="dropdown-item py-2" type="button">File available</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">More</p>
-            <button class="dropdown-item py-2" type="button">Subject / keyword</button>
-            <button class="dropdown-item py-2" type="button">Language</button>
+            <div role="group" aria-label="Type &amp; identity">
+              <div class="dropdown-header" aria-hidden="true">Type &amp; identity</div>
+              <button class="dropdown-item" type="button">Type</button>
+              <button class="dropdown-item" type="button">Identifier (DOI, handle&hellip;)</button>
+            </div>
+            <div role="group" aria-label="People">
+              <div class="dropdown-header" aria-hidden="true">People</div>
+              <button class="dropdown-item" type="button">Author</button>
+              <button class="dropdown-item" type="button">Affiliation / faculty</button>
+            </div>
+            <div role="group" aria-label="Time">
+              <div class="dropdown-header" aria-hidden="true">Time</div>
+              <button class="dropdown-item" type="button">Publication year</button>
+            </div>
+            <div role="group" aria-label="Access">
+              <div class="dropdown-header" aria-hidden="true">Access</div>
+              <button class="dropdown-item" type="button">Open access</button>
+              <button class="dropdown-item" type="button">File available</button>
+            </div>
+            <div role="group" aria-label="More">
+              <div class="dropdown-header" aria-hidden="true">More</div>
+              <button class="dropdown-item" type="button">Subject / keyword</button>
+              <button class="dropdown-item" type="button">Language</button>
+            </div>
           </div>
         </div>
       </div>
@@ -116,28 +124,32 @@
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker — selected / applied items</h2>
     <p class="mb-3">When a filter is already applied (or is the one currently being edited), its picker item is marked with Bootstrap's <code>.active</code> state plus a trailing check icon. Reopening the picker then shows at a glance which dimensions are in play — without this, an applied filter looks identical to an unused one.</p>
-    <p class="mb-4">The <code>.active</code> fill is recoloured to the theme chip blue with dark text (rather than Bootstrap's solid primary) so it reads as a soft selection consistent with the active chips. Add <code>d-flex align-items-center</code> to the item so the check sits at the trailing edge via <code>ms-auto</code>. Driven by <code>aria-current="true"</code> for assistive tech.</p>
+    <p class="mb-4">Driven by <code>aria-current="true"</code> for assistive tech.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Selected / applied items</h3>
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block" style="min-width: 240px;">
           <div class="bt-dropdown-scroll">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Type &amp; identity</p>
-            <button class="dropdown-item d-flex align-items-center py-2 active" type="button" aria-current="true">
-              Type
-              <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
-            </button>
-            <button class="dropdown-item d-flex align-items-center py-2" type="button">Identifier (DOI, handle&hellip;)</button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Time</p>
-            <button class="dropdown-item d-flex align-items-center py-2 active" type="button" aria-current="true">
-              Publication year
-              <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
-            </button>
-            <hr class="dropdown-divider my-1">
-            <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Access</p>
-            <button class="dropdown-item d-flex align-items-center py-2" type="button">Open access</button>
+            <div role="group" aria-label="Type &amp; identity">
+              <div class="dropdown-header" aria-hidden="true">Type &amp; identity</div>
+              <button class="dropdown-item active" type="button" aria-current="true">
+                Type
+                <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
+              </button>
+              <button class="dropdown-item" type="button">Identifier (DOI, handle&hellip;)</button>
+            </div>
+            <div role="group" aria-label="Time">
+              <div class="dropdown-header" aria-hidden="true">Time</div>
+              <button class="dropdown-item active" type="button" aria-current="true">
+                Publication year
+                <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div role="group" aria-label="Access">
+              <div class="dropdown-header" aria-hidden="true">Access</div>
+              <button class="dropdown-item" type="button">Open access</button>
+            </div>
           </div>
         </div>
       </div>
@@ -197,21 +209,22 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — boolean</h2>
-    <p class="mb-4">Used for yes/no filters: Open access, Has file. A Bootstrap <code>.btn-check</code> radio toggle group — native single-select semantics, themed via <code>--bs-btn-active-*</code>. No JS selection handling needed.</p>
+    <p class="mb-4">Used for yes/no filters: Open access, Has file. Plain <code>.form-check</code> radios — matching the checklist editor and what <code>filter-editor.js</code> renders.</p>
 
-    <!-- TODO (pattern alignment): this demo shows the .btn-check toggle, but the live
-         implementations (filter-editor.js, directory-filters*.js, result-filter-bar.html)
-         render plain .form-check radios. The two should be aligned — deferred, not now. -->
     <div class="ds-demo">
       <h3 class="ds-demo-label">Boolean</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-bool-title" aria-modal="false">
           <p class="bt-panel__title" id="fe-bool-title">Open access</p>
           <div class="bt-panel__body bt-panel__body--boolean" role="group" aria-label="Open access">
-            <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-true" autocomplete="off" checked>
-            <label class="btn" for="fe-bool-demo-true">Yes — open access only</label>
-            <input type="radio" class="btn-check" name="fe-bool-demo" id="fe-bool-demo-false" autocomplete="off">
-            <label class="btn" for="fe-bool-demo-false">No — restricted only</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="fe-bool-demo" id="fe-bool-demo-true" checked>
+              <label class="form-check-label" for="fe-bool-demo-true">Yes — open access only</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="fe-bool-demo" id="fe-bool-demo-false">
+              <label class="form-check-label" for="fe-bool-demo-false">No — restricted only</label>
+            </div>
           </div>
           <div class="bt-panel__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
@@ -362,7 +375,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Active chips</h2>
-    <p class="mb-0">Applied filters surface as chips — the visible output of the picker/editor flow. The directory result bars render the <strong>editable split chip</strong> (the label reopens the editor, the × removes it); <code>public-works.html</code> uses the <strong>basic single-button chip</strong> (the whole chip removes the filter). Both are clickable <a href="/elements/badges.html">badges</a> (outline, squared); the split chip joins two of them with <code>.filter-chip-group</code>. Display-only summaries use a soft <code>badge text-bg-primary-light</code>. This pattern just composes them.</p>
+    <p class="mb-0">Applied filters surface as chips — the visible output of the picker/editor flow. The standard everywhere is the <strong>editable split chip</strong>: the label reopens the editor, the × removes it — two clickable <a href="/elements/badges.html">badges</a> (outline, squared) joined with <code>.filter-chip-group</code>. Display-only summaries use a soft <code>badge text-bg-primary-light</code>.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -400,11 +413,6 @@
           <td><code>data-filter="&lt;key&gt;"</code></td>
           <td>Each <code>button.dropdown-item</code></td>
           <td>Key must match an entry in <code>FILTERS</code> inside <code>filter-editor.js</code></td>
-        </tr>
-        <tr>
-          <td><code>id="filter-search"</code></td>
-          <td><code>input[type="search"]</code> inside picker</td>
-          <td>Optional. Live-filters the list when present</td>
         </tr>
         <tr>
           <td><code>id="filter-editor"</code></td>

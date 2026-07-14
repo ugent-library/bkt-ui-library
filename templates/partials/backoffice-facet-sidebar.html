@@ -307,24 +307,23 @@
       More filters
     </button>
     <div class="dropdown-menu p-0">
-      <div class="p-2">
-        <label for="more-filter-search" class="visually-hidden">Search filters</label>
-        <input type="search" id="more-filter-search" class="form-control form-control-sm"
-          placeholder="Find a filter&hellip;" autocomplete="off">
-      </div>
-      <div id="more-filter-list">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-        <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
-        <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation</button>
-        <button class="dropdown-item py-2" type="button" data-filter="research_group">Research group</button>
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
-        <button class="dropdown-item py-2" type="button" data-filter="project">Project / funding</button>
-        <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Classification</p>
-        <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
-        <button class="dropdown-item py-2" type="button" data-filter="tags">Librarian tags</button>
+      <div id="more-filter-list" class="bt-dropdown-scroll">
+        <div role="group" aria-label="People">
+          <div class="dropdown-header" aria-hidden="true">People</div>
+          <button class="dropdown-item" type="button" data-filter="author">Author</button>
+          <button class="dropdown-item" type="button" data-filter="affiliation">Affiliation</button>
+          <button class="dropdown-item" type="button" data-filter="research_group">Research group</button>
+        </div>
+        <div role="group" aria-label="Context">
+          <div class="dropdown-header" aria-hidden="true">Context</div>
+          <button class="dropdown-item" type="button" data-filter="project">Project / funding</button>
+          <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+        </div>
+        <div role="group" aria-label="Classification">
+          <div class="dropdown-header" aria-hidden="true">Classification</div>
+          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
+          <button class="dropdown-item" type="button" data-filter="tags">Librarian tags</button>
+        </div>
       </div>
     </div>
   </div>
