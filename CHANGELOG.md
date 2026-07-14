@@ -6,6 +6,40 @@ system, or do I reach for something new?"
 
 ---
 
+## Public search form + filter picker unified (v2.4, 2026-07-14)
+
+No class removals — a markup + convention consolidation. Where to look when
+building or porting search/filter UI.
+
+**Public search form:** one canonical skeleton on every public listing header
+(`public-works`, `public-researchers`, `public-organisations`,
+`public-projects`): `<form role="search">` → `#suggest-wrapper` →
+`.input-group.input-group-lg` (visually-hidden label + `type="search"` combobox
+input + submit button) → `#suggest-panel.bt-suggest-panel`. Generic IDs (`q`,
+`suggest-wrapper`, `suggest-panel`) on every page — the JS binds them. Only
+scope varies: placeholder/`aria-label` copy, the form `action`, and the one
+behaviour hook (`hx-*` omni-suggest on works vs `data-directory-search`
+client-side typeahead on the directories). Documented on
+`elements/search-bar.html` → **Listing / results-header search**.
+
+**Filter picker:** one markup everywhere (`search-filter-bar`,
+`result-filter-bar` + `-projects`/`-researchers`, `backoffice-facet-sidebar`,
+and the `patterns/filter-picker.html` demos): `role="group"` +
+`.dropdown-header` labels, plain `.dropdown-item` buttons. Removed the per-item
+`py-2` and `d-flex align-items-center` utilities, the unused "Find a filter"
+search input (and its `filter-editor.js` guard requirement), and the invalid
+`aria-labelledby` on the menu `<div>`. Row padding now comes from Bootstrap's
+own token — `--bs-dropdown-item-padding-y: 0.5rem` on `.dropdown-menu`, with
+`.dropdown-header` reading the same token; rows are flex via
+`.bt-dropdown-scroll .dropdown-item` so an applied item's trailing check
+(`.ms-auto`) sits at the edge.
+
+**Search-bar kit page:** documents three variants — hero pill
+(`.input-group--hero`), canonical listing search, and compact/toolbar
+(`.form-control-search`, backoffice).
+
+---
+
 ## Access CTA rules + formatting conventions (v2.3, 2026-07-13)
 
 No class changes. Behaviour and copy changes on the public surface;
