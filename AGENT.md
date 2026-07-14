@@ -600,7 +600,7 @@ Row selection state: Bootstrap's `.table-active` on `<tr>`. The CSS tokens `--bs
 
 **Empty states**
 ```
-bt-blank-slate           bt-blank-slate--default  bt-blank-slate--muted
+bt-blank-slate           bt-blank-slate--muted
 bt-blank-slate--primary
 ```
 

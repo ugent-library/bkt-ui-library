@@ -1,5 +1,6 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
+<!-- @states: results, no-results -->
 <!--
   Public search page — search-first with multi-entity autocomplete.
 
@@ -369,12 +370,13 @@
 
           <!-- Clear all filters: stub link dropping filter params, keeping the query.
                The query is cleared separately by the box's native search ×. -->
-          <a href="#" class="btn btn-ghost btn-sm text-muted ms-1">
+          <a href="#" class="btn btn-ghost btn-sm">
             <i class="if if-close if--xs" aria-hidden="true"></i>
             Clear all filters
           </a>
         </div>
 
+        <!-- @state: results -->
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <!-- Pagination is only styled, does not work. Make it work according to bootstrap patterns -->
@@ -747,6 +749,31 @@
             <span class="text-muted small">Showing 1–10 of 179 results</span>
           </div>
         </nav>
+        <!-- @state -->
+
+        <!-- @state: no-results -->
+        <div class="pt-3 mt-5" role="status" aria-live="polite">
+          <p class="h5 mb-2">
+            No results for &ldquo;Quantum computing&rdquo; with these filters
+          </p>
+
+          <!-- "Did you mean" (spelling correction) — STUB, pending raven's phrase/term
+               suggester (see PLAN Open threads). raven already fuzzy-matches, so a true
+               no-results means even that whiffed; render this line when the suggester exists:
+            <p class="mb-3">Did you mean <a href="/templates/biblio-public/public-works.html?q=quantum+computing">quantum&nbsp;computing</a>?</p>
+          -->
+
+          <p class="text-muted mb-2">Nothing matches all your filters together. Try:</p>
+          <ul class="text-muted mb-3">
+            <li>Removing a filter &mdash; Access, Year, or Language</li>
+            <li>Broadening your terms, or checking the spelling</li>
+          </ul>
+
+          <a href="#" class="btn btn-secondary btn-sm" aria-label="Clear all filters">
+            <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
+          </a>
+        </div>
+        <!-- @state -->
 
       </div><!-- /results -->
     </div><!-- /row -->

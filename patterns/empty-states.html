@@ -1,0 +1,76 @@
+<!-- @title: Empty states — Booktower Design System -->
+<!-- @surface: frontoffice -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Empty states</h1>
+    <p class="lead">Two kinds of empty state: an inline blank slate (<code>bt-blank-slate</code>) for a card or section with no content, and a guided empty composed from utilities for a full search or results area.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Inline empty</h2>
+    <p class="mb-3">The blank slate (<code>bt-blank-slate</code>) is a small, centered empty for a card or section: no files on a record, an unfilled panel. It carries its own styling (centering, padding, tint). For a full search or results area, use the guided pattern below instead.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Subtle — default, inside cards and list areas</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate">
+          <p>No research output added yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Muted — inside a section that hasn't been filled in yet</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate bt-blank-slate--muted">
+          <div class="bt-avatar text-bg-primary">
+            <i class="if if-info-circle" aria-hidden="true"></i>
+          </div>
+          <p>No files attached to this record.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Primary — calls for action</div>
+      <div class="ds-demo-body">
+        <div class="bt-blank-slate bt-blank-slate--primary">
+          <div class="bt-avatar text-bg-light">
+            <i class="if if-file-text" aria-hidden="true"></i>
+          </div>
+          <p>No research output added yet.</p>
+          <div>
+            <a href="#" class="btn btn-primary btn-sm">Add your first record</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Guided empty — search / results area</h2>
+    <p class="mb-3">A zero-results search state is a <em>guided</em> empty state, not the centered <code>bt-blank-slate</code>. It stays left-aligned in the results column, names the query, and offers recovery &mdash; remove a filter, broaden or re-spell the terms. Compose it from utilities and give the region <code>role="status"</code> so screen readers announce it. Use <code>bt-blank-slate</code> for small inline empties (no files, empty section); use this for a full results area.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label">Guided — no results for a query with filters applied</div>
+      <div class="ds-demo-body">
+        <div role="status" aria-live="polite">
+          <p class="h5 mb-2">No results for &ldquo;Quantum computing&rdquo; with these filters</p>
+          <p class="text-muted mb-2">Nothing matches all your filters together. Try:</p>
+          <ul class="text-muted mb-3">
+            <li>Removing a filter &mdash; Access, Year, or Language</li>
+            <li>Broadening your terms, or checking the spelling</li>
+          </ul>
+          <a href="#" class="btn btn-secondary btn-sm">
+            <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0">Optional lead line when a spelling suggester offers a correction (raven phrase/term suggester), rendered only when a correction exists: <code>Did you mean &lt;a&gt;quantum computing&lt;/a&gt;?</code></p>
+  </section>
+</div>

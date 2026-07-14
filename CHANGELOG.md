@@ -54,7 +54,7 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `sr-only` | Bootstrap's `visually-hidden` |
 | `bt-navbar__mark` | `bt-navbar__brand` |
 | `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` | `bt-sidebar` and its elements |
-| `bt-blank-slate-default/-muted/-primary` (single dash) | `bt-blank-slate--default/--muted/--primary` |
+| `bt-blank-slate-muted/-primary` (single dash) | `bt-blank-slate--muted/--primary` |
 | `bt-table` | Bootstrap `.table .table-hover .align-middle` |
 | `bt-filter-bar`, `bt-bulk-bar`, `bt-pagination-bar` | `bt-toolbar` |
 | `bt-results-toolbar` | `bt-toolbar bt-toolbar--bordered` |
@@ -103,9 +103,7 @@ partial, and stylesheet:
 | `c-sidebar--bordered` | `bt-sidebar--bordered` |
 | `c-sub-sidebar` | `u-main__sidebar` |
 | `c-sub-sidebar--bordered` | `u-main__sidebar--bordered` |
-| `c-blank-slate` | `bt-blank-slate` |
-| `c-blank-slate-default` | `bt-blank-slate--default` |
-| `c-blank-slate-muted` | `bt-blank-slate--muted` |
+| `c-blank-slate` | `bt-blank-slate` || `c-blank-slate-muted` | `bt-blank-slate--muted` |
 | `c-blank-slate-primary` | `bt-blank-slate--primary` |
 | `c-radio-card` | `btn-check` (Bootstrap) |
 | `c-radio-card__group` | `bt-btn-check__group` (Bootstrap extension for grouping btn-checks) |
@@ -337,7 +335,7 @@ is unchanged.
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
 | `c-blank-slate` | `bt-blank-slate` | ✅ Carried over | Active in `_booktower-components.scss`. |
-| `c-blank-slate-default`, `-muted`, `-primary` | `bt-blank-slate--default`, `--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
+| `c-blank-slate-muted`, `-primary` | `bt-blank-slate--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
 
 ---
 
