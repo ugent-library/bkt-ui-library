@@ -1,0 +1,54 @@
+<!-- @title: Copy to clipboard — Booktower Design System -->
+<!-- @surface: public -->
+<div class="ds-page">
+  <header class="ds-page-header col-6" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Copy to clipboard</h1>
+    <p class="lead">A value shown in a <code>&lt;code&gt;</code> next to a button that copies it. One behaviour for both variants below, so what is displayed is always what gets copied.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Contract</h2>
+    <p class="col-8">Put <code>data-clipboard</code> on the button and a <code>&lt;code&gt;</code> next to it in the same parent. On click, <code>assets/js/clipboard.js</code> copies that <code>&lt;code&gt;</code>'s text and confirms for two seconds &mdash; the icon becomes a check, and a button with a <code>.btn-text</code> label also swaps to &ldquo;Copied!&rdquo;. Because the copied text is read from the visible <code>&lt;code&gt;</code>, there is no second value to fall out of sync. Button and <code>&lt;code&gt;</code> may sit in either order.</p>
+    <p class="col-8 mb-0">No inline <code>onclick</code>: the behaviour is the shared script, not markup. The button variant itself is documented on <a href="/elements/buttons.html">Buttons</a>.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Copy Biblio ID</h2>
+    <p class="mb-3 col-8">A labelled action beside a record's Biblio ID, in the work-card footer and across the backoffice. The visible button text is the accessible name; the icon is <code>aria-hidden</code>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Labelled button + code</h3>
+      <div class="ds-demo-body">
+        <span class="input-group w-auto">
+          <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
+            <i class="if if-copy if--xs" aria-hidden="true"></i>
+            <span class="btn-text">Biblio ID</span>
+          </button>
+          <code class="border small align-content-center px-2">01G3TZB614X7XXR52JYYGAND25</code>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Persistent link</h2>
+    <p class="mb-3 col-8">The &ldquo;Link to this record&rdquo; box on public detail pages (work, dataset, person, organisation, project). It shows the record's persistent URL &mdash; a handle for works, the canonical page for the rest &mdash; and copies exactly that. The copy button is icon-only, so its accessible name lives in <code>aria-label</code>; the script restores that label after confirming.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Label + code + icon-only copy</h3>
+      <div class="ds-demo-body">
+        <div class="alert alert-light mb-1 col-8">
+          <h4 class="form-label mb-2">Link to this record</h4>
+          <div class="btn-group mb-2">
+            <code class="small overflow-auto fw-bold p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTVXD41Z</code>
+            <button type="button" class="btn btn-light btn-sm" data-clipboard aria-label="Copy persistent link to record page">
+              <i class="if if-copy" aria-hidden="true"></i>
+            </button>
+          </div>
+          <p class="small fst-italic mb-0">This persistent link guarantees your citations will always lead to the right place, even when the location changes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
