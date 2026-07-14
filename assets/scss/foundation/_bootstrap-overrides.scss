@@ -72,6 +72,17 @@
   --bs-dropdown-link-hover-bg:     var(--bt-gray-50);
 }
 
+.dropdown-header {
+  /* Bootstrap's .dropdown-header markup is an <h6>, which base/_typography.scss
+     renders italic + light. Match the filter-picker group-label treatment instead:
+     uppercase, semibold, muted — the class beats the h6 element rule. */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.875em;
+  text-transform: uppercase;
+  color: var(--bt-gray-500);
+}
+
 .pagination {
   --bs-pagination-color:                 var(--bt-blue-800);
   --bs-pagination-bg:                    var(--s-bg, var(--bt-white));
