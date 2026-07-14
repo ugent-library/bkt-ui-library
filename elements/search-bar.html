@@ -41,6 +41,37 @@
   </section>
 
   <section class="ds-section">
+    <h2 class="h4 mb-3">Listing / results-header search</h2>
+    <p class="mb-4">The canonical search form in every public listing header — research output, researchers, organisations, projects. Square <code>.input-group-lg</code> (not the hero pill), an autocomplete <code>.bt-suggest-panel</code> overlay, and the full combobox ARIA wiring. The structure is identical on all four pages; only the <em>scope</em> varies — the placeholder and <code>aria-label</code> copy, the <code>action</code>, and the behaviour hook (works carries <code>hx-*</code> for omni-suggest; the directories carry <code>data-directory-search</code> for client-side typeahead). IDs are the generic <code>q</code> / <code>suggest-wrapper</code> / <code>suggest-panel</code> on every page.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Listing header — <code>.input-group.input-group-lg</code> + <code>.bt-suggest-panel</code></h3></div>
+      <div class="ds-demo-body">
+        <form role="search" aria-label="Search research output" action="/search">
+          <div class="position-relative" id="suggest-wrapper">
+            <label for="q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
+            <div class="input-group input-group-lg">
+              <input type="search" id="q" name="q" class="form-control"
+                placeholder="Search by title, author, DOI, or keyword&hellip;"
+                autocomplete="off" role="combobox" aria-autocomplete="list"
+                aria-controls="suggest-panel" aria-expanded="false">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <div id="suggest-panel" class="bt-suggest-panel" role="listbox"
+              aria-label="Search suggestions" hidden></div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <p class="mb-0"><strong>Rule:</strong> scope varies, structure does not. When adding a fifth listing surface, copy this skeleton verbatim and change only the copy, the <code>action</code>, and the one behaviour hook. Do not rename the IDs — <code>suggest-panel.js</code> binds <code>#q</code> / <code>#suggest-panel</code> / <code>#suggest-wrapper</code>; <code>directory-search.js</code> binds structurally via <code>[data-directory-search]</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
     <h2 class="h4 mb-3">In-hero context</h2>
 
     <div class="ds-demo">
@@ -84,6 +115,23 @@
   </section>
 
   <section class="ds-section">
+    <h2 class="h4 mb-3">Compact / toolbar search — backoffice</h2>
+    <p class="mb-4">The compact variant for inline filtering inside a <code>.bt-toolbar</code> — filtering a list, searching within a deposit, live-filtering. Plain Bootstrap <code>.input-group</code> (no size modifier, no pill) with <code>.form-control-search</code>. Used in the backoffice overview; not a public-discovery bar.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Compact — <code>.form-control-search</code></h3></div>
+      <div class="ds-demo-body">
+        <label for="search-compact" class="visually-hidden">Search research output</label>
+        <div class="input-group">
+          <input type="search" class="form-control form-control-search" id="search-compact"
+            placeholder="Search by title, author, DOI&hellip;">
+          <button class="btn btn-primary" type="button">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
     <h2 class="h4 mb-3">What the modifier does — and what it leaves alone</h2>
     <div class="ds-demo">
       <div class="ds-demo-body">
@@ -114,7 +162,7 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <p>Use <code>.input-group--hero</code> when search is the primary action on the page and deserves visual prominence — homepage hero, a dedicated search landing page, or above a full-width result list.</p>
-        <p class="mb-0">Use the compact <code>.form-control-search</code> inside a <code>.bt-toolbar</code> for inline filtering in the backoffice — filtering a list, searching within a deposit, live-filtering a dropdown. That pattern is documented in <a href="/elements/forms.html">Forms &amp; Inputs → Search input</a>.</p>
+        <p class="mb-0">Use the compact <code>.form-control-search</code> inside a <code>.bt-toolbar</code> for inline filtering in the backoffice — filtering a list, searching within a deposit, live-filtering a dropdown. See the <strong>Compact / toolbar search</strong> demo above.</p>
       </div>
     </div>
   </section>
