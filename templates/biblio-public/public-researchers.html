@@ -37,30 +37,30 @@
              dataset as you type (it does not filter the list further down the
              page). In production this becomes GET /researchers/suggest?q=&hellip; -->
         <form role="search" aria-label="Search researchers"
-          action="/templates/biblio-public/public-researchers.html" class="mb-4">
-          <div class="position-relative" id="researcher-search" data-directory-search="researchers">
+          action="/templates/biblio-public/public-researchers.html">
+          <div class="position-relative" id="suggest-wrapper" data-directory-search="researchers">
 
-            <label for="researcher-q" class="visually-hidden">
+            <label for="q" class="visually-hidden">
               Search researchers by name, ID, or organisation...
             </label>
 
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg mb-3">
               <input
                 type="search"
-                id="researcher-q"
+                id="q"
                 name="q"
                 class="form-control"
                 placeholder="Search researchers by name, ORCID, or department&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
-                aria-controls="researcher-search-panel"
+                aria-controls="suggest-panel"
                 aria-expanded="false">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
             <!-- Typeahead panel — populated client-side by directory-search.js. -->
-            <div id="researcher-search-panel" class="bt-suggest-panel"
+            <div id="suggest-panel" class="bt-suggest-panel"
               role="listbox" aria-label="Researcher suggestions" hidden></div>
 
             <!-- Example dataset powering the typeahead (prototype only). -->
@@ -83,8 +83,10 @@
                People-scoped "Add filter" chip bar (Faculty/department,
                Membership, Public research output, ORCID). Same interaction as
                the works result-filter-bar; engine in directory-filters.js. -->
-          <div class="mt-3">
-            <!-- @include: templates/partials/result-filter-bar-researchers.html -->
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <!-- @include: templates/partials/result-filter-bar-researchers.html -->
+            </div>
           </div>
 
         </form>

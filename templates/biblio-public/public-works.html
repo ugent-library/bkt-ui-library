@@ -11,9 +11,10 @@
   Scripts:
     suggest-panel.js    — panel show/hide, keyboard nav
 
-  The "Add filter" builder (search-filter-bar.html + filter-editor.js) lives on
-  the Advanced search surface, not here. Applied filters are shown as the static
-  chip row above the results.
+  A scoped Add-filter control (public discovery dimensions) sits in the chip row; its
+  interaction is stubbed here. The full filter-editor.js engine (editor + JS-managed
+  chips) lives on the Advanced/backoffice surface. Applied filters show as the static
+  chip readout above the results.
 -->
 
 <!-- @include: templates/partials/public-header.html -->
@@ -22,7 +23,7 @@
   <main id="main-content">
 
     <!-- ── Search bar ──────────────────────────────────────────────────────── -->
-    <div class="u-main__header border-bottom pb-3 pt-5">
+    <div class="u-main__header border-bottom pt-5 pb-4">
       <div class="container">
 
         <nav aria-label="Breadcrumb">
@@ -39,13 +40,13 @@
           action="/search">
 
           <!-- ── Search input + suggest panel shell ───────────────────────── -->
-          <div class="position-relative mb-3" id="suggest-wrapper">
+          <div class="position-relative" id="suggest-wrapper">
 
             <label for="q" class="visually-hidden">
               Search by title, author, keyword, DOI, or organisation
             </label>
 
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg mb-3">
               <input
                 type="search"
                 id="q"
@@ -54,6 +55,7 @@
                 value="Quantum computing"
                 placeholder="Search by title, author, DOI, or keyword&hellip;"
                 autocomplete="off"
+                role="combobox"
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false"
@@ -90,7 +92,86 @@
           </div><!-- /#suggest-wrapper -->
 
           <div class="bt-toolbar">
-            <div class="bt-toolbar__right ms-auto">
+            <div class="bt-toolbar__left">
+              <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Access is Open access">
+                    <span class="fw-light">Access:</span> Open access
+                  </button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Access is Open access">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Year is 2024">
+                    <span class="fw-light">Year:</span> 2024
+                  </button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Year is 2024">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Language is English">
+                    <span class="fw-light">Language:</span> English
+                  </button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Language is English">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <!-- Organisation chip — UNDER CONSTRUCTION, hidden with the facet; do not remove.
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Organisation is Faculty of Test">
+                    <span class="fw-light">Organisation:</span> Faculty of Test
+                  </button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Organisation is Faculty of Test">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+                -->
+
+                <!-- Add filter — scoped to public discovery dimensions (the "search-it" set the sidebar
+                    can't hold). Author + Identifier are backed by raven's index today; organisation /
+                    journal / project / keyword need a raven field + facet config first (see PLAN
+                    Dimension placement). Interaction is stubbed like the page's other hx-* stubs. -->
+                <div class="dropdown" id="add-filter-dropdown">
+                  <button class="btn btn-ghost btn-sm" type="button" id="add-filter-btn"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                  </button>
+                  <div class="dropdown-menu p-0">
+                    <div id="filter-picker-list" class="bt-dropdown-scroll">
+                      <div role="group" aria-label="People &amp; organisations">
+                        <div class="dropdown-header" aria-hidden="true">People &amp; organisations</div>
+                        <button class="dropdown-item" type="button" data-filter="author">Author</button>
+                        <button class="dropdown-item" type="button" data-filter="affiliation">Organisation / affiliation</button>
+                      </div>
+                      <div role="group" aria-label="Context">
+                        <div class="dropdown-header" aria-hidden="true">Context</div>
+                        <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+                        <button class="dropdown-item" type="button" data-filter="project">Project</button>
+                      </div>
+                      <div role="group" aria-label="Topic &amp; identifiers">
+                        <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
+                        <button class="dropdown-item" type="button" data-filter="keywords">Keywords / subject</button>
+                        <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI / ISSN)</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Clear all filters: stub link dropping filter params, keeping the query.
+                    The query is cleared separately by the box's native search ×. -->
+                <a href="#" class="btn btn-ghost btn-sm">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                  Clear all filters
+                </a>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
               <div class="bt-toolbar__item">
                 <a href="/advanced-search" class="btn btn-ghost btn-sm">
                   Advanced search
@@ -98,8 +179,8 @@
               </div>
             </div>
           </div>
-
         </form>
+
       </div>
     </div>
 
@@ -336,45 +417,6 @@
       <!-- ── Results ─────────────────────────────────────────────────────── -->
       <div class="col-lg-9" id="search-results">
 
-        <!-- Applied filters — output only: a summary of current query state
-             (sidebar facets + suggest-panel selections). Clicking a chip removes
-             that filter. Prototype uses <button type="button">; production = <a> param-drop. -->
-        <div class="d-flex flex-wrap align-items-center gap-2 mb-4"
-          role="group" aria-label="Active filters">
-
-          <button type="button" class="badge badge--outline"
-            aria-label="Remove filter: Access is Open access">
-            <span class="fw-light">Access:</span>Open access
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-          </button>
-
-          <button type="button" class="badge badge--outline"
-            aria-label="Remove filter: Year is 2024">
-            <span class="fw-light">Year:</span>2024
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-          </button>
-
-          <button type="button" class="badge badge--outline"
-            aria-label="Remove filter: Language is English">
-            <span class="fw-light">Language:</span>English
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-          </button>
-
-          <!-- Organisation chip — UNDER CONSTRUCTION, hidden with the facet; do not remove.
-          <button type="button" class="badge badge--outline"
-            aria-label="Remove filter: Organisation is Faculty of Test">
-            <span class="fw-light">Organisation:</span>Faculty of Test
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-          </button>
-          -->
-
-          <!-- Clear all filters: stub link dropping filter params, keeping the query.
-               The query is cleared separately by the box's native search ×. -->
-          <a href="#" class="btn btn-ghost btn-sm">
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-            Clear all filters
-          </a>
-        </div>
 
         <!-- @state: results -->
         <div class="bt-toolbar mb-4">

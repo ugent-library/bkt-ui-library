@@ -14,7 +14,7 @@
   <main id="main-content">
 
     <!-- Header -->
-    <div class="u-main__header border-bottom pt-5 pb-5">
+    <div class="u-main__header border-bottom pt-5 pb-4">
       <div class="container">
 
         <nav aria-label="Breadcrumb">
@@ -32,30 +32,30 @@
              dataset as you type (it does not filter the list below). In
              production this becomes GET /projects/suggest?q=&hellip; -->
         <form role="search" aria-label="Search projects"
-          action="/templates/biblio-public/public-projects.html" class="mb-0">
-          <div class="position-relative" id="project-search" data-directory-search="projects">
+          action="/templates/biblio-public/public-projects.html">
+          <div class="position-relative" id="suggest-wrapper" data-directory-search="projects">
 
-            <label for="project-q" class="visually-hidden">
+            <label for="q" class="visually-hidden">
               Search projects by title, description, acronym, funder, or ID
             </label>
 
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg mb-3">
               <input
                 type="search"
-                id="project-q"
+                id="q"
                 name="q"
                 class="form-control"
                 placeholder="Search projects by title, acronym, funder, or ID&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
-                aria-controls="project-search-panel"
+                aria-controls="suggest-panel"
                 aria-expanded="false">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
             <!-- Typeahead panel — populated client-side by directory-search.js. -->
-            <div id="project-search-panel" class="bt-suggest-panel"
+            <div id="suggest-panel" class="bt-suggest-panel"
               role="listbox" aria-label="Project suggestions" hidden></div>
 
             <!-- Example dataset powering the typeahead (prototype only).
@@ -76,8 +76,10 @@
                Project-scoped "Add filter" chip bar (Host faculty, Status,
                Period). Same interaction as the researcher directory; engine in
                directory-filters-projects.js. -->
-          <div class="mt-3">
-            <!-- @include: templates/partials/result-filter-bar-projects.html -->
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <!-- @include: templates/partials/result-filter-bar-projects.html -->
+            </div>
           </div>
 
         </form>

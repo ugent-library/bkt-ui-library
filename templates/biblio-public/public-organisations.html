@@ -49,7 +49,7 @@
   <main id="main-content">
 
     <!-- Header -->
-    <div class="u-main__header border-bottom pt-5 pb-5">
+    <div class="u-main__header border-bottom pt-5 pb-4">
       <div class="container">
 
         <nav aria-label="Breadcrumb">
@@ -67,30 +67,30 @@
              dataset as you type (it does not filter the org tree below). In
              production this becomes GET /organisations/suggest?q=&hellip; -->
         <form role="search" aria-label="Search organisations"
-          action="/templates/biblio-public/public-organisations.html" class="mb-0">
-          <div class="position-relative" id="organisation-search" data-directory-search="organisations">
+          action="/templates/biblio-public/public-organisations.html">
+          <div class="position-relative" id="suggest-wrapper" data-directory-search="organisations">
 
-            <label for="organisation-q" class="visually-hidden">
+            <label for="q" class="visually-hidden">
               Search organisations by name, ID, or type
             </label>
 
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg mb-3">
               <input
                 type="search"
-                id="organisation-q"
+                id="q"
                 name="q"
                 class="form-control"
                 placeholder="Search organisations by name, code, or type&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
-                aria-controls="organisation-search-panel"
+                aria-controls="suggest-panel"
                 aria-expanded="false">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
             <!-- Typeahead panel — populated client-side by directory-search.js. -->
-            <div id="organisation-search-panel" class="bt-suggest-panel"
+            <div id="suggest-panel" class="bt-suggest-panel"
               role="listbox" aria-label="Organisation suggestions" hidden></div>
 
             <!-- Example dataset powering the typeahead (prototype only). -->
