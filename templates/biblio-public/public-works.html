@@ -96,48 +96,53 @@
           <div class="position-relative">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
-
-                <!-- Active filter chips — rendered by filter-bar.js (works config). Two are
-                     pre-applied, so the bar shows chips from the start (unlike the directories). -->
-                <div class="d-flex flex-wrap align-items-center gap-2" role="group"
-                  aria-label="Active filters" id="wf-active-chips"></div>
-
-                <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
-                    Author + Identifier are index-backed today; organisation / venue / project /
-                    keyword need a raven field + facet config first (see docs/SEARCH-AND-FILTERING.md,
-                    Rule 5). Chips are client-side stubs. -->
-                <div class="dropdown" id="wf-add-filter-dropdown">
-                  <button class="btn btn-ghost btn-sm" type="button" id="wf-add-filter-btn"
-                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                    <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
-                  </button>
-                  <div class="dropdown-menu p-0">
-                    <div id="wf-filter-picker-list" class="bt-dropdown-scroll">
-                      <div role="group" aria-label="People &amp; organisations">
-                        <div class="dropdown-header" aria-hidden="true">People &amp; organisations</div>
-                        <button class="dropdown-item" type="button" data-filter="author">Author</button>
-                        <button class="dropdown-item" type="button" data-filter="affiliation">Organisation / affiliation</button>
-                      </div>
-                      <div role="group" aria-label="Context">
-                        <div class="dropdown-header" aria-hidden="true">Context</div>
-                        <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
-                        <button class="dropdown-item" type="button" data-filter="project">Project</button>
-                      </div>
-                      <div role="group" aria-label="Topic &amp; identifiers">
-                        <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
-                        <button class="dropdown-item" type="button" data-filter="keywords">Keywords / subject</button>
-                        <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI / ISSN)</button>
+                <div class="bt-toolbar__item">
+                  <!-- Do not render parent bt-toolbar__item if there are no active filters -->
+                  <!-- Active filter chips — rendered by filter-bar.js (works config). Two are
+                      pre-applied, so the bar shows chips from the start (unlike the directories). -->
+                  <div class="d-flex flex-wrap align-items-center gap-2" role="group"
+                    aria-label="Active filters" id="wf-active-chips"></div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
+                      Author + Identifier are index-backed today; organisation / venue / project /
+                      keyword need a raven field + facet config first (see docs/SEARCH-AND-FILTERING.md,
+                      Rule 5). Chips are client-side stubs. -->
+                  <div class="dropdown" id="wf-add-filter-dropdown">
+                    <button class="btn btn-ghost btn-sm" type="button" id="wf-add-filter-btn"
+                      data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                    </button>
+                    <div class="dropdown-menu p-0">
+                      <div id="wf-filter-picker-list" class="bt-dropdown-scroll">
+                        <div role="group" aria-label="People &amp; organisations">
+                          <div class="dropdown-header" aria-hidden="true">People &amp; organisations</div>
+                          <button class="dropdown-item" type="button" data-filter="author">Author</button>
+                          <button class="dropdown-item" type="button" data-filter="affiliation">Organisation / affiliation</button>
+                        </div>
+                        <div role="group" aria-label="Context">
+                          <div class="dropdown-header" aria-hidden="true">Context</div>
+                          <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+                          <button class="dropdown-item" type="button" data-filter="project">Project</button>
+                        </div>
+                        <div role="group" aria-label="Topic &amp; identifiers">
+                          <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
+                          <button class="dropdown-item" type="button" data-filter="keywords">Keywords / subject</button>
+                          <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI / ISSN)</button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div class="bt-toolbar__item">
 
-                <!-- Clear all filters — shown by filter-bar.js when chips are present. Drops
-                    filter params only; the query is cleared by the box's × (Rule 2). -->
-                <button type="button" class="btn btn-ghost btn-sm" id="wf-clear-all" hidden>
-                  <i class="if if-close if--xs" aria-hidden="true"></i>
-                  Clear all filters
-                </button>
+                  <!-- Clear all filters — shown by filter-bar.js when chips are present. Drops
+                      filter params only; the query is cleared by the box's × (Rule 2). -->
+                  <button type="button" class="btn btn-ghost btn-sm" id="wf-clear-all" hidden>
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                    Clear all filters
+                  </button>
+                </div>
               </div>
               <div class="bt-toolbar__right">
                 <div class="bt-toolbar__item">
