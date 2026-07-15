@@ -1021,6 +1021,18 @@ I must not just assert a position — I must name which source supports it and w
 
 ---
 
+## Comments
+
+Default to **no comment**. Add one only when a later change would break something you
+wouldn't quickly catch — a **silent or non-local failure**: it breaks a different
+element, depends on order, relies on a value defined elsewhere, or must match an
+external spec / a check outside visual review (WCAG contrast, a z-index tier, a
+query-param that must match raven). If breaking it fails **loudly and locally** —
+visible at once in review or the browser — omit the comment. Never restate what the
+code does; a few words when one is kept.
+
+---
+
 ## A note on confidence
 
 I produce code confidently regardless of whether I am correct. Confidence is not a reliability signal. Before finalising any output, check:
