@@ -625,12 +625,7 @@ bt-panel__actions        bt-panel__body           bt-panel__body--checklist
 bt-panel__body--boolean  bt-panel__body--form     bt-panel__body--year
 bt-panel__year-input
 ```
-Sizes to content by default; `bt-panel--wide` (480px cap) is the filter-editor case. Used by the add-to-list picker and the filter editor. Body layouts (`--checklist/--boolean/--year/--form`) are generic. Defined in `patterns/_panel.scss`.
-
-**Surface-aware filter group visibility**
-```
-filter-group--backoffice-only
-```
+Sizes to content by default; `bt-panel--wide` (480px cap) is the filter-editor case. Used by the add-to-list picker and the `filter-bar.js` filter editors. Body layouts (`--checklist/--boolean/--year/--form`) are generic. Defined in `patterns/_panel.scss`.
 
 **HTMX state classes**
 ```

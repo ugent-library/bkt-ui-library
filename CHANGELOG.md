@@ -6,6 +6,21 @@ system, or do I reach for something new?"
 
 ---
 
+## Filter engines consolidated into filter-bar.js (v2.6, 2026-07-15)
+
+One class removed: `filter-group--backoffice-only` (and its `[data-surface]`
+rule) — it only existed to hide backoffice groups in the deleted
+`search-filter-bar.html` partial. Surface scoping is now per-bar config, not CSS.
+
+`filter-editor.js`, `filter-stubs.js`, `directory-filters.js` and
+`directory-filters-projects.js` are replaced by one config-driven
+`assets/js/filter-bar.js`: one engine, one config per bar, self-discovered by id
+prefix (`wf-` works, `rdir-` researchers, `pdir-` projects). Editor types:
+checklist, boolean, year-range, text. The works page now uses the same live
+chip bar as the directories (two chips pre-applied) instead of static markup.
+Chips remain client-side prototype stubs. Registry: `docs/JAVASCRIPT.md`;
+interaction model: `docs/SEARCH-AND-FILTERING.md`.
+
 ## Copy-to-clipboard documented as a pattern (v2.5, 2026-07-14)
 
 No class changes. New kit page `patterns/copy-to-clipboard.html` documents the two

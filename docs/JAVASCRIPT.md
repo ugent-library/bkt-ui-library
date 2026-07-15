@@ -37,9 +37,8 @@ Load order matters. Scripts must be declared in this sequence in any template th
 ```html
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>  <!-- prototype only -->
-<script src="/assets/js/filter-editor.js"></script>
-<script src="/assets/js/filter-stubs.js"></script>        <!-- prototype only -->
 <script src="/assets/js/suggest-panel.js"></script>
+<script src="/assets/js/filter-bar.js"></script>
 <script src="/assets/js/deposit.js"></script>             <!-- deposit flow only -->
 ```
 
@@ -77,25 +76,6 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `filter-editor.js`
-
-**Purpose:** Manages the filter picker, editor panel, and active filter chips. Owns the filter state and fires search requests when a filter changes.
-
-**Loaded by:** none currently — removed from `public-works.html`. Retained for the Advanced search / backoffice filter builder (not yet on a live page); documented in the `patterns/filter-picker.html` UI-kit page.
-
-**Listens for:**
-- `biblio:filter-add` — adds a chip without opening the editor (used by autocomplete selections)
-- Click on `[data-filter]` items in the picker dropdown
-- Click on `[data-filter-id]` chip badges (reopens editor in edit mode)
-- Click on `[data-remove-id]` remove buttons
-- Click on `#clear-all-btn`
-
-**Dispatches:** nothing (fires HTMX GET directly via `htmx.ajax`)
-
-**Prototype-only:** no
-
----
-
 ### `suggest-panel.js`
 
 **Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup and handles keyboard navigation within the panel. Suggestion rows navigate via their own `href` ("type decides"); the panel no longer mutates filter state.
@@ -109,7 +89,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Dispatches:** nothing
 
-**Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub data is in `filter-stubs.js`)
+**Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub suggestions are server-rendered into the panel)
 
 ---
 
@@ -131,51 +111,35 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `directory-filters.js`
+### `filter-bar.js`
 
-**Purpose:** People-scoped chip + editor filter bar for the researcher directory. Same interaction as `filter-editor.js`, but the filter set is Faculty/department, Membership (current / alumni), and Public research output — not works. Owns its own filter state and chips.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist, boolean, year-range, text. A bar may pre-apply filters (`INITIAL`) so it starts populated.
 
-**Loaded by:** `public-researchers.html` (via `templates/partials/result-filter-bar-researchers.html`)
+**Bars & filter sets:**
+- `wf-` — public works (`public-works.html`): Author, Organisation/affiliation, Journal/venue, Project, Keywords/subject, Identifier. Two chips pre-applied.
+- `rdir-` — researcher directory (`public-researchers.html` via `result-filter-bar-researchers.html`): Faculty/department, Current or alumni, Has public research output.
+- `pdir-` — project directory (`public-projects.html` via `result-filter-bar-projects.html`): Host faculty, Status, Period (year range).
 
-**Listens for:**
-- Click on `[data-filter]` items in the `#rdir-filter-picker-list` dropdown
+**Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
+
+**Listens for (per bar, `<prefix>` = `wf-` / `rdir-` / `pdir-`):**
+- Click on `[data-filter]` items in `#<prefix>filter-picker-list`
 - Click on `[data-filter-id]` chip badges (reopens editor)
 - Click on `[data-remove-id]` remove buttons
-- Click on `#rdir-clear-all`
+- Click on `#<prefix>clear-all`
 - `keydown` Escape inside the editor; outside-click close
 
 **Dispatches:** nothing
 
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty values and the public-output rollup are stubs). Wire to real query params when the directory endpoint exists.
-
----
-
-### `directory-filters-projects.js`
-
-**Purpose:** Project-scoped chip + editor filter bar for the project directory. Same interaction as `directory-filters.js`, plus a year-range editor. Filter set is Host faculty, Status (active / completed), and Period. Owns its own filter state and chips.
-
-**Loaded by:** `public-projects.html` (via `templates/partials/result-filter-bar-projects.html`)
-
-**Listens for:**
-- Click on `[data-filter]` items in the `#pdir-filter-picker-list` dropdown
-- Click on `[data-filter-id]` chip badges (reopens editor)
-- Click on `[data-remove-id]` remove buttons
-- Click on `#pdir-clear-all`
-- `keydown` Escape inside the editor; outside-click close
-
-**Dispatches:** nothing
-
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty values, status and period are stubs). Wire to real query params when the directory endpoint exists.
-
-**Note:** Near-duplicate of `directory-filters.js` (filter set, the `pdir-` id prefix, and the added year-range editor differ). When a real endpoint lands, consider consolidating the directory filter engines into one config-driven module.
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty/venue/project/keyword values are stubs, and organisation/venue/project/keyword facets are backend-dependent). Wire to real query params when the endpoints exist.
 
 ---
 
 ### `people-search.js`
 
-**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used inside the filter editor (Author filter) and the deposit flow add-author form.
+**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. (The works Author filter is a text stub today; production would resolve it through this widget.)
 
-**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`); also embedded in the `patterns/filter-picker.html` UI-kit demo. (Removed from `public-works.html` with the filter builder.)
+**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`)
 
 **Listens for:**
 - `keyup` on `[data-ps-input]` inputs
@@ -232,16 +196,6 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `filter-stubs.js` (prototype only)
-
-**Purpose:** Provides mock autocomplete suggestions for text filter fields (used by `suggest-panel.js` and `filter-editor.js` in prototypes).
-
-**Loaded by:** none currently — was `public-works.html`; unused since the suggest panel renders rows server-side (prototype builds only)
-
-**Remove when:** real server endpoints for autocomplete exist.
-
----
-
 ## Custom events
 
 ### `biblio:filter-add`
@@ -251,15 +205,15 @@ Fired when a filter should be added without opening the editor panel (e.g. selec
 ```javascript
 document.dispatchEvent(new CustomEvent('biblio:filter-add', {
   detail: {
-    filterId: 'affiliation',           // key matching FILTERS in filter-editor.js
+    filterId: 'affiliation',           // key matching FILTERS in the directory filter engine
     displayValue: 'Faculty of Sciences',
     rawValue: { id: 'fw', name: 'Faculty of Sciences' }
   }
 }));
 ```
 
-Fired by: nothing currently — the public suggest panel now navigates instead of dispatching. Retained for the filter builder (`filter-editor.js`) on the Advanced search / backoffice surfaces.
-Handled by: `filter-editor.js`
+Fired by: nothing currently — the public suggest panel navigates instead of dispatching.
+Handled by: nothing currently — the directory filter engines manage their own chips directly. Kept as a reserved contract for a future filter builder.
 
 ---
 
@@ -274,7 +228,7 @@ document.dispatchEvent(new CustomEvent('people-search:select', {
 ```
 
 Fired by: `people-search.js`
-Handled by: `filter-editor.js` (Author filter) and deposit flow author form
+Handled by: the deposit flow author form
 
 ---
 

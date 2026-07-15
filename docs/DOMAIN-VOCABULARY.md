@@ -267,7 +267,6 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `backoffice-header.html` | All backoffice templates |
 | `main-sidebar.html` | All backoffice templates (researcher, curator, proxy) |
 | `backoffice-facet-sidebar.html` | Search pages with filter sidebar |
-| `search-filter-bar.html` | Search results header |
 | `search-suggest-panel.html` | Search autocomplete panel |
 | `result-filter-bar.html` | Active filter chips bar |
 | `public-header.html` | Public templates |

@@ -32,6 +32,11 @@
           <td><code>btn-primary</code></td>
         </tr>
         <tr>
+          <td>Select file (multiple files, publications only)</td>
+          <td><code>if-file</code></td>
+          <td><code>btn-primary</code></td>
+        </tr>
+        <tr>
           <td>Log in (restricted)</td>
           <td><code>if-lock</code></td>
           <td><code>btn-warning</code></td>
@@ -116,6 +121,42 @@
             </h2>
             <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Stefan K. Arndt</a></p>
             <p class="bt-work-card__pub"><time datetime="2025">2025</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Zenodo</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Multiple files — choose on the detail page</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-multi">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="badge text-bg-success">Open access</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Species composition of Flemish forest plots">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Species composition of Flemish forest plots">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <!-- Publication with several files: no server pick — route to the Files section -->
+              <a href="#" class="btn btn-primary btn-sm"
+                aria-label="Select file: Species composition of Flemish forest plots, 3 files">
+                <i class="if if-file" aria-hidden="true"></i> Select file
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-multi" class="bt-work-card__title">
+              <a href="#">Species composition of Flemish forest plots: a twenty-year resurvey</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Jonas Maes</a></p>
+            <p class="bt-work-card__pub"><time datetime="2025">2025</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Forest Ecology and Management</a></p>
           </div>
         </article>
       </div>

@@ -10,11 +10,12 @@
 
   Scripts:
     suggest-panel.js    — panel show/hide, keyboard nav
+    filter-bar.js       — Add-filter picker + editor + chips (works config, wf- ids)
 
-  A scoped Add-filter control (public discovery dimensions) sits in the chip row; its
-  interaction is stubbed here. The full filter-editor.js engine (editor + JS-managed
-  chips) lives on the Advanced/backoffice surface. Applied filters show as the static
-  chip readout above the results.
+  The Add-filter control (public discovery "search-it" dimensions) is wired by
+  filter-bar.js: pick a filter → editor opens; a chip appears; click a chip to edit,
+  × to remove. Two chips are pre-applied so the bar starts populated. Chips are
+  client-side stubs and don't refilter the list yet.
 -->
 
 <!-- @include: templates/partials/public-header.html -->
@@ -91,59 +92,27 @@
 
           </div><!-- /#suggest-wrapper -->
 
-          <div class="bt-toolbar">
-            <div class="bt-toolbar__left">
-              <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+          <!-- position-relative anchors the editor overlay so it floats over the results. -->
+          <div class="position-relative">
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
 
-                <div class="filter-chip-group">
-                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Access is Open access">
-                    <span class="fw-light">Access:</span> Open access
-                  </button>
-                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Access is Open access">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </div>
+                <!-- Active filter chips — rendered by filter-bar.js (works config). Two are
+                     pre-applied, so the bar shows chips from the start (unlike the directories). -->
+                <div class="d-flex flex-wrap align-items-center gap-2" role="group"
+                  aria-label="Active filters" id="wf-active-chips"></div>
 
-                <div class="filter-chip-group">
-                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Year is 2024">
-                    <span class="fw-light">Year:</span> 2024
-                  </button>
-                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Year is 2024">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </div>
-
-                <div class="filter-chip-group">
-                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Language is English">
-                    <span class="fw-light">Language:</span> English
-                  </button>
-                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Language is English">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </div>
-
-                <!-- Organisation chip — UNDER CONSTRUCTION, hidden with the facet; do not remove.
-                <div class="filter-chip-group">
-                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Organisation is Faculty of Test">
-                    <span class="fw-light">Organisation:</span> Faculty of Test
-                  </button>
-                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Organisation is Faculty of Test">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </div>
-                -->
-
-                <!-- Add filter — scoped to public discovery dimensions (the "search-it" set the sidebar
-                    can't hold). Author + Identifier are backed by raven's index today; organisation /
-                    journal / project / keyword need a raven field + facet config first (see PLAN
-                    Dimension placement). Interaction is stubbed like the page's other hx-* stubs. -->
-                <div class="dropdown" id="add-filter-dropdown">
-                  <button class="btn btn-ghost btn-sm" type="button" id="add-filter-btn"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
+                    Author + Identifier are index-backed today; organisation / venue / project /
+                    keyword need a raven field + facet config first (see docs/SEARCH-AND-FILTERING.md,
+                    Rule 5). Chips are client-side stubs. -->
+                <div class="dropdown" id="wf-add-filter-dropdown">
+                  <button class="btn btn-ghost btn-sm" type="button" id="wf-add-filter-btn"
+                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
                   </button>
                   <div class="dropdown-menu p-0">
-                    <div id="filter-picker-list" class="bt-dropdown-scroll">
+                    <div id="wf-filter-picker-list" class="bt-dropdown-scroll">
                       <div role="group" aria-label="People &amp; organisations">
                         <div class="dropdown-header" aria-hidden="true">People &amp; organisations</div>
                         <button class="dropdown-item" type="button" data-filter="author">Author</button>
@@ -163,21 +132,27 @@
                   </div>
                 </div>
 
-                <!-- Clear all filters: stub link dropping filter params, keeping the query.
-                    The query is cleared separately by the box's native search ×. -->
-                <a href="#" class="btn btn-ghost btn-sm">
+                <!-- Clear all filters — shown by filter-bar.js when chips are present. Drops
+                    filter params only; the query is cleared by the box's × (Rule 2). -->
+                <button type="button" class="btn btn-ghost btn-sm" id="wf-clear-all" hidden>
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                   Clear all filters
-                </a>
+                </button>
+              </div>
+              <div class="bt-toolbar__right">
+                <div class="bt-toolbar__item">
+                  <a href="/advanced-search" class="btn btn-ghost btn-sm">
+                    Advanced search
+                  </a>
+                </div>
               </div>
             </div>
-            <div class="bt-toolbar__right">
-              <div class="bt-toolbar__item">
-                <a href="/advanced-search" class="btn btn-ghost btn-sm">
-                  Advanced search
-                </a>
-              </div>
-            </div>
+
+            <!-- Filter editor panel — must exist at load; filter-bar.js renders into it. -->
+            <div id="wf-filter-editor" hidden
+              class="bt-panel bt-panel--wide position-absolute top-100 start-0 w-100 mt-2"
+              role="dialog" aria-modal="false" aria-labelledby="wf-filter-editor-title"></div>
+
           </div>
         </form>
 
@@ -746,9 +721,10 @@
                   </div>
                 </div>
               </div>
-              <a href="#" download class="btn btn-primary btn-sm"
-                aria-label="Download: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
-                <i class="if if-download" aria-hidden="true"></i> Download
+              <!-- Publication with several files: no server pick — route to the Files section -->
+              <a href="/templates/biblio-public/public-work-detail.html#files-heading" class="btn btn-primary btn-sm"
+                aria-label="Select file: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics, 3 files">
+                <i class="if if-file" aria-hidden="true"></i> Select file
               </a>
             </div>
           </div>
@@ -874,5 +850,6 @@
 </div>
 
 <script src="/assets/js/suggest-panel.js"></script>
+<script src="/assets/js/filter-bar.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
