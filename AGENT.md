@@ -17,6 +17,7 @@ When a new session begins on this project, execute these steps before writing an
    - `docs/UI-LAYER.md` — surface system, CSS distribution, HTMX rules, template map
    - `docs/CONSUMING-BOOKTOWER.md` — how to use this UI library correctly inside another project
    - `docs/JAVASCRIPT.md` — JS file registry, event contract, loading order
+   - `docs/SEARCH-AND-FILTERING.md` — the search & filtering interaction model (URL-is-truth, suggestion routing, dimension placement, public vs backoffice); read when touching any search box, facet sidebar, or filter picker
    - `docs/ISSUE-TEMPLATE.md` — template and anti-rot rules for implementation issues (read when drafting an issue)
 
 2. **Check the verified class list** — the complete class list in this file (AGENT.md) is the working reference for CSS class names. Do not guess names not on that list. If verifying something not listed, read `assets/booktower.css` directly.

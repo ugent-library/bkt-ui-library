@@ -4,29 +4,29 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Facets</h1>
-    <p class="lead">Filter sidebars are plain Bootstrap: <code>fieldset</code>/<code>legend</code> groups with <code>form-check</code> rows, separated by <code>&lt;hr&gt;</code>. No custom facet classes. Live examples: <a href="/templates/biblio-researcher/search-my-research.html">search-my-research</a>, <a href="/templates/biblio-public/public-works.html">public-works</a>.</p>
+    <p class="lead">Filter sidebars are plain Bootstrap: <code>fieldset</code>/<code>legend</code> groups with <code>form-check</code> rows, separated by <code>&lt;hr&gt;</code>. No custom facet classes. Used on the <strong>public</strong> search sidebar today (<a href="/templates/biblio-public/public-works.html">public-works</a>). Backoffice list/search facets are a separate surface that is not yet ready — so every example here is a public facet.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Facet sidebar — flat groups</h2>
-    <p class="mb-4">The pattern as used in the backoffice list templates. Counts are decorative for sighted users (<code>aria-hidden</code>); the input's <code>aria-label</code> carries name and count together.</p>
+    <p class="mb-4">The pattern as used on the public search sidebar. Counts are decorative for sighted users (<code>aria-hidden</code>); the input's <code>aria-label</code> carries name and count together.</p>
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Filter sidebar</h3></div>
       <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
 
         <aside aria-label="Filter by">
           <fieldset class="mb-4">
-            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <legend class="form-label fw-semibold mb-2">Full text access</legend>
             <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="fx-published"
-                aria-label="Published (3,802 records)">
-              <label class="form-check-label flex-grow-1" for="fx-published">Published</label>
+              <input class="form-check-input me-2" type="checkbox" id="fx-oa"
+                aria-label="Open access (3,802 records)">
+              <label class="form-check-label flex-grow-1" for="fx-oa">Open access</label>
               <span class="badge bg-transparent pe-1" aria-hidden="true">3,802</span>
             </div>
             <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="fx-draft"
-                aria-label="Draft (1,017 records)">
-              <label class="form-check-label flex-grow-1" for="fx-draft">Draft</label>
+              <input class="form-check-input me-2" type="checkbox" id="fx-embargo"
+                aria-label="Under embargo (1,017 records)">
+              <label class="form-check-label flex-grow-1" for="fx-embargo">Under embargo</label>
               <span class="badge bg-transparent pe-1" aria-hidden="true">1,017</span>
             </div>
           </fieldset>
@@ -98,5 +98,64 @@
 
       </div>
     </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Range facet — a few checkboxes plus a custom range</h2>
+    <p class="mb-4">For an ordinal dimension like Year, pair the most useful discrete values (recent years, as checkboxes with counts) with a <code>From</code>/<code>To</code> number-input range for everything else. The two are one <code>fieldset</code>; the range inputs get visually-hidden labels. Live use: <a href="/templates/biblio-public/public-works.html">public-works</a> (Year).</p>
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Year — checkboxes + range</h3></div>
+      <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
+
+        <fieldset>
+          <legend class="form-label h6 mb-2">Year</legend>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="fx-y2025"
+              aria-label="2025 (38 results)">
+            <label class="form-check-label flex-grow-1" for="fx-y2025">2025</label>
+            <span class="text-muted small" aria-hidden="true">38</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="fx-y2024" checked
+              aria-label="2024 (31 results)">
+            <label class="form-check-label flex-grow-1" for="fx-y2024">2024</label>
+            <span class="text-muted small" aria-hidden="true">31</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="fx-y2023"
+              aria-label="2023 (28 results)">
+            <label class="form-check-label flex-grow-1" for="fx-y2023">2023</label>
+            <span class="text-muted small" aria-hidden="true">28</span>
+          </div>
+          <div class="mt-2">
+            <p class="text-muted small mb-1">Custom range</p>
+            <div class="d-flex gap-2">
+              <div>
+                <label for="fx-year-from" class="visually-hidden">From year</label>
+                <input type="number" id="fx-year-from" name="year_from"
+                  class="form-control form-control-sm" placeholder="From" min="1800" max="2030">
+              </div>
+              <div>
+                <label for="fx-year-to" class="visually-hidden">To year</label>
+                <input type="number" id="fx-year-to" name="year_to"
+                  class="form-control form-control-sm" placeholder="To" min="1800" max="2030">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The facet sidebar in the search system</h2>
+    <p class="mb-3">The facet sidebar is one input in the composed search system — see <a href="/patterns/search-and-filtering.html">Search &amp; filtering</a> for the assembly and <code>docs/SEARCH-AND-FILTERING.md</code> for the interaction rules. Three things carry over into how you build it:</p>
+    <ul>
+      <li><strong>Readout, not just input.</strong> Ticking a box surfaces a removable chip; removing that chip unticks the box. Both are views onto the URL (server-derived in production). The chips themselves are the <a href="/patterns/filter-picker.html">Filter picker</a>'s split-chip markup.</li>
+      <li><strong>How facets combine.</strong> Multiple values in one facet are OR; different facets are AND. There is no boolean control on the public surface — operator choice is an advanced/expert affordance.</li>
+      <li><strong>The public set is deliberate.</strong> Public carries only the browse-it dimensions — Access, Type, Year, Language, with Access first (OA-forward). High-cardinality dimensions (author, journal, project, organisation) go to the Add-filter picker, not the rail. The full placement taxonomy is in the doc (Rule 5).</li>
+    </ul>
+    <p class="mb-0">The rail is a plain <code>&lt;aside aria-label="Filter by"&gt;</code> — not <a href="/patterns/sidebar.html"><code>bt-sidebar</code></a>, which is the app navigation column.</p>
   </section>
 </div>

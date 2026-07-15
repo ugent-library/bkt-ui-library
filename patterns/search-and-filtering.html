@@ -1,0 +1,238 @@
+<!-- @title: Search & Filtering — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header col-8" data-surface="public">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Search &amp; filtering</h1>
+    <p class="lead">How the search box, suggest panel, sidebar facets, Add-filter picker, chip bar, and results toolbar compose into one system. This page shows the assembly; the interaction rules — URL-is-truth, what the box exposes, where each dimension goes — live in <code>docs/SEARCH-AND-FILTERING.md</code>. Each part has its own kit page for markup and states.</p>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       THE PARTS AND THEIR JOBS
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The parts and their jobs</h2>
+    <p class="mb-4">Six components, two jobs. The <strong>box enters</strong> a result space or navigates to a record; the <strong>sidebar and picker narrow</strong> within it; the <strong>chip bar reads out</strong> what is applied. The URL holds the one canonical state — every part is a view onto it.</p>
+
+    <table class="table table-hover align-middle" aria-label="Search and filtering components and their jobs">
+      <thead>
+        <tr>
+          <th scope="col" class="text-uppercase text-muted small">Part</th>
+          <th scope="col" class="text-uppercase text-muted small">Job</th>
+          <th scope="col" class="text-uppercase text-muted small">Documented in</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Search box</td>
+          <td>Enters a result space (<code>?q=</code>) or jumps to a record. It doesn't filter the list you're viewing — narrowing is the sidebar's and picker's job.</td>
+          <td><a href="/elements/search-bar.html">Search bar</a></td>
+        </tr>
+        <tr>
+          <td>Suggest panel</td>
+          <td>Autocomplete of navigation shortcuts — entities you can go to, plus keyword/tag topic-sets.</td>
+          <td><a href="/elements/search-bar.html">Search bar</a></td>
+        </tr>
+        <tr>
+          <td>Sidebar facets</td>
+          <td>Narrows on browse-it dimensions — closed, low-cardinality, countable (Access, Type, Year, Language).</td>
+          <td><a href="/patterns/facets.html">Facets</a></td>
+        </tr>
+        <tr>
+          <td>Add-filter picker + editor</td>
+          <td>Narrows on search-it dimensions — high-cardinality records (author, journal, project, organisation) via typeahead.</td>
+          <td><a href="/patterns/filter-picker.html">Filter picker</a></td>
+        </tr>
+        <tr>
+          <td>Chip bar</td>
+          <td>Reflects the applied filters as editable split chips — a readout of the sidebar/picker, not an input.</td>
+          <td><a href="/patterns/filter-picker.html">Filter picker</a>, <a href="/elements/badges.html">Badges</a></td>
+        </tr>
+        <tr>
+          <td>Results toolbar</td>
+          <td>Presentation controls — result count (live region), sort, page size, and result actions.</td>
+          <td><a href="/patterns/toolbar.html">Toolbar</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small text-muted mb-0">Not part of this system: <code>bt-sidebar</code> (<a href="/patterns/sidebar.html">Sidebar navigation</a>) is the persistent nav column in <code>u-layout--app</code> — a navigator, not a filter rail. The filter rail is a plain <code>&lt;aside&gt;</code>.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ASSEMBLED — PUBLIC RESULTS PAGE
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Assembled — a public results page</h2>
+    <p class="mb-4">The parts in place on <a href="/templates/biblio-public/public-works.html">public-works</a>: search box on top, the chip bar (readout) and Add-filter picker (input) below it, the facet rail on the left, and the results toolbar above the list. The live page carries the <code>hx-*</code> wiring and the suggest-panel content; here they are static.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Public assembly</h3></div>
+      <div class="ds-demo-body" data-surface="public">
+
+        <!-- Search box + suggest shell (canonical form; real IDs are q / suggest-panel on the live page) -->
+        <form role="search" aria-label="Search research output" action="/search">
+          <div class="position-relative" id="saf-suggest-wrapper">
+            <label for="saf-q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
+            <div class="input-group input-group-lg mb-3">
+              <input type="search" id="saf-q" name="q" class="form-control"
+                value="Quantum computing"
+                placeholder="Search by title, author, DOI, or keyword&hellip;"
+                autocomplete="off" role="combobox" aria-autocomplete="list"
+                aria-controls="saf-suggest-panel" aria-expanded="false">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <div id="saf-suggest-panel" class="bt-suggest-panel" role="listbox"
+              aria-label="Search suggestions" hidden></div>
+          </div>
+
+          <!-- Chip bar (readout) + Add-filter picker (input) + Clear all filters -->
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Access is Open access">
+                    <span class="fw-light">Access:</span> Open access
+                  </button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Access is Open access">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Year is 2024">
+                    <span class="fw-light">Year:</span> 2024
+                  </button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Year is 2024">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <div class="dropdown" id="saf-add-filter-dropdown">
+                  <button class="btn btn-ghost btn-sm" type="button" id="saf-add-filter-btn"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                  </button>
+                  <div class="dropdown-menu p-0">
+                    <div class="bt-dropdown-scroll">
+                      <div role="group" aria-label="People &amp; organisations">
+                        <div class="dropdown-header" aria-hidden="true">People &amp; organisations</div>
+                        <button class="dropdown-item" type="button" data-filter="author">Author</button>
+                        <button class="dropdown-item" type="button" data-filter="affiliation">Organisation / affiliation</button>
+                      </div>
+                      <div role="group" aria-label="Context">
+                        <div class="dropdown-header" aria-hidden="true">Context</div>
+                        <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+                        <button class="dropdown-item" type="button" data-filter="project">Project</button>
+                      </div>
+                      <div role="group" aria-label="Topic &amp; identifiers">
+                        <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
+                        <button class="dropdown-item" type="button" data-filter="keywords">Keywords / subject</button>
+                        <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI / ISSN)</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <a href="#" class="btn btn-ghost btn-sm">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                  Clear all filters
+                </a>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <a href="/advanced-search" class="btn btn-ghost btn-sm">Advanced search</a>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Facet rail + results -->
+        <div class="row g-5 align-items-start mt-1">
+
+          <aside class="col-lg-4" aria-label="Filter results">
+            <fieldset>
+              <legend class="form-label h6 mb-2">Full text access</legend>
+              <div class="d-flex form-check">
+                <input class="form-check-input me-2" type="checkbox" id="saf-f-oa" checked
+                  aria-label="Open access (142 results)">
+                <label class="form-check-label flex-grow-1" for="saf-f-oa">Open access</label>
+                <span class="text-muted small" aria-hidden="true">142</span>
+              </div>
+              <div class="d-flex form-check">
+                <input class="form-check-input me-2" type="checkbox" id="saf-f-embargo"
+                  aria-label="Under embargo (11 results)">
+                <label class="form-check-label flex-grow-1" for="saf-f-embargo">Under embargo</label>
+                <span class="text-muted small" aria-hidden="true">11</span>
+              </div>
+              <div class="d-flex form-check">
+                <input class="form-check-input me-2" type="checkbox" id="saf-f-restricted"
+                  aria-label="Restricted (37 results)">
+                <label class="form-check-label flex-grow-1" for="saf-f-restricted">Restricted</label>
+                <span class="text-muted small" aria-hidden="true">37</span>
+              </div>
+            </fieldset>
+
+            <hr>
+
+            <fieldset>
+              <legend class="form-label h6 mb-2">Type</legend>
+              <div class="d-flex form-check">
+                <input class="form-check-input me-2" type="checkbox" id="saf-f-journal" checked
+                  aria-label="Journal article (88 results)">
+                <label class="form-check-label flex-grow-1" for="saf-f-journal">Journal article</label>
+                <span class="text-muted small" aria-hidden="true">88</span>
+              </div>
+              <div class="d-flex form-check">
+                <input class="form-check-input me-2" type="checkbox" id="saf-f-conference"
+                  aria-label="Conference paper (31 results)">
+                <label class="form-check-label flex-grow-1" for="saf-f-conference">Conference paper</label>
+                <span class="text-muted small" aria-hidden="true">31</span>
+              </div>
+              <div class="d-flex form-check">
+                <input class="form-check-input me-2" type="checkbox" id="saf-f-dataset"
+                  aria-label="Dataset (24 results)">
+                <label class="form-check-label flex-grow-1" for="saf-f-dataset">Dataset</label>
+                <span class="text-muted small" aria-hidden="true">24</span>
+              </div>
+            </fieldset>
+          </aside>
+
+          <div class="col-lg-8">
+            <div class="bt-toolbar mb-4">
+              <div class="bt-toolbar__left">
+                <div class="bt-toolbar__item">
+                  <span class="text-muted small" aria-live="polite">Showing 1&ndash;10 of 179 results</span>
+                </div>
+              </div>
+              <div class="bt-toolbar__right">
+                <div class="bt-toolbar__item">
+                  <label for="saf-page-size" class="visually-hidden">Results per page</label>
+                  <select id="saf-page-size" class="form-select form-select-sm">
+                    <option value="10" selected>10 per page</option>
+                    <option value="25">25 per page</option>
+                    <option value="50">50 per page</option>
+                  </select>
+                </div>
+                <div class="bt-toolbar__item">
+                  <label for="saf-sort" class="visually-hidden">Sort by</label>
+                  <select id="saf-sort" class="form-select form-select-sm">
+                    <option value="relevance">Relevance</option>
+                    <option value="year-desc" selected>Year (new to old)</option>
+                    <option value="title-asc">Title (A&ndash;Z)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <p class="alert alert-info">Result cards render here — see <a href="/patterns/work-card.html">Work card</a>. This page documents the search and filter chrome around them.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
