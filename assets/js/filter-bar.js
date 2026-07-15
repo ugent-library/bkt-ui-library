@@ -39,7 +39,6 @@
     'rdir-': {
       faculty:    { label: 'Faculty or department', type: 'checklist', values: FACULTIES },
       status:     { label: 'Current or alumni', type: 'boolean', yesLabel: 'Current members', noLabel: 'Alumni' },
-      has_output: { label: 'Has public research output', type: 'boolean', yesLabel: 'Has public output', noLabel: 'No public output' },
     },
     'pdir-': {
       faculty: { label: 'Host faculty', type: 'checklist', values: FACULTIES },
