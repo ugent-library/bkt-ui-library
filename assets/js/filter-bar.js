@@ -64,17 +64,20 @@
     if (!activeChips || !filterEditor || !clearAllBtn) return;   // bar not on this page
 
     const pickerSel = `#${prefix}filter-picker-list button[data-filter]`;
+    const addFilterDropdown = document.getElementById(prefix + 'add-filter-dropdown');
     let activeFilters = initial ? JSON.parse(JSON.stringify(initial)) : {};
     let editingFilter = null;
 
     document.querySelectorAll(pickerSel).forEach(btn => {
       btn.addEventListener('click', () => {
         hideDropdown();
-        openEditor(btn.dataset.filter, activeFilters[btn.dataset.filter] || null);
+        openEditor(btn.dataset.filter, activeFilters[btn.dataset.filter] || null, addFilterDropdown);
       });
     });
 
     clearAllBtn.addEventListener('click', () => { activeFilters = {}; renderChips(); closeEditor(); });
+
+    document.getElementById(prefix + 'add-filter-btn')?.addEventListener('click', closeEditor);
 
     document.addEventListener('click', e => {
       if (!filterEditor.hidden &&
@@ -87,15 +90,25 @@
 
     renderChips();   // paint any pre-applied (initial) filters
 
-    function openEditor(filterId, existing) {
+    function openEditor(filterId, existing, anchorEl) {
       const def = FILTERS[filterId];
       if (!def) return;
       editingFilter = filterId;
       filterEditor.hidden = false;
       filterEditor.innerHTML = renderEditor(def, existing);
+      positionEditor(anchorEl);
       filterEditor.querySelector('input')?.focus();
       attachEditorEvents(filterId, def);
       syncPickerState();
+    }
+
+    // Drop the panel under whatever opened it (Add-filter button or the chip).
+    function positionEditor(anchorEl) {
+      const parent = filterEditor.offsetParent;
+      if (!anchorEl || !parent) return;
+      const left = anchorEl.getBoundingClientRect().left - parent.getBoundingClientRect().left;
+      const maxLeft = Math.max(0, parent.clientWidth - filterEditor.offsetWidth);
+      filterEditor.style.left = Math.min(Math.max(0, left), maxLeft) + 'px';
     }
 
     function renderEditor(def, existing) {
@@ -206,7 +219,7 @@
         </div>`).join('');
 
       activeChips.querySelectorAll('[data-filter-id]').forEach(btn => {
-        btn.addEventListener('click', () => openEditor(btn.dataset.filterId, activeFilters[btn.dataset.filterId]));
+        btn.addEventListener('click', () => openEditor(btn.dataset.filterId, activeFilters[btn.dataset.filterId], btn.closest('.filter-chip-group')));
       });
       activeChips.querySelectorAll('[data-remove-id]').forEach(btn => {
         btn.addEventListener('click', () => { removeFilter(btn.dataset.removeId); if (editingFilter === btn.dataset.removeId) closeEditor(); });
