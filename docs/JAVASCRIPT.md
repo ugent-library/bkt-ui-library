@@ -113,12 +113,12 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `filter-bar.js`
 
-**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist, boolean, year-range, text. A bar may pre-apply filters (`INITIAL`) so it starts populated.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters (`INITIAL`) so it starts populated.
 
 **Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author, Organisation/affiliation, Journal/venue, Project, Keywords/subject, Identifier. Two chips pre-applied.
-- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Faculty/department, Current or alumni.
-- `pdir-` — project directory (`public-projects.html`, bar inline): Host faculty, Status, Period (year range).
+- `wf-` — public works (`public-works.html`): Author, Organisation, Project, Keywords/subject (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied.
+- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organisation, Current or alumni.
+- `pdir-` — project directory (`public-projects.html`, bar inline): Organisation, Status, Year (range).
 
 **Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
 
@@ -131,7 +131,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Dispatches:** nothing
 
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty/venue/project/keyword values are stubs, and organisation/venue/project/keyword facets are backend-dependent). Wire to real query params when the endpoints exist.
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organisation tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
 
 ---
 

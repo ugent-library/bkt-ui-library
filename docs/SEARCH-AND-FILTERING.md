@@ -176,7 +176,7 @@ A dimension's shape decides its home. This is the taxonomy in full:
 |---|---|---|
 | Closed, low-cardinality, broad, legible, discovery | **Sidebar checklist** | Access, Type, Language |
 | Ordinal / continuous | **Sidebar range** | Year |
-| High-cardinality *records* | **Add-filter picker + typeahead** | Author, Organisation, Journal/venue, Project |
+| High-cardinality *records* | **Add-filter picker + typeahead** | Author, Organisation, Project |
 | Open concept / free vocabulary | **Query box** | topic |
 | Curation / workflow / expert | **Not public** — backoffice / advanced / expert (surfaces TBD) | status, classification (A1/A2…), full-text version (COAR), subtype, tags, created/updated dates |
 
@@ -217,12 +217,14 @@ user-facing boolean control on the public surface — this keeps the sidebar leg
 matches how comparable discovery layers behave. Choosing the operator (AND / OR / NOT) is an
 advanced/expert affordance, not a public one.
 
-### Identifier is one combined filter
+### Identifier — one filter, scheme auto-detected
 
-DOI / ISSN / ISBN / arXiv / handle are a single **Identifier** filter with the scheme
-auto-detected from the value (matching raven's scheme-scoped `identifiers`), not one filter
-per scheme. The primary identifier path is not the filter, though: it is the suggest panel's
-known-item shortcut — pasting a DOI jumps straight to the work.
+The picker's **Identifier** filter matches any value in the work's `identifiers` bag — DOI,
+ISSN, ISBN, arXiv, handle — scheme auto-detected, not one filter per scheme. Filtering by a
+journal works through its ISSN (searching a venue by name is unreliable; the ISSN is exact),
+so there is **no separate Journal/venue filter**. The suggest panel additionally offers a
+known-item shortcut — pasting a full DOI jumps straight to the work — but the filter is not
+restricted to that.
 
 ---
 
@@ -237,8 +239,9 @@ typeahead), Identifier / DOI / ISSN (`identifiers`, scheme-scoped), and the free
 box (`primary`/`secondary`).
 
 **Backend-dependent** (needs a raven field + index mapping + facet config first):
-Organisation / affiliation, Journal / venue, Project, Keyword/subject as a discrete facet,
-and Language (which also blocks the sidebar Language facet). UGent config enables only
+Organisation (the tree — institution / faculty / department / research group), Project,
+Keyword/subject as a discrete facet, and Language (which also blocks the sidebar Language
+facet). UGent config enables only
 `work_type` publicly today, so promoting an index-backed dimension is a config edit; a
 backend-dependent one is an index + config change. These land as raven issues.
 

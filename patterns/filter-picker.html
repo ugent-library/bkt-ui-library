@@ -16,7 +16,7 @@
     <p>The full flow, end to end:</p>
     <ol class="small">
       <li>User clicks <strong>Add filter</strong> → Bootstrap dropdown opens showing the picker</li>
-      <li>User clicks a filter item (e.g. <em>Faculty or department</em>) → dropdown closes, editor panel appears over the result list</li>
+      <li>User clicks a filter item (e.g. <em>Organisation</em>) → dropdown closes, editor panel appears over the result list</li>
       <li>User sets a value → clicks <strong>Apply</strong> → editor closes, a chip appears in the active filter bar</li>
       <li>User clicks a chip → editor reopens pre-populated for editing</li>
       <li>User clicks × on a chip → filter removed</li>
@@ -29,16 +29,15 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker</h2>
-    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input, because each filter set is small enough to scan. The researcher directory offers Faculty/department, membership, and public-output; the project directory swaps in host faculty, status, and a period range; public works uses the search-it set — Author, Organisation/affiliation, Journal/venue, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels).</p>
+    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organisation and membership; the project directory swaps in Organisation, status, and a period range; public works uses the search-it set — Author, Organisation, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor (checklist), not the picker.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Researcher directory picker</h3>
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
           <div class="bt-dropdown-scroll">
-            <button class="dropdown-item" type="button" data-filter="faculty">Faculty or department</button>
+            <button class="dropdown-item" type="button" data-filter="organisation">Organisation</button>
             <button class="dropdown-item" type="button" data-filter="status">Current or alumni</button>
-            <button class="dropdown-item" type="button" data-filter="has_output">Has public research output</button>
           </div>
         </div>
       </div>
@@ -58,11 +57,10 @@
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
           <div class="bt-dropdown-scroll">
             <button class="dropdown-item active" type="button" aria-current="true">
-              Faculty or department
+              Organisation
               <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
             </button>
             <button class="dropdown-item" type="button">Current or alumni</button>
-            <button class="dropdown-item" type="button">Has public research output</button>
           </div>
         </div>
       </div>
@@ -78,14 +76,14 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for pick-from-a-set values — the directory Faculty as well as the works record filters (Author, Organisation, Journal / venue, Project, Keywords). Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
+    <p class="mb-4">Used for pick-from-a-set values — the works record filters (Author, Organisation, Project, Keywords) and the directory Organisation. Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Checklist</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-checklist-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-checklist-title">Faculty or department</p>
-          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select faculty or department">
+          <p class="bt-panel__title" id="fe-checklist-title">Organisation</p>
+          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select Organisation">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="fv-we" checked>
               <label class="form-check-label" for="fv-we">Sciences</label>
@@ -149,13 +147,13 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — year range</h2>
-    <p class="mb-4">Used for the project directory's Period. Either bound is optional — "from 2020" and "to 2024" are both valid alone. Chip reads "2020–2024", "from 2020", or "to 2024" accordingly.</p>
+    <p class="mb-4">Used for the project directory's Year filter — a <strong>year</strong> range, not exact dates. Either bound is optional — "from 2020" and "to 2024" are both valid alone. Chip reads "2020–2024", "from 2020", or "to 2024" accordingly.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Year range</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-year-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-year-title">Period</p>
+          <p class="bt-panel__title" id="fe-year-title">Year</p>
           <div class="bt-panel__body bt-panel__body--year">
             <label for="demo-year-from" class="visually-hidden">From year</label>
             <input type="number" id="demo-year-from" class="form-control form-control-sm bt-panel__year-input"
@@ -180,17 +178,17 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — text</h2>
-    <p class="mb-4">Used for the Identifier filter — you type a value (DOI, ISSN, ISBN, handle), you don't pick from a list. A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — author, organisation, venue, project, keywords — are searchable checklists instead; see above.)</p>
+    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — author, organisation, project, keywords — are searchable checklists instead; see above.)</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Text</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-text-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-text-title">Journal / venue</p>
+          <p class="bt-panel__title" id="fe-text-title">Identifier</p>
           <div class="bt-panel__body">
-            <label for="demo-text-val" class="visually-hidden">Journal / venue</label>
+            <label for="demo-text-val" class="visually-hidden">Identifier</label>
             <input type="text" id="demo-text-val" class="form-control form-control-sm"
-              placeholder="Journal, publisher, or conference&hellip;" value="Nature Climate Change" autocomplete="off">
+              placeholder="DOI, ISSN, ISBN, arXiv, or handle&hellip;" value="1476-4687" autocomplete="off">
           </div>
           <div class="bt-panel__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
@@ -206,7 +204,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor as overlay</h2>
-    <p class="mb-3">The editor panel floats <strong>over</strong> the result list instead of pushing it down. The filter bar and panel are wrapped in a <code>position-relative</code> container; the panel (<code>#wf-filter-editor</code> / <code>#rdir-filter-editor</code> / <code>#pdir-filter-editor</code>) then gets <code>position-absolute top-100 start-0 w-100 mt-2</code> — anchored to the bottom edge of the bar, full width, with a small gap.</p>
+    <p class="mb-3">The editor panel floats <strong>over</strong> the result list instead of pushing it down. The filter bar and panel are wrapped in a <code>position-relative</code> container; the panel (<code>#wf-filter-editor</code> / <code>#rdir-filter-editor</code> / <code>#pdir-filter-editor</code>) gets <code>position-absolute top-100 mt-2</code>, and <code>filter-bar.js</code> sets its left offset so it drops under whatever opened it (the Add-filter button or the chip), clamped to the bar's width.</p>
     <p class="mb-0">The popover <code>z-index</code> (and a <code>min-width</code> floor for narrow anchors) lives on <code>.bt-panel</code> itself — Bootstrap's <code>z-3</code> utility maxes at 3, which ties with the active <code>.page-link</code> in pagination.</p>
   </section>
 
@@ -232,12 +230,12 @@
           <div class="bt-toolbar__left">
             <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
               <div class="filter-chip-group">
-                <button type="button" class="badge badge--outline" aria-label="Edit filter: Author is Jane Doe">Author: <span class="fw-bold">Jane Doe</span></button>
+                <button type="button" class="badge badge--outline" aria-label="Edit filter: Author is Jane Doe"><span class="fw-light">Author:</span> Jane Doe</button>
                 <button type="button" class="badge badge--outline" aria-label="Remove filter: Author is Jane Doe"><i class="if if-close if--xs" aria-hidden="true"></i></button>
               </div>
               <div class="filter-chip-group">
-                <button type="button" class="badge badge--outline" aria-label="Edit filter: Journal or venue is Nature Climate Change">Journal / venue: <span class="fw-bold">Nature Climate Change</span></button>
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Journal or venue is Nature Climate Change"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                <button type="button" class="badge badge--outline" aria-label="Edit filter: Keywords is Climate change"><span class="fw-light">Keywords:</span> Climate change</button>
+                <button type="button" class="badge badge--outline" aria-label="Remove filter: Keywords is Climate change"><i class="if if-close if--xs" aria-hidden="true"></i></button>
               </div>
             </div>
             <div class="dropdown">
@@ -247,7 +245,7 @@
               <div class="dropdown-menu p-0">
                 <div class="bt-dropdown-scroll">
                   <button class="dropdown-item" type="button">Author</button>
-                  <button class="dropdown-item" type="button">Journal / venue</button>
+                  <button class="dropdown-item" type="button">Organisation</button>
                   <button class="dropdown-item" type="button">Project</button>
                 </div>
               </div>
@@ -295,7 +293,7 @@
         <tr>
           <td><code>data-filter="&lt;key&gt;"</code></td>
           <td>Each <code>button.dropdown-item</code></td>
-          <td>Key must match an entry in <code>FILTERS</code> inside the directory engine</td>
+          <td>Key must match an entry in <code>CONFIGS</code> inside <code>filter-bar.js</code></td>
         </tr>
         <tr>
           <td><code>id="rdir-filter-editor"</code></td>
