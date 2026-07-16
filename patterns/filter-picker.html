@@ -219,6 +219,49 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
+       THE ASSEMBLED BAR
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The assembled bar</h2>
+    <p class="mb-4">The whole bar in one <a href="/patterns/toolbar.html"><code>bt-toolbar</code></a>: the active-filter chips (the readout), the <strong>Add filter</strong> picker, and <strong>Clear all</strong>, together. Inlined per page (works, researchers, projects) — identical but for the picker items and id prefix — and wired by <code>filter-bar.js</code>. Use <strong>Show HTML</strong> for the markup; the required ids are in the wiring reference below, and the editor panel (see the editor sections above) sits in the same <code>position-relative</code> wrapper so it can overlay the results.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Chips, Add filter, and Clear together</h3></div>
+      <div class="ds-demo-body">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+              <div class="filter-chip-group">
+                <button type="button" class="badge badge--outline" aria-label="Edit filter: Author is Jane Doe">Author: <span class="fw-bold">Jane Doe</span></button>
+                <button type="button" class="badge badge--outline" aria-label="Remove filter: Author is Jane Doe"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+              </div>
+              <div class="filter-chip-group">
+                <button type="button" class="badge badge--outline" aria-label="Edit filter: Journal or venue is Nature Climate Change">Journal / venue: <span class="fw-bold">Nature Climate Change</span></button>
+                <button type="button" class="badge badge--outline" aria-label="Remove filter: Journal or venue is Nature Climate Change"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+              </div>
+            </div>
+            <div class="dropdown">
+              <button class="btn btn-ghost btn-sm" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+              </button>
+              <div class="dropdown-menu p-0">
+                <div class="bt-dropdown-scroll">
+                  <button class="dropdown-item" type="button">Author</button>
+                  <button class="dropdown-item" type="button">Journal / venue</button>
+                  <button class="dropdown-item" type="button">Project</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-close if--xs" aria-hidden="true"></i> Clear all
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
        7. REQUIRED IDS — WIRING REFERENCE
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">

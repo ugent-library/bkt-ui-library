@@ -77,10 +77,41 @@
                Project-scoped "Add filter" chip bar (Host faculty, Status,
                Period). Same interaction as the researcher directory; engine in
                filter-bar.js (pdir- config). -->
-          <div class="bt-toolbar">
-            <div class="bt-toolbar__left">
-              <!-- @include: templates/partials/result-filter-bar-projects.html -->
+          <div class="position-relative">
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+
+                <div class="bt-toolbar__item">
+                  <div class="filter-chips" role="group"
+                    aria-label="Active filters" id="pdir-active-chips">
+                    <!-- Do not show this div if there are no active filters -->
+                  </div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <div class="dropdown" id="pdir-add-filter-dropdown">
+                    <button class="btn btn-ghost btn-sm" type="button" id="pdir-add-filter-btn"
+                      data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                    </button>
+                    <div class="dropdown-menu p-0">
+                      <div id="pdir-filter-picker-list" class="bt-dropdown-scroll">
+                        <button class="dropdown-item" type="button" data-filter="faculty">Host faculty</button>
+                        <button class="dropdown-item" type="button" data-filter="status">Status (active / completed)</button>
+                        <button class="dropdown-item" type="button" data-filter="period">Period</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <button type="button" class="btn btn-ghost btn-sm" id="pdir-clear-all" hidden>
+                    <i class="if if-close if--xs" aria-hidden="true"></i> Clear all
+                  </button>
+                </div>
+              </div>
             </div>
+            <div id="pdir-filter-editor" hidden
+              class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
+              role="dialog" aria-modal="false" aria-labelledby="pdir-filter-editor-title"></div>
           </div>
 
         </form>

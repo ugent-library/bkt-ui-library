@@ -100,8 +100,9 @@
                   <!-- Do not render parent bt-toolbar__item if there are no active filters -->
                   <!-- Active filter chips — rendered by filter-bar.js (works config). Two are
                       pre-applied, so the bar shows chips from the start (unlike the directories). -->
-                  <div class="d-flex flex-wrap align-items-center gap-2" role="group"
-                    aria-label="Active filters" id="wf-active-chips"></div>
+                  <div class="filter-chips" role="group"
+                    aria-label="Active filters" id="wf-active-chips">
+                  </div>
                 </div>
                 <div class="bt-toolbar__item">
                   <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
@@ -135,7 +136,6 @@
                   </div>
                 </div>
                 <div class="bt-toolbar__item">
-
                   <!-- Clear all filters — shown by filter-bar.js when chips are present. Drops
                       filter params only; the query is cleared by the box's × (Rule 2). -->
                   <button type="button" class="btn btn-ghost btn-sm" id="wf-clear-all" hidden>
@@ -155,9 +155,8 @@
 
             <!-- Filter editor panel — must exist at load; filter-bar.js renders into it. -->
             <div id="wf-filter-editor" hidden
-              class="bt-panel bt-panel--wide position-absolute top-100 start-0 w-100 mt-2"
+              class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
               role="dialog" aria-modal="false" aria-labelledby="wf-filter-editor-title"></div>
-
           </div>
         </form>
 

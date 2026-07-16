@@ -83,11 +83,40 @@
           <!-- ── Filters — researcher-directory scope ─────────────────────────
                People-scoped "Add filter" chip bar (Faculty/department,
                Membership). Same interaction as
-               the works result-filter-bar; engine in filter-bar.js (rdir- config). -->
-          <div class="bt-toolbar">
-            <div class="bt-toolbar__left">
-              <!-- @include: templates/partials/result-filter-bar-researchers.html -->
+               the works filter bar; engine in filter-bar.js (rdir- config). -->
+          <div class="position-relative">
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+                <div class="bt-toolbar__item">
+                  <div class="filter-chips" role="group"
+                    aria-label="Active filters" id="rdir-active-chips">
+                    <!-- Do not show this div if there are no active filters -->
+                  </div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <div class="dropdown" id="rdir-add-filter-dropdown">
+                    <button class="btn btn-ghost btn-sm" type="button" id="rdir-add-filter-btn"
+                      data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                    </button>
+                    <div class="dropdown-menu p-0">
+                      <div id="rdir-filter-picker-list" class="bt-dropdown-scroll">
+                        <button class="dropdown-item" type="button" data-filter="faculty">Faculty or department</button>
+                        <button class="dropdown-item" type="button" data-filter="status">Current or alumni</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <button type="button" class="btn btn-ghost btn-sm" id="rdir-clear-all" hidden>
+                    <i class="if if-close if--xs" aria-hidden="true"></i> Clear all
+                  </button>
+                </div>
+              </div>
             </div>
+            <div id="rdir-filter-editor" hidden
+              class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
+              role="dialog" aria-modal="false" aria-labelledby="rdir-filter-editor-title"></div>
           </div>
 
         </form>

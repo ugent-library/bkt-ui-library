@@ -614,8 +614,9 @@ bt-file-drop__hint
 
 **Filter chips**
 ```
-filter-chip-group
+filter-chips            filter-chip-group
 ```
+`filter-chips` is the applied-chip container (flex row); it collapses with `:empty` so an empty chip row leaves no gap before "Add filter".
 Applied-filter chips are clickable badges — `badge badge--outline` on a `<button>`/`<a>` (see Badges). `filter-chip-group` joins two into a split label + remove pill. Display-only summaries use `badge text-bg-primary-light`. The "Add filter" dropdown's scrollable list uses the generic `bt-dropdown-scroll` (see Scroll utility). Defined in `patterns/_filters.scss`.
 
 **Panel** (`bt-panel`: generic popover panel — title + scrollable body + actions footer)

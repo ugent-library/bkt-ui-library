@@ -117,8 +117,8 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Bars & filter sets:**
 - `wf-` — public works (`public-works.html`): Author, Organisation/affiliation, Journal/venue, Project, Keywords/subject, Identifier. Two chips pre-applied.
-- `rdir-` — researcher directory (`public-researchers.html` via `result-filter-bar-researchers.html`): Faculty/department, Current or alumni.
-- `pdir-` — project directory (`public-projects.html` via `result-filter-bar-projects.html`): Host faculty, Status, Period (year range).
+- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Faculty/department, Current or alumni.
+- `pdir-` — project directory (`public-projects.html`, bar inline): Host faculty, Status, Period (year range).
 
 **Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
 
