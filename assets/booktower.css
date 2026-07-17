@@ -1064,6 +1064,7 @@ code, kbd, pre, samp {
   padding: var(--bt-btn-pad-y) var(--bt-btn-pad-x); /* 7px 14px → ~38px tall */
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--bt-sp-2);
   transition: background-color var(--bt-dur-fast) var(--bt-ease), border-color var(--bt-dur-fast) var(--bt-ease), color var(--bt-dur-fast) var(--bt-ease), transform var(--bt-dur-fast) var(--bt-ease);
 }
@@ -1373,27 +1374,33 @@ a.btn-danger,
   padding-block: 0.4em 0.3em;
 }
 
-.badge.text-bg-primary { /* white on blue-800 — 13.6:1 */
+.badge--lg {
+  --bs-badge-font-size: var(--bt-text-sm);
+  padding-block: 0.5em 0.4em;
+  padding-inline: 0.8em;
+}
+
+.badge.text-bg-primary {
   background: var(--bt-blue-800) !important;
   color: var(--bt-white) !important;
 }
 
-.badge.text-bg-info { /* submitted status; white on blue-600 — 5.7:1 */
+.badge.text-bg-info {
   background: var(--bt-blue-600) !important;
   color: var(--bt-white) !important;
 }
 
-.badge.text-bg-success { /* white on green-700 — 6.6:1 (green-600 fails) */
+.badge.text-bg-success {
   background: var(--bt-green-700) !important;
   color: var(--bt-white) !important;
 }
 
-.badge.text-bg-warning { /* dark text on bright amber — 8.7:1. White can't pass on amber, so warning is the one dark-text solid (as Bootstrap does). */
+.badge.text-bg-warning {
   background: var(--bt-orange-500) !important;
   color: var(--bt-gray-1000) !important;
 }
 
-.badge.text-bg-danger { /* white on red-600 — 5.8:1 (red-500 fails) */
+.badge.text-bg-danger {
   background: var(--bt-red-600) !important;
   color: var(--bt-white) !important;
 }
@@ -1403,7 +1410,7 @@ a.btn-danger,
   color: var(--bt-gray-700) !important;
 }
 
-.badge.text-bg-light { /* neutral: pale fill, dark text */
+.badge.text-bg-light {
   background: var(--bt-gray-50) !important;
   color: var(--bt-gray-700) !important;
 }
@@ -1414,7 +1421,7 @@ a.btn-danger,
   color: var(--bt-blue-900) !important;
 }
 
-.badge.text-bg-info-light { /* paler blue than primary-light — same ramp, one step lighter */
+.badge.text-bg-info-light {
   background: var(--bt-blue-50) !important;
   color: var(--bt-blue-900) !important;
 }
@@ -1439,24 +1446,42 @@ a.btn-danger,
   color: var(--bt-gray-500);
 }
 
-/* Outline — transparent fill, token border + text. Mirrors Bootstrap's outline
-   approach (border + colour, no fill) for the badge context. */
 .badge.badge--outline {
   background: transparent !important;
   border: 1px solid var(--bt-blue-900);
   color: var(--bt-blue-900) !important;
 }
 
-/* Editor-open state for filter chips (filter-bar.js). !important — must beat
-   --outline's transparent fill above. */
 .badge.badge--outline.active {
   background-color: var(--bt-blue-100) !important;
 }
 
-/* Clickable badge — a badge that is a real button/link. Squared (vs the pill
-   status badge) is the affordance; pick the look with text-bg-* or badge--outline.
-   Bootstrap-first check: not a .btn (buttons carry padding/weight for primary
-   actions); this is a compact chip-scale control. */
+/* Tab-style badge, scroll-spy style */
+.badge.badge--tab {
+  display: inline-block;
+  background: transparent;
+  color: var(--bt-gray-700);
+  font-weight: 500;
+  border: 1px solid var(--bt-white);
+}
+
+.badge--tab.active {
+  background: var(--bt-blue-100);
+  color: var(--bt-blue-900);
+}
+
+button.badge--tab:hover,
+a.badge--tab:hover {
+  background: var(--bt-gray-25);
+  border: var(--bt-border);
+}
+
+button.badge--tab:hover .badge.text-bg-secondary,
+a.badge--tab:hover .badge.text-bg-secondary {
+  background: var(--bt-gray-200);
+}
+
+/* Clickable badge */
 button.badge,
 a.badge {
   --bs-badge-border-radius: var(--bt-radius);
@@ -1919,6 +1944,12 @@ a.bt-avatar--outline:hover:not(:disabled) {
   overflow-y: auto;
 }
 
+:not(.bt-panel) > .bt-panel__body {
+  max-height: none;
+  overflow-y: visible;
+  border-top: 0;
+}
+
 .bt-panel__actions {
   display: flex;
   gap: var(--bt-sp-2);
@@ -1930,10 +1961,14 @@ a.bt-avatar--outline:hover:not(:disabled) {
   padding: var(--bt-sp-4);
 }
 
-/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio. */
+/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio.
+   Rows run full-width (body gutter removed, row carries the inset) so the hover fill spans
+   edge-to-edge with the checkbox inset — same on every screen. */
 .bt-panel__body--checklist,
 .bt-panel__body--boolean {
+  padding: 0;
   flex-direction: column;
+  gap: 0;
 }
 
 .bt-panel__body .form-check {
@@ -1941,8 +1976,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: center;
   gap: var(--bt-sp-2);
   margin: 0;
-  padding: 0;
-  border-radius: var(--bt-radius-sm);
+  padding: var(--bt-sp-2) var(--bt-sp-4);
+  flex-shrink: 0;
 }
 
 .bt-panel__body .form-check-input {
