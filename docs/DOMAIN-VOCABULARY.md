@@ -103,7 +103,9 @@ Describes who can access a file. Per-file, not per-work. Field and values are ra
 |-------|-------|-------|
 | `public` | Open access | `badge text-bg-success` |
 | `restricted` | Restricted | `badge text-bg-warning` |
-| `private` | — | never listed publicly |
+| `private` | backoffice: "Private" | never rendered on the public surface — not even a count |
+
+Private files leave no public trace whatsoever: no count, no badge, no machine-facing output. Even revealing that a file *exists* is a patent risk (tech transfer). "All files private" renders identically to "no files".
 
 In summary views (cards, table rows), show the most permissive visibility across all files on the work.
 

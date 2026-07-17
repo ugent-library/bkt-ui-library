@@ -73,6 +73,15 @@
               <span class="text-muted">team members</span>
             </li>
           </ul>
+
+          <!-- Primary actions -->
+          <div class="d-flex align-items-center gap-3">
+            <button type="button" class="btn btn-primary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#export-modal">
+              <i class="if if-download" aria-hidden="true"></i>
+              Export publications
+            </button>
+          </div>
         </div>
 
         <!-- Sidebar column: heading -->
@@ -179,11 +188,15 @@
                       <span class="bt-meta-list__item-bordered">Journal article</span>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                      <!-- Access CTA per raven#141: no View button, title navigates -->
-                      <a href="#" download class="btn btn-primary btn-sm"
-                        aria-label="Download: Urban forests as essential infrastructure for climate resilience">
-                        <i class="if if-download" aria-hidden="true"></i> Download
-                      </a>
+                      <!-- v1: no access CTA on cards; title navigates (raven#141) -->
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Cite: Urban forests as essential infrastructure for climate resilience">
+                        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+                      </button>
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Add to list: Urban forests as essential infrastructure for climate resilience">
+                        <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                      </button>
                     </div>
                   </div>
                   <div class="card-body">
@@ -219,10 +232,14 @@
                       <span class="bt-meta-list__item-bordered">Journal article</span>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                      <a href="#" download class="btn btn-primary btn-sm"
-                        aria-label="Download: Green infrastructure planning in urban heat islands">
-                        <i class="if if-download" aria-hidden="true"></i> Download
-                      </a>
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Cite: Green infrastructure planning in urban heat islands">
+                        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+                      </button>
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Add to list: Green infrastructure planning in urban heat islands">
+                        <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                      </button>
                     </div>
                   </div>
                   <div class="card-body">
@@ -250,10 +267,14 @@
                       <span class="bt-meta-list__item-bordered">Dataset</span>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                      <a href="#" class="btn btn-primary btn-sm"
-                        aria-label="Access dataset at Zenodo: Urban tree canopy cover measurements Belgium 2019–2024">
-                        <i class="if if-external-link" aria-hidden="true"></i> Access at Zenodo
-                      </a>
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Cite: Urban tree canopy cover measurements Belgium 2019–2024">
+                        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+                      </button>
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Add to list: Urban tree canopy cover measurements Belgium 2019–2024">
+                        <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                      </button>
                     </div>
                   </div>
                   <div class="card-body">

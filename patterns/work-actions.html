@@ -4,7 +4,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Work actions</h1>
-    <p class="lead">The action rows on research output — search result cards and the detail page header. Which CTA a work gets per access state is a workflow rule, not a kit rule: see <a href="https://github.com/ugent-library/raven/issues/141">raven#141</a>.</p>
+    <p class="lead">The action rows on research output — search result cards and the detail page header. v1 keeps file access on the page itself; v2 adds direct access CTAs. Rules: see <a href="https://github.com/ugent-library/raven/issues/141">raven#141</a>.</p>
   </header>
 
   <!-- CTA rules live in raven#141, not here — one copy, no sync rot -->
@@ -18,33 +18,45 @@
           <th scope="col">CTA</th>
           <th scope="col">Icon</th>
           <th scope="col">Button</th>
+          <th scope="col">Version</th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <td>View at &lt;host&gt; (dataset)</td>
+          <td><code>if-external-link</code></td>
+          <td><code>btn-primary</code></td>
+          <td>v1</td>
+        </tr>
+        <tr>
+          <td>View files (publication with files) — scrolls down, anchor</td>
+          <td><code>if-arrow-down</code></td>
+          <td><code>btn-primary</code></td>
+          <td>v1</td>
+        </tr>
+        <tr>
           <td>Download</td>
           <td><code>if-download</code></td>
           <td><code>btn-primary</code></td>
-        </tr>
-        <tr>
-          <td>Access (external)</td>
-          <td><code>if-external-link</code></td>
-          <td><code>btn-primary</code></td>
+          <td>v2</td>
         </tr>
         <tr>
           <td>Select file (multiple files, publications only)</td>
           <td><code>if-file</code></td>
           <td><code>btn-primary</code></td>
+          <td>v2</td>
         </tr>
         <tr>
           <td>Log in (restricted)</td>
           <td><code>if-lock</code></td>
           <td><code>btn-warning</code></td>
+          <td>v2</td>
         </tr>
         <tr>
           <td>Embargo date</td>
           <td><code>if-time</code></td>
           <td>none — plain text</td>
+          <td>v2</td>
         </tr>
       </tbody>
     </table>
@@ -53,8 +65,44 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">On a search result card</h2>
-    <p class="mb-4 text-muted small">Every card: Cite (ghost) + Add to list (ghost) + the access CTA. The Add to list picker panel is documented at <a href="/patterns/panel.html">Panel</a>.</p>
+    <h2 class="h4 mb-3">Search result card — v1</h2>
+    <p class="mb-4 text-muted small">Every card: Cite (ghost) + Add to list (ghost). No access CTA — the title navigates, the badge communicates access. The Add to list picker panel is documented at <a href="/patterns/panel.html">Panel</a>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Every card, regardless of access state</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-v1">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="badge text-bg-success">Open access</span>
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Urban forests as essential infrastructure">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Urban forests as essential infrastructure">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-v1" class="bt-work-card__title">
+              <a href="#">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Stefan K. Arndt</a></p>
+            <p class="bt-work-card__pub"><time datetime="2026">2026</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Plants People Planet</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Search result card — v2</h2>
+    <p class="mb-4 text-muted small">The card gains the access CTA, mirroring the detail header with a compressed label. The compression is visual only: the <code>aria-label</code> carries the full detail-header label plus the record title (screen reader users get the complete action; sighted users get the icon). States without a CTA render like v1.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Open file in Biblio</h3>
@@ -75,7 +123,7 @@
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
               <a href="#" download class="btn btn-primary btn-sm"
-                aria-label="Download: Urban forests as essential infrastructure">
+                aria-label="Download Full Text: Urban forests as essential infrastructure">
                 <i class="if if-download" aria-hidden="true"></i> Download
               </a>
             </div>
@@ -110,8 +158,8 @@
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
               <a href="#" class="btn btn-primary btn-sm"
-                aria-label="Access dataset at Zenodo: Ghent urban forest inventory">
-                <i class="if if-external-link" aria-hidden="true"></i> Access at Zenodo
+                aria-label="View at Zenodo: Ghent urban forest inventory">
+                <i class="if if-external-link" aria-hidden="true"></i> View at Zenodo
               </a>
             </div>
           </div>
@@ -157,6 +205,7 @@
             </h2>
             <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Jonas Maes</a></p>
             <p class="bt-work-card__pub"><time datetime="2025">2025</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Forest Ecology and Management</a></p>
+            <p class="bt-meta-list mb-0"><span class="text-muted small">Full text in 3 parts &middot; Open Access &middot; PDF</span></p>
           </div>
         </article>
       </div>
@@ -198,6 +247,45 @@
     </div>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Embargo, restricted — CTA + date text</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-embargo-restricted">
+          <div class="card-header">
+            <div class="bt-meta-list pt-1">
+              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span class="text-muted small text-nowrap">
+                <i class="if if-time" aria-hidden="true"></i>
+                Open access from <time datetime="2027-05-01">01/05/2027</time>
+              </span>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Cite: Deep learning for coastal erosion monitoring">
+                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm"
+                aria-label="Add to list: Deep learning for coastal erosion monitoring">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <a href="#" class="btn btn-warning btn-sm"
+                aria-label="Log in to access: Deep learning for coastal erosion monitoring">
+                <i class="if if-lock" aria-hidden="true"></i> Log in
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <h2 id="wa-card-embargo-restricted" class="bt-work-card__title">
+              <a href="#">Deep learning for coastal erosion monitoring along the Belgian North Sea coast</a>
+            </h2>
+            <p class="bt-work-card__authors"><a href="#">Dirk Verstraeten</a>, <a href="#">Karen De Pauw</a></p>
+            <p class="bt-work-card__pub"><time datetime="2026">2026</time><span class="text-muted mx-1" aria-hidden="true">·</span><a href="#">Coastal Engineering</a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
       <h3 class="ds-demo-label">Embargo, private — text, not a button</h3>
       <div class="ds-demo-body" data-surface="public">
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-embargo">
@@ -231,41 +319,66 @@
         </article>
       </div>
     </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Detail page header — v1</h2>
+    <p class="mb-4 text-muted small">No direct file access from the header: datasets link out, publications point to the Files section on the same page, no (visible) files means no CTA.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">All files private — no access CTA</h3>
+      <h3 class="ds-demo-label">Dataset — view at &lt;host&gt;</h3>
       <div class="ds-demo-body" data-surface="public">
-        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-private">
-          <div class="card-header">
-            <div class="bt-meta-list pt-1">
-              <span class="bt-meta-list__item-bordered">Report</span>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Cite: Annual biodiversity monitoring report Flanders">
-                <i class="if if-double-quotes" aria-hidden="true"></i> Cite
-              </button>
-              <button type="button" class="btn btn-ghost btn-sm"
-                aria-label="Add to list: Annual biodiversity monitoring report Flanders">
-                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-              </button>
-            </div>
-          </div>
-          <div class="card-body">
-            <h2 id="wa-card-private" class="bt-work-card__title">
-              <a href="#">Annual biodiversity monitoring report Flanders 2024</a>
-            </h2>
-            <p class="bt-work-card__authors"><a href="#">Karen De Pauw</a>, <a href="#">Tom Van Damme</a></p>
-            <p class="bt-work-card__pub"><time datetime="2024">2024</time><span class="text-muted mx-1" aria-hidden="true">·</span><span>Ghent University</span></p>
-          </div>
-        </article>
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="btn btn-primary">
+            <i class="if if-external-link" aria-hidden="true"></i> View at Zenodo
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Publication with files — view files</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <!-- Scrolls to the Files section on the same page -->
+          <a href="#files-heading" class="btn btn-primary">
+            <i class="if if-arrow-down" aria-hidden="true"></i> View files
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Publication without (visible) files — no CTA</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+        <p class="small text-muted mt-2 mb-0">No full text available in Biblio</p>
       </div>
     </div>
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">On the detail page header</h2>
-    <p class="mb-4 text-muted small">Access CTA (primary slot) + Add to list (secondary) + Cite (ghost), followed by the file meta line. Full context in <code>templates/biblio-public/public-work-detail.html</code>.</p>
+    <h2 class="h4 mb-3">Detail page header — v2</h2>
+    <p class="mb-4 text-muted small">Direct access CTA (primary slot) + Add to list (secondary) + Cite (ghost), followed by the file meta line. All the states v1 does not cover.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Open file in Biblio</h3>
@@ -282,23 +395,6 @@
           </button>
         </div>
         <p class="small text-muted mt-2 mb-0">Accepted manuscript &middot; Open Access &middot; PDF &middot; 158,71 KB</p>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">No file — external dataset</h3>
-      <div class="ds-demo-body" data-surface="public">
-        <div class="d-flex align-items-center gap-3">
-          <a href="#" class="btn btn-primary">
-            <i class="if if-external-link" aria-hidden="true"></i> Access dataset at Zenodo
-          </a>
-          <button type="button" class="btn btn-secondary">
-            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-          </button>
-          <button type="button" class="btn btn-ghost">
-            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
-          </button>
-        </div>
       </div>
     </div>
 
@@ -321,6 +417,28 @@
     </div>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Embargo, restricted — CTA + date text</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" class="btn btn-warning" aria-label="Log in to access: Full text">
+            <i class="if if-lock" aria-hidden="true"></i> Log in to access
+          </a>
+          <button type="button" class="btn btn-secondary">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+        </div>
+        <p class="small text-muted mt-2 mb-0">
+          Accepted manuscript &middot; Restricted &middot;
+          Open access from <time datetime="2027-05-01">01/05/2027</time> &middot;
+          PDF &middot; 158,71 KB
+        </p>
+      </div>
+    </div>
+
+    <div class="ds-demo">
       <h3 class="ds-demo-label">Embargo, private — text, not a button</h3>
       <div class="ds-demo-body" data-surface="public">
         <div class="d-flex align-items-center gap-3">
@@ -339,9 +457,14 @@
     </div>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">All files private — no access CTA</h3>
+      <h3 class="ds-demo-label">Multiple files — no pick, choose in the Files section</h3>
       <div class="ds-demo-body" data-surface="public">
         <div class="d-flex align-items-center gap-3">
+          <!-- Full text split over several files (part 1, 2, 3): a single Download
+               would lie. Anchors to the Files section on the same page. -->
+          <a href="#files-heading" class="btn btn-primary">
+            <i class="if if-file" aria-hidden="true"></i> Select file
+          </a>
           <button type="button" class="btn btn-secondary">
             <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
           </button>
@@ -349,7 +472,7 @@
             <i class="if if-double-quotes" aria-hidden="true"></i> Cite
           </button>
         </div>
-        <p class="small text-muted mt-2 mb-0">No full text available in Biblio &middot; 2 private files</p>
+        <p class="small text-muted mt-2 mb-0">Full text in 3 parts &middot; Open Access &middot; PDF</p>
       </div>
     </div>
   </section>

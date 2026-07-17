@@ -142,7 +142,9 @@ Visible text is European-formatted; machine formats stay ISO.
 - Machine formats stay ISO: `datetime` attributes, JSON-LD, date input
   values, query syntax.
 - File meta line sequence, always: version · access · format · size
-  (e.g. Accepted manuscript · Restricted · PDF · 100,25 KB).
+  (e.g. Accepted manuscript · Restricted · PDF · 100,25 KB). An embargo
+  lift date follows access: version · access · lift date · format ·
+  size (… · Restricted · Open access from 01/05/2027 · PDF · …).
 
 ---
 

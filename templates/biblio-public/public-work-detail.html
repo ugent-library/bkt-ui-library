@@ -1,6 +1,6 @@
 <!-- @title: Urban forests as essential infrastructure — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: files, logged-in, restricted, embargo, no-files -->
+<!-- @states: files, v1, logged-in, restricted, embargo, no-files -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -43,7 +43,7 @@
           <!-- Status badges -->
           <div class="d-flex flex-wrap gap-2 mb-3">
             <span class="badge text-bg-primary">Journal article</span>
-            <!-- @state: files logged-in -->
+            <!-- @state: files logged-in v1 -->
             <span class="badge text-bg-success">
               <i class="if if-open-access"></i> Open access
             </span>
@@ -100,6 +100,13 @@
               Download Full Text
             </a>
             <!-- @state -->
+            <!-- v1: no direct download — anchor to the Files section (raven#141) -->
+            <!-- @state: v1 -->
+            <a href="#files-heading" class="btn btn-primary">
+              <i class="if if-arrow-down" aria-hidden="true"></i>
+              View files
+            </a>
+            <!-- @state -->
             <!-- @state: restricted -->
             <a href="#" class="btn btn-warning" aria-label="Log in to access: Full text">
               <i class="if if-lock" aria-hidden="true"></i> Log in to access
@@ -134,11 +141,10 @@
           <!-- @state: restricted -->
           <p class="small text-muted mt-2">Accepted manuscript &middot; Restricted &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
-          <!-- No files, or all files private: same state. The private count
-               renders only when private files exist — visitors learn files
-               exist, never what they are. -->
+          <!-- No files, or all files private: same state, indistinguishable —
+               private existence is never revealed (patent risk, tech transfer) -->
           <!-- @state: no-files -->
-          <p class="small text-muted mt-2">No full text available in Biblio &middot; 2 confidential files</p>
+          <p class="small text-muted mt-2">No full text available in Biblio</p>
           <!-- @state -->
         </div>
 
@@ -180,7 +186,7 @@
 
           <!-- Order: fullText first (selection ranking), then other kinds, open before restricted.
                Login line renders only when: anonymous + restricted rows + header CTA isn't the login button. -->
-          <!-- @state: files -->
+          <!-- @state: files v1 -->
           <section aria-labelledby="files-heading" class="mb-5">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
@@ -260,11 +266,7 @@
                 </div>
               </li>
 
-              <!-- private files: count only — no name, link, size, or type -->
-              <li class="list-group-item d-flex align-items-center gap-3 px-0">
-                <i class="if if-lock" aria-hidden="true"></i>
-                <p class="mb-0">1 confidential file</p>
-              </li>
+              <!-- private files: never rendered — not even a count (patent risk, tech transfer) -->
             </ul>
           </section>
           <!-- @state -->
@@ -356,11 +358,7 @@
                 </a>
               </li>
 
-              <!-- private files: count only, also for logged-in public visitors -->
-              <li class="list-group-item d-flex align-items-center gap-3 px-0">
-                <i class="if if-lock" aria-hidden="true"></i>
-                <p class="mb-0">1 confidential file</p>
-              </li>
+              <!-- private files: never rendered, also for logged-in public visitors -->
             </ul>
           </section>
           <!-- @state -->

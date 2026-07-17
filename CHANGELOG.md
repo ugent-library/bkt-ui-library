@@ -71,15 +71,17 @@ own token — `--bs-dropdown-item-padding-y: 0.5rem` on `.dropdown-menu`, with
 No class changes. Behaviour and copy changes on the public surface;
 decision record is raven#141.
 
-**Access CTA (cards + detail header):** the card's action slot now
-mirrors the detail header — same action, icon, and button variant.
-Removed: the card **View** button (title navigates), **Request access**
-(future CTA, no process yet), per-row "Log in to access" links in the
-Files section (login appears once per page), and the disabled
-**Under embargo** button (embargo renders as text naming the
-post-embargo state). Labels: card "Log in", "Access at ⟨host⟩";
-detail "Log in to access", "Access dataset at ⟨host⟩". "Full Text at
-Publisher" dropped — external open full text is out of scope.
+**Access CTA (cards + detail header):** split into v1 (parity with
+biblio.ugent.be) and v2 (extended). Templates show v1: full CTA on the
+detail header, cards carry only Cite + Add to list — no access CTA, no
+View button (title navigates). v2 (card mirrors the header: Download /
+Access at ⟨host⟩ / Log in / Select file) is preserved as designs on the
+kit page. Also removed: **Request access** (future, no process yet),
+per-row "Log in to access" links in the Files section (login appears
+once per page), the disabled **Under embargo** button (embargo renders
+as text naming the post-embargo state), "Full Text at Publisher"
+(external open full text out of scope), and every public trace of
+`private` files — not even a count (patent risk, tech transfer).
 
 **New kit page:** `patterns/work-actions.html` — CTA designs and
 styling (icon + button variant per CTA). Rules deliberately live in
