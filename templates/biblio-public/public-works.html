@@ -334,6 +334,10 @@
         <!-- Language -->
         <fieldset>
           <legend class="form-label h6 mb-2">Language</legend>
+          <!-- Search-within (long tail) — same checklist-search field as the Add-filter editor. Prototype affordance, not wired. -->
+          <label for="lang-facet-search" class="visually-hidden">Search languages</label>
+          <input type="search" id="lang-facet-search" class="form-control form-control-sm mb-2"
+            placeholder="Search languages&hellip;" autocomplete="off" data-checklist-search>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-en" checked
               aria-label="English (161 results)">
@@ -515,7 +519,7 @@
                   <a class="page-link" href="#" aria-label="Next page">›</a>
                 </li>
               </ul>
-              <span class="text-muted small" aria-live="polite" id="result-count">Showing 1–10 of 179 results</span>
+              <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–10 of 179 results</span>
             </nav>
           </div>
           <div class="bt-toolbar__right">
@@ -856,7 +860,7 @@
                 <a class="page-link" href="#" aria-label="Next page">›</a>
               </li>
             </ul>
-            <span class="text-muted small">Showing 1–10 of 179 results</span>
+            <span class="text-muted small"><span class="visually-hidden">Showing </span> 1–10 of 179 results</span>
           </div>
         </nav>
         <!-- @state -->
