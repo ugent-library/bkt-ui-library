@@ -662,6 +662,9 @@ Clickable badge: a `<button>` or `<a>` carrying `.badge` is styled squared (vs t
 pill status badge) with pointer + hover + focus — element-based, no extra class.
 Pick the look with `badge--outline` or `text-bg-*`. This is the only case where a
 badge is interactive; a plain status badge stays a `<span>`. Used for filter chips.
+The chip whose editor is open adds Bootstrap's `.active` to `badge--outline`
+(blue-100 fill) plus `aria-current="true"` on the label half — a state class, not
+a variant; there is no `badge--active`.
 
 **Buttons**
 `btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap

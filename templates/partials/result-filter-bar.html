@@ -170,7 +170,7 @@
     filterEditor.innerHTML = renderEditor(filterId, def, existing);
     filterEditor.querySelector('input')?.focus();
     attachEditorEvents(filterId, def);
-    syncPickerState();   // highlight the filter being edited
+    renderChips();   // repaint the "editing" highlight on chip + picker
   }
 
   function renderEditor(filterId, def, existing) {
@@ -374,6 +374,15 @@
         </button>
       </div>`).join('');
 
+    // Editing highlight, post-paint — the class checker reads class="" attrs
+    // in this file, so no ${} may appear inside them.
+    const editBtn = editingFilter && activeChips.querySelector(`[data-filter-id="${editingFilter}"]`);
+    if (editBtn) {
+      editBtn.setAttribute('aria-current', 'true');
+      editBtn.closest('.filter-chip-group').querySelectorAll('.badge')
+        .forEach(b => b.classList.add('active'));
+    }
+
     activeChips.querySelectorAll('[data-filter-id]').forEach(btn => {
       btn.addEventListener('click', () => openEditor(btn.dataset.filterId, activeFilters[btn.dataset.filterId]));
     });
@@ -412,7 +421,7 @@
     filterEditor.innerHTML = '';
     editingFilter = null;
     pendingValue  = null;
-    syncPickerState();   // drop the "editing" highlight if it wasn't applied
+    renderChips();   // drop the "editing" highlight if it wasn't applied
   }
 
   function hideDropdown() {
