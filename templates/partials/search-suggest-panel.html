@@ -17,10 +17,6 @@
     - Grouped suggestion rows (People, Works, Orgs, Projects, Keywords)
     - Keyboard hints footer
 
-  In production: GET /search/suggest?q={query}&surface={public|backoffice}
-  returns this partial with real data. The server renders only the tabs and
-  rows that have results; empty groups are omitted.
-
   ── Entity routing ─────────────────────────────────────────────────────────
   Person     → navigate to profile page  /researchers/{id}
   Work       → navigate to detail page   /works/{id}
@@ -38,53 +34,58 @@
   The loading state is handled by #suggest-indicator in the host page.
   To prototype an empty state, replace the content below with:
     <p class="p-4 text-muted small text-center">No results for "&hellip;"</p>
+
 -->
 
-<!-- Tab bar — counts come from the server in production -->
-<div class="border-bottom px-3 pt-2" role="tablist" aria-label="Filter suggestions by type">
-  <ul class="nav nav-tabs border-0 gap-1" id="suggest-tabs">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active px-3 py-2" type="button"
-        id="stab-all" role="tab" aria-selected="true" aria-controls="suggest-all">
-        All
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link px-3 py-2" type="button"
-        id="stab-people" role="tab" aria-selected="false" aria-controls="suggest-people">
-        People
-        <span class="badge text-bg-secondary ms-1" aria-label="12 people results">12</span>
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link px-3 py-2" type="button"
-        id="stab-works" role="tab" aria-selected="false" aria-controls="suggest-works">
-        Works
-        <span class="badge text-bg-secondary ms-1" aria-label="1 work result">1</span>
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link px-3 py-2" type="button"
-        id="stab-orgs" role="tab" aria-selected="false" aria-controls="suggest-orgs">
-        Organisations
-        <span class="badge text-bg-secondary ms-1" aria-label="10 organisation results">10</span>
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link px-3 py-2" type="button"
-        id="stab-projects" role="tab" aria-selected="false" aria-controls="suggest-projects">
-        Projects
-        <span class="badge text-bg-secondary ms-1" aria-label="9 project results">9</span>
-      </button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link px-3 py-2" type="button"
-        id="stab-keywords" role="tab" aria-selected="false" aria-controls="suggest-keywords">
-        Keywords
-        <span class="badge text-bg-secondary ms-1" aria-label="8 keyword results">8</span>
-      </button>
-    </li>
-  </ul>
+<!-- Tab bar — type filter over the suggestions.
+     Styling: badge--lg + badge--tab (no fill/border; light-blue fill on .active).
+
+     Behaviour (intended):
+       - Counts are live per-type totals from the server; "All" is the default,
+         and empty types are omitted (server never renders a 0 badge).
+       - Active state is scrollspy, not a selection: in the All view every type is
+         rendered as a group in one scroll, and the active badge reflects the group
+         currently in view, updated as the user scrolls. It indicates position.
+       - Clicking a badge scrolls the list to that type's group (in-page anchor);
+         all groups stay rendered — no per-type re-query, no page reload.
+       - Keyboard: roving tabindex across the badges; arrows move focus, Enter/Space
+         jumps to the group, Esc closes the panel.
+       - Because the active state tracks scroll rather than selection, the ARIA is
+         navigation (aria-current) — not role="tab"/aria-selected. Update the markup
+         to match once the model is confirmed.
+     -->
+
+<div class="border-bottom px-3 py-2 d-flex flex-wrap gap-2" role="tablist"
+  id="suggest-tabs" aria-label="Filter suggestions by type">
+  <button class="badge badge--lg badge--tab active" type="button"
+    id="stab-all" role="tab" aria-selected="true" aria-controls="suggest-all">
+    All
+  </button>
+  <button class="badge badge--lg badge--tab" type="button"
+    id="stab-people" role="tab" aria-selected="false" aria-controls="suggest-people">
+    People
+    <span class="badge text-bg-secondary" aria-label="12 people results">12</span>
+  </button>
+  <button class="badge badge--lg badge--tab" type="button"
+    id="stab-works" role="tab" aria-selected="false" aria-controls="suggest-works">
+    Works
+    <span class="badge text-bg-secondary" aria-label="1 work result">1</span>
+  </button>
+  <button class="badge badge--lg badge--tab" type="button"
+    id="stab-orgs" role="tab" aria-selected="false" aria-controls="suggest-orgs">
+    Organisations
+    <span class="badge text-bg-secondary" aria-label="10 organisation results">10</span>
+  </button>
+  <button class="badge badge--lg badge--tab" type="button"
+    id="stab-projects" role="tab" aria-selected="false" aria-controls="suggest-projects">
+    Projects
+    <span class="badge text-bg-secondary" aria-label="9 project results">9</span>
+  </button>
+  <button class="badge badge--lg badge--tab" type="button"
+    id="stab-keywords" role="tab" aria-selected="false" aria-controls="suggest-keywords">
+    Keywords
+    <span class="badge text-bg-secondary" aria-label="8 keyword results">8</span>
+  </button>
 </div>
 
 <!-- All panel: recent + grouped rows -->
