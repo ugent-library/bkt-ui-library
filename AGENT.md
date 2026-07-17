@@ -647,6 +647,7 @@ badge.text-bg-danger         badge.text-bg-danger-light
 badge.text-bg-info           badge.text-bg-info-light      (submitted status — blue-600)
 badge.text-bg-secondary      badge.text-bg-light           (neutral: gray-50 fill, dark text — needs .border to be visible on white)
 badge.bg-transparent         badge.badge--outline          badge--total
+badge--lg                    badge--tab
 ```
 Solid badges need a dark-enough background to clear WCAG AA with white text —
 success uses green-700, danger red-600 (their 500/600 steps fail). Warning is the
@@ -665,6 +666,11 @@ badge is interactive; a plain status badge stays a `<span>`. Used for filter chi
 The chip whose editor is open adds Bootstrap's `.active` to `badge--outline`
 (blue-100 fill) plus `aria-current="true"` on the label half — a state class, not
 a variant; there is no `badge--active`.
+
+`badge--lg` is a larger size (`--bt-text-sm` + more padding) for tap targets.
+`badge--tab` is the quiet type-tab variant used in the search suggest overlay:
+transparent, no border, light-blue fill only on `.active`. The active state tracks
+scroll position (scroll-spy), so it pairs with `aria-current`, not `aria-selected`.
 
 **Buttons**
 `btn-xs` (extra small), `btn-sm`, `btn`, `btn-lg` are all defined. All standard Bootstrap
