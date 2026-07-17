@@ -72,6 +72,128 @@
   </section>
 
   <section class="ds-section">
+    <h2 class="h4 mb-3">Suggestions — overlay</h2>
+    <p class="mb-4">What the overlay renders as you type (<code>search-suggest-panel.html</code>, swapped into <code>#suggest-panel</code>): type-filter badges with live counts (<code>badge--lg badge--tab</code>), a submit row, and results grouped by entity type. Every row is a link — a record goes to its detail page, a keyword to a filtered search.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Populated — <code>.bt-suggest-panel</code></h3></div>
+      <div class="ds-demo-body">
+        <div class="border rounded overflow-hidden">
+
+          <div class="border-bottom px-3 py-2 d-flex flex-wrap gap-2" role="tablist" aria-label="Filter suggestions by type">
+            <button class="badge badge--lg badge--tab active" type="button" role="tab" aria-selected="true">All</button>
+            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">People <span class="badge text-bg-secondary">12</span></button>
+            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Works <span class="badge text-bg-secondary">1</span></button>
+            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Organisations <span class="badge text-bg-secondary">10</span></button>
+            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Projects <span class="badge text-bg-secondary">9</span></button>
+            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Keywords <span class="badge text-bg-secondary">8</span></button>
+          </div>
+
+          <div class="bt-suggest-panel__body">
+
+            <div class="px-3 pt-3 pb-1">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#" class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                    <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                    <span class="flex-grow-1 min-w-0">Search all research output for <strong>test</strong></span>
+                    <kbd class="ms-auto">&crarr;</kbd>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <hr class="my-1">
+
+            <div class="px-3 pt-2 pb-1">
+              <p class="text-muted small fw-semibold text-uppercase mb-1">People <span class="fw-normal ms-1" aria-hidden="true">2</span></p>
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#" class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                    <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div class="min-w-0">
+                      <div>Lea <mark>Test</mark>ut <span class="text-muted small">(53)</span></div>
+                      <div class="small text-muted">UGent Alumni · 2020–2024</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <hr class="my-1">
+
+            <div class="px-3 pt-2 pb-1">
+              <p class="text-muted small fw-semibold text-uppercase mb-1">Works <span class="fw-normal ms-1" aria-hidden="true">1</span></p>
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#" class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                    <i class="if if-article if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div class="min-w-0">
+                      <div class="badge text-bg-primary mb-1">Journal article</div>
+                      <div>Validated <mark>test</mark>s for language research&hellip;</div>
+                      <div class="small text-muted">(2024) Scribes and language use · Vermeiren, Hanke, et al</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Suggestions — no match</h2>
+    <p class="mb-4">When the query matches nothing, the overlay renders a no-match variant instead of the suggestion list — no type tabs, the submit row kept so <kbd>&crarr;</kbd> still runs the full search, the query named, a spelling nudge, and Recent (query-independent). Populated-overlay wiring is in <strong>Listing / results-header search</strong> above.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">No match — <code>.bt-suggest-panel</code> empty variant</h3></div>
+      <div class="ds-demo-body">
+        <div class="border rounded overflow-hidden">
+          <div class="bt-suggest-panel__body">
+
+            <div class="px-3 pt-3 pb-1">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#" class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                    <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                    <span class="flex-grow-1 min-w-0">Search all research output for <strong>xyz</strong></span>
+                    <kbd class="ms-auto">&crarr;</kbd>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <hr class="my-1">
+
+            <div class="px-3 py-4 text-center" role="status">
+              <p class="text-body mb-1">Nothing matches <strong>&ldquo;xyz&rdquo;</strong>.</p>
+              <p class="text-muted small mb-0">Try fewer or different words, or check the spelling.</p>
+            </div>
+
+            <hr class="my-1">
+
+            <div class="px-3 pt-3 pb-2">
+              <p class="text-muted small fw-semibold text-uppercase mb-2">Recent</p>
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#" class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                    <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+                    <span>Test <span class="text-muted small">(542)</span></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
     <h2 class="h4 mb-3">In-hero context</h2>
 
     <div class="ds-demo">
