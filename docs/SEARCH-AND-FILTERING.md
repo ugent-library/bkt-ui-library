@@ -290,3 +290,38 @@ The audiences these serve, in one line each (full profiles in `docs/RESEARCH-PER
   status, classification, faculty, type, year, locked. Wants year ranges, filter-on-missing,
   export to Excel, and shares filters via bookmarked URLs. This is the analysis surface that
   stays in the backoffice — the reason the public sidebar carries discovery axes only.
+
+## Mobile — one Filters tray (settled; do not reopen)
+
+On small screens **every filter input collapses into a single Bootstrap Offcanvas "Filters"
+tray**: the sidebar facets (Access / Type / Year / Language) and the record-dimension picker
+(Author, Organisation, Project, Keywords, Identifier — as drill-ins) live together in the one
+sheet. The chip bar stays the readout *above* the results (Rule 4). The only filter-adjacent
+controls kept out of the tray are **Sort** and **results-per-page**, surfaced as pills in the
+results header. This was evaluated against a Vinted-style horizontal filter-pill bar and
+settled in favour of the tray — **do not reopen without new evidence.**
+
+Why the tray, not a pill bar and not two separate entry points:
+
+- **Mobile faceted search wants a tray, not a separate screen (NN/g).** The effective mobile
+  pattern is an *overlay tray* of the filter controls over the results — Amazon and eBay
+  converged on it — because a separate filter *screen* forces "pogo-sticking" between filters
+  and results. Keep the **result count always visible** and label it with the plain word
+  "Filter" / "Refine", never a cryptic icon. This is exactly the offcanvas tray we ship.
+  <https://www.nngroup.com/articles/mobile-faceted-search/>
+- **Horizontal filter-pill rows have poor discoverability (Baymard).** Users routinely
+  overlook anything past the right edge of a horizontally-scrolled row, so a pill scroller is
+  a shortcut for one or two top filters *at most*, never the whole mechanism. Our
+  high-cardinality record dimensions (Author, Organisation, Project, Keyword, Identifier)
+  would scroll off-screen and be missed — so they belong in the tray, not a pill bar.
+  *(Baymard mobile-filtering research; attributed from prior study — live search was
+  unavailable when this was noted.)*
+- **One canonical state (Rule 1).** A pill bar plus a separate sheet would be two competing
+  filter inputs; one tray keeps a single input surface and preserves chip-bar-as-readout.
+- **Faceting is a results-page behaviour (query log, Evidence above).** Filter clauses appear
+  in ~1% of typed searches but ~49% of results-page interactions, and the simple box
+  dominates — so the mobile filter surface should be a lightweight, discoverable results-page
+  tray, not a heavy separate screen or more syntax.
+
+Pills (Sort + the couple of common facets) are a deliberate *garnish* layered on the tray,
+never the primary mechanism.
