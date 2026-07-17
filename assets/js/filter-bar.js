@@ -132,6 +132,7 @@
       if (!filterEditor.hidden &&
           !filterEditor.contains(e.target) &&
           !e.target.closest('[data-filter-id]') &&
+          !e.target.closest('[data-filter]') &&
           !e.target.closest('#' + prefix + 'add-filter-dropdown')) {
         closeEditor();
       }
@@ -167,7 +168,7 @@
       if (def.type === 'checklist') {
         const checked = existing?.rawValue || [];
         const search = def.values.length > 8
-          ? `<div class="bt-panel__body pb-1">
+          ? `<div class="bt-panel__body">
               <label class="visually-hidden" for="${prefix}fv-search">Search ${def.label}</label>
               <input type="search" class="form-control form-control-sm" id="${prefix}fv-search"
                 data-checklist-search placeholder="Search ${def.label.toLowerCase()}…" autocomplete="off">
@@ -271,10 +272,11 @@
 
     function renderChips() {
       activeChips.innerHTML = Object.entries(activeFilters).map(([id, f]) => {
-        const cls = editingFilter === id ? 'badge text-bg-primary-light' : 'badge badge--outline';
+        const editing = editingFilter === id;
+        const cls = editing ? 'badge badge--outline active' : 'badge badge--outline';
         return `
         <div class="filter-chip-group">
-          <button type="button" class="${cls}"
+          <button type="button" class="${cls}"${editing ? ' aria-current="true"' : ''}
             aria-label="Edit filter: ${f.label} is ${f.displayValue}" data-filter-id="${id}">
             <span class="fw-light">${f.label}:</span> ${f.displayValue}
           </button>

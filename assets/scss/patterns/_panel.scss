@@ -37,6 +37,14 @@
   overflow-y: auto;
 }
 
+// Detached from its panel chrome (mobile drill-in): fill the sheet instead of a
+// capped scroll box, and drop the border-top that would double the sheet header's.
+:not(.bt-panel) > .bt-panel__body {
+  max-height: none;
+  overflow-y: visible;
+  border-top: 0;
+}
+
 .bt-panel__actions {
   display: flex;
   gap: var(--bt-sp-2);
@@ -48,18 +56,22 @@
   padding: var(--bt-sp-4);
 }
 
-/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio. */
+/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio.
+   Rows run full-width (body gutter removed, row carries the inset) so the hover fill spans
+   edge-to-edge with the checkbox inset — same on every screen. */
 .bt-panel__body--checklist,
 .bt-panel__body--boolean {
+  padding: 0;
   flex-direction: column;
+  gap: 0;
 }
 .bt-panel__body .form-check {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
   margin: 0;
-  padding: 0;
-  border-radius: var(--bt-radius-sm);
+  padding: var(--bt-sp-2) var(--bt-sp-4);
+  flex-shrink: 0;
 }
 .bt-panel__body .form-check-input {
   float: none;

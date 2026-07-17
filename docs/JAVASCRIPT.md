@@ -76,6 +76,23 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `filter-sheet.js`
+
+**Purpose:** Mobile only — relocates the works filter-bar's picker list, editor, and clear-all button into the `#filters-offcanvas` sheet below `lg`, and back to the toolbar above `lg`, so every filter input lives in one place on a phone. Moving the nodes keeps the single `filter-bar.js` instance and its state (the handlers were attached at init). In the sheet it: turns each record row into a drill-in (label · applied value read from the chips · chevron, replacing filter-bar's floating tick); makes tapping a row swap `#wf-sheet-main` for `#wf-sheet-detail` (the editor + a back button), returning on Apply/back; and strips the editor's `position-absolute`/`top-100`/`bt-panel`/`bt-panel--wide` so it flows inline full-width instead of as a floating panel.
+
+**Loaded by:** `public-works.html` (after `filter-bar.js`).
+
+**Listens for:**
+- `matchMedia('(max-width: 991.98px)')` change
+- `#wf-filter-editor` `hidden` attribute (drill in on open, return + refresh row values on close)
+- click on `#wf-detail-back` (closes the editor) and `#wf-clear-all` (refreshes row values)
+
+**Dispatches:** nothing
+
+**Prototype-only:** yes (rides on `filter-bar.js`'s prototype chips; production would render the sheet vs. toolbar placement server-side).
+
+---
+
 ### `suggest-panel.js`
 
 **Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup and handles keyboard navigation within the panel. Suggestion rows navigate via their own `href` ("type decides"); the panel no longer mutates filter state.

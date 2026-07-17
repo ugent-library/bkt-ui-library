@@ -104,7 +104,7 @@
                     aria-label="Active filters" id="wf-active-chips">
                   </div>
                 </div>
-                <div class="bt-toolbar__item">
+                <div class="bt-toolbar__item d-none d-lg-block">
                   <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
                       Author + Identifier are index-backed today; organisation / venue / project /
                       keyword need a raven field + facet config first (see docs/SEARCH-AND-FILTERING.md,
@@ -134,7 +134,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="bt-toolbar__item">
+                <div class="bt-toolbar__item d-none d-lg-block">
                   <!-- Clear all filters — shown by filter-bar.js when chips are present. Drops
                       filter params only; the query is cleared by the box's × (Rule 2). -->
                   <button type="button" class="btn btn-ghost btn-sm" id="wf-clear-all" hidden>
@@ -164,10 +164,38 @@
 
     <!-- ── Body: facets sidebar + results ─────────────────────────────────── -->
     <div class="u-main__body">
-    <div class="container py-4">
+    <div class="container pb-4 pt-0 pt-lg-4">
     <div class="row g-5 align-items-start">
 
+      <!-- Grid cell and drawer are separate elements: offcanvas on the column
+           needs p-0, which breaks the g-5 gutter pairing (row negative margin
+           stays, column padding gone → sidebar shifts left of the container). -->
       <aside class="col-lg-3" aria-label="Filter results">
+      <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="filters-offcanvas"
+        aria-labelledby="filters-offcanvas-title">
+
+        <!-- Drawer header — offcanvas mode only (below lg). Two states, swapped by
+             filter-sheet.js: the list title, or a back-arrow + filter name in the detail
+             view. The × always closes the sheet. -->
+        <div class="offcanvas-header d-lg-none border-bottom">
+          <div id="wf-head-list">
+            <h2 class="h5 mb-0" id="filters-offcanvas-title">Filters</h2>
+            <span class="text-muted small" id="wf-sheet-count">179 results</span>
+          </div>
+          <button type="button" class="btn btn-ghost px-0 fs-5" id="wf-head-back" hidden>
+            <i class="if if-arrow-left" aria-hidden="true"></i> <span id="wf-head-title"></span>
+          </button>
+          <button type="button" class="btn-close"
+            data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas"
+            aria-label="Close filters"></button>
+        </div>
+
+        <!-- p-0: the header/footer borders span full width in drawer mode. -->
+        <div class="offcanvas-body flex-column p-0">
+
+        <!-- wf-sheet-main: the full filter list. filter-sheet.js hides it when you drill into
+             a single filter (mobile) and swaps in wf-sheet-detail. -->
+        <div id="wf-sheet-main" class="p-3 p-lg-0">
 
         <!-- Access — first (OA-forward per UB2030) -->
         <fieldset>
@@ -285,13 +313,13 @@
           </div>
           <div class="mt-2">
             <p class="text-muted small mb-1">Custom range</p>
-            <div class="d-flex gap-2">
-              <div>
+            <div class="row g-2">
+              <div class="col">
                 <label for="year-from" class="visually-hidden">From year</label>
                 <input type="number" id="year-from" name="year_from"
                   class="form-control form-control-sm" placeholder="From" min="1800" max="2030">
               </div>
-              <div>
+              <div class="col">
                 <label for="year-to" class="visually-hidden">To year</label>
                 <input type="number" id="year-to" name="year_to"
                   class="form-control form-control-sm" placeholder="To" min="1800" max="2030">
@@ -390,11 +418,83 @@
         </fieldset>
         -->
 
+        <!-- Mobile only: the Add-filter picker + editor relocate here at <lg (filter-sheet.js),
+             below the facets. Empty on desktop; the nodes stay in the toolbar. -->
+        <hr class="d-lg-none">
+        <div class="d-lg-none mb-2" id="wf-sheet-refine">
+          <h3 class="form-label h6 mb-2">More filters</h3>
+        </div>
+
+        </div><!-- /wf-sheet-main -->
+
+        <!-- Drill-in detail view (mobile) — filter-sheet.js moves the editor here and shows
+             this when a filter is opened; the header back-arrow returns to the full list. -->
+        <div class="d-lg-none" id="wf-sheet-detail" hidden>
+          <div id="wf-editor-slot"></div>
+        </div>
+
+        </div><!-- /offcanvas-body -->
+
+        <!-- Mobile only: sticky footer — outside offcanvas-body so it stays pinned. Two states
+             (filter-sheet.js): the list's Clear-all + Show-results, or the open filter's
+             Remove + Apply. Clear-all relocates into the slot at <lg. -->
+        <div class="d-lg-none p-3 border-top" id="wf-sheet-footer">
+          <div class="d-flex align-items-center gap-2" id="wf-foot-list">
+            <span id="wf-clear-slot"></span>
+            <button type="button" class="btn btn-primary flex-grow-1"
+              data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
+              Show 179 results
+            </button>
+          </div>
+          <div class="align-items-center gap-2 d-none" id="wf-foot-detail">
+            <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove" hidden>Remove filter</button>
+            <button type="button" class="btn btn-primary flex-grow-1" id="wf-foot-apply">Apply</button>
+          </div>
+        </div>
+      </div><!-- /#filters-offcanvas -->
       </aside>
 
       <!-- ── Results ─────────────────────────────────────────────────────── -->
       <div class="col-lg-9" id="search-results">
 
+        <!-- Mobile filter + sort bar — Filters opens the tray (left); Sort is a Vinted-style
+             pill on the right. Both hidden ≥lg (desktop uses the sidebar + results toolbar).
+             Dot shows when filters are applied (static here; production toggles it). -->
+        <div class="d-flex justify-content-between align-items-center gap-2 mb-4 d-lg-none">
+          <button type="button" class="btn btn-secondary rounded-pill"
+            data-bs-toggle="offcanvas" data-bs-target="#filters-offcanvas"
+            aria-controls="filters-offcanvas">
+            <i class="if if-filter-3-line" aria-hidden="true"></i> Filters
+          </button>
+          <div class="d-flex gap-2">
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary rounded-pill dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false" aria-label="Results per page">
+                10 / page
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><button type="button" class="dropdown-item active" aria-current="true">10 per page</button></li>
+                <li><button type="button" class="dropdown-item">25 per page</button></li>
+                <li><button type="button" class="dropdown-item">50 per page</button></li>
+                <li><button type="button" class="dropdown-item">100 per page</button></li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <!-- WORK IN PROGRESS: We do not know which sorting to use yet, do not build, just stub -->
+              <button class="btn btn-outline-secondary rounded-pill dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Sort
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><button type="button" class="dropdown-item">Relevance</button></li>
+                <li><button type="button" class="dropdown-item active" aria-current="true">Year (new to old)</button></li>
+                <li><button type="button" class="dropdown-item">Year (old to new)</button></li>
+                <li><button type="button" class="dropdown-item">Title (A–Z)</button></li>
+                <li><button type="button" class="dropdown-item">First author (A–Z)</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
         <!-- @state: results -->
         <div class="bt-toolbar mb-4">
@@ -419,14 +519,15 @@
           </div>
           <div class="bt-toolbar__right">
             <label for="page-size" class="visually-hidden">Results per page</label>
-            <select id="page-size" class="form-select form-select-sm">
+            <select id="page-size" class="form-select form-select-sm d-none d-lg-block">
               <option value="10" selected>10 per page</option>
               <option value="25">25 per page</option>
               <option value="50">50 per page</option>
               <option value="100">100 per page</option>
             </select>
+            <!-- WORK IN PROGRESS: We do not know which sorting to use yet, do not build, just stub -->
             <label for="sort-by" class="visually-hidden">Sort by</label>
-            <select id="sort-by" class="form-select form-select-sm">
+            <select id="sort-by" class="form-select form-select-sm d-none d-lg-block">
               <option value="relevance">Relevance</option>
               <option value="year-desc" selected>Year (new to old)</option>
               <option value="year-asc">Year (old to new)</option>
@@ -841,5 +942,6 @@
 
 <script src="/assets/js/suggest-panel.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
+<script src="/assets/js/filter-sheet.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
