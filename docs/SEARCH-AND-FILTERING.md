@@ -48,6 +48,26 @@ to keep in sync.
 Every significant view is bookmarkable: a filtered, sorted, paginated result is a URL.
 Use `hx-push-url` whenever a user would expect Back to work or want to bookmark the state.
 
+### State transitions
+
+- **A new query keeps the active filters.** Changing the search text — including fixing
+  a typo — re-runs within the current filters rather than clearing them; `q` and the
+  filter params are orthogonal. A clean slate is a deliberate act, via the box's × or
+  "Clear all filters".
+- **Changing a filter or the sort resets to the first page** — a page number is only
+  meaningful against a fixed, ordered set. Sort and page-size selections are preserved
+  across filter changes, and sort across a page-size change; only explicit pagination
+  moves off page one.
+- **Filtering updates in place; a facet toggle doesn't reposition the page.** On desktop,
+  real-time filtering — results update as you select, the persistent sidebar and the
+  user's scroll position staying put — is Baymard's documented standard; ticking several
+  boxes in a row (e.g. multiple languages low in the sidebar) must not scroll the page. On
+  mobile, Baymard instead recommends an explicit "Show X results" apply button, *because*
+  live updates cause disorienting refreshes mid-interaction — so the mobile tray batches
+  changes behind Apply (a Step-8 / mobile-pass concern). Scroll-to-top belongs to
+  pagination or a new query, not to filter toggles — that half is convention, not cited.
+  ([Baymard, *Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui).)
+
 ---
 
 ## Rule 2 — search enters, filters narrow
@@ -194,7 +214,10 @@ A dimension's shape decides its home. This is the taxonomy in full:
 **Sidebar inclusion test.** A dimension earns a public sidebar slot only if it is: closed &
 low-cardinality, countable per value, broad across research output, legible to a
 non-expert, and discovery (not curation). A soft sixth test — *worth the space* — can demote
-a qualifying-but-rarely-used facet.
+a qualifying-but-rarely-used facet. **Language currently holds its slot on parity alone**:
+the live facet drew 349 uses / 322 sessions in seven months of logs (measured 2026-07-21) —
+a dropping candidate, decided with post-launch usage data. Research discipline already fell
+to the same test (see below).
 
 **The search box holds the open concepts; the picker holds the record dimensions.** The box
 still navigates (Rule 2); the picker is a separate, explicit input for high-cardinality
@@ -220,13 +243,65 @@ public facet, and classification is a curator tag. Publisher-side publication st
 a separate axis — raven models it as `PublicationVersions`, which the full-text-version
 filter surfaces. Indexing `publication_version` as a facet is raven work not yet done.
 
+### Keywords vs. Research discipline — two dimensions, not one (settled)
+
+The old "Keywords / subject" picker item conflated two dimensions with different shapes.
+**Keywords** are an open, high-cardinality vocabulary: a **picker filter** (backend-dependent,
+not indexed yet). **Research discipline** (raven `research_disciplines`) is a closed
+taxonomy, so its home — if it ever ships publicly — is a **sidebar checklist**, never the
+picker.
+
+Research discipline is **cut from the public surface** (M, 2026-07-21): no sidebar facet,
+not shown on detail pages. Grounds: the live Subject facet drew 392 uses / 269 sessions in
+seven months of query logs (~0.03% of results-page interactions) — it fails the "worth the
+space" test — and the vocabulary itself needs review before any public display (the scheme —
+UGent categories / Frascati / OECD / ANZSRC — is raven config and a policy decision). The
+review flag lives as a comment on the work detail page, where the data would first
+resurface. Revisit only after the vocabulary review, with post-launch usage data.
+
 ### How facets combine
 
 Public facets use the standard discovery convention: **OR within a facet** (Type = Journal
 article OR Dataset) and **AND across facets** (Type AND Year AND Access). There is no
 user-facing boolean control on the public surface — this keeps the sidebar legible and
 matches how comparable discovery layers behave. Choosing the operator (AND / OR / NOT) is an
-advanced/expert affordance, not a public one.
+advanced/expert affordance, not a public one. (AND across filter types, OR within a
+type's options is Baymard's stated filter-logic rule — [Baymard, *Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui).)
+
+### Facet counts — drill-down
+
+The count beside each value is a **drill-down** count: it reflects the current query
+plus the *other* applied facets — "add this and you'd get N" — not the global result
+set. This prevents dead-ends, where a global count promises a number the combination
+can't deliver. By the OR-within rule, a facet's counts are computed with **that
+facet's own selection excluded**, so selecting one value never shrinks the other
+values in the same facet — you can still see and add them. This is the standard
+OpenSearch faceted-navigation pattern (post-filter aggregations). Note it is **more
+expensive** — one aggregation pass per facet, each with a different filter set — a
+real but standard cost.
+
+Evidence: Baymard calls a per-option count one of the single highest-impact filter
+improvements — it tells users the selection will return results, heading off zero-result
+dead-ends ([Baymard, *Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui)).
+The self-excluding drill-down mechanism itself is the standard OpenSearch faceting pattern,
+not a Baymard prescription.
+
+### Filters don't disappear at zero
+
+A facet value or filter option stays present even when the current combination would
+return zero results for it — options never silently vanish as the user narrows. An
+already-applied filter is likewise never auto-dropped to dodge an empty result: the
+system honours it and shows the zero-results state. (How a zero-count value is shown —
+greyed, disabled, or a plain "0" — is an implementation detail; that it *stays* is the
+rule.)
+
+Facet values are ordered by count, most first; a **selected value stays put** — it does
+not reshuffle or drop under a "More" collapse.
+
+The dead-end-avoidance principle is Baymard's — a silently-zero result is a dead-end to
+prevent or offer recovery from ([*Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui)).
+That page doesn't prescribe the exact zero-count treatment; keeping the value visible
+rather than removing it is our choice, for list stability.
 
 ### Identifier — one filter, scheme auto-detected
 
@@ -273,10 +348,16 @@ The redesign is grounded in a query-log analysis (≈102M logged interactions ov
 - **The simple box wins.** 98% of human searches use the simple box with bare keywords;
   the CQL query language and the advanced/expert tiers are, in practice, used far less.
   Invest in a fast, forgiving keyword box (ranking, typo tolerance, autosuggest).
-- **Facets are a results-page behaviour.** Filter clauses appear in ~1% of typed searches
-  but ~49% of results-page interactions. People search broadly, then narrow on the
-  results page — which is exactly Rule 2 (search enters, filters narrow) and why the facets
-  and picker live on the results page, never bolted onto the box.
+- **Refinement is a results-page behaviour — and it is mostly scoped links, not facets**
+  *(corrected 2026-07-21)*. Filter clauses appear in ~1% of typed searches, so narrowing
+  happens after arrival (Rule 2 stands). But the per-field split shows the ~49% of
+  results-page interactions carrying filter clauses is almost entirely **link-follows** —
+  clicking an author (~199k sessions / 7 months), keyword (~252k), or journal title
+  (~204k) on a record, which re-runs a scoped query. That is Rule 3's navigate-to-scope
+  behaviour, and it is the volume path. True checklist-facet usage is minuscule (type 477
+  sessions, year 779, subject 269, language 322 over 7 months — upper bounds). Consequence:
+  wiring author / keyword / journal links to their scoped views outranks facet-rail polish;
+  the sidebar stays small and every facet must re-earn its slot from post-launch usage.
 - **The query permalink is a first-class surface.** ~63% of all traffic *arrives* on a
   query-result page from an external link, bookmark, or citation — a genuine long tail.
   Query URLs are durable, citable identifiers, which is the practical stakes of Rule 1
@@ -330,10 +411,11 @@ Why the tray, not a pill bar and not two separate entry points:
   unavailable when this was noted.)*
 - **One canonical state (Rule 1).** A pill bar plus a separate sheet would be two competing
   filter inputs; one tray keeps a single input surface and preserves chip-bar-as-readout.
-- **Faceting is a results-page behaviour (query log, Evidence above).** Filter clauses appear
-  in ~1% of typed searches but ~49% of results-page interactions, and the simple box
-  dominates — so the mobile filter surface should be a lightweight, discoverable results-page
-  tray, not a heavy separate screen or more syntax.
+- **Refinement is a results-page behaviour (query log, Evidence above — corrected
+  2026-07-21).** Filter clauses appear in ~1% of typed searches; narrowing happens after
+  arrival, and measured checklist-facet usage is small — so the mobile filter surface
+  should be a lightweight, discoverable results-page tray, not a heavy separate screen,
+  more syntax, or anything that competes with the scoped links on the cards.
 
 Pills (Sort + the couple of common facets) are a deliberate *garnish* layered on the tray,
 never the primary mechanism.
