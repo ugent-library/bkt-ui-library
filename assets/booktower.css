@@ -2382,6 +2382,7 @@ img.bt-navbar__logo {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   /* an earlier `min-height: --s-topbar-height` (missing var()) was invalid and
      never applied — removed rather than fixed to avoid a rendering change */
   padding: var(--bt-sp-2) 0;
@@ -2407,6 +2408,12 @@ img.bt-navbar__logo {
   align-items: center;
   gap: var(--bt-sp-2);
   flex-shrink: 0;
+}
+
+/* A lone right group still pins right; a left+right pair leans on the toolbar's
+   space-between, so on wrap the right group drops to the left (a stack) rather
+   than a right-aligned staircase. */
+.bt-toolbar__right:only-child {
   margin-left: auto;
 }
 
