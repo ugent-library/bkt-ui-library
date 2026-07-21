@@ -268,6 +268,11 @@ matches how comparable discovery layers behave. Choosing the operator (AND / OR 
 advanced/expert affordance, not a public one. (AND across filter types, OR within a
 type's options is Baymard's stated filter-logic rule — [Baymard, *Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui).)
 
+The current biblio does exactly this — OR within a facet, AND across
+(`lib/Biblio/Model/Publication.pm`) — and puts **no cap** on how many filters combine.
+That's the precedent: keep it **unbounded**; revisit only if URL length or query cost
+proves a problem.
+
 ### Facet counts — drill-down
 
 The count beside each value is a **drill-down** count: it reflects the current query
@@ -284,7 +289,9 @@ Evidence: Baymard calls a per-option count one of the single highest-impact filt
 improvements — it tells users the selection will return results, heading off zero-result
 dead-ends ([Baymard, *Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui)).
 The self-excluding drill-down mechanism itself is the standard OpenSearch faceting pattern,
-not a Baymard prescription.
+not a Baymard prescription — and the current biblio already computes counts this way, each
+facet's aggregation excluding its own selection (`lib/Biblio/Model/Publication.pm`). So this
+matches the system being replaced, not only external guidance.
 
 ### Filters don't disappear at zero
 
