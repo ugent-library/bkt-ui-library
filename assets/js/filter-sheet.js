@@ -34,8 +34,6 @@
   const pickerHome = pickerList.parentNode;
   const editorHome = editor.parentNode;
   const clearHome  = clearAll.parentNode;
-  // On desktop the editor is a floating panel; in the sheet it flows inline full-width
-  // (dropping bt-panel also sheds the min-width that would overflow a narrow sheet).
   const OVERLAY = ['position-absolute', 'top-100', 'bt-panel', 'bt-panel--wide', 'mt-2'];
   const mq = window.matchMedia('(max-width: 991.98px)');
   const scroller = document.querySelector('#filters-offcanvas .offcanvas-body');
@@ -49,15 +47,12 @@
     return map;
   }
 
-  // Each record row: label · applied value · chevron. Replaces filter-bar's floating tick
-  // so the indicator sits in one place. Re-run at finite moments (open / editor close /
-  // clear-all), never on a live observer.
+  // never call on a live observer — it mutates the picker and would infinite-loop
   function decorateRows() {
     const vals = chipValues();
     pickerList.querySelectorAll('.dropdown-header').forEach(h => h.classList.add('d-none'));
     pickerList.querySelectorAll('button[data-filter]').forEach(b => {
-      // py-2: the dropdown-item padding vars only live inside .dropdown-menu, so relocating
-      // out of it drops the padding — restore it so rows aren't squished in the sheet.
+      // py-2: dropdown-item padding vars live only inside .dropdown-menu, gone once relocated
       b.classList.add('d-flex', 'align-items-center', 'py-2');
       b.querySelector('.if-check')?.remove();
       let end = b.querySelector('[data-end]');
@@ -98,8 +93,6 @@
     showMain();
   }
 
-  // Detail: header shows back + filter name, footer shows the filter's own actions.
-  // The editor's in-body title and actions are hidden (avoid duplicates).
   function showDetail() {
     const title = editor.querySelector('.bt-panel__title');
     headTitle.textContent = title ? title.textContent : 'Filter';
@@ -123,14 +116,12 @@
   function showFlex(el) { el.classList.add('d-flex'); el.classList.remove('d-none'); }
   function hideFlex(el) { el.classList.add('d-none'); el.classList.remove('d-flex'); }
 
-  // Drill in when the editor opens; on close, return to the list and refresh values.
   new MutationObserver(() => {
     if (!mq.matches) return;
     if (editor.hidden) { showMain(); decorateRows(); }
     else showDetail();
   }).observe(editor, { attributes: true, attributeFilter: ['hidden'] });
 
-  // Detail footer/back proxy the editor's own buttons (Apply returns to the list).
   headBack.addEventListener('click', () => document.getElementById('wf-editor-cancel')?.click());
   footApply.addEventListener('click', () => document.getElementById('wf-editor-apply')?.click());
   footRemove.addEventListener('click', () => document.getElementById('wf-editor-remove')?.click());

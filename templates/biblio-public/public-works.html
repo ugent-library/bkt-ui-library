@@ -192,11 +192,8 @@
             aria-label="Close filters"></button>
         </div>
 
-        <!-- p-0: the header/footer borders span full width in drawer mode. -->
         <div class="offcanvas-body flex-column p-0">
 
-        <!-- wf-sheet-main: the full filter list. filter-sheet.js hides it when you drill into
-             a single filter (mobile) and swaps in wf-sheet-detail. -->
         <div id="wf-sheet-main" class="p-3 p-lg-0">
 
         <!-- Access — first (OA-forward per UB2030) -->
@@ -425,8 +422,7 @@
         </fieldset>
         -->
 
-        <!-- Mobile only: the Add-filter picker + editor relocate here at <lg (filter-sheet.js),
-             below the facets. Empty on desktop; the nodes stay in the toolbar. -->
+        <!-- filter-sheet.js relocates the picker + editor here at <lg -->
         <hr class="d-lg-none">
         <div class="d-lg-none mb-2" id="wf-sheet-refine">
           <h3 class="form-label h6 mb-2">More filters</h3>
@@ -434,17 +430,14 @@
 
         </div><!-- /wf-sheet-main -->
 
-        <!-- Drill-in detail view (mobile) — filter-sheet.js moves the editor here and shows
-             this when a filter is opened; the header back-arrow returns to the full list. -->
+        <!-- filter-sheet.js moves the editor here on drill-in -->
         <div class="d-lg-none" id="wf-sheet-detail" hidden>
           <div id="wf-editor-slot"></div>
         </div>
 
         </div><!-- /offcanvas-body -->
 
-        <!-- Mobile only: sticky footer — outside offcanvas-body so it stays pinned. Two states
-             (filter-sheet.js): the list's Clear-all + Show-results, or the open filter's
-             Remove + Apply. Clear-all relocates into the slot at <lg. -->
+        <!-- sibling of offcanvas-body so it stays pinned while the body scrolls -->
         <div class="d-lg-none p-3 border-top" id="wf-sheet-footer">
           <div class="d-flex align-items-center gap-2" id="wf-foot-list">
             <span id="wf-clear-slot"></span>
@@ -464,9 +457,6 @@
       <!-- ── Results ─────────────────────────────────────────────────────── -->
       <div class="col-lg-9" id="search-results">
 
-        <!-- Mobile filter + sort bar — Filters opens the tray (left); Sort is a Vinted-style
-             pill on the right. Both hidden ≥lg (desktop uses the sidebar + results toolbar).
-             Dot shows when filters are applied (static here; production toggles it). -->
         <div class="d-flex justify-content-between align-items-center gap-2 mb-4 d-lg-none">
           <button type="button" class="btn btn-secondary rounded-pill"
             data-bs-toggle="offcanvas" data-bs-target="#filters-offcanvas"
