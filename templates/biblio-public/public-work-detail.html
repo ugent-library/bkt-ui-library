@@ -85,9 +85,10 @@
           </p>
 
 
-          <!-- Journal info -->
+          <!-- Journal info — title links to the ISSN-scoped works search (Identifier chip),
+               Rule 3: a journal names a set of works. -->
           <p class="mb-4">
-            <em>Plants People Planet</em> · Vol. 8, No. 1 · 2026 · pp. 14–19
+            <a href="public-works.html?issn=2572-2611"><em>Plants People Planet</em></a> · Vol. 8, No. 1 · 2026 · pp. 14–19
           </p>
 
           <!-- Primary actions. CTA rules: raven#141; file selection: docs/DOMAIN-VOCABULARY.md.
@@ -446,14 +447,22 @@
             </dl>
           </div>
 
+          <!-- Research disciplines — NOT SHOWN, pending review (M, 2026-07-21). raven
+               models them (research_disciplines; scheme is deployer config: UGent
+               categories / Frascati / OECD / ANZSRC) but the vocabulary needs a policy
+               review before public display. Also cut from the works sidebar — live
+               Subject facet drew ~269 sessions in 7 months of logs. -->
+
           <!-- Keywords -->
           <div class="mb-4">
             <h3 class="form-label d-block mb-2">Keywords</h3>
+            <!-- Keyword badges navigate to the keyword-scoped works search (Rule 3) —
+                 the highest-volume refinement in the live logs (~252k sessions / 7 months). -->
             <div class="d-flex flex-wrap gap-1">
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Urban climate</a>
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Resilience</a>
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Green infrastructure</a>
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Ghent</a>
+              <a href="public-works.html?keyword=urban-climate" class="badge text-bg-secondary text-decoration-none">Urban climate</a>
+              <a href="public-works.html?keyword=resilience" class="badge text-bg-secondary text-decoration-none">Resilience</a>
+              <a href="public-works.html?keyword=green-infrastructure" class="badge text-bg-secondary text-decoration-none">Green infrastructure</a>
+              <a href="public-works.html?keyword=ghent" class="badge text-bg-secondary text-decoration-none">Ghent</a>
             </div>
           </div>
 

@@ -127,7 +127,7 @@
                         </div>
                         <div role="group" aria-label="Topic &amp; identifiers">
                           <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
-                          <button class="dropdown-item" type="button" data-filter="keywords">Keywords / subject</button>
+                          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
                           <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI, ISSN, ISBN…)</button>
                         </div>
                       </div>
@@ -274,7 +274,7 @@
               <span class="text-muted small" aria-hidden="true">4</span>
             </div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm py-0 px-0 mt-1"
+          <button type="button" class="btn btn-ghost btn-sm px-0 mt-1"
             data-bs-toggle="collapse" data-bs-target="#type-more"
             aria-expanded="false" aria-controls="type-more">
             More types <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
@@ -330,7 +330,9 @@
 
         <hr>
 
-        <!-- Language -->
+        <!-- Language — holds its slot on parity alone: live facet drew 322 sessions in
+             7 months of logs. Dropping candidate (Rule 5 "worth the space"); also
+             backend-dependent (not indexed in raven). -->
         <fieldset>
           <legend class="form-label h6 mb-2">Language</legend>
           <!-- Search-within (long tail) — same checklist-search field as the Add-filter editor. Prototype affordance, not wired. -->
@@ -387,7 +389,7 @@
               <span class="text-muted small" aria-hidden="true">1</span>
             </div>
           </div>
-          <button type="button" class="btn btn-ghost btn-sm py-0 px-0 mt-1"
+          <button type="button" class="btn btn-ghost btn-sm px-0 mt-1"
             data-bs-toggle="collapse" data-bs-target="#lang-more"
             aria-expanded="false" aria-controls="lang-more">
             More languages <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
@@ -441,14 +443,14 @@
         <div class="d-lg-none p-3 border-top" id="wf-sheet-footer">
           <div class="d-flex align-items-center gap-2" id="wf-foot-list">
             <span id="wf-clear-slot"></span>
-            <button type="button" class="btn btn-primary flex-grow-1"
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
               data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
               Show 179 results
             </button>
           </div>
           <div class="align-items-center gap-2 d-none" id="wf-foot-detail">
             <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove" hidden>Remove filter</button>
-            <button type="button" class="btn btn-primary flex-grow-1" id="wf-foot-apply">Apply</button>
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center" id="wf-foot-apply">Apply</button>
           </div>
         </div>
       </div><!-- /#filters-offcanvas -->
@@ -565,6 +567,11 @@
              count, sort, page size, pagination. -->
         <!-- v1 (parity): cards carry no access CTA — title navigates, badge
              communicates access. v2 (card CTA) designs: patterns/work-actions.html -->
+        <!-- Journal / host titles link to the identifier-scoped works search
+             (?issn= / ?isbn= → applied Identifier chip) — Rule 3: a journal names a set
+             of works. Link-follows on author/keyword/journal are the measured volume
+             path (~200–250k sessions each / 7 months; see docs/SEARCH-AND-FILTERING.md
+             Evidence). Publisher/platform names (Zenodo) are not a public scope — no link. -->
         <ol class="list-unstyled mb-0">
         <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-s01">
           <div class="card-header">
@@ -630,7 +637,7 @@
             <p class="bt-work-card__pub">
               <time datetime="2025">2025</time>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="#">Laser &amp; Photonics Reviews</a>
+              <a href="public-works.html?issn=1863-8880">Laser &amp; Photonics Reviews</a>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
               <span>33(2) · pp. 2227–2246</span>
             </p>
@@ -697,7 +704,7 @@
             <p class="bt-work-card__pub">
               <time datetime="2024">2024</time>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="#">Advances in Quantum Computing</a>
+              <a href="public-works.html?isbn=978-0-12-000000-0">Advances in Quantum Computing</a>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
               <span>pp. 78–112</span>
             </p>
@@ -763,7 +770,7 @@
             <p class="bt-work-card__pub">
               <time datetime="2024">2024</time>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="#">Zenodo</a>
+              <span>Zenodo</span>
             </p>
           </div>
         </article></li>
@@ -829,7 +836,7 @@
             <p class="bt-work-card__pub">
               <time datetime="2023">2023</time>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="#">npj Quantum Information</a>
+              <a href="public-works.html?issn=2056-6387">npj Quantum Information</a>
               <span class="text-muted mx-1" aria-hidden="true">·</span>
               <span>9(1) · p. 44</span>
             </p>

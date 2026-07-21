@@ -82,7 +82,7 @@
       author:       { label: 'Author', type: 'checklist', values: AUTHORS },
       organisation: { label: 'Organisation', type: 'checklist', values: ORG },
       project:      { label: 'Project', type: 'checklist', values: PROJECTS },
-      keywords:    { label: 'Keywords / subject', type: 'checklist', values: KEYWORDS },
+      keywords:    { label: 'Keywords', type: 'checklist', values: KEYWORDS },
       identifier:  { label: 'Identifier', type: 'text', placeholder: 'DOI, ISSN, ISBN, arXiv, or handle…' },
     },
     'rdir-': {
@@ -100,7 +100,7 @@
   const INITIAL = {
     'wf-': {
       author:   { label: 'Author', displayValue: 'Jane Doe', rawValue: ['jane-doe'] },
-      keywords: { label: 'Keywords / subject', displayValue: 'Climate change', rawValue: ['climate-change'] },
+      keywords: { label: 'Keywords', displayValue: 'Climate change', rawValue: ['climate-change'] },
     },
   };
 

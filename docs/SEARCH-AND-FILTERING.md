@@ -108,6 +108,7 @@ A suggestion takes you to the thing it names, routed identically on every search
 | Organisation | organisation detail page | a record you visit (its page lists/searches its own output) |
 | Project | project detail page | a record you visit |
 | Keyword / tag | scoped works search (`?keyword=` / `?tag=`) | names a *set of works*, so it resolves to those works — the one forced exception |
+| Journal / host title (a link on cards and record pages — not a box suggestion) | identifier-scoped works search (`?issn=` / `?isbn=`) | names a *set of works* — the keyword logic applied to a venue; lands as an Identifier chip (Rule 5) |
 | Free text (Enter / Search) | works results (`?q=…`) | topical search enters the result space |
 
 **Submit vs. select.** Pressing Enter or clicking Search always submits the typed text as
@@ -115,6 +116,16 @@ a free-text query to the results space, whether or not suggestions matched. Navi
 an entity happens *only* by explicitly selecting a suggestion (click, or ArrowDown into a
 row then Enter). The panel opens with nothing highlighted, so Enter always searches your
 text. `suggest-panel.js` already behaves this way.
+
+### Scoped links on cards and record pages
+
+The same routing governs the links inside result cards and work detail pages: an author
+name goes to the researcher page, a keyword badge to the keyword-scoped works search, a
+journal/host title to the identifier-scoped works search (its ISSN/ISBN). These
+link-follows are the measured volume path of results-page refinement — author ~199k,
+keyword ~252k, journal ~204k sessions over seven months of live logs (Evidence below) —
+so every one of them must be a working link, never decorative text. Publisher/platform
+names (e.g. Zenodo) are not a public scope and stay unlinked.
 
 ### Every box, one grammar
 
@@ -224,7 +235,8 @@ ISSN, ISBN, arXiv, handle — scheme auto-detected, not one filter per scheme. F
 journal works through its ISSN (searching a venue by name is unreliable; the ISSN is exact),
 so there is **no separate Journal/venue filter**. The suggest panel additionally offers a
 known-item shortcut — pasting a full DOI jumps straight to the work — but the filter is not
-restricted to that.
+restricted to that. Journal/host titles on cards and record pages link into this filter
+(`?issn=` / `?isbn=` → an applied Identifier chip) — see Rule 3, Scoped links.
 
 ---
 
@@ -240,8 +252,8 @@ box (`primary`/`secondary`).
 
 **Backend-dependent** (needs a raven field + index mapping + facet config first):
 Organisation (the tree — institution / faculty / department / research group), Project,
-Keyword/subject as a discrete facet, and Language (which also blocks the sidebar Language
-facet). UGent config enables only
+Keywords as a discrete filter, Research discipline (`research_disciplines`), and Language
+(which also blocks the sidebar Language facet). UGent config enables only
 `work_type` publicly today, so promoting an index-backed dimension is a config edit; a
 backend-dependent one is an index + config change. These land as raven issues.
 
