@@ -18,6 +18,15 @@ Anti-rot rules:
 - Stable conventions live in the repo agent docs, not here:
   raven conventions in CLAUDE.md/AGENTS.md, design system conventions
   in bkt-ui-library/AGENT.md.
+- Never tell the dev how to build it. What/Acceptance state the outcome and
+  behaviour, not the mechanism — no framework idioms (`hx-push-url`, `hx-get`),
+  library calls, `[data-*]` hooks, raven field names, index state, or query
+  mechanics. The prototype (the spec) and the repo agent docs carry the how; the
+  dev owns implementation. Express a backend gap as a `backend` child + a
+  dependency, never as an asserted "X is indexed" note.
+- Screenshot markers. Mark each distinct view with `> **Screenshot:** <what to
+  capture>`, placed next to what it shows — one per view. The image is pasted in at
+  filing. A backend issue with nothing to show says so: `> No screenshot — backend`.
 -->
 
 ## Why
@@ -52,9 +61,8 @@ same layout and may fall short for now. We iterate on top. Flag ambiguity.
 _The prototype governs the visible page and markup. Machine-facing
 output (`citation_*` tags, Signposting, `?format=` alternates, crawl
 semantics) is governed by `docs/public-site-semantics.md` — preserve
-as-is. JS follows raven's frontend standards (`data-` components, no
-inline handlers). Prototype `hx-*` URLs are stubs. UI copy goes through
-the translation files._
+as-is. JS follows raven's frontend standards. Prototype URLs are
+placeholders, not real endpoints. UI copy goes through the translation files._
 <!-- Backoffice issue: delete the machine-facing sentence, keep the rest. -->
 
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
