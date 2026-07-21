@@ -1,6 +1,6 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: results, no-results -->
+<!-- @states: results, best-bet, no-results, query-empty -->
 <!--
   Public search page — search-first with multi-entity autocomplete.
 
@@ -47,6 +47,9 @@
               Search by title, author, keyword, DOI, or organisation
             </label>
 
+            <!-- Box value derives from ?q= (Rule 1), so it varies per state. -->
+            <!-- [html-validate-disable-block no-dup-id, form-dup-name -- @state blocks; one renders at a time] -->
+            <!-- @state: results -->
             <div class="input-group input-group-lg mb-3">
               <input
                 type="search"
@@ -67,6 +70,73 @@
                 hx-indicator="#suggest-indicator">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
+            <!-- @state -->
+            <!-- @state: best-bet -->
+            <div class="input-group input-group-lg mb-3">
+              <input
+                type="search"
+                id="q"
+                name="q"
+                class="form-control"
+                value="Mattias Billet"
+                placeholder="Search by title, author, DOI, or keyword&hellip;"
+                autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="suggest-panel"
+                aria-expanded="false"
+                hx-get="/search/suggest"
+                hx-trigger="keyup changed delay:200ms, focus"
+                hx-target="#suggest-panel"
+                hx-swap="innerHTML"
+                hx-indicator="#suggest-indicator">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <!-- @state -->
+            <!-- @state: no-results -->
+            <div class="input-group input-group-lg mb-3">
+              <input
+                type="search"
+                id="q"
+                name="q"
+                class="form-control"
+                value="Quantm computing"
+                placeholder="Search by title, author, DOI, or keyword&hellip;"
+                autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="suggest-panel"
+                aria-expanded="false"
+                hx-get="/search/suggest"
+                hx-trigger="keyup changed delay:200ms, focus"
+                hx-target="#suggest-panel"
+                hx-swap="innerHTML"
+                hx-indicator="#suggest-indicator">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <!-- @state -->
+            <!-- @state: query-empty -->
+            <div class="input-group input-group-lg mb-3">
+              <input
+                type="search"
+                id="q"
+                name="q"
+                class="form-control"
+                value=""
+                placeholder="Search by title, author, DOI, or keyword&hellip;"
+                autocomplete="off"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-controls="suggest-panel"
+                aria-expanded="false"
+                hx-get="/search/suggest"
+                hx-trigger="keyup changed delay:200ms, focus"
+                hx-target="#suggest-panel"
+                hx-swap="innerHTML"
+                hx-indicator="#suggest-indicator">
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+            <!-- @state -->
 
             <!--
               Autocomplete panel shell — must stay in DOM at page load.
@@ -98,11 +168,23 @@
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
                   <!-- Do not render parent bt-toolbar__item if there are no active filters -->
-                  <!-- Active filter chips — rendered by filter-bar.js (works config). Two are
-                      pre-applied, so the bar shows chips from the start (unlike the directories). -->
+                  <!-- Chips rendered by filter-bar.js from data-initial-filters —
+                      per state: a name search and an empty query start clean. -->
+                  <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
+                  <!-- @state: results no-results -->
+                  <div class="d-flex flex-wrap align-items-center gap-2" role="group"
+                    aria-label="Active filters" id="wf-active-chips"
+                    data-initial-filters='{
+                      "author":   { "label": "Author", "displayValue": "Jane Doe", "rawValue": ["jane-doe"] },
+                      "keywords": { "label": "Keywords", "displayValue": "Climate change", "rawValue": ["climate-change"] }
+                    }'>
+                  </div>
+                  <!-- @state -->
+                  <!-- @state: best-bet query-empty -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips">
                   </div>
+                  <!-- @state -->
                 </div>
                 <div class="bt-toolbar__item d-none d-lg-block">
                   <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
@@ -495,7 +577,41 @@
           </div>
         </div>
 
-        <!-- @state: results -->
+        <!-- @state: best-bet -->
+        <!-- Rendered only on a strong single match against the author authority
+             list. An assist, never a redirect — Enter has searched the typed text. -->
+        <article class="card mb-4" aria-labelledby="best-bet-name">
+          <div class="card-body d-flex align-items-center gap-3 p-4">
+            <span class="bt-avatar bt-avatar--large" aria-hidden="true">MB</span>
+            <div class="flex-grow-1 min-w-0">
+              <h2 class="h5 mb-1" id="best-bet-name">
+                Looking for the researcher
+                <a href="/templates/biblio-public/public-researcher-detail.html">Mattias
+                  Billet</a>?
+              </h2>
+              <p class="text-muted small mb-0">
+                <i class="if if-ghent-university" aria-hidden="true"></i>
+                Department of Physics and Astronomy
+                <span class="mx-1" aria-hidden="true">·</span>
+                <i class="if if-orcid" aria-hidden="true"></i>
+                0000-0002-4483-0141
+                <span class="mx-1" aria-hidden="true">·</span>
+                89 research output
+              </p>
+            </div>
+            <a href="/templates/biblio-public/public-researcher-detail.html"
+              class="btn btn-secondary btn-sm text-nowrap d-none d-sm-inline-flex"
+              aria-label="View profile: Mattias Billet">
+              View profile <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
+        </article>
+        <!-- @state -->
+
+        <!-- @state: results best-bet query-empty -->
+        <!-- query-empty: an empty ?q= is the full result space, most-recent-first —
+             never the blank slate. Its real count is the full corpus; 179 is shared
+             placeholder data. -->
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <!-- Pagination is only styled, does not work. Make it work according to bootstrap patterns -->
@@ -699,7 +815,8 @@
             </h2>
             <p class="bt-work-card__authors">
               <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Dirk Verstraeten<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Katrien De Wolf<span class="visually-hidden"> (UGent)</span></a>
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Katrien De Wolf<span class="visually-hidden"> (UGent)</span></a>,
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>
             </p>
             <p class="bt-work-card__pub">
               <time datetime="2024">2024</time>
@@ -830,7 +947,7 @@
             <p class="bt-work-card__authors">
               <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Tom Van Damme<span class="visually-hidden"> (UGent)</span></a>,
               <a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a>
+              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>
               <span class="text-muted">et al.</span>
             </p>
             <p class="bt-work-card__pub">
@@ -865,16 +982,25 @@
         <!-- @state -->
 
         <!-- @state: no-results -->
-        <div class="pt-3 mt-5" role="status" aria-live="polite">
+        <div class="bt-toolbar mb-4">
+          <div class="bt-toolbar__left">
+            <!-- [html-validate-disable-next no-dup-id -- @state blocks; one renders at a time] -->
+            <span class="text-muted small" aria-live="polite" id="result-count">0 results</span>
+          </div>
+        </div>
+
+        <div role="status">
           <p class="h5 mb-2">
-            No results for &ldquo;Quantum computing&rdquo; with these filters
+            No results for &ldquo;Quantm computing&rdquo; with these filters
           </p>
 
-          <!-- "Did you mean" (spelling correction) — STUB, pending raven's phrase/term
-               suggester (see PLAN Open threads). raven already fuzzy-matches, so a true
-               no-results means even that whiffed; render this line when the suggester exists:
-            <p class="mb-3">Did you mean <a href="/templates/biblio-public/public-works.html?q=quantum+computing">quantum&nbsp;computing</a>?</p>
-          -->
+          <!-- Slot: rendered only when the suggester (backend, not built) returns a
+               correction; absent otherwise. A clickable suggestion, never an
+               auto-correct; the link re-runs within the current filters. -->
+          <p class="mb-3">
+            Did you mean
+            <a href="public-works.html?q=quantum+computing">quantum&nbsp;computing</a>?
+          </p>
 
           <p class="text-muted mb-2">Nothing matches all your filters together. Try:</p>
           <ul class="text-muted mb-3">
@@ -882,7 +1008,8 @@
             <li>Broadening your terms, or checking the spelling</li>
           </ul>
 
-          <a href="#" class="btn btn-secondary btn-sm" aria-label="Clear all filters">
+          <!-- Drops filter params only; the query is cleared by the box's × (Rule 2). -->
+          <a href="public-works.html?q=Quantm+computing" class="btn btn-secondary btn-sm">
             <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
           </a>
         </div>

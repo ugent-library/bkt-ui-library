@@ -96,17 +96,9 @@
     },
   };
 
-  // Filters pre-applied on load, so a bar can show chips from the start.
-  const INITIAL = {
-    'wf-': {
-      author:   { label: 'Author', displayValue: 'Jane Doe', rawValue: ['jane-doe'] },
-      keywords: { label: 'Keywords', displayValue: 'Climate change', rawValue: ['climate-change'] },
-    },
-  };
+  Object.keys(CONFIGS).forEach(prefix => initBar(prefix, CONFIGS[prefix]));
 
-  Object.keys(CONFIGS).forEach(prefix => initBar(prefix, CONFIGS[prefix], INITIAL[prefix]));
-
-  function initBar(prefix, FILTERS, initial) {
+  function initBar(prefix, FILTERS) {
     const activeChips  = document.getElementById(prefix + 'active-chips');
     const filterEditor = document.getElementById(prefix + 'filter-editor');
     const clearAllBtn  = document.getElementById(prefix + 'clear-all');
@@ -114,7 +106,7 @@
 
     const pickerSel = `#${prefix}filter-picker-list button[data-filter]`;
     const addFilterDropdown = document.getElementById(prefix + 'add-filter-dropdown');
-    let activeFilters = initial ? JSON.parse(JSON.stringify(initial)) : {};
+    let activeFilters = JSON.parse(activeChips.dataset.initialFilters || '{}');
     let editingFilter = null;
 
     document.querySelectorAll(pickerSel).forEach(btn => {

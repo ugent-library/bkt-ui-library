@@ -130,10 +130,10 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `filter-bar.js`
 
-**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters (`INITIAL`) so it starts populated.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
 
 **Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author, Organisation, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied.
+- `wf-` — public works (`public-works.html`): Author, Organisation, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
 - `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organisation, Current or alumni.
 - `pdir-` — project directory (`public-projects.html`, bar inline): Organisation, Status, Year (range).
 
