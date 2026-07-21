@@ -186,6 +186,20 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `org-tree.js`
+
+**Purpose:** Expand/collapse-all toggle for the public organisation tree. Toggles every `.collapse` inside the `[aria-label="Organisation tree"]` region via Bootstrap's Collapse API and keeps the button's `aria-expanded` and label text in sync.
+
+**Loaded by:** `templates/biblio-public/public-organisations.html`
+
+**Listens for:** click on `#org-tree-toggle-all`
+
+**Dispatches:** nothing
+
+**Prototype-only:** yes (the tree is stub markup; wire to real org data when available)
+
+---
+
 ### `sidebar-toggle.js`
 
 **Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync.
