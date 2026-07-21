@@ -52,7 +52,6 @@
     const vals = chipValues();
     pickerList.querySelectorAll('.dropdown-header').forEach(h => h.classList.add('d-none'));
     pickerList.querySelectorAll('button[data-filter]').forEach(b => {
-      // py-2: dropdown-item padding vars live only inside .dropdown-menu, gone once relocated
       b.classList.add('d-flex', 'align-items-center', 'py-2');
       b.querySelector('.if-check')?.remove();
       let end = b.querySelector('[data-end]');
@@ -112,7 +111,6 @@
     detailView.hidden = true; mainView.hidden = false;
     if (scroller) scroller.scrollTop = listScroll;
   }
-  // .d-flex uses !important so it beats [hidden]; toggle the display class directly.
   function showFlex(el) { el.classList.add('d-flex'); el.classList.remove('d-none'); }
   function hideFlex(el) { el.classList.add('d-none'); el.classList.remove('d-flex'); }
 
