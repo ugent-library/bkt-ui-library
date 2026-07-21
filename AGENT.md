@@ -209,10 +209,12 @@ The only acceptable exception: a search input inside `<form role="search">` may 
 ```html
 <!-- ✓ Correct -->
 <label for="title" class="form-label">
-  Title <span class="text-danger" aria-label="required">*</span>
+  Title <span class="text-danger" aria-hidden="true">*</span>
 </label>
 <input type="text" id="title" class="form-control" required autocomplete="off">
 ```
+
+The `*` is decorative (`aria-hidden`); assistive tech announces the field as required from the input's `required` attribute, not from a label on the asterisk — a `<span>` can't carry an accessible name.
 
 **C3. Validation errors: `aria-describedby` + `aria-invalid` + focus management.** After a failed submit, move focus to the first invalid field or to an error summary at the top of the form.
 
