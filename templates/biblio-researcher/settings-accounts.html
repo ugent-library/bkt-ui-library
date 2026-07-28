@@ -76,30 +76,13 @@
               </li>
 
               <!-- UGent login — authoritative, cannot unlink -->
-              <li class="px-4 py-3 border-bottom d-flex align-items-center gap-3">
+              <li class="px-4 py-3 d-flex align-items-center gap-3">
                 <i class="if if-user if--lg text-muted flex-shrink-0" aria-hidden="true"></i>
                 <div class="min-w-0">
                   <div class="small fw-semibold">UGent login</div>
                   <div class="small text-muted">mclaes · primary account</div>
                 </div>
                 <span class="badge text-bg-success ms-auto flex-shrink-0">Connected</span>
-              </li>
-
-              <!-- Web of Science ResearcherID — not connected -->
-              <!-- TODO icon: no link/chain glyph in the icon font — if-external-link is a placeholder, confirm choice -->
-              <li class="px-4 py-3 d-flex align-items-center gap-3">
-                <i class="if if-external-link if--lg text-muted flex-shrink-0" aria-hidden="true"></i>
-                <div class="min-w-0">
-                  <div class="small fw-semibold">Web of Science ResearcherID</div>
-                  <div class="small text-muted">Not connected</div>
-                </div>
-                <button type="button" class="btn btn-outline-primary btn-sm ms-auto flex-shrink-0"
-                  aria-label="Connect Web of Science ResearcherID"
-                  hx-post="/settings/accounts/wos"
-                  hx-target="closest li"
-                  hx-swap="outerHTML">
-                  Connect
-                </button>
               </li>
 
             </ul>
