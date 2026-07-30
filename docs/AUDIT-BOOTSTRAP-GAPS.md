@@ -207,6 +207,8 @@ Nav link colour in two files (§3.4). `body[data-surface="backoffice"] { overflo
 
 AGENT.md's class list is the project's ground truth, but it currently asserts classes that aren't in the compiled CSS (`bt-blank-slate*`) while 63 undefined classes sit in templates. Hand-maintained lists drift; this one already has. Generate the checkable part: a script that extracts class selectors from `assets/booktower.css`, extracts class usage from HTML, and reports both directions (the exact scan §5 came from). Run it in CI or `npm run check`. AGENT.md keeps the prose and usage notes; the raw existence claims come from the build.
 
+**Resolved (2026-07):** `scripts/generate-classes-doc.js` (runs in `npm run build`) emits the generated reference `docs/CLASSES.md`; AGENT.md keeps only the curated usage notes. `check:classes` remains the enforcement.
+
 ---
 
 ## Verification notes
