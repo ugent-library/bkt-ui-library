@@ -39,7 +39,6 @@ Load order matters. Scripts must be declared in this sequence in any template th
 <script src="/assets/js/people-search-stub.js"></script>  <!-- prototype only -->
 <script src="/assets/js/suggest-panel.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
-<script src="/assets/js/deposit.js"></script>             <!-- deposit flow only -->
 ```
 
 Remove the `-stub.js` files when wiring real endpoints.
@@ -166,23 +165,6 @@ Remove the `-stub.js` files when wiring real endpoints.
 - `people-search:select` — `{ id, name, affiliation }` when a person is chosen
 
 **Prototype-only:** no (widget logic is real; stub data is in `people-search-stub.js`)
-
----
-
-### `deposit.js`
-
-**Purpose:** Deposit flow behaviour. Currently contains the embargo date field show/hide on Step 3 (Access & Rights). Additional deposit flow interactions should be added here as the flow is implemented.
-
-**Loaded by:** deposit flow templates (`deposit-3-access-rights.html` at minimum; load on all deposit steps for consistency)
-
-**Listens for:**
-- `change` on `input[name="oa"]` radio group (Step 3) — shows/hides `#embargo-date-field`, moves focus to date input when shown
-
-**Dispatches:** nothing
-
-**Prototype-only:** no
-
-**Note:** The Step 3 embargo toggle now lives here and uses the `hidden` attribute on `#embargo-date-field`, not `d-none`.
 
 ---
 
