@@ -424,11 +424,11 @@
             <div class="bt-toolbar__right">
               <div class="bt-toolbar__item">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Switch view">
-                  <input type="radio" class="btn-check" name="cswitchview" id="c-card-view" autocomplete="off" checked aria-label="Card view">
+                  <input type="radio" class="btn-check" name="cswitchview" id="c-card-view" data-view-toggle="card" data-view-store="curator-results-view" autocomplete="off" checked aria-label="Card view">
                   <label class="btn btn-outline-light" for="c-card-view">
                     <i class="if if-list-unordered" aria-hidden="true"></i>
                   </label>
-                  <input type="radio" class="btn-check" name="cswitchview" id="c-table-view" autocomplete="off" aria-label="Table view">
+                  <input type="radio" class="btn-check" name="cswitchview" id="c-table-view" data-view-toggle="table" autocomplete="off" aria-label="Table view">
                   <label class="btn btn-outline-light" for="c-table-view">
                     <i class="if if-table" aria-hidden="true"></i>
                   </label>
@@ -461,7 +461,7 @@
 
           <!-- ── Card view ── -->
           <!-- Backoffice work cards: titles are <p>, not headings. See AGENT.md → "Work card". -->
-          <ol class="list-unstyled mb-0" id="c-view-cards">
+          <ol class="list-unstyled mb-0" id="c-view-cards" data-view-panel="card">
 
             <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="c-card-title-01">
               <div class="card-header">
@@ -567,7 +567,7 @@
           </ol><!-- /c-view-cards -->
 
           <!-- ── Table view ── -->
-          <div id="c-view-table" hidden>
+          <div id="c-view-table" data-view-panel="table" hidden>
             <table class="table table-hover align-middle" aria-label="Research output — curator view">
               <thead class="text-uppercase text-muted">
                 <tr>
@@ -704,27 +704,8 @@
   </main>
 </div>
 
+<script src="/assets/js/view-toggle.js"></script>
 <script>
-  // View toggle
-  const btnCard  = document.getElementById('c-card-view');
-  const btnTable = document.getElementById('c-table-view');
-  const viewCards = document.getElementById('c-view-cards');
-  const viewTable = document.getElementById('c-view-table');
-
-  function setView(v) {
-    viewCards.hidden = v !== 'card';
-    viewTable.hidden = v === 'card';
-    try { localStorage.setItem('curator-results-view', v); } catch(e) {}
-  }
-
-  btnCard.addEventListener('click',  () => setView('card'));
-  btnTable.addEventListener('click', () => setView('table'));
-
-  try {
-    const saved = localStorage.getItem('curator-results-view');
-    if (saved === 'table') setView('table');
-  } catch(e) {}
-
   // Bulk selection
   const bulkBar  = document.getElementById('c-bulk-bar');
   const selectAll = document.getElementById('c-select-all');

@@ -61,6 +61,20 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `view-toggle.js`
+
+**Purpose:** Card/table results toggle. Shows the `[data-view-panel]` matching the checked `[data-view-toggle]` radio and hides the rest; persists the choice to `localStorage` when a `[data-view-store]` key is present. Markup-driven, so one file serves every results page.
+
+**Loaded by:** `curate.html`, `search-researcher.html`, `search-my-research.html`, `search-filter-first.html`
+
+**Listens for:** `change` on `[data-view-toggle]`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
+
+---
+
 ### `popovers.js`
 
 **Purpose:** Initialises Bootstrap popovers (`[data-bs-toggle="popover"]`), e.g. the identifier IDs shown on hover over ORCID/UGent icons in author lists. Triggers inside links need `data-bs-container="body"`.

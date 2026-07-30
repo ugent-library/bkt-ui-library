@@ -134,7 +134,7 @@ DO NOT BUILD YET
             </span>
 
             <!-- Card view -->
-            <div id="view-cards" class="p-4">
+            <div id="view-cards" data-view-panel="card" class="p-4">
 
               <ol class="card rounded-3 list-group list-group-flush list-unstyled mb-0">
 
@@ -241,7 +241,7 @@ DO NOT BUILD YET
             </div><!-- /view-cards -->
 
             <!-- Table view (hidden by default) -->
-            <div id="view-table" hidden>
+            <div id="view-table" data-view-panel="table" hidden>
               <table class="table table-hover align-middle" aria-label="Research output records">
                 <thead class="text-uppercase text-muted small">
                   <tr>
@@ -345,12 +345,12 @@ DO NOT BUILD YET
 
               <div class="bt-toolbar__right">
                 <div class="btn-group" role="group" aria-label="Switch view">
-                  <input type="radio" class="btn-check" name="switchview" id="btn-card-view" autocomplete="off" aria-label="Card view" checked>
+                  <input type="radio" class="btn-check" name="switchview" id="btn-card-view" data-view-toggle="card" data-view-store="results-view" autocomplete="off" aria-label="Card view" checked>
                   <label class="btn btn-outline-light" for="btn-card-view">
                     <i class="if if-list-unordered" aria-hidden="true"></i>
                   </label>
 
-                  <input type="radio" class="btn-check" name="switchview" id="btn-table-view"  aria-label="Table view" autocomplete="off">
+                  <input type="radio" class="btn-check" name="switchview" id="btn-table-view" data-view-toggle="table"  aria-label="Table view" autocomplete="off">
                   <label class="btn btn-outline-light" for="btn-table-view">
                     <i class="if if-table" aria-hidden="true"></i>
                   </label>
@@ -363,30 +363,8 @@ DO NOT BUILD YET
   </main>
 </div>
 
+<script src="/assets/js/view-toggle.js"></script>
 <script>
-  // ── View toggle ────────────────────────────────────────────────────────────
-  const btnCard   = document.getElementById('btn-card-view');
-  const btnTable  = document.getElementById('btn-table-view');
-  const viewCards = document.getElementById('view-cards');
-  const viewTable = document.getElementById('view-table');
-
-  function setView(view) {
-    const isCard = view === 'card';
-    viewCards.hidden = !isCard;
-    viewTable.hidden =  isCard;
-    btnCard.toggleAttribute('checked',  String(isCard));
-    btnTable.toggleAttribute('checked', String(!isCard));
-    try { localStorage.setItem('results-view', view); } catch(e) {}
-  }
-
-  btnCard.addEventListener('click',  () => setView('card'));
-  btnTable.addEventListener('click', () => setView('table'));
-
-  try {
-    const saved = localStorage.getItem('results-view');
-    if (saved === 'table') setView('table');
-  } catch(e) {}
-
   // ── Bulk action bar ────────────────────────────────────────────────────────
   const bulkBar   = document.getElementById('bulk-bar');
   const selectAll = document.getElementById('select-all');

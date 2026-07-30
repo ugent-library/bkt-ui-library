@@ -201,11 +201,11 @@
             </div>
             <div class="bt-toolbar__right">
               <div class="btn-group btn-group-sm" role="group" aria-label="Switch view">
-                <input type="radio" class="btn-check" name="switchview" id="res-card-view" autocomplete="off" checked aria-label="Card view">
+                <input type="radio" class="btn-check" name="switchview" id="res-card-view" data-view-toggle="card" autocomplete="off" checked aria-label="Card view">
                 <label class="btn btn-outline-light" for="res-card-view">
                   <i class="if if-list-unordered" aria-hidden="true"></i>
                 </label>
-                <input type="radio" class="btn-check" name="switchview" id="res-table-view" autocomplete="off" aria-label="Table view">
+                <input type="radio" class="btn-check" name="switchview" id="res-table-view" data-view-toggle="table" autocomplete="off" aria-label="Table view">
                 <label class="btn btn-outline-light" for="res-table-view">
                   <i class="if if-table" aria-hidden="true"></i>
                 </label>
@@ -219,7 +219,7 @@
           <span id="search-indicator" class="htmx-indicator text-muted small px-4 py-3 d-block" aria-live="polite">Searching&hellip;</span>
 
           <!-- Backoffice work cards: titles are <p>, not headings. See AGENT.md → "Work card". -->
-          <ol class="list-unstyled mb-0" id="view-cards">
+          <ol class="list-unstyled mb-0" id="view-cards" data-view-panel="card">
 
             <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="r-card-title-01">
               <div class="card-header">
@@ -303,7 +303,7 @@
 
           </ol><!-- /view-cards -->
 
-          <div id="view-table" hidden>
+          <div id="view-table" data-view-panel="table" hidden>
             <table class="table table-hover align-middle" aria-label="My research output">
               <thead class="text-uppercase text-muted small">
                 <tr>
@@ -374,16 +374,5 @@
   </main>
 </div>
 
-<script>
-  const btnCard = document.getElementById('res-card-view');
-  const btnTable = document.getElementById('res-table-view');
-  const viewCards = document.getElementById('view-cards');
-  const viewTable = document.getElementById('view-table');
-  function setView(v) {
-    viewCards.hidden = v !== 'card';
-    viewTable.hidden = v === 'card';
-  }
-  btnCard.addEventListener('click', () => setView('card'));
-  btnTable.addEventListener('click', () => setView('table'));
-</script>
+<script src="/assets/js/view-toggle.js"></script>
 <script src="/assets/js/sidebar-toggle.js"></script>
