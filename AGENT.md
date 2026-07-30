@@ -233,7 +233,9 @@ What the generated list can't express — composition rules, traps, and names I 
 
 **Faculty colours** — keyed by live Biblio org code, defined in `_utilities.scss`: `bg-faculty-<code>` (brand fill + readable foreground) and `bg-faculty-<code>-light` (12% tint, holds body text). Never inline a faculty hex.
 
-**Alert modifiers** — on top of Bootstrap `.alert`/`.alert-*`. `alert--seamless-inbox` (borderless flat, researcher inbox) and `alert--dashed` (2px dashed border) are ⚠️ TBD — may not survive review. `alert--sm` is stable.
+**Alert modifiers** — on top of Bootstrap `.alert`/`.alert-*`. `alert--seamless-inbox` (borderless flat, researcher inbox) is kept — it mirrors the old-backoffice inbox alerts. `alert--dashed` (2px dashed border) is ⚠️ TBD — may not survive review. `alert--sm` is stable.
+
+**Undemoed but kept** — `u-notifications`, `bt-toolbar__middle`, `bt-panel__body--form`, `u-main__sidebar--border-left`, and `alert--seamless-inbox` have no kit demo yet, so `check:classes` lists them as unused. Keep them: each mirrors an old-backoffice component (toasts/flash, `bc-toolbar-center`, side-panel, sub-sidebar, inbox alerts). `token-bar__token--negated` and `no-tokens` also show as unused but are applied by JS (negated tokens in advanced search) — not dead, keep.
 
 **Popover modifiers** — `popover--sm`, `popover--dark`, applied via `data-bs-custom-class`, initialised by `assets/js/popovers.js`. Both feed `--bs-popover-*` variables only. Combine for the identifier-icon hover pattern in author lists (see `elements/popovers.html`).
 
