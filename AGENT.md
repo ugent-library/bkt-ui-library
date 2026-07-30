@@ -156,7 +156,9 @@ Rules: `docs/ACCESSIBILITY.md` §C.
 ### HTMX
 Behavioural rules: `docs/ACCESSIBILITY.md` §D, plus C6 (progressive enhancement).
 Unique here: all `hx-*` URLs in templates are stubs — documentation of
-intent, not working code.
+intent, not working code. Same logic for forms: no `<form>` without a working
+submit path — mark where the real implementation needs one
+(`<!-- real impl: form POST /… -->`, see C6's prototype exception).
 
 ### Template states
 Data-dependent variants of a template (empty, no-files, filled&hellip;) are **states

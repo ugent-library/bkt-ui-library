@@ -6,6 +6,31 @@ system, or do I reach for something new?"
 
 ---
 
+## HTML validity batch — check:html and check:a11y green (v2.7, 2026-07-30)
+
+No class changes. All `npm run check:html` and `check:a11y` errors fixed across kit
+pages, templates and partials, visually inert except curate-detail, which gained a
+visible `h1.bt-toolbar__title` ("Curate record") — it had no h1 at all.
+
+Conventions this locked in:
+
+- **Stub forms:** prototypes carry no `<form>` without a working submit path; the spot
+  is marked `<!-- real impl: form POST /… -->` (ACCESSIBILITY.md C6 prototype
+  exception). Markers added across the deposit flow and add-author-form.
+- **Wrapping labels keep `for`/`id`:** voice control doesn't recognise implicit
+  association, so `no-redundant-for` is off in `.htmlvalidate.json`
+  (ACCESSIBILITY.md §C1, TPGi citation). File-drop zones carry both.
+- **`@state` vs checks:** ids unique across states; duplicate landmark names get an
+  inline `html-validate-disable-next` directive (SERVER.md → Template states).
+- **Duplicate pagination navs:** named "Results pagination (top)"/"(bottom)"
+  (ACCESSIBILITY.md A5 table).
+- Redundant `role="banner"`/`"contentinfo"` and invalid `width="auto"` removed
+  everywhere; sidebar toggle's aria attributes moved from the styled div to the
+  button (`sidebar-toggle.js` selector updated to match).
+- All 19 backoffice templates (biblio-researcher + biblio-team: deposit, search,
+  settings, dashboard, curation) now carry a WIP marker: backoffice is not
+  settled, do not implement in raven yet.
+
 ## Filter engines consolidated into filter-bar.js (v2.6, 2026-07-15)
 
 One class removed: `filter-group--backoffice-only` (and its `[data-surface]`

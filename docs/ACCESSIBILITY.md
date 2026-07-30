@@ -43,6 +43,7 @@ Section navigation       ← bt-sidebar
 Breadcrumb               ← breadcrumb nav
 Filter by                ← facet/filter aside (use aria-label on <aside>)
 Results pagination       ← pagination nav
+Results pagination (top) / (bottom) ← when one list repeats its pagination nav
 ```
 
 **A6. Landmark regions used correctly.**
@@ -116,6 +117,8 @@ Results pagination       ← pagination nav
 
 The only acceptable exception: a search input inside `<form role="search">` may use a visually-hidden label if a visible one would be redundant given surrounding context — but the label must still exist in the DOM.
 
+**A wrapping label still carries `for`/`id`.** Wrap-only (implicit) association is valid HTML but Dragon NaturallySpeaking and Apple Voice Control don't recognise it — voice users can't say "Click <label text>" to reach the field. Explicit `for`/`id` inside the wrap fixes that while keeping the large hit area (TPGi, [Should form labels be wrapped or separate?](https://www.tpgi.com/should-form-labels-be-wrapped-or-separate/)). This is why `no-redundant-for` is off in `.htmlvalidate.json` — the "redundant" `for` is load-bearing. Applies to the file-drop zones.
+
 ```html
 <!-- ✓ Correct — visually-hidden label for search -->
 <form role="search" aria-label="Search research output">
@@ -172,6 +175,15 @@ The `*` is decorative (`aria-hidden`); assistive tech announces the field as req
 **C5. Autocomplete on personal data fields.** Any field that collects user-identifiable data must carry `autocomplete`. Minimum: `name`, `email`, `organization`. This is a WCAG 1.3.5 requirement.
 
 **C6. `<button type="submit">` inside every form.** Progressive enhancement: the form must be submittable without JavaScript and without HTMX. A real `action` attribute on `<form>` and a real submit button.
+
+**Prototype exception:** prototype templates navigate between steps with `<a>` links, and those endpoints will never exist in the kit. A `<form>` that cannot satisfy this rule is omitted instead — mark the spot where the real implementation needs one:
+
+```html
+<!-- real impl: form POST /deposit/new -->
+<div class="col-8">
+```
+
+Any `<form>` that *is* present must satisfy this rule (`npm run check:html` enforces it via `wcag/h32`).
 
 ---
 
