@@ -1,5 +1,6 @@
 <!-- @title: Add research output — Step 3: Access & Rights -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Deposit flow — Step 3
 
@@ -66,6 +67,7 @@
 
     <div class="u-main__body">
       <div class="u-main__content">
+        <!-- real impl: step content is a form; Next is its submit button -->
         <div class="u-main__content-body">
 
           <!-- Work identity card -->
@@ -87,23 +89,26 @@
           <h2 class="h4">Access &amp; Rights</h2>
 
           <!-- OA status -->
+          <!-- ⚠️ review: only the radio + title toggle here; the whole card should
+               be the click target. Needs a canonical option-card pattern — the
+               license cards below (btn-check) already select on the whole card -->
           <fieldset class="mb-2">
             <legend class="form-label mb-3">Who can see your full text / dataset?</legend>
 
             <div class="d-flex flex-column gap-2">
 
-              <label class="d-flex gap-3 align-items-start p-3 bg-white border rounded" for="oa-open">
+              <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
                 <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="oa-open" value="open">
                 <div>
-                  <span class="fw-semibold d-block">Open Access</span>
+                  <label class="fw-semibold d-block" for="oa-open">Open Access</label>
                   <span class="text-muted small">Anyone can read and download immediately. Maximum visibility and impact.</span>
                 </div>
-              </label>
+              </div>
 
-              <label class="d-flex gap-3 align-items-start p-3 bg-white border rounded" for="oa-embargo">
+              <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
                 <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="oa-embargo" value="embargo">
                 <div>
-                  <span class="fw-semibold d-block">Embargoed</span>
+                  <label class="fw-semibold d-block" for="oa-embargo">Embargoed</label>
                   <span class="text-muted small">Files become publicly available after a date you choose. Metadata is visible now.</span>
                   <!--
                     Embargo date field — shown/hidden by deposit.js when this radio is selected.
@@ -119,15 +124,15 @@
                     </div>
                   </div>
                 </div>
-              </label>
+              </div>
 
-              <label class="d-flex gap-3 align-items-start p-3 bg-white border rounded" for="oa-closed">
+              <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
                 <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="oa-closed" value="closed">
                 <div>
-                  <span class="fw-semibold d-block">Restricted</span>
+                  <label class="fw-semibold d-block" for="oa-closed">Restricted</label>
                   <span class="text-muted small">Only users you approve can access the files. Metadata remains discoverable.</span>
                 </div>
-              </label>
+              </div>
 
             </div>
           </fieldset>
@@ -150,10 +155,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-cc-by" value="cc-by-4.0" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-cc-by">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">CC BY 4.0</p>
-                      <p class="small mb-0">Attribution</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">CC BY 4.0</span>
+                      <span class="small mb-0 d-block">Attribution</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -163,10 +168,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-cc-by-sa" value="cc-by-sa-4.0" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-cc-by-sa">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">CC BY-SA 4.0</p>
-                      <p class="small mb-0">Attribution, ShareAlike</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">CC BY-SA 4.0</span>
+                      <span class="small mb-0 d-block">Attribution, ShareAlike</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -176,10 +181,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-cc-by-nc" value="cc-by-nc-4.0" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-cc-by-nc">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">CC BY-NC 4.0</p>
-                      <p class="small mb-0">Attribution, NonCommercial</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">CC BY-NC 4.0</span>
+                      <span class="small mb-0 d-block">Attribution, NonCommercial</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -189,10 +194,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-cc-by-nc-sa" value="cc-by-nc-sa-4.0" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-cc-by-nc-sa">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">CC BY-NC-SA 4.0</p>
-                      <p class="small mb-0">Attribution, NC, ShareAlike</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">CC BY-NC-SA 4.0</span>
+                      <span class="small mb-0 d-block">Attribution, NC, ShareAlike</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -202,10 +207,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-cc0" value="cc0-1.0" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-cc0">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">CC0 1.0</p>
-                      <p class="small mb-0">Public Domain</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">CC0 1.0</span>
+                      <span class="small mb-0 d-block">Public Domain</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -215,10 +220,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-mit" value="mit" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-mit">
                     <i class="if if-mit if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">MIT License</p>
-                      <p class="small mb-0">Permissive software license</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">MIT License</span>
+                      <span class="small mb-0 d-block">Permissive software license</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -228,10 +233,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-apache" value="apache-2.0" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-apache">
                     <i class="if if-apache if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">Apache 2.0</p>
-                      <p class="small mb-0">Permissive with patent grant</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">Apache 2.0</span>
+                      <span class="small mb-0 d-block">Permissive with patent grant</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -241,10 +246,10 @@
                   <input type="radio" class="btn-check" name="license" id="license-all-rights" value="all-rights-reserved" autocomplete="off">
                   <label class="card-body d-flex gap-3" for="license-all-rights">
                     <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
-                    <div>
-                      <p class="h6 mb-0">All Rights Reserved</p>
-                      <p class="small mb-0">No reuse without permission</p>
-                    </div>
+                    <span>
+                      <span class="h6 mb-0 d-block">All Rights Reserved</span>
+                      <span class="small mb-0 d-block">No reuse without permission</span>
+                    </span>
                   </label>
                 </div>
               </div>

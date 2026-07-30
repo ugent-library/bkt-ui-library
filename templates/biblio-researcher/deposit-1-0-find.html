@@ -1,5 +1,6 @@
 <!-- @title: Add research output — Step 1: Describe -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Describe flow — Step 1 (blank)
   No pre-fill. Three entry paths: identifier lookup, file import, manual entry.
@@ -75,11 +76,8 @@
             <div class="col-8 alert alert-info alert--dashed ms-2 mb-0">
               <h3 class="h5">Quick fill with identifier</h3>
               <p class="small mb-3">Use a <a href="#">DOI</a>, <a href="#">PubMed ID</a>, <a href="#">arXiv ID</a>, <a href="#">ISBN</a>, or <a href="#">handle</a>.</p>
-              <form action="/deposit/import-id" method="get"
-                hx-get="/deposit/import-id"
-                hx-target="#import-result-id"
-                hx-swap="innerHTML"
-                hx-indicator="#id-indicator">
+              <!-- real impl: form GET /deposit/import-id — see deposit-1-1-find.html -->
+              <div>
                 <div class="row g-2 align-items-start">
                   <div class="col-auto">
                     <label for="id-type" class="visually-hidden">Identifier type</label>
@@ -98,7 +96,7 @@
                       autocomplete="off">
                   </div>
                   <div class="col">
-                    <a href="deposit-1-1-find.html" type="submit" class="btn btn-primary">
+                    <a href="deposit-1-1-find.html" class="btn btn-primary">
                       Look up
                       <!-- <span id="id-indicator" class="htmx-indicator ms-1" aria-live="polite">
                         <span class="spinner-border spinner-border-sm" role="status" aria-label="Looking up&hellip;"></span>
@@ -106,7 +104,7 @@
                     </a>
                   </div>
                 </div>
-              </form>
+              </div>
               <!-- <div id="import-result-id">
                 <article class="border rounded bg-white p-3 mt-5">
                   <div class="d-flex align-items-center gap-2 mb-2">
@@ -124,15 +122,15 @@
             <div class="col-3 bt-file-drop">
               <label for="file-upload-import">
                 <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
-                <p class="bt-file-drop__text">Drag a file to upload, or browse.</p>
-                <p class="bt-file-drop__hint">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). Max 500 MB.</p>
+                <span class="bt-file-drop__text d-block">Drag a file to upload, or browse.</span>
+                <span class="bt-file-drop__hint d-block">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). Max 500 MB.</span>
                 <input type="file" id="file-upload-import" class="visually-hidden" accept=".txt,.bib,.ris">
               </label>
             </div>
           </div>
 
-          <!-- Manual entry form -->
-          <form action="/deposit/new" method="post" class="col-8">
+          <!-- Manual entry — real impl: form POST /deposit/new -->
+          <div class="col-8">
 
             <div class="d-flex flex-column gap-5 mb-5">
 
@@ -244,16 +242,16 @@
             <section aria-labelledby="metadata-heading" class="card my-5">
               <div class="card-header bt-title-toolbar mb-0"
                   data-bs-toggle="collapse"
-                  data-bs-target="#metadata-body"
-                  aria-expanded="false"
-                  aria-controls="metadata-body"
-                  aria-label="Toggle research metadata">
+                  data-bs-target="#metadata-body">
                 <h3 id="metadata-heading" class="h6 mt-2 d-flex gap-2">
                   <i class="if if-book text-muted" aria-hidden="true"></i>
                   Research metadata
                   <span class="badge text-bg-secondary">Optional</span>
                 </h3>
-                <button type="button" class="btn btn-ghost btn-sm p-0">
+                <button type="button" class="btn btn-ghost btn-sm p-0"
+                  aria-label="Toggle research metadata"
+                  aria-expanded="false"
+                  aria-controls="metadata-body">
                   <i class="if if-chevron-down" aria-hidden="true"></i>
                 </button>
               </div>
@@ -374,7 +372,7 @@
               </div>
             </div>
 
-          </form>
+          </div>
         </div>
       </div>
     </div>

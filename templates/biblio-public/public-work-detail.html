@@ -103,7 +103,7 @@
             <!-- @state -->
             <!-- v1: no direct download — anchor to the Files section (raven#141) -->
             <!-- @state: v1 -->
-            <a href="#files-heading" class="btn btn-primary">
+            <a href="#files-heading-v1" class="btn btn-primary">
               <i class="if if-arrow-down" aria-hidden="true"></i>
               View files
             </a>
@@ -188,10 +188,11 @@
           <!-- Order: fullText first (selection ranking), then other kinds, open before restricted.
                Login line renders only when: anonymous + restricted rows + header CTA isn't the login button. -->
           <!-- @state: files v1 -->
-          <section aria-labelledby="files-heading" class="mb-5">
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-v1" class="mb-5">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
-                <h2 id="files-heading" class="h4 mb-0">Files</h2>
+                <h2 id="files-heading-v1" class="h4 mb-0">Files</h2>
               </div>
               <div class="bt-toolbar__right">
                 <p class="small"><a href="#">Log in</a> to download restricted files.</p>
@@ -276,8 +277,9 @@
                cannot nest): restricted files render like open ones — filename,
                download — keeping their Restricted badge. -->
           <!-- @state: logged-in -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-login" class="mb-5">
+            <h2 id="files-heading-login" class="h4 mb-3">Files</h2>
             <ul class="list-group list-group-flush list-unstyled mb-0">
 
               <!-- fullText, selected for the header download button -->
@@ -366,8 +368,9 @@
 
           <!-- Only file is restricted, anonymous viewer: name redacted; header CTA already handles login -->
           <!-- @state: restricted -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-restricted" class="mb-5">
+            <h2 id="files-heading-restricted" class="h4 mb-3">Files</h2>
             <ul class="list-group list-group-flush list-unstyled mb-0">
               <li class="list-group-item d-flex align-items-center gap-3 px-0">
                 <i class="if if-lock" aria-hidden="true"></i>
@@ -388,8 +391,9 @@
 
           <!-- File is private now, embargo opens it later: type + date, never the name -->
           <!-- @state: embargo -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-embargo" class="mb-5">
+            <h2 id="files-heading-embargo" class="h4 mb-3">Files</h2>
             <ul class="list-group list-group-flush list-unstyled mb-0">
               <li class="list-group-item d-flex align-items-center gap-3 px-0">
                 <i class="if if-time" aria-hidden="true"></i>
