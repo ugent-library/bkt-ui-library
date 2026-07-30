@@ -1,6 +1,6 @@
 /**
  * clipboard.js
- * Copy button: copies the <code> sitting next to a [data-clipboard] button.
+ * Copy button: copies text to the clipboard on click.
  *
  *   <button class="btn ..." data-clipboard aria-label="Copy link">
  *     <i class="if if-copy" aria-hidden="true"></i>
@@ -8,8 +8,11 @@
  *   </button>
  *   <code>01G3TZB614X7XXR52JYYGAND25</code>
  *
- * Copies the sibling <code>, so what's shown and what's copied can't drift apart.
- * Button and <code> can be in either order inside the shared parent.
+ * Source of the copied text:
+ *   - default: the <code> sibling in the same parent (display and copy can't drift)
+ *   - data-clipboard-target="<css selector>": that element's text instead, resolved
+ *     at click time (for dynamic content, e.g. the active citation tab)
+ * Button and <code> may sit in either order.
  *
  * Confirms for 2s: icon swaps to a check; a .btn-text label also swaps to
  * "Copied!". Icon-only buttons get a temporary aria-label, and their original
@@ -21,10 +24,13 @@
     const button = event.target.closest('[data-clipboard]');
     if (!button) return;
 
-    const code = button.parentElement.querySelector('code');
-    if (!code) return;
+    const targetSel = button.getAttribute('data-clipboard-target');
+    const source = targetSel
+      ? document.querySelector(targetSel)
+      : button.parentElement.querySelector('code');
+    if (!source) return;
 
-    const value = code.textContent.trim();
+    const value = source.textContent.trim();
     if (!value) return;
 
     navigator.clipboard.writeText(value).then(function () {
@@ -46,7 +52,7 @@
         if (icon) icon.classList.replace('if-check', 'if-copy');
       }, 2000);
     }).catch(function () {
-      // clipboard unavailable or denied — user can still select the code manually
+      // clipboard unavailable or denied — user can still select the text manually
     });
   });
 })();

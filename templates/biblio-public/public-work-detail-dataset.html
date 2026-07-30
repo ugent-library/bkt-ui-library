@@ -98,7 +98,7 @@
               <code class="small overflow-auto fw-bold p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTW2R8FQ</code>
               <button type="button" class="btn btn-light btn-sm"
                 aria-label="Copy persistent link to this dataset record"
-                onclick="navigator.clipboard.writeText('https://hdl.handle.net/1854/LU-01K9XTW2R8FQ');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                data-clipboard>
                 <i class="if if-copy" aria-hidden="true"></i>
               </button>
             </div>
@@ -245,9 +245,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"
-          onclick="navigator.clipboard.writeText(document.querySelector('.tab-pane.active .font-monospace').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy citation',1800)">
-          Copy citation
+        <button type="button" class="btn btn-primary" data-clipboard data-clipboard-target=".tab-pane.active .font-monospace">
+          <span class="btn-text">Copy citation</span>
         </button>
       </div>
     </div>

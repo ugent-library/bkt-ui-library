@@ -50,7 +50,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `clipboard.js`
 
-**Purpose:** Copy button — copies the `<code>` next to a `[data-clipboard]` button (Biblio ID, persistent link); shows "Copied!" for 2s. Reads the visible `<code>`, so display and copied value can't drift. Handles both labelled buttons (`.btn-text` swaps to "Copied!") and icon-only buttons (temporary `aria-label`, original restored after). Pattern: `patterns/copy-to-clipboard.html`.
+**Purpose:** Copy button — copies the `<code>` next to a `[data-clipboard]` button (Biblio ID, persistent link); shows "Copied!" for 2s. Reads the visible `<code>`, so display and copied value can't drift; or copies `data-clipboard-target` (a CSS selector resolved at click time) for dynamic sources like the active citation tab. Handles both labelled buttons (`.btn-text` swaps to "Copied!") and icon-only buttons (temporary `aria-label`, original restored after). Pattern: `patterns/copy-to-clipboard.html`.
 
 **Loaded by:** all pages (global footer script, injected by the dev server).
 
