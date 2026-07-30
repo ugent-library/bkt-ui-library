@@ -328,8 +328,7 @@
    public page gets its own tokens — without it, "mix within a page" only
    worked in one direction. */
 body,
-[data-surface=backoffice],
-.s-backoffice {
+[data-surface=backoffice] {
   --s-heading-font: var(--bt-font-sans);
   --s-heading-weight: 600;
   --s-heading-color: var(--bt-blue-900);
@@ -364,8 +363,7 @@ body,
 }
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
-[data-surface=public],
-.s-public {
+[data-surface=public] {
   --s-heading-weight: 700; /* confident, editorial */
   --s-heading-color: var(--bt-blue-800);
   --s-heading-leading: 1.05; /* tight — typeset, deliberate */
@@ -656,8 +654,7 @@ h6 {
   margin-bottom: var(--bt-sp-4);
 }
 
-[data-surface=public] .lead,
-.s-public .lead {
+[data-surface=public] .lead {
   font-style: italic;
 }
 
@@ -2431,8 +2428,7 @@ img.bt-navbar__logo {
   text-overflow: ellipsis;
 }
 
-[data-surface=backoffice] .bt-toolbar__title,
-.s-backoffice .bt-toolbar__title {
+[data-surface=backoffice] .bt-toolbar__title {
   font-family: var(--bt-font-sans);
   font-size: var(--bt-text-md);
   font-weight: 500;
@@ -2922,61 +2918,6 @@ img.bt-navbar__logo {
   fill: var(--i40);
 }
 
-/* ── Scroll cue ──────────────────────────────────────────────────────────────── */
-.scroll-cue-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.scroll-cue {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: var(--bt-radius-pill);
-  text-decoration: none;
-  pointer-events: auto;
-}
-
-.scroll-cue__icon {
-  display: block;
-}
-
-.scroll-cue__icon path {
-  fill: var(--i22);
-}
-
-.scroll-cue__icon g.page path {
-  fill: var(--i12);
-}
-
-.scroll-cue .page {
-  transform-box: fill-box;
-  transform-origin: left center;
-  animation: leafTurn 6.8s ease-in-out infinite alternate;
-}
-
-@keyframes leafTurn {
-  0% {
-    transform: translateX(0) rotate(0deg) skewX(0deg) scaleX(1);
-  }
-  18% {
-    transform: translateX(0.2px) rotate(-12deg) skewX(-6deg) scaleX(1);
-  }
-  45% {
-    transform: translateX(0.4px) rotate(-3deg) skewX(7deg) scaleX(0.12);
-  }
-  66% {
-    transform: translateX(0.2px) rotate(10deg) skewX(10deg) scaleX(-1);
-  }
-  84% {
-    transform: translateX(0) rotate(3deg) skewX(2deg) scaleX(1);
-  }
-  100% {
-    transform: translateX(0) rotate(0deg) skewX(0deg) scaleX(1);
-  }
-}
 /* ── Detail globe: rims, meridians, shimmer, pins, shooting stars ────────────── */
 .gRimInner {
   stroke: var(--i12);

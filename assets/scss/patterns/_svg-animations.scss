@@ -111,47 +111,6 @@
 }
 
 
-/* ── Scroll cue ──────────────────────────────────────────────────────────────── */
-
-.scroll-cue-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.scroll-cue {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: var(--bt-radius-pill);
-  text-decoration: none;
-  pointer-events: auto;
-}
-
-.scroll-cue__icon {
-  display: block;
-}
-
-.scroll-cue__icon path        { fill: var(--i22); }
-.scroll-cue__icon g.page path { fill: var(--i12); }
-
-.scroll-cue .page {
-  transform-box: fill-box;
-  transform-origin: left center;
-  animation: leafTurn 6.8s ease-in-out infinite alternate;
-}
-
-@keyframes leafTurn {
-  0%   { transform: translateX(0)    rotate(0deg)    skewX(0deg)   scaleX(1);    }
-  18%  { transform: translateX(.2px) rotate(-12deg)  skewX(-6deg)  scaleX(1);    }
-  45%  { transform: translateX(.4px) rotate(-3deg)   skewX(7deg)   scaleX(0.12); }
-  66%  { transform: translateX(.2px) rotate(10deg)   skewX(10deg)  scaleX(-1);   }
-  84%  { transform: translateX(0)    rotate(3deg)    skewX(2deg)   scaleX(1);    }
-  100% { transform: translateX(0)    rotate(0deg)    skewX(0deg)   scaleX(1);    }
-}
-
-
 /* ── Detail globe: rims, meridians, shimmer, pins, shooting stars ────────────── */
 
 .gRimInner { stroke: var(--i12); stroke-width: 1.5; }
