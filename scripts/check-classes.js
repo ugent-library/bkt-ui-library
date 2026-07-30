@@ -26,14 +26,27 @@ function* htmlFiles(dirs) {
 }
 
 const btClasses = cssClasses(read('assets/booktower.css'));
+const bootstrap = new Set(read('scripts/bootstrap-classes.txt').split('\n').filter(Boolean));
 const defined = new Set([
   ...btClasses,
   ...cssClasses(read('shell/shell.css')),
-  ...read('scripts/bootstrap-classes.txt').split('\n').filter(Boolean),
+  ...bootstrap,
 ]);
 
 // runtime-added classes, never in static HTML
 const runtime = /^(htmx-|if$|if-)/;
+
+// Defined-but-unused on purpose: applied by JS, Bootstrap API, or documented
+// classes kept for old-backoffice parity but not yet demoed (see AGENT.md).
+const intentional = new Set([
+  'no-tokens', 'token-bar__token--negated',            // applied by JS (token bar)
+  'u-notifications', 'bt-toolbar__middle', 'bt-panel__body--form',
+  'u-main__sidebar--border-left', 'alert--seamless-inbox', // kept API, undemoed
+  // Detail-globe SVG illustration — kept for a planned page, not yet wired (_svg-animations.scss)
+  'axis', 'axisDot', 'faintFill', 'fast', 'gLat', 'gMer', 'gRimInner', 'gRimOuter',
+  'pinDot', 'pinMed', 'pinShoot', 'pinShort', 'pinTall', 'shimmer', 'shimmerSmall',
+  'shoot', 'travDot',
+]);
 
 const used = new Map(); // class -> first file seen
 let rawCorpus = '';
@@ -64,7 +77,8 @@ const isJsHook = c => new RegExp(`['"\`(\\s]\\.${c}\\b`).test(rawCorpus + js);
 
 const undef = [...used].filter(([c]) => !defined.has(c) && !runtime.test(c) && !isJsHook(c));
 const unused = [...btClasses].filter(c =>
-  !used.has(c) && !runtime.test(c) && !new RegExp(`['"\` .]${c}['"\` )]`).test(js));
+  !used.has(c) && !runtime.test(c) && !intentional.has(c) && !bootstrap.has(c) &&
+  !new RegExp(`['"\` .]${c}['"\` )]`).test(js));
 
 console.log(`Undefined classes used in HTML: ${undef.length}`);
 for (const [c, f] of undef.sort()) console.log(`  ${c}  (${f})`);
