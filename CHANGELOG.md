@@ -46,16 +46,12 @@ chip bar as the directories (two chips pre-applied) instead of static markup.
 Chips remain client-side prototype stubs. Registry: `docs/JAVASCRIPT.md`;
 interaction model: `docs/SEARCH-AND-FILTERING.md`.
 
-## Copy-to-clipboard documented as a pattern (v2.5, 2026-07-14)
+## Copy-to-clipboard pattern (v2.5, 2026-07-14)
 
-No class changes. New kit page `patterns/copy-to-clipboard.html` documents the two
-copy compositions on one `clipboard.js` contract: **Copy Biblio ID** (labelled
-button + `<code>`) and **Persistent link** (the "Link to this record" box on public
-detail pages). `clipboard.js` generalised to also drive icon-only buttons (swaps the
-icon and a temporary `aria-label`, restoring the original) — previously it only
-handled buttons with a `.btn-text` label. The script copies the visible `<code>`, so
-what's shown is what's copied. Detail templates still use an inline `onclick` for the
-persistent link — refactoring them onto `data-clipboard` is the follow-up.
+No class changes. New kit page `patterns/copy-to-clipboard.html`. `clipboard.js` copies the
+sibling `<code>` (or `data-clipboard-target` for dynamic sources) and drives icon-only
+buttons. Public detail templates moved off inline `onclick` to `data-clipboard` (persistent
+link + cite-modal Copy citation).
 
 ## Public search form + filter picker unified (v2.4, 2026-07-14)
 

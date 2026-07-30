@@ -1,24 +1,4 @@
-/**
- * clipboard.js
- * Copy button: copies text to the clipboard on click.
- *
- *   <button class="btn ..." data-clipboard aria-label="Copy link">
- *     <i class="if if-copy" aria-hidden="true"></i>
- *     <span class="btn-text">Biblio ID</span>   <!-- optional -->
- *   </button>
- *   <code>01G3TZB614X7XXR52JYYGAND25</code>
- *
- * Source of the copied text:
- *   - default: the <code> sibling in the same parent (display and copy can't drift)
- *   - data-clipboard-target="<css selector>": that element's text instead, resolved
- *     at click time (for dynamic content, e.g. the active citation tab)
- * Button and <code> may sit in either order.
- *
- * Confirms for 2s: icon swaps to a check; a .btn-text label also swaps to
- * "Copied!". Icon-only buttons get a temporary aria-label, and their original
- * one is restored after — without it they'd lose their accessible name.
- */
-
+// Copy button — see docs/JAVASCRIPT.md
 (function () {
   document.addEventListener('click', function (event) {
     const button = event.target.closest('[data-clipboard]');
@@ -46,13 +26,12 @@
 
       setTimeout(function () {
         if (label) label.textContent = originalText;
+        // restore, don't remove: icon-only buttons rely on it for their name
         if (originalAria !== null) button.setAttribute('aria-label', originalAria);
         else button.removeAttribute('aria-label');
         button.classList.replace('btn-outline-success', 'btn-outline-secondary');
         if (icon) icon.classList.replace('if-check', 'if-copy');
       }, 2000);
-    }).catch(function () {
-      // clipboard unavailable or denied — user can still select the text manually
-    });
+    }).catch(function () {});
   });
 })();
