@@ -25,6 +25,18 @@ All kinds are collectively referred to as **research output** — not "publicati
 In the UI: shown as a `badge text-bg-primary` badge and controls which form fields appear.
 
 ### Work status
+
+> ⚠ **Known raven misalignment — parked (M, 2026-07-30).** Raven models two axes, not
+> one: deposit status (`draft → submitted → returned → reviewed`) and visibility
+> (`private / restricted / public`). There is no `PublishWork` — no publish verb at all
+> (`raven/docs/architecture-overview.md`). Additionally decided: submitting publishes
+> immediately (visibility public on submit); review happens after. Do not build on the
+> single-axis lifecycle below; alignment is deliberately deferred until after the
+> public-site work. Aligning means: rewriting this section and the review-workflow
+> section below, relabelling the "Published" badges/facets in ~9 templates, and one
+> open question (what a researcher sees between submit and review; whether a returned
+> record stays public).
+
 The lifecycle state of a Work.
 
 | Status | Meaning | Who sees it |
