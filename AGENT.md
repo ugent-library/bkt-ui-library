@@ -16,6 +16,7 @@ When a new session begins on this project, execute these steps before writing an
    | Task touches | Read first |
    |---|---|
    | Scoping any new page or feature | `docs/SURFACES.md` — the public vs backoffice surface test |
+   | Audience, personas, or legibility questions | `docs/RESEARCH-PERSONAS.md` — the public personas anchor the surface and vocabulary tests |
    | Domain meaning — entities, statuses, badges, review workflow | `docs/DOMAIN-VOCABULARY.md`, `docs/DOMAIN-CONTEXT.md` |
    | Building or changing a template | `docs/UI-LAYER.md`, `docs/CONSUMING-BOOKTOWER.md`, `docs/ACCESSIBILITY.md` |
    | Any search box, facet sidebar, or filter picker | `docs/SEARCH-AND-FILTERING.md` |
@@ -27,7 +28,7 @@ When a new session begins on this project, execute these steps before writing an
 
 2. **Check class names against `docs/CLASSES.md`** — the generated reference for every class that exists (rebuilt by `npm run build`). Do not guess names not on that list. Usage gotchas are in this file under "CSS class names".
 
-3. **Identify the surface** — before writing the first line of HTML, confirm whether this is a `public` or `backoffice` page. If uncertain, ask.
+3. **Identify the surface** — before writing the first line of HTML, confirm whether this is a `public` or `backoffice` page. If uncertain, apply the test in `docs/SURFACES.md`; if the test doesn't settle it, ask.
 
 4. **Answer the plain-language layout questions** — before choosing layout classes, read the “Questions to answer before writing layout HTML” section in `docs/CONSUMING-BOOKTOWER.md`.
 
