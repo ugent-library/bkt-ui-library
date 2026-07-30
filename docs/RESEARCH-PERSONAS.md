@@ -83,7 +83,7 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 **Public / discovery profile** · *consumes the record, off the deposit axis*
 *Not from Biblio testing — external discovery-UX literature (Ithaka S+R; CIBER/Nicholas, "Google Generation"; OCLC "Perceptions"; Connaway, JISC "Digital Information Seeker"; White & Le Cornu, "Visitors & Residents") + raven `public-site-semantics.md`.*
 
-- **Is:** anyone reaching a record from the open web — mostly researchers + students; also practitioners (clinician, teacher, policy, journalist) and the curious public (heritage, local, patient/family).
+- **Is:** the academic reader reaching a record from the open web — researchers + students. (Practitioners and the curious public have their own profiles below: Pia Practice, Carrie Curious.)
 - **Arrives:** via Google / Google Scholar on a **deep link to one record** — the record page is the entry point, often the only page seen (rarely the homepage).
 - **Does:** scans, grabs the PDF, leaves. Power-browsing, short visits, "viewing not reading," downloads to read later; satisficing — "good enough" beats exhaustive.
 - **Wants:** full text fast (ideally OA); confidence in version (VoR/AAM) and trust (peer-reviewed, who/where/when); easy cite/export.
@@ -93,7 +93,31 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 
 **Variant — the author checking their own footprint.** Bridges public + backoffice: is my record correct, is it OA, how many downloads? (ties to Claire Searcher's "search own records").
 
-> **Too broad — extend later.** Sue Kerr is a composite. Once we test the public surface, the sub-audiences (researcher, student, practitioner, citizen/heritage) likely each need their own profile — their goals and trust signals differ.
+> **Narrowed 2026-07-30.** Sue Kerr was a composite of every open-web visitor; the practitioner and citizen sub-audiences are now their own profiles (below). Researcher vs student may still split after public-surface testing.
+
+## Pia Practice — "applies it, doesn't publish"
+**Public / discovery profile** · *outside the researcher community, professional stake*
+*Not from Biblio testing — external discovery-UX literature (Ithaka S+R; OCLC "Perceptions"; JISC "Digital Information Seeker") + a local signal: researchers curate publication lists on their own sites because industry partners and practitioners consult them there (Wim, composites.ugent.be, 2026-01).*
+
+- **Is:** clinician, teacher, policymaker, journalist, industry engineer. Domain-literate, repository-illiterate: reads the field's language, not ours — "AAM", "VoR", "A1" mean nothing.
+- **Arrives:** Google / news / a researcher's own website, deep-linked to one record.
+- **Does:** reads to *apply* — a guideline, lesson, brief, design decision. Judges relevance fast, reads the full text when it opens.
+- **Pain:** paywalls elsewhere; version jargon; login or network dead-ends (works off-UGent by definition).
+- **Needs:** plain access signals ("you can read this" / "available from May 2027"); trust signals that don't require knowing venues — peer-review status, institution, date, real author names; abstract up front.
+- *Finds the record from outside academia, needs it to work without academic vocabulary.*
+
+## Carrie Curious — "personal stake, zero jargon"
+**Public / discovery profile** · *the curious public*
+*Not from Biblio testing — same external literature; locally untested.*
+
+- **Is:** patient or family member, local-heritage enthusiast, hobbyist — anyone with a personal reason to read research. No domain vocabulary, no repository vocabulary.
+- **Arrives:** Google on a life question (a condition, a place, an event) → one record, the only Biblio page she'll see.
+- **Does:** reads title + abstract; the record page *is* the product — she rarely downloads. Trust comes from the institution's brand and plain signals, not venue reputation.
+- **Pain:** jargon at every level, title and abstract included; "restricted" reads as broken; paywall vs open is opaque.
+- **Needs:** the strictest legibility bar on the public surface — she anchors the vocabulary test in `docs/SURFACES.md`. The demand for a lay summary originates with her.
+- *Judges the page in seconds with no vocabulary — if she can't tell what it says or whether she can read it, the page failed.*
+
+> **Personas motivate demand, not schema.** Feature demands these profiles generate (e.g. a lay summary field) route via ProductBoard → raven modelling, per AGENT.md "What lives where". The prototype shows such features only as flagged open questions until the concept has an owner — a lay summary in particular carries a policy question (who writes it?) that belongs to OSP, given Biblio's core problem is administrative overhead.
 
 ## Cody Crawley — "machine reader" (first-class user)
 **Machine / discovery profile**
