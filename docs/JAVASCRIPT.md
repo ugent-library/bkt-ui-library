@@ -108,14 +108,15 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `suggest-panel.js`
 
-**Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup and handles keyboard navigation within the panel. Suggestion rows navigate via their own `href` ("type decides"); the panel no longer mutates filter state.
+**Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup, handles keyboard navigation within the panel, and wires the type-filter tabs over the freshly server-rendered grouped result list. Selecting a type hides the other groups without issuing another request; All restores them. Tab Arrow/Home/End keys change selection with roving focus. Escape closes the panel and restores input focus without reopening it. Suggestion rows navigate via their own `href` ("type decides"); the panel never mutates result-page filter state.
 
 **Loaded by:** `public-works.html`
 
 **Listens for:**
 - `focus` and `keyup` on `#q`
 - `keydown` for Arrow/Enter/Escape navigation
-- `htmx:afterSwap` on `#suggest-panel` (updates panel visibility after content loads)
+- click and keyboard events on `[data-suggest-filter]`
+- `htmx:afterSwap` on `#suggest-panel` (rebinds swapped navigation and updates panel visibility)
 
 **Dispatches:** nothing
 
@@ -130,7 +131,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Loaded by:** `public-researchers.html`, `public-organisations.html`, `public-projects.html`
 
 **Listens for:**
-- `input` and `focus` on the directory `input[type="search"]`
+- `input` and `focus` on the directory `input[role="combobox"]`
 - `keydown` for Arrow/Enter/Escape navigation (input and panel)
 - Click on `document` (outside-click close)
 - `submit` on the enclosing form

@@ -137,6 +137,23 @@ an entity happens *only* by explicitly selecting a suggestion (click, or ArrowDo
 row then Enter). The panel opens with nothing highlighted, so Enter always searches your
 text. `suggest-panel.js` already behaves this way.
 
+**Optional suggestion groups own their separator.** A conditional group such
+as Recent carries its leading `.border-top` on the same outer wrapper as its
+content. Hide that outer wrapper when it has no rows; do not leave the border
+on a separate element. Every following result group likewise owns its leading
+border. This keeps every boundary to one rule, with no separator margin, in
+all combinations of recent/no-recent and matches/no-match. Populate the inner
+`[data-suggest-recent-content]` target rather than replacing the wrapper.
+
+**Type tabs narrow the one freshly rendered grouped result list.** Selecting a
+type hides the other entity groups; All restores every group. This is a local
+view over the current server response, not a per-type request, so every input
+change still performs one suggest request and the counts remain the live
+server totals. The tabs use `aria-selected`, roving keyboard focus, and wrap
+visually on narrow screens. The free-text submit row remains available in
+every view; Recent belongs to All. Every rendered entity tab carries its live
+server count; zero-result groups are omitted.
+
 ### Scoped links on cards and record pages
 
 The same routing governs the links inside result cards and work detail pages: an author
@@ -150,6 +167,11 @@ names (e.g. Zenodo) are not a public scope and stay unlinked.
 ### Every box, one grammar
 
 All four public search boxes obey the same two-part grammar, so they read as one system:
+
+The visible query control uses `type="text"`, `inputmode="search"`, and
+`role="combobox"`. This keeps the ARIA combobox contract valid while still
+requesting a search-optimized keyboard. HTMX wiring uses the conforming
+`data-hx-*` spelling.
 
 - **Select a suggestion → that entity's page** (same everywhere).
 - **Submit the text → the result space of this box's scope.**

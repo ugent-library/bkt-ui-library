@@ -52,7 +52,8 @@
             <!-- @state: results -->
             <div class="input-group input-group-lg mb-3">
               <input
-                type="search"
+                type="text"
+                inputmode="search"
                 id="q"
                 name="q"
                 class="form-control"
@@ -63,18 +64,19 @@
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false"
-                hx-get="/search/suggest"
-                hx-trigger="keyup changed delay:200ms, focus"
-                hx-target="#suggest-panel"
-                hx-swap="innerHTML"
-                hx-indicator="#suggest-indicator">
+                data-hx-get="/search/suggest"
+                data-hx-trigger="keyup changed delay:200ms, focus"
+                data-hx-target="#suggest-panel"
+                data-hx-swap="innerHTML"
+                data-hx-indicator="#suggest-indicator">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
             <!-- @state: best-bet -->
             <div class="input-group input-group-lg mb-3">
               <input
-                type="search"
+                type="text"
+                inputmode="search"
                 id="q"
                 name="q"
                 class="form-control"
@@ -85,18 +87,19 @@
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false"
-                hx-get="/search/suggest"
-                hx-trigger="keyup changed delay:200ms, focus"
-                hx-target="#suggest-panel"
-                hx-swap="innerHTML"
-                hx-indicator="#suggest-indicator">
+                data-hx-get="/search/suggest"
+                data-hx-trigger="keyup changed delay:200ms, focus"
+                data-hx-target="#suggest-panel"
+                data-hx-swap="innerHTML"
+                data-hx-indicator="#suggest-indicator">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
             <!-- @state: no-results -->
             <div class="input-group input-group-lg mb-3">
               <input
-                type="search"
+                type="text"
+                inputmode="search"
                 id="q"
                 name="q"
                 class="form-control"
@@ -107,18 +110,19 @@
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false"
-                hx-get="/search/suggest"
-                hx-trigger="keyup changed delay:200ms, focus"
-                hx-target="#suggest-panel"
-                hx-swap="innerHTML"
-                hx-indicator="#suggest-indicator">
+                data-hx-get="/search/suggest"
+                data-hx-trigger="keyup changed delay:200ms, focus"
+                data-hx-target="#suggest-panel"
+                data-hx-swap="innerHTML"
+                data-hx-indicator="#suggest-indicator">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
             <!-- @state: query-empty -->
             <div class="input-group input-group-lg mb-3">
               <input
-                type="search"
+                type="text"
+                inputmode="search"
                 id="q"
                 name="q"
                 class="form-control"
@@ -129,11 +133,11 @@
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false"
-                hx-get="/search/suggest"
-                hx-trigger="keyup changed delay:200ms, focus"
-                hx-target="#suggest-panel"
-                hx-swap="innerHTML"
-                hx-indicator="#suggest-indicator">
+                data-hx-get="/search/suggest"
+                data-hx-trigger="keyup changed delay:200ms, focus"
+                data-hx-target="#suggest-panel"
+                data-hx-swap="innerHTML"
+                data-hx-indicator="#suggest-indicator">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -253,7 +257,7 @@
            needs p-0, which breaks the g-5 gutter pairing (row negative margin
            stays, column padding gone → sidebar shifts left of the container). -->
       <aside class="col-lg-3" aria-label="Filter results">
-      <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="filters-offcanvas"
+      <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="filters-offcanvas" role="dialog"
         aria-labelledby="filters-offcanvas-title">
 
         <!-- Drawer header — offcanvas mode only (below lg). Two states, swapped by
