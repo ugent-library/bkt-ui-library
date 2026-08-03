@@ -6,6 +6,37 @@ system, or do I reach for something new?"
 
 ---
 
+## Work card grammar — public surface (v2.8, 2026-07-30)
+
+Four classes added, no removals. The card's inner rows get semantic elements;
+Bootstrap structural regions (`.card-header`, `.card-body`) stay.
+
+| Old markup (still valid CSS, migrate on touch) | v2.8 |
+|---|---|
+| `div.bt-meta-list.pt-1` (card badge row) | `div.bt-work-card__meta` |
+| `span.bt-meta-list__item-bordered` (type, in cards) | `span.bt-work-card__meta-item` |
+| `div.d-flex.align-items-center.gap-2` (card actions) | `div.bt-work-card__actions` |
+| author `<a>` with icons + space inside | `span.bt-work-card__author` — icons outside the `<a>`, spacing via CSS |
+
+Behaviour changes:
+
+- `bt-meta-list__item-bordered` (and `bt-work-card__meta-item`): separator now
+  renders only *between* consecutive items (sibling `border-left`), never after
+  the last item.
+- `bt-work-card__authors` dropped `display:flex`/`gap` — authors are prose with
+  comma text nodes; flex made every comma a spaced flex item.
+- `.bt-work-card.card` chrome-strip rule deleted; its one usage
+  (search-advanced-builder embed preview) dropped `.card`.
+- Access state on cards is always a badge (DOMAIN-VOCABULARY mapping); the
+  bordered-item and bare-sentence renderings are gone from public cards.
+- Public `__pub` line follows `docs/WORK-CARD-REFERENCE-STYLES.md` (Harvard,
+  `<cite>`, linked `<time>` year); `·` separator spans removed on public.
+
+Swept: search-result-cards.js, public-works.html, public-project-detail.html,
+work-card.html (public section), work-actions.html, search-advanced-builder.html.
+Backoffice cards (curate.html, search-researcher/my-research/filter-first/token)
+still carry the old markup — they migrate in the backoffice pass.
+
 ## HTML validity batch — check:html and check:a11y green (v2.7, 2026-07-30)
 
 No class changes. All `npm run check:html` and `check:a11y` errors fixed across kit

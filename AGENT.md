@@ -205,9 +205,9 @@ What the generated list can't express — composition rules, traps, and names I 
 
 **Scroll utilities** — `bt-table-sticky-col` on a `.table` inside `.table-responsive` pins the first column while the rest scrolls horizontally. `bt-dropdown-scroll` is the scrollable inner list for a dropdown-menu with a fixed header (e.g. the filter picker's search box); per-dropdown width via `--bs-dropdown-min-width`.
 
-**Work card** — `bt-work-card` uses Bootstrap's `.card` as the structural base; internal regions use Bootstrap's own `.card-header`, `.card-body`, `.card-footer` — not BEM elements. `bt-work-card--researcher` and `bt-work-card__head`/`__body`/`__foot` do NOT exist. The title element is surface-dependent: `<h2 class="bt-work-card__title">` on public, `<p class="bt-work-card__title">` on backoffice (see the record-card decision under Accessibility) — the class is purely visual, SCSS requires no specific tag.
+**Work card** — grammar, rules, and demos live at `/patterns/work-card.html` (reference-line composition: `docs/WORK-CARD-REFERENCE-STYLES.md`). `bt-work-card--researcher` and `__head`/`__body`/`__foot` do NOT exist. Backoffice cards still carry old utility markup pending the backoffice pass (CHANGELOG v2.8).
 
-**List wrapper** — cards rendered as a list of results belong inside `<ol class="list-group list-group-flush list-unstyled mb-0">` with each card wrapped in `<li>`. A plain `<section>` wrapper is wrong: it is an unlabelled landmark and AT cannot announce a count.
+**List wrapper** — cards rendered as a list of results belong inside `<ol class="list-unstyled mb-0">` with each card wrapped in `<li>`. A plain `<section>` wrapper is wrong: it is an unlabelled landmark and AT cannot announce a count.
 
 **Facets sidebar** — plain Bootstrap: `fieldset`, `legend`, `form-check*`, spacing utilities, Collapse. The old custom facet classes (`bt-facets`, `bt-facet-name`, `bt-facet-separator`, `bt-results-col`) do not exist. Show-more toggle: put the overflow in `<div class="collapse">` with a `data-bs-toggle="collapse"` button + `if-chevron-down` after it; the button must carry `aria-expanded="false"` when the list starts collapsed (do not rely on `.collapsed`, which Bootstrap only adds after the first click). Documented at `/patterns/facets.html`.
 

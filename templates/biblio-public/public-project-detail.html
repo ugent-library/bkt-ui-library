@@ -243,13 +243,7 @@
               </div>
             </div>
 
-            <div
-              hx-get="/projects/fwo-g001234n/works"
-              hx-trigger="load"
-              hx-target="#project-output-list"
-              hx-indicator="#output-loading">
-            </div>
-            <span id="output-loading" class="htmx-indicator" aria-live="polite">Loading research output&hellip;</span>
+            <!-- Works render server-side: public content is never lazy-loaded (crawlers do not run HTMX). -->
 
             <div id="project-output-list">
 
@@ -257,11 +251,11 @@
               <div class="my-5">
                 <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-01">
                   <div class="card-header">
-                    <div class="bt-meta-list pt-1">
+                    <div class="bt-work-card__meta">
                       <span class="badge text-bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
+                      <span class="bt-work-card__meta-item">Journal article</span>
                     </div>
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="bt-work-card__actions">
                       <!-- v1: no access CTA on cards; title navigates (raven#141) -->
                       <button type="button" class="btn btn-ghost btn-sm"
                         aria-label="Cite: Urban forests as essential infrastructure for climate resilience">
@@ -278,18 +272,12 @@
                       <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
                     </h4>
                     <p class="bt-work-card__authors">
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon‑Rodriguez</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt</a>
+                      <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon‑Rodriguez</a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt</a></span>
                       <span class="text-muted">et al.</span>
                     </p>
-                    <p class="bt-work-card__pub">
-                      <time datetime="2026">2026</time>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <a href="#">Plants People Planet</a>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <span>8(1) · pp. 14–19</span>
-                    </p>
+                    <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="#"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.</p>
                   </div>
                 </article>
 
@@ -301,11 +289,11 @@
 
                 <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-02">
                   <div class="card-header">
-                    <div class="bt-meta-list pt-1">
+                    <div class="bt-work-card__meta">
                       <span class="badge text-bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
+                      <span class="bt-work-card__meta-item">Journal article</span>
                     </div>
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="bt-work-card__actions">
                       <button type="button" class="btn btn-ghost btn-sm"
                         aria-label="Cite: Green infrastructure planning in urban heat islands">
                         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -321,26 +309,20 @@
                       <a href="#">Green infrastructure planning in urban heat islands: lessons from Belgian cities</a>
                     </h4>
                     <p class="bt-work-card__authors">
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Sander Vanderhaegen</a>
+                      <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Sander Vanderhaegen</a></span>
                     </p>
-                    <p class="bt-work-card__pub">
-                      <time datetime="2025">2025</time>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <a href="#">Urban Forestry &amp; Urban Greening</a>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <span>89 · p.128421</span>
-                    </p>
+                    <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="#"><cite>Urban Forestry &amp; Urban Greening</cite></a>, 89, 128421.</p>
                   </div>
                 </article>
 
                 <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-03">
                   <div class="card-header">
-                    <div class="bt-meta-list pt-1">
+                    <div class="bt-work-card__meta">
                       <span class="badge text-bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Dataset</span>
+                      <span class="bt-work-card__meta-item">Dataset</span>
                     </div>
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="bt-work-card__actions">
                       <button type="button" class="btn btn-ghost btn-sm"
                         aria-label="Cite: Urban tree canopy cover measurements Belgium 2019–2024">
                         <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -356,14 +338,10 @@
                       <a href="#">Urban tree canopy cover measurements Belgium 2019–2024</a>
                     </h4>
                     <p class="bt-work-card__authors">
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a>
+                      <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a></span>
                     </p>
-                    <p class="bt-work-card__pub">
-                      <time datetime="2025">2025</time>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <a href="#">Zenodo</a>
-                    </p>
+                    <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>)</p>
                   </div>
                 </article>
 

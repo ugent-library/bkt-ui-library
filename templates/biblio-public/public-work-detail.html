@@ -412,15 +412,90 @@
           </section>
           <!-- @state -->
 
-          <!-- Related research — HTMX loaded
+          <!-- Related research — server-rendered
            Top 3 matches by keyword similarity. Similar keywords are highlighted in the list. Clicking the "More" link takes the user to a filtered search results page with all related research output. TBD: can we filter by "or" in the search results page?-->
           <section aria-labelledby="related-heading" class="mb-5">
             <h2 id="related-heading" class="h4 mb-3">Related research output</h2>
-            <div
-              hx-get="/partials/related?id=01K9XTVXD41Z&partial=true"
-              hx-trigger="revealed"
-              hx-swap="innerHTML">
-              <div class="text-muted">Loading related research output&hellip;</div>
+            <!-- Renders server-side: public content is never lazy-loaded (crawlers do not run HTMX).
+                 Content generated from server/content/related-works.js. raven note: similarity is an
+                 expensive query — how to serve it without lazy-load (cache, precompute) is an open
+                 question for raven, recorded in the #125 discussion. -->
+            <div>
+            <ol class="list-unstyled mb-0">
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-01">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-01" class="bt-work-card__title"><a href="#">Cooling co-benefits of urban tree networks in compact European cities</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2025">2025</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Green infrastructure <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Trees</a>
+                  </div>
+                </div>
+              </article></li>
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-02">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-02" class="bt-work-card__title"><a href="#">Planning biodiversity corridors through urban green infrastructure</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2024">2024</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Biodiversity</a>
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Urban climate <span class="visually-hidden">(shared keyword)</span></a>
+                  </div>
+                </div>
+              </article></li>
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-03">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Book chapter</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-03" class="bt-work-card__title"><a href="#">Community-led climate adaptation in Flemish mid-sized cities</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2023">2023</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Resilience <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Ghent <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Climate adaptation</a>
+                  </div>
+                </div>
+              </article></li>
+            </ol>
+            <!-- stub — intended target: works search pre-filtered on this work's keywords
+                 e.g. /works?keyword=Urban+climate&keyword=Resilience&keyword=Green+infrastructure&keyword=Ghent -->
+            <a href="#" class="btn btn-ghost">
+              <i class="if if-arrow-right" aria-hidden="true"></i>
+              More related research, by keyword
+            </a>
             </div>
           </section>
         </div>

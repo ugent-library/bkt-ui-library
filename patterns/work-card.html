@@ -487,13 +487,13 @@
           <div class="card-header">
 
             <!-- Status badges -->
-            <div class="bt-meta-list pt-1">
+            <div class="bt-work-card__meta">
               <span class="badge text-bg-success">Open access</span>
-              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
             </div>
 
             <!-- Access CTA varies by state: patterns/work-actions.html -->
-            <div class="d-flex align-items-center gap-2">
+            <div class="bt-work-card__actions">
               <button type="button" class="btn btn-ghost btn-sm"
                 aria-label="Cite: Neuropsychiatric aspects of COVID-19 pandemic">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -519,26 +519,93 @@
 
             <!-- Authors with affiliation indicators -->
             <p class="bt-work-card__authors">
-              <a href="#"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i> Cooper, J.<span class="visually-hidden"> (UGent, ORCID)</span></a>,
-              <a href="#"><i class="if if-ghent-university" aria-hidden="true"></i> Simmons, B.<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="#">Palumbo, Z.</a>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Cooper, J.<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Simmons, B.<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="#">Palumbo, Z.</a></span>
               <span class="text-muted">et al.</span>
             </p>
 
             <!-- Publication line -->
-            <p class="bt-work-card__pub">
-              <span>2020</span>
-              <span class="text-muted mx-1">·</span>
-              <span>International Journal of Environmental Research and Public Health</span>
-              <span class="text-muted mx-1">·</span>
-              <span>Vol. 17 · Issue 7 · pp. 12–32</span>
-            </p>
+            <p class="bt-work-card__pub">(<a href="#"><time datetime="2020">2020</time></a>) <cite>International Journal of Environmental Research and Public Health</cite>, 17(7), pp. 12&ndash;32.</p>
 
           </div>
         </article>
 
       </div>
     </div>
+  </section>
+
+
+  <!-- ============================================================
+       CARD GRAMMAR — REGION BY REGION
+       ============================================================ -->
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Card grammar — region by region</h2>
+    <p class="mb-2 col-8">Every work card is the same five regions: <code>__meta</code> (access + type), <code>__actions</code>, <code>__title</code>, <code>__authors</code> (of <code>__author</code> spans), and <code>__pub</code> (the reference line, composed per <a href="/docs/WORK-CARD-REFERENCE-STYLES.md">WORK-CARD-REFERENCE-STYLES</a>). Structural wrappers stay Bootstrap (<code>card-header</code>, <code>card-body</code>).</p>
+    <p class="mb-2 col-8 text-muted small">The title element is surface- and outline-dependent: <code>&lt;h2&gt;</code> on public search results, <code>&lt;p&gt;</code> on backoffice lists, deeper heading levels where the page outline requires (project detail uses <code>&lt;h4&gt;</code> under year <code>&lt;h3&gt;</code>s). The <code>__title</code> class is purely visual — SCSS requires no specific tag.</p>
+    <p class="mb-4 col-8 text-muted small">Access CTA states (Download, Log in, Select file, embargo text) live at <a href="/patterns/work-actions.html">Work actions</a>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">__meta — access is always a badge, type is a meta item</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="bt-work-card__meta mb-3">
+          <span class="badge text-bg-success">Open access</span>
+          <span class="bt-work-card__meta-item">Journal article</span>
+        </div>
+        <div class="bt-work-card__meta mb-3">
+          <span class="badge text-bg-warning">Restricted access</span>
+          <span class="bt-work-card__meta-item">Book chapter</span>
+        </div>
+        <div class="bt-work-card__meta mb-3">
+          <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+          <span class="bt-work-card__meta-item">Doctoral thesis</span>
+        </div>
+        <div class="bt-work-card__meta">
+          <span class="bt-work-card__meta-item">Lecture</span>
+          <span class="bt-work-card__meta-item">Second text item</span>
+        </div>
+      </div>
+    </div>
+    <p class="mb-4 col-8 text-muted small">No files, or all files private, means no access element at all — private leaves no public trace. The separator renders only <em>between</em> consecutive meta items, never after the last.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">__actions — Cite and Add to list on every card (v1)</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="bt-work-card__actions">
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Example record title">
+            <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Example record title">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">__author — icons outside the link, hidden text inside it</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <p class="bt-work-card__authors mb-0">
+          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
+          <span class="bt-work-card__author"><a href="#">Manuel Esperon-Rodriguez</a></span>
+          <span class="text-muted">et al.</span>
+        </p>
+      </div>
+    </div>
+    <p class="mb-4 col-8 text-muted small">Authors are prose: comma text nodes between <code>__author</code> spans, up to ten names then <span lang="la">et al.</span> Icons sit inside the span but outside the <code>&lt;a&gt;</code> — spacing comes from CSS, and the hover underline stays off the gap. The <code>visually-hidden</code> identifier text inside the link carries what the icons show.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">__pub — the reference line, per work type</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <p class="bt-work-card__pub">(<a href="#"><time datetime="2024">2024</time></a>) <a href="#"><cite>European Journal of Crime, Criminal Law and Criminal Justice</cite></a>, 32(1), pp. 58&ndash;79.</p>
+        <p class="bt-work-card__pub">(<a href="#"><time datetime="2024">2024</time></a>) in <a href="#"><cite>Handbook of urban ecology</cite></a>. London: Routledge, pp. 100&ndash;120.</p>
+        <p class="bt-work-card__pub">(<a href="#"><time datetime="2024">2024</time></a>) PhD thesis. Ghent University.</p>
+        <p class="bt-work-card__pub mb-0">(<a href="#"><time datetime="2026">2026</time></a>)</p>
+      </div>
+    </div>
+    <p class="mb-0 col-8 text-muted small">Harvard author-date, card variant: the year opens the line (authors and title live above), container titles in <code>&lt;cite&gt;</code>, linked parts keep their search links, datasets carry the year only. Full per-type composition: <code>docs/WORK-CARD-REFERENCE-STYLES.md</code>.</p>
   </section>
 
 

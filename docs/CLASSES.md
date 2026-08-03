@@ -163,7 +163,11 @@ bt-toolbar__title
 
 bt-work-card
 bt-work-card--border-bottom
+bt-work-card__actions
+bt-work-card__author
 bt-work-card__authors
+bt-work-card__meta
+bt-work-card__meta-item
 bt-work-card__pub
 bt-work-card__title
 
@@ -490,10 +494,6 @@ people-results
 
 popover--dark
 popover--sm
-
-s-backoffice
-
-s-public
 
 skip-link
 

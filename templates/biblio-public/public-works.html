@@ -554,9 +554,9 @@
                 10 / page
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
-                <li><button type="button" class="dropdown-item active" aria-current="true">10 per page</button></li>
+                <li><button type="button" class="dropdown-item">10 per page</button></li>
                 <li><button type="button" class="dropdown-item">25 per page</button></li>
-                <li><button type="button" class="dropdown-item">50 per page</button></li>
+                <li><button type="button" class="dropdown-item active" aria-current="true">50 per page</button></li>
                 <li><button type="button" class="dropdown-item">100 per page</button></li>
               </ul>
             </div>
@@ -629,15 +629,15 @@
                   <a class="page-link" href="#" aria-label="Next page">›</a>
                 </li>
               </ul>
-              <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–10 of 179 results</span>
+              <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–27 of 27 results</span>
             </nav>
           </div>
           <div class="bt-toolbar__right">
             <label for="page-size" class="visually-hidden">Results per page</label>
             <select id="page-size" class="form-select form-select-sm d-none d-lg-block">
-              <option value="10" selected>10 per page</option>
+              <option value="10">10 per page</option>
               <option value="25">25 per page</option>
-              <option value="50">50 per page</option>
+              <option value="50" selected>50 per page</option>
               <option value="100">100 per page</option>
             </select>
             <!-- WORK IN PROGRESS: We do not know which sorting to use yet, do not build, just stub -->
@@ -691,11 +691,11 @@
         <ol class="list-unstyled mb-0">
         <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-s01">
           <div class="card-header">
-            <div class="bt-meta-list pt-1">
+            <div class="bt-work-card__meta">
               <span class="badge text-bg-success">Open access</span>
-              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="bt-work-card__actions">
               <button type="button" class="btn btn-ghost btn-sm"
                 aria-label="Cite: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -744,30 +744,26 @@
               <a href="/templates/biblio-public/public-work-detail.html">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Marieke J. Kiewiet<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Sam Cuyvers</a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marieke J. Kiewiet<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Sam Cuyvers</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a></span>
               <span class="text-muted">et al.</span>
             </p>
             <p class="bt-work-card__pub">
-              <time datetime="2025">2025</time>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="public-works.html?issn=1863-8880">Laser &amp; Photonics Reviews</a>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <span>33(2) · pp. 2227–2246</span>
+              (<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>)
+              <a href="public-works.html?issn=1863-8880"><cite>Laser &amp; Photonics Reviews</cite></a>, 33(2), pp. 2227&ndash;2246.
             </p>
           </div>
         </article></li>
 
         <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-s02">
           <div class="card-header">
-            <div class="bt-meta-list pt-1">
-              <span class="bt-meta-list__item-bordered">Book chapter</span>
-              <span class="bt-meta-list__item-bordered">Restricted access</span>
-              <span>Embargo until Jan 2026</span>
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+              <span class="bt-work-card__meta-item">Book chapter</span>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="bt-work-card__actions">
               <button type="button" class="btn btn-ghost btn-sm"
                 aria-label="Cite: Quantum error correction in near-term devices">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -814,27 +810,24 @@
               <a href="#">Quantum error correction in near-term devices: a practical guide to surface codes</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Dirk Verstraeten<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Katrien De Wolf<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Dirk Verstraeten<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Katrien De Wolf<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <p class="bt-work-card__pub">
-              <time datetime="2024">2024</time>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="public-works.html?isbn=978-0-12-000000-0">Advances in Quantum Computing</a>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <span>pp. 78–112</span>
+              (<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>)
+              in <a href="public-works.html?isbn=978-0-12-000000-0"><cite>Advances in Quantum Computing</cite></a>, pp. 78&ndash;112.
             </p>
           </div>
         </article></li>
 
         <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-s03">
           <div class="card-header">
-            <div class="bt-meta-list pt-1">
+            <div class="bt-work-card__meta">
               <span class="badge text-bg-success">Open access</span>
-              <span class="bt-meta-list__item-bordered">Dataset</span>
+              <span class="bt-work-card__meta-item">Dataset</span>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="bt-work-card__actions">
               <button type="button" class="btn btn-ghost btn-sm"
                 aria-label="Cite: Benchmark results for variational quantum eigensolver">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -881,24 +874,22 @@
               <a href="#">Benchmark results for variational quantum eigensolver across 14 molecular systems</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Jonas Maes<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <p class="bt-work-card__pub">
-              <time datetime="2024">2024</time>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <span>Zenodo</span>
+              (<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>)
             </p>
           </div>
         </article></li>
 
         <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-s04">
           <div class="card-header">
-            <div class="bt-meta-list pt-1">
+            <div class="bt-work-card__meta">
               <span class="badge text-bg-success">Open access</span>
-              <span class="bt-meta-list__item-bordered">Journal article</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
             </div>
-            <div class="d-flex align-items-center gap-2">
+            <div class="bt-work-card__actions">
               <button type="button" class="btn btn-ghost btn-sm"
                 aria-label="Cite: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
                 <i class="if if-double-quotes" aria-hidden="true"></i> Cite
@@ -945,20 +936,559 @@
               <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
             </h2>
             <p class="bt-work-card__authors">
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Tom Van Damme<span class="visually-hidden"> (UGent)</span></a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a>,
-              <a href="/templates/biblio-public/public-researcher-detail.html"><i class="if if-ghent-university" aria-hidden="true"></i> Mattias Billet<span class="visually-hidden"> (UGent)</span></a>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Tom Van Damme<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet<span class="visually-hidden"> (UGent)</span></a></span>
               <span class="text-muted">et al.</span>
             </p>
             <p class="bt-work-card__pub">
-              <time datetime="2023">2023</time>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <a href="public-works.html?issn=2056-6387">npj Quantum Information</a>
-              <span class="text-muted mx-1" aria-hidden="true">·</span>
-              <span>9(1) · p. 44</span>
+              (<a href="public-works.html?year=2023"><time datetime="2023">2023</time></a>)
+              <a href="public-works.html?issn=2056-6387"><cite>npj Quantum Information</cite></a>, 9(1), p. 44.
             </p>
           </div>
         </article></li>
+
+        <!-- The 23 raven-type cards below are generated from server/content/search-result-cards.js.
+             Regenerate on module change: node scripts snippet in notes/PLAN-work-card.md. Keep the 4 cards above on top. -->
+<li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-01">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Journal article</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure for climate resilience and biodiversity">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-01" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Renée Prokopavicius</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Sally A. Power</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">David S. Ellsworth</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Camille Vervoort</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Mark G. Tjoelker</a></span> <span class="text-muted">et al.</span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 12&ndash;29.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-02">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-warning">Restricted access</span><span class="bt-work-card__meta-item">Book</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests: a field guide to the trees of Flemish cities">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban forests: a field guide to the trees of Flemish cities">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-02" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Urban forests: a field guide to the trees of Flemish cities</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) 2nd edn. Ghent: Academia Press.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-03">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Edited book</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Handbook of urban ecology">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Handbook of urban ecology">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-03" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Handbook of urban ecology</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) London: Routledge.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-04">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-warning">Restricted access</span><span class="bt-work-card__meta-item">Book chapter</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Canopy cover in Flanders: patterns and policy">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Canopy cover in Flanders: patterns and policy">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-04" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Canopy cover in Flanders: patterns and policy</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) in <a href="public-works.html?isbn=978-0-415-88700-1"><cite>Handbook of urban ecology</cite></a>. London: Routledge, pp. 100&ndash;120.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-05">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Book review</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Review of: Urban forests: a field guide to the trees of Flemish cities">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Review of: Urban forests: a field guide to the trees of Flemish cities">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-05" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Review of: Urban forests: a field guide to the trees of Flemish cities</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">An Willems<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?issn=1365-2745"><cite>Journal of Ecology Reviews</cite></a>, 12(2), pp. 301&ndash;303.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-06">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Reference entry</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Photosynthesis">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Photosynthesis">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-06" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Photosynthesis</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Tom Green</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2023"><time datetime="2023">2023</time></a>) <cite>Encyclopedia of plant science</cite>. Amsterdam: Elsevier, pp. 455&ndash;460.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-07">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Journal issue</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Special issue: match-fixing and integrity in European football">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Special issue: match-fixing and integrity in European football">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-07" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Special issue: match-fixing and integrity in European football</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0003-2222-8888" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Tom Vander Beken<span class="visually-hidden"> (UGent, ORCID 0000-0003-2222-8888)</span></a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">An Vermeersch<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) <a href="public-works.html?issn=0928-9569"><cite>European Journal of Crime, Criminal Law and Criminal Justice</cite></a>, 32(1).</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-08">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Conference paper</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Frequency-domain parameter tracking of single-actuated multi-body mechanisms">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Frequency-domain parameter tracking of single-actuated multi-body mechanisms">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-08" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Frequency-domain parameter tracking of single-actuated multi-body mechanisms</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Foeke Vanbecelaere<span class="visually-hidden"> (UGent)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Kurt Stockman</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) <cite>Proceedings of the 12th IFToMM World Congress</cite>. IFToMM World Congress, Tokyo, pp. 1&ndash;8.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-09">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Conference abstract</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Postural sway under dual-task conditions in older adults">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Postural sway under dual-task conditions in older adults">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-09" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Postural sway under dual-task conditions in older adults</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Els Vanderhaeghen<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) ISPGR World Congress, Brisbane.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-10">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Conference poster</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: High-resolution soil moisture mapping with distributed sensors">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: High-resolution soil moisture mapping with distributed sensors">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-10" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">High-resolution soil moisture mapping with distributed sensors</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Wouter Maes<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) EGU General Assembly, Vienna.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-11">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Conference presentation</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Linked data for library collections: five years of lessons">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Linked data for library collections: five years of lessons">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-11" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Linked data for library collections: five years of lessons</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Dries Moreels<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) DH Benelux, Leuven.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-12">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Preprint</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Canopy microclimate buffering across European forests: a continental synthesis">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-12" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Canopy microclimate buffering across European forests: a continental synthesis</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Pieter Vangansbeke</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) bioRxiv [Preprint].</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-13">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Working paper</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: The cost structure of diamond open access publishing in Flanders">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: The cost structure of diamond open access publishing in Flanders">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-13" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">The cost structure of diamond open access publishing in Flanders</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Evelien Smets<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) Ghent: Ghent University Faculty of Economics and Business Administration (FEB Working Paper Series).</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-14">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Report</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: State of the urban forest in Flanders 2025">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: State of the urban forest in Flanders 2025">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-14" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">State of the urban forest in Flanders 2025</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Lien Poelmans</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) Report RPT-42. Brussels: Agentschap Natuur en Bos.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-15">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span><span class="bt-work-card__meta-item">Doctoral thesis</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-15" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0001-9876-5432" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Foeke Vanbecelaere<span class="visually-hidden"> (UGent, ORCID 0000-0001-9876-5432)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) PhD thesis. Ghent University.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-16">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Magazine article</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: De stad die zichzelf plant">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: De stad die zichzelf plant">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-16" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">De stad die zichzelf plant</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>Eos Wetenschap</cite>, 14 June, pp. 22&ndash;27.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-17">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-warning">Restricted access</span><span class="bt-work-card__meta-item">Newspaper article</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Universiteit plant stadsbos aan rand van Gent">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Universiteit plant stadsbos aan rand van Gent">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-17" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Universiteit plant stadsbos aan rand van Gent</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>De Standaard</cite>, 2 March, p. 7.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-18">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Online post</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Why repositories should love preprints">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Why repositories should love preprints">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-18" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Why repositories should love preprints</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Evelien Smets<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>Open Access Belgium</cite>, 1 September.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-19">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Media appearance</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Waarom de Boekentoren een schatkamer is">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Waarom de Boekentoren een schatkamer is">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-19" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Waarom de Boekentoren een schatkamer is</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Dries Moreels<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>Universiteit van Vlaanderen</cite>, 5 November.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-20">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Lecture</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Open science at scale: infrastructure for a university">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Open science at scale: infrastructure for a university">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-20" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Open science at scale: infrastructure for a university</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Evelien Smets<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) UGent Data Stewards seminar, Ghent, 20 October.</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-21">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Dataset</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-21" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Urban tree canopy cover measurements Belgium 2020–2025</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>)</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-22">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Software</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: canopyR: canopy cover estimation toolkit">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: canopyR: canopy cover estimation toolkit">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-22" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">canopyR: canopy cover estimation toolkit</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>)</p>
+    </div>
+  </article></li>
+
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-23">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="bt-work-card__meta-item">Other</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Boekentoren restoration: photographic record 2012–2023">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Boekentoren restoration: photographic record 2012–2023">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-23" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Boekentoren restoration: photographic record 2012–2023</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sylvia Van Peteghem<span class="visually-hidden"> (UGent)</span></a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>)</p>
+    </div>
+  </article></li>
         </ol>
 
         <nav class="bt-toolbar mt-2 pt-3" aria-label="Results pagination, bottom">
@@ -976,7 +1506,7 @@
                 <a class="page-link" href="#" aria-label="Next page">›</a>
               </li>
             </ul>
-            <span class="text-muted small"><span class="visually-hidden">Showing </span> 1–10 of 179 results</span>
+            <span class="text-muted small"><span class="visually-hidden">Showing </span> 1–27 of 27 results</span>
           </div>
         </nav>
         <!-- @state -->
