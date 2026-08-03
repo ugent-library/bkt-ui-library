@@ -119,7 +119,7 @@ DO NOT BUILD YET
               </div>
             </div>
             <!-- Bulk actions (hidden until rows selected) -->
-            <div id="bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
+            <div id="bulk-bar" data-bulk-bar role="toolbar" aria-label="Bulk actions" hidden>
               <button type="button" class="btn btn-ghost btn-sm">
                 <i class="if if-download if--sm" aria-hidden="true"></i> Export selected
               </button>
@@ -246,7 +246,7 @@ DO NOT BUILD YET
                 <thead class="text-uppercase text-muted small">
                   <tr>
                     <th scope="col">
-                      <input type="checkbox" class="form-check-input mt-0" id="select-all"
+                      <input type="checkbox" class="form-check-input mt-0" id="select-all" data-bulk-all
                         aria-label="Select all records on this page">
                     </th>
                     <th scope="col">Title</th>
@@ -264,7 +264,7 @@ DO NOT BUILD YET
                 </thead>
                 <tbody>
                   <tr>
-                    <td><input type="checkbox" class="form-check-input mt-0 row-check"
+                    <td><input type="checkbox" class="form-check-input mt-0" data-bulk-row
                       aria-label="Select: Entanglement entropy in quantum spin chains"></td>
                     <td>
                       <a href="#" class="fw-semibold text-reset text-decoration-none">Entanglement entropy in quantum spin chains with long-range interactions</a>
@@ -284,7 +284,7 @@ DO NOT BUILD YET
                     </td>
                   </tr>
                   <tr>
-                    <td><input type="checkbox" class="form-check-input mt-0 row-check"
+                    <td><input type="checkbox" class="form-check-input mt-0" data-bulk-row
                       aria-label="Select: Machine learning approaches to protein folding"></td>
                     <td>
                       <a href="#" class="fw-semibold text-reset text-decoration-none">Machine learning approaches to protein folding prediction</a>
@@ -304,7 +304,7 @@ DO NOT BUILD YET
                     </td>
                   </tr>
                   <tr>
-                    <td><input type="checkbox" class="form-check-input mt-0 row-check"
+                    <td><input type="checkbox" class="form-check-input mt-0" data-bulk-row
                       aria-label="Select: Climate forcing data"></td>
                     <td>
                       <a href="#" class="fw-semibold text-reset text-decoration-none">Climate forcing data over Belgium 1950–2023</a>
@@ -364,38 +364,4 @@ DO NOT BUILD YET
 </div>
 
 <script src="/assets/js/view-toggle.js"></script>
-<script>
-  // ── Bulk action bar ────────────────────────────────────────────────────────
-  const bulkBar   = document.getElementById('bulk-bar');
-  const selectAll = document.getElementById('select-all');
-
-  function updateBulkBar() {
-    const checked = document.querySelectorAll('.form-check-input.row-check:checked');
-    const total   = document.querySelectorAll('.form-check-input.row-check');
-    bulkBar.hidden = checked.length === 0;
-    if (selectAll) {
-      selectAll.checked       = checked.length === total.length && total.length > 0;
-      selectAll.indeterminate = checked.length > 0 && checked.length < total.length;
-      if (selectAll.indeterminate) {
-        selectAll.setAttribute('aria-label', 'Some records selected — click to select all');
-      } else if (selectAll.checked) {
-        selectAll.setAttribute('aria-label', 'All records selected — click to deselect all');
-      } else {
-        selectAll.setAttribute('aria-label', 'Select all records on this page');
-      }
-    }
-  }
-
-  document.querySelectorAll('.form-check-input.row-check').forEach(cb => {
-    cb.addEventListener('change', updateBulkBar);
-  });
-
-  if (selectAll) {
-    selectAll.addEventListener('change', () => {
-      document.querySelectorAll('.form-check-input.row-check').forEach(cb => {
-        cb.checked = selectAll.checked;
-      });
-      updateBulkBar();
-    });
-  }
-</script>
+<script src="/assets/js/bulk-select.js"></script>

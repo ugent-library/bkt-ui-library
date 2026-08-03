@@ -438,7 +438,7 @@
           </div>
 
           <!-- Bulk actions — hidden until rows selected -->
-          <div id="c-bulk-bar" role="toolbar" aria-label="Bulk actions" hidden>
+          <div id="c-bulk-bar" data-bulk-bar role="toolbar" aria-label="Bulk actions" hidden>
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
@@ -572,7 +572,7 @@
               <thead class="text-uppercase text-muted">
                 <tr>
                   <th scope="col">
-                    <input type="checkbox" class="form-check-input mt-0" id="c-select-all"
+                    <input type="checkbox" class="form-check-input mt-0" id="c-select-all" data-bulk-all
                       aria-label="Select all records on this page">
                   </th>
                   <th scope="col">Title</th>
@@ -593,7 +593,7 @@
               <tbody>
                 <tr>
                   <td>
-                    <input type="checkbox" class="form-check-input mt-0 row-check"
+                    <input type="checkbox" class="form-check-input mt-0" data-bulk-row
                       aria-label="Select: Entanglement entropy in quantum spin chains">
                   </td>
                   <td>
@@ -621,7 +621,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="checkbox" class="form-check-input mt-0 row-check"
+                    <input type="checkbox" class="form-check-input mt-0" data-bulk-row
                       aria-label="Select: Characterisation of biofilm formation">
                   </td>
                   <td>
@@ -646,7 +646,7 @@
                 </tr>
                 <tr>
                   <td>
-                    <input type="checkbox" class="form-check-input mt-0 row-check"
+                    <input type="checkbox" class="form-check-input mt-0" data-bulk-row
                       aria-label="Select: Comparative transcriptomics">
                   </td>
                   <td>
@@ -705,39 +705,5 @@
 </div>
 
 <script src="/assets/js/view-toggle.js"></script>
-<script>
-  // Bulk selection
-  const bulkBar  = document.getElementById('c-bulk-bar');
-  const selectAll = document.getElementById('c-select-all');
-
-  function updateBulk() {
-    const checked = document.querySelectorAll('.row-check:checked');
-    const total   = document.querySelectorAll('.row-check');
-    bulkBar.hidden = checked.length === 0;
-    if (selectAll) {
-      selectAll.checked       = checked.length === total.length && total.length > 0;
-      selectAll.indeterminate = checked.length > 0 && checked.length < total.length;
-      if (selectAll.indeterminate) {
-        selectAll.setAttribute('aria-label', 'Some records selected — click to select all');
-      } else if (selectAll.checked) {
-        selectAll.setAttribute('aria-label', 'All records selected — click to deselect all');
-      } else {
-        selectAll.setAttribute('aria-label', 'Select all records on this page');
-      }
-    }
-  }
-
-  document.querySelectorAll('.row-check').forEach(cb => {
-    cb.addEventListener('change', updateBulk);
-  });
-
-  if (selectAll) {
-    selectAll.addEventListener('change', () => {
-      document.querySelectorAll('.row-check').forEach(cb => {
-        cb.checked = selectAll.checked;
-      });
-      updateBulk();
-    });
-  }
-</script>
+<script src="/assets/js/bulk-select.js"></script>
 <script src="/assets/js/sidebar-toggle.js"></script>

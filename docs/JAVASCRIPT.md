@@ -75,6 +75,22 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `bulk-select.js`
+
+**Purpose:** Row selection + bulk-action bar for backoffice result tables. Shows `[data-bulk-bar]` while any `[data-bulk-row]` checkbox is checked; a `[data-bulk-all]` master checkbox selects/clears all rows and tracks the indeterminate state with a matching `aria-label`.
+
+**Loaded by:** `curate.html`, `search-filter-first.html`
+
+**Listens for:** `change` on `[data-bulk-row]` and `[data-bulk-all]`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
+
+**Note:** Dormant for now — the backoffice list pages (`curate`, `search-filter-first`) are WIP (backoffice not settled), so the bulk bar isn't in active use yet.
+
+---
+
 ### `popovers.js`
 
 **Purpose:** Initialises Bootstrap popovers (`[data-bs-toggle="popover"]`), e.g. the identifier IDs shown on hover over ORCID/UGent icons in author lists. Triggers inside links need `data-bs-container="body"`.
