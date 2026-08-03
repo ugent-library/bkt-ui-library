@@ -39,7 +39,7 @@ const runtime = /^(htmx-|if$|if-)/;
 // Defined-but-unused on purpose: applied by JS, Bootstrap API, or documented
 // classes kept for old-backoffice parity but not yet demoed (see AGENT.md).
 const intentional = new Set([
-  'no-tokens', 'token-bar__token--negated',            // applied by JS (token bar)
+  'no-tokens', 'token-bar__token--negated',            // token-bar states — dormant, token bar being reworked
   'u-notifications', 'bt-toolbar__middle', 'bt-panel__body--form',
   'u-main__sidebar--border-left', 'alert--seamless-inbox', // kept API, undemoed
   // Detail-globe SVG illustration — kept for a planned page, not yet wired (_svg-animations.scss)
