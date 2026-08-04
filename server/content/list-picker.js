@@ -30,12 +30,15 @@ module.exports = function renderListPicker(prefix, q = '', created = false) {
 
   if (created) return renderRow(prefix, slugify(query), query, true);
 
-  const matches = LISTS.filter(list => list.name.toLowerCase().includes(query.toLowerCase()));
-  if (matches.length) {
-    return matches.map(list => renderRow(prefix, list.slug, list.name, list.member)).join('');
-  }
+  const needle = query.toLowerCase();
+  const matches = LISTS.filter(list => list.name.toLowerCase().includes(needle));
+  const rows = matches.map(list => renderRow(prefix, list.slug, list.name, list.member)).join('');
 
-  return `
+  // No create row at an exact name: the list is already in the checklist, which
+  // is what refuses duplicates.
+  if (!query || LISTS.some(list => list.name.toLowerCase() === needle)) return rows;
+
+  return rows + `
 <form hx-post="/lists" hx-target="#${prefix}-lists" hx-swap="innerHTML" hx-indicator="#${prefix}-saving">
   <input type="hidden" name="name" value="${escape(query)}">
   <button type="submit" class="dropdown-item">

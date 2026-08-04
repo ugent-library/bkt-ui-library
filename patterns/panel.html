@@ -46,7 +46,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Create from the search field</h2>
-    <p class="mb-4">When the typed name matches none of your lists, the checklist body holds a create row instead: naming a new list is the same keystrokes as looking for an existing one. The row is a real form — a submit button and a hidden <code>name</code> carrying the typed value — server-rendered, because the server is what knows whether anything matched.</p>
+    <p class="mb-4">The create row sits under whatever matched, so naming a new list is the same keystrokes as looking for an existing one. It appears whenever the typed text is not exactly one of your lists — including when something partly matched, so a name like &ldquo;Reading&rdquo; is still available next to &ldquo;Reading list&rdquo;. At an exact name it disappears: that list is already in the checklist, and that is what refuses duplicates. The row is a real form, server-rendered, because the server is what knows whether anything matched.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Nothing matches — create the typed name</h3>
@@ -74,6 +74,35 @@
     </div>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Partly matched — create is still offered</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add to list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p4-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p4-search" name="q"
+                value="Reading" placeholder="Search your lists&hellip;" autocomplete="off">
+              <button type="submit" class="visually-hidden">Search lists</button>
+            </form>
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p4-reading" checked>
+              <label class="form-check-label" for="p4-reading">Reading list</label>
+            </div>
+            <form action="/lists" method="post">
+              <input type="hidden" name="name" value="Reading">
+              <button type="submit" class="dropdown-item">
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i> Create &ldquo;Reading&rdquo;
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
       <h3 class="ds-demo-label">No lists yet — the panel opens in the create state</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
@@ -91,7 +120,9 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">With no lists there is nothing to search, so the create form is the whole body (<code>bt-panel__body--form</code>). Creating the first list returns the picker with that list ticked.</p>
+    <p class="mb-4 col-8 text-muted small">With no lists there is nothing to search, so the create form is the whole body (<code>bt-panel__body--form</code>). Creating the first list returns the picker with that list ticked.</p>
+
+    <p class="mb-0 col-8 text-muted small">The panel has no duplicate-name error, because it cannot reach one: the create row is gone before a name can collide. Renaming can still collide, so the refusal lives on <a href="/templates/biblio-researcher/list-edit.html?state=name-taken">the list edit form</a>.</p>
   </section>
 
   <section class="ds-section">
@@ -122,22 +153,18 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Logged out</h2>
-    <p class="mb-4">Anonymous visitors and crawlers get the button; opening it asks for a login, with the record in the return URL. The template is the same either way — <code>GET /lists/panel</code> returns this body when there is no session.</p>
+    <p class="mb-4">Anonymous visitors and crawlers get the button, and it goes straight to login carrying the record in the return URL. After login they land back on the record with the panel open. No panel, no second click.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">No session — the panel prompts</h3>
-      <div class="ds-demo-body">
-        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
-          <p class="bt-panel__title">Add to list</p>
-          <div class="bt-panel__body bt-panel__body--form">
-            <div class="w-100">
-              <p class="mb-3">Lists live in your Biblio account.</p>
-              <a href="#" class="btn btn-secondary btn-sm">Log in to save this work</a>
-            </div>
-          </div>
-        </div>
+      <h3 class="ds-demo-label">No session — the button is a login link</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <a href="/login?return_to=/works/01K9XTVXD41Z%3Fadd_to_list%3D1" class="btn btn-ghost btn-sm" rel="nofollow">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </a>
       </div>
     </div>
+
+    <p class="mb-0 col-8 text-muted small"><code>rel="nofollow"</code> keeps crawlers out of the login flow.</p>
   </section>
 
   <section class="ds-section">
