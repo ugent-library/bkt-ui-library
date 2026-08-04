@@ -100,62 +100,43 @@
     <p class="mb-4">The search field triggers on <code>input</code>, never <code>keyup</code>: the field's own ✕ fires <code>input</code> and <code>search</code> only, so on <code>keyup</code> the list stays filtered after a clear.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Recipe — the loaded panel</h3>
+      <h3 class="ds-demo-label">Recipe — the toggle a template writes</h3>
       <div class="ds-demo-body" data-surface="public">
         <div class="dropdown">
           <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
             data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-            aria-label="Add to list: Example record title">
+            aria-label="Add to list: Example record title"
+            hx-get="/lists/panel?work=kit" hx-trigger="click once"
+            hx-target="#atl-kit-panel" hx-swap="innerHTML" hx-indicator="#atl-kit-loading">
             <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
           </button>
-          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide show position-static" role="dialog" aria-label="Add to list">
-            <p class="bt-panel__title">Add to list</p>
-            <div class="bt-panel__body">
-              <form class="w-100" action="/lists" method="get"
-                hx-get="/lists" hx-target="#atl-kit-lists" hx-swap="innerHTML" hx-indicator="#atl-kit-searching">
-                <label class="visually-hidden" for="atl-kit-search">Search your lists</label>
-                <input type="search" class="form-control form-control-sm" id="atl-kit-search" name="q"
-                  placeholder="Search your lists&hellip;" autocomplete="off"
-                  hx-get="/lists" hx-trigger="input changed delay:200ms, search"
-                  hx-target="#atl-kit-lists" hx-swap="innerHTML" hx-indicator="#atl-kit-searching">
-                <span id="atl-kit-searching" class="htmx-indicator text-muted small" aria-live="polite">Searching&hellip;</span>
-                <span id="atl-kit-saving" class="htmx-indicator text-muted small" aria-live="polite">Saving&hellip;</span>
-                <button type="submit" class="visually-hidden">Search lists</button>
-              </form>
-            </div>
-            <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists" id="atl-kit-lists">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="atl-kit-reading" checked
-                  hx-delete="/lists/reading" hx-swap="none" hx-indicator="#atl-kit-saving">
-                <label class="form-check-label" for="atl-kit-reading">Reading list</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="atl-kit-refs"
-                  hx-put="/lists/refs" hx-swap="none" hx-indicator="#atl-kit-saving">
-                <label class="form-check-label" for="atl-kit-refs">Quantum computing refs</label>
-              </div>
-            </div>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-kit-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-kit-loading" aria-live="polite">Loading your lists&hellip;</p>
           </div>
         </div>
       </div>
     </div>
-    <p class="mb-4 col-8 text-muted small">Live: type to filter, clear to get the list back. The demo renders the menu open and in flow — <strong>drop <code>show position-static</code> in real usage</strong>; the kit clips absolutely-positioned popups.</p>
 
-    <p class="mb-3">A template writes only the toggle and an empty menu — the panel above is a fragment the server returns on first open, per record, the way raven does it. <code>hx-*</code> URLs are stubs.</p>
+    <p class="mb-0 col-8 text-muted small">A template writes only the toggle and an empty menu; everything inside is the fragment the server returns on first open. <code>hx-*</code> URLs are stubs. The mock keeps no membership, so a tick is forgotten when the list re-renders.</p>
+  </section>
 
-    <div class="ds-code">
-      <pre>&lt;div class="dropdown"&gt;
-  &lt;button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-    aria-label="Add to list: &lt;record title&gt;"
-    hx-get="/lists/panel?work=s01" hx-trigger="click once"
-    hx-target="#atl-s01-panel" hx-swap="innerHTML" hx-indicator="#atl-s01-loading"&gt;
-    &lt;i class="if if-bookmark-line" aria-hidden="true"&gt;&lt;/i&gt; Add to list
-  &lt;/button&gt;
-  &lt;div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s01-panel" role="dialog" aria-label="Add to list"&gt;
-    &lt;p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s01-loading" aria-live="polite"&gt;Loading your lists&amp;hellip;&lt;/p&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</pre>
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Logged out</h2>
+    <p class="mb-4">Anonymous visitors and crawlers get the button; opening it asks for a login, with the record in the return URL. The template is the same either way — <code>GET /lists/panel</code> returns this body when there is no session.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No session — the panel prompts</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add to list</p>
+          <div class="bt-panel__body bt-panel__body--form">
+            <div class="w-100">
+              <p class="mb-3">Lists live in your Biblio account.</p>
+              <a href="#" class="btn btn-secondary btn-sm">Log in to save this work</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -172,7 +153,7 @@
       </thead>
       <tbody class="small">
         <tr>
-          <td>Add-to-list picker — every public work card and both work-detail headers: <code>public-works.html</code>, the researcher, project and organisation detail pages, and the 23 generated cards in <code>server/content/search-result-cards.js</code></td>
+          <td>Add-to-list picker — <code>public-works.html</code>, both work-detail pages, the researcher, project and organisation detail pages, and the 23 generated cards in <code>server/content/search-result-cards.js</code></td>
           <td><code>bt-panel bt-panel--wide</code> as a <code>.dropdown-menu</code>, loaded on first open; ids prefixed <code>atl-&lt;record&gt;-</code></td>
           <td><code>/lists/panel</code>, <code>/lists</code> — kit server, <code>server/content/list-panel.js</code> and <code>list-picker.js</code></td>
         </tr>
@@ -189,6 +170,5 @@
       </tbody>
     </table>
 
-    <p class="col-8 mb-0 text-muted small"><strong>Open question:</strong> the picker renders for anonymous visitors, where there are no lists to add to. Hiding it when logged out, or showing it and prompting login, is undecided.</p>
   </section>
 </div>

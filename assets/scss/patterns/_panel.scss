@@ -1,8 +1,3 @@
-/* -- bt-panel — generic popover panel: title + scrollable body + actions footer.
-   Used by add-to-list (in a dropdown, content-sized) and the filter editor
-   (bt-panel--wide, overlay). Body layouts (--checklist/--boolean/--year/--form)
-   are generic layouts — a column of radios, a two-input row — not filter concepts. */
-
 .bt-panel {
   background: var(--bt-white);
   border: var(--bt-border);
@@ -14,8 +9,6 @@
   max-width: min(24rem, 100vw - 2rem);
 }
 
-/* Wider variant — year ranges, people search, long labels. The container's own
-   width utility (e.g. w-100 on the overlay) governs the actual width; this caps it. */
 .bt-panel--wide {
   max-width: 480px;
   min-width: min(480px, 100vw - 2rem);
@@ -75,6 +68,11 @@
   flex: 0 0 auto;
 }
 .bt-panel__body .form-check:hover { background-color: var(--bt-gray-50); }
+
+.bt-panel__body .dropdown-item {
+  padding: var(--bt-sp-2) var(--bt-sp-4);
+}
+
 .bt-panel__body .form-check-label {
   font-size: var(--bt-text-base);
   color: var(--bt-gray-700);
