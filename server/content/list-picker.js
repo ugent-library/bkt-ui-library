@@ -1,10 +1,8 @@
 /**
- * Add-to-list picker body — the search-first panel in patterns/panel.html.
- * Returns the checklist rows matching ?q=, or a single create row when nothing
- * matches. `created` returns the just-created list as one ticked row.
- *
- * Membership is stateless here: "Reading list" always renders as the member,
- * so a tick made in the browser is lost when the list re-renders.
+ * The picker's list body: rows matching ?q=, a create row when nothing matches,
+ * or with `created`, the new list as one ticked row.
+ * Membership is stateless — "Reading list" is always the member, so a tick made
+ * in the browser is lost on re-render.
  */
 
 const slugify = require('./slugify');

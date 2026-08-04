@@ -14,9 +14,18 @@ function card({ id, badges, title, authors, line }) {
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: ${title}">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: ${title}">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: ${title}"
+            hx-get="/lists/panel?work=${id}" hx-trigger="click once"
+            hx-target="#atl-${id}-panel" hx-swap="innerHTML" hx-indicator="#atl-${id}-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-${id}-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-${id}-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -30,7 +39,7 @@ function card({ id, badges, title, authors, line }) {
 }
 
 const oa = '<span class="badge text-bg-success">Open access</span>';
-const embargo = '<span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>';
+const embargo = '<span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span>';
 const type = (label) => `<span class="bt-work-card__meta-item">${label}</span>`;
 const restricted = '<span class="badge text-bg-warning">Restricted access</span>';
 
