@@ -86,9 +86,10 @@
 
 
           <!-- Journal info — title links to the ISSN-scoped works search (Identifier chip),
-               Rule 3: a journal names a set of works. -->
+               Rule 3: a journal names a set of works. Harvard card format:
+               docs/WORK-CARD-REFERENCE-STYLES.md. -->
           <p class="mb-4">
-            <a href="public-works.html?issn=2572-2611"><em>Plants People Planet</em></a> · Vol. 8, No. 1 · 2026 · pp. 14–19
+            (<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.
           </p>
 
           <!-- Primary actions. CTA rules: raven#141; file selection: docs/DOMAIN-VOCABULARY.md.
@@ -120,13 +121,19 @@
               Open access from <time datetime="2027-05-01">01/05/2027</time>
             </span>
             <!-- @state -->
-            <button type="button" class="btn btn-secondary"
-              hx-post="/lists/add"
-              hx-vals='{"id":"01K9XTVXD41Z"}'
-              hx-swap="none">
-              <i class="if if-bookmark-line" aria-hidden="true"></i>
-              Add to list
-            </button>
+            <div class="dropdown">
+              <button type="button" class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers"
+                hx-get="/lists/panel?work=wd" hx-trigger="click once"
+                hx-target="#atl-wd-panel" hx-swap="innerHTML" hx-indicator="#atl-wd-loading">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-wd-panel" role="dialog" aria-label="Add to list">
+                <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wd-loading" aria-live="polite">Loading your lists&hellip;</p>
+              </div>
+            </div>
             <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#cite-modal">
               <i class="if if-double-quotes" aria-hidden="true"></i>
               Cite

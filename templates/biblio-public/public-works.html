@@ -703,38 +703,14 @@
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
                   data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-                  aria-label="Add to list: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks">
+                  aria-label="Add to list: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks"
+                  hx-get="/lists/panel?work=s01" hx-trigger="click once"
+                  hx-target="#atl-s01-panel" hx-swap="innerHTML" hx-indicator="#atl-s01-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <!-- Editor-checklist pattern (patterns/filter-picker.html). raven lazy-loads
-                     this via hx-get /b/works/{id}/lists; shown inline here. -->
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
-                  <p class="bt-panel__title">Add to list</p>
-                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s01-reading" checked
-                        hx-delete="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s01-reading">Reading list</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s01-quantum"
-                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s01-quantum">Quantum computing refs</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s01-review"
-                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s01-review">To cite in review</label>
-                    </div>
-                  </div>
-                  <div class="bt-panel__actions">
-                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label for="atl-s01-new" class="visually-hidden">New list name</label>
-                      <input type="text" id="atl-s01-new" name="name" class="form-control form-control-sm"
-                        placeholder="Create a new list&hellip;" required>
-                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
-                    </form>
-                  </div>
+                <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s01-panel" role="dialog" aria-label="Add to list">
+                  <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s01-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
             </div>
@@ -771,36 +747,13 @@
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
                   data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-                  aria-label="Add to list: Quantum error correction in near-term devices">
+                  aria-label="Add to list: Quantum error correction in near-term devices"
+                  hx-get="/lists/panel?work=s02" hx-trigger="click once"
+                  hx-target="#atl-s02-panel" hx-swap="innerHTML" hx-indicator="#atl-s02-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
-                  <p class="bt-panel__title">Add to list</p>
-                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s02-reading"
-                        hx-put="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s02-reading">Reading list</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s02-quantum"
-                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s02-quantum">Quantum computing refs</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s02-review"
-                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s02-review">To cite in review</label>
-                    </div>
-                  </div>
-                  <div class="bt-panel__actions">
-                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label for="atl-s02-new" class="visually-hidden">New list name</label>
-                      <input type="text" id="atl-s02-new" name="name" class="form-control form-control-sm"
-                        placeholder="Create a new list&hellip;" required>
-                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
-                    </form>
-                  </div>
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s02-panel" role="dialog" aria-label="Add to list">
+                  <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s02-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
             </div>
@@ -835,36 +788,13 @@
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
                   data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-                  aria-label="Add to list: Benchmark results for variational quantum eigensolver">
+                  aria-label="Add to list: Benchmark results for variational quantum eigensolver"
+                  hx-get="/lists/panel?work=s03" hx-trigger="click once"
+                  hx-target="#atl-s03-panel" hx-swap="innerHTML" hx-indicator="#atl-s03-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
-                  <p class="bt-panel__title">Add to list</p>
-                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s03-reading"
-                        hx-put="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s03-reading">Reading list</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s03-quantum"
-                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s03-quantum">Quantum computing refs</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s03-review"
-                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s03-review">To cite in review</label>
-                    </div>
-                  </div>
-                  <div class="bt-panel__actions">
-                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label for="atl-s03-new" class="visually-hidden">New list name</label>
-                      <input type="text" id="atl-s03-new" name="name" class="form-control form-control-sm"
-                        placeholder="Create a new list&hellip;" required>
-                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
-                    </form>
-                  </div>
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s03-panel" role="dialog" aria-label="Add to list">
+                  <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s03-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
             </div>
@@ -897,36 +827,13 @@
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
                   data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
-                  aria-label="Add to list: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics">
+                  aria-label="Add to list: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics"
+                  hx-get="/lists/panel?work=s04" hx-trigger="click once"
+                  hx-target="#atl-s04-panel" hx-swap="innerHTML" hx-indicator="#atl-s04-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel" role="dialog" aria-label="Add to list">
-                  <p class="bt-panel__title">Add to list</p>
-                  <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s04-reading"
-                        hx-put="/lists/reading" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s04-reading">Reading list</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s04-quantum"
-                        hx-put="/lists/quantum" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s04-quantum">Quantum computing refs</label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="atl-s04-review"
-                        hx-put="/lists/review" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label class="form-check-label" for="atl-s04-review">To cite in review</label>
-                    </div>
-                  </div>
-                  <div class="bt-panel__actions">
-                    <form class="d-flex gap-2 w-100" hx-post="/lists" hx-target="closest .bt-panel" hx-swap="innerHTML">
-                      <label for="atl-s04-new" class="visually-hidden">New list name</label>
-                      <input type="text" id="atl-s04-new" name="name" class="form-control form-control-sm"
-                        placeholder="Create a new list&hellip;" required>
-                      <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
-                    </form>
-                  </div>
+                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s04-panel" role="dialog" aria-label="Add to list">
+                  <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s04-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
             </div>
@@ -950,7 +857,7 @@
 
         <!-- The 23 raven-type cards below are generated from server/content/search-result-cards.js.
              Regenerate on module change: node scripts snippet in notes/PLAN-work-card.md. Keep the 4 cards above on top. -->
-<li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-01">
+  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-01">
     <div class="card-header">
       <div class="bt-work-card__meta">
         <span class="badge text-bg-success">Open access</span><span class="bt-work-card__meta-item">Journal article</span>
@@ -959,9 +866,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure for climate resilience and biodiversity">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity"
+            hx-get="/lists/panel?work=card-feed-01" hx-trigger="click once"
+            hx-target="#atl-card-feed-01-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-01-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-01-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-01-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -991,9 +907,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests: a field guide to the trees of Flemish cities">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban forests: a field guide to the trees of Flemish cities">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban forests: a field guide to the trees of Flemish cities"
+            hx-get="/lists/panel?work=card-feed-02" hx-trigger="click once"
+            hx-target="#atl-card-feed-02-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-02-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-02-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-02-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1014,9 +939,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Handbook of urban ecology">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Handbook of urban ecology">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Handbook of urban ecology"
+            hx-get="/lists/panel?work=card-feed-03" hx-trigger="click once"
+            hx-target="#atl-card-feed-03-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-03-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-03-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-03-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1038,9 +972,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Canopy cover in Flanders: patterns and policy">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Canopy cover in Flanders: patterns and policy">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Canopy cover in Flanders: patterns and policy"
+            hx-get="/lists/panel?work=card-feed-04" hx-trigger="click once"
+            hx-target="#atl-card-feed-04-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-04-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-04-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-04-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1061,9 +1004,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Review of: Urban forests: a field guide to the trees of Flemish cities">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Review of: Urban forests: a field guide to the trees of Flemish cities">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Review of: Urban forests: a field guide to the trees of Flemish cities"
+            hx-get="/lists/panel?work=card-feed-05" hx-trigger="click once"
+            hx-target="#atl-card-feed-05-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-05-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-05-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-05-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1084,9 +1036,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Photosynthesis">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Photosynthesis">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Photosynthesis"
+            hx-get="/lists/panel?work=card-feed-06" hx-trigger="click once"
+            hx-target="#atl-card-feed-06-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-06-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-06-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-06-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1107,9 +1068,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Special issue: match-fixing and integrity in European football">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Special issue: match-fixing and integrity in European football">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Special issue: match-fixing and integrity in European football"
+            hx-get="/lists/panel?work=card-feed-07" hx-trigger="click once"
+            hx-target="#atl-card-feed-07-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-07-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-07-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-07-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1131,9 +1101,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Frequency-domain parameter tracking of single-actuated multi-body mechanisms">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Frequency-domain parameter tracking of single-actuated multi-body mechanisms">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Frequency-domain parameter tracking of single-actuated multi-body mechanisms"
+            hx-get="/lists/panel?work=card-feed-08" hx-trigger="click once"
+            hx-target="#atl-card-feed-08-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-08-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-08-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-08-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1154,9 +1133,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Postural sway under dual-task conditions in older adults">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Postural sway under dual-task conditions in older adults">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Postural sway under dual-task conditions in older adults"
+            hx-get="/lists/panel?work=card-feed-09" hx-trigger="click once"
+            hx-target="#atl-card-feed-09-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-09-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-09-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-09-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1177,9 +1165,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: High-resolution soil moisture mapping with distributed sensors">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: High-resolution soil moisture mapping with distributed sensors">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: High-resolution soil moisture mapping with distributed sensors"
+            hx-get="/lists/panel?work=card-feed-10" hx-trigger="click once"
+            hx-target="#atl-card-feed-10-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-10-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-10-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-10-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1200,9 +1197,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Linked data for library collections: five years of lessons">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Linked data for library collections: five years of lessons">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Linked data for library collections: five years of lessons"
+            hx-get="/lists/panel?work=card-feed-11" hx-trigger="click once"
+            hx-target="#atl-card-feed-11-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-11-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-11-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-11-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1223,9 +1229,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Canopy microclimate buffering across European forests: a continental synthesis">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis"
+            hx-get="/lists/panel?work=card-feed-12" hx-trigger="click once"
+            hx-target="#atl-card-feed-12-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-12-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-12-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-12-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1246,9 +1261,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: The cost structure of diamond open access publishing in Flanders">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: The cost structure of diamond open access publishing in Flanders">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: The cost structure of diamond open access publishing in Flanders"
+            hx-get="/lists/panel?work=card-feed-13" hx-trigger="click once"
+            hx-target="#atl-card-feed-13-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-13-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-13-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-13-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1269,9 +1293,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: State of the urban forest in Flanders 2025">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: State of the urban forest in Flanders 2025">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: State of the urban forest in Flanders 2025"
+            hx-get="/lists/panel?work=card-feed-14" hx-trigger="click once"
+            hx-target="#atl-card-feed-14-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-14-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-14-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-14-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1286,15 +1319,24 @@
   <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-15">
     <div class="card-header">
       <div class="bt-work-card__meta">
-        <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span><span class="bt-work-card__meta-item">Doctoral thesis</span>
+        <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span><span class="bt-work-card__meta-item">Doctoral thesis</span>
       </div>
       <div class="bt-work-card__actions">
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques"
+            hx-get="/lists/panel?work=card-feed-15" hx-trigger="click once"
+            hx-target="#atl-card-feed-15-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-15-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-15-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-15-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1315,9 +1357,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: De stad die zichzelf plant">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: De stad die zichzelf plant">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: De stad die zichzelf plant"
+            hx-get="/lists/panel?work=card-feed-16" hx-trigger="click once"
+            hx-target="#atl-card-feed-16-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-16-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-16-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-16-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1338,9 +1389,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Universiteit plant stadsbos aan rand van Gent">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Universiteit plant stadsbos aan rand van Gent">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Universiteit plant stadsbos aan rand van Gent"
+            hx-get="/lists/panel?work=card-feed-17" hx-trigger="click once"
+            hx-target="#atl-card-feed-17-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-17-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-17-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-17-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1361,9 +1421,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Why repositories should love preprints">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Why repositories should love preprints">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Why repositories should love preprints"
+            hx-get="/lists/panel?work=card-feed-18" hx-trigger="click once"
+            hx-target="#atl-card-feed-18-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-18-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-18-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-18-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1384,9 +1453,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Waarom de Boekentoren een schatkamer is">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Waarom de Boekentoren een schatkamer is">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Waarom de Boekentoren een schatkamer is"
+            hx-get="/lists/panel?work=card-feed-19" hx-trigger="click once"
+            hx-target="#atl-card-feed-19-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-19-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-19-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-19-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1407,9 +1485,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Open science at scale: infrastructure for a university">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Open science at scale: infrastructure for a university">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Open science at scale: infrastructure for a university"
+            hx-get="/lists/panel?work=card-feed-20" hx-trigger="click once"
+            hx-target="#atl-card-feed-20-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-20-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-20-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-20-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1430,9 +1517,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025"
+            hx-get="/lists/panel?work=card-feed-21" hx-trigger="click once"
+            hx-target="#atl-card-feed-21-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-21-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-21-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-21-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1453,9 +1549,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: canopyR: canopy cover estimation toolkit">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: canopyR: canopy cover estimation toolkit">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: canopyR: canopy cover estimation toolkit"
+            hx-get="/lists/panel?work=card-feed-22" hx-trigger="click once"
+            hx-target="#atl-card-feed-22-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-22-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-22-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-22-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -1476,9 +1581,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Boekentoren restoration: photographic record 2012–2023">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Boekentoren restoration: photographic record 2012–2023">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Boekentoren restoration: photographic record 2012–2023"
+            hx-get="/lists/panel?work=card-feed-23" hx-trigger="click once"
+            hx-target="#atl-card-feed-23-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-23-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-23-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-23-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">

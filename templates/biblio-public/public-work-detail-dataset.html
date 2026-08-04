@@ -74,13 +74,19 @@
               <i class="if if-external-link" aria-hidden="true"></i>
               Access dataset at Zenodo
             </a>
-            <button type="button" class="btn btn-secondary"
-              hx-post="/lists/add"
-              hx-vals='{"id":"01K9XTW2R8FQ"}'
-              hx-swap="none">
-              <i class="if if-bookmark-line" aria-hidden="true"></i>
-              Add to list
-            </button>
+            <div class="dropdown">
+              <button type="button" class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                aria-label="Add to list: Ghent urban forest inventory and microclimate measurements 2020–2025"
+                hx-get="/lists/panel?work=wdd" hx-trigger="click once"
+                hx-target="#atl-wdd-panel" hx-swap="innerHTML" hx-indicator="#atl-wdd-loading">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-wdd-panel" role="dialog" aria-label="Add to list">
+                <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wdd-loading" aria-live="polite">Loading your lists&hellip;</p>
+              </div>
+            </div>
             <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#cite-modal">
               <i class="if if-double-quotes" aria-hidden="true"></i>
               Cite

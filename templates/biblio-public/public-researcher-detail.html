@@ -254,9 +254,19 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure for climate resilience and biodiversity">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity"
+            hx-get="/lists/panel?work=card-feed-01" hx-trigger="click once"
+            hx-target="#atl-card-feed-01-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-01-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-01-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-01-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -285,9 +295,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Canopy microclimate buffering across European forests: a continental synthesis">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis"
+            hx-get="/lists/panel?work=card-feed-12" hx-trigger="click once"
+            hx-target="#atl-card-feed-12-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-12-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-12-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-12-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">
@@ -307,9 +326,18 @@
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
           <i class="if if-double-quotes" aria-hidden="true"></i> Cite
         </button>
-        <button type="button" class="btn btn-ghost btn-sm" aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025">
-          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
-        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025"
+            hx-get="/lists/panel?work=card-feed-21" hx-trigger="click once"
+            hx-target="#atl-card-feed-21-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-21-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-21-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-21-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="card-body">

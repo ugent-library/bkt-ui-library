@@ -3,18 +3,26 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Panel</h1>
-    <p class="lead">A generic popover panel — a titled header, a scrollable body, and an actions footer — shown inside a dropdown or overlay. It sizes to its content. The <a href="/patterns/filter-picker.html">filter editor</a> is a wider (480px) specialisation of the same chrome.</p>
+    <p class="lead">A generic popover panel — a titled header, one or more bodies, an optional actions footer — shown inside a dropdown or overlay. Two bodies stack into the <strong>search-first</strong> shape: a search field pinned at the top, a scrollable checklist below. The <a href="/patterns/filter-picker.html">filter editor</a> is the same chrome with an Apply/Cancel footer.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Anatomy</h2>
-    <p class="mb-4"><code>bt-panel</code> wraps three parts: <code>bt-panel__title</code>, a <code>bt-panel__body</code> (add <code>bt-panel__body--checklist</code> to stack option rows; the body scrolls past ~240px), and a <code>bt-panel__actions</code> footer. Option rows are plain Bootstrap <code>form-check</code>. Live use: the add-to-list picker on <a href="/templates/biblio-public/public-works.html">public-works</a>.</p>
+    <p class="mb-4"><code>bt-panel</code> wraps a <code>bt-panel__title</code>, one or more <code>bt-panel__body</code> blocks, and an optional <code>bt-panel__actions</code> footer. Each body draws its own top border, so stacking two gives the search-first divider for free: a plain body holds the search field, the <code>bt-panel__body--checklist</code> below it takes the option rows and scrolls past ~240px. Rows are plain Bootstrap <code>form-check</code>. <code>bt-panel--wide</code> fixes the width at 480px — the list body is swapped as you type, and a content-sized panel would resize with it.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Add-to-list picker</h3>
+      <h3 class="ds-demo-label">Add-to-list picker — search-first</h3>
       <div class="ds-demo-body">
-        <div class="bt-panel" role="dialog" aria-label="Add to list">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
           <p class="bt-panel__title">Add to list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p-search" name="q"
+                placeholder="Search your lists&hellip;" autocomplete="off">
+              <button type="submit" class="visually-hidden">Search lists</button>
+            </form>
+          </div>
           <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="p-reading" checked>
@@ -29,20 +37,158 @@
               <label class="form-check-label" for="p-review">To cite in review</label>
             </div>
           </div>
-          <div class="bt-panel__actions">
-            <form class="d-flex gap-2 w-100">
-              <label for="p-new" class="visually-hidden">New list name</label>
-              <input type="text" id="p-new" class="form-control form-control-sm" placeholder="Create a new list&hellip;">
-              <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; ticking a box adds or removes the work and leaves the panel open. One field searches and names — there is no separate "new list" field.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Create from the search field</h2>
+    <p class="mb-4">When the typed name matches none of your lists, the checklist body holds a create row instead: naming a new list is the same keystrokes as looking for an existing one. The row is a real form — a submit button and a hidden <code>name</code> carrying the typed value — server-rendered, because the server is what knows whether anything matched.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Nothing matches — create the typed name</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add to list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p2-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p2-search" name="q"
+                value="Coastal erosion" placeholder="Search your lists&hellip;" autocomplete="off">
+              <button type="submit" class="visually-hidden">Search lists</button>
+            </form>
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist">
+            <form action="/lists" method="post">
+              <input type="hidden" name="name" value="Coastal erosion">
+              <button type="submit" class="dropdown-item">
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i> Create &ldquo;Coastal erosion&rdquo;
+              </button>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No lists yet — the panel opens in the create state</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add to list</p>
+          <div class="bt-panel__body bt-panel__body--form">
+            <form class="w-100" action="/lists" method="post">
+              <label for="p3-new" class="form-label">Name your first list</label>
+              <div class="d-flex gap-2">
+                <input type="text" id="p3-new" name="name" class="form-control form-control-sm" required>
+                <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0 col-8 text-muted small">With no lists there is nothing to search, so the create form is the whole body (<code>bt-panel__body--form</code>). Creating the first list returns the picker with that list ticked.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">In a dropdown</h2>
-    <p class="mb-0">On result cards the panel is the menu of a Bootstrap dropdown: put <code>bt-panel</code> on the <code>.dropdown-menu</code> with <code>p-0</code>, and give the toggle <code>data-bs-auto-close="outside"</code> so toggling checkboxes doesn't close it. HTMX drives membership (<code>hx-put</code> / <code>hx-delete</code>) and create (<code>hx-post</code>), mirroring raven's <code>AddToListComponent</code>.</p>
+    <p class="mb-4">On result cards the panel is the menu of a Bootstrap dropdown: <code>bt-panel bt-panel--wide</code> on the <code>.dropdown-menu</code> with <code>p-0</code>, and <code>data-bs-auto-close="outside"</code> on the toggle so ticking a box doesn't close it. HTMX drives the three jobs — <code>hx-get</code> re-renders the checklist, <code>hx-put</code> / <code>hx-delete</code> write membership with <code>hx-swap="none"</code> so the typed query survives, <code>hx-post</code> creates. Mirrors raven's <code>AddToListComponent</code>.</p>
+    <p class="mb-4">The search field triggers on <code>input</code>, never <code>keyup</code>: the field's own ✕ fires <code>input</code> and <code>search</code> only, so on <code>keyup</code> the list stays filtered after a clear.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Recipe — the loaded panel</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Example record title">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide show position-static" role="dialog" aria-label="Add to list">
+            <p class="bt-panel__title">Add to list</p>
+            <div class="bt-panel__body">
+              <form class="w-100" action="/lists" method="get"
+                hx-get="/lists" hx-target="#atl-kit-lists" hx-swap="innerHTML" hx-indicator="#atl-kit-searching">
+                <label class="visually-hidden" for="atl-kit-search">Search your lists</label>
+                <input type="search" class="form-control form-control-sm" id="atl-kit-search" name="q"
+                  placeholder="Search your lists&hellip;" autocomplete="off"
+                  hx-get="/lists" hx-trigger="input changed delay:200ms, search"
+                  hx-target="#atl-kit-lists" hx-swap="innerHTML" hx-indicator="#atl-kit-searching">
+                <span id="atl-kit-searching" class="htmx-indicator text-muted small" aria-live="polite">Searching&hellip;</span>
+                <span id="atl-kit-saving" class="htmx-indicator text-muted small" aria-live="polite">Saving&hellip;</span>
+                <button type="submit" class="visually-hidden">Search lists</button>
+              </form>
+            </div>
+            <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists" id="atl-kit-lists">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="atl-kit-reading" checked
+                  hx-delete="/lists/reading" hx-swap="none" hx-indicator="#atl-kit-saving">
+                <label class="form-check-label" for="atl-kit-reading">Reading list</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="atl-kit-refs"
+                  hx-put="/lists/refs" hx-swap="none" hx-indicator="#atl-kit-saving">
+                <label class="form-check-label" for="atl-kit-refs">Quantum computing refs</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="mb-4 col-8 text-muted small">Live: type to filter, clear to get the list back. The demo renders the menu open and in flow — <strong>drop <code>show position-static</code> in real usage</strong>; the kit clips absolutely-positioned popups.</p>
+
+    <p class="mb-3">A template writes only the toggle and an empty menu — the panel above is a fragment the server returns on first open, per record, the way raven does it. <code>hx-*</code> URLs are stubs.</p>
+
+    <div class="ds-code">
+      <pre>&lt;div class="dropdown"&gt;
+  &lt;button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+    aria-label="Add to list: &lt;record title&gt;"
+    hx-get="/lists/panel?work=s01" hx-trigger="click once"
+    hx-target="#atl-s01-panel" hx-swap="innerHTML" hx-indicator="#atl-s01-loading"&gt;
+    &lt;i class="if if-bookmark-line" aria-hidden="true"&gt;&lt;/i&gt; Add to list
+  &lt;/button&gt;
+  &lt;div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s01-panel" role="dialog" aria-label="Add to list"&gt;
+    &lt;p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s01-loading" aria-live="polite"&gt;Loading your lists&amp;hellip;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Where the panel is used</h2>
+
+    <table class="table table-sm align-middle" aria-label="Places bt-panel is used">
+      <thead class="text-uppercase text-muted small">
+        <tr>
+          <th scope="col">Place</th>
+          <th scope="col">Composition</th>
+          <th scope="col">Wired by</th>
+        </tr>
+      </thead>
+      <tbody class="small">
+        <tr>
+          <td>Add-to-list picker — every public work card and both work-detail headers: <code>public-works.html</code>, the researcher, project and organisation detail pages, and the 23 generated cards in <code>server/content/search-result-cards.js</code></td>
+          <td><code>bt-panel bt-panel--wide</code> as a <code>.dropdown-menu</code>, loaded on first open; ids prefixed <code>atl-&lt;record&gt;-</code></td>
+          <td><code>/lists/panel</code>, <code>/lists</code> — kit server, <code>server/content/list-panel.js</code> and <code>list-picker.js</code></td>
+        </tr>
+        <tr>
+          <td>Filter editor — <a href="/patterns/filter-picker.html">public works, researcher and project directories</a></td>
+          <td><code>bt-panel bt-panel--wide</code> as a floating overlay; checklist / boolean / year / text body + Apply–Cancel footer</td>
+          <td><code>assets/js/filter-bar.js</code></td>
+        </tr>
+        <tr>
+          <td>Filters tray on small screens</td>
+          <td>The same editor with <code>bt-panel</code> and <code>bt-panel--wide</code> stripped, so it flows inline in the offcanvas</td>
+          <td><code>assets/js/filter-sheet.js</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="col-8 mb-0 text-muted small"><strong>Open question:</strong> the picker renders for anonymous visitors, where there are no lists to add to. Hiding it when logged out, or showing it and prompting login, is undecided.</p>
   </section>
 </div>
