@@ -1,5 +1,6 @@
 // Public search-result cards — one card per raven work type (23).
 // Actions: v1 per raven#141 — Cite + Add to list, no access CTA.
+// Add to list picker: patterns/panel.html.
 // Reference line: docs/WORK-CARD-REFERENCE-STYLES.md (Harvard author-date, card variant).
 // All names, titles, dates: placeholder data.
 

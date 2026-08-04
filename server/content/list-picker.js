@@ -1,6 +1,5 @@
 /**
- * The picker's list body: rows matching ?q=, a create row when nothing matches,
- * or with `created`, the new list as one ticked row.
+ * The picker's list body (patterns/panel.html).
  * Membership is stateless — "Reading list" is always the member, so a tick made
  * in the browser is lost on re-render.
  */

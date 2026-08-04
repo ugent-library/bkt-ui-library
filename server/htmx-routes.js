@@ -184,10 +184,6 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
     return respond(c.renderRelatedWorks(), 420);
   }
 
-  if ((urlPath === '/lists/add' || urlPath === '/lists/add-person') && method === 'POST') {
-    return respond('', 180, 204, 'text/plain; charset=utf-8');
-  }
-
   // ?work=<id> becomes the panel's id prefix.
   if (urlPath === '/lists/panel' && method === 'GET') {
     return respond(c.renderListPanel(`atl-${params.work || 'x'}`), 240);
