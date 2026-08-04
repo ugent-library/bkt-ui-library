@@ -1,0 +1,147 @@
+<!-- @title: My lists — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: default, empty -->
+<!--
+  Lists index. A list is a named, ordered set of works owned by one user;
+  works land in it from the Add to list picker on public record pages
+  (/patterns/panel.html). Curators run batch edit over a list.
+
+  Raven has this page already (name, description, edit, delete, new list).
+  This is that page in Booktower, plus a work count, a last-used column and
+  an empty state.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/main-sidebar.html -->
+<!-- @active: lists -->
+
+  <main id="main-content" class="bt-bg">
+
+    <div class="u-main__header bg-white border-bottom">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">My lists</h1>
+          </div>
+          <!-- @state: default -->
+          <div class="bt-toolbar__item">
+            <span class="text-muted">3 lists</span>
+          </div>
+          <!-- @state -->
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="list-edit.html" class="btn btn-primary btn-sm">
+              <i class="if if-add if--sm" aria-hidden="true"></i>
+              New list
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body px-4 pb-4">
+
+          <!-- @state: default -->
+          <div class="row">
+            <div class="col-lg-8 col-xxl-6">
+              <ul class="list-group list-group-flush list-unstyled mb-0">
+              <li class="list-group-item d-flex align-items-start gap-3 px-0 py-3">
+                <i class="if if-bookmark-line text-muted mt-1 flex-shrink-0" aria-hidden="true"></i>
+                <div class="min-w-0 flex-grow-1">
+                  <a href="list-detail.html" class="h6 fw-semibold text-reset text-decoration-none d-block mb-1">Reading list</a>
+              <p class="mb-1">Things to get through before the review meeting</p>
+                  <p class="small text-muted mb-0">12 works &middot; changed <time datetime="2026-08-03">3 August 2026</time></p>
+                </div>
+                <div class="d-flex gap-1 flex-shrink-0">
+                  <a href="list-edit.html" class="btn btn-ghost btn-sm" aria-label="Edit list: Reading list">
+                    <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
+                  </a>
+                  <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#delete-list-modal"
+                    aria-label="Delete list: Reading list">
+                    <i class="if if-delete if--xs" aria-hidden="true"></i> Delete
+                  </button>
+                </div>
+              </li>
+              <li class="list-group-item d-flex align-items-start gap-3 px-0 py-3">
+                <i class="if if-bookmark-line text-muted mt-1 flex-shrink-0" aria-hidden="true"></i>
+                <div class="min-w-0 flex-grow-1">
+                  <a href="list-detail.html" class="h6 fw-semibold text-reset text-decoration-none d-block mb-1">Quantum computing refs</a>
+                  <p class="small text-muted mb-0">4 works &middot; changed <time datetime="2026-07-28">28 July 2026</time></p>
+                </div>
+                <div class="d-flex gap-1 flex-shrink-0">
+                  <a href="list-edit.html" class="btn btn-ghost btn-sm" aria-label="Edit list: Quantum computing refs">
+                    <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
+                  </a>
+                  <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#delete-list-modal"
+                    aria-label="Delete list: Quantum computing refs">
+                    <i class="if if-delete if--xs" aria-hidden="true"></i> Delete
+                  </button>
+                </div>
+              </li>
+              <li class="list-group-item d-flex align-items-start gap-3 px-0 py-3">
+                <i class="if if-bookmark-line text-muted mt-1 flex-shrink-0" aria-hidden="true"></i>
+                <div class="min-w-0 flex-grow-1">
+                  <a href="list-detail.html" class="h6 fw-semibold text-reset text-decoration-none d-block mb-1">To cite in review</a>
+              <p class="mb-1">Candidates for the 2026 faculty report</p>
+                  <p class="small text-muted mb-0">31 works &middot; changed <time datetime="2026-07-02">2 July 2026</time></p>
+                </div>
+                <div class="d-flex gap-1 flex-shrink-0">
+                  <a href="list-edit.html" class="btn btn-ghost btn-sm" aria-label="Edit list: To cite in review">
+                    <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
+                  </a>
+                  <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#delete-list-modal"
+                    aria-label="Delete list: To cite in review">
+                    <i class="if if-delete if--xs" aria-hidden="true"></i> Delete
+                  </button>
+                </div>
+              </li>
+              </ul>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: empty -->
+          <div class="bt-blank-slate bt-blank-slate--muted" role="status">
+            <p class="h5 mb-2">No lists yet</p>
+            <p>Lists collect works you want to keep together. Add to list on any record starts one.</p>
+            <div>
+              <a href="list-edit.html" class="btn btn-secondary btn-sm">
+                <i class="if if-add if--xs" aria-hidden="true"></i>
+                New list
+              </a>
+            </div>
+          </div>
+          <!-- @state -->
+
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>
+
+<!-- One dialog for every row; the real implementation names the list in the title and body. -->
+<div class="modal fade" id="delete-list-modal" tabindex="-1" aria-labelledby="delete-list-modal-title" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="delete-list-modal-title">Delete this list?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">The works stay in Biblio. Only the list goes.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <!-- real impl: form POST /lists/<id>/delete -->
+        <button type="button" class="btn btn-danger btn-sm">Delete list</button>
+      </div>
+    </div>
+  </div>
+</div>
