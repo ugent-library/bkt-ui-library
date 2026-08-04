@@ -188,6 +188,18 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
     return respond('', 180, 204, 'text/plain; charset=utf-8');
   }
 
+  // Add-to-list picker: the target id is <prefix>-lists, so the fragment can
+  // carry ids matching the card it was rendered for.
+  if (urlPath === '/lists' && (method === 'GET' || method === 'POST')) {
+    const prefix = target.replace(/-lists$/, '') || 'atl';
+    if (method === 'GET') return respond(c.renderListPicker(prefix, params.q || ''), 200);
+    return respond(c.renderListPicker(prefix, bodyParams.get('name') || 'New list', true), 260);
+  }
+
+  if (/^\/lists\/[^/]+$/.test(urlPath) && (method === 'PUT' || method === 'DELETE')) {
+    return respond('', 180, 204, 'text/plain; charset=utf-8');
+  }
+
   return false;
 }
 

@@ -18,6 +18,7 @@ module.exports = {
   renderScopeList: require('./scope-list'),
   renderScopeForm: require('./scope-form'),
   renderOrgSuggest: require('./org-suggest'),
+  renderListPicker: require('./list-picker'),
   renderJournalSuggestions: require('./journal-suggestions'),
   renderAuthorList: require('./author-list'),
   renderUploadList: require('./upload-list'),
