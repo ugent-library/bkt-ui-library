@@ -6,6 +6,87 @@ system, or do I reach for something new?"
 
 ---
 
+## Backoffice status model + card completion (v2.10, 2026-07-30)
+
+No class changes. The backoffice aligns to raven's state model and the cards fill out:
+
+- **Two-axis status**: deposit status (draft/submitted/returned/reviewed) is the one
+  badge; record visibility rides inside it as `if-eye`/`if-eye-off` + visually-hidden
+  text. "Published"/"Biblio public" wording is gone. File access is never a badge on
+  backoffice cards — plain `bt-work-card__meta-item` ("Open access", "Embargo until
+  <date>"). DOMAIN-VOCABULARY rewritten accordingly (two axes, deletion/tombstones,
+  raven event model; retraction: will be built in raven, timing open).
+- **Facets**: Status = the four deposit statuses (list pages + backoffice facet
+  partial); Visibility is its own facet on both list pages.
+- **One list page per role**: search-my-research and search-filter-first deleted;
+  filter-first's condensation concepts noted in curate.html.
+- **Cards**: automated missing-metadata alert (role-specific lists) in the Biblio
+  message slot; org badges muted (`text-bg-light`); projects clickable; year links
+  to the year filter in filterable views; a Returned+embargo example card added.
+- **Kit**: work-card page restructured — on-page nav; order grammar → roles &
+  views → public → researcher → curator; duplicate demo cards removed; researcher
+  demo re-labelled (was "Curator card"); public demo aligned to v1 actions (no
+  Download CTA per raven#141). "One card across roles and views" matrix section;
+  add-to-list recipe renders open in flow. The Biblio message pattern = automated
+  missing-metadata check + CTA + optional personalised curator note.
+- **Access badges changed** — see the table below; check any page you are working on that
+  shows access status.
+- **Cards use one row concept**: `bt-meta-list` is gone from inside work cards —
+  departments, projects, VABB and the provenance footer are `bt-work-card__meta` rows with
+  `bt-work-card__meta-item` items, same as the header row. The separator is now scoped to
+  direct children of a row (`__meta > __meta-item + __meta-item`), so stacked sub-lists draw
+  none; `.bt-work-card__meta-item .if` glues an icon to its item. `bt-meta-list` stays as
+  the off-card metadata line (detail-page file rows, typography demos) and moved to
+  `patterns/_booktower-components.scss`; its dead `__item` element was removed.
+- **Public title links**: every public card title opens
+  `templates/biblio-public/public-work-detail.html` (was `#`, and one raven-shaped
+  `/research/<id>`); backoffice titles stay `#` — no backoffice detail view yet.
+- **Search pages**: results-search hx stubs removed (raven owns search behaviour);
+  `@states: default, no-results` on both list pages with a bt-blank-slate zero-results
+  state; "did you mean" deliberately not built (raven search-quality epic).
+
+### ⚠️ Access badges changed (v2.10) — recheck any page showing access status
+
+The badge markup for access status is different. No class was added or removed, so
+`check:classes` stays silent — a page left on the old markup keeps rendering, just wrong.
+
+| Access state | v2.9 and earlier | v2.10 |
+|---|---|---|
+| Open access | `badge text-bg-success` | `badge text-bg-success` + `if-open-access` |
+| Restricted access | `badge text-bg-warning` | `badge text-bg-secondary` + `if-lock` |
+| Embargo | `badge text-bg-warning` + `if-time` | `badge text-bg-secondary` + `if-time` (badge names the date) |
+| Closed access | `badge text-bg-secondary` | unchanged — and it never takes an icon |
+
+**Only open access carries colour.** Restricted and embargo are correct outcomes, not
+warnings: the orange read as an error and competed with open access. `text-bg-warning` on
+an access badge is now wrong everywhere. Icons are decorative (`aria-hidden="true"`) — the
+badge text carries the meaning.
+
+Swept in this release: `public-works.html`, `public-work-detail.html`,
+`public-work-detail-dataset.html`, `public-project-detail.html`,
+`public-researcher-detail.html`, `public-organisation-detail.html`,
+`deposit-4-review.html`, `search-advanced-builder.html`,
+`partials/search-suggest-panel.html`, `server/content/search-result-cards.js`,
+`server/content/token-results.js`, and the kit pages `patterns/work-card.html`,
+`patterns/work-actions.html`, `patterns/hero.html`, `elements/badges.html`.
+
+**Backoffice cards are unaffected**: access there is plain `bt-work-card__meta-item` text,
+never a badge. If you are adding an access badge to a backoffice card, that is the bug.
+
+## Work card grammar — backoffice cards + add-to-list recipe (v2.9, 2026-07-30)
+
+No class changes. The backoffice cards (curate.html, search-researcher,
+search-my-research, search-filter-first, search-advanced-token, and the kit
+page's curator/researcher sections) migrated to the v2.8 grammar: `__meta` /
+`__meta-item` / `__actions`, access always a badge (fixed the double-class
+`bt-meta-list__item-bordered badge` element in the researcher search twins),
+curator kit titles corrected `h2`→`p`, curator authors as `__author` spans with
+comma separators. The backoffice `__pub` scan line keeps its `·` separators —
+deliberately distinct from the public Harvard line. Backoffice-only blocks
+(departments, projects, VABB, footer) stay on generic `bt-meta-list` markup;
+naming them is an open decision. The add-to-list dropdown composition is now a
+documented recipe on `patterns/panel.html`.
+
 ## Work card grammar — public surface (v2.8, 2026-07-30)
 
 Four classes added, no removals. The card's inner rows get semantic elements;
