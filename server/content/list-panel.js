@@ -9,7 +9,7 @@ const renderListPicker = require('./list-picker');
 
 module.exports = function renderListPanel(prefix) {
   return `
-<p class="bt-panel__title">Add to list</p>
+<p class="bt-panel__title">Add this work to a list</p>
 <div class="bt-panel__body">
   <form class="w-100" action="/lists" method="get"
     hx-get="/lists" hx-target="#${prefix}-lists" hx-swap="innerHTML" hx-indicator="#${prefix}-searching">

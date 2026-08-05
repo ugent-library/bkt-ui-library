@@ -39,10 +39,10 @@ function card({ id, badges, title, authors, line }) {
   </article></li>`;
 }
 
-const oa = '<span class="badge text-bg-success">Open access</span>';
-const embargo = '<span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span>';
+const oa = '<span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>';
+const embargo = '<span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span>';
 const type = (label) => `<span class="bt-work-card__meta-item">${label}</span>`;
-const restricted = '<span class="badge text-bg-warning">Restricted access</span>';
+const restricted = '<span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Restricted access</span>';
 
 const year = (y) => `(<a href="public-works.html?year=${y}"><time datetime="${y}">${y}</time></a>)`;
 const researcher = '/templates/biblio-public/public-researcher-detail.html';
