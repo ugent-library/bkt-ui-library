@@ -251,7 +251,13 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 
 **In search and discovery:**
 - OA status should be a prominent, early filter — not buried
-- the open-access badge (`badge text-bg-success`) should be visually distinct and positive, not neutral
+- the open-access badge (`badge text-bg-success` + `if-open-access`) should be visually distinct and positive, not neutral
+- **only open access carries colour.** Restricted and embargo are neutral badges
+  (`badge text-bg-secondary`), told apart by icon: `if-lock` for restricted, `if-time` for
+  embargo (which names the date). They are correct outcomes, not warnings — the orange
+  `text-bg-warning` they used to wear read as an error and competed with open access
+- **closed access carries no icon** (M, 2026-08-04) — `badge text-bg-secondary`, text only.
+  The lock is restricted's; reusing it would say the two states are the same thing
 - Works without full-text access should not look broken — restricted access is sometimes correct, but the UI should make open access feel like the norm
 
 ---

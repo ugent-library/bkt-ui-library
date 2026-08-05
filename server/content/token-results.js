@@ -12,7 +12,7 @@ module.exports = function renderTokenResults() {
   <article class="border rounded bg-white p-3">
     <div class="d-flex align-items-center gap-2 mb-2">
       <span class="badge text-bg-primary">Journal article</span>
-      <span class="badge text-bg-success">Open access</span>
+      <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
     </div>
     <a href="#" class="fw-semibold text-decoration-none d-block mb-1">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
     <p class="small text-muted mb-0">Matched tokens: <code>type:journal_article</code> <code>affiliation:sciences</code></p>

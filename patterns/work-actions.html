@@ -4,7 +4,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Work actions</h1>
-    <p class="lead">The action rows on research output — search result cards and the detail page header. v1 keeps file access on the page itself; v2 adds direct access CTAs. Rules: see <a href="https://github.com/ugent-library/raven/issues/141">raven#141</a>.</p>
+    <p class="lead">The action rows on research output — public search result cards and the public detail page header. Backoffice card actions (Edit, Review, Edit &amp; resubmit) are not documented here yet — deliberately; see the work-card page for their current shape. v1 keeps file access on the page itself; v2 adds direct access CTAs. Rules: see <a href="https://github.com/ugent-library/raven/issues/141">raven#141</a>.</p>
   </header>
 
   <!-- CTA rules live in raven#141, not here — one copy, no sync rot -->
@@ -74,7 +74,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-v1">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Open access</span>
+              <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
               <span class="bt-work-card__meta-item">Journal article</span>
             </div>
             <div class="bt-work-card__actions">
@@ -110,7 +110,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-open">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Open access</span>
+              <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
               <span class="bt-work-card__meta-item">Journal article</span>
             </div>
             <div class="bt-work-card__actions">
@@ -145,7 +145,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-external">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Open access</span>
+              <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
               <span class="bt-work-card__meta-item">Dataset</span>
             </div>
             <div class="bt-work-card__actions">
@@ -180,7 +180,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-multi">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Open access</span>
+              <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
               <span class="bt-work-card__meta-item">Journal article</span>
             </div>
             <div class="bt-work-card__actions">
@@ -205,7 +205,7 @@
             </h2>
             <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="#">Jonas Maes</a></span></p>
             <p class="bt-work-card__pub">(<a href="#"><time datetime="2025">2025</time></a>) <a href="#"><cite>Forest Ecology and Management</cite></a>.</p>
-            <p class="bt-meta-list mb-0"><span class="text-muted small">Full text in 3 parts &middot; Open Access &middot; PDF</span></p>
+            <p class="bt-work-card__meta mb-0"><span class="text-muted small">Full text in 3 parts &middot; Open Access &middot; PDF</span></p>
           </div>
         </article>
       </div>
@@ -217,7 +217,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-restricted">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning">Restricted access</span>
+              <span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Restricted access</span>
               <span class="bt-work-card__meta-item">Book chapter</span>
             </div>
             <div class="bt-work-card__actions">
@@ -252,7 +252,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-embargo-restricted">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+              <span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span>
               <span class="bt-work-card__meta-item">Journal article</span>
             </div>
             <div class="bt-work-card__actions">
@@ -291,7 +291,7 @@
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wa-card-embargo">
           <div class="card-header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+              <span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span>
               <span class="bt-work-card__meta-item">Journal article</span>
             </div>
             <div class="bt-work-card__actions">
