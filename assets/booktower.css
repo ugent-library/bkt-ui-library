@@ -1734,6 +1734,33 @@ a.badge:focus-visible {
   rotate: -180deg;
 }
 
+/* -- bt-meta-list -- */
+/*
+  Metadata line outside a work card — the file rows on the public detail page and
+  the typography demos. Inside a card the card's own __meta / __meta-item own this
+  job; keeping both there was two names for one idea.
+*/
+.bt-meta-list {
+  font-size: var(--bt-text-sm);
+  color: var(--s-text-muted, var(--bt-text-muted));
+  line-height: 1.5;
+  margin: 0 0 var(--bt-sp-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+}
+
+.bt-meta-list a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+}
+
+/* separator only between text items — never after the last */
+.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
+  border-left: var(--bt-border);
+  padding-left: var(--bt-sp-2);
+}
+
 /* -- bt-avatar -- */
 /* Used in backoffice-header.html as the account menu trigger */
 .bt-avatar {
@@ -1905,10 +1932,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   background-color: var(--bt-blue-100) !important;
 }
 
-/* -- bt-panel — generic popover panel: title + scrollable body + actions footer.
-   Used by add-to-list (in a dropdown, content-sized) and the filter editor
-   (bt-panel--wide, overlay). Body layouts (--checklist/--boolean/--year/--form)
-   are generic layouts — a column of radios, a two-input row — not filter concepts. */
 .bt-panel {
   background: var(--bt-white);
   border: var(--bt-border);
@@ -1920,8 +1943,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   max-width: min(24rem, 100vw - 2rem);
 }
 
-/* Wider variant — year ranges, people search, long labels. The container's own
-   width utility (e.g. w-100 on the overlay) governs the actual width; this caps it. */
 .bt-panel--wide {
   max-width: 480px;
   min-width: min(480px, 100vw - 2rem);
@@ -1985,6 +2006,10 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-panel__body .form-check:hover {
   background-color: var(--bt-gray-50);
+}
+
+.bt-panel__body .dropdown-item {
+  padding: var(--bt-sp-2) var(--bt-sp-4);
 }
 
 .bt-panel__body .form-check-label {
@@ -2140,9 +2165,10 @@ img.bt-navbar__logo {
 /*
   Research output card. Surface (public/backoffice) drives typography via tokens.
 
-  Region grammar: __meta (badges + type) · __actions · __title · __authors
-  (of __author) · __pub (reference line). Backoffice-only regions (departments,
-  projects, VABB, footer) are unnamed pending the backoffice pass.
+  Region grammar: __meta (a metadata row) · __actions · __title · __authors
+  (of __author) · __pub (reference line). __meta is every metadata row, not just
+  the header one: access + type up top, and departments / projects / VABB /
+  provenance in the backoffice body. One row concept, one item concept.
 
   Justified as a custom component because:
   - Bootstrap .card is a boxed container; this is a border-separated list item
@@ -2252,10 +2278,13 @@ img.bt-navbar__logo {
   padding-top: var(--bt-sp-1);
 }
 
-/* separator only between text items — never after the last */
-.bt-work-card__meta-item + .bt-work-card__meta-item {
+.bt-work-card__meta > .bt-work-card__meta-item + .bt-work-card__meta-item {
   border-left: var(--bt-border);
   padding-left: var(--bt-sp-2);
+}
+
+.bt-work-card__meta-item .if {
+  margin-right: var(--bt-sp-1);
 }
 
 /* Action row */
@@ -2263,34 +2292,6 @@ img.bt-navbar__logo {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
-}
-
-/* bt-meta-list */
-.bt-meta-list {
-  font-size: var(--bt-text-sm);
-  color: var(--s-text-muted, var(--bt-text-muted));
-  line-height: 1.5;
-  margin: 0 0 var(--bt-sp-1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-2);
-}
-
-.bt-meta-list a:hover {
-  color: var(--bt-blue);
-  text-decoration: underline;
-}
-
-.bt-meta-list__item {
-  display: inline-flex;
-  gap: var(--bt-sp-1);
-  margin-right: var(--bt-sp-2);
-}
-
-/* separator only between text items — never after the last */
-.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
-  border-left: var(--bt-border);
-  padding-left: var(--bt-sp-2);
 }
 
 /* -- Token bar -- */

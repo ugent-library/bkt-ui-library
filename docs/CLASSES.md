@@ -105,7 +105,6 @@ bt-hero
 bt-hero__content
 
 bt-meta-list
-bt-meta-list__item
 bt-meta-list__item-bordered
 
 bt-meta-text

@@ -2,9 +2,10 @@
 /*
   Research output card. Surface (public/backoffice) drives typography via tokens.
 
-  Region grammar: __meta (badges + type) · __actions · __title · __authors
-  (of __author) · __pub (reference line). Backoffice-only regions (departments,
-  projects, VABB, footer) are unnamed pending the backoffice pass.
+  Region grammar: __meta (a metadata row) · __actions · __title · __authors
+  (of __author) · __pub (reference line). __meta is every metadata row, not just
+  the header one: access + type up top, and departments / projects / VABB /
+  provenance in the backoffice body. One row concept, one item concept.
 
   Justified as a custom component because:
   - Bootstrap .card is a boxed container; this is a border-separated list item
@@ -115,10 +116,13 @@
   padding-top: var(--bt-sp-1);
 }
 
-/* separator only between text items — never after the last */
-.bt-work-card__meta-item + .bt-work-card__meta-item {
+.bt-work-card__meta > .bt-work-card__meta-item + .bt-work-card__meta-item {
   border-left: var(--bt-border);
   padding-left: var(--bt-sp-2);
+}
+
+.bt-work-card__meta-item .if {
+  margin-right: var(--bt-sp-1);
 }
 
 /* Action row */
@@ -126,36 +130,6 @@
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
-}
-
-/* bt-meta-list */
-
-.bt-meta-list {
-  font-size: var(--bt-text-sm);
-  color: var(--s-text-muted, var(--bt-text-muted));
-  line-height: 1.5;
-  margin: 0 0 var(--bt-sp-1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-2);
-}
-
-
-.bt-meta-list a:hover {
-  color: var(--bt-blue);
-  text-decoration: underline;
-}
-
-.bt-meta-list__item {
-  display: inline-flex;
-  gap: var(--bt-sp-1);
-  margin-right: var(--bt-sp-2);
-}
-
-/* separator only between text items — never after the last */
-.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
-  border-left: var(--bt-border);
-  padding-left: var(--bt-sp-2);
 }
 
 

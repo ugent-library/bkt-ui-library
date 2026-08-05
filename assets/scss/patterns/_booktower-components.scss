@@ -232,3 +232,31 @@
 #org-tree-toggle-all[aria-expanded="true"] .if-chevron-down {
   rotate: -180deg;
 }
+
+
+/* -- bt-meta-list -- */
+/*
+  Metadata line outside a work card — the file rows on the public detail page and
+  the typography demos. Inside a card the card's own __meta / __meta-item own this
+  job; keeping both there was two names for one idea.
+*/
+.bt-meta-list {
+  font-size: var(--bt-text-sm);
+  color: var(--s-text-muted, var(--bt-text-muted));
+  line-height: 1.5;
+  margin: 0 0 var(--bt-sp-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+}
+
+.bt-meta-list a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+}
+
+/* separator only between text items — never after the last */
+.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
+  border-left: var(--bt-border);
+  padding-left: var(--bt-sp-2);
+}
