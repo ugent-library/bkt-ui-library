@@ -1,7 +1,9 @@
 <!-- @title: Projects — Biblio UGent -->
 <!-- @surface: public -->
 <!--
-  Public project directory — institutional org tree (index, not detail).
+  Public project directory — search, project filters, and project cards.
+  The list card is the same source pattern used by the Projects panel in
+  public-researcher-detail.html.
 
   Partials:
     @include: templates/partials/public-header.html
@@ -41,7 +43,8 @@
 
             <div class="input-group input-group-lg mb-3">
               <input
-                type="search"
+                type="text"
+                inputmode="search"
                 id="q"
                 name="q"
                 class="form-control"
@@ -74,8 +77,10 @@
           </div>
 
           <!-- ── Filters — project-directory scope ─────────────────────────────
-               Project-scoped "Add filter" chip bar (Host faculty, Status,
-               Period). Same interaction as the researcher directory; engine in
+               Project-scoped "Add filter" chip bar (Status, Period).
+               Organisation participation is deferred in Raven's data contract,
+               so a host-organisation control would be inert. Same interaction
+               as the researcher directory; engine in
                filter-bar.js (pdir- config). -->
           <div class="position-relative">
             <div class="bt-toolbar">
@@ -95,7 +100,6 @@
                     </button>
                     <div class="dropdown-menu p-0">
                       <div id="pdir-filter-picker-list" class="bt-dropdown-scroll">
-                        <button class="dropdown-item" type="button" data-filter="organisation">Organisation</button>
                         <button class="dropdown-item" type="button" data-filter="status">Status (active / completed)</button>
                         <button class="dropdown-item" type="button" data-filter="year">Year</button>
                       </div>
@@ -119,20 +123,107 @@
       </div>
     </div>
 
-    <!-- Body: org tree -->
+    <!-- Body: project results -->
     <div class="u-main__body">
       <div class="container py-5">
-        <ul>
-          <li>Title</li>
-          <li>Description</li>
-          <li>Period: 01/10/2003 – 30/09/2005</li>
-          <li>"Read more" link for GISMO</li>
-          <li>Project ID</li>
-          <li>IWETO ID</li>
-          <li>GISMO ID</li>
-          <li>Other IDs if available</li>
-          <li>Funders</li>
-          <li>Link to detail <a href="public-project-detail.html">Project detail</a></li>
+        <div class="bt-toolbar mb-3">
+          <div class="bt-toolbar__left">
+            <p class="text-muted small mb-0" aria-live="polite">Showing 1–4 of 4 results</p>
+          </div>
+        </div>
+
+        <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+          <li class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-start gap-3 mb-2">
+                <a href="public-project-detail.html"
+                  class="flex-grow-1 fw-semibold text-decoration-none">
+                  Urban green infrastructure and climate adaptation in Flemish cities
+                </a>
+                <span class="badge text-bg-success flex-shrink-0">Active</span>
+              </div>
+              <p class="text-muted mb-3">
+                How can urban green infrastructure make Flemish cities more
+                resilient to climate change?
+              </p>
+              <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted"
+                aria-label="Project metadata">
+                <li>Period <time datetime="2023-01-01">2023</time>–<time datetime="2027-12-31">2027</time></li>
+                <li>Funder FWO</li>
+                <li>Project ID <code>G001234N</code></li>
+              </ul>
+              <div class="d-flex flex-wrap gap-3 small">
+                <a href="public-project-detail.html" class="text-decoration-none">Project detail</a>
+                <a href="https://gismo.ugent.be/project/fwo-g001234n"
+                  rel="noopener noreferrer" class="text-decoration-none">
+                  Read more on GISMO
+                  <i class="if if-external-link if--xs" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </li>
+          <li class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-start gap-3 mb-2">
+                <a href="public-project-detail.html"
+                  class="flex-grow-1 fw-semibold text-decoration-none">ManureEcoMine</a>
+                <span class="badge text-bg-secondary flex-shrink-0">Completed</span>
+              </div>
+              <p class="text-muted mb-3">
+                Green fertilizer upcycling from manure: technological,
+                economic and environmental sustainability demonstration.
+              </p>
+              <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted"
+                aria-label="Project metadata">
+                <li>Period <time datetime="2015-01-01">2015</time>–<time datetime="2019-12-31">2019</time></li>
+                <li>Funder European Commission</li>
+                <li>Project ID <code>603744</code></li>
+              </ul>
+              <div class="d-flex flex-wrap gap-3 small">
+                <a href="public-project-detail.html" class="text-decoration-none">Project detail</a>
+              </div>
+            </div>
+          </li>
+          <li class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-start gap-3 mb-2">
+                <a href="public-project-detail.html"
+                  class="flex-grow-1 fw-semibold text-decoration-none">
+                  Diamond open access publishing infrastructure
+                </a>
+                <span class="badge text-bg-success flex-shrink-0">Active</span>
+              </div>
+              <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted"
+                aria-label="Project metadata">
+                <li>Period <time datetime="2021-01-01">2021</time>–Current</li>
+                <li>Funder BOF</li>
+                <li>Project ID <code>01D04121</code></li>
+              </ul>
+              <div class="d-flex flex-wrap gap-3 small">
+                <a href="public-project-detail.html" class="text-decoration-none">Project detail</a>
+              </div>
+            </div>
+          </li>
+          <li class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-start gap-3 mb-2">
+                <a href="public-project-detail.html"
+                  class="flex-grow-1 fw-semibold text-decoration-none">
+                  Seismic retrofitting of historic masonry
+                </a>
+                <span class="badge text-bg-secondary flex-shrink-0">Completed</span>
+              </div>
+              <ul class="list-unstyled d-flex flex-wrap gap-3 mb-3 small text-muted"
+                aria-label="Project metadata">
+                <li>Period <time datetime="2019-01-01">2019</time>–<time datetime="2023-12-31">2023</time></li>
+                <li>Funder FWO</li>
+                <li>Project ID <code>G005678N</code></li>
+              </ul>
+              <div class="d-flex flex-wrap gap-3 small">
+                <a href="public-project-detail.html" class="text-decoration-none">Project detail</a>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </div>

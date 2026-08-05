@@ -51,7 +51,7 @@
           <div class="position-relative" id="suggest-wrapper">
             <label for="q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
             <div class="input-group input-group-lg">
-              <input type="search" id="q" name="q" class="form-control"
+              <input type="text" inputmode="search" id="q" name="q" class="form-control"
                 placeholder="Search by title, author, DOI, or keyword&hellip;"
                 autocomplete="off" role="combobox" aria-autocomplete="list"
                 aria-controls="suggest-panel" aria-expanded="false">
@@ -80,21 +80,41 @@
       <div class="ds-demo-body">
         <div class="border rounded overflow-hidden">
 
-          <div class="border-bottom px-3 py-2 d-flex flex-wrap gap-2" role="tablist" aria-label="Filter suggestions by type">
-            <button class="badge badge--lg badge--tab active" type="button" role="tab" aria-selected="true">All</button>
-            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">People <span class="badge text-bg-secondary">12</span></button>
-            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Works <span class="badge text-bg-secondary">1</span></button>
-            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Organisations <span class="badge text-bg-secondary">10</span></button>
-            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Projects <span class="badge text-bg-secondary">9</span></button>
-            <button class="badge badge--lg badge--tab" type="button" role="tab" aria-selected="false">Keywords <span class="badge text-bg-secondary">8</span></button>
+          <div class="border-bottom px-3 py-2 d-flex flex-wrap gap-2" role="tablist"
+            id="suggest-tabs-demo" aria-label="Filter suggestions by type">
+            <button class="badge badge--lg badge--tab active" type="button"
+              id="stab-all-demo" role="tab" data-suggest-filter="all"
+              aria-controls="suggest-result-list-demo" aria-selected="true" tabindex="0">All</button>
+            <button class="badge badge--lg badge--tab" type="button"
+              id="stab-people-demo" role="tab" data-suggest-filter="people"
+              aria-controls="suggest-result-list-demo" aria-selected="false" tabindex="-1">
+              People <span class="badge text-bg-secondary" aria-hidden="true">12</span></button>
+            <button class="badge badge--lg badge--tab" type="button"
+              id="stab-works-demo" role="tab" data-suggest-filter="works"
+              aria-controls="suggest-result-list-demo" aria-selected="false" tabindex="-1">
+              Works <span class="badge text-bg-secondary" aria-hidden="true">1</span></button>
+            <button class="badge badge--lg badge--tab" type="button"
+              id="stab-orgs-demo" role="tab" data-suggest-filter="orgs"
+              aria-controls="suggest-result-list-demo" aria-selected="false" tabindex="-1">
+              Organisations <span class="badge text-bg-secondary" aria-hidden="true">10</span></button>
+            <button class="badge badge--lg badge--tab" type="button"
+              id="stab-projects-demo" role="tab" data-suggest-filter="projects"
+              aria-controls="suggest-result-list-demo" aria-selected="false" tabindex="-1">
+              Projects <span class="badge text-bg-secondary" aria-hidden="true">9</span></button>
+            <button class="badge badge--lg badge--tab" type="button"
+              id="stab-keywords-demo" role="tab" data-suggest-filter="keywords"
+              aria-controls="suggest-result-list-demo" aria-selected="false" tabindex="-1">
+              Keywords <span class="badge text-bg-secondary" aria-hidden="true">8</span></button>
           </div>
 
-          <div class="bt-suggest-panel__body">
+          <div class="bt-suggest-panel__body" id="suggest-result-list-demo"
+            role="tabpanel" aria-labelledby="stab-all-demo">
 
             <div class="px-3 pt-3 pb-1">
               <ul class="list-unstyled mb-0">
                 <li>
-                  <a href="#" class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                  <a href="#" class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
+                    role="option">
                     <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
                     <span class="flex-grow-1 min-w-0">Search all research output for <strong>test</strong></span>
                     <kbd class="ms-auto">&crarr;</kbd>
@@ -103,13 +123,12 @@
               </ul>
             </div>
 
-            <hr class="my-1">
-
-            <div class="px-3 pt-2 pb-1">
+            <div class="border-top px-3 pt-2 pb-1" data-suggest-section="people">
               <p class="text-muted small fw-semibold text-uppercase mb-1">People <span class="fw-normal ms-1" aria-hidden="true">2</span></p>
               <ul class="list-unstyled mb-0">
                 <li>
-                  <a href="#" class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                  <a href="#" class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+                    role="option">
                     <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div class="min-w-0">
                       <div>Lea <mark>Test</mark>ut <span class="text-muted small">(53)</span></div>
@@ -120,13 +139,12 @@
               </ul>
             </div>
 
-            <hr class="my-1">
-
-            <div class="px-3 pt-2 pb-1">
+            <div class="border-top px-3 pt-2 pb-1" data-suggest-section="works">
               <p class="text-muted small fw-semibold text-uppercase mb-1">Works <span class="fw-normal ms-1" aria-hidden="true">1</span></p>
               <ul class="list-unstyled mb-0">
                 <li>
-                  <a href="#" class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body">
+                  <a href="#" class="d-flex align-items-start gap-3 py-2 px-2 rounded text-decoration-none text-body"
+                    role="option">
                     <i class="if if-article if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div class="min-w-0">
                       <div class="badge text-bg-primary mb-1">Journal article</div>
@@ -270,7 +288,7 @@
         <ul>
           <li>Wrap in <code>&lt;form role="search"&gt;</code> with a distinct <code>aria-label</code> so screen reader users can jump to the search landmark directly.</li>
           <li>The <code>&lt;label&gt;</code> must exist in the DOM even if visually hidden. <code>placeholder</code> alone is not a label.</li>
-          <li>Use <code>type="search"</code> so mobile browsers show the correct keyboard and voice-search affordances.</li>
+          <li>Use <code>type="search"</code> for a standalone search field. When the field is an ARIA combobox, use <code>type="text"</code> with <code>inputmode="search"</code> so the combobox contract remains valid while mobile browsers still show a search-optimized keyboard.</li>
           <li>The <code>:focus-within</code> ring surrounds the entire pill — individual element outlines are suppressed to avoid a double ring. The ring meets WCAG 2.2 AA contrast requirements.</li>
           <li>The button must be <code>type="submit"</code> so the form submits without JavaScript. <code>action</code> on the <code>&lt;form&gt;</code> is the no-JS fallback.</li>
           <li>When wiring to HTMX live search, add <code>hx-get</code> on the input and a paired <code>hx-indicator</code> with <code>aria-live="polite"</code>.</li>

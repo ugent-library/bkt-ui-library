@@ -130,18 +130,18 @@
         <!-- Search & headline -->
         <div class="col-11 col-xl-6 pb-5">
           <h1 id="hero-heading" class="display-1 mb-4">
-            Search, use &amp; cite trusted&nbsp;research
+            Search, use &amp; cite trusted research
           </h1>
           <form role="search" class="mb-4"
             aria-label="Search research output" action="public-works.html">
             <div class="position-relative" id="suggest-wrapper">
               <label class="visually-hidden" for="q">Search by title, author, keyword, or DOI</label>
               <div class="input-group input-group--hero">
-                <input class="form-control" type="search" id="q" name="q"
+                <input class="form-control" type="text" inputmode="search" id="q" name="q"
                   placeholder='Try "climate change" or "quantum computing"' autocomplete="off" autofocus
-                  aria-autocomplete="list" aria-controls="suggest-panel" aria-expanded="false"
-                  hx-get="/search/suggest" hx-trigger="keyup changed delay:200ms, focus"
-                  hx-target="#suggest-panel" hx-swap="innerHTML" hx-indicator="#suggest-indicator">
+                  role="combobox" aria-autocomplete="list" aria-controls="suggest-panel" aria-expanded="false"
+                  data-hx-get="/search/suggest" data-hx-trigger="keyup changed delay:200ms, focus"
+                  data-hx-target="#suggest-panel" data-hx-swap="innerHTML" data-hx-indicator="#suggest-indicator">
                 <button class="btn btn-primary" type="submit">Search</button>
               </div>
               <div id="suggest-panel" class="bt-suggest-panel" role="listbox"

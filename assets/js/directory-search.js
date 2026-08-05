@@ -13,7 +13,7 @@
   document.querySelectorAll('[data-directory-search]').forEach(init);
 
   function init(wrapper) {
-    const input  = wrapper.querySelector('input[type="search"]');
+    const input  = wrapper.querySelector('input[role="combobox"]');
     const panel  = wrapper.querySelector('.bt-suggest-panel');
     const source = wrapper.querySelector('script[data-suggest-source]');
     if (!input || !panel || !source) return;

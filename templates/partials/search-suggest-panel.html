@@ -37,59 +37,61 @@
 
 -->
 
-<!-- Tab bar — type filter over the suggestions.
+<!-- Type-filter tabs over the suggestions.
      Styling: badge--lg + badge--tab (no fill/border; light-blue fill on .active).
 
-     Behaviour (intended):
+     Behaviour:
        - Counts are live per-type totals from the server; "All" is the default,
          and empty types are omitted (server never renders a 0 badge).
-       - Active state is scrollspy, not a selection: in the All view every type is
-         rendered as a group in one scroll, and the active badge reflects the group
-         currently in view, updated as the user scrolls. It indicates position.
-       - Clicking a badge scrolls the list to that type's group (in-page anchor);
-         all groups stay rendered — no per-type re-query, no page reload.
-       - Keyboard: roving tabindex across the badges; arrows move focus, Enter/Space
-         jumps to the group, Esc closes the panel.
-       - Because the active state tracks scroll rather than selection, the ARIA is
-         navigation (aria-current) — not role="tab"/aria-selected. Update the markup
-         to match once the model is confirmed.
+       - Selecting a tab narrows the freshly server-rendered grouped list to that
+         type. "All" restores every group. No per-type request is made.
+       - The free-text submit row stays available in every view; Recent belongs
+         to the All view.
+       - Keyboard: roving tabindex across the tabs; arrows change selection and
+         focus, Home/End jump, and Esc closes the panel.
      -->
 
 <div class="border-bottom px-3 py-2 d-flex flex-wrap gap-2" role="tablist"
   id="suggest-tabs" aria-label="Filter suggestions by type">
   <button class="badge badge--lg badge--tab active" type="button"
-    id="stab-all" role="tab" aria-selected="true" aria-controls="suggest-all">
+    id="stab-all" role="tab" data-suggest-filter="all"
+    aria-controls="suggest-result-list" aria-selected="true" tabindex="0">
     All
   </button>
   <button class="badge badge--lg badge--tab" type="button" aria-label="People, 12 results"
-    id="stab-people" role="tab" aria-selected="false" aria-controls="suggest-people">
+    id="stab-people" role="tab" data-suggest-filter="people"
+    aria-controls="suggest-result-list" aria-selected="false" tabindex="-1">
     People
     <span class="badge text-bg-secondary" aria-hidden="true">12</span>
   </button>
   <button class="badge badge--lg badge--tab" type="button" aria-label="Works, 1 result"
-    id="stab-works" role="tab" aria-selected="false" aria-controls="suggest-works">
+    id="stab-works" role="tab" data-suggest-filter="works"
+    aria-controls="suggest-result-list" aria-selected="false" tabindex="-1">
     Works
     <span class="badge text-bg-secondary" aria-hidden="true">1</span>
   </button>
   <button class="badge badge--lg badge--tab" type="button" aria-label="Organisations, 10 results"
-    id="stab-orgs" role="tab" aria-selected="false" aria-controls="suggest-orgs">
+    id="stab-orgs" role="tab" data-suggest-filter="orgs"
+    aria-controls="suggest-result-list" aria-selected="false" tabindex="-1">
     Organisations
     <span class="badge text-bg-secondary" aria-hidden="true">10</span>
   </button>
   <button class="badge badge--lg badge--tab" type="button" aria-label="Projects, 9 results"
-    id="stab-projects" role="tab" aria-selected="false" aria-controls="suggest-projects">
+    id="stab-projects" role="tab" data-suggest-filter="projects"
+    aria-controls="suggest-result-list" aria-selected="false" tabindex="-1">
     Projects
     <span class="badge text-bg-secondary" aria-hidden="true">9</span>
   </button>
   <button class="badge badge--lg badge--tab" type="button" aria-label="Keywords, 8 results"
-    id="stab-keywords" role="tab" aria-selected="false" aria-controls="suggest-keywords">
+    id="stab-keywords" role="tab" data-suggest-filter="keywords"
+    aria-controls="suggest-result-list" aria-selected="false" tabindex="-1">
     Keywords
     <span class="badge text-bg-secondary" aria-hidden="true">8</span>
   </button>
 </div>
 
-<!-- All panel: recent + grouped rows -->
-<div id="suggest-all" role="tabpanel" aria-labelledby="stab-all"
+<!-- Filtered panel: shared submit row + optional Recent + grouped rows -->
+<div id="suggest-result-list" role="tabpanel" aria-labelledby="stab-all"
   class="bt-suggest-panel__body">
 
   <!-- Primary action — submit the typed query. Server sets q; static demo uses "Test". -->
@@ -117,36 +119,35 @@
     </a>
   -->
 
-  <hr class="my-1">
-
-  <!-- Recent searches — populated from localStorage by suggest-panel.js -->
-  <div class="px-3 pt-3 pb-1" id="suggest-recent">
-    <p class="text-muted small fw-semibold text-uppercase mb-2">Recent</p>
-    <ul class="list-unstyled mb-0">
-      <li>
-        <a href="/templates/biblio-public/public-works.html?q=Test"
-          class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
-          role="option">
-          <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
-          <span>Test <span class="text-muted small">(542)</span></span>
-        </a>
-      </li>
-      <li>
-        <a href="/templates/biblio-public/public-researcher-detail.html"
-          class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
-          role="option">
-          <i class="if if-user if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
-          <span>Leo Testut <span class="text-muted small">(53)</span></span>
-          <i class="if if-arrow-right if--xs ms-auto text-muted" aria-hidden="true"></i>
-        </a>
-      </li>
-    </ul>
+  <!-- Optional recent searches. Keep the single leading border on this wrapper
+       so a host can hide the complete group without leaving a blank rule. -->
+  <div class="border-top" id="suggest-recent" data-suggest-all-only>
+    <div class="px-3 pt-3 pb-1" data-suggest-recent-content>
+      <p class="text-muted small fw-semibold text-uppercase mb-2">Recent</p>
+      <ul class="list-unstyled mb-0">
+        <li>
+          <a href="/templates/biblio-public/public-works.html?q=Test"
+            class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
+            role="option">
+            <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+            <span>Test <span class="text-muted small">(542)</span></span>
+          </a>
+        </li>
+        <li>
+          <a href="/templates/biblio-public/public-researcher-detail.html"
+            class="d-flex align-items-center gap-3 py-2 px-2 rounded text-decoration-none text-body"
+            role="option">
+            <i class="if if-user if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+            <span>Leo Testut <span class="text-muted small">(53)</span></span>
+            <i class="if if-arrow-right if--xs ms-auto text-muted" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <hr class="my-1">
-
   <!-- People -->
-  <div class="px-3 pt-2 pb-1">
+  <div class="border-top px-3 pt-2 pb-1" id="suggest-people" data-suggest-section="people">
     <p class="text-muted small fw-semibold text-uppercase mb-1">
       People <span class="fw-normal ms-1" aria-hidden="true">4</span>
     </p>
@@ -203,10 +204,8 @@
     </ul>
   </div>
 
-  <hr class="my-1">
-
   <!-- Works -->
-  <div class="px-3 pt-2 pb-1">
+  <div class="border-top px-3 pt-2 pb-1" id="suggest-works" data-suggest-section="works">
     <p class="text-muted small fw-semibold text-uppercase mb-1">
       Works <span class="fw-normal ms-1" aria-hidden="true">2</span>
     </p>
@@ -245,10 +244,8 @@
     </ul>
   </div>
 
-  <hr class="my-1">
-
   <!-- Organisations — navigate to the org detail page -->
-  <div class="px-3 pt-2 pb-1">
+  <div class="border-top px-3 pt-2 pb-1" id="suggest-orgs" data-suggest-section="orgs">
     <p class="text-muted small fw-semibold text-uppercase mb-1">
       Organisations <span class="fw-normal ms-1" aria-hidden="true">2</span>
     </p>
@@ -281,10 +278,8 @@
     </ul>
   </div>
 
-  <hr class="my-1">
-
   <!-- Projects — navigate to the project detail page -->
-  <div class="px-3 pt-2 pb-1">
+  <div class="border-top px-3 pt-2 pb-1" id="suggest-projects" data-suggest-section="projects">
     <p class="text-muted small fw-semibold text-uppercase mb-1">
       Projects <span class="fw-normal ms-1" aria-hidden="true">1</span>
     </p>
@@ -303,10 +298,8 @@
     </ul>
   </div>
 
-  <hr class="my-1">
-
   <!-- Keywords — not a record; resolve to a scoped works search (?keyword=). -->
-  <div class="px-3 pt-2 pb-1">
+  <div class="border-top px-3 pt-2 pb-1" id="suggest-keywords" data-suggest-section="keywords">
     <p class="text-muted small fw-semibold text-uppercase mb-1">
       Keywords <span class="fw-normal ms-1" aria-hidden="true">2</span>
     </p>
@@ -339,7 +332,7 @@
     </ul>
   </div>
 
-</div><!-- /suggest-all -->
+</div><!-- /suggest-result-list -->
 
 <!-- Keyboard hints footer -->
 <div class="border-top px-3 py-2 d-flex gap-4 text-muted small bg-light">

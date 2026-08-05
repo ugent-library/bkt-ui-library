@@ -221,7 +221,7 @@ A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked
 A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. The organisation directory that links to these is `public-organisations.html`.
 
 ### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project-detail.html`
-A page for a funded research project. In progress. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. The project directory that links to these is `public-projects.html` (in progress).
+A page for a funded research project. In progress. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. The project directory that links to these is `public-projects.html`; its list cards reuse the Projects-panel card source from the researcher detail prototype.
 
 ### Curated list / collection page (public) — not yet prototyped
 A named set of Works, editable by curators. Used for OAI-PMH sets, open access subsets, faculty publication feeds, heritage object collections, and reading lists. Backed by lists (user-curated) and work collections (administratively defined).
@@ -284,7 +284,7 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `public-organisations.html` | Organisation directory |
 | `public-organisation-detail.html` | Organisation landing page |
 | `public-project-detail.html` | Project detail page (in progress) |
-| `public-projects.html` | Project directory (in progress) |
+| `public-projects.html` | Project directory |
 
 ### Researcher — `templates/biblio-researcher/`
 
