@@ -1,6 +1,16 @@
 <!-- @title: Research output — Curator — Biblio -->
 <!-- @surface: backoffice -->
+<!-- @states: default, no-results -->
 <!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
+
+<!-- Design note (M, 2026-07-30): this page can be more condensed. Concepts from the
+     retired filter-first exploration to fold in:
+     - scope line in the page header (under the h1), not in the filter sidebar
+     - gray background with a condensed search field — TBD: the search bar must not
+       disappear or cause an awkward scroll
+     - a "+ More filters" affordance instead of showing every facet group
+     - a clean "Views" section at the top of the filter sidebar (All records /
+       Needs review / Suggestions / Incomplete / Missing full text, with counts) -->
 <!--
   Research output list — curator view.
   "All output in my scope" — scoped to configured faculties.
@@ -226,20 +236,35 @@
 
           <hr>
 
-          <!-- Status: only needed for the overview of records -->
+          <!-- Status: only needed for the overview of records.
+               Values = deposit status (draft / submitted / returned / reviewed) per
+               docs/DOMAIN-VOCABULARY.md — Work status, two axes. Visibility
+               (private / restricted / public) is its own facet, not a status value. -->
           <!-- <fieldset class="mb-3">
             <legend class="form-label h6 mb-2">Status</legend>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="cs-published"
-                aria-label="Published (3,802 records)">
-              <label class="form-check-label flex-grow-1" for="cs-published">Published</label>
-              <span class="badge bg-transparent pe-1" aria-hidden="true">3,802</span>
-            </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="cs-draft"
                 aria-label="Draft (1,015 records)">
               <label class="form-check-label flex-grow-1" for="cs-draft">Draft</label>
               <span class="badge bg-transparent pe-1" aria-hidden="true">1,015</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="cs-submitted"
+                aria-label="Submitted (122 records)">
+              <label class="form-check-label flex-grow-1" for="cs-submitted">Submitted</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">122</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="cs-returned"
+                aria-label="Returned (18 records)">
+              <label class="form-check-label flex-grow-1" for="cs-returned">Returned</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">18</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="cs-reviewed"
+                aria-label="Reviewed (3,799 records)">
+              <label class="form-check-label flex-grow-1" for="cs-reviewed">Reviewed</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3,799</span>
             </div>
           </fieldset>
           <hr> -->
@@ -271,6 +296,31 @@
                 aria-label="Curator-flagged (3 records)">
               <label class="form-check-label flex-grow-1" for="cf-flagged">Curator-flagged</label>
               <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+          </fieldset>
+
+          <hr>
+
+<!-- Visibility — record exposure, own axis (DOMAIN-VOCABULARY: Work status, two axes) -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Visibility</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="cv-public"
+                aria-label="Public (3,690 records)">
+              <label class="form-check-label flex-grow-1" for="cv-public">Public</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3,690</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="cv-restricted"
+                aria-label="Restricted (124 records)">
+              <label class="form-check-label flex-grow-1" for="cv-restricted">Restricted</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">124</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="cv-private"
+                aria-label="Private (1,017 records)">
+              <label class="form-check-label flex-grow-1" for="cv-private">Private</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1,017</span>
             </div>
           </fieldset>
 
@@ -384,15 +434,12 @@
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item" role="search" aria-label="Search within research output">
                 <label for="c-search-refine" class="visually-hidden">Search by title, author, DOI</label>
+                <!-- real impl: form GET /works?q=… — raven owns search behaviour -->
                 <div class="d-flex align-items-center gap-2">
                   <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
                   <input type="search" id="c-search-refine"
                     class="form-control form-control-sm border-0 bg-transparent shadow-none"
-                    placeholder="Search by title, author, DOI&hellip;"
-                    hx-get="/search"
-                    hx-trigger="keyup changed delay:300ms"
-                    hx-target="#c-results-list"
-                    hx-indicator="#c-search-indicator">
+                    placeholder="Search by title, author, DOI&hellip;">
                 </div>
               </div>
             </div>
@@ -455,23 +502,21 @@
 
         <!-- Results list -->
         <div id="c-results-list" class="u-main__content-body">
-          <span id="c-search-indicator" class="htmx-indicator text-muted px-4 py-3 d-block" aria-live="polite">
-            Searching&hellip;
-          </span>
 
+          <!-- @state: default -->
           <!-- ── Card view ── -->
           <!-- Backoffice work cards: titles are <p>, not headings. See AGENT.md → "Work card". -->
           <ol class="list-unstyled mb-0" id="c-view-cards" data-view-panel="card">
 
             <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="c-card-title-01">
               <div class="card-header">
-                <div class="bt-meta-list pt-1">
-                  <span class="badge text-bg-info">Submitted</span>
-                  <span class="bt-meta-list__item-bordered">Journal article</span>
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-info">Submitted · <i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="bt-work-card__meta-item">Open access</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
                   <!--NOT YET <span class="badge text-bg-danger">Deep curation</span> -->
-                  <span class="badge text-bg-warning">FWO — 18d</span>
                 </div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="bt-work-card__actions">
                   <a href="curate-detail.html" class="btn btn-primary btn-sm"
                     aria-label="Review: Entanglement entropy in quantum spin chains">
                     <i class="if if-check if--sm" aria-hidden="true"></i>
@@ -489,23 +534,42 @@
                 </p>
                 <p class="bt-work-card__authors">De Moor, B., Adriaens, T., Vanderstraeten, L.</p>
                 <p class="bt-work-card__pub">
-                  <time datetime="2025">2025</time>
+                  <a href="?year=2025"><time datetime="2025">2025</time></a>
                   <span class="text-muted mx-1" aria-hidden="true">·</span>
                   <a href="#">Physical Review B</a>
                 </p>
                 <p class="small text-muted mb-0">Submitted by <strong>researcher</strong> · 3d ago</p>
+
+                <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div>
+                      <p class="mb-1"><strong>Missing:</strong> full text, DOI or WoS ID.</p>
+                      <p class="mb-1"><strong>Biblio message:</strong> upload the author accepted manuscript, not the publisher PDF.</p>
+                      <p class="mb-0"><a href="#" class="fw-medium">Complete metadata</a></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="alert alert-light alert--sm mb-0" role="note" aria-label="For curators">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="if if-lock flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div>
+                      <p class="mb-1"><strong>Missing:</strong> ISSN, volume, pages.</p>
+                      <p class="mb-0"><strong>Internal note:</strong> waiting for the author's accepted manuscript — contacted the author on 28/07.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </article></li>
 
             <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="c-card-title-02">
               <div class="card-header">
-                <div class="bt-meta-list pt-1">
-                  <span class="badge text-bg-info">Submitted</span>
-                  <span class="bt-meta-list__item-bordered">Journal article</span>
-                  <span class="badge text-bg-secondary">Standard</span>
-                  <span class="badge text-bg-warning">Proxy-set OA</span>
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-success">Reviewed · <i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="bt-work-card__meta-item">Embargo — open access from 01/05/2027</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="bt-work-card__actions">
                   <a href="curate-detail.html" class="btn btn-primary btn-sm"
                     aria-label="Review: Characterisation of biofilm formation on stainless steel surfaces">
                     <i class="if if-check if--sm" aria-hidden="true"></i>
@@ -523,7 +587,7 @@
                 </p>
                 <p class="bt-work-card__authors">Van Acker, H., Coenye, T., Martinez-Garcia, L.</p>
                 <p class="bt-work-card__pub">
-                  <time datetime="2025">2025</time>
+                  <a href="?year=2025"><time datetime="2025">2025</time></a>
                   <span class="text-muted mx-1" aria-hidden="true">·</span>
                   <a href="#">Biofouling</a>
                 </p>
@@ -533,12 +597,11 @@
 
             <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="c-card-title-03">
               <div class="card-header">
-                <div class="bt-meta-list pt-1">
-                  <span class="badge text-bg-info">Submitted</span>
-                  <span class="bt-meta-list__item-bordered">Journal article</span>
-                  <span class="badge text-bg-light border">Fast pass</span>
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-info">Submitted · <i class="if if-eye-off" aria-hidden="true"></i> Not public</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="bt-work-card__actions">
                   <a href="curate-detail.html" class="btn btn-outline-primary btn-sm"
                     aria-label="Review: Comparative transcriptomics of drought stress response">
                     <i class="if if-check if--sm" aria-hidden="true"></i>
@@ -556,13 +619,50 @@
                 </p>
                 <p class="bt-work-card__authors">Inzé, D., Nelissen, H.</p>
                 <p class="bt-work-card__pub">
-                  <time datetime="2025">2025</time>
+                  <a href="?year=2025"><time datetime="2025">2025</time></a>
                   <span class="text-muted mx-1" aria-hidden="true">·</span>
                   <a href="#">Plant Cell</a>
                 </p>
                 <p class="small text-muted mb-0">Via <strong>WoS import</strong> · 6d ago</p>
               </div>
             </article></li>
+
+            <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="c-card-title-04">
+              <div class="card-header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-danger">Returned · <i class="if if-eye-off" aria-hidden="true"></i> Not public</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+                <div class="bt-work-card__actions">
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="View: Nutrient cycling in restored wetlands">
+                    <i class="if if-eye if--sm" aria-hidden="true"></i> View
+                  </a>
+                </div>
+              </div>
+              <div class="card-body">
+                <p id="c-card-title-04" class="bt-work-card__title">
+                  <a href="#">Nutrient cycling in restored wetlands of the Scheldt estuary</a>
+                </p>
+                <p class="bt-work-card__authors">Peeters, R., De Baets, S.</p>
+                <p class="bt-work-card__pub">
+                  <a href="?year=2026"><time datetime="2026">2026</time></a>
+                </p>
+                <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="mb-0"><strong>Biblio message:</strong> returned — the affiliation list is incomplete; add the second department and resubmit.</p>
+                  </div>
+                </div>
+                <div class="alert alert-light alert--sm mb-0" role="note" aria-label="For curators">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="if if-lock flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="mb-0"><strong>Internal note:</strong> awaiting resubmission — remind after 14 days.</p>
+                  </div>
+                </div>
+              </div>
+            </article></li>
+
 
           </ol><!-- /c-view-cards -->
 
@@ -604,7 +704,7 @@
                   </td>
                   <td><span class="badge text-bg-primary">Journal article</span></td>
                   <td>2025</td>
-                  <td><span class="badge text-bg-info">Submitted</span></td>
+                  <td><span class="badge text-bg-info">Submitted · <i class="if if-eye" aria-hidden="true"></i> Public</span></td>
                   <td><span class="badge text-bg-warning">Restricted</span></td>
                   <td><span class="text-muted">—</span></td>
                   <td>
@@ -632,8 +732,8 @@
                   </td>
                   <td><span class="badge text-bg-primary">Journal article</span></td>
                   <td>2025</td>
-                  <td><span class="badge text-bg-info">Submitted</span></td>
-                  <td><span class="badge text-bg-success">Open access</span></td>
+                  <td><span class="badge text-bg-success">Reviewed · <i class="if if-eye" aria-hidden="true"></i> Public</span></td>
+                  <td>Open access</td>
                   <td><span class="text-muted">—</span></td>
                   <td><span class="badge text-bg-warning">Proxy OA</span></td>
                   <td class="text-end">
@@ -657,8 +757,8 @@
                   </td>
                   <td><span class="badge text-bg-primary">Journal article</span></td>
                   <td>2025</td>
-                  <td><span class="badge text-bg-info">Submitted</span></td>
-                  <td><span class="badge text-bg-success">Open access</span></td>
+                  <td><span class="badge text-bg-info">Submitted · <i class="if if-eye-off" aria-hidden="true"></i> Not public</span></td>
+                  <td>Open access</td>
                   <td><span>A1</span></td>
                   <td><span class="text-muted">—</span></td>
                   <td class="text-end">
@@ -672,9 +772,27 @@
               </tbody>
             </table>
           </div><!-- /c-view-table -->
+          <!-- @state -->
+
+          <!-- @state: no-results -->
+          <div class="p-4">
+            <div class="bt-blank-slate bt-blank-slate--muted" role="status">
+              <p class="h5 mb-2">No results</p>
+              <p>No research output matches your search and filters.</p>
+              <div>
+                <button type="button" class="btn btn-secondary btn-sm">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                  Clear all filters
+                </button>
+              </div>
+            </div>
+            <!-- "Did you mean …" suggestion goes here later — NOT BUILT YET, deliberately: search quality (did-you-mean, best bets) is raven's search-quality epic, not this prototype. Do not build it. -->
+          </div>
+          <!-- @state -->
 
         </div><!-- /c-results-list -->
 
+        <!-- @state: default -->
         <!-- Pagination -->
         <div class="u-main__content-footer">
           <nav class="bt-toolbar" aria-label="Results pagination">
@@ -698,6 +816,7 @@
             </div>
           </nav>
         </div>
+        <!-- @state -->
 
       </section>
     </div><!-- /u-main__body -->

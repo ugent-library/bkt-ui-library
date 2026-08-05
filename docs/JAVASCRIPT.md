@@ -65,7 +65,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Card/table results toggle. Shows the `[data-view-panel]` matching the checked `[data-view-toggle]` radio and hides the rest; persists the choice to `localStorage` when a `[data-view-store]` key is present. Markup-driven, so one file serves every results page.
 
-**Loaded by:** `curate.html`, `search-researcher.html`, `search-my-research.html`, `search-filter-first.html`
+**Loaded by:** `curate.html`, `search-researcher.html`
 
 **Listens for:** `change` on `[data-view-toggle]`
 
@@ -79,7 +79,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Purpose:** Row selection + bulk-action bar for backoffice result tables. Shows `[data-bulk-bar]` while any `[data-bulk-row]` checkbox is checked; a `[data-bulk-all]` master checkbox selects/clears all rows and tracks the indeterminate state with a matching `aria-label`.
 
-**Loaded by:** `curate.html`, `search-filter-first.html`
+**Loaded by:** `curate.html`
 
 **Listens for:** `change` on `[data-bulk-row]` and `[data-bulk-all]`
 
@@ -87,7 +87,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Prototype-only:** no
 
-**Note:** Dormant for now — the backoffice list pages (`curate`, `search-filter-first`) are WIP (backoffice not settled), so the bulk bar isn't in active use yet.
+**Note:** Dormant for now — the backoffice list page (`curate`) is WIP (backoffice not settled), so the bulk bar isn't in active use yet.
 
 ---
 
@@ -289,6 +289,6 @@ Scripts listen for `htmx:afterSwap` to update UI state after content changes. Ke
 
 ## View toggle and bulk actions
 
-The view toggle (card/table) and bulk select/checkbox logic in `search-filter-first.html` currently live as an inline `<script>` in that template. These should be extracted to `assets/js/search.js` when the backoffice search is implemented in Go templ.
+The view toggle (card/table) and bulk select/checkbox logic in `curate.html` and `search-researcher.html` currently live as inline `<script>` blocks in those templates. These should be extracted to `assets/js/search.js` when the backoffice search is implemented in Go templ.
 
 Until then: do not copy or duplicate the inline script. The template is the single source.

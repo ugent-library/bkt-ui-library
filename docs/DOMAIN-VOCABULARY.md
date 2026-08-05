@@ -9,11 +9,10 @@ This file defines the shared language between the backend (`raven`) and the UI l
 ### Work
 The central entity. A publication, dataset, software, or other research output produced by one or more people. Every card, row, or detail page in the UI represents a Work.
 
-- Stored in the works table
-- Has a `kind` (see Work kind) and a `status` (see Work status)
-- Metadata lives in `attrs jsonb` on the database row
-- Display data (contributors, files, organisations, projects) is aggregated into `doc jsonb` — this is what the UI renders, no joins required
-- A Work is **never hard-deleted** once it has been public; it can only be withdrawn, retracted, or taken down
+- Stored as a raven record: a header envelope (id, type, `visibility`, `deposit_status`, timestamps) plus source-partitioned fields that reconcile into one projection (`raven/docs/architecture-overview.md`)
+- Has a `kind` (see Work kind), a `deposit_status`, and a `visibility` (see Work status — two axes)
+- The UI renders the reconciled projection with relations resolved (contributors, files, organisations, projects) — templates never join
+- A Work that never went public can be hard-deleted; once public it is only ever soft-deleted into a tombstone (see Deletion, withdrawal, retraction)
 
 ### Work kind
 The publication type. Determines which fields are active in the deposit form (profile-driven — see The profile system).
@@ -24,38 +23,77 @@ All kinds are collectively referred to as **research output** — not "publicati
 
 In the UI: shown as a `badge text-bg-primary` badge and controls which form fields appear.
 
-### Work status
+### Work status — two axes
 
-> ⚠ **Known raven misalignment — parked (M, 2026-07-30).** Raven models two axes, not
-> one: deposit status (`draft → submitted → returned → reviewed`) and visibility
-> (`private / restricted / public`). There is no `PublishWork` — no publish verb at all
-> (`raven/docs/architecture-overview.md`). Additionally decided: submitting publishes
-> immediately (visibility public on submit); review happens after. Do not build on the
-> single-axis lifecycle below; alignment is deliberately deferred until after the
-> public-site work. Aligning means: rewriting this section and the review-workflow
-> section below, relabelling the "Published" badges/facets in ~9 templates, and one
-> open question (what a researcher sees between submit and review; whether a returned
-> record stays public).
+Raven models a work's state on two orthogonal axes (`raven/deposit_status.go`,
+`raven/docs/architecture-overview.md`). One badge cannot say both things; backoffice
+cards carry both.
 
-The lifecycle state of a Work.
+**Deposit status** — the workflow state:
 
-| Status | Meaning | Who sees it |
-|--------|---------|-------------|
-| `draft` | Created, not yet submitted | Owner and curators only |
-| `submitted` | Submitted for review | Owner and curators |
-| `public` | Published and visible | Everyone |
-| `deleted` | Withdrawn, retracted, or taken down | Curators only (tombstone) |
+| `deposit_status` | Meaning |
+|---|---|
+| `draft` | Being prepared; editable by the owner |
+| `submitted` | Handed to curation. UGent decision: visibility goes `public` on submit — review happens after publication |
+| `returned` | Sent back by a curator with a reason; owner edits and resubmits |
+| `reviewed` | Curator stamped the editorial state. Terminal — there is no "published" status and no publish verb |
 
-In the UI: shown as a badge. `draft` → `badge text-bg-warning` (yellow). `submitted` → `badge text-bg-info` (blue). `public` → `badge text-bg-success` (green). `deleted` is not shown in normal lists.
+**Record visibility** — whether the record is on the public site, independent of
+workflow. Raven values (`raven/visibility.go`): `private` (owners only), `restricted`
+(institution), `public` (world). Reviewed-and-private is a valid end state (embargoed,
+on-file, confidential — e.g. metadata that cannot be shown).
 
-### Work delete_kind
-Only set when `status = 'deleted'`. Distinguishes the reason.
+**Do not confuse record visibility with file access.** Raven uses the same word and
+vocabulary at two levels: the *record's* `visibility` says whether the record exists
+on the public site; each *file's* `visibility` (plus embargo) says whether you can get
+the full text or dataset. "Open access / Restricted" on a card is the file level, never
+the record level.
 
-| Value | Meaning |
-|-------|---------|
-| `withdrawn` | Author or editor request post-publication |
-| `retracted` | Post-publication integrity issue |
-| `takedown` | Legal obligation (GDPR, court order) — attrs may be purged |
+In the UI (backoffice cards): deposit status is the one badge — `draft` →
+`badge text-bg-warning`, `submitted` → `badge text-bg-info`, `returned` →
+`badge text-bg-danger`, `reviewed` → `badge text-bg-success` — and record visibility is
+an icon **with a visible label** inside that badge: `· if-eye Public` or
+`· if-eye-off Not public` — the icon never stands alone. Public cards never show deposit status or record visibility: a deliberate absence, the public card must not leak workflow. File access renders as a
+plain `bt-work-card__meta-item` ("Open access", "Restricted access", "Embargo until
+<date>"), never as a badge on the backoffice.
+
+Open questions: what a researcher sees between submit and review; whether a returned
+record stays public; what record-level `restricted` (institution) means on the public
+site — for the issues discussion, not parked here.
+
+### Messages on backoffice cards
+
+Two blocks, split by audience — lines inside, never columns:
+
+**For the researcher** — `alert alert-warning alert--sm`, visible to researcher *and*
+curator. Lines, in order: automated missing items from the researcher list (full text,
+DOI/WoS, title, abstract, authors, keywords, projects); the **Biblio message**
+(curator → researcher note); the "Complete metadata" call to action.
+
+**For curators** — `alert alert-light alert--sm` with the `if-lock` icon, curator only.
+Lines: automated missing items from the curator list (journal, publisher, year, ISSN,
+volume, issue, pages); the **Internal note** (curator → curators; old biblio:
+"Librarian message").
+
+The researcher fast lane behind "Complete metadata" (edit view scoped to the missing
+fields) has no screens yet — `notes/TOPLAN.md`, Backoffice.
+
+### Deletion, withdrawal, retraction
+
+Raven has no deletion *status* and no `delete_kind`. Its model
+(`raven/docs/architecture-overview.md`): a record that never went public is
+**hard-deleted** (the row disappears — nobody holds a citable URL); a record that was
+once public is **soft-deleted into a tombstone** (`DeletedAt`/`DeletedBy`, optionally
+`replaced_by` for merge redirects). Tombstones exist for permalink resolution and
+OAI-PMH deleted headers; normal reads and lists exclude them.
+
+The old biblio reasons — `withdrawn` (author request), `retracted` (integrity),
+`takedown` (legal) — have no raven counterpart yet. Scholarly *retraction* is not
+deletion: a retracted article stays public with a retraction notice (an editorial
+state). **Retraction will be built in raven; the timing is open** (M, 2026-07-30) —
+the prototype designs ahead: a retracted work carries `badge text-bg-danger`
+"Retracted" on public and backoffice cards (the work stays public; the detail page
+carries the notice). See `notes/TOPLAN.md`, Backoffice.
 
 ### Person
 A real-world individual who contributed to research output. May be known only by name (external, unlinked) or linked to a canonical authority record.
@@ -89,20 +127,17 @@ An application account. May be linked to a PersonIdentity (most staff users) or 
 ### Grant
 A permission record. One row = one permission for one user over one scope. A user's full access picture is one query on the grants table. Grants can be global, org-scoped, project-scoped, or entity-level.
 
-In the UI: not directly visible to end users, but determines which action buttons appear (edit, submit, publish, delete).
+In the UI: not directly visible to end users, but determines which action buttons appear (edit, submit, review, delete). There is no publish action — visibility, not a publish verb, decides exposure.
 
 ### Candidate
 A possible Work collected by an automated harvester (Web of Science, ORCID, arXiv, etc.). Not a Work until explicitly accepted by a curator or the submitting researcher.
 
 In the UI: the "Suggestions" section in the backoffice sidebar. Shown as a review queue — accept or reject. The badge count on "Suggestions" reflects pending candidates matched to the current user's works or organisation.
 
-### Revision (Rev)
-One transaction boundary in the audit trail. Every state change goes through `AddRev`, which writes one revision row and one or more Mutation rows. Human actions have `user_id` set; automated imports have `source` set.
+### Revision and events
+One transaction boundary in the audit trail. Every record-touching write runs through raven's `Revise`; one revision id stamps every event the write produced (`record_created`, `record_updated`, `deposit_submitted`, `deposit_returned`, `deposit_reviewed`, `visibility_changed`, `file_embargo_lifted`, …). Events carry the actor and an optional free-text comment — the workflow back-and-forth rides on them.
 
-In the UI: surfaces as a change history view on a Work detail page (who changed what, when).
-
-### Mutation
-A named, serializable unit of state change within a Revision. Examples: `SetTitle`, `PublishWork`, `AddContributor`. The audit trail is a log of mutations. Pure and testable — no DB access in the apply step.
+In the UI: surfaces as a change history view on a Work detail page (who changed what, when), and as the review-message thread on deposit transitions.
 
 ---
 
@@ -142,23 +177,25 @@ Work kinds have **profiles** — YAML configuration files that define which fiel
 
 ## The review / curation workflow
 
-The lifecycle transition for a Work from draft to public:
+The deposit workflow (raven events: `deposit_submitted`, `deposit_returned`,
+`deposit_reviewed`). Submit sets visibility `public` (UGent decision); review stamps
+the editorial state afterwards.
 
 ```
-[draft] ──SubmitWork──► [submitted] ──PublishWork──► [public]
-                              │
-                       ReturnToDraft
-                       (with curator reason)
-                              │
-                              ▼
-                           [draft]
+[draft] ──submit──► [submitted] ──review──► [reviewed]
+                         │       (terminal)
+                       return
+                 (with curator reason)
+                         │
+                         ▼
+                    [returned] ──resubmit──► [submitted]
 ```
 
-A review message thread records the back-and-forth between submitter and curator:
-- `submitted` — cover note from submitter (optional)
-- `review_comment` — curator or submitter comment during review
-- `returned` — curator returned to draft with reason
-- `published` — optional curator note on publish
+Workflow transitions carry an optional free-text comment (raven's event `comment`
+field) — the back-and-forth between submitter and curator rides on the events:
+- `deposit_submitted` — cover note from the submitter (optional)
+- `deposit_returned` — curator's reason for returning
+- `deposit_reviewed` — optional curator note on review
 
 In the UI: the deposit flow (`templates/biblio-researcher/deposit-1-0-find.html` through `deposit-4-review.html`) covers the **submitter side**. The **curator side** is prototyped in `templates/biblio-team/`.
 
@@ -249,7 +286,6 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 |----------|------------------|
 | `dashboard.html` | Researcher inbox + activity |
 | `search-researcher.html` | My research output list |
-| `search-filter-first.html` | Filter-first search exploration |
 | `search-advanced-builder.html` | Advanced filter builder |
 | `search-advanced-token.html` | Advanced filter token variant |
 | `settings-profile.html` | Settings — own profile (display name, contact, language) |
@@ -295,18 +331,21 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 
 ## Status → badge mapping
 
-| `status` | Badge | Colour |
+| `deposit_status` | Badge | Colour |
 |----------|-------|--------|
-| `public` | `badge text-bg-success` | Green |
-| `submitted` | `badge text-bg-info` | Blue |
 | `draft` | `badge text-bg-warning` | Yellow |
-| `deleted` | not rendered in normal lists | — |
+| `submitted` | `badge text-bg-info` | Blue |
+| `returned` | `badge text-bg-danger` | Red |
+| `reviewed` | `badge text-bg-success` | Green |
 
-| Visibility | Badge |
-|------------|-------|
-| `public` | `badge text-bg-success` |
-| `restricted` | `badge text-bg-warning` |
-| `private` | never listed publicly |
+Record visibility rides *inside* the deposit-status badge as icon + visible label
+(backoffice cards): `· if-eye Public` / `· if-eye-off Not public`. Record-level `restricted` (institution)
+awaits the issues discussion before it gets its own rendering.
+
+File access: on **public** cards a solid badge — open → `badge text-bg-success`,
+restricted → `badge text-bg-warning`, embargo → `badge text-bg-warning` + `if-time`.
+On **backoffice** cards never a badge — a plain `bt-work-card__meta-item` ("Open
+access", "Restricted access", "Embargo until <date>").
 
 Work kind is always `badge text-bg-primary` (blue).
 
