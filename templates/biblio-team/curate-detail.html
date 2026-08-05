@@ -1,5 +1,6 @@
 <!-- @title: Curator review — single record — Biblio -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!-- @states: standard-review, proxy-flagged -->
 <!--
   Curator review — inline edit throughout, suggestions pre-populated.
@@ -13,15 +14,19 @@
   - Top toolbar: navigation only (breadcrumb, queue position). No duplicate actions.
 
   Left sidebar: issues checklist + field history (collapsed by default after 3 items).
+
+  ⚠️ Header deviates from sibling pages: h1 and breadcrumb share one toolbar row
+  (siblings have h1 only), and the breadcrumb trail/labels don't follow the
+  breadcrumb pattern used elsewhere. Align when the backoffice header settles.
 -->
 
 <div class="u-layout--app" data-surface="backoffice">
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <header class="bt-navbar" role="banner">
+  <header class="bt-navbar">
     <a href="#" class="bt-navbar__brand" aria-label="Biblio — go to dashboard">
-      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" width="auto" height="70">
+      <img src="/assets/images/logo-ugent-boekentoren-small.svg" class="bt-navbar__logo" alt="Ghent University Logo" height="70">
       Biblio
     </a>
     <div class="ms-auto d-flex align-items-center gap-2">
@@ -51,6 +56,9 @@
     <div class="u-main__header">
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Curate record</h1>
+          </div>
           <div class="bt-toolbar__item">
             <nav aria-label="Breadcrumb">
               <ol class="breadcrumb mb-0 small">
@@ -364,7 +372,7 @@
                     <i class="if if-file-pdf if--sm text-danger me-1" aria-hidden="true"></i>
                     biofilm_stainless_accepted.pdf
                   </a>
-                  <span class="text-muted small">1.4 MB</span>
+                  <span class="text-muted small">1,4 MB</span>
                 </div>
               </div>
             </div>
@@ -381,7 +389,7 @@
             <!-- Licence — MISSING — system suggestion -->
             <div id="field-licence">
               <label for="field-licence-select" class="form-label small fw-semibold mb-1">
-                Licence <span class="text-danger" aria-label="required">*</span>
+                Licence <span class="text-danger" aria-hidden="true">*</span>
               </label>
 
               <!-- Suggestion -->
@@ -465,6 +473,7 @@
               </div>
             </div>
 
+            <label for="field-vabb-select" class="visually-hidden">VABB classification</label>
             <select id="field-vabb-select" name="vabb" class="form-select form-select-sm w-auto"
               hx-post="/records/BIB-2025-08847/field/vabb"
               hx-trigger="change"
@@ -545,7 +554,7 @@
           <p class="small text-muted mb-3">The researcher will see your message and be asked to resubmit.</p>
           <div class="mb-3">
             <label for="return-reason" class="form-label">
-              Message to researcher <span class="text-danger" aria-label="required">*</span>
+              Message to researcher <span class="text-danger" aria-hidden="true">*</span>
             </label>
             <textarea id="return-reason" name="reason" class="form-control" rows="4" required
               placeholder="Describe what needs to be fixed or confirmed&hellip;"></textarea>

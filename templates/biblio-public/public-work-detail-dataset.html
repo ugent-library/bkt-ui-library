@@ -37,7 +37,7 @@
       </nav>
 
       <!-- Heading -->
-      <div class="row g-md-4 g-0 align-items-end border-bottom bt-section-detail">
+      <div class="row g-4 align-items-end border-bottom bt-section-detail">
 
         <!-- Main column: heading -->
         <div class="col-lg-12 col-xl-8">
@@ -46,7 +46,7 @@
           <div class="d-flex flex-wrap gap-2 mb-3">
             <span class="badge text-bg-primary">Dataset</span>
             <span class="badge text-bg-success">
-              <i class="if if-open-access"></i> Open access
+              <i class="if if-open-access" aria-hidden="true"></i> Open access
             </span>
           </div>
 
@@ -74,13 +74,19 @@
               <i class="if if-external-link" aria-hidden="true"></i>
               Access dataset at Zenodo
             </a>
-            <button type="button" class="btn btn-secondary"
-              hx-post="/lists/add"
-              hx-vals='{"id":"01K9XTW2R8FQ"}'
-              hx-swap="none">
-              <i class="if if-bookmark-line" aria-hidden="true"></i>
-              Add to list
-            </button>
+            <div class="dropdown">
+              <button type="button" class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                aria-label="Add to list: Ghent urban forest inventory and microclimate measurements 2020–2025"
+                hx-get="/lists/panel?work=wdd" hx-trigger="click once"
+                hx-target="#atl-wdd-panel" hx-swap="innerHTML" hx-indicator="#atl-wdd-loading">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-wdd-panel" role="dialog" aria-label="Add to list">
+                <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wdd-loading" aria-live="polite">Loading your lists&hellip;</p>
+              </div>
+            </div>
             <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#cite-modal">
               <i class="if if-double-quotes" aria-hidden="true"></i>
               Cite
@@ -98,7 +104,7 @@
               <code class="small overflow-auto fw-bold p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTW2R8FQ</code>
               <button type="button" class="btn btn-light btn-sm"
                 aria-label="Copy persistent link to this dataset record"
-                onclick="navigator.clipboard.writeText('https://hdl.handle.net/1854/LU-01K9XTW2R8FQ');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                data-clipboard>
                 <i class="if if-copy" aria-hidden="true"></i>
               </button>
             </div>
@@ -136,11 +142,84 @@
           <!-- Related research — HTMX loaded -->
           <section aria-labelledby="related-heading" class="mb-5">
             <h2 id="related-heading" class="h4 mb-3">Related research output</h2>
-            <div
-              hx-get="/partials/related?id=01K9XTW2R8FQ&partial=true"
-              hx-trigger="revealed"
-              hx-swap="innerHTML">
-              <div class="text-muted">Loading related research output&hellip;</div>
+            <!-- Renders server-side: public content is never lazy-loaded (crawlers do not run HTMX).
+                 Content generated from server/content/related-works.js. -->
+            <div>
+            <ol class="list-unstyled mb-0">
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-01">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-01" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">Cooling co-benefits of urban tree networks in compact European cities</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2025">2025</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Green infrastructure <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Trees</a>
+                  </div>
+                </div>
+              </article></li>
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-02">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-02" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">Planning biodiversity corridors through urban green infrastructure</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2024">2024</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Biodiversity</a>
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Urban climate <span class="visually-hidden">(shared keyword)</span></a>
+                  </div>
+                </div>
+              </article></li>
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-03">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Book chapter</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-03" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">Community-led climate adaptation in Flemish mid-sized cities</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2023">2023</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Resilience <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Ghent <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Climate adaptation</a>
+                  </div>
+                </div>
+              </article></li>
+            </ol>
+            <!-- stub — intended target: works search pre-filtered on this work's keywords
+                 e.g. /works?keyword=Urban+climate&keyword=Resilience&keyword=Green+infrastructure&keyword=Ghent -->
+            <a href="#" class="btn btn-ghost">
+              <i class="if if-arrow-right" aria-hidden="true"></i>
+              More related research, by keyword
+            </a>
             </div>
           </section>
         </div>
@@ -245,9 +324,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"
-          onclick="navigator.clipboard.writeText(document.querySelector('.tab-pane.active .font-monospace').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy citation',1800)">
-          Copy citation
+        <button type="button" class="btn btn-primary" data-clipboard data-clipboard-target=".tab-pane.active .font-monospace">
+          <span class="btn-text">Copy citation</span>
         </button>
       </div>
     </div>

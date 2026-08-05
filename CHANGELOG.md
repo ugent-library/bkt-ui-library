@@ -6,6 +6,228 @@ system, or do I reach for something new?"
 
 ---
 
+## Backoffice status model + card completion (v2.10, 2026-07-30)
+
+No class changes. The backoffice aligns to raven's state model and the cards fill out:
+
+- **Two-axis status**: deposit status (draft/submitted/returned/reviewed) is the one
+  badge; record visibility rides inside it as `if-eye`/`if-eye-off` + visually-hidden
+  text. "Published"/"Biblio public" wording is gone. File access is never a badge on
+  backoffice cards — plain `bt-work-card__meta-item` ("Open access", "Embargo until
+  <date>"). DOMAIN-VOCABULARY rewritten accordingly (two axes, deletion/tombstones,
+  raven event model; retraction: will be built in raven, timing open).
+- **Facets**: Status = the four deposit statuses (list pages + backoffice facet
+  partial); Visibility is its own facet on both list pages.
+- **One list page per role**: search-my-research and search-filter-first deleted;
+  filter-first's condensation concepts noted in curate.html.
+- **Cards**: automated missing-metadata alert (role-specific lists) in the Biblio
+  message slot; org badges muted (`text-bg-light`); projects clickable; year links
+  to the year filter in filterable views; a Returned+embargo example card added.
+- **Kit**: work-card page restructured — on-page nav; order grammar → roles &
+  views → public → researcher → curator; duplicate demo cards removed; researcher
+  demo re-labelled (was "Curator card"); public demo aligned to v1 actions (no
+  Download CTA per raven#141). "One card across roles and views" matrix section;
+  add-to-list recipe renders open in flow. The Biblio message pattern = automated
+  missing-metadata check + CTA + optional personalised curator note.
+- **Access badges changed** — see the table below; check any page you are working on that
+  shows access status.
+- **Cards use one row concept**: `bt-meta-list` is gone from inside work cards —
+  departments, projects, VABB and the provenance footer are `bt-work-card__meta` rows with
+  `bt-work-card__meta-item` items, same as the header row. The separator is now scoped to
+  direct children of a row (`__meta > __meta-item + __meta-item`), so stacked sub-lists draw
+  none; `.bt-work-card__meta-item .if` glues an icon to its item. `bt-meta-list` stays as
+  the off-card metadata line (detail-page file rows, typography demos) and moved to
+  `patterns/_booktower-components.scss`; its dead `__item` element was removed.
+- **Public title links**: every public card title opens
+  `templates/biblio-public/public-work-detail.html` (was `#`, and one raven-shaped
+  `/research/<id>`); backoffice titles stay `#` — no backoffice detail view yet.
+- **Search pages**: results-search hx stubs removed (raven owns search behaviour);
+  `@states: default, no-results` on both list pages with a bt-blank-slate zero-results
+  state; "did you mean" deliberately not built (raven search-quality epic).
+
+### ⚠️ Access badges changed (v2.10) — recheck any page showing access status
+
+The badge markup for access status is different. No class was added or removed, so
+`check:classes` stays silent — a page left on the old markup keeps rendering, just wrong.
+
+| Access state | v2.9 and earlier | v2.10 |
+|---|---|---|
+| Open access | `badge text-bg-success` | `badge text-bg-success` + `if-open-access` |
+| Restricted access | `badge text-bg-warning` | `badge text-bg-secondary` + `if-lock` |
+| Embargo | `badge text-bg-warning` + `if-time` | `badge text-bg-secondary` + `if-time` (badge names the date) |
+| Closed access | `badge text-bg-secondary` | unchanged — and it never takes an icon |
+
+**Only open access carries colour.** Restricted and embargo are correct outcomes, not
+warnings: the orange read as an error and competed with open access. `text-bg-warning` on
+an access badge is now wrong everywhere. Icons are decorative (`aria-hidden="true"`) — the
+badge text carries the meaning.
+
+Swept in this release: `public-works.html`, `public-work-detail.html`,
+`public-work-detail-dataset.html`, `public-project-detail.html`,
+`public-researcher-detail.html`, `public-organisation-detail.html`,
+`deposit-4-review.html`, `search-advanced-builder.html`,
+`partials/search-suggest-panel.html`, `server/content/search-result-cards.js`,
+`server/content/token-results.js`, and the kit pages `patterns/work-card.html`,
+`patterns/work-actions.html`, `patterns/hero.html`, `elements/badges.html`.
+
+**Backoffice cards are unaffected**: access there is plain `bt-work-card__meta-item` text,
+never a badge. If you are adding an access badge to a backoffice card, that is the bug.
+
+## Work card grammar — backoffice cards + add-to-list recipe (v2.9, 2026-07-30)
+
+No class changes. The backoffice cards (curate.html, search-researcher,
+search-my-research, search-filter-first, search-advanced-token, and the kit
+page's curator/researcher sections) migrated to the v2.8 grammar: `__meta` /
+`__meta-item` / `__actions`, access always a badge (fixed the double-class
+`bt-meta-list__item-bordered badge` element in the researcher search twins),
+curator kit titles corrected `h2`→`p`, curator authors as `__author` spans with
+comma separators. The backoffice `__pub` scan line keeps its `·` separators —
+deliberately distinct from the public Harvard line. Backoffice-only blocks
+(departments, projects, VABB, footer) stay on generic `bt-meta-list` markup;
+naming them is an open decision. The add-to-list dropdown composition is now a
+documented recipe on `patterns/panel.html`.
+
+## Work card grammar — public surface (v2.8, 2026-07-30)
+
+Four classes added, no removals. The card's inner rows get semantic elements;
+Bootstrap structural regions (`.card-header`, `.card-body`) stay.
+
+| Old markup (still valid CSS, migrate on touch) | v2.8 |
+|---|---|
+| `div.bt-meta-list.pt-1` (card badge row) | `div.bt-work-card__meta` |
+| `span.bt-meta-list__item-bordered` (type, in cards) | `span.bt-work-card__meta-item` |
+| `div.d-flex.align-items-center.gap-2` (card actions) | `div.bt-work-card__actions` |
+| author `<a>` with icons + space inside | `span.bt-work-card__author` — icons outside the `<a>`, spacing via CSS |
+
+Behaviour changes:
+
+- `bt-meta-list__item-bordered` (and `bt-work-card__meta-item`): separator now
+  renders only *between* consecutive items (sibling `border-left`), never after
+  the last item.
+- `bt-work-card__authors` dropped `display:flex`/`gap` — authors are prose with
+  comma text nodes; flex made every comma a spaced flex item.
+- `.bt-work-card.card` chrome-strip rule deleted; its one usage
+  (search-advanced-builder embed preview) dropped `.card`.
+- Access state on cards is always a badge (DOMAIN-VOCABULARY mapping); the
+  bordered-item and bare-sentence renderings are gone from public cards.
+- Public `__pub` line follows `docs/WORK-CARD-REFERENCE-STYLES.md` (Harvard,
+  `<cite>`, linked `<time>` year); `·` separator spans removed on public.
+
+Swept: search-result-cards.js, public-works.html, public-project-detail.html,
+work-card.html (public section), work-actions.html, search-advanced-builder.html.
+Backoffice cards (curate.html, search-researcher/my-research/filter-first/token)
+still carry the old markup — they migrate in the backoffice pass.
+
+## HTML validity batch — check:html and check:a11y green (v2.7, 2026-07-30)
+
+No class changes. All `npm run check:html` and `check:a11y` errors fixed across kit
+pages, templates and partials, visually inert except curate-detail, which gained a
+visible `h1.bt-toolbar__title` ("Curate record") — it had no h1 at all.
+
+Conventions this locked in:
+
+- **Stub forms:** prototypes carry no `<form>` without a working submit path; the spot
+  is marked `<!-- real impl: form POST /… -->` (ACCESSIBILITY.md C6 prototype
+  exception). Markers added across the deposit flow and add-author-form.
+- **Wrapping labels keep `for`/`id`:** voice control doesn't recognise implicit
+  association, so `no-redundant-for` is off in `.htmlvalidate.json`
+  (ACCESSIBILITY.md §C1, TPGi citation). File-drop zones carry both.
+- **`@state` vs checks:** ids unique across states; duplicate landmark names get an
+  inline `html-validate-disable-next` directive (SERVER.md → Template states).
+- **Duplicate pagination navs:** named "Results pagination (top)"/"(bottom)"
+  (ACCESSIBILITY.md A5 table).
+- Redundant `role="banner"`/`"contentinfo"` and invalid `width="auto"` removed
+  everywhere; sidebar toggle's aria attributes moved from the styled div to the
+  button (`sidebar-toggle.js` selector updated to match).
+- All 19 backoffice templates (biblio-researcher + biblio-team: deposit, search,
+  settings, dashboard, curation) now carry a WIP marker: backoffice is not
+  settled, do not implement in raven yet.
+
+## Filter engines consolidated into filter-bar.js (v2.6, 2026-07-15)
+
+One class removed: `filter-group--backoffice-only` (and its `[data-surface]`
+rule) — it only existed to hide backoffice groups in the deleted
+`search-filter-bar.html` partial. Surface scoping is now per-bar config, not CSS.
+
+`filter-editor.js`, `filter-stubs.js`, `directory-filters.js` and
+`directory-filters-projects.js` are replaced by one config-driven
+`assets/js/filter-bar.js`: one engine, one config per bar, self-discovered by id
+prefix (`wf-` works, `rdir-` researchers, `pdir-` projects). Editor types:
+checklist, boolean, year-range, text. The works page now uses the same live
+chip bar as the directories (two chips pre-applied) instead of static markup.
+Chips remain client-side prototype stubs. Registry: `docs/JAVASCRIPT.md`;
+interaction model: `docs/SEARCH-AND-FILTERING.md`.
+
+## Copy-to-clipboard pattern (v2.5, 2026-07-14)
+
+No class changes. New kit page `patterns/copy-to-clipboard.html`. `clipboard.js` copies the
+sibling `<code>` (or `data-clipboard-target` for dynamic sources) and drives icon-only
+buttons. Public detail templates moved off inline `onclick` to `data-clipboard` (persistent
+link + cite-modal Copy citation).
+
+## Public search form + filter picker unified (v2.4, 2026-07-14)
+
+No class removals — a markup + convention consolidation. Where to look when
+building or porting search/filter UI.
+
+**Public search form:** one canonical skeleton on every public listing header
+(`public-works`, `public-researchers`, `public-organisations`,
+`public-projects`): `<form role="search">` → `#suggest-wrapper` →
+`.input-group.input-group-lg` (visually-hidden label + `type="search"` combobox
+input + submit button) → `#suggest-panel.bt-suggest-panel`. Generic IDs (`q`,
+`suggest-wrapper`, `suggest-panel`) on every page — the JS binds them. Only
+scope varies: placeholder/`aria-label` copy, the form `action`, and the one
+behaviour hook (`hx-*` omni-suggest on works vs `data-directory-search`
+client-side typeahead on the directories). Documented on
+`elements/search-bar.html` → **Listing / results-header search**.
+
+**Filter picker:** one markup everywhere (`search-filter-bar`,
+`result-filter-bar` + `-projects`/`-researchers`, `backoffice-facet-sidebar`,
+and the `patterns/filter-picker.html` demos): `role="group"` +
+`.dropdown-header` labels, plain `.dropdown-item` buttons. Removed the per-item
+`py-2` and `d-flex align-items-center` utilities, the unused "Find a filter"
+search input (and its `filter-editor.js` guard requirement), and the invalid
+`aria-labelledby` on the menu `<div>`. Row padding now comes from Bootstrap's
+own token — `--bs-dropdown-item-padding-y: 0.5rem` on `.dropdown-menu`, with
+`.dropdown-header` reading the same token; rows are flex via
+`.bt-dropdown-scroll .dropdown-item` so an applied item's trailing check
+(`.ms-auto`) sits at the edge.
+
+**Search-bar kit page:** documents three variants — hero pill
+(`.input-group--hero`), canonical listing search, and compact/toolbar
+(`.form-control-search`, backoffice).
+
+---
+
+## Access CTA rules + formatting conventions (v2.3, 2026-07-13)
+
+No class changes. Behaviour and copy changes on the public surface;
+decision record is raven#141.
+
+**Access CTA (cards + detail header):** split into v1 (parity with
+biblio.ugent.be) and v2 (extended). Templates show v1: full CTA on the
+detail header, cards carry only Cite + Add to list — no access CTA, no
+View button (title navigates). v2 (card mirrors the header: Download /
+Access at ⟨host⟩ / Log in / Select file) is preserved as designs on the
+kit page. Also removed: **Request access** (future, no process yet),
+per-row "Log in to access" links in the Files section (login appears
+once per page), the disabled **Under embargo** button (embargo renders
+as text naming the post-embargo state), "Full Text at Publisher"
+(external open full text out of scope), and every public trace of
+`private` files — not even a count (patent risk, tech transfer).
+
+**New kit page:** `patterns/work-actions.html` — CTA designs and
+styling (icon + button variant per CTA). Rules deliberately live in
+raven#141, not in the kit.
+
+**New doc rules:** file selection for the access CTA
+(`docs/DOMAIN-VOCABULARY.md`: full_text only, published > accepted >
+rest, format irrelevant; restricted = login-scoped) and formatting
+conventions (`docs/UI-LAYER.md`: dates dd/mm/yyyy, decimal comma,
+meta line version · access · format · size).
+
+---
+
 ## Bootstrap gap audit (v2.2, 2026-07-03)
 
 Full findings in `docs/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
@@ -27,7 +249,7 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `sr-only` | Bootstrap's `visually-hidden` |
 | `bt-navbar__mark` | `bt-navbar__brand` |
 | `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` | `bt-sidebar` and its elements |
-| `bt-blank-slate-default/-muted/-primary` (single dash) | `bt-blank-slate--default/--muted/--primary` |
+| `bt-blank-slate-muted/-primary` (single dash) | `bt-blank-slate--muted/--primary` |
 | `bt-table` | Bootstrap `.table .table-hover .align-middle` |
 | `bt-filter-bar`, `bt-bulk-bar`, `bt-pagination-bar` | `bt-toolbar` |
 | `bt-results-toolbar` | `bt-toolbar bt-toolbar--bordered` |
@@ -39,6 +261,9 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `td-title`, `td-meta`, `td-actions`, `td-actions-inner`, `row-actions` | Bootstrap utilities directly |
 | `u-scroll-wrapper`, `u-scroll-wrapper__body`, `u-maximize-height` | The `u-layout--app` / `u-main__*` shell |
 | `.bt-toolbar.h-auto` state hook | `align-items-start` where needed |
+| `filter-editor`, `__title`, `__body`, `__body--checklist`, `__actions` | `bt-panel` and its elements/modifiers (see `notes/ARCHIVE-PROPOSAL-panel-unification.md`) |
+| `filter-tag` | Clickable badge: `<button>`/`<a>` with `badge badge--outline` |
+| `filter-year__input` | `bt-panel__year-input` |
 
 **New rules (see AGENT.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
 
@@ -73,9 +298,7 @@ partial, and stylesheet:
 | `c-sidebar--bordered` | `bt-sidebar--bordered` |
 | `c-sub-sidebar` | `u-main__sidebar` |
 | `c-sub-sidebar--bordered` | `u-main__sidebar--bordered` |
-| `c-blank-slate` | `bt-blank-slate` |
-| `c-blank-slate-default` | `bt-blank-slate--default` |
-| `c-blank-slate-muted` | `bt-blank-slate--muted` |
+| `c-blank-slate` | `bt-blank-slate` || `c-blank-slate-muted` | `bt-blank-slate--muted` |
 | `c-blank-slate-primary` | `bt-blank-slate--primary` |
 | `c-radio-card` | `btn-check` (Bootstrap) |
 | `c-radio-card__group` | `bt-btn-check__group` (Bootstrap extension for grouping btn-checks) |
@@ -100,7 +323,7 @@ is unchanged.
 
 ## Status key
 
-**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in `AGENT.md` as the verified class list.
+**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in the generated `docs/CLASSES.md` (usage notes in `AGENT.md`).
 
 | Symbol | Meaning |
 |--------|---------|
@@ -307,7 +530,7 @@ is unchanged.
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
 | `c-blank-slate` | `bt-blank-slate` | ✅ Carried over | Active in `_booktower-components.scss`. |
-| `c-blank-slate-default`, `-muted`, `-primary` | `bt-blank-slate--default`, `--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
+| `c-blank-slate-muted`, `-primary` | `bt-blank-slate--muted`, `--primary` | 🔧 Revised | OLD used no double-dash — inconsistent with BEM. v2 corrects this. |
 
 ---
 

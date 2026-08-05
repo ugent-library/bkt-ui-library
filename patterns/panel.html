@@ -1,0 +1,201 @@
+<!-- @title: Panel — Booktower Design System -->
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Panel</h1>
+    <p class="lead">A generic popover panel — a titled header, one or more bodies, an optional actions footer — shown inside a dropdown or overlay. Two bodies stack into the <strong>search-first</strong> shape: a search field pinned at the top, a scrollable checklist below. The <a href="/patterns/filter-picker.html">filter editor</a> is the same chrome with an Apply/Cancel footer.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Anatomy</h2>
+    <p class="mb-4"><code>bt-panel</code> wraps a <code>bt-panel__title</code>, one or more <code>bt-panel__body</code> blocks, and an optional <code>bt-panel__actions</code> footer. Each body draws its own top border, so stacking two gives the search-first divider for free: a plain body holds the search field, the <code>bt-panel__body--checklist</code> below it takes the option rows and scrolls past ~240px. Rows are plain Bootstrap <code>form-check</code>. <code>bt-panel--wide</code> fixes the width at 480px — the list body is swapped as you type, and a content-sized panel would resize with it.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Add-to-list picker — search-first</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add this work to a list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p-search" name="q"
+                placeholder="Search your lists&hellip;" autocomplete="off">
+              <button type="submit" class="visually-hidden">Search lists</button>
+            </form>
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p-reading" checked>
+              <label class="form-check-label" for="p-reading">Reading list</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p-quantum">
+              <label class="form-check-label" for="p-quantum">Quantum computing refs</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p-review">
+              <label class="form-check-label" for="p-review">To cite in review</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; ticking a box adds or removes the work and leaves the panel open. One field searches and names — there is no separate "new list" field.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Create from the search field</h2>
+    <p class="mb-4">The create row sits under whatever matched, so naming a new list is the same keystrokes as looking for an existing one. It appears whenever the typed text is not exactly one of your lists — including when something partly matched, so a name like &ldquo;Reading&rdquo; is still available next to &ldquo;Reading list&rdquo;. At an exact name it disappears: that list is already in the checklist, and that is what refuses duplicates. The row is a real form, server-rendered, because the server is what knows whether anything matched.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Nothing matches — create the typed name</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add this work to a list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p2-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p2-search" name="q"
+                value="Coastal erosion" placeholder="Search your lists&hellip;" autocomplete="off">
+              <button type="submit" class="visually-hidden">Search lists</button>
+            </form>
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist">
+            <form action="/lists" method="post">
+              <input type="hidden" name="name" value="Coastal erosion">
+              <button type="submit" class="dropdown-item">
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i> Create &ldquo;Coastal erosion&rdquo;
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Partly matched — create is still offered</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add this work to a list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p4-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p4-search" name="q"
+                value="Reading" placeholder="Search your lists&hellip;" autocomplete="off">
+              <button type="submit" class="visually-hidden">Search lists</button>
+            </form>
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p4-reading" checked>
+              <label class="form-check-label" for="p4-reading">Reading list</label>
+            </div>
+            <form action="/lists" method="post">
+              <input type="hidden" name="name" value="Reading">
+              <button type="submit" class="dropdown-item">
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i> Create &ldquo;Reading&rdquo;
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No lists yet — the panel opens in the create state</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add this work to a list</p>
+          <div class="bt-panel__body bt-panel__body--form">
+            <form class="w-100" action="/lists" method="post">
+              <label for="p3-new" class="form-label">Name your first list</label>
+              <div class="d-flex gap-2">
+                <input type="text" id="p3-new" name="name" class="form-control form-control-sm" required>
+                <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-4 col-8 text-muted small">With no lists there is nothing to search, so the create form is the whole body (<code>bt-panel__body--form</code>). Creating the first list returns the picker with that list ticked.</p>
+
+    <p class="mb-0 col-8 text-muted small">The panel has no duplicate-name error, because it cannot reach one: the create row is gone before a name can collide. Renaming can still collide, so the refusal lives on <a href="/templates/biblio-researcher/list-edit.html?state=name-taken">the list edit form</a>.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">In a dropdown</h2>
+    <p class="mb-4">On result cards the panel is the menu of a Bootstrap dropdown: <code>bt-panel bt-panel--wide</code> on the <code>.dropdown-menu</code> with <code>p-0</code>, and <code>data-bs-auto-close="outside"</code> on the toggle so ticking a box doesn't close it. HTMX drives the three jobs — <code>hx-get</code> re-renders the checklist, <code>hx-put</code> / <code>hx-delete</code> write membership with <code>hx-swap="none"</code> so the typed query survives, <code>hx-post</code> creates. Mirrors raven's <code>AddToListComponent</code>.</p>
+    <p class="mb-4">The search field triggers on <code>input</code>, never <code>keyup</code>: the field's own ✕ fires <code>input</code> and <code>search</code> only, so on <code>keyup</code> the list stays filtered after a clear.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Recipe — the toggle a template writes</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Example record title"
+            hx-get="/lists/panel?work=kit" hx-trigger="click once"
+            hx-target="#atl-kit-panel" hx-swap="innerHTML" hx-indicator="#atl-kit-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-kit-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-kit-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0 col-8 text-muted small">A template writes only the toggle and an empty menu; everything inside is the fragment the server returns on first open. <code>hx-*</code> URLs are stubs. The mock keeps no membership, so a tick is forgotten when the list re-renders.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Logged out</h2>
+    <p class="mb-4">Anonymous visitors and crawlers get the button, and it goes straight to login carrying the record in the return URL. After login they land back on the record with the panel open. No panel, no second click.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No session — the button is a login link</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <a href="/login?return_to=/works/01K9XTVXD41Z%3Fadd_to_list%3D1" class="btn btn-ghost btn-sm" rel="nofollow">
+          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+        </a>
+      </div>
+    </div>
+
+    <p class="mb-0 col-8 text-muted small"><code>rel="nofollow"</code> keeps crawlers out of the login flow.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Where the panel is used</h2>
+
+    <table class="table table-sm align-middle" aria-label="Places bt-panel is used">
+      <thead class="text-uppercase text-muted small">
+        <tr>
+          <th scope="col">Place</th>
+          <th scope="col">Composition</th>
+          <th scope="col">Wired by</th>
+        </tr>
+      </thead>
+      <tbody class="small">
+        <tr>
+          <td>Add-to-list picker — <code>public-works.html</code>, both work-detail pages, the researcher, project and organisation detail pages, and the 23 generated cards in <code>server/content/search-result-cards.js</code></td>
+          <td><code>bt-panel bt-panel--wide</code> as a <code>.dropdown-menu</code>, loaded on first open; ids prefixed <code>atl-&lt;record&gt;-</code></td>
+          <td><code>/lists/panel</code>, <code>/lists</code> — kit server, <code>server/content/list-panel.js</code> and <code>list-picker.js</code></td>
+        </tr>
+        <tr>
+          <td>Filter editor — <a href="/patterns/filter-picker.html">public works, researcher and project directories</a></td>
+          <td><code>bt-panel bt-panel--wide</code> as a floating overlay; checklist / boolean / year / text body + Apply–Cancel footer</td>
+          <td><code>assets/js/filter-bar.js</code></td>
+        </tr>
+        <tr>
+          <td>Filters tray on small screens</td>
+          <td>The same editor with <code>bt-panel</code> and <code>bt-panel--wide</code> stripped, so it flows inline in the offcanvas</td>
+          <td><code>assets/js/filter-sheet.js</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </section>
+</div>

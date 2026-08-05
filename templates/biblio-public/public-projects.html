@@ -14,7 +14,7 @@
   <main id="main-content">
 
     <!-- Header -->
-    <div class="u-main__header border-bottom pt-5 pb-5">
+    <div class="u-main__header border-bottom pt-5 pb-4">
       <div class="container">
 
         <nav aria-label="Breadcrumb">
@@ -32,30 +32,31 @@
              dataset as you type (it does not filter the list below). In
              production this becomes GET /projects/suggest?q=&hellip; -->
         <form role="search" aria-label="Search projects"
-          action="/templates/biblio-public/public-projects.html" class="mb-0">
-          <div class="position-relative" id="project-search" data-directory-search="projects">
+          action="/templates/biblio-public/public-projects.html">
+          <div class="position-relative" id="suggest-wrapper" data-directory-search="projects">
 
-            <label for="project-q" class="visually-hidden">
+            <label for="q" class="visually-hidden">
               Search projects by title, description, acronym, funder, or ID
             </label>
 
-            <div class="input-group input-group-lg">
+            <div class="input-group input-group-lg mb-3">
               <input
                 type="search"
-                id="project-q"
+                id="q"
                 name="q"
                 class="form-control"
+                value="green"
                 placeholder="Search projects by title, acronym, funder, or ID&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
-                aria-controls="project-search-panel"
+                aria-controls="suggest-panel"
                 aria-expanded="false">
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
             <!-- Typeahead panel — populated client-side by directory-search.js. -->
-            <div id="project-search-panel" class="bt-suggest-panel"
+            <div id="suggest-panel" class="bt-suggest-panel"
               role="listbox" aria-label="Project suggestions" hidden></div>
 
             <!-- Example dataset powering the typeahead (prototype only).
@@ -75,9 +76,42 @@
           <!-- ── Filters — project-directory scope ─────────────────────────────
                Project-scoped "Add filter" chip bar (Host faculty, Status,
                Period). Same interaction as the researcher directory; engine in
-               directory-filters-projects.js. -->
-          <div class="mt-3">
-            <!-- @include: templates/partials/result-filter-bar-projects.html -->
+               filter-bar.js (pdir- config). -->
+          <div class="position-relative">
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+
+                <div class="bt-toolbar__item">
+                  <div class="d-flex flex-wrap align-items-center gap-2" role="group"
+                    aria-label="Active filters" id="pdir-active-chips">
+                    <!-- Do not show this div if there are no active filters -->
+                  </div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <div class="dropdown" id="pdir-add-filter-dropdown">
+                    <button class="btn btn-ghost btn-sm" type="button" id="pdir-add-filter-btn"
+                      data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                      <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                    </button>
+                    <div class="dropdown-menu p-0">
+                      <div id="pdir-filter-picker-list" class="bt-dropdown-scroll">
+                        <button class="dropdown-item" type="button" data-filter="organisation">Organisation</button>
+                        <button class="dropdown-item" type="button" data-filter="status">Status (active / completed)</button>
+                        <button class="dropdown-item" type="button" data-filter="year">Year</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bt-toolbar__item">
+                  <button type="button" class="btn btn-ghost btn-sm" id="pdir-clear-all" hidden>
+                    <i class="if if-close if--xs" aria-hidden="true"></i> Clear all
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="pdir-filter-editor" hidden
+              class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
+              role="dialog" aria-modal="false" aria-labelledby="pdir-filter-editor-title"></div>
           </div>
 
         </form>
@@ -91,7 +125,7 @@
         <ul>
           <li>Title</li>
           <li>Description</li>
-          <li>Period: 2003-10-01 – 2005-09-30</li>
+          <li>Period: 01/10/2003 – 30/09/2005</li>
           <li>"Read more" link for GISMO</li>
           <li>Project ID</li>
           <li>IWETO ID</li>
@@ -107,6 +141,6 @@
 </div>
 
 <script src="/assets/js/directory-search.js"></script>
-<script src="/assets/js/directory-filters-projects.js"></script>
+<script src="/assets/js/filter-bar.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

@@ -1,13 +1,11 @@
 /* -- bt-work-card -- */
 /*
-  Research output card. Three variants via surface + modifier:
-    Backoffice curator    data-surface="backoffice" (default)
-    Backoffice researcher data-surface="backoffice" + .bt-work-card--researcher
-    Public                data-surface="public"
+  Research output card. Surface (public/backoffice) drives typography via tokens.
 
-  Based on Bootstrap .card but with box chrome removed for list context.
-  Bootstrap utilities handle all internal layout.
-  Custom classes only for: border-only separation, title link, pub line, foot.
+  Region grammar: __meta (a metadata row) · __actions · __title · __authors
+  (of __author) · __pub (reference line). __meta is every metadata row, not just
+  the header one: access + type up top, and departments / projects / VABB /
+  provenance in the backoffice body. One row concept, one item concept.
 
   Justified as a custom component because:
   - Bootstrap .card is a boxed container; this is a border-separated list item
@@ -15,13 +13,6 @@
   - The domain-specific metadata structure (departments, projects, notice, foot)
     is not expressible with Bootstrap utilities alone
 */
-
-/* Strip Bootstrap card box chrome -- list items use border-bottom only */
-.bt-work-card.card {
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-}
 
 .bt-work-card--border-bottom {
   border-bottom: var(--bt-border);
@@ -76,9 +67,6 @@
   color: var(--bt-gray-700);
   line-height: 1.5;
   margin: 0 0 var(--bt-sp-1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-2);
 }
 
 .bt-work-card__authors a {
@@ -92,6 +80,13 @@
   text-decoration: underline;
 }
 
+/* One author: identifier icons + linked name, comma text nodes between authors.
+   Plain inline — inline-block creates break opportunities before the comma,
+   pushing it to the next line. Icons glue to the name (no whitespace in markup). */
+.bt-work-card__author .if {
+  margin-right: var(--bt-sp-1);
+}
+
 /* Publication line */
 .bt-work-card__pub {
   font-size: var(--bt-text-sm);
@@ -99,33 +94,42 @@
   margin: 0 0 var(--bt-sp-3);
 }
 
-/* bt-meta-list */
-
-.bt-meta-list {
-  font-size: var(--bt-text-sm);
-  color: var(--s-text-muted, var(--bt-text-muted));
-  line-height: 1.5;
-  margin: 0 0 var(--bt-sp-1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-2);
+/* links stay clickable but quiet — same affordance as the author links */
+.bt-work-card__pub a {
+  color: inherit;
+  text-decoration: none;
 }
 
-
-.bt-meta-list a:hover {
+.bt-work-card__pub a:hover {
   color: var(--bt-blue);
   text-decoration: underline;
 }
 
-.bt-meta-list__item {
-  display: inline-flex;
-  gap: var(--bt-sp-1);
-  margin-right: var(--bt-sp-2);
+/* Meta row: access badge + type item(s) */
+.bt-work-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  font-size: var(--bt-text-sm);
+  color: var(--s-text-muted, var(--bt-text-muted));
+  padding-top: var(--bt-sp-1);
 }
 
-.bt-meta-list__item-bordered {
-  border-right: var(--bt-border);
-  padding-right: var(--bt-sp-2);
+.bt-work-card__meta > .bt-work-card__meta-item + .bt-work-card__meta-item {
+  border-left: var(--bt-border);
+  padding-left: var(--bt-sp-2);
+}
+
+.bt-work-card__meta-item .if {
+  margin-right: var(--bt-sp-1);
+}
+
+/* Action row */
+.bt-work-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
 }
 
 

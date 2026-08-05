@@ -37,10 +37,8 @@ Load order matters. Scripts must be declared in this sequence in any template th
 ```html
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>  <!-- prototype only -->
-<script src="/assets/js/filter-editor.js"></script>
-<script src="/assets/js/filter-stubs.js"></script>        <!-- prototype only -->
 <script src="/assets/js/suggest-panel.js"></script>
-<script src="/assets/js/deposit.js"></script>             <!-- deposit flow only -->
+<script src="/assets/js/filter-bar.js"></script>
 ```
 
 Remove the `-stub.js` files when wiring real endpoints.
@@ -51,7 +49,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `clipboard.js`
 
-**Purpose:** Copies the Biblio ID (the `<code>` next to a `[data-clipboard]` button) to the clipboard; shows "Copied!" for 2s.
+**Purpose:** Copy button — copies the `<code>` next to a `[data-clipboard]` button (Biblio ID, persistent link); shows "Copied!" for 2s. Reads the visible `<code>`, so display and copied value can't drift; or copies `data-clipboard-target` (a CSS selector resolved at click time) for dynamic sources like the active citation tab. Handles both labelled buttons (`.btn-text` swaps to "Copied!") and icon-only buttons (temporary `aria-label`, original restored after). Pattern: `patterns/copy-to-clipboard.html`.
 
 **Loaded by:** all pages (global footer script, injected by the dev server).
 
@@ -60,6 +58,36 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Dispatches:** nothing
 
 **Prototype-only:** no
+
+---
+
+### `view-toggle.js`
+
+**Purpose:** Card/table results toggle. Shows the `[data-view-panel]` matching the checked `[data-view-toggle]` radio and hides the rest; persists the choice to `localStorage` when a `[data-view-store]` key is present. Markup-driven, so one file serves every results page.
+
+**Loaded by:** `curate.html`, `search-researcher.html`
+
+**Listens for:** `change` on `[data-view-toggle]`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
+
+---
+
+### `bulk-select.js`
+
+**Purpose:** Row selection + bulk-action bar for backoffice result tables. Shows `[data-bulk-bar]` while any `[data-bulk-row]` checkbox is checked; a `[data-bulk-all]` master checkbox selects/clears all rows and tracks the indeterminate state with a matching `aria-label`.
+
+**Loaded by:** `curate.html`
+
+**Listens for:** `change` on `[data-bulk-row]` and `[data-bulk-all]`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no
+
+**Note:** Dormant for now — the backoffice list page (`curate`) is WIP (backoffice not settled), so the bulk bar isn't in active use yet.
 
 ---
 
@@ -77,22 +105,20 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `filter-editor.js`
+### `filter-sheet.js`
 
-**Purpose:** Manages the filter picker, editor panel, and active filter chips. Owns the filter state and fires search requests when a filter changes.
+**Purpose:** Mobile only — relocates the works filter-bar's picker list, editor, and clear-all button into the `#filters-offcanvas` sheet below `lg`, and back to the toolbar above `lg`, so every filter input lives in one place on a phone. Moving the nodes keeps the single `filter-bar.js` instance and its state (the handlers were attached at init). In the sheet it: turns each record row into a drill-in (label · applied value read from the chips · chevron, replacing filter-bar's floating tick); makes tapping a row swap `#wf-sheet-main` for `#wf-sheet-detail` (the editor + a back button), returning on Apply/back; and strips the editor's `position-absolute`/`top-100`/`bt-panel`/`bt-panel--wide` so it flows inline full-width instead of as a floating panel.
 
-**Loaded by:** none currently — removed from `public-works.html`. Retained for the Advanced search / backoffice filter builder (not yet on a live page); documented in the `patterns/filter-picker.html` UI-kit page.
+**Loaded by:** `public-works.html` (after `filter-bar.js`).
 
 **Listens for:**
-- `biblio:filter-add` — adds a chip without opening the editor (used by autocomplete selections)
-- Click on `[data-filter]` items in the picker dropdown
-- Click on `.filter-tag--editable` chips (reopens editor in edit mode)
-- Click on `.filter-tag__remove` buttons
-- Click on `#clear-all-btn`
+- `matchMedia('(max-width: 991.98px)')` change
+- `#wf-filter-editor` `hidden` attribute (drill in on open, return + refresh row values on close)
+- click on `#wf-detail-back` (closes the editor) and `#wf-clear-all` (refreshes row values)
 
-**Dispatches:** nothing (fires HTMX GET directly via `htmx.ajax`)
+**Dispatches:** nothing
 
-**Prototype-only:** no
+**Prototype-only:** yes (rides on `filter-bar.js`'s prototype chips; production would render the sheet vs. toolbar placement server-side).
 
 ---
 
@@ -109,7 +135,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Dispatches:** nothing
 
-**Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub data is in `filter-stubs.js`)
+**Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub suggestions are server-rendered into the panel)
 
 ---
 
@@ -131,53 +157,35 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `directory-filters.js`
+### `filter-bar.js`
 
-**Purpose:** People-scoped chip + editor filter bar for the researcher directory. Same interaction as `filter-editor.js`, but the filter set is Faculty/department, Membership (current / alumni), and Public research output — not works. Owns its own filter state and chips.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
 
-**Loaded by:** `public-researchers.html` (via `templates/partials/result-filter-bar-researchers.html`)
+**Bars & filter sets:**
+- `wf-` — public works (`public-works.html`): Author, Organisation, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
+- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organisation, Current or alumni.
+- `pdir-` — project directory (`public-projects.html`, bar inline): Organisation, Status, Year (range).
 
-**Listens for:**
-- `input` on `#rdir-filter-search` (picker search)
-- Click on `[data-filter]` items in the `#rdir-filter-picker-list` dropdown
-- Click on `.filter-tag--editable` chips (reopens editor)
-- Click on `.filter-tag__remove` buttons
-- Click on `#rdir-clear-all`
+**Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
+
+**Listens for (per bar, `<prefix>` = `wf-` / `rdir-` / `pdir-`):**
+- Click on `[data-filter]` items in `#<prefix>filter-picker-list`
+- Click on `[data-filter-id]` chip badges (reopens editor)
+- Click on `[data-remove-id]` remove buttons
+- Click on `#<prefix>clear-all`
 - `keydown` Escape inside the editor; outside-click close
 
 **Dispatches:** nothing
 
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty values and the public-output rollup are stubs). Wire to real query params when the directory endpoint exists.
-
----
-
-### `directory-filters-projects.js`
-
-**Purpose:** Project-scoped chip + editor filter bar for the project directory. Same interaction as `directory-filters.js`, plus a year-range editor. Filter set is Host faculty, Status (active / completed), and Period. Owns its own filter state and chips.
-
-**Loaded by:** `public-projects.html` (via `templates/partials/result-filter-bar-projects.html`)
-
-**Listens for:**
-- `input` on `#pdir-filter-search` (picker search)
-- Click on `[data-filter]` items in the `#pdir-filter-picker-list` dropdown
-- Click on `.filter-tag--editable` chips (reopens editor)
-- Click on `.filter-tag__remove` buttons
-- Click on `#pdir-clear-all`
-- `keydown` Escape inside the editor; outside-click close
-
-**Dispatches:** nothing
-
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; faculty values, status and period are stubs). Wire to real query params when the directory endpoint exists.
-
-**Note:** Near-duplicate of `directory-filters.js` (filter set, the `pdir-` id prefix, and the added year-range editor differ). When a real endpoint lands, consider consolidating the directory filter engines into one config-driven module.
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organisation tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
 
 ---
 
 ### `people-search.js`
 
-**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used inside the filter editor (Author filter) and the deposit flow add-author form.
+**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. (The works Author filter is a text stub today; production would resolve it through this widget.)
 
-**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`); also embedded in the `patterns/filter-picker.html` UI-kit demo. (Removed from `public-works.html` with the filter builder.)
+**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`)
 
 **Listens for:**
 - `keyup` on `[data-ps-input]` inputs
@@ -190,20 +198,17 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `deposit.js`
+### `org-tree.js`
 
-**Purpose:** Deposit flow behaviour. Currently contains the embargo date field show/hide on Step 3 (Access & Rights). Additional deposit flow interactions should be added here as the flow is implemented.
+**Purpose:** Expand/collapse-all toggle for the public organisation tree. Toggles every `.collapse` inside the `[aria-label="Organisation tree"]` region via Bootstrap's Collapse API and keeps the button's `aria-expanded` and label text in sync.
 
-**Loaded by:** deposit flow templates (`deposit-3-access-rights.html` at minimum; load on all deposit steps for consistency)
+**Loaded by:** `templates/biblio-public/public-organisations.html`
 
-**Listens for:**
-- `change` on `input[name="oa"]` radio group (Step 3) — shows/hides `#embargo-date-field`, moves focus to date input when shown
+**Listens for:** click on `#org-tree-toggle-all`
 
 **Dispatches:** nothing
 
-**Prototype-only:** no
-
-**Note:** The Step 3 embargo toggle now lives here and uses the `hidden` attribute on `#embargo-date-field`, not `d-none`.
+**Prototype-only:** yes (the tree is stub markup; wire to real org data when available)
 
 ---
 
@@ -234,16 +239,6 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
-### `filter-stubs.js` (prototype only)
-
-**Purpose:** Provides mock autocomplete suggestions for text filter fields (used by `suggest-panel.js` and `filter-editor.js` in prototypes).
-
-**Loaded by:** none currently — was `public-works.html`; unused since the suggest panel renders rows server-side (prototype builds only)
-
-**Remove when:** real server endpoints for autocomplete exist.
-
----
-
 ## Custom events
 
 ### `biblio:filter-add`
@@ -253,15 +248,15 @@ Fired when a filter should be added without opening the editor panel (e.g. selec
 ```javascript
 document.dispatchEvent(new CustomEvent('biblio:filter-add', {
   detail: {
-    filterId: 'affiliation',           // key matching FILTERS in filter-editor.js
+    filterId: 'affiliation',           // key matching FILTERS in the directory filter engine
     displayValue: 'Faculty of Sciences',
     rawValue: { id: 'fw', name: 'Faculty of Sciences' }
   }
 }));
 ```
 
-Fired by: nothing currently — the public suggest panel now navigates instead of dispatching. Retained for the filter builder (`filter-editor.js`) on the Advanced search / backoffice surfaces.
-Handled by: `filter-editor.js`
+Fired by: nothing currently — the public suggest panel navigates instead of dispatching.
+Handled by: nothing currently — the directory filter engines manage their own chips directly. Kept as a reserved contract for a future filter builder.
 
 ---
 
@@ -276,7 +271,7 @@ document.dispatchEvent(new CustomEvent('people-search:select', {
 ```
 
 Fired by: `people-search.js`
-Handled by: `filter-editor.js` (Author filter) and deposit flow author form
+Handled by: the deposit flow author form
 
 ---
 
@@ -294,6 +289,6 @@ Scripts listen for `htmx:afterSwap` to update UI state after content changes. Ke
 
 ## View toggle and bulk actions
 
-The view toggle (card/table) and bulk select/checkbox logic in `search-filter-first.html` currently live as an inline `<script>` in that template. These should be extracted to `assets/js/search.js` when the backoffice search is implemented in Go templ.
+The view toggle (card/table) and bulk select/checkbox logic in `curate.html` and `search-researcher.html` currently live as inline `<script>` blocks in those templates. These should be extracted to `assets/js/search.js` when the backoffice search is implemented in Go templ.
 
 Until then: do not copy or duplicate the inline script. The template is the single source.

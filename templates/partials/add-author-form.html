@@ -17,8 +17,9 @@
     POST to /deposit/authors returns updated #author-list content.
 -->
 
-<div class="card mt-3" id="add-author-form"
-  aria-label="Add author" role="region">
+<!-- real impl: form POST /deposit/authors -->
+<section class="card mt-3" id="add-author-form"
+  aria-label="Add author">
   <div class="card-body">
     <p class="h6 mb-3">Add author</p>
 
@@ -98,7 +99,7 @@
         </div>
         <div>
           <label for="external-last-name" class="form-label">
-            Last name <span class="text-danger" aria-label="required">*</span>
+            Last name <span class="text-danger" aria-hidden="true">*</span>
           </label>
           <input type="text" id="external-last-name" name="external_last_name"
             class="form-control form-control-sm" autocomplete="family-name" required>
@@ -133,7 +134,7 @@
       </button>
     </div>
   </div>
-</div>
+</section>
 
 <!--
   Note: people-search.js and people-search-stub.js must be loaded by the

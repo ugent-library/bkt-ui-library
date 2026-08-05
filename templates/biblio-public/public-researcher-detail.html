@@ -44,7 +44,7 @@
       </nav>
 
       <!-- Heading -->
-      <article aria-labelledby="person-name" class="row g-md-4 g-0 align-items-end border-bottom bt-section-detail">
+      <article aria-labelledby="person-name" class="row g-4 align-items-end border-bottom bt-section-detail">
 
         <!-- Main column: heading -->
         <div class="col-lg-12 col-xl-8">
@@ -103,15 +103,17 @@
               <span class="fw-semibold">89</span>
               <span class="text-muted">open access</span>
             </li>
+            <!-- Projects out of scope -->
             <li>
               <span class="fw-semibold">4</span>
-              <span class="text-muted">active projects</span>
+              <span class="text-muted">projects</span>
             </li>
           </ul>
 
           <!-- Primary actions -->
           <div class="d-flex align-items-center gap-3">
-            <button type="button" href="#" class="btn btn-primary btn-sm">
+            <button type="button" class="btn btn-primary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#export-modal">
               <i class="if if-download" aria-hidden="true"></i>
               Export publications
             </button>
@@ -128,7 +130,7 @@
               <code class="small overflow-auto fw-bold p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTVXD41Z</code>
               <button type="button" class="btn btn-light btn-sm"
                 aria-label="Copy persistent link to person page"
-                onclick="navigator.clipboard.writeText('https://biblio.ugent.be/person/01K9XTVXD41Z');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                data-clipboard>
                 <i class="if if-copy" aria-hidden="true"></i>
               </button>
             </div>
@@ -157,6 +159,8 @@
                   <span class="badge text-bg-secondary ms-1 fw-normal">147</span>
                 </button>
               </li>
+
+              <!-- Projects out of scope -->
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="tab-projects"
                   type="button" role="tab"
@@ -186,14 +190,15 @@
 
             <h2 class="visually-hidden">Research output</h2>
 
-            <div class="bt-toolbar mt-2 align-items-start">
+            <div class="bt-toolbar mt-2">
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
-                  <!-- @include: templates/partials/result-filter-bar.html -->
+                  <span class="text-muted small" aria-live="polite"><span class="d-none d-md-inline-block visually-hidden">Showing </span>1&ndash;20 of 147 results</span>
                 </div>
               </div>
               <div class="bt-toolbar__right">
                 <div class="bt-toolbar__item">
+                  <!-- Sorting: to be discussed, do not build yet. -->
                   <label for="sort-by" class="visually-hidden">Sort by</label>
                   <select id="sort-by" class="form-select form-select-sm">
                     <option value="relevance">Relevance</option>
@@ -202,21 +207,148 @@
                     <option value="title-asc">Title (A–Z)</option>
                   </select>
                 </div>
+                <div class="bt-toolbar__item">
+                  <div class="dropdown">
+                    <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Actions
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <!-- Faceting is delegated to the shared works search, pre-scoped
+                           to this person (docs/SEARCH-AND-FILTERING.md, Rule 3) -->
+                      <li><a class="dropdown-item" href="public-works.html?person=01K9XTVXD41Z">
+                        <i class="if if-filter-3-line if--sm me-2" aria-hidden="true"></i>
+                        Filter publications
+                      </a></li>
+                      <!-- Save search: saved-searches list not designed yet — stub -->
+                      <li><a class="dropdown-item" href="#">
+                        <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
+                        Save this search
+                      </a></li>
+                      <li>
+                        <button type="button" class="dropdown-item"
+                          data-bs-toggle="modal" data-bs-target="#export-modal">
+                          <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                          Export publications
+                        </button>
+                      </li>
+                      <!-- TBD: we don't know yet if we still want a feed subscription — stub until decided -->
+                      <li><a class="dropdown-item" href="/feed/persons/01K9XTVXD41Z">
+                        <i class="if if-rss-fill if--sm me-2" aria-hidden="true"></i>
+                        Subscribe to news feed
+                      </a></li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
-            <div id="pub-list">
-              <!-- Research list loads here -->
-            </div>
-
-            <div
-              hx-get="/persons/01K9XTVXD41Z/works"
-              hx-trigger="load"
-              hx-target="#pub-list"
-              hx-indicator="#pub-loading">
-            </div>
-            <span id="pub-loading" class="htmx-indicator" aria-live="polite">
-              Loading research output&hellip;
-            </span>
+            <!-- Works render server-side: public content is never lazy-loaded (crawlers do not run HTMX).
+                 Cards below are examples generated from server/content/search-result-cards.js. -->
+            <ol class="list-unstyled mb-0">
+<li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-01">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span><span class="bt-work-card__meta-item">Journal article</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban forests as essential infrastructure for climate resilience and biodiversity">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity"
+            hx-get="/lists/panel?work=card-feed-01" hx-trigger="click once"
+            hx-target="#atl-card-feed-01-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-01-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-01-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-01-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-01" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Renée Prokopavicius</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Sally A. Power</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">David S. Ellsworth</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Camille Vervoort</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Mark G. Tjoelker</a></span> <span class="text-muted">et al.</span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 12&ndash;29.</p>
+    </div>
+  </article></li>
+<li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-12">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span><span class="bt-work-card__meta-item">Preprint</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Canopy microclimate buffering across European forests: a continental synthesis">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis"
+            hx-get="/lists/panel?work=card-feed-12" hx-trigger="click once"
+            hx-target="#atl-card-feed-12-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-12-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-12-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-12-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-12" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Canopy microclimate buffering across European forests: a continental synthesis</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Pieter Vangansbeke</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) bioRxiv [Preprint].</p>
+    </div>
+  </article></li>
+<li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-feed-21">
+    <div class="card-header">
+      <div class="bt-work-card__meta">
+        <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span><span class="bt-work-card__meta-item">Dataset</span>
+      </div>
+      <div class="bt-work-card__actions">
+        <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Urban tree canopy cover measurements Belgium 2020–2025">
+          <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+        </button>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025"
+            hx-get="/lists/panel?work=card-feed-21" hx-trigger="click once"
+            hx-target="#atl-card-feed-21-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-21-loading">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-21-panel" role="dialog" aria-label="Add to list">
+            <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-21-loading" aria-live="polite">Loading your lists&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h2 id="card-feed-21" class="bt-work-card__title">
+        <a href="/templates/biblio-public/public-work-detail.html">Urban tree canopy cover measurements Belgium 2020–2025</a>
+      </h2>
+      <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a></span></p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>)</p>
+    </div>
+  </article></li>
+            </ol>
 
             <div class="bt-toolbar mt-4">
               <div class="bt-toolbar__left">
@@ -243,31 +375,26 @@
                   </nav>
                 </div>
                 <div class="bt-toolbar__item">
-                  <span class="text-muted small" aria-live="polite">Showing 1–20 of 140</span>
+                  <span class="text-muted small"><span class="d-none d-md-inline-block visually-hidden">Showing </span> 1&ndash;20 of 147 results</span>
                 </div>
               </div>
             </div>
 
           </div><!-- /research output panel -->
 
-          <!-- Projects panel -->
+          <!-- Projects panel out of scope -->
           <div class="tab-pane fade" id="panel-projects"
             role="tabpanel" aria-labelledby="tab-projects" tabindex="0">
 
             <h2 class="visually-hidden">Projects</h2>
 
-            <span id="projects-loading" class="htmx-indicator" aria-live="polite">Loading projects&hellip;</span>
-
-            <div id="projects-list"
-              hx-get="/persons/01K9XTVXD41Z/projects"
-              hx-trigger="intersect once"
-              hx-target="#projects-list"
-              hx-indicator="#projects-loading">
+            <!-- Renders server-side: public content is never lazy-loaded (crawlers do not run HTMX). -->
+            <div id="projects-list">
 
               <!--
                 Project cards mirror public-organisation-detail.html / public-projects.html:
                 title link + status badge, period, IDs, detail + GISMO links.
-                Static fallback for #projects-list — replaced on htmx swap.
+                Server-rendered content.
                 PLACEHOLDER: GISMO IDs and gismo.ugent.be URLs are invented.
               -->
               <ul class="list-unstyled d-flex flex-column gap-3">
@@ -319,15 +446,10 @@
 
             <h2 class="visually-hidden">Co-authors</h2>
 
-            <span id="coauthors-loading" class="htmx-indicator" aria-live="polite">Loading co-authors&hellip;</span>
+            <!-- Renders server-side: public content is never lazy-loaded (crawlers do not run HTMX). -->
+            <div id="coauthors-list">
 
-            <div id="coauthors-list"
-              hx-get="/persons/01K9XTVXD41Z/coauthors"
-              hx-trigger="intersect once"
-              hx-target="#coauthors-list"
-              hx-indicator="#coauthors-loading">
-
-              <!-- Static fallback for #coauthors-list — replaced on htmx swap.
+              <!-- Server-rendered content.
                    PLACEHOLDER: shared-work counts are invented. -->
               <ul class="list-unstyled d-flex flex-column gap-3">
                 <li class="card">
@@ -383,20 +505,60 @@
           </section>
 
           <!-- Affiliation history — temporal, as per the domain model -->
+          <!-- Don't put a coloured avatar in front of information in the sidebar, it takes away attention from the primary info.
+            Dark svg variant or icon still needed for organisations-->
           <section aria-labelledby="affiliations-heading" class="mb-5">
             <h2 id="affiliations-heading" class="form-label d-block mb-3">Affiliations</h2>
-            <dl class="row g-2 mb-0 small">
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Current</dt>
-              <dd class="col-sm-9 mb-0">
-                <a href="/organisations/dept-environment">Department of Environment</a><br>
-                <span class="text-muted small">Faculty of Bioscience Engineering, 2012–now</span>
-              </dd>
-              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Previous</dt>
-              <dd class="col-sm-9 mb-0">
-                <a href="/organisations/dept-applied-ecology">Department of Applied Ecology and Environmental Biology</a><br>
-                <span class="text-muted small">Faculty of Bioscience Engineering, 2012–2018</span>
-              </dd>
-            </dl>
+            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+              <li class="d-flex gap-3 align-items-start">
+                <span class="bt-avatar bt-avatar--outline mt-1" aria-hidden="true">
+                  <i class="if if-building" aria-hidden="true"></i>
+                </span>
+                <div>
+                  <p class="mb-0">
+                    <a href="/organizations/01KX3B4GGG261GXNJ455WKSNN5" class="text-decoration-none">Department of Environment</a>
+                  </p>
+                  <div class="d-flex flex-column gap-1">
+                    <p class="text-muted small mb-1"><a href="#">Faculty of Bioscience Engineering</a></p>
+                    <p class="text-muted small mb-0">
+                      <span class="badge text-bg-success">Current</span> 2012 &mdash; now
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="d-flex gap-3 align-items-start">
+                <span class="bt-avatar bt-avatar--outline mt-1" aria-hidden="true">
+                  <i class="if if-building" aria-hidden="true"></i>
+                </span>
+                <div>
+                  <p class="mb-0">
+                    <a href="/organizations/01KX3B4GGG261GXNJ455WKSNN5" class="text-decoration-none">Department of Applied Ecology and Environmental Biology</a>
+                  </p>
+                  <div class="d-flex flex-column gap-1">
+                    <p class="text-muted small mb-1"><a href="#">Faculty of Bioscience Engineering</a></p>
+                    <p class="text-muted small mb-0">
+                      2012 &mdash; 2018
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="d-flex gap-3 align-items-start">
+                <span class="bt-avatar bt-avatar--outline mt-1" aria-hidden="true">
+                  <i class="if if-building" aria-hidden="true"></i>
+                </span>
+                <div>
+                  <p class="mb-0">
+                    <a href="/organizations/01KX3B4GNCGC78RMZKQB8EQTMY" class="text-decoration-none">Flanders Make</a>
+                  </p>
+                  <div class="d-flex flex-column gap-1">
+                    <p class="text-muted small mb-1">Partner institution</p>
+                    <p class="text-muted small mb-0">
+                      2012 &mdash; 2018
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </section>
 
         </div><!-- /sidebar -->
@@ -404,6 +566,55 @@
       </div>
     </div>
   </main>
+</div>
+
+<!-- Export modal — same component as public-works.html. Opened by the
+     "Export publications" CTA and the Actions → Download publications item.
+     Endpoints are stubs. -->
+<div class="modal fade" id="export-modal" tabindex="-1"
+  aria-labelledby="export-modal-title" aria-modal="true" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="export-modal-title">Export 147 results</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-4">
+          <label for="export-format" class="form-label h6 mb-2">Format</label>
+          <select id="export-format" class="form-select">
+            <option value="bibtex" selected>BibTeX</option>
+            <option value="ris">RIS (reference manager)</option>
+            <option value="csv">CSV</option>
+            <option value="excel">Excel</option>
+            <option value="word">Word, with formatted citations</option>
+            <option value="text">Plain text, with formatted citations</option>
+            <option value="fwo">FWO funder report</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="export-style" class="form-label h6 mb-2">Citation style</label>
+          <select id="export-style" class="form-select">
+            <option value="apa" selected>APA</option>
+            <option value="mla">MLA</option>
+            <option value="chicago">Chicago (author-date)</option>
+            <option value="vancouver">Vancouver</option>
+            <option value="ieee">IEEE</option>
+          </select>
+          <p class="text-muted small mt-1 mb-0">Applies to Word and plain-text exports.</p>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">
+          <i class="if if-download" aria-hidden="true"></i> Export
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- @include: templates/partials/public-footer.html -->

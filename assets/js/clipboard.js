@@ -1,52 +1,37 @@
-/**
- * clipboard.js
- * Copies the Biblio ID to clipboard when the copy button is clicked.
- *
- * Pattern:
- *   <button class="btn ..." data-clipboard>
- *     <i class="if if-copy" aria-hidden="true"></i>
- *     <span class="btn-text">Biblio ID</span>
- *   </button>
- *   <code>01G3TZB614X7XXR52JYYGAND25</code>
- *
- * The [data-clipboard] attribute must be on the <button> itself.
- * The ID value is read from the next sibling <code> element.
- *
- * On success: button text changes to "Copied!" for 2 seconds, then resets.
- * On failure: silently ignores (clipboard API unavailable or denied).
- */
-
+// Copy button — see docs/JAVASCRIPT.md
 (function () {
   document.addEventListener('click', function (event) {
     const button = event.target.closest('[data-clipboard]');
     if (!button) return;
 
-    const code = button.parentElement.querySelector('code');
-    if (!code) return;
+    const targetSel = button.getAttribute('data-clipboard-target');
+    const source = targetSel
+      ? document.querySelector(targetSel)
+      : button.parentElement.querySelector('code');
+    if (!source) return;
 
-    const id = code.textContent.trim();
-    if (!id) return;
+    const value = source.textContent.trim();
+    if (!value) return;
 
-    navigator.clipboard.writeText(id).then(function () {
+    navigator.clipboard.writeText(value).then(function () {
       const label = button.querySelector('.btn-text');
-      if (!label) return;
-
       const icon = button.querySelector('.if-copy');
-      const original = label.textContent;
+      const originalText = label ? label.textContent : null;
+      const originalAria = button.getAttribute('aria-label');
 
-      label.textContent = 'Copied!';
-      button.setAttribute('aria-label', 'Copied to clipboard');
+      if (label) label.textContent = 'Copied!';
+      else button.setAttribute('aria-label', 'Copied to clipboard');
       button.classList.replace('btn-outline-secondary', 'btn-outline-success');
-      if (icon) { icon.classList.replace('if-copy', 'if-check'); }
+      if (icon) icon.classList.replace('if-copy', 'if-check');
 
       setTimeout(function () {
-        label.textContent = original;
-        button.removeAttribute('aria-label');
+        if (label) label.textContent = originalText;
+        // restore, don't remove: icon-only buttons rely on it for their name
+        if (originalAria !== null) button.setAttribute('aria-label', originalAria);
+        else button.removeAttribute('aria-label');
         button.classList.replace('btn-outline-success', 'btn-outline-secondary');
-        if (icon) { icon.classList.replace('if-check', 'if-copy'); }
+        if (icon) icon.classList.replace('if-check', 'if-copy');
       }, 2000);
-    }).catch(function () {
-      // Clipboard write failed — do nothing. User can select the <code> manually.
-    });
+    }).catch(function () {});
   });
 })();

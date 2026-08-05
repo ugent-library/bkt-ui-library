@@ -19,7 +19,7 @@
   }
 
   document.addEventListener('click', function (event) {
-    var button = event.target.closest('.bt-sidebar__toggle');
+    var button = event.target.closest('.bt-sidebar__toggle button');
     if (!button) return;
 
     var controlsId = button.getAttribute('aria-controls');

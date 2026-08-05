@@ -43,7 +43,7 @@
       </nav>
 
       <!-- Heading -->
-      <article aria-labelledby="project-title" class="row g-md-4 g-0 align-items-end border-bottom bt-section-detail">
+      <article aria-labelledby="project-title" class="row g-4 align-items-end border-bottom bt-section-detail">
 
         <!-- Main column: heading -->
         <div class="col-lg-12 col-xl-8">
@@ -58,8 +58,25 @@
             Urban green infrastructure and climate adaptation in Flemish cities
           </h1>
 
+          <!-- Identifiers — trust signals, show prominently -->
+          <ul class="list-unstyled d-flex flex-wrap gap-3 mb-4" aria-label="Project identifiers">
+            <li>
+              <span>Project ID:</span>
+              <span>G001234N</span>
+            </li>
+            <li>
+              <a href="https://research.ugent.be/web/result/project/g001234n/details/en"
+                class="d-flex align-items-center gap-1 text-decoration-none"
+                rel="noopener noreferrer"
+                aria-label="Research Explorer page for this project">
+                <i class="if if-external-link" aria-hidden="true"></i>
+                <span>Research Explorer</span>
+              </a>
+            </li>
+          </ul>
+
           <!-- Quick stats -->
-          <ul class="list-unstyled d-flex flex-wrap gap-4 mb-0" aria-label="Project summary">
+          <ul class="list-unstyled d-flex flex-wrap gap-4 mb-4" aria-label="Project summary">
             <li>
               <span class="fw-semibold">23</span>
               <span class="text-muted">research output</span>
@@ -73,6 +90,15 @@
               <span class="text-muted">team members</span>
             </li>
           </ul>
+
+          <!-- Primary actions -->
+          <div class="d-flex align-items-center gap-3">
+            <button type="button" class="btn btn-primary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#export-modal">
+              <i class="if if-download" aria-hidden="true"></i>
+              Export publications
+            </button>
+          </div>
         </div>
 
         <!-- Sidebar column: heading -->
@@ -82,10 +108,10 @@
           <div class="alert alert-light mb-1">
             <h2 class="form-label mb-2">Link to this record</h2>
             <div class="btn-group mb-2">
-              <code class="small overflow-auto fw-bold p-2 bg-white border">https://biblio.ugent.be/project/fwo-g001234n</code>
+              <code class="small overflow-auto fw-bold p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTW7QK3M</code>
               <button type="button" class="btn btn-light btn-sm"
-                aria-label="Copy persistent link to person page"
-                onclick="navigator.clipboard.writeText('https://biblio.ugent.be/project/fwo-g001234n');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                aria-label="Copy persistent link to project page"
+                data-clipboard>
                 <i class="if if-copy" aria-hidden="true"></i>
               </button>
             </div>
@@ -105,6 +131,12 @@
             <h2 id="description-heading" class="h4 mb-3">About this project</h2>
             <p class="lead">Urban trees and green spaces are increasingly recognised as essential infrastructure for adapting cities to climate change. This project investigates how green infrastructure can be planned and managed to maximise climate adaptation benefits across Flemish cities.</p>
             <p>The project combines field measurements, remote sensing data and urban climate modelling to quantify the cooling, flood mitigation and biodiversity co-benefits of diverse urban green infrastructure typologies. Outcomes include evidence-based planning guidelines and open datasets for policymakers and urban designers.</p>
+            <p class="mb-0">
+              <a href="https://research.ugent.be/web/result/project/g001234n/details/en" rel="noopener noreferrer">
+                More information about this project on Research Explorer
+                <i class="if if-external-link ms-1" aria-hidden="true"></i>
+              </a>
+            </p>
           </section>
 
           <!--
@@ -141,145 +173,11 @@
 
             <h2 class="visually-hidden">Research output</h2>
 
-            <div class="bt-toolbar mt-2 align-items-start">
-              <div class="bt-toolbar__left">
-                <div class="bt-toolbar__item">
-                  <!-- @include: templates/partials/result-filter-bar.html -->
-                </div>
-              </div>
-              <div class="bt-toolbar__right">
-                <div class="bt-toolbar__item">
-                  <label for="sort-by" class="visually-hidden">Sort by</label>
-                  <select id="sort-by" class="form-select form-select-sm">
-                    <option value="relevance">Relevance</option>
-                    <option value="year-desc" selected>Year (new to old)</option>
-                    <option value="year-asc">Year (old to new)</option>
-                    <option value="title-asc">Title (A–Z)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div
-              hx-get="/projects/fwo-g001234n/works"
-              hx-trigger="load"
-              hx-target="#project-output-list"
-              hx-indicator="#output-loading">
-            </div>
-            <span id="output-loading" class="htmx-indicator" aria-live="polite">Loading research output&hellip;</span>
-
-            <div id="project-output-list">
-
-              <!-- Year group: 2026 -->
-              <div class="my-5">
-                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-01">
-                  <div class="card-header">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge text-bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                      <a href="/research/01K9XTVXD41Z" class="btn btn-ghost btn-sm"
-                        aria-label="View: Urban forests as essential infrastructure for climate resilience">
-                        <i class="if if-eye" aria-hidden="true"></i> View
-                      </a>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <h4 id="card-title-proj-01" class="bt-work-card__title">
-                      <a href="/research/01K9XTVXD41Z">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
-                    </h4>
-                    <p class="bt-work-card__authors">
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon‑Rodriguez</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt</a>
-                      <span class="text-muted">et al.</span>
-                    </p>
-                    <p class="bt-work-card__pub">
-                      <time datetime="2026">2026</time>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <a href="#">Plants People Planet</a>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <span>8(1) · pp. 14–19</span>
-                    </p>
-                  </div>
-                </article>
-
-              </div>
-
-              <!-- Year group: 2025 -->
-              <div class="mb-5">
-                <h3 class="h6 text-uppercase text-muted pb-2 mb-3">2025</h3>
-
-                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-02">
-                  <div class="card-header">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge text-bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Journal article</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                      <a href="#" class="btn btn-ghost btn-sm"
-                        aria-label="View: Green infrastructure planning in urban heat islands">
-                        <i class="if if-eye" aria-hidden="true"></i> View
-                      </a>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <h4 id="card-title-proj-02" class="bt-work-card__title">
-                      <a href="#">Green infrastructure planning in urban heat islands: lessons from Belgian cities</a>
-                    </h4>
-                    <p class="bt-work-card__authors">
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Sander Vanderhaegen</a>
-                    </p>
-                    <p class="bt-work-card__pub">
-                      <time datetime="2025">2025</time>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <a href="#">Urban Forestry &amp; Urban Greening</a>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <span>89 · p.128421</span>
-                    </p>
-                  </div>
-                </article>
-
-                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-03">
-                  <div class="card-header">
-                    <div class="bt-meta-list pt-1">
-                      <span class="badge text-bg-success">Open access</span>
-                      <span class="bt-meta-list__item-bordered">Dataset</span>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                      <a href="#" class="btn btn-ghost btn-sm"
-                        aria-label="View: Urban tree canopy cover measurements Belgium 2019–2024">
-                        <i class="if if-eye" aria-hidden="true"></i> View
-                      </a>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <h4 id="card-title-proj-03" class="bt-work-card__title">
-                      <a href="#">Urban tree canopy cover measurements Belgium 2019–2024</a>
-                    </h4>
-                    <p class="bt-work-card__authors">
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw</a>,
-                      <a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a>
-                    </p>
-                    <p class="bt-work-card__pub">
-                      <time datetime="2025">2025</time>
-                      <span class="text-muted mx-1" aria-hidden="true">·</span>
-                      <a href="#">Zenodo</a>
-                    </p>
-                  </div>
-                </article>
-
-              </div>
-
-            </div><!-- /project-output-list -->
-
-            <div class="bt-toolbar mt-4">
+            <div class="bt-toolbar mt-2">
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
                   <!-- Pagination -->
-                  <nav aria-label="Research output pagination">
+                  <nav aria-label="Results pagination (top)">
                     <ul class="pagination pagination-sm">
                       <li class="page-item disabled">
                         <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
@@ -295,7 +193,214 @@
                   </nav>
                 </div>
                 <div class="bt-toolbar__item">
-                  <span class="text-muted small" aria-live="polite">Showing 1–20 of 23</span>
+                  <span class="text-muted small" aria-live="polite"><span class="d-none d-md-inline-block visually-hidden">Showing </span>1&ndash;20 of 23 results</span>
+                </div>
+              </div>
+              <div class="bt-toolbar__right">
+                <div class="bt-toolbar__item">
+                  <!-- Sorting: to be discussed, do not build yet. -->
+                  <label for="sort-by" class="visually-hidden">Sort by</label>
+                  <select id="sort-by" class="form-select form-select-sm">
+                    <option value="relevance">Relevance</option>
+                    <option value="year-desc" selected>Year (new to old)</option>
+                    <option value="year-asc">Year (old to new)</option>
+                    <option value="title-asc">Title (A–Z)</option>
+                  </select>
+                </div>
+                <div class="bt-toolbar__item">
+                  <div class="dropdown">
+                    <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Actions
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                      <!-- Faceting is delegated to the shared works search, pre-scoped
+                           to this project (docs/SEARCH-AND-FILTERING.md, Rule 3) -->
+                      <li><a class="dropdown-item" href="public-works.html?project=fwo-g001234n">
+                        <i class="if if-filter-3-line if--sm me-2" aria-hidden="true"></i>
+                        Filter publications
+                      </a></li>
+                      <!-- Save search: saved-searches list not designed yet — stub -->
+                      <li><a class="dropdown-item" href="#">
+                        <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
+                        Save this search
+                      </a></li>
+                      <li>
+                        <button type="button" class="dropdown-item"
+                          data-bs-toggle="modal" data-bs-target="#export-modal">
+                          <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                          Export publications
+                        </button>
+                      </li>
+                      <!-- TBD: we don't know yet if we still want a feed subscription — stub until decided -->
+                      <li><a class="dropdown-item" href="/feed/projects/fwo-g001234n">
+                        <i class="if if-rss-fill if--sm me-2" aria-hidden="true"></i>
+                        Subscribe to news feed
+                      </a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Works render server-side: public content is never lazy-loaded (crawlers do not run HTMX). -->
+
+            <!-- KNOWN BROKEN (2026-08-04) — renders incorrectly, fix before implementation:
+                 1. the 2026 group has no <h3>, so the first card jumps h2 → h4 (skipped level);
+                 2. the cards are bare <div>s, not <ol class="list-unstyled mb-0"> > <li>,
+                    so AT announces no result count (AGENT.md → List wrapper).
+                 npm test passes anyway: check:a11y covers neither heading order nor list
+                 semantics. Prompt to extend it: notes/PLAN-work-card.md → a11y checks. -->
+            <div id="project-output-list">
+
+              <!-- Year group: 2026 -->
+              <div class="my-5">
+                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-01">
+                  <div class="card-header">
+                    <div class="bt-work-card__meta">
+                      <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
+                      <span class="bt-work-card__meta-item">Journal article</span>
+                    </div>
+                    <div class="bt-work-card__actions">
+                      <!-- v1: no access CTA on cards; title navigates (raven#141) -->
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Cite: Urban forests as essential infrastructure for climate resilience">
+                        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+                      </button>
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                          data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                          aria-label="Add to list: Urban forests as essential infrastructure for climate resilience"
+                          hx-get="/lists/panel?work=pd1" hx-trigger="click once"
+                          hx-target="#atl-pd1-panel" hx-swap="innerHTML" hx-indicator="#atl-pd1-loading">
+                          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                        </button>
+                        <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+                        <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-pd1-panel" role="dialog" aria-label="Add to list">
+                          <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-pd1-loading" aria-live="polite">Loading your lists&hellip;</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4 id="card-title-proj-01" class="bt-work-card__title">
+                      <a href="/templates/biblio-public/public-work-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers</a>
+                    </h4>
+                    <p class="bt-work-card__authors">
+                      <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon‑Rodriguez</a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Stefan K. Arndt</a></span>
+                      <span class="text-muted">et al.</span>
+                    </p>
+                    <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="#"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.</p>
+                  </div>
+                </article>
+
+              </div>
+
+              <!-- Year group: 2025 -->
+              <div class="mb-5">
+                <h3 class="h6 text-uppercase text-muted pb-2 mb-3">2025</h3>
+
+                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-02">
+                  <div class="card-header">
+                    <div class="bt-work-card__meta">
+                      <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
+                      <span class="bt-work-card__meta-item">Journal article</span>
+                    </div>
+                    <div class="bt-work-card__actions">
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Cite: Green infrastructure planning in urban heat islands">
+                        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+                      </button>
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                          data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                          aria-label="Add to list: Green infrastructure planning in urban heat islands"
+                          hx-get="/lists/panel?work=pd2" hx-trigger="click once"
+                          hx-target="#atl-pd2-panel" hx-swap="innerHTML" hx-indicator="#atl-pd2-loading">
+                          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-pd2-panel" role="dialog" aria-label="Add to list">
+                          <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-pd2-loading" aria-live="polite">Loading your lists&hellip;</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4 id="card-title-proj-02" class="bt-work-card__title">
+                      <a href="/templates/biblio-public/public-work-detail.html">Green infrastructure planning in urban heat islands: lessons from Belgian cities</a>
+                    </h4>
+                    <p class="bt-work-card__authors">
+                      <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Sander Vanderhaegen</a></span>
+                    </p>
+                    <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="#"><cite>Urban Forestry &amp; Urban Greening</cite></a>, 89, 128421.</p>
+                  </div>
+                </article>
+
+                <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="card-title-proj-03">
+                  <div class="card-header">
+                    <div class="bt-work-card__meta">
+                      <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
+                      <span class="bt-work-card__meta-item">Dataset</span>
+                    </div>
+                    <div class="bt-work-card__actions">
+                      <button type="button" class="btn btn-ghost btn-sm"
+                        aria-label="Cite: Urban tree canopy cover measurements Belgium 2019–2024">
+                        <i class="if if-double-quotes" aria-hidden="true"></i> Cite
+                      </button>
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                          data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                          aria-label="Add to list: Urban tree canopy cover measurements Belgium 2019–2024"
+                          hx-get="/lists/panel?work=pd3" hx-trigger="click once"
+                          hx-target="#atl-pd3-panel" hx-swap="innerHTML" hx-indicator="#atl-pd3-loading">
+                          <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-pd3-panel" role="dialog" aria-label="Add to list">
+                          <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-pd3-loading" aria-live="polite">Loading your lists&hellip;</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4 id="card-title-proj-03" class="bt-work-card__title">
+                      <a href="/templates/biblio-public/public-work-detail.html">Urban tree canopy cover measurements Belgium 2019–2024</a>
+                    </h4>
+                    <p class="bt-work-card__authors">
+                      <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
+                      <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Maes</a></span>
+                    </p>
+                    <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>)</p>
+                  </div>
+                </article>
+
+              </div>
+
+            </div><!-- /project-output-list -->
+
+            <div class="bt-toolbar mt-4">
+              <div class="bt-toolbar__left">
+                <div class="bt-toolbar__item">
+                  <!-- Pagination -->
+                  <nav aria-label="Results pagination (bottom)">
+                    <ul class="pagination pagination-sm">
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link" href="#" aria-current="page">1</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next page">›</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+                <div class="bt-toolbar__item">
+                  <span class="text-muted small"><span class="d-none d-md-inline-block visually-hidden">Showing </span>1&ndash;20 of 23 results</span>
                 </div>
               </div>
             </div>
@@ -384,6 +489,13 @@
               <dd class="col-sm-9 mb-0"><code>G001234N</code></dd>
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Programme</dt>
               <dd class="col-sm-9 mb-0">FWO Research project</dd>
+              <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Research Explorer</dt>
+              <dd class="col-sm-9 mb-0">
+                <a href="https://research.ugent.be/web/result/project/g001234n/details/en" rel="noopener noreferrer">
+                  View project
+                  <i class="if if-external-link ms-1" aria-hidden="true"></i>
+                </a>
+              </dd>
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Period</dt>
               <dd class="col-sm-9 mb-0">
                 <time datetime="2023-01-01">January 2023</time>
@@ -393,7 +505,7 @@
             </dl>
 
             <ul class="list-unstyled mb-0">
-              <li><img src="/assets/images/logo-ugent-en.svg" alt="Funder: Ghent University" width="auto" height="70"></li>
+              <li><img src="/assets/images/logo-ugent-en.svg" alt="Funder: Ghent University" height="70"></li>
             </ul>
           </section>
 
@@ -412,6 +524,55 @@
       </div>
     </div>
   </main>
+</div>
+
+<!-- Export modal — same component as public-works.html. Opened by the
+     "Export publications" CTA and the Actions → Download publications item.
+     Endpoints are stubs. -->
+<div class="modal fade" id="export-modal" tabindex="-1"
+  aria-labelledby="export-modal-title" aria-modal="true" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="export-modal-title">Export 23 results</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-4">
+          <label for="export-format" class="form-label h6 mb-2">Format</label>
+          <select id="export-format" class="form-select">
+            <option value="bibtex" selected>BibTeX</option>
+            <option value="ris">RIS (reference manager)</option>
+            <option value="csv">CSV</option>
+            <option value="excel">Excel</option>
+            <option value="word">Word, with formatted citations</option>
+            <option value="text">Plain text, with formatted citations</option>
+            <option value="fwo">FWO funder report</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="export-style" class="form-label h6 mb-2">Citation style</label>
+          <select id="export-style" class="form-select">
+            <option value="apa" selected>APA</option>
+            <option value="mla">MLA</option>
+            <option value="chicago">Chicago (author-date)</option>
+            <option value="vancouver">Vancouver</option>
+            <option value="ieee">IEEE</option>
+          </select>
+          <p class="text-muted small mt-1 mb-0">Applies to Word and plain-text exports.</p>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">
+          <i class="if if-download" aria-hidden="true"></i> Export
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- @include: templates/partials/public-footer.html -->

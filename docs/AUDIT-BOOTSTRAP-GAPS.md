@@ -134,7 +134,7 @@ Judged against the repo's own Bootstrap-first rule ("does Bootstrap have a patte
 
 **4.4 `bt-navbar`** doesn't wrap Bootstrap's `.navbar` — it's a from-scratch sticky flex bar. Defensible (BS navbar drags in collapse plumbing), but it's an undocumented rejection of a Bootstrap component, and the templates betray the gap: `templates/partials/public-header.html` uses `bt-navbar__collapse` and `bt-navbar__actions`, which exist in no CSS — someone reached for responsive behaviour the component doesn't have. Either document the decision and build the missing responsive story, or rebase on BS navbar.
 
-**4.5 Legitimate customs** (checked, no Bootstrap equivalent): `bt-avatar`, `bt-toolbar` (region layout, not BS's `.btn-toolbar` use case), `bt-work-card` (wraps `.card` correctly), `bt-file-drop`, `token-bar`, `filter-tag`/`filter-editor`, `bt-hero`, `bt-sidebar`, layout shells. No action.
+**4.5 Legitimate customs** (checked, no Bootstrap equivalent): `bt-avatar`, `bt-toolbar` (region layout, not BS's `.btn-toolbar` use case), `bt-work-card` (wraps `.card` correctly), `bt-file-drop`, `token-bar`, `bt-panel`, `bt-hero`, `bt-sidebar`, layout shells. No action.
 
 ---
 
@@ -206,6 +206,8 @@ Nav link colour in two files (§3.4). `body[data-surface="backoffice"] { overflo
 ### 6.5 The verified class list is hand-maintained and already wrong
 
 AGENT.md's class list is the project's ground truth, but it currently asserts classes that aren't in the compiled CSS (`bt-blank-slate*`) while 63 undefined classes sit in templates. Hand-maintained lists drift; this one already has. Generate the checkable part: a script that extracts class selectors from `assets/booktower.css`, extracts class usage from HTML, and reports both directions (the exact scan §5 came from). Run it in CI or `npm run check`. AGENT.md keeps the prose and usage notes; the raw existence claims come from the build.
+
+**Resolved (2026-07):** `scripts/generate-classes-doc.js` (runs in `npm run build`) emits the generated reference `docs/CLASSES.md`; AGENT.md keeps only the curated usage notes. `check:classes` remains the enforcement.
 
 ---
 

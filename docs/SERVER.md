@@ -71,6 +71,12 @@ A template represents its data-dependent variants as **states in one file** — 
 - A block cannot span another `@state` block; the closing marker is `<!-- @state -->`.
 - The sidebar automatically shows a state button per declared state under the active template.
 - Existing examples: `biblio-researcher/dashboard.html`, `biblio-public/public-work-detail.html`.
+- **Checks read the raw file, not one rendered state.** `npm run check:html` sees all
+  states at once, so ids must be unique across states (suffix per state:
+  `files-heading-v1`, `files-heading-embargo`). When state variants of one landmark
+  unavoidably share a visible name, put
+  `<!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->`
+  directly above each variant — see `public-work-detail.html`.
 
 ## Configuration
 

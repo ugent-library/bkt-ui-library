@@ -184,7 +184,19 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
     return respond(c.renderRelatedWorks(), 420);
   }
 
-  if ((urlPath === '/lists/add' || urlPath === '/lists/add-person') && method === 'POST') {
+  // ?work=<id> becomes the panel's id prefix.
+  if (urlPath === '/lists/panel' && method === 'GET') {
+    return respond(c.renderListPanel(`atl-${params.work || 'x'}`), 240);
+  }
+
+  // Prefix comes back via the target id, <prefix>-lists.
+  if (urlPath === '/lists' && (method === 'GET' || method === 'POST')) {
+    const prefix = target.replace(/-lists$/, '') || 'atl';
+    if (method === 'GET') return respond(c.renderListPicker(prefix, params.q || ''), 200);
+    return respond(c.renderListPicker(prefix, bodyParams.get('name') || 'New list', true), 260);
+  }
+
+  if (/^\/lists\/[^/]+$/.test(urlPath) && (method === 'PUT' || method === 'DELETE')) {
     return respond('', 180, 204, 'text/plain; charset=utf-8');
   }
 

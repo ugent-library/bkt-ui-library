@@ -41,7 +41,7 @@ module.exports = function renderPeopleList() {
             </li>
           </ul>
 
-          <div class="d-flex flex-wrap gap-1" aria-label="Research topics">
+          <div class="d-flex flex-wrap gap-1" role="group" aria-label="Research topics">
             <a href="/search?q=urban+forests" class="badge text-bg-primary text-decoration-none">Urban forests</a>
             <a href="/search?q=climate+resilience" class="badge text-bg-primary text-decoration-none">Climate resilience</a>
             <a href="/search?q=green+infrastructure" class="badge text-bg-primary text-decoration-none">Green infrastructure</a>
@@ -84,7 +84,7 @@ module.exports = function renderPeopleList() {
             </li>
           </ul>
 
-          <div class="d-flex flex-wrap gap-1" aria-label="Research topics">
+          <div class="d-flex flex-wrap gap-1" role="group" aria-label="Research topics">
             <a href="/search?q=food+technology" class="badge text-bg-primary text-decoration-none">Food technology</a>
             <a href="/search?q=fermentation" class="badge text-bg-primary text-decoration-none">Fermentation</a>
           </div>
@@ -131,7 +131,7 @@ module.exports = function renderPeopleList() {
             </li>
           </ul>
 
-          <div class="d-flex flex-wrap gap-1" aria-label="Research topics">
+          <div class="d-flex flex-wrap gap-1" role="group" aria-label="Research topics">
             <a href="/search?q=food+chemistry" class="badge text-bg-primary text-decoration-none">Food chemistry</a>
             <a href="/search?q=antioxidants" class="badge text-bg-primary text-decoration-none">Antioxidants</a>
             <a href="/search?q=lipid+oxidation" class="badge text-bg-primary text-decoration-none">Lipid oxidation</a>

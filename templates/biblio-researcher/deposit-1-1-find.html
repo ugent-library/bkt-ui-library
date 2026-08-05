@@ -1,5 +1,6 @@
 <!-- @title: Add research output — Step 1: Describe (prefilled) -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Describe flow — Step 1 (prefilled from identifier lookup)
   Shows the same form as deposit-1-0-find.html with metadata already populated
@@ -112,15 +113,15 @@
             <div class="col-3 bt-file-drop">
               <label for="file-upload-import">
                 <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
-                <p class="bt-file-drop__text">Drag a file to upload, or browse.</p>
-                <p class="bt-file-drop__hint">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). Max 500 MB.</p>
+                <span class="bt-file-drop__text d-block">Drag a file to upload, or browse.</span>
+                <span class="bt-file-drop__hint d-block">Use a Web of Science export (.txt) or BibTeX file (.bib or .ris). Max 500 MB.</span>
                 <input type="file" id="file-upload-import" class="visually-hidden" accept=".txt,.bib,.ris">
               </label>
             </div>
           </div>
 
           <!-- Manual entry form -->
-          <form action="/deposit/new" method="post" class="col-8">
+          <!-- real impl: form POST /deposit/new --><div class="col-8">
 
             <!-- Prefill confirmation notice -->
             <div class="alert alert-info mb-4" role="status">
@@ -141,7 +142,7 @@
                 <div class="bt-title-toolbar">
                   <label class="h6 mb-0" for="title">
                     Title
-                    <span class="text-danger" aria-label="required">*</span>
+                    <span class="text-danger" aria-hidden="true">*</span>
                   </label>
                   <button type="button" class="btn btn-ghost btn-sm">
                     <i class="if if-add if--sm" aria-hidden="true"></i>
@@ -169,7 +170,7 @@
                 <div class="bt-title-toolbar">
                   <label class="h6 mb-0" for="abstract">
                     Abstract
-                    <span class="text-danger" aria-label="required">*</span>
+                    <span class="text-danger" aria-hidden="true">*</span>
                   </label>
                   <button type="button" class="btn btn-ghost btn-sm">
                     <i class="if if-add if--sm" aria-hidden="true"></i>
@@ -283,16 +284,16 @@
             <section aria-labelledby="metadata-heading" class="card my-5">
               <div class="card-header bt-title-toolbar mb-0"
                   data-bs-toggle="collapse"
-                  data-bs-target="#metadata-body"
-                  aria-expanded="false"
-                  aria-controls="metadata-body"
-                  aria-label="Toggle research metadata">
+                  data-bs-target="#metadata-body">
                 <h3 id="metadata-heading" class="h6 mt-2 d-flex gap-2 mb-0">
                   <i class="if if-book text-muted" aria-hidden="true"></i>
                   Research metadata
                   <span class="badge text-bg-secondary">Optional</span>
                 </h3>
-                <button type="button" class="btn btn-ghost btn-sm p-0">
+                <button type="button" class="btn btn-ghost btn-sm p-0"
+                  aria-label="Toggle research metadata"
+                  aria-expanded="false"
+                  aria-controls="metadata-body">
                   <i class="if if-chevron-down" aria-hidden="true"></i>
                 </button>
               </div>
@@ -303,7 +304,7 @@
                     <fieldset>
                       <legend class="form-label mb-2">
                         Resource type
-                        <span class="text-danger" aria-label="required">*</span>
+                        <span class="text-danger" aria-hidden="true">*</span>
                       </legend>
                       <div class="bt-btn-check__group">
                         <input type="radio" class="btn-check" name="work_type" id="type-journal-article" value="journal_article" autocomplete="off" checked>
@@ -416,7 +417,7 @@
               </div>
             </div>
 
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -426,4 +427,3 @@
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>
 <!-- Remove people-search-stub.js when wiring the real /people/search endpoint -->
-<script src="/assets/js/deposit.js"></script>

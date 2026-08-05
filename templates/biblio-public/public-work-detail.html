@@ -1,6 +1,6 @@
 <!-- @title: Urban forests as essential infrastructure — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: files, logged-in, restricted, embargo, external, no-files -->
+<!-- @states: files, v1, logged-in, restricted, embargo, no-files -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,7 +35,7 @@
       </nav>
 
       <!-- Heading -->
-      <div class="row g-md-4 g-0 align-items-end border-bottom bt-section-detail">
+      <div class="row g-4 align-items-end border-bottom bt-section-detail">
 
         <!-- Main column: heading -->
         <div class="col-lg-12 col-xl-8">
@@ -43,18 +43,18 @@
           <!-- Status badges -->
           <div class="d-flex flex-wrap gap-2 mb-3">
             <span class="badge text-bg-primary">Journal article</span>
-            <!-- @state: files logged-in -->
+            <!-- @state: files logged-in v1 -->
             <span class="badge text-bg-success">
-              <i class="if if-open-access"></i> Open access
+              <i class="if if-open-access" aria-hidden="true"></i> Open access
             </span>
             <!-- @state -->
             <!-- @state: restricted -->
-            <span class="badge text-bg-warning">
+            <span class="badge text-bg-secondary">
               <i class="if if-lock" aria-hidden="true"></i> Restricted
             </span>
             <!-- @state -->
             <!-- @state: embargo -->
-            <span class="badge text-bg-warning">
+            <span class="badge text-bg-secondary">
               <i class="if if-time" aria-hidden="true"></i> Embargo
             </span>
             <!-- @state -->
@@ -85,19 +85,16 @@
           </p>
 
 
-          <!-- Journal info -->
+          <!-- Journal info — title links to the ISSN-scoped works search (Identifier chip),
+               Rule 3: a journal names a set of works. Harvard card format:
+               docs/WORK-CARD-REFERENCE-STYLES.md. -->
           <p class="mb-4">
-            <em>Plants People Planet</em> · Vol. 8, No. 1 · 2026 · pp. 14–19
+            (<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.
           </p>
 
-          <!-- Primary actions.
-               Header download selected server-side (fullText candidates only):
-               open+accepted > open+published > open > restricted, PDF-first.
-               Shown here: accessible state. Locked variants replace the button with
-               a lock icon + a "Log in to access" login link
-               (restricted, not signed in) or "Available from <date>" (embargoed).
+          <!-- Primary actions. CTA rules: raven#141; file selection: docs/DOMAIN-VOCABULARY.md.
                Login links carry the post-login return URL.
-               No fullText file: external full-text link when we have one, else no button. -->
+               No fullText file: no button (external full text out of scope). -->
           <div class="d-flex align-items-center gap-3">
             <!-- @state: files logged-in -->
             <a href="#" class="btn btn-primary" download>
@@ -105,30 +102,38 @@
               Download Full Text
             </a>
             <!-- @state -->
-            <!-- @state: external -->
-            <a href="https://doi.org/10.1002/ppp3.70125" class="btn btn-primary">
-              <i class="if if-external-link" aria-hidden="true"></i>
-              Full Text at Publisher
+            <!-- v1: no direct download — anchor to the Files section (raven#141) -->
+            <!-- @state: v1 -->
+            <a href="#files-heading-v1" class="btn btn-primary">
+              <i class="if if-arrow-down" aria-hidden="true"></i>
+              View files
             </a>
             <!-- @state -->
             <!-- @state: restricted -->
-            <button class="btn btn-warning" aria-label="Log in to access: Full text">
+            <a href="#" class="btn btn-warning" aria-label="Log in to access: Full text">
               <i class="if if-lock" aria-hidden="true"></i> Log in to access
-            </button>
+            </a>
             <!-- @state -->
+            <!-- Embargo: text, never a disabled button -->
             <!-- @state: embargo -->
-            <button class="btn btn-primary" disabled>
+            <span class="text-muted">
               <i class="if if-time" aria-hidden="true"></i>
-              Under embargo
-            </button>
+              Open access from <time datetime="2027-05-01">01/05/2027</time>
+            </span>
             <!-- @state -->
-            <button type="button" class="btn btn-secondary"
-              hx-post="/lists/add"
-              hx-vals='{"id":"01K9XTVXD41Z"}'
-              hx-swap="none">
-              <i class="if if-bookmark-line" aria-hidden="true"></i>
-              Add to list
-            </button>
+            <div class="dropdown">
+              <button type="button" class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity: a call to policymakers"
+                hx-get="/lists/panel?work=wd" hx-trigger="click once"
+                hx-target="#atl-wd-panel" hx-swap="innerHTML" hx-indicator="#atl-wd-loading">
+                <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+              </button>
+              <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-wd-panel" role="dialog" aria-label="Add to list">
+                <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wd-loading" aria-live="polite">Loading your lists&hellip;</p>
+              </div>
+            </div>
             <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#cite-modal">
               <i class="if if-double-quotes" aria-hidden="true"></i>
               Cite
@@ -139,21 +144,15 @@
             </button> -->
           </div>
           <!-- @state: files logged-in -->
-          <p class="small text-muted mt-2">Accepted manuscript &middot; PDF &middot; Open Access &middot; 158.71 KB</p>
+          <p class="small text-muted mt-2">Accepted manuscript &middot; Open Access &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
           <!-- @state: restricted -->
-          <p class="small text-muted mt-2">Accepted manuscript &middot; PDF &middot; Restricted &middot; 158.71 KB</p>
+          <p class="small text-muted mt-2">Accepted manuscript &middot; Restricted &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
-          <!-- @state: embargo -->
-          <p class="small text-muted mt-2">Full text available from <time datetime="2027-05-01">1.05.2027</time></p>
-          <!-- @state -->
-          <!-- @state: external -->
-          <!-- @state -->
-          <!-- No files, or all files private: same state. The private count
-               renders only when private files exist — visitors learn files
-               exist, never what they are. -->
+          <!-- No files, or all files private: same state, indistinguishable —
+               private existence is never revealed (patent risk, tech transfer) -->
           <!-- @state: no-files -->
-          <p class="small text-muted mt-2">No full text available in Biblio &middot; 2 private files</p>
+          <p class="small text-muted mt-2">No full text available in Biblio</p>
           <!-- @state -->
         </div>
 
@@ -167,7 +166,7 @@
               <code class="small overflow-auto fw-bold p-2 bg-white border">https://hdl.handle.net/1854/LU-01K9XTVXD41Z</code>
               <button type="button" class="btn btn-light btn-sm"
                 aria-label="Copy persistent link to person page"
-                onclick="navigator.clipboard.writeText('https://hdl.handle.net/1854/LU-01K9XTVXD41Z');this.innerHTML='<i class=\'if if-check\' aria-hidden=\'true\'></i>'">
+                data-clipboard>
                 <i class="if if-copy" aria-hidden="true"></i>
               </button>
             </div>
@@ -193,10 +192,19 @@
             </p>
           </section>
 
-          <!-- Order: fullText first (selection ranking), then other kinds, open before restricted -->
-          <!-- @state: files -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- Order: fullText first (selection ranking), then other kinds, open before restricted.
+               Login line renders only when: anonymous + restricted rows + header CTA isn't the login button. -->
+          <!-- @state: files v1 -->
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-v1" class="mb-5">
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+                <h2 id="files-heading-v1" class="h4 mb-0">Files</h2>
+              </div>
+              <div class="bt-toolbar__right">
+                <p class="small"><a href="#">Log in</a> to download restricted files.</p>
+              </div>
+            </div>
             <ul class="list-group list-group-flush list-unstyled mb-0">
 
               <!-- fullText, selected for the header download button -->
@@ -206,9 +214,9 @@
                   <span>depauw-2026-urban-forests-accepted.pdf</span>
                   <p class="bt-meta-list">
                     <span class="badge text-bg-success-light">
-                      <i class="if if-open-access"></i> Open access
+                      <i class="if if-open-access" aria-hidden="true"></i> Open access
                     </span>
-                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB &middot; CC BY 4.0
+                    Full text &middot; Accepted manuscript &middot; CC BY 4.0 &middot; PDF &middot; 158,71 KB
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -229,8 +237,7 @@
                       Restricted, embargo
                     </span>
                     Full text &middot; PDF &middot;
-                    <a href="#" aria-label="Log in to access: Published version">Log in to access</a> &middot;
-                    open access from <time datetime="2027-05-01">1.05.2027</time></p>
+                    open access from <time datetime="2027-05-01">01/05/2027</time></p>
                 </div>
               </li>
 
@@ -241,9 +248,9 @@
                   <span>urban-forests-supplementary-data.xlsx</span>
                   <p class="bt-meta-list">
                     <span class="badge text-bg-success-light">
-                      <i class="if if-open-access"></i> Open access
+                      <i class="if if-open-access" aria-hidden="true"></i> Open access
                     </span>
-                    Supplementary material &middot; XLSX &middot; 2.4 MB &middot; CC0 1.0
+                    Supplementary material &middot; XLSX &middot; 2,4 MB &middot; CC0 1.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -263,17 +270,12 @@
                       <i class="if if-time" aria-hidden="true"></i>
                       Restricted
                     </span>
-                    PDF &middot;
-                    <a href="#" aria-label="Log in to access: Peer review report">Log in to access</a>
+                    PDF
                   </p>
                 </div>
               </li>
 
-              <!-- private files: count only — no name, link, size, or type -->
-              <li class="list-group-item d-flex align-items-center gap-3 px-0">
-                <i class="if if-lock" aria-hidden="true"></i>
-                <p class="mb-0">1 private file</p>
-              </li>
+              <!-- private files: never rendered — not even a count (patent risk, tech transfer) -->
             </ul>
           </section>
           <!-- @state -->
@@ -282,8 +284,9 @@
                cannot nest): restricted files render like open ones — filename,
                download — keeping their Restricted badge. -->
           <!-- @state: logged-in -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-login" class="mb-5">
+            <h2 id="files-heading-login" class="h4 mb-3">Files</h2>
             <ul class="list-group list-group-flush list-unstyled mb-0">
 
               <!-- fullText, selected for the header download button -->
@@ -293,9 +296,9 @@
                   <span>depauw-2026-urban-forests-accepted.pdf</span>
                   <p class="bt-meta-list">
                     <span class="badge text-bg-success-light">
-                      <i class="if if-open-access"></i> Open access
+                      <i class="if if-open-access" aria-hidden="true"></i> Open access
                     </span>
-                    Full text &middot; Accepted manuscript &middot; PDF &middot; 158.71 KB &middot; CC BY 4.0
+                    Full text &middot; Accepted manuscript &middot; CC BY 4.0 &middot; PDF &middot; 158,71 KB
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -315,8 +318,8 @@
                       <i class="if if-time" aria-hidden="true"></i>
                       Restricted, embargo
                     </span>
-                    Full text &middot; Published version &middot; PDF &middot; 1.2 MB &middot;
-                    open access from <time datetime="2027-05-01">1.05.2027</time>
+                    Full text &middot; Published version &middot; PDF &middot; 1,2 MB &middot;
+                    open access from <time datetime="2027-05-01">01/05/2027</time>
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -333,9 +336,9 @@
                   <span>urban-forests-supplementary-data.xlsx</span>
                   <p class="bt-meta-list">
                     <span class="badge text-bg-success-light">
-                      <i class="if if-open-access"></i> Open access
+                      <i class="if if-open-access" aria-hidden="true"></i> Open access
                     </span>
-                    Supplementary material &middot; XLSX &middot; 2.4 MB &middot; CC0 1.0
+                    Supplementary material &middot; XLSX &middot; 2,4 MB &middot; CC0 1.0
                   </p>
                 </div>
                 <a href="#" download class="btn btn-secondary btn-sm"
@@ -365,19 +368,16 @@
                 </a>
               </li>
 
-              <!-- private files: count only, also for logged-in public visitors -->
-              <li class="list-group-item d-flex align-items-center gap-3 px-0">
-                <i class="if if-lock" aria-hidden="true"></i>
-                <p class="mb-0">1 private file</p>
-              </li>
+              <!-- private files: never rendered, also for logged-in public visitors -->
             </ul>
           </section>
           <!-- @state -->
 
-          <!-- Only file is restricted, anonymous viewer: name redacted, login nudge -->
+          <!-- Only file is restricted, anonymous viewer: name redacted; header CTA already handles login -->
           <!-- @state: restricted -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-restricted" class="mb-5">
+            <h2 id="files-heading-restricted" class="h4 mb-3">Files</h2>
             <ul class="list-group list-group-flush list-unstyled mb-0">
               <li class="list-group-item d-flex align-items-center gap-3 px-0">
                 <i class="if if-lock" aria-hidden="true"></i>
@@ -388,8 +388,7 @@
                       <i class="if if-lock" aria-hidden="true"></i>
                       Restricted
                     </span>
-                    Full text &middot; PDF &middot;
-                    <a href="#" aria-label="Log in to access: Accepted manuscript">Log in to access</a>
+                    Full text &middot; PDF
                   </p>
                 </div>
               </li>
@@ -399,8 +398,9 @@
 
           <!-- File is private now, embargo opens it later: type + date, never the name -->
           <!-- @state: embargo -->
-          <section aria-labelledby="files-heading" class="mb-5">
-            <h2 id="files-heading" class="h4 mb-3">Files</h2>
+          <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+          <section aria-labelledby="files-heading-embargo" class="mb-5">
+            <h2 id="files-heading-embargo" class="h4 mb-3">Files</h2>
             <ul class="list-group list-group-flush list-unstyled mb-0">
               <li class="list-group-item d-flex align-items-center gap-3 px-0">
                 <i class="if if-time" aria-hidden="true"></i>
@@ -411,7 +411,7 @@
                       <i class="if if-time" aria-hidden="true"></i>
                       Embargo
                     </span>
-                    PDF &middot; available from <time datetime="2027-05-01">1.05.2027</time>
+                    PDF &middot; open access from <time datetime="2027-05-01">01/05/2027</time>
                   </p>
                 </div>
               </li>
@@ -419,21 +419,96 @@
           </section>
           <!-- @state -->
 
-          <!-- Related research — HTMX loaded
+          <!-- Related research — server-rendered
            Top 3 matches by keyword similarity. Similar keywords are highlighted in the list. Clicking the "More" link takes the user to a filtered search results page with all related research output. TBD: can we filter by "or" in the search results page?-->
           <section aria-labelledby="related-heading" class="mb-5">
             <h2 id="related-heading" class="h4 mb-3">Related research output</h2>
-            <div
-              hx-get="/partials/related?id=01K9XTVXD41Z&partial=true"
-              hx-trigger="revealed"
-              hx-swap="innerHTML">
-              <div class="text-muted">Loading related research output&hellip;</div>
+            <!-- Renders server-side: public content is never lazy-loaded (crawlers do not run HTMX).
+                 Content generated from server/content/related-works.js. raven note: similarity is an
+                 expensive query — how to serve it without lazy-load (cache, precompute) is an open
+                 question for raven, recorded in the #125 discussion. -->
+            <div>
+            <ol class="list-unstyled mb-0">
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-01">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-01" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">Cooling co-benefits of urban tree networks in compact European cities</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2025">2025</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Green infrastructure <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Trees</a>
+                  </div>
+                </div>
+              </article></li>
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-02">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-02" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">Planning biodiversity corridors through urban green infrastructure</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2024">2024</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Biodiversity</a>
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Urban climate <span class="visually-hidden">(shared keyword)</span></a>
+                  </div>
+                </div>
+              </article></li>
+            
+              <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="related-work-03">
+                <div class="card-header">
+                  <div class="bt-work-card__meta">
+                    <span class="bt-work-card__meta-item">Book chapter</span>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3 id="related-work-03" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">Community-led climate adaptation in Flemish mid-sized cities</a></h3>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
+                    <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+                    <span class="text-muted">+ 6 more</span>
+                  </p>
+                  <p class="bt-work-card__pub">(<a href="#"><time datetime="2023">2023</time></a>)</p>
+                  <div class="d-flex flex-wrap gap-1">
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Resilience <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-primary-light text-decoration-none">Ghent <span class="visually-hidden">(shared keyword)</span></a>
+                    <a href="#" class="badge text-bg-secondary text-decoration-none">Climate adaptation</a>
+                  </div>
+                </div>
+              </article></li>
+            </ol>
+            <!-- stub — intended target: works search pre-filtered on this work's keywords
+                 e.g. /works?keyword=Urban+climate&keyword=Resilience&keyword=Green+infrastructure&keyword=Ghent -->
+            <a href="#" class="btn btn-ghost">
+              <i class="if if-arrow-right" aria-hidden="true"></i>
+              More related research, by keyword
+            </a>
             </div>
           </section>
         </div>
 
         <!-- Sidebar column: content -->
-        <div class="col-lg-4 col-lg-4 d-flex flex-column gap-3">
+        <div class="col-lg-4 d-flex flex-column gap-3">
 
           <!-- Metadata -->
           <div class="mb-4">
@@ -458,14 +533,22 @@
             </dl>
           </div>
 
+          <!-- Research disciplines — NOT SHOWN, pending review (M, 2026-07-21). raven
+               models them (research_disciplines; scheme is deployer config: UGent
+               categories / Frascati / OECD / ANZSRC) but the vocabulary needs a policy
+               review before public display. Also cut from the works sidebar — live
+               Subject facet drew ~269 sessions in 7 months of logs. -->
+
           <!-- Keywords -->
           <div class="mb-4">
             <h3 class="form-label d-block mb-2">Keywords</h3>
+            <!-- Keyword badges navigate to the keyword-scoped works search (Rule 3) —
+                 the highest-volume refinement in the live logs (~252k sessions / 7 months). -->
             <div class="d-flex flex-wrap gap-1">
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Urban climate</a>
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Resilience</a>
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Green infrastructure</a>
-              <a href="#" class="badge text-bg-secondary text-decoration-none">Ghent</a>
+              <a href="public-works.html?keyword=urban-climate" class="badge text-bg-secondary text-decoration-none">Urban climate</a>
+              <a href="public-works.html?keyword=resilience" class="badge text-bg-secondary text-decoration-none">Resilience</a>
+              <a href="public-works.html?keyword=green-infrastructure" class="badge text-bg-secondary text-decoration-none">Green infrastructure</a>
+              <a href="public-works.html?keyword=ghent" class="badge text-bg-secondary text-decoration-none">Ghent</a>
             </div>
           </div>
 
@@ -550,9 +633,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary"
-          onclick="navigator.clipboard.writeText(document.querySelector('.tab-pane.active .font-monospace').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy citation',1800)">
-          Copy citation
+        <button type="button" class="btn btn-primary" data-clipboard data-clipboard-target=".tab-pane.active .font-monospace">
+          <span class="btn-text">Copy citation</span>
         </button>
       </div>
     </div>

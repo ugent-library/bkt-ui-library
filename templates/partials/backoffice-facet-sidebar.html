@@ -56,9 +56,9 @@
        - Types → primary badges, omitted if all types in scope
        Edit icon links to Settings — scope is not changed inline here.
   ──────────────────────────────────────────────────────────────────────── -->
-  <div class="mb-3">
-    <!--
+  <!--
     Temporarily hidden until we decide scope
+  <div class="mb-3">
     <div class="d-flex align-items-center justify-content-between mb-2">
       <p class="small fw-bold text-uppercase text-muted mb-0">Scope</p>
       <a href="/settings/scope" class="btn btn-ghost btn-sm p-0 text-muted"
@@ -116,7 +116,7 @@
             class="nav-link d-flex align-items-center gap-2 py-1 px-0 text-decoration-none">
             <i class="if if-error-circle if--xs text-muted" aria-hidden="true"></i>
             <span class="flex-grow-1">Needs review</span>
-            <span class="text-muted small" aria-label="12 items need review">122</span>
+            <span class="text-muted small">122</span>
           </a>
         </li>
         <li>
@@ -124,7 +124,7 @@
             class="nav-link d-flex align-items-center gap-2 py-1 px-0 text-decoration-none">
             <i class="if if-notification if--xs text-muted" aria-hidden="true"></i>
             <span class="flex-grow-1">Suggestions</span>
-            <span class="text-muted small" aria-label="12 suggestion">12</span>
+            <span class="text-muted small">12</span>
           </a>
         </li>
         <li>
@@ -132,7 +132,7 @@
             class="nav-link d-flex align-items-center gap-2 py-1 px-0 text-decoration-none">
             <i class="if if-draft if--xs text-muted" aria-hidden="true"></i>
             <span class="flex-grow-1">Incomplete</span>
-            <span class="text-muted small" aria-label="12 items are incomplete">12</span>
+            <span class="text-muted small">12</span>
           </a>
         </li>
         <li>
@@ -140,7 +140,7 @@
             class="nav-link d-flex align-items-center gap-2 py-1 px-0 text-decoration-none">
             <i class="if if-file if--xs text-muted" aria-hidden="true"></i>
             <span class="flex-grow-1">Missing full text</span>
-            <span class="text-muted small" aria-label="47 items missing full text">47</span>
+            <span class="text-muted small">47</span>
           </a>
         </li>
       </ul>
@@ -168,9 +168,15 @@
       <span class="text-muted small" aria-hidden="true">12</span>
     </div>
     <div class="d-flex form-check">
-      <input class="form-check-input me-2" type="checkbox" id="fs-published"
-        aria-label="Published (3,802 records)">
-      <label class="form-check-label flex-grow-1" for="fs-published">Published</label>
+      <input class="form-check-input me-2" type="checkbox" id="fs-returned"
+        aria-label="Returned (18 records)">
+      <label class="form-check-label flex-grow-1" for="fs-returned">Returned</label>
+      <span class="text-muted small" aria-hidden="true">18</span>
+    </div>
+    <div class="d-flex form-check">
+      <input class="form-check-input me-2" type="checkbox" id="fs-reviewed"
+        aria-label="Reviewed (3,802 records)">
+      <label class="form-check-label flex-grow-1" for="fs-reviewed">Reviewed</label>
       <span class="text-muted small" aria-hidden="true">3,802</span>
     </div>
     <div class="d-flex form-check">
@@ -307,24 +313,23 @@
       More filters
     </button>
     <div class="dropdown-menu p-0">
-      <div class="p-2">
-        <label for="more-filter-search" class="visually-hidden">Search filters</label>
-        <input type="search" id="more-filter-search" class="form-control form-control-sm"
-          placeholder="Find a filter&hellip;" autocomplete="off">
-      </div>
-      <div id="more-filter-list">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">People</p>
-        <button class="dropdown-item py-2" type="button" data-filter="author">Author</button>
-        <button class="dropdown-item py-2" type="button" data-filter="affiliation">Affiliation</button>
-        <button class="dropdown-item py-2" type="button" data-filter="research_group">Research group</button>
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Context</p>
-        <button class="dropdown-item py-2" type="button" data-filter="project">Project / funding</button>
-        <button class="dropdown-item py-2" type="button" data-filter="venue">Journal / venue</button>
-        <hr class="dropdown-divider my-1">
-        <p class="text-muted small fw-semibold text-uppercase px-3 pt-2 mb-1">Classification</p>
-        <button class="dropdown-item py-2" type="button" data-filter="keywords">Keywords</button>
-        <button class="dropdown-item py-2" type="button" data-filter="tags">Librarian tags</button>
+      <div id="more-filter-list" class="bt-dropdown-scroll">
+        <div role="group" aria-label="People">
+          <div class="dropdown-header" aria-hidden="true">People</div>
+          <button class="dropdown-item" type="button" data-filter="author">Author</button>
+          <button class="dropdown-item" type="button" data-filter="affiliation">Affiliation</button>
+          <button class="dropdown-item" type="button" data-filter="research_group">Research group</button>
+        </div>
+        <div role="group" aria-label="Context">
+          <div class="dropdown-header" aria-hidden="true">Context</div>
+          <button class="dropdown-item" type="button" data-filter="project">Project / funding</button>
+          <button class="dropdown-item" type="button" data-filter="venue">Journal / venue</button>
+        </div>
+        <div role="group" aria-label="Classification">
+          <div class="dropdown-header" aria-hidden="true">Classification</div>
+          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
+          <button class="dropdown-item" type="button" data-filter="tags">Librarian tags</button>
+        </div>
       </div>
     </div>
   </div>

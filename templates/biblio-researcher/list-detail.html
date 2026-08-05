@@ -1,0 +1,174 @@
+<!-- @title: Reading list — My lists — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: default, empty -->
+<!--
+  One list and its works. Order is the list's own — works sit where they were
+  put, not in date or title order — so this table is not sortable.
+
+  Batch edit is a curator action over the whole list; it renders only with the
+  grant. Raven has it as a plain link above the items.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/main-sidebar.html -->
+<!-- @active: lists -->
+
+  <main id="main-content" class="bt-bg">
+
+    <div class="u-main__header bg-white border-bottom">
+      <nav aria-label="Breadcrumb" class="mb-2">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="lists.html">My lists</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Reading list</li>
+        </ol>
+      </nav>
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Reading list</h1>
+          </div>
+          <div class="bt-toolbar__item">
+            <span class="text-muted">3 works</span>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <!-- Curator grant only -->
+            <a href="/templates/biblio-team/curate.html" class="btn btn-secondary btn-sm">
+              <i class="if if-list-check if--sm" aria-hidden="true"></i>
+              Batch edit this list
+            </a>
+          </div>
+          <div class="bt-toolbar__item">
+            <a href="list-edit.html" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--sm" aria-hidden="true"></i>
+              Edit
+            </a>
+          </div>
+          <div class="bt-toolbar__item">
+            <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="modal" data-bs-target="#delete-list-modal"
+              aria-label="Delete list: Reading list">
+              <i class="if if-delete if--sm" aria-hidden="true"></i>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="text-muted mb-0">Things to get through before the review meeting</p>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body px-4 pb-4">
+
+          <!-- @state: default -->
+          <div class="row">
+            <div class="col-xl-9 col-xxl-8">
+              <!-- Works use the work card: /patterns/work-card.html. The list row on
+                   lists.html and its bookmark icon want a line of their own there. -->
+              <ol class="list-unstyled mb-0">
+                <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="ld-card-01">
+                  <div class="card-header">
+                    <div class="bt-work-card__meta">
+                      <span class="bt-work-card__meta-item">Book</span>
+                    </div>
+                    <div class="bt-work-card__actions">
+                      <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove from list: Maritime History and Navigation">
+                        <i class="if if-close if--sm" aria-hidden="true"></i>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p id="ld-card-01" class="bt-work-card__title">
+                      <a href="/templates/biblio-public/public-work-detail.html">Maritime History and Navigation</a>
+                    </p>
+                    <p class="bt-work-card__authors">Lambert, W., Jacobs, E.</p>
+                    <p class="bt-work-card__pub"><time datetime="1992">1992</time></p>
+                  </div>
+                </article></li>
+                <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="ld-card-02">
+                  <div class="card-header">
+                    <div class="bt-work-card__meta">
+                      <span class="bt-work-card__meta-item">Journal article</span>
+                    </div>
+                    <div class="bt-work-card__actions">
+                      <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove from list: Urban forests as essential infrastructure for climate resilience and biodiversity">
+                        <i class="if if-close if--sm" aria-hidden="true"></i>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p id="ld-card-02" class="bt-work-card__title">
+                      <a href="/templates/biblio-public/public-work-detail.html">Urban forests as essential infrastructure for climate resilience and biodiversity</a>
+                    </p>
+                    <p class="bt-work-card__authors">De Pauw, K., Maes, S.</p>
+                    <p class="bt-work-card__pub"><time datetime="2026">2026</time><span class="text-muted mx-1" aria-hidden="true">&middot;</span><cite>Plants People Planet</cite></p>
+                  </div>
+                </article></li>
+                <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="ld-card-03">
+                  <div class="card-header">
+                    <div class="bt-work-card__meta">
+                      <span class="bt-work-card__meta-item">Dataset</span>
+                    </div>
+                    <div class="bt-work-card__actions">
+                      <button type="button" class="btn btn-ghost btn-sm" aria-label="Remove from list: Soil moisture measurements, Flanders 2019 to 2024">
+                        <i class="if if-close if--sm" aria-hidden="true"></i>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <p id="ld-card-03" class="bt-work-card__title">
+                      <a href="/templates/biblio-public/public-work-detail-dataset.html">Soil moisture measurements, Flanders 2019&ndash;2024</a>
+                    </p>
+                    <p class="bt-work-card__authors">Dewulf, D.</p>
+                    <p class="bt-work-card__pub"><time datetime="2025">2025</time></p>
+                  </div>
+                </article></li>
+              </ol>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: empty -->
+          <div class="bt-blank-slate bt-blank-slate--muted" role="status">
+            <p class="h5 mb-2">Nothing in this list yet</p>
+            <p>Add to list on any record puts it here.</p>
+            <div>
+              <a href="/templates/biblio-public/public-works.html" class="btn btn-secondary btn-sm">
+                Browse research output
+              </a>
+            </div>
+          </div>
+          <!-- @state -->
+
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>
+
+<div class="modal fade" id="delete-list-modal" tabindex="-1" aria-labelledby="delete-list-modal-title" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="delete-list-modal-title">Delete &ldquo;Reading list&rdquo;?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">The 3 works stay in Biblio. Only the list goes.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <!-- real impl: form POST /lists/<id>/delete -->
+        <button type="button" class="btn btn-danger btn-sm">Delete list</button>
+      </div>
+    </div>
+  </div>
+</div>

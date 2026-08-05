@@ -1,5 +1,6 @@
 <!-- @title: Add research output — Step 2: Upload -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Deposit flow — Step 2
 
@@ -60,6 +61,7 @@
 
     <div class="u-main__body">
       <div class="u-main__content">
+        <!-- real impl: step content is a form; Next is its submit button -->
         <div class="u-main__content-body">
 
           <!--
@@ -92,16 +94,16 @@
               <i class="if if-file-pdf text-muted" aria-hidden="true"></i>
               <div class="flex-grow-1">
                 <div class="small fw-semibold">publisher-version.pdf</div>
-                <div class="text-muted small">Open access · 2.1 MB</div>
+                <div class="text-muted small">Open access · 2,1 MB</div>
               </div>
               <a href="deposit-2-upload.html" class="btn btn-ghost btn-sm">Change</a>
             </div>
 
-            <!-- File drop zone — drag events handled by deposit.js -->
+            <!-- real impl: file drop drag/drop upload -->
             <label class="bt-file-drop d-block mb-2" for="file-upload">
               <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
-              <p class="bt-file-drop__text">Drag a file here, or <strong>browse</strong></p>
-              <p class="bt-file-drop__hint">PDF, DOCX, EPUB — max 500 MB</p>
+              <span class="bt-file-drop__text d-block">Drag a file here, or <strong>browse</strong></span>
+              <span class="bt-file-drop__hint d-block">PDF, DOCX, EPUB — max 500 MB</span>
               <input type="file" id="file-upload" class="visually-hidden" accept=".pdf,.docx,.epub"
                 hx-post="/deposit/upload"
                 hx-target="#file-list"
@@ -145,4 +147,3 @@
   </main>
 </div>
 
-<script src="/assets/js/deposit.js"></script>

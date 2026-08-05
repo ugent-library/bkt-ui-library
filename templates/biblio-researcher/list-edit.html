@@ -1,0 +1,77 @@
+<!-- @title: Edit list — My lists — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: default, name-taken -->
+<!--
+  Name and description. The Add to list picker can only ever create a name that
+  is free — it withdraws the create row at an exact match — so renaming here is
+  the one place a duplicate name can be attempted, and the only place the
+  refusal has to be shown.
+
+  Same form creates a list: New list arrives here with the fields empty.
+-->
+
+<div class="u-layout--app">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+
+<!-- @include: templates/partials/main-sidebar.html -->
+<!-- @active: lists -->
+
+  <main id="main-content" class="bt-bg">
+
+    <div class="u-main__header bg-white border-bottom">
+      <nav aria-label="Breadcrumb" class="mb-2">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item"><a href="lists.html">My lists</a></li>
+          <li class="breadcrumb-item"><a href="list-detail.html">Reading list</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+      </nav>
+      <h1 class="bt-toolbar__title">Edit list</h1>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body p-4">
+
+          <!-- real impl: form POST /lists/<id> -->
+          <!-- [html-validate-disable-block form-dup-name -- @state blocks; one renders at a time] -->
+          <form class="col-lg-6">
+
+            <!-- @state: default -->
+            <div class="mb-3">
+              <label for="list-name" class="form-label">Name <span aria-hidden="true">*</span></label>
+              <input type="text" class="form-control" id="list-name" name="name" value="Reading list" required>
+            </div>
+            <!-- @state -->
+
+            <!-- @state: name-taken -->
+            <div class="mb-3">
+              <label for="list-name-taken" class="form-label">Name <span aria-hidden="true">*</span></label>
+              <input type="text" class="form-control is-invalid" id="list-name-taken" name="name"
+                value="Quantum computing refs" required aria-describedby="list-name-error">
+              <div class="invalid-feedback" id="list-name-error">
+                You already have a list called &ldquo;Quantum computing refs&rdquo;. <a href="list-detail.html">Open it</a> or pick another name.
+              </div>
+            </div>
+            <!-- @state -->
+
+            <div class="mb-3">
+              <label for="list-description" class="form-label">Description</label>
+              <textarea class="form-control" id="list-description" name="description" rows="3">Things to get through before the review meeting</textarea>
+              <div class="form-text">Only you see this.</div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">Save</button>
+              <a href="list-detail.html" class="btn btn-ghost">Cancel</a>
+            </div>
+
+          </form>
+
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>

@@ -1,7 +1,10 @@
 <!-- @title: Settings — Work scope — Biblio -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!-- @states: filled, empty -->
 <!--
+
+  DO NOT BUILD YET
   EXPLORATION: Curator / proxy scope configuration
   ─────────────────────────────────────────────────
   Available to: Librarian role (curators) and proxies.
@@ -46,12 +49,12 @@
             </div>
             <div class="bt-toolbar__right">
               <div class="bt-toolbar__item">
-                <a href="/settings" class="btn btn-ghost btn-sm text-muted">Cancel</a>
+                <a href="/settings" class="btn btn-ghost btn-sm">Cancel</a>
                 <span id="scope-save-status" role="status" aria-live="polite"
                   class="text-muted small ms-auto visually-hidden">Saved</span>
               </div>
               <div class="bt-toolbar__item">
-                <button type="submit" class="btn btn-primary">Save scope</button>
+                <button type="submit" form="scope-form" class="btn btn-primary">Save scope</button>
               </div>
             </div>
           </div>
@@ -139,21 +142,21 @@
                    "You can see all records for all organisations your grants
                    allow. Add an organisation to narrow your scope." -->
               <div class="card-body border-bottom" id="org-scope-list"
-                aria-label="Selected organisations" aria-live="polite">
+                role="group" aria-label="Selected organisations" aria-live="polite">
                 <div class="d-flex flex-wrap gap-2">
 
                   <!-- @state: filled -->
-                    <button type="button" class="filter-tag" aria-label="Remove Faculty of Sciences from scope">
+                    <button type="button" class="badge badge--outline" aria-label="Remove Faculty of Sciences from scope">
                       Faculty of Sciences
                       <i class="if if-close" aria-hidden="true"></i>
                     </button>
 
-                    <button type="button" class="filter-tag" aria-label="Remove Faculty of Engineering and Architecture from scope">
+                    <button type="button" class="badge badge--outline" aria-label="Remove Faculty of Engineering and Architecture from scope">
                       Faculty of Engineering and Architecture
                       <i class="if if-close" aria-hidden="true"></i>
                     </button>
 
-                    <button type="button" class="filter-tag" aria-label="Remove Department of Physics and astronomy from scope">
+                    <button type="button" class="badge badge--outline" aria-label="Remove Department of Physics and astronomy from scope">
                       Department of Physics and astronomy
                       <i class="if if-close" aria-hidden="true"></i>
                     </button>

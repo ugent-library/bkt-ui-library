@@ -14,7 +14,7 @@
   at the injection point, followed by an active key comment:
 
     @include templates/partials/main-sidebar.html
-    @active dashboard | review | suggestions | incomplete | my-research | queue | curate | all-research | overview | proxy-inbox | proxy-all
+    @active dashboard | review | suggestions | incomplete | my-research | lists | queue | curate | all-research | overview | proxy-inbox | proxy-all
 
   The local prototype renderer consumes the active key and adds active plus
   aria-current="page" to the matching data-nav-key link.
@@ -31,7 +31,7 @@
   Valid currentPage values:
     "overview" | "queue" | "curate" | "all-research"      (Curation)
     "proxy-inbox" | "proxy-all"                            (Proxy)
-    "dashboard" | "review" | "suggestions" | "incomplete" | "my-research"  (My research output)
+    "dashboard" | "review" | "suggestions" | "incomplete" | "my-research" | "lists"  (My research output)
 
   BADGE COLOUR LOGIC (queue)
   bg-danger  — any Tier-3 or deadline-flagged item exists within 30 days
@@ -41,11 +41,11 @@
 
 <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation" id="bt-sidebar">
 
-  <div class="bt-sidebar__toggle"
-    aria-controls="bt-sidebar"
-    aria-expanded="true"
-    aria-label="Collapse sidebar">
-    <button type="button" class="btn btn-ghost btn-sm">
+  <div class="bt-sidebar__toggle">
+    <button type="button" class="btn btn-ghost btn-sm"
+      aria-controls="bt-sidebar"
+      aria-expanded="true"
+      aria-label="Collapse sidebar">
       <i class="if if-arrow-left" aria-hidden="true"></i>
     </button>
   </div>
@@ -164,6 +164,12 @@
     data-bs-toggle="tooltip" data-bs-placement="right" title="All research">
     <i class="if if-list-unordered" aria-hidden="true"></i>
     <span class="bt-sidebar__label">All my research</span>
+  </a>
+
+  <a href="/templates/biblio-researcher/lists.html" class="nav-link" data-nav-key="lists"
+    data-bs-toggle="tooltip" data-bs-placement="right" title="My lists">
+    <i class="if if-bookmark-line" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">My lists</span>
   </a>
 
   <div class="d-grid mx-2 mt-3">

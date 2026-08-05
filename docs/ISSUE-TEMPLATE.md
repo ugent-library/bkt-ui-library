@@ -18,11 +18,23 @@ Anti-rot rules:
 - Stable conventions live in the repo agent docs, not here:
   raven conventions in CLAUDE.md/AGENTS.md, design system conventions
   in bkt-ui-library/AGENT.md.
+- Never tell the dev how to build it. What/Acceptance state the outcome and
+  behaviour, not the mechanism — no framework idioms (`hx-push-url`, `hx-get`),
+  library calls, `[data-*]` hooks, raven field names, index state, or query
+  mechanics. The prototype (the spec) and the repo agent docs carry the how; the
+  dev owns implementation. Express a backend gap as a `backend` child + a
+  dependency, never as an asserted "X is indexed" note.
+- Screenshot markers. Mark each distinct view with `> **Screenshot:** <what to
+  capture>`, placed next to what it shows — one per view. The image is pasted in at
+  filing. A backend issue with nothing to show says so: `> No screenshot — backend`.
 -->
 
 ## Why
 
-<!-- 2–4 terse, self-contained sentences: the problem and the intent.
+<!-- 2–4 terse, self-contained sentences: the design intent — what the
+     region does for the user. Lead with that, never with a backend gap.
+     Whether raven models the data yet is a question to resolve while
+     finishing the issue (log it under Open questions), not the framing.
      Link a docs/ decision record if one exists. Add one overview
      screenshot of the prototype below the text when filing. -->
 
@@ -49,9 +61,8 @@ same layout and may fall short for now. We iterate on top. Flag ambiguity.
 _The prototype governs the visible page and markup. Machine-facing
 output (`citation_*` tags, Signposting, `?format=` alternates, crawl
 semantics) is governed by `docs/public-site-semantics.md` — preserve
-as-is. JS follows raven's frontend standards (`data-` components, no
-inline handlers). Prototype `hx-*` URLs are stubs. UI copy goes through
-the translation files._
+as-is. JS follows raven's frontend standards. Prototype URLs are
+placeholders, not real endpoints. UI copy goes through the translation files._
 <!-- Backoffice issue: delete the machine-facing sentence, keep the rest. -->
 
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
@@ -60,6 +71,7 @@ View at `localhost:3111/<template path>`
 ## Acceptance criteria
 
 - [ ] Matches the prototype at the source-of-truth path
+- [ ] Visual and UI copy review by the product manager before merge
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/AGENT.md`,
       plus these component-specific concerns:
 - [ ] `make build` passes
@@ -77,5 +89,7 @@ View at `localhost:3111/<template path>`
 
 ## Open questions
 
-<!-- Only questions that block implementation. Anything strategic goes
-     to docs/. Delete if none. -->
+<!-- Questions to resolve while doing the issue — including "does raven
+     model this, and if not do we build it or drop it?". Log the question
+     and the options; the answer comes from a conversation, not from
+     inventing a rule. Anything strategic goes to docs/. Delete if none. -->

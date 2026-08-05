@@ -1,7 +1,8 @@
 <!-- @title: Advanced search (token bar) — Biblio -->
 <!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 
-<!--
+<!--  DO NOT BUILD YET
   EXPERT SEARCH — token bar variant
   Compare with advanced-search.html (condition builder variant).
 
@@ -313,7 +314,7 @@
           <div id="query-preview">
 
             <!-- ── Human-readable summary ──────────────────────────────────────── -->
-            <div class="bg-light border rounded p-3 mb-3 font-monospace small" id="query-summary" aria-label="Current query conditions">
+            <div class="bg-light border rounded p-3 mb-3 font-monospace small" id="query-summary" role="group" aria-label="Current query conditions">
               <span class="text-muted">type</span>
               <span class="fw-semibold text-dark ms-1 me-1">is</span>
               <span class="badge text-bg-primary fw-normal">Journal article</span>
@@ -425,32 +426,39 @@
                     <span class="text-muted small">Preview</span>
                     <span class="badge text-bg-secondary fw-normal small">Live iframe would show here</span>
                   </div>
-                  <!-- Simulated embed output — in production this is the real iframe -->
+                  <!-- Simulated embed output — in production this is the real iframe.
+                       The embed card follows the work-card grammar (__meta, __title, __authors,
+                       __pub) minus actions and researcher links: an embed on an external site
+                       reads, it does not act. -->
                   <div class="p-3" data-surface="public">
-                    <article class="bt-work-card card" aria-labelledby="embed-card-1">
+                    <article class="bt-work-card" aria-labelledby="embed-card-1">
                       <div class="card-header">
-                        <span class="badge text-bg-success">Open access</span>
-                        <span class="badge text-bg-primary">Journal article</span>
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
+                          <span class="bt-work-card__meta-item">Journal article</span>
+                        </div>
                       </div>
                       <div class="card-body">
                         <h3 id="embed-card-1" class="bt-work-card__title">
                           <a href="#">The role of the parameter landscape in Hartree–Fock quantum computing benchmarks</a>
                         </h3>
-                        <p class="bt-work-card__authors">Kiewiet, M., Cuyvers, S., Billet, M. <span class="text-muted">et al.</span></p>
-                        <p class="bt-work-card__pub"><span>2025</span> · <a href="#">Laser &amp; Photonics Reviews</a></p>
+                        <p class="bt-work-card__authors"><span class="bt-work-card__author">Kiewiet, M.</span>, <span class="bt-work-card__author">Cuyvers, S.</span>, <span class="bt-work-card__author">Billet, M.</span> <span class="text-muted">et al.</span></p>
+                        <p class="bt-work-card__pub">(<time datetime="2025">2025</time>) <a href="#"><cite>Laser &amp; Photonics Reviews</cite></a>.</p>
                       </div>
                     </article>
-                    <article class="bt-work-card card" aria-labelledby="embed-card-2">
+                    <article class="bt-work-card" aria-labelledby="embed-card-2">
                       <div class="card-header">
-                        <span class="badge text-bg-success">Open access</span>
-                        <span class="badge text-bg-primary">Journal article</span>
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
+                          <span class="bt-work-card__meta-item">Journal article</span>
+                        </div>
                       </div>
                       <div class="card-body">
                         <h3 id="embed-card-2" class="bt-work-card__title">
                           <a href="#">Hybrid classical–quantum algorithms for combinatorial optimisation in logistics</a>
                         </h3>
-                        <p class="bt-work-card__authors">Van Damme, T., Esperon-Rodriguez, M., Akritidis, K. <span class="text-muted">et al.</span></p>
-                        <p class="bt-work-card__pub"><span>2023</span> · <a href="#">npj Quantum Information</a></p>
+                        <p class="bt-work-card__authors"><span class="bt-work-card__author">Van Damme, T.</span>, <span class="bt-work-card__author">Esperon-Rodriguez, M.</span>, <span class="bt-work-card__author">Akritidis, K.</span> <span class="text-muted">et al.</span></p>
+                        <p class="bt-work-card__pub">(<time datetime="2023">2023</time>) <a href="#"><cite>npj Quantum Information</cite></a>.</p>
                       </div>
                     </article>
                   </div>
@@ -529,10 +537,10 @@
               <div class="flex-grow-1">
                 <p class="fw-semibold mb-1 small">Sciences — open access journal articles 2020–2025</p>
                 <p class="text-muted small mb-1">
-                  <span class="filter-tag--static">Type: Journal article</span>
-                  <span class="filter-tag--static ms-1">Affiliation: Sciences</span>
-                  <span class="filter-tag--static ms-1">Open access: yes</span>
-                  <span class="filter-tag--static ms-1">Year: 2020–2025</span>
+                  <span class="badge text-bg-primary-light">Type: Journal article</span>
+                  <span class="badge text-bg-primary-light ms-1">Affiliation: Sciences</span>
+                  <span class="badge text-bg-primary-light ms-1">Open access: yes</span>
+                  <span class="badge text-bg-primary-light ms-1">Year: 2020–2025</span>
                 </p>
               </div>
               <div class="d-flex gap-2 flex-shrink-0">
@@ -562,9 +570,9 @@
               <div class="flex-grow-1">
                 <p class="fw-semibold mb-1 small">Engineering — datasets needing review</p>
                 <p class="text-muted small mb-1">
-                  <span class="filter-tag--static">Type: Dataset</span>
-                  <span class="filter-tag--static ms-1">Affiliation: Engineering</span>
-                  <span class="filter-tag--static ms-1">Status: Submitted</span>
+                  <span class="badge text-bg-primary-light">Type: Dataset</span>
+                  <span class="badge text-bg-primary-light ms-1">Affiliation: Engineering</span>
+                  <span class="badge text-bg-primary-light ms-1">Status: Submitted</span>
                 </p>
               </div>
               <div class="d-flex gap-2 flex-shrink-0">
@@ -600,193 +608,4 @@
   </main>
 </div>
 
-<script>
-// ── Token bar — prototype interaction ────────────────────────────────────────
-// In production: server parses the query string and returns highlighted
-// token HTML as an HTMX partial. Here we do client-side parsing for the demo.
-
-const input      = document.getElementById('token-input');
-const display    = document.getElementById('token-display');
-const suggestions = document.getElementById('token-suggestions');
-const wrapper    = document.getElementById('token-bar-wrapper');
-const clearBtn   = document.getElementById('token-clear');
-const clearBtn2  = document.getElementById('token-clear-btn');
-
-// Known fields — in production sourced from the canonical filter config
-const FIELDS = [
-  'type','subtype','identifier','author','affiliation','research_group',
-  'year','created_since','updated_since','venue','project','collection',
-  'open_access','has_file','file_type','embargo',
-  'status','pub_status','locked','tags',
-  'keywords','external_index','source_system'
-];
-
-// Token regex: optional leading -, then field:value (value may be quoted)
-const TOKEN_RE = /(-?)(\w+):("(?:[^"]+)"|\S+)/g;
-
-function renderTokens(raw) {
-  const tokens = [];
-  let lastIndex = 0;
-  let match;
-  TOKEN_RE.lastIndex = 0;
-
-  // Reset display
-  display.innerHTML = '';
-
-  while ((match = TOKEN_RE.exec(raw)) !== null) {
-    const [full, neg, field, value] = match;
-
-    // Plain text before this token
-    if (match.index > lastIndex) {
-      const text = raw.slice(lastIndex, match.index);
-      if (text.trim()) {
-        const span = document.createElement('span');
-        span.className = 'font-monospace small text-muted';
-        span.textContent = text;
-        display.appendChild(span);
-      }
-    }
-
-    if (FIELDS.includes(field)) {
-      const token = document.createElement('span');
-      token.className = 'token-bar__token';
-      if (neg) token.dataset.negated = 'true';
-      if (neg) token.classList.add('token-bar__token--negated');
-      token.innerHTML =
-        (neg ? '<span class="token-bar__field">-' + field + '</span>' :
-               '<span class="token-bar__field">' + field + '</span>') +
-        '<span class="token-bar__sep">:</span>' +
-        '<span class="token-bar__value">' + value + '</span>';
-      display.appendChild(token);
-    } else {
-      // Unknown field — render as plain mono
-      const span = document.createElement('span');
-      span.className = 'font-monospace small';
-      span.textContent = full;
-      display.appendChild(span);
-    }
-
-    lastIndex = match.index + full.length;
-    tokens.push({ neg, field, value });
-  }
-
-  // Trailing text
-  if (lastIndex < raw.length) {
-    const trailing = raw.slice(lastIndex);
-    if (trailing) {
-      const span = document.createElement('span');
-      span.className = 'font-monospace small text-muted';
-      span.textContent = trailing;
-      display.appendChild(span);
-    }
-  }
-
-  input.classList.toggle('no-tokens', tokens.length === 0);
-  return tokens;
-}
-
-// ── Autocomplete ─────────────────────────────────────────────────────────────
-function showSuggestions() {
-  const val   = input.value;
-  const pos   = input.selectionStart;
-  const chunk = val.slice(0, pos).split(/\s+/).pop(); // word at cursor
-
-  if (!chunk) {
-    hideSuggestions();
-    return;
-  }
-
-  // Show field suggestions when user is typing a field name (no colon yet)
-  if (!chunk.includes(':')) {
-    const partial = chunk.replace(/^-/, '').toLowerCase();
-    const items   = suggestions.querySelectorAll('.token-suggestions__item');
-    let anyVisible = false;
-    items.forEach(item => {
-      const field = item.querySelector('.token-bar__field')?.textContent || '';
-      const show  = partial === '' || field.includes(partial);
-      item.hidden = !show;
-      if (show) anyVisible = true;
-    });
-    suggestions.hidden = !anyVisible;
-    wrapper.setAttribute('aria-expanded', String(!suggestions.hidden));
-  } else {
-    hideSuggestions();
-  }
-}
-
-function hideSuggestions() {
-  suggestions.hidden = true;
-  wrapper.setAttribute('aria-expanded', 'false');
-}
-
-// ── Suggestion click ──────────────────────────────────────────────────────────
-suggestions.querySelectorAll('.token-suggestions__item').forEach(item => {
-  item.addEventListener('mousedown', e => {
-    e.preventDefault(); // don't blur input
-    const token = item.dataset.token;
-    if (!token) return;
-
-    const val = input.value;
-    const pos = input.selectionStart;
-    // Replace the partial word at cursor with the token
-    const before = val.slice(0, pos);
-    const after  = val.slice(pos);
-    const partial = before.split(/\s+/).pop();
-    const start   = before.lastIndexOf(partial);
-    input.value   = val.slice(0, start) + token + after;
-    // Place cursor after the token
-    const newPos  = start + token.length;
-    input.setSelectionRange(newPos, newPos);
-    input.focus();
-    renderTokens(input.value);
-    hideSuggestions();
-  });
-});
-
-// ── Events ────────────────────────────────────────────────────────────────────
-input.addEventListener('input',   () => { renderTokens(input.value); showSuggestions(); });
-input.addEventListener('keyup',   () => showSuggestions());
-input.addEventListener('focus',   () => { if (input.value) showSuggestions(); });
-input.addEventListener('blur',    () => setTimeout(hideSuggestions, 150));
-
-input.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { hideSuggestions(); return; }
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    const visible = [...suggestions.querySelectorAll('.token-suggestions__item:not([hidden])')];
-    if (visible.length) visible[0].focus();
-  }
-});
-
-// Keyboard nav within suggestions
-suggestions.addEventListener('keydown', e => {
-  const items  = [...suggestions.querySelectorAll('.token-suggestions__item:not([hidden])')];
-  const idx    = items.indexOf(document.activeElement);
-  if (e.key === 'ArrowDown' && idx < items.length - 1) { e.preventDefault(); items[idx+1].focus(); }
-  if (e.key === 'ArrowUp')   { e.preventDefault(); idx > 0 ? items[idx-1].focus() : input.focus(); }
-  if (e.key === 'Escape')    { hideSuggestions(); input.focus(); }
-  if (e.key === 'Enter' && idx >= 0) { items[idx].dispatchEvent(new MouseEvent('mousedown')); }
-});
-
-function clearQuery() {
-  input.value = '';
-  display.innerHTML = '';
-  input.classList.add('no-tokens');
-  hideSuggestions();
-  input.focus();
-}
-
-clearBtn.addEventListener('click',  clearQuery);
-clearBtn2.addEventListener('click', clearQuery);
-
-// ── Load example ──────────────────────────────────────────────────────────────
-function loadExample(query) {
-  input.value = query + ' ';
-  renderTokens(input.value);
-  input.focus();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// ── Initial render ────────────────────────────────────────────────────────────
-renderTokens(input.value);
-</script>
+<!-- Token-bar interaction removed; being reworked (advanced search rebuild, see TOPLAN). -->

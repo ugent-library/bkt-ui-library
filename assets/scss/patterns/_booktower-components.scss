@@ -11,7 +11,6 @@
 */
 .bt-hero {
   position: relative;
-  overflow: hidden;
   isolation: isolate;
   background-color: var(--bt-gray-25);
   border-bottom: var(--bt-border);
@@ -140,6 +139,17 @@
   overflow-y: auto;
 }
 
+// Scrollable inner list for a dropdown-menu with a fixed header (e.g. the filter
+// picker's search box): sits inside .dropdown-menu so the header stays put while
+// items scroll. min-width keeps a bare list usable; per-dropdown width is set via
+// --bs-dropdown-min-width.
+.bt-dropdown-scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 260px;
+}
+
 // Sticky first column for wide matrix tables. The table sits inside a
 // Bootstrap .table-responsive (horizontal scroll); this pins the outer-left
 // label column — the leading cell of thead, every tbody row, and tfoot — so
@@ -211,13 +221,6 @@
 .token-suggestions__footer { border-top: var(--bt-border); padding: var(--bt-sp-2) var(--bt-sp-3); }
 .token-suggestions__syntax-link { font-size: var(--bt-text-xs); color: var(--bt-gray-500); }
 
-// -- Filter bar: surface-aware filter picker --
-// Controls which filter groups appear in the Add filter dropdown.
-// The backoffice-only groups in search-filter-bar.html are hidden on the
-// public surface via the data-surface ancestor.
-// Applied to: .filter-group--backoffice-only
-[data-surface="public"]     .filter-group--backoffice-only { display: none; }
-
 // Show-more toggle caret. Keyed on aria-expanded, not :not(.collapsed):
 // Bootstrap adds .collapsed only after the first interaction, so a
 // collapsed-on-load toggle would otherwise start rotated.
@@ -228,4 +231,32 @@
 [data-bs-toggle="collapse"][aria-expanded="true"] .if-chevron-down,
 #org-tree-toggle-all[aria-expanded="true"] .if-chevron-down {
   rotate: -180deg;
+}
+
+
+/* -- bt-meta-list -- */
+/*
+  Metadata line outside a work card — the file rows on the public detail page and
+  the typography demos. Inside a card the card's own __meta / __meta-item own this
+  job; keeping both there was two names for one idea.
+*/
+.bt-meta-list {
+  font-size: var(--bt-text-sm);
+  color: var(--s-text-muted, var(--bt-text-muted));
+  line-height: 1.5;
+  margin: 0 0 var(--bt-sp-1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bt-sp-2);
+}
+
+.bt-meta-list a:hover {
+  color: var(--bt-blue);
+  text-decoration: underline;
+}
+
+/* separator only between text items — never after the last */
+.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
+  border-left: var(--bt-border);
+  padding-left: var(--bt-sp-2);
 }
