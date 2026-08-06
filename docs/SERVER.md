@@ -7,9 +7,15 @@ The `server.js` file provides a development server for the Booktower UI Library.
 | File | Responsibility |
 |------|----------------|
 | `server.js` | Engine: config, nav scan, template/state rendering, shell injection, HTTP + live-reload WS, file watcher |
+| `api/index.js` | Vercel function entry — imports the exported handler. See [Deployment](../README.md#deployment) |
 | `server/htmx-routes.js` | The HTMX endpoint → fragment map (`handleTemplateHtmx`). Add or change a prototype endpoint here |
 | `server/content/` | The injected mock content — one file per block (research output, researchers, projects, deposit fragments). Edit a block file to change what an endpoint returns |
 | `server/content/index.js` | Barrel that re-exports every block; `htmx-routes.js` reaches them via `require('./content')` |
+
+`server.js` exports its request handler with `module.exports`. Listening, live
+reload and the file watcher run only under `if (IS_DEV)`, which is false when
+the `VERCEL` environment variable is set — that is how the same engine serves
+both `npm run dev` and the Vercel deployment.
 
 `server.js` injects `loadFragment` into `handleTemplateHtmx` so the route module stays free of the template engine. To add a content block: drop a file in `server/content/` that exports its `render*` function and add one line to `index.js`.
 
