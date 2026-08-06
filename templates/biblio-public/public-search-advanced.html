@@ -22,10 +22,11 @@
   placeholder too: the public URL grammar is a permanent permalink contract and is
   raven's to design (BET, rabbit hole 1), so this prototype never invents it.
 
-  Field list: the same 28 options repeat in every row's field select — production
-  renders the list once, server-side. The list covers the fields humans actually
-  authored (DESIGN doc § Field selection); jcr.* is deliberately absent (journal
-  metrics, adjacent to the BI no-go).
+  Field list: the same options repeat in every row's field select — production
+  renders the list once, server-side. One rule decides membership (DESIGN doc §
+  Field selection): any field raven exposes publicly, the builder offers. The list
+  drawn here covers the fields humans authored in 2026-H1, journal metrics
+  included — those follow raven, so they show if raven carries them.
 
   Interaction not drawn here, because a static wireframe cannot: the chosen field
   drives which operators are offered and which value widget appears. Each row below
@@ -66,16 +67,21 @@
         <section aria-labelledby="conditions-heading" class="mb-4">
 
           <!-- Goal-first framing (DESIGN item 6) — the sentence anchors what AND means.
-               Phase 3: “publications” becomes a record-type chooser here. -->
+               Phase 3 needs a row above this heading for the record-type choice, and the
+               heading's noun then follows it: “Show people where …”. A form control inside
+               a heading would be the wrong shape, so the room it needs is the space here,
+               not the word itself. -->
           <h2 id="conditions-heading" class="h4 mb-4">
             Show publications where all of these are true
           </h2>
 
-          <div id="p1-conditions">
+          <div id="qb-conditions">
 
             <!-- @state: phase-1 -->
 
-            <!-- ── Condition 1 — free text is an ordinary row (DESIGN, evidence row 2) ── -->
+            <!-- ── Condition 1 — free text is an ordinary row (DESIGN, evidence row 2) ──
+                 Picking "contains any of" swaps this row's single input for the paste
+                 list of condition 6: OR'd free-text phrases are a value list too. -->
             <div class="row g-2 align-items-center">
               <div class="col-12 col-md-4">
                 <label class="visually-hidden" for="p1-field-1">Field, condition 1</label>
@@ -117,6 +123,10 @@
                     <option>Embargo</option>
                     <option>Has full text</option>
                     <option>Copyright statement</option>
+                  </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
                   </optgroup>
                 </select>
               </div>
@@ -190,6 +200,10 @@
                     <option>Embargo</option>
                     <option>Has full text</option>
                     <option>Copyright statement</option>
+                  </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
                   </optgroup>
                 </select>
               </div>
@@ -271,6 +285,10 @@
                     <option>Embargo</option>
                     <option>Has full text</option>
                     <option>Copyright statement</option>
+                  </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
                   </optgroup>
                 </select>
               </div>
@@ -360,6 +378,10 @@
                     <option>Has full text</option>
                     <option>Copyright statement</option>
                   </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
+                  </optgroup>
                 </select>
               </div>
               <div class="col-7 col-md-3">
@@ -442,6 +464,10 @@
                     <option>Has full text</option>
                     <option>Copyright statement</option>
                   </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
+                  </optgroup>
                 </select>
               </div>
               <div class="col-7 col-md-3">
@@ -519,6 +545,10 @@
                     <option>Has full text</option>
                     <option>Copyright statement</option>
                   </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
+                  </optgroup>
                 </select>
               </div>
               <div class="col-7 col-md-3">
@@ -551,147 +581,150 @@
                  The top level stays AND-joined rows. A row can be an “any of these”
                  group, one level deep. No per-row AND/OR toggle, no free nesting.
                  Drawn case: golden C3.09 — (parent OR publisher) AND year.
-                 Full interaction, collapse and delete rules: notes/PLAN-query-builder-phase2.md -->
-            <div class="border rounded-3 p-3 bt-bg-alt" role="group" aria-labelledby="p2-group-1-label">
+
+                 This state is clickable: query-builder.js turns a row into a group and
+                 back, and keeps the sentence under “Your query” in sync. Every action
+                 sits on the thing it acts on — “Add an alternative” on the row, “Remove
+                 group” on the group, “Add condition” under the list for a new AND row.
+                 Interaction, collapse and delete rules: notes/PLAN-query-builder-phase2.md -->
+            <div class="border rounded-3 p-3 bt-bg-alt" role="group"
+              aria-labelledby="p2-group-1-label" data-qb-item data-qb-group>
               <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                 <p class="h6 mb-0" id="p2-group-1-label">Any of these</p>
-                <button type="button" class="btn btn-ghost btn-sm ms-auto"
-                  aria-label="Remove group: host publication or publisher">
+                <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                   Remove group
                 </button>
               </div>
 
-              <div class="row g-2 align-items-center">
-                <div class="col-12 col-md-4">
-                  <label class="visually-hidden" for="p2-field-1a">Field, alternative 1</label>
-                  <select class="form-select" id="p2-field-1a">
-                    <optgroup label="Text and topic">
-                      <option>Any field</option>
-                      <option>Title</option>
-                      <option>Abstract</option>
-                      <option>Keyword</option>
-                    </optgroup>
-                    <optgroup label="People, organisations and projects">
-                      <option>Contributor</option>
-                      <option>Organisation</option>
-                      <option>Project</option>
-                    </optgroup>
-                    <optgroup label="Publication">
-                      <option>Type</option>
-                      <option selected>Host publication (journal, book, series)</option>
-                      <option>Publisher</option>
-                      <option>Language</option>
-                      <option>Publication year</option>
-                      <option>Publication status</option>
-                      <option>Classification</option>
-                    </optgroup>
-                    <optgroup label="Identifiers">
-                      <option>Biblio ID</option>
-                      <option>DOI, ISSN, ISBN or handle</option>
-                    </optgroup>
-                    <optgroup label="Full text">
-                      <option>Full text access</option>
-                      <option>Embargo</option>
-                    </optgroup>
-                  </select>
-                </div>
-                <div class="col-7 col-md-3">
-                  <label class="visually-hidden" for="p2-op-1a">Operator, alternative 1</label>
-                  <select class="form-select" id="p2-op-1a">
+              <div data-qb-alts>
+                <div class="row g-2 align-items-center" data-qb-row>
+                  <div class="col-12 col-md-4">
+                    <label class="visually-hidden" for="p2-field-1a">Field, alternative 1</label>
+                    <select class="form-select" id="p2-field-1a" data-qb-field>
+                      <optgroup label="Text and topic">
+                        <option>Any field</option>
+                        <option>Title</option>
+                        <option>Abstract</option>
+                        <option>Keyword</option>
+                      </optgroup>
+                      <optgroup label="People, organisations and projects">
+                        <option>Contributor</option>
+                        <option>Organisation</option>
+                        <option>Project</option>
+                      </optgroup>
+                      <optgroup label="Publication">
+                        <option>Type</option>
+                        <option selected>Host publication (journal, book, series)</option>
+                        <option>Publisher</option>
+                        <option>Language</option>
+                        <option>Publication year</option>
+                        <option>Publication status</option>
+                        <option>Classification</option>
+                      </optgroup>
+                      <optgroup label="Identifiers">
+                        <option>Biblio ID</option>
+                        <option>DOI, ISSN, ISBN or handle</option>
+                      </optgroup>
+                      <optgroup label="Full text">
+                        <option>Full text access</option>
+                        <option>Embargo</option>
+                      </optgroup>
+                      <optgroup label="Journal metrics">
+                        <option>Journal category</option>
+                        <option>Journal impact factor</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                  <div class="col-7 col-md-3">
+                    <label class="visually-hidden" for="p2-op-1a">Operator, alternative 1</label>
+                    <select class="form-select" id="p2-op-1a" data-qb-op>
                     <option selected>is</option>
                     <option>is not</option>
                     <option>is any of</option>
                     <option>contains</option>
-                  </select>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md">
+                    <label class="visually-hidden" for="p2-val-1a">Value, alternative 1</label>
+                    <input type="text" class="form-control" id="p2-val-1a" data-qb-value value="Nature Photonics">
+                  </div>
+                  <div class="col-auto d-flex gap-1" data-qb-actions>
+                    <!-- filled by query-builder.js: [Add an alternative] [remove] on a row,
+                         [remove] alone inside a group -->
+                  </div>
                 </div>
-                <div class="col-12 col-md">
-                  <label class="visually-hidden" for="p2-val-1a">Host publication, alternative 1</label>
-                  <input type="text" class="form-control" id="p2-val-1a" value="Nature Photonics">
-                </div>
-                <div class="col-auto">
-                  <button type="button" class="btn btn-ghost btn-sm"
-                    aria-label="Remove alternative 1: host publication is Nature Photonics">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </div>
-              </div>
 
-              <p class="small text-muted my-2">or</p>
-
-              <div class="row g-2 align-items-center">
-                <div class="col-12 col-md-4">
-                  <label class="visually-hidden" for="p2-field-1b">Field, alternative 2</label>
-                  <select class="form-select" id="p2-field-1b">
-                    <optgroup label="Text and topic">
-                      <option>Any field</option>
-                      <option>Title</option>
-                      <option>Abstract</option>
-                      <option>Keyword</option>
-                    </optgroup>
-                    <optgroup label="People, organisations and projects">
-                      <option>Contributor</option>
-                      <option>Organisation</option>
-                      <option>Project</option>
-                    </optgroup>
-                    <optgroup label="Publication">
-                      <option>Type</option>
-                      <option>Host publication (journal, book, series)</option>
-                      <option selected>Publisher</option>
-                      <option>Language</option>
-                      <option>Publication year</option>
-                      <option>Publication status</option>
-                      <option>Classification</option>
-                    </optgroup>
-                    <optgroup label="Identifiers">
-                      <option>Biblio ID</option>
-                      <option>DOI, ISSN, ISBN or handle</option>
-                    </optgroup>
-                    <optgroup label="Full text">
-                      <option>Full text access</option>
-                      <option>Embargo</option>
-                    </optgroup>
-                  </select>
-                </div>
-                <div class="col-7 col-md-3">
-                  <label class="visually-hidden" for="p2-op-1b">Operator, alternative 2</label>
-                  <select class="form-select" id="p2-op-1b">
+                <div class="row g-2 align-items-center" data-qb-row>
+                  <div class="col-12 col-md-4">
+                    <label class="visually-hidden" for="p2-field-1b">Field, alternative 2</label>
+                    <select class="form-select" id="p2-field-1b" data-qb-field>
+                      <optgroup label="Text and topic">
+                        <option>Any field</option>
+                        <option>Title</option>
+                        <option>Abstract</option>
+                        <option>Keyword</option>
+                      </optgroup>
+                      <optgroup label="People, organisations and projects">
+                        <option>Contributor</option>
+                        <option>Organisation</option>
+                        <option>Project</option>
+                      </optgroup>
+                      <optgroup label="Publication">
+                        <option>Type</option>
+                        <option>Host publication (journal, book, series)</option>
+                        <option selected>Publisher</option>
+                        <option>Language</option>
+                        <option>Publication year</option>
+                        <option>Publication status</option>
+                        <option>Classification</option>
+                      </optgroup>
+                      <optgroup label="Identifiers">
+                        <option>Biblio ID</option>
+                        <option>DOI, ISSN, ISBN or handle</option>
+                      </optgroup>
+                      <optgroup label="Full text">
+                        <option>Full text access</option>
+                        <option>Embargo</option>
+                      </optgroup>
+                      <optgroup label="Journal metrics">
+                        <option>Journal category</option>
+                        <option>Journal impact factor</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                  <div class="col-7 col-md-3">
+                    <label class="visually-hidden" for="p2-op-1b">Operator, alternative 2</label>
+                    <select class="form-select" id="p2-op-1b" data-qb-op>
                     <option selected>is</option>
                     <option>is not</option>
                     <option>is any of</option>
                     <option>contains</option>
-                  </select>
-                </div>
-                <div class="col-12 col-md">
-                  <label class="visually-hidden" for="p2-val-1b">Publisher, alternative 2</label>
-                  <input type="text" class="form-control" id="p2-val-1b" value="Springer">
-                </div>
-                <div class="col-auto">
-                  <button type="button" class="btn btn-ghost btn-sm"
-                    aria-label="Remove alternative 2: publisher is Springer">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md">
+                    <label class="visually-hidden" for="p2-val-1b">Value, alternative 2</label>
+                    <input type="text" class="form-control" id="p2-val-1b" data-qb-value value="Springer">
+                  </div>
+                  <div class="col-auto d-flex gap-1" data-qb-actions>
+                    <!-- filled by query-builder.js: [Add an alternative] [remove] on a row,
+                         [remove] alone inside a group -->
+                  </div>
                 </div>
               </div>
 
               <div class="mt-3">
-                <button type="button" class="btn btn-ghost btn-sm">
+                <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt>
                   <i class="if if-add if--xs" aria-hidden="true"></i>
                   Add an alternative
                 </button>
               </div>
             </div>
 
-            <p class="small text-muted my-2">and</p>
-
-            <!-- A plain row carries the affordance that turns it into a group:
-                 “Or…” adds a second alternative and the row becomes an “any of these”
-                 group in place. Removing alternatives until one is left collapses the
-                 group back to a plain row. -->
-            <div class="row g-2 align-items-center">
+            <div class="row g-2 align-items-center" data-qb-row data-qb-item>
               <div class="col-12 col-md-4">
                 <label class="visually-hidden" for="p2-field-2">Field, condition 2</label>
-                <select class="form-select" id="p2-field-2">
+                <select class="form-select" id="p2-field-2" data-qb-field>
                   <optgroup label="Text and topic">
                     <option>Any field</option>
                     <option>Title</option>
@@ -720,35 +753,32 @@
                     <option>Full text access</option>
                     <option>Embargo</option>
                   </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
+                  </optgroup>
                 </select>
               </div>
               <div class="col-7 col-md-3">
                 <label class="visually-hidden" for="p2-op-2">Operator, condition 2</label>
-                <select class="form-select" id="p2-op-2">
-                  <option selected>is</option>
-                  <option>is not</option>
-                  <option>is any of</option>
-                  <option>is between</option>
-                  <option>is at least</option>
-                  <option>is at most</option>
-                  <option>is after</option>
-                  <option>is before</option>
+                <select class="form-select" id="p2-op-2" data-qb-op>
+                <option selected>is</option>
+                <option>is not</option>
+                <option>is any of</option>
+                <option>is between</option>
+                <option>is at least</option>
+                <option>is at most</option>
+                <option>is after</option>
+                <option>is before</option>
                 </select>
               </div>
               <div class="col-12 col-md">
-                <label class="visually-hidden" for="p2-val-2">Year, condition 2</label>
-                <input type="number" class="form-control" id="p2-val-2" value="2020" min="1800" max="2100">
+                <label class="visually-hidden" for="p2-val-2">Value, condition 2</label>
+                <input type="number" class="form-control" id="p2-val-2" data-qb-value value="2020" min="1800" max="2100">
               </div>
-              <div class="col-auto d-flex gap-1">
-                <button type="button" class="btn btn-ghost btn-sm"
-                  aria-label="Add an alternative to condition 2: publication year is 2020">
-                  <i class="if if-add if--xs" aria-hidden="true"></i>
-                  Or&hellip;
-                </button>
-                <button type="button" class="btn btn-ghost btn-sm"
-                  aria-label="Remove condition 2: publication year is 2020">
-                  <i class="if if-close if--xs" aria-hidden="true"></i>
-                </button>
+              <div class="col-auto d-flex gap-1" data-qb-actions>
+                <!-- filled by query-builder.js: [Add an alternative] [remove] on a row,
+                     [remove] alone inside a group -->
               </div>
             </div>
             <!-- @state -->
@@ -756,8 +786,9 @@
           </div><!-- /conditions -->
 
           <div class="mt-3">
-            <!-- real impl: appends a row server-side and re-renders the list -->
-            <button type="button" class="btn btn-secondary btn-sm">
+            <!-- Adds an AND row at the top level. An "or" is never added here — it is
+                 added on the row it belongs to, which turns that row into a group. -->
+            <button type="button" class="btn btn-secondary btn-sm" data-qb-add-condition>
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add condition
             </button>
@@ -769,7 +800,9 @@
              complete conditions only, debounced, superseded requests cancelled
              (DESIGN item 3). Without it the builder stays fully usable.
              The preview is the query as one sentence, human labels throughout,
-             copyable (DESIGN item 5). -->
+             copyable (DESIGN item 5).
+             What gets announced is the count, not the sentence: the count is the answer,
+             the sentence is a readback of what the user just typed. -->
 
         <!-- @state: phase-1 -->
         <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
@@ -778,7 +811,7 @@
 
           <div id="p1-readout" aria-live="polite"
             hx-get="/search/query-readout"
-            hx-trigger="change from:#p1-conditions delay:500ms"
+            hx-trigger="change from:#qb-conditions delay:500ms"
             hx-target="this"
             hx-swap="innerHTML"
             hx-indicator="#p1-updating">
@@ -820,12 +853,12 @@
                keeps joining with “and”. Shared conditions are never duplicated. -->
           <div id="p2-readout" aria-live="polite"
             hx-get="/search/query-readout"
-            hx-trigger="change from:#p1-conditions delay:500ms"
+            hx-trigger="change from:#qb-conditions delay:500ms"
             hx-target="this"
             hx-swap="innerHTML"
             hx-indicator="#p2-updating">
             <p class="h3 mb-3">438 publications match</p>
-            <p class="mb-0" id="p2-preview">
+            <p class="mb-0" id="p2-preview" data-qb-preview>
               Either host publication is <span class="badge text-bg-primary-light">Nature Photonics</span>
               or publisher is <span class="badge text-bg-primary-light">Springer</span>,
               and publication year is <span class="badge text-bg-primary-light">2020</span>
@@ -1054,5 +1087,7 @@
     </div>
   </main>
 </div>
+
+<script src="/assets/js/query-builder.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
