@@ -57,7 +57,11 @@ None of them looked like noise — they looked maintained, and every one had dri
 Prose explaining *why* had barely rotted at all. If a comment restates a value, a list,
 or a doc section, it will go stale and nothing will tell you.
 
-The exception is a one-line guardrail at the point of temptation: `/* Colour with
+A copy with a named owner and a removal trigger is not rot — the `⚠️ WIP` banner
+repeated across the backoffice templates goes when the issues for that work are
+written. State the trigger in the comment so the next reader knows what retires it.
+
+The other exception is a one-line guardrail at the point of temptation: `/* Colour with
 text-bg-*, never bg-* + text-* — see CLASS-USAGE.md */` sits where someone would
 otherwise add the wrong thing. Keep the rule, not the reasoning; point at the doc for
 the rest.
@@ -78,6 +82,12 @@ the file.
 
 It may not restate how the component is *used* — that is `CLASS-USAGE.md` /
 `JAVASCRIPT.md`, and the copy inside the file is the one that goes stale.
+
+Drift risk scales with detail, so split on length, not on subject. One line saying what
+the file *is* costs nothing and changes only when the module's job changes — keep it, so
+opening the file orients you. A paragraph mirroring the doc's description is the thing
+that rots: six of six JS headers had drifted from `JAVASCRIPT.md`. Shortest true
+statement in the file, detail in the doc.
 
 **HTML directives** (`@state`, `@surface`, `@include`) are a machine-read
 vocabulary, not comments. They are documented in `SERVER.md` and `SURFACES.md` and
