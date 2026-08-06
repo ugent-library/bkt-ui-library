@@ -36,7 +36,7 @@ Generated from \`assets/booktower.css\` by \`scripts/generate-classes-doc.js\`,
 which runs in \`npm run build\`. Do not edit by hand.
 
 A class not listed here does not exist — do not use it. Usage notes and
-gotchas live in \`AGENT.md\`; \`npm test\` (\`check:classes\`) enforces this
+gotchas live in \`docs/CLASS-USAGE.md\`; \`npm test\` (\`check:classes\`) enforces this
 list mechanically. SVG illustration internals (\`_svg-animations.scss\`) are
 excluded — they are not part of the component API.
 

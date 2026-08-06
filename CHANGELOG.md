@@ -265,7 +265,7 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `filter-tag` | Clickable badge: `<button>`/`<a>` with `badge badge--outline` |
 | `filter-year__input` | `bt-panel__year-input` |
 
-**New rules (see AGENT.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
+**New rules (see docs/CSS-ARCHITECTURE.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
 
 **Added:** `min-w-0`, `bg-success-light`, `--bt-*-rgb` triplet tokens; backoffice surface tokens now work on nested `[data-surface]` containers.
 
@@ -323,7 +323,7 @@ is unchanged.
 
 ## Status key
 
-**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in the generated `docs/CLASSES.md` (usage notes in `AGENT.md`).
+**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in the generated `docs/CLASSES.md` (usage notes in `AGENTS.md`).
 
 | Symbol | Meaning |
 |--------|---------|

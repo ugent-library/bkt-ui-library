@@ -14,7 +14,7 @@ Three things are broken right now. The `.form-select` dropdown arrow is erased o
 
 Beyond the bugs, there is a pattern: the override layer *fights* Bootstrap instead of *feeding* it. Bootstrap 5.3 exposes runtime CSS variables for alerts, buttons, progress bars and more — the codebase sometimes uses them (the second half of `_buttons.scss` does it correctly) and sometimes re-styles with selectors and `!important` (badges, alerts, the first half of `_buttons.scss`). Several overrides target variables that don't exist at all (`--bs-nav-padding-x`, `--bs-font-weight-bold`, `--bs-mark-bg`) and silently do nothing.
 
-Templates have drifted from the CSS: 63 class names appear in HTML that no stylesheet defines, including `bt-work-card__head/__body` in 8 files (which AGENT.md explicitly says don't exist), invented Bootstrap spacing steps (`mb-6`, `py-8` — the scale ends at 5), and Tailwind habits (`min-w-0`, `flex-inline`).
+Templates have drifted from the CSS: 63 class names appear in HTML that no stylesheet defines, including `bt-work-card__head/__body` in 8 files (which docs/CLASS-USAGE.md explicitly says don't exist), invented Bootstrap spacing steps (`mb-6`, `py-8` — the scale ends at 5), and Tailwind habits (`min-w-0`, `flex-inline`).
 
 The root cause of most of this is architectural: layering overrides on a prebuilt `bootstrap.min.css` means Bootstrap's compiled colours can never be changed at the source, only fought after the fact. **Recommendation: compile Bootstrap from Sass source with Booktower's `$theme-colors`.** You already run dart-sass; the change is one dependency and ~20 lines of configuration, and it deletes the badge `!important` war, the button variant re-implementations, most alert overrides, and the hand-maintained RGB triplets (including the drifted one) in a single move. Details in §6.
 
@@ -33,7 +33,7 @@ Suggested order of work: fix the three bugs (§1, minutes each) → delete the n
 
 ### 1.2 `bt-blank-slate` is not in the compiled CSS
 
-`patterns/_booktower-blank-slate.scss` exists and is intact, but `booktower.scss` never `@use`s it — `grep blank-slate assets/booktower.css` returns zero matches. AGENT.md lists it in the verified class list; `patterns/blank-slate.html` demos it unstyled. Nobody noticed because nothing checks that every partial is imported (see §6.4).
+`patterns/_booktower-blank-slate.scss` exists and is intact, but `booktower.scss` never `@use`s it — `grep blank-slate assets/booktower.css` returns zero matches. the working guide's class list asserted it at audit time; `patterns/blank-slate.html` demos it unstyled. Nobody noticed because nothing checks that every partial is imported (see §6.4).
 
 **Fix:** add `@use 'patterns/booktower-blank-slate';` — or use this moment to resolve the open TODO ("is blank-slate just a card with text-center?") before re-adding it.
 **Risk:** none.
@@ -71,7 +71,7 @@ Verified against the 5.3.3 dist: each "doesn't exist" below has zero occurrences
 | 2.9 | `_buttons.scss:131` | `--bs-btn-color: white !important` — `!important` on a custom-property declaration only affects the cascade *of the custom property itself*, and both competing declarations are same-specificity with booktower loading later. It wins anyway. | Drop `!important`. Same for `_reset.scss` `scrollbar-width: thin !important`. |
 | 2.10 | `base/_accessibility.scss:33` | `.sr-only` defined, used nowhere — Bootstrap 5 renamed it `visually-hidden`, which is what the codebase actually uses. | Delete unless it's a deliberate compat shim for pasted code; then say so in a comment. |
 | 2.11 | `patterns/_svg-animations.scss` (265 lines) | The partial and the actual SVGs have desynced in both directions: CSS animates `pinDot`, `pinTall`, `gLat`, `gMer`, `shimmer`, `axis`, `travDot`… — **no SVG, template, or JS anywhere in the repo carries these classes**. Meanwhile `patterns/hero.html` uses `frontSoft`, which no CSS defines. | Rebuild the partial against the SVGs that actually exist, or delete it. Currently it's ~250 lines of dead weight shipping in every page load. |
-| 2.12 | Defined in CSS, used in no HTML/JS: `bt-toolbar__middle`, `bt-meta-text`, `bt-btn-toolbar--vertical`, `bt-avatar__square`, `bg-danger-light`, `alert-primary`, `u-main__sidebar--border-left`, `.bt-toolbar.h-auto`, `u-notifications`. Several are in AGENT.md's verified list, so they may be intentional API surface. | Decide per class: documented API (keep, note it) or leftovers (delete). `u-notifications` is documented infrastructure — keep. `.bt-toolbar.h-auto` piggybacks a Bootstrap utility name as a state hook and is used nowhere — delete. |
+| 2.12 | Defined in CSS, used in no HTML/JS: `bt-toolbar__middle`, `bt-meta-text`, `bt-btn-toolbar--vertical`, `bt-avatar__square`, `bg-danger-light`, `alert-primary`, `u-main__sidebar--border-left`, `.bt-toolbar.h-auto`, `u-notifications`. Several were in the guide's verified list at audit time, so they may be intentional API surface. | Decide per class: documented API (keep, note it) or leftovers (delete). `u-notifications` is documented infrastructure — keep. `.bt-toolbar.h-auto` piggybacks a Bootstrap utility name as a state hook and is used nowhere — delete. |
 
 ---
 
@@ -111,7 +111,7 @@ Feeding the four variables per variant collapses each block to four lines, and `
 
 `_badges.scss` documents the problem accurately: Bootstrap's `.text-bg-*` helpers are compiled with `!important`, so overriding them requires `!important` — 29 of them. This is not fixable cleanly at runtime; it *is* the canonical argument for §6.1. Compiling with Booktower's `$theme-colors` and `$min-contrast-ratio: 4.5` makes Bootstrap generate `text-bg-*` with the right colours and correct auto-contrast, and the whole file shrinks to the `-light` soft variants and `badge--outline`.
 
-Related naming risk: `.text-bg-primary-light` etc. mimic Bootstrap's helper naming but are Booktower inventions. A reader (or a future Claude) will assume Bootstrap semantics. Consider `badge--soft-*`, or keep the names but flag them in AGENT.md as local extensions. Judgment call.
+Related naming risk: `.text-bg-primary-light` etc. mimic Bootstrap's helper naming but are Booktower inventions. A reader (or a future Claude) will assume Bootstrap semantics. Consider `badge--soft-*`, or keep the names but flag them in docs/CLASS-USAGE.md as local extensions. Judgment call.
 
 ### 3.6 Body colour has two sources of truth
 
@@ -142,11 +142,11 @@ Judged against the repo's own Bootstrap-first rule ("does Bootstrap have a patte
 
 Full machine-generated list at the end of this section's source scan; the ones that matter:
 
-**Ghost components (AGENT.md explicitly says these don't exist, yet they're in real templates):** `bt-work-card__head`/`__body` in **8 files** each, `bt-work-card__foot`, `bt-navbar__mark`, `bt-facets`, `bt-facet-name`/`-count`/`-check`/`-separator`/`-sep` (across `search-my-research.html`, `search-filter-first.html`, `backoffice-overview.html`, `facets.html`, `htmx-patterns.html`), `card-research`, `card--work`, `card-meta`, `card-authors`, `card-publication` (mostly `research-card-backup.html` — consider deleting that backup file outright, it's a museum of removed classes).
+**Ghost components (docs/CLASS-USAGE.md explicitly says these don't exist, yet they're in real templates):** `bt-work-card__head`/`__body` in **8 files** each, `bt-work-card__foot`, `bt-navbar__mark`, `bt-facets`, `bt-facet-name`/`-count`/`-check`/`-separator`/`-sep` (across `search-my-research.html`, `search-filter-first.html`, `backoffice-overview.html`, `facets.html`, `htmx-patterns.html`), `card-research`, `card--work`, `card-meta`, `card-authors`, `card-publication` (mostly `research-card-backup.html` — consider deleting that backup file outright, it's a museum of removed classes).
 
 **Undefined modifiers that look real:** `bt-avatar--primary` (5 files), `bt-avatar--md` (the system has `--small`/`--large`, no `--md`), `form-label-sm`, `alert--small` (real name: `alert--sm`).
 
-**Invented Boots  trap utilities — silently render as nothing:** `mb-6`, `mb-8`, `my-6`, `py-8`, `pb-8`, `g-6` (Bootstrap's spacing scale ends at 5), `min-w-0`, `flex-inline`, `align-items-top` (Tailwind vocabulary; Bootstrap: nothing / `d-inline-flex` / `align-items-start`). These are exactly the "plausible-looking classes" AGENT.md warns about, but in the utility namespace where the verified-class-list discipline doesn't currently look.
+**Invented Boots  trap utilities — silently render as nothing:** `mb-6`, `mb-8`, `my-6`, `py-8`, `pb-8`, `g-6` (Bootstrap's spacing scale ends at 5), `min-w-0`, `flex-inline`, `align-items-top` (Tailwind vocabulary; Bootstrap: nothing / `d-inline-flex` / `align-items-start`). These are exactly the "plausible-looking classes" the working guide warns about, but in the utility namespace where the verified-class-list discipline doesn't currently look.
 
 **Icon system violation:** `ri-checkbox-circle-line`, `ri-delete-bin-line` (Remix Icons) in `patterns/htmx-patterns.html` — the one-icon-system rule says these can't exist.
 
@@ -197,7 +197,7 @@ UI-LAYER.md documents `--bt-z-panel: 1000` as "suggest panel, token suggestions"
 
 ### 6.3 One-rule-one-place violations
 
-Nav link colour in two files (§3.4). `body[data-surface="backoffice"] { overflow: hidden }` lives in `_reset.scss` — that's layout geometry, which the AGENT.md table assigns to `_surfaces.scss`/`_layouts.scss`. Small, but these tables only work if they're never wrong.
+Nav link colour in two files (§3.4). `body[data-surface="backoffice"] { overflow: hidden }` lives in `_reset.scss` — that's layout geometry, which the docs/CSS-ARCHITECTURE.md table assigns to `_surfaces.scss`/`_layouts.scss`. Small, but these tables only work if they're never wrong.
 
 ### 6.4 The build can't notice a missing partial
 
@@ -205,9 +205,9 @@ Nav link colour in two files (§3.4). `body[data-surface="backoffice"] { overflo
 
 ### 6.5 The verified class list is hand-maintained and already wrong
 
-AGENT.md's class list is the project's ground truth, but it currently asserts classes that aren't in the compiled CSS (`bt-blank-slate*`) while 63 undefined classes sit in templates. Hand-maintained lists drift; this one already has. Generate the checkable part: a script that extracts class selectors from `assets/booktower.css`, extracts class usage from HTML, and reports both directions (the exact scan §5 came from). Run it in CI or `npm run check`. AGENT.md keeps the prose and usage notes; the raw existence claims come from the build.
+The working guide's hand-maintained class list was the ground truth at audit time, but it currently asserts classes that aren't in the compiled CSS (`bt-blank-slate*`) while 63 undefined classes sit in templates. Hand-maintained lists drift; this one already has. Generate the checkable part: a script that extracts class selectors from `assets/booktower.css`, extracts class usage from HTML, and reports both directions (the exact scan §5 came from). Run it in CI or `npm run check`. docs/CLASS-USAGE.md keeps the prose and usage notes; the raw existence claims come from the build.
 
-**Resolved (2026-07):** `scripts/generate-classes-doc.js` (runs in `npm run build`) emits the generated reference `docs/CLASSES.md`; AGENT.md keeps only the curated usage notes. `check:classes` remains the enforcement.
+**Resolved (2026-07):** `scripts/generate-classes-doc.js` (runs in `npm run build`) emits the generated reference `docs/CLASSES.md`; the curated usage notes live in docs/CLASS-USAGE.md. `check:classes` remains the enforcement.
 
 ---
 
@@ -222,11 +222,11 @@ Every "variable doesn't exist" and "same as Bootstrap default" claim above was g
 Items deliberately out of this audit's scope, queued for the next one:
 
 1. **Token usage** — find every place a raw value was written where an existing variable should have been used (`--bt-*`, `--s-*`): colours, spacing, radii, durations. Rule agreed 2026-07-03: raw colour values only in `_colors.scss`, `_tokens.scss`, and SVG data URIs.
-2. **Inline code demos** — remove `ds-code` blocks that duplicate what the "Show HTML" toggle generates (the AGENT.md UI-kit rule already declares these deletable; nobody has swept for them).
+2. **Inline code demos** — remove `ds-code` blocks that duplicate what the "Show HTML" toggle generates (the `docs/KIT-PAGES.md` UI-kit rule already declares these deletable; nobody has swept for them).
 3. **Stale context** — scan for comments, doc claims, and TODO markers that no longer match the code (the "Active surface tokens" header listing dead tokens was one; there will be more).
 4. **Class drift** — run `npm run check:classes` and drive both directions to zero: undefined classes in HTML, unused classes in CSS.
 5. **Kit completeness** — for each file in `foundations/`, `elements/`, `patterns/`: compare what the kit page documents against what actually exists in the compiled CSS and what templates actually use. Components, variants, and states present in CSS or templates but missing from their kit page are documentation gaps.
-6. **JavaScript audit** — check `assets/js/` and inline scripts against the written rules (AGENT.md JS section, `docs/JAVASCRIPT.md`): no inline `<script>` outside kit demos, every file documented, no style mutation. Known violation to start from: the copy button.
+6. **JavaScript audit** — check `assets/js/` and inline scripts against the written rules (`docs/JAVASCRIPT.md`): no inline `<script>` outside kit demos, every file documented, no style mutation. Known violation to start from: the copy button.
 
 ## Open design notes (M, 2026-07-03)
 

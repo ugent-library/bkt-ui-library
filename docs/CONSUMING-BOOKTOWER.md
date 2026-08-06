@@ -4,6 +4,8 @@ This document is the integration contract for any other project, repository, or 
 
 Read this before copying templates, classes, or CSS into another codebase.
 
+The ownership model — what Booktower owns vs what the consuming app owns, how to adapt a prototype once, and how to apply later updates without overwriting app logic — is `RENDERED-HTML-CONTRACT.md`. This file covers the mechanics: assets, shells, scroll, and class rules.
+
 ---
 
 ## What Booktower is
@@ -75,7 +77,7 @@ How you obtain Bootstrap is your project's choice (npm dependency, vendored copy
 ## Non-negotiable rules
 
 1. Use only documented classes.
-   - `AGENT.md` is the class reference.
+   - `docs/CLASSES.md` is the class reference; `docs/CLASS-USAGE.md` has the usage notes.
    - `assets/booktower.css` is the final ground truth.
    - Do not invent plausible BEM names.
 
@@ -118,6 +120,7 @@ If you are new to this library, answer these in plain language first. Do this be
 4. Is the left sidebar the main app navigation, or is it page-specific content such as filters?
 5. Does this page need a fixed top area inside the content, such as tabs, actions, or search controls?
 6. Does this page need a fixed bottom area inside the content, such as pagination or actions?
+   (Pagination bars follow one composition — see `patterns/pagination.html`.)
 7. Is there an extra right-side panel for side tasks, editing, or contextual actions?
 8. Should this page follow an existing example in `templates/` or `patterns/`, or is it intentionally a new pattern?
 
@@ -313,7 +316,7 @@ Every consuming project should preserve these:
 - `aria-current="page"` on active navigation
 - no visual-only state changes without accessible feedback
 
-See `AGENT.md` for the full checklist.
+See the pre-flight checklist in `docs/ACCESSIBILITY.md`.
 
 ---
 
@@ -322,10 +325,11 @@ See `AGENT.md` for the full checklist.
 If you are using this library inside another repository, do this in order:
 
 1. Read `docs/CONSUMING-BOOKTOWER.md`
-2. Read `docs/UI-LAYER.md`
-3. Read `AGENT.md`
-4. Open `patterns/layout-shells.html`
-5. Open the closest matching template in `templates/`
-6. Copy the structure first, then adapt the content
+2. Read `docs/RENDERED-HTML-CONTRACT.md`
+3. Read `docs/UI-LAYER.md`
+4. Read `AGENTS.md` (the Consumers section)
+5. Open `patterns/layout-shells.html`
+6. Open the closest matching template in `templates/`
+7. Copy the structure first, then adapt the content
 
 Do not start by inventing markup from memory.

@@ -45,7 +45,7 @@ Runs four static checks; run it after any template or SCSS editing session:
 | `check:partials` | SCSS partials that exist but aren't `@use`d in `booktower.scss` (component would silently vanish from the compiled CSS) |
 | `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
 | `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
-| `check:a11y` | The house rules from AGENT.md: one `<h1>` per template, `main#main-content`, distinct `aria-label` on every `<nav>`, accessible names on icon-only buttons |
+| `check:a11y` | The house rules from docs/ACCESSIBILITY.md: one `<h1>` per template, `main#main-content`, distinct `aria-label` on every `<nav>`, accessible names on icon-only buttons |
 
 Each check also runs on its own: `npm run check:classes`, etc.
 
@@ -145,7 +145,8 @@ to be found.
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [Integration](base/integration.html) — Using the design system in apps
 - [Bootstrap gap audit](docs/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
-- [Coding conventions & AI guidelines](AGENT.md) — **Read before your first change.** HTML/CSS/JS rules, naming ([`bt-`/`u-` prefixes](AGENT.md#naming-conventions)), [Bootstrap-first](AGENT.md#bootstrap-first-check-before-creating-any-new-class), [CSS architecture](AGENT.md#css-architecture--where-styles-live), and the [accessibility checklist](AGENT.md#accessibility-rules). Written AI-first, but the rules apply to everyone.
+- [Working guide](AGENTS.md) — **Read before your first change.** For humans and AI agents, any tool. Routes to the rules: [CSS authoring](docs/CSS-ARCHITECTURE.md) (naming, Bootstrap-first, where styles live), the [accessibility rules + checklist](docs/ACCESSIBILITY.md), and the rest of `docs/`.
+- [Contributing](CONTRIBUTING.md) — how work flows, what gates a change, who decides what.
 
 ## Browser Support
 
@@ -222,7 +223,7 @@ Minimal page template:
 </div>
 ```
 
-The server injects Bootstrap, `booktower.css`, and the shell nav automatically.
+The server injects Bootstrap, `booktower.css`, and the shell nav automatically. Full page conventions (`ds-*` structure, demo and code-block rules): [docs/KIT-PAGES.md](docs/KIT-PAGES.md).
 
 Pages without a surface declaration default to `backoffice`. To set a page to public:
 
@@ -255,6 +256,8 @@ Booktower has no `npm run dist` or `make export` command that bundles the consum
 cp assets/booktower.css                  <consumer>/path/to/css/
 cp assets/fonts/icon-font.woff{,2}       <consumer>/path/to/css/fonts/
 ```
+
+Every build stamps `booktower.css` with its source commit (`/*! Booktower <commit>/<date> */`), so a consumer's copy always names the state it came from.
 
 This is deliberate. Updates happen on a low cadence, by a small group, and a missing font file fails loudly — broken icons render as empty squares within seconds of loading the page. A build step would add machinery for a problem that doesn't exist yet. Revisit when the update cadence increases, more people start doing updates, or a real second consumer deployment exists.
 

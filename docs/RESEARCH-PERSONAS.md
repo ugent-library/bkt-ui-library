@@ -117,7 +117,7 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 - **Needs:** the strictest legibility bar on the public surface — she anchors the vocabulary test in `docs/SURFACES.md`. The demand for a lay summary originates with her.
 - *Judges the page in seconds with no vocabulary — if she can't tell what it says or whether she can read it, the page failed.*
 
-> **Personas motivate demand, not schema.** Feature demands these profiles generate (e.g. a lay summary field) route via ProductBoard → raven modelling, per AGENT.md "What lives where". The prototype shows such features only as flagged open questions until the concept has an owner — a lay summary in particular carries a policy question (who writes it?) that belongs to OSP, given Biblio's core problem is administrative overhead.
+> **Personas motivate demand, not schema.** Feature demands these profiles generate (e.g. a lay summary field) route via ProductBoard → raven modelling, per AGENTS.md "What lives where". The prototype shows such features only as flagged open questions until the concept has an owner — a lay summary in particular carries a policy question (who writes it?) that belongs to OSP, given Biblio's core problem is administrative overhead.
 
 ## Cody Crawley — "machine reader" (first-class user)
 **Machine / discovery profile**

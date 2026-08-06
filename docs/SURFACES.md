@@ -74,3 +74,9 @@ advanced search and the API are the future exception paths (M, 2026-07-30).
 
 The public export (see `notes/PLAN-public-export.md`) stays: visitors export what
 public facets express — type, year, access.
+
+## Declaring the surface
+
+Every layout container carries `data-surface="public"` or `data-surface="backoffice"` on `<body>` or the outermost layout element. The attribute activates the surface tokens (typography, density, visual weight — see `docs/UI-LAYER.md` → The surface system; `foundation/_surfaces.scss` is the implementation and wins on disagreement). Surfaces mix within a page: every `[data-surface]` boundary applies its own tokens.
+
+In the UI kit, pages without any surface declaration get `data-surface="backoffice"` injected on `<body>` automatically by the server. To override this for a specific page, add `<!-- @surface: public -->` at the top of the file.

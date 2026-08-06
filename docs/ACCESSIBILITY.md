@@ -13,10 +13,22 @@ Static HTML can be produced correctly; runtime behaviour after HTMX swaps
 cannot be tested by an agent. Screen reader testing with VoiceOver or NVDA is
 a human responsibility.
 
-The enforcement summary is the pre-flight checklist in `AGENT.md` — run it
-before finalising any template. Project-specific decisions (record-card
-titles, view toggle, toolbar roles, focus rules) are digested there too; this
-file holds the full rules and reasoning.
+The enforcement summary is the pre-flight checklist at the bottom of this
+file — run it before finalising any template (`npm test`'s `check:a11y`
+enforces a subset mechanically). The project-specific decisions the generic
+WCAG rules don't cover are digested right below; the lettered sections hold
+the full rules and reasoning.
+
+## Project decisions the generic WCAG rules don't cover
+
+One-line digest — reasoning and markup live in the lettered sections:
+
+- **Record-card titles are surface-dependent (H1):** public cards are `<article>` with an `<h2>` title; backoffice cards use `<p class="bt-work-card__title">` — list-item navigation replaces heading-jump there. Both carry `aria-labelledby`.
+- **The view toggle is a pair of buttons, not a tab panel (E5).**
+- **`bt-toolbar` carries no `role` (I1)** — only the bulk action bar is `role="toolbar"`, and it hides with the `hidden` attribute, never `display:none` (F5).
+- **Focus after swaps (D4):** search results — focus stays on the input; deposit step advance — focus to the new step's `<h2>`; modal close — back to the trigger.
+- **Filter tags and facet checkboxes carry full labels (I2, I3):** action + value ("Remove filter: Type is Journal article"); facet labels include the count, visible count `aria-hidden`.
+- **`text-muted` only for supplementary content (G4)** — never for information needed to complete a task.
 
 ---
 
@@ -45,6 +57,8 @@ Filter by                ← facet/filter aside (use aria-label on <aside>)
 Results pagination       ← pagination nav
 Results pagination (top) / (bottom) ← when one list repeats its pagination nav
 ```
+
+Pagination labels in full — single bar, repeated bar, several lists on one page — are pinned in the kit: `patterns/pagination.html`.
 
 **A6. Landmark regions used correctly.**
 - `<header>` for the topbar (`bt-navbar`)
@@ -308,7 +322,14 @@ The public site is read by researchers, students, and automated agents (crawlers
 
 **H3. Breadcrumb: `<nav aria-label="Breadcrumb">` + `<ol>` + `aria-current="page"` on the last item.** `<ol>` because position in the hierarchy is meaningful.
 
-**H4. Structured data on every public record page.** See "Structured data" in `AGENT.md` (HTML patterns) for the minimum schema.org payload — this is how reference managers and accessibility overlays read metadata when the HTML rendering is not available.
+**H4. Structured data on every public record page.** Include `<script type="application/ld+json">` with schema.org markup — this is how reference managers and accessibility overlays read metadata when the HTML rendering is not available. Minimum payload for a research output:
+
+- `@type: "ScholarlyArticle"` (or `Dataset`, `SoftwareSourceCode` etc.)
+- `headline`, `author[]`, `datePublished`, `publisher`, `isPartOf` for journal
+- `license` as a URL when open access
+- `identifier` with DOI
+
+The authoritative contract for public crawl semantics, structured data, and render formats is raven's `docs/public-site-semantics.md`, audited by Rubric. Check it before changing anything a crawler or reference manager consumes.
 
 **H5. Tab panel pattern for citation formats.** The cite modal uses Bootstrap tabs. Each `<button role="tab">` must have `aria-controls` pointing to its panel, and each panel must have `role="tabpanel"` and `aria-labelledby` pointing back to its tab. Bootstrap handles this — do not strip the data attributes.
 
@@ -350,3 +371,32 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 **J2. SVG ink animations** in `_svg-animations.scss` are suppressed correctly by the global reduced-motion rule — no extra work needed there. Do not add `@keyframes` that are not caught by the universal selector override.
 
 **J3. Reduced-motion has one owner.** Durations are handled only in `base/_accessibility.scss` — never re-tuned in component partials. A component may carry its own `prefers-reduced-motion` block only to swap in a replacement rendering (`_svg-animations.scss` hides the SMIL layer). Named exceptions live next to the global rule.
+
+---
+
+## Pre-flight checklist — run before finalising any template
+
+```
+□ <html lang="en"> present
+□ Exactly one <h1>, logical heading hierarchy, no skipped levels
+□ <main id="main-content"> present
+□ Skip link is first focusable element in layout wrapper
+□ Every <nav> has a distinct aria-label
+□ Every icon-only button: aria-label on button, aria-hidden on icon
+□ Every row action label includes the record name
+□ No aria-label that duplicates or overrides visible button text
+□ aria-current="page" (or "step") on all active nav links
+□ Every <input>/<select>/<textarea> has a <label for>
+□ No placeholder used as the sole label
+□ Required fields have required attribute + visible marker (aria-hidden)
+□ Grouped radio/checkbox controls wrapped in <fieldset> + <legend>
+□ Personal data fields have autocomplete attributes
+□ Every hx-get/hx-post has hx-indicator with aria-live="polite"
+□ All aria-live regions exist in DOM at page load (not injected by HTMX)
+□ role="status" for confirmations, role="alert" for errors only
+□ bulk-bar uses hidden attribute (not CSS display:none)
+□ Table: aria-label on <table>, scope="col" on all <th>
+□ Sortable columns: aria-sort on <th>
+□ No information conveyed by colour alone
+□ text-muted used only for supplementary, non-critical content
+```

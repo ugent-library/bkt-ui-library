@@ -1,4 +1,4 @@
-// Booktower-specific accessibility checks from the AGENT.md pre-flight list —
+// Booktower-specific accessibility checks from the docs/ACCESSIBILITY.md pre-flight list —
 // the mechanically checkable subset. Generic HTML/ARIA validity is
 // html-validate's job (npm run check:html); this covers the house rules:
 //   A1  exactly one <h1> per page template

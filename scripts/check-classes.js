@@ -37,7 +37,7 @@ const defined = new Set([
 const runtime = /^(htmx-|if$|if-)/;
 
 // Defined-but-unused on purpose: applied by JS, Bootstrap API, or documented
-// classes kept for old-backoffice parity but not yet demoed (see AGENT.md).
+// classes kept for old-backoffice parity but not yet demoed (see docs/CLASS-USAGE.md).
 const intentional = new Set([
   'no-tokens', 'token-bar__token--negated',            // token-bar states — dormant, token bar being reworked
   'u-notifications', 'bt-toolbar__middle', 'bt-panel__body--form',

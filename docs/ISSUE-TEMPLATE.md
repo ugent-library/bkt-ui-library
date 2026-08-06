@@ -16,8 +16,8 @@ questions, what-not-how, point don't paste. Template-specific:
 - No file paths beyond the source-of-truth ones below. Whoever picks
   this up verifies current state on disk before editing.
 - Stable conventions live in the repo agent docs, not here:
-  raven conventions in CLAUDE.md/AGENTS.md, design system conventions
-  in AGENT.md.
+  raven conventions in raven's `AGENTS.md`, design system conventions
+  in this repo's `AGENTS.md`.
 - Express a backend gap as a `backend` child + a dependency, never as an
   asserted "X is indexed" note.
 - Screenshot markers. Mark each distinct view with `> **Screenshot:** <what to
@@ -82,7 +82,7 @@ View at `localhost:3111/<template path>`
 ## Acceptance criteria
 
 - [ ] Matches the prototype at the source-of-truth path
-- [ ] Passes the pre-flight checklist in `AGENT.md`,
+- [ ] Passes the pre-flight checklist in `docs/ACCESSIBILITY.md`,
       plus these component-specific concerns:
 - [ ] `make build` passes
 

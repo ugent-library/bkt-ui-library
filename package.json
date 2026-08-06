@@ -22,7 +22,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "npm run build && node server.js & npm run watch:css",
-    "build": "npm run check:partials && npm run build:icons && npm run build:css && npm run build:classes-doc",
+    "build": "npm run check:partials && npm run build:icons && npm run build:css && npm run stamp:css && npm run build:classes-doc",
+    "stamp:css": "node scripts/stamp-css.js",
     "build:classes-doc": "node scripts/generate-classes-doc.js",
     "build:icons": "fantasticon",
     "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css",
@@ -34,6 +35,7 @@
     "check:js": "node scripts/check-js.js",
     "check:html": "html-validate 'templates/**/*.html' 'elements/*.html' 'patterns/*.html' 'foundations/*.html' 'getting-started/*.html'",
     "check:a11y": "node scripts/check-a11y.js",
+    "check:pagination": "node scripts/check-a11y.js --drift",
     "check:a11y-browser": "pa11y-ci",
     "watch:css": "sass --watch --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css"
   },

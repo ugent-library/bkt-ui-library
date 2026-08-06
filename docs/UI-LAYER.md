@@ -47,7 +47,7 @@ Backoffice: system-UI headings weight 600, blue-900 · 15px body · 1.5 leading 
 
 ## CSS class names
 
-The class list in `booktower-ui-library/AGENT.md` is the authoritative ground truth. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
+The generated class list in `booktower-ui-library/docs/CLASSES.md` is the authoritative ground truth; usage notes live in `docs/CLASS-USAGE.md`. Do not invent class names — they will not exist in the CSS. The most common mistake is writing plausible-looking BEM names that have no SCSS definition.
 
 If this library is being consumed from another project, also follow `docs/CONSUMING-BOOKTOWER.md`. That file defines the shell contract, Bootstrap vs Booktower responsibilities, and the scroll rules that are easiest to get wrong.
 
@@ -165,7 +165,7 @@ The most critical rules for Go templ work:
 - Every `<input>` has an associated `<label for>` — `placeholder` is not a label
 - `aria-current="page"` on the active nav link
 
-The full accessibility reference is in `booktower-ui-library/AGENT.md`.
+The full accessibility reference is in `booktower-ui-library/docs/ACCESSIBILITY.md`, with the pre-flight checklist at the bottom.
 
 ---
 
@@ -181,7 +181,7 @@ The SCSS is no longer just one large pattern partial. Shared patterns still live
 - `patterns/_booktower-toolbar.scss`
 - `patterns/_booktower-work-card.scss`
 
-When a style is missing from the system, flag it and add it to the correct SCSS partial in `booktower-ui-library`. Do not patch inline.
+When a style is missing from the system, flag it and add it to the correct SCSS partial in `booktower-ui-library`. Do not patch inline. The full authoring rulebook — Bootstrap-first, naming, file placement, safe overrides — is `CSS-ARCHITECTURE.md`.
 
 ---
 

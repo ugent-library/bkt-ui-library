@@ -1,7 +1,7 @@
 // Cards mirror the public-researchers.html examples (identifiers, activity
 // counts, research-topic badges) but omit the affiliations/organisations
 // block — the organisation is implied by this page. Card names are <h3>
-// because they sit under the letter-group <h2>; see AGENT.md rule A1.
+// because they sit under the letter-group <h2>; see docs/ACCESSIBILITY.md rule A1.
 module.exports = function renderPeopleList() {
   return `
 <div class="mb-4">

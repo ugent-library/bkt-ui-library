@@ -50,12 +50,12 @@ The gate checks markup. It does not check whether the markup is *right for a
 person*. These stay yours:
 
 - **Policy calls when a rule and reality conflict.** Fix the code or change the
-  rule — and record the decision (AGENT.md's open-question discipline). This is
+  rule — and record the decision (AGENTS.md's open-question discipline). This is
   judgment, not automatable.
 - **The manual-a11y layer:** screen-reader, keyboard, and contrast sign-off on
-  real rendered pages. AGENT.md already names screen-reader testing a human
+  real rendered pages. AGENTS.md already names screen-reader testing a human
   responsibility; CI does not replace it.
-- **Keep AGENT.md and the checks in sync.** When a house rule changes, update both
+- **Keep docs/ACCESSIBILITY.md and the checks in sync.** When a house rule changes, update both
   the doc and `check-a11y.js`. A check that contradicts the doc erodes trust in
   both.
 - **Approve dependency bumps** that change the gate.

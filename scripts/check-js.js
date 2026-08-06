@@ -1,4 +1,4 @@
-// Fails the build on JS hygiene gaps (AGENT.md → JavaScript): a file in assets/js
+// Fails the build on JS hygiene gaps (docs/JAVASCRIPT.md): a file in assets/js
 // not documented in docs/JAVASCRIPT.md, a documented file that no longer exists, or
 // a file referenced nowhere (a template <script> or server.js global injection).
 const fs = require('fs');
