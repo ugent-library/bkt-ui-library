@@ -1,11 +1,11 @@
-// org-tree.js — expand/collapse all for the public organisation tree (prototype).
+// org-tree.js — expand/collapse all for the public organization tree (prototype).
 (function () {
   if (window.btOrgTreeInitialised) return;
   window.btOrgTreeInitialised = true;
 
   document.addEventListener('DOMContentLoaded', function () {
     var btn = document.getElementById('org-tree-toggle-all');
-    var tree = document.querySelector('[aria-label="Organisation tree"]');
+    var tree = document.querySelector('[aria-label="Organization tree"]');
     if (!btn || !tree) return;
 
     var label = btn.querySelector('[data-toggle-label]') || btn;

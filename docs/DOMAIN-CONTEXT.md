@@ -36,7 +36,7 @@ When the prototype and the Go template diverge, the prototype is the design auth
 
 ## What the backend provides to templates
 
-The `raven` backend provides data to templates through the `doc jsonb` field on the works table. This is a pre-aggregated snapshot written on every save — contributors, files, organisations, projects — so templates do not need to make extra requests for this data.
+The `raven` backend provides data to templates through the `doc jsonb` field on the works table. This is a pre-aggregated snapshot written on every save — contributors, files, organizations, projects — so templates do not need to make extra requests for this data.
 
 For the backoffice list and public search, data comes from OpenSearch (eventually consistent — there is a short lag after a save before search results update). Post-save redirects go to the detail page, which is served directly from PostgreSQL and is always consistent.
 

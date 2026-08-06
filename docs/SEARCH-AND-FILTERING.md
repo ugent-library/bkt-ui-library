@@ -106,7 +106,7 @@ A full reset composes the two — so there is no third "reset everything" button
 ## Rule 3 — a suggestion navigates to the record it names
 
 **What the box exposes: navigation shortcuts, never filter controls.** Suggestions are only
-things you can *go to* — the four entity types (person, work, organisation, project) and
+things you can *go to* — the four entity types (person, work, organization, project) and
 keyword/tag rows. Narrowing dimensions (Type, Access, Year, status) never appear as box
 behaviours; they live in the sidebar and the picker. The dividing line is navigate vs.
 narrow. This is why the dual-action autocomplete row (a suggestion with an extra "add as
@@ -125,7 +125,7 @@ A suggestion takes you to the thing it names, routed identically on every search
 |---|---|---|
 | Person | researcher detail page | a record you visit |
 | Work | work detail page | a record you visit |
-| Organisation | organisation detail page | a record you visit (its page lists/searches its own output) |
+| Organization | organization detail page | a record you visit (its page lists/searches its own output) |
 | Project | project detail page | a record you visit |
 | Keyword / tag | scoped works search (`?keyword=` / `?tag=`) | names a *set of works*, so it resolves to those works — the one forced exception |
 | Journal / host title (a link on cards and record pages — not a box suggestion) | identifier-scoped works search (`?issn=` / `?isbn=`) | names a *set of works* — the keyword logic applied to a venue; lands as an Identifier chip (Rule 5) |
@@ -182,7 +182,7 @@ Only the submit-scope varies, and it equals the page the box is on:
 |---|---|---|
 | Works (landing + `public-works`) | all research output → works results (`?q=`) | cross-entity: people / works / orgs / projects / keywords, as navigation shortcuts |
 | Researchers directory | researchers → filtered directory list | within-type (researchers only) |
-| Organisations directory | organisations → filtered directory list | within-type (orgs only) |
+| Organizations directory | organizations → filtered directory list | within-type (orgs only) |
 | Projects directory | projects → filtered directory list | within-type (projects only) |
 
 The works box searches all research output and returns a works list; its autocomplete
@@ -192,7 +192,7 @@ autocompletes stay within-type on purpose — "this box finds researchers" is wo
 than occasional cross-type convenience, and the omni-box already covers cross-entity.
 
 There are no entity-scope tabs on the results page (Publications / Datasets / Authors /
-Organisations / Projects re-running the query per type). A work's kind — **datasets
+Organizations / Projects re-running the query per type). A work's kind — **datasets
 included** — is a Type facet value, not a separate surface, tab, or listing. Cross-entity
 discovery is the autocomplete and the entity directories.
 
@@ -230,7 +230,7 @@ A dimension's shape decides its home. This is the taxonomy in full:
 |---|---|---|
 | Closed, low-cardinality, broad, legible, discovery | **Sidebar checklist** | Access, Type, Language |
 | Ordinal / continuous | **Sidebar range** | Year |
-| High-cardinality *records* | **Add-filter picker + typeahead** | Author, Organisation, Project |
+| High-cardinality *records* | **Add-filter picker + typeahead** | Author, Organization, Project |
 | Open concept / free vocabulary | **Query box** | topic |
 | Curation / workflow / expert | **Not public** — backoffice / advanced / expert (surfaces TBD) | status, classification (A1/A2…), full-text version (COAR), subtype, tags, created/updated dates |
 
@@ -244,7 +244,7 @@ to the same test (see below).
 
 **The search box holds the open concepts; the picker holds the record dimensions.** The box
 still navigates (Rule 2); the picker is a separate, explicit input for high-cardinality
-dimensions the sidebar cannot hold (author, journal, project, organisation — resolved by
+dimensions the sidebar cannot hold (author, journal, project, organization — resolved by
 typeahead).
 
 ### What is not public
@@ -356,7 +356,7 @@ typeahead), Identifier / DOI / ISSN (`identifiers`, scheme-scoped), and the free
 box (`primary`/`secondary`).
 
 **Backend-dependent** (needs a raven field + index mapping + facet config first):
-Organisation (the tree — institution / faculty / department / research group), Project,
+Organization (the tree — institution / faculty / department / research group), Project,
 Keywords as a discrete filter, Research discipline (`research_disciplines`), and Language
 (which also blocks the sidebar Language facet). UGent config enables only
 `work_type` publicly today, so promoting an index-backed dimension is a config edit; a
@@ -418,7 +418,7 @@ The audiences these serve, in one line each (full profiles in `docs/RESEARCH-PER
 
 On small screens **every filter input collapses into a single Bootstrap Offcanvas "Filters"
 tray**: the sidebar facets (Access / Type / Year / Language) and the record-dimension picker
-(Author, Organisation, Project, Keywords, Identifier — as drill-ins) live together in the one
+(Author, Organization, Project, Keywords, Identifier — as drill-ins) live together in the one
 sheet. The chip bar stays the readout *above* the results (Rule 4). The only filter-adjacent
 controls kept out of the tray are **Sort** and **results-per-page**, surfaced as pills in the
 results header. This was evaluated against a Vinted-style horizontal filter-pill bar and
@@ -435,7 +435,7 @@ Why the tray, not a pill bar and not two separate entry points:
 - **Horizontal filter-pill rows have poor discoverability (Baymard).** Users routinely
   overlook anything past the right edge of a horizontally-scrolled row, so a pill scroller is
   a shortcut for one or two top filters *at most*, never the whole mechanism. Our
-  high-cardinality record dimensions (Author, Organisation, Project, Keyword, Identifier)
+  high-cardinality record dimensions (Author, Organization, Project, Keyword, Identifier)
   would scroll off-screen and be missed — so they belong in the tray, not a pill bar.
   *(Baymard mobile-filtering research; attributed from prior study — live search was
   unavailable when this was noted.)*

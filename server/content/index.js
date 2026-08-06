@@ -24,8 +24,6 @@ module.exports = {
   renderAuthorList: require('./author-list'),
   renderUploadList: require('./upload-list'),
   renderWorksFeed: require('./works-feed'),
-  renderPeopleList: require('./people-list'),
-  renderProjectsList: require('./projects-list'),
   renderExpandedAuthors: require('./expanded-authors'),
   renderRelatedWorks: require('./related-works'),
 };

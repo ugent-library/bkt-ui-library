@@ -2,7 +2,7 @@ const slugify = require('./slugify');
 
 module.exports = function renderScopeList(names) {
   return `
-<div class="px-4 py-3 border-bottom" id="org-scope-list" aria-label="Selected organisations" aria-live="polite">
+<div class="px-4 py-3 border-bottom" id="org-scope-list" aria-label="Selected organizations" aria-live="polite">
   <div class="d-flex flex-wrap gap-2">
     ${names.map(name => `
       <span class="d-inline-flex align-items-center gap-1 badge text-bg-light border fw-normal py-2 px-3">

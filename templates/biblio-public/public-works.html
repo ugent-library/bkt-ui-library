@@ -37,14 +37,14 @@
         <h1 class="mb-4">Research output</h1>
 
         <form role="search"
-          aria-label="Search research output, people, organisations, and projects"
+          aria-label="Search research output, people, organizations, and projects"
           action="/search">
 
           <!-- ── Search input + suggest panel shell ───────────────────────── -->
           <div class="position-relative" id="suggest-wrapper">
 
             <label for="q" class="visually-hidden">
-              Search by title, author, keyword, DOI, or organisation
+              Search by title, author, keyword, DOI, or organization
             </label>
 
             <!-- Box value derives from ?q= (Rule 1), so it varies per state. -->
@@ -192,7 +192,7 @@
                 </div>
                 <div class="bt-toolbar__item d-none d-lg-block">
                   <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
-                      Author + Identifier are index-backed today; organisation / venue / project /
+                      Author + Identifier are index-backed today; organization / venue / project /
                       keyword need a raven field + facet config first (see docs/SEARCH-AND-FILTERING.md,
                       Rule 5). Chips are client-side stubs. -->
                   <div class="dropdown" id="wf-add-filter-dropdown">
@@ -202,10 +202,10 @@
                     </button>
                     <div class="dropdown-menu p-0">
                       <div id="wf-filter-picker-list" class="bt-dropdown-scroll">
-                        <div role="group" aria-label="People &amp; organisations">
-                          <div class="dropdown-header" aria-hidden="true">People &amp; organisations</div>
+                        <div role="group" aria-label="People &amp; organizations">
+                          <div class="dropdown-header" aria-hidden="true">People &amp; organizations</div>
                           <button class="dropdown-item" type="button" data-filter="author">Author</button>
-                          <button class="dropdown-item" type="button" data-filter="organisation">Organisation</button>
+                          <button class="dropdown-item" type="button" data-filter="organization">Organization</button>
                         </div>
                         <div role="group" aria-label="Context">
                           <div class="dropdown-header" aria-hidden="true">Context</div>
@@ -482,14 +482,14 @@
           </button>
         </fieldset>
 
-        <!-- Organisation facet — HIDDEN, do not remove. Decision (M): org filtering will
+        <!-- Organization facet — HIDDEN, do not remove. Decision (M): org filtering will
              be handled via SEARCH, not a sidebar facet — revisit later. Kept here as a
              static reference of the type-ahead facet we prototyped. Org browsing lives on
-             the organisation detail pages.
+             the organization detail pages.
         <hr>
 
         <fieldset>
-          <legend class="form-label h6 mb-2">Organisation</legend>
+          <legend class="form-label h6 mb-2">Organization</legend>
           <div class="input-group input-group-sm mb-2">
             <span class="input-group-text"><i class="if if-search" aria-hidden="true"></i></span>
             <input type="text" class="form-control" placeholder="Filter by faculty or department"
