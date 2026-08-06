@@ -23,6 +23,7 @@ When a new session begins on this project, execute these steps before writing an
    | JavaScript | `docs/JAVASCRIPT.md` — file registry, event contract, loading order |
    | Kit server behaviour — template states, mock endpoints | `docs/SERVER.md` |
    | Drafting an implementation issue | `docs/ISSUE-TEMPLATE.md` + the `biblio-issue-writer` skill; raven's `CLAUDE.md` owns the issue → branch → commit → PR chain |
+   | Writing or reviewing a product bet | `docs/PRODUCT-BET-TEMPLATE.md` + the `product-bet-writer` skill |
    | A field, status, or entity that might need modelling | raven is the source of truth — check its schema and catalog docs (`docs/metadata-*.md` in the raven repo) before inventing a concept here |
    | Public record pages that crawlers or reference managers consume | raven's `docs/public-site-semantics.md` — the Rubric-audited contract |
 

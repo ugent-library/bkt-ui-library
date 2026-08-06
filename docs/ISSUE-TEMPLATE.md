@@ -8,22 +8,18 @@ title: "[area] "
 Title: [area] verb + deliverable + scope, e.g.
 "[public] Align work detail page with Booktower prototype: Journal Article"
 
-Anti-rot rules:
-- Point, don't paste. Link to prototype files and docs; never copy code
-  or markup into the issue.
+House rules: docs/WRITING-RULES.md — do not invent, personas, open
+questions, what-not-how, point don't paste. Template-specific:
+
 - The prototype is the spec. If the issue text and the prototype
   disagree, the prototype wins. Screenshots are snapshots at filing time.
 - No file paths beyond the source-of-truth ones below. Whoever picks
   this up verifies current state on disk before editing.
 - Stable conventions live in the repo agent docs, not here:
   raven conventions in CLAUDE.md/AGENTS.md, design system conventions
-  in bkt-ui-library/AGENT.md.
-- Never tell the dev how to build it. What/Acceptance state the outcome and
-  behaviour, not the mechanism — no framework idioms (`hx-push-url`, `hx-get`),
-  library calls, `[data-*]` hooks, raven field names, index state, or query
-  mechanics. The prototype (the spec) and the repo agent docs carry the how; the
-  dev owns implementation. Express a backend gap as a `backend` child + a
-  dependency, never as an asserted "X is indexed" note.
+  in AGENT.md.
+- Express a backend gap as a `backend` child + a dependency, never as an
+  asserted "X is indexed" note.
 - Screenshot markers. Mark each distinct view with `> **Screenshot:** <what to
   capture>`, placed next to what it shows — one per view. The image is pasted in at
   filing. A backend issue with nothing to show says so: `> No screenshot — backend`.
@@ -31,12 +27,27 @@ Anti-rot rules:
 
 ## Why
 
-<!-- 2–4 terse, self-contained sentences: the design intent — what the
-     region does for the user. Lead with that, never with a backend gap.
-     Whether raven models the data yet is a question to resolve while
-     finishing the issue (log it under Open questions), not the framing.
-     Link a docs/ decision record if one exists. Add one overview
-     screenshot of the prototype below the text when filing. -->
+<!-- Three things, terse, in this order:
+     1. The starting point, and where it is observed. Exists in old
+        Biblio or the old backoffice? Describe those actual steps —
+        concrete, not "cumbersome" — then either what's wrong with them
+        or how the new approach differs. Not everything we change was
+        broken. New feature? State what the user can't do today, no
+        walkthrough. Never describe a current Raven flow: Raven is being
+        rebuilt and isn't live, so it is not a benchmark.
+     2. The target pattern, described. What the user sees, what they
+        click, what happens, and which properties make it work. List
+        inspiration and links underneath as references — never as the
+        description. "Like GitHub" describes nothing: the reference
+        drifts and the dev may not know it.
+     3. Who wants what, and why. Name the user (persona from
+        docs/RESEARCH-PERSONAS.md), what they're trying to accomplish,
+        and why it matters to them. That sentence is the tiebreaker for
+        everything this issue leaves open.
+     Lead with the user, never with a backend gap. Whether raven models
+     the data yet goes under Open questions, not here. Link a docs/
+     decision record if one exists. Add one overview screenshot of the
+     prototype below the text when filing. -->
 
 ## What
 
@@ -71,8 +82,7 @@ View at `localhost:3111/<template path>`
 ## Acceptance criteria
 
 - [ ] Matches the prototype at the source-of-truth path
-- [ ] Visual and UI copy review by the product manager before merge
-- [ ] Passes the pre-flight checklist in `bkt-ui-library/AGENT.md`,
+- [ ] Passes the pre-flight checklist in `AGENT.md`,
       plus these component-specific concerns:
 - [ ] `make build` passes
 
@@ -89,7 +99,8 @@ View at `localhost:3111/<template path>`
 
 ## Open questions
 
-<!-- Questions to resolve while doing the issue — including "does raven
-     model this, and if not do we build it or drop it?". Log the question
-     and the options; the answer comes from a conversation, not from
-     inventing a rule. Anything strategic goes to docs/. Delete if none. -->
+<!-- Per docs/WRITING-RULES.md: only what genuinely needs someone else —
+     curator or reviewer policy, calls belonging to another team, what the
+     dev settles while implementing, and "does raven model this, and if not
+     do we build it or drop it?". Log the question with its concrete
+     options. Anything strategic goes to docs/. Delete if none. -->
