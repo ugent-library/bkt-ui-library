@@ -35,36 +35,39 @@ under `prefers-reduced-motion`, or a value another file reads, is the case.
 
 ## Never
 
-**History.** A comment annotates the code that is there, not the change that
-produced it. If a reader can only understand it by knowing the diff — what was
-tried, what broke, what a value used to be — it belongs in the commit message.
-`/* was 2.25rem — larger for public h1 */` tells the next reader nothing they can
-act on.
+**History.** A comment annotates the code that is there, not the change that produced
+it. If a reader can only understand it by knowing the diff — what was tried, what
+broke, what a value used to be — it belongs in the commit message.
 
-**Disabled code.** Do not put `//` in front of rules you might want back. Nobody
-after you can tell whether it is waiting for something or simply forgotten, so it
-stays forever. Delete it; the commit you delete it in is the record.
+**Disabled code.** Do not put `//` in front of rules you might want back. Nobody after
+you can tell whether it is waiting for something or simply forgotten, so it stays
+forever. Delete it; the commit you delete it in is the record.
 
-**Restating the declaration.** `/* Pill search input with inset search icon */`
-above the rule that sets a pill radius and an inset icon. If the comment can be
-derived by reading the three lines under it, it is noise. This is the most common
-failure and no linter catches it.
+**Restating the declaration.** If the comment can be derived by reading the three
+lines under it, it is noise. This is the most common failure and no linter catches it.
 
 **A copy of something maintained elsewhere.** Every rotten comment found in the first
 sweep was a copy: a px table beside the rem values, a token index above the tokens, a
-target-height table repeated in four files, a usage note already in `CLASS-USAGE.md`.
-None of them looked like noise — they looked maintained, and every one had drifted.
-Prose explaining *why* had barely rotted at all. If a comment restates a value, a list,
-or a doc section, it will go stale and nothing will tell you.
+target-height table repeated in four files, a purpose paragraph already in
+`JAVASCRIPT.md`. None looked like noise — they looked maintained, and every one had
+drifted. Prose explaining *why* had barely rotted at all.
 
-A copy with a named owner and a removal trigger is not rot — the `⚠️ WIP` banner
-repeated across the backoffice templates goes when the issues for that work are
-written. State the trigger in the comment so the next reader knows what retires it.
+Two things are not copies in this sense:
 
-The other exception is a one-line guardrail at the point of temptation: `/* Colour with
-text-bg-*, never bg-* + text-* — see CLASS-USAGE.md */` sits where someone would
-otherwise add the wrong thing. Keep the rule, not the reasoning; point at the doc for
-the rest.
+- **A one-line guardrail at the point of temptation.** `/* Colour with text-bg-*,
+  never bg-* + text-* — see CLASS-USAGE.md */` sits where someone would otherwise add
+  the wrong thing. Keep the rule, drop the reasoning, point at the doc.
+- **A marker with a named owner and a removal trigger**, like the `⚠️ WIP` banners
+  that go when the issues for that work are written. State the trigger in the comment
+  so the next reader knows what retires it.
+
+## Length
+
+Drift risk scales with detail, so what stays in the file is decided by how detailed the
+statement is, not by what it covers. One line saying what a file *is* costs nothing and
+changes only when the module's job changes — keep it, so opening the file orients you.
+A paragraph mirroring a doc's description is what rots. Shortest true statement in the
+file, detail in the doc.
 
 ## Categories that are not explanations
 
@@ -78,32 +81,37 @@ web fonts), a trap (`_bootstrap-components.scss`: `background-color`, not the
 shorthand), a host-page contract (`people-search.js`: the required `data-ps-*`
 elements), or a prototype boundary (`people-search-stub.js`: delete this file when the
 endpoint lands). A doc you have to already know about does not reach the person editing
-the file.
+the file. It may not restate how the component is *used* — that is `CLASS-USAGE.md` /
+`JAVASCRIPT.md`.
 
-It may not restate how the component is *used* — that is `CLASS-USAGE.md` /
-`JAVASCRIPT.md`, and the copy inside the file is the one that goes stale.
+**HTML block markers.** A closing marker mirrors the opening tag's id or component
+class, on the closing tag:
 
-Drift risk scales with detail, so split on length, not on subject. One line saying what
-the file *is* costs nothing and changes only when the module's job changes — keep it, so
-opening the file orients you. A paragraph mirroring the doc's description is the thing
-that rots: six of six JS headers had drifted from `JAVASCRIPT.md`. Shortest true
-statement in the file, detail in the doc.
+```html
+</div><!-- /c-results-list -->
+```
 
-**HTML directives** (`@state`, `@surface`, `@include`) are a machine-read
-vocabulary, not comments. They are documented in `SERVER.md` and `SURFACES.md` and
-nothing here applies to them.
+Put one on every layout region (`u-main__*`, `u-layout--*`) and every component root
+(`bt-*`). Never on a generic wrapper, and never as an opening label — an opener next to
+a named element restates it. The rule keys off what the element is, not how long the
+block is, so a missing marker always means "not a region", never "someone judged it
+short".
+
+**HTML directives** (`@state`, `@surface`, `@include`) are a machine-read vocabulary,
+not comments. They are documented in `SERVER.md` and `SURFACES.md` and nothing here
+applies to them.
 
 ## Per language
 
 **SCSS** — `//` is stripped at compile; `/* */` ships to `booktower.css`, which
-consuming apps read. Use `//` unless the comment is deliberately addressed to
-someone reading the compiled file.
+consuming apps read. Use `//` unless the comment is deliberately addressed to someone
+reading the compiled file.
 
 **HTML and JS** — every comment ships to the browser and is visible in view-source.
 
 ## What is checked
 
-`npm run check:comments` (part of `npm test`) fails the build on history words and
-on commented-out code in `assets/` and `shell/`. Restatement is not mechanically
-detectable — it needs a pass over your own diff, reading each comment against the
-code it sits above, deleting by default.
+`npm run check:comments` (part of `npm test`) fails the build on history words and on
+commented-out code in `assets/` and `shell/`. Restatement is not mechanically
+detectable — it needs a pass over your own diff, reading each comment against the code
+it sits above, deleting by default.
