@@ -6,6 +6,50 @@ system, or do I reach for something new?"
 
 ---
 
+## Pagination pattern — the results bar (v2.11, 2026-08-06)
+
+The pagination bar is pinned in the new kit page `patterns/pagination.html` (pagination and
+result count left, page size / sort / more actions right, each control in its own
+`bt-toolbar__item`) and in `docs/CLASS-USAGE.md`.
+
+**Consumers: re-copy `booktower.css`.** No class was added or removed — one existing rule
+changed: `bt-toolbar__right` is now `flex-wrap: wrap` and shrinkable (it was
+`flex-shrink: 0`, no wrap). A row of controls that did not fit — page size + sort + a
+menu button, below roughly 600px — overflowed the viewport horizontally; it now stacks.
+Nothing changes at widths where the row already fitted. The icon fonts are unchanged.
+
+### ⚠️ Pagination markup changed — recheck any page with a result count
+
+Because no class changed, `check:classes` stays silent: a page left on the old markup keeps
+rendering, just with the accessibility bugs below. Consumers mirroring a Booktower list bar
+(raven templates included) should apply these:
+
+| What | Was | Now | Why |
+|---|---|---|---|
+| Screen-reader prefix | `<span class="d-none d-md-inline-block visually-hidden">Showing </span>` | plain visible text: `Showing 1–50 of 879 results` | `visually-hidden` carries no `display`, so `d-none` won below `md` and dropped the word from the accessibility tree there while hiding it from everyone above it. One string, every width, every reader. |
+| Result count | inside `<nav aria-label="Results pagination">` | sibling of the `<nav>`, in `bt-toolbar__left` | A count is a status, not navigation. Removes the `nav.d-flex.gap-3` wrapper too — `bt-toolbar__left` already gaps. |
+| Inert page item | `<a class="page-link" href="#" aria-disabled="true">` | `<span class="page-link">` in `li.page-item.disabled` | `aria-disabled` is a label, not a behaviour: the link stayed focusable and clickable. Applies to end arrows, `…` gaps, and letters with no entries. |
+| Arrows | `‹` / `›` text glyphs | `<i class="if if-chevron-left">` / `if-chevron-right`, `aria-hidden`, size inherited | One icon system. The link keeps `aria-label="Previous page"` / `"Next page"` — several sites had an arrow with no accessible name at all. |
+| Live region | `aria-live="polite"` on both bars, or neither | exactly one count per list carries it — the bar at the head | A repeated bottom bar announced the same change twice. |
+| Spacing | `mb-0` on `ul.pagination`, `ms-3` on the count | neither | `base/_reset.scss` zeroes list margins; the toolbar owns the gap. |
+| Toolbar children | controls sometimes bare in `bt-toolbar__left`/`__right` | every child in its own `bt-toolbar__item` | Confirmed as the pattern for consuming apps. It is also load-bearing for `form-select`: as a direct flex child, `width: 100%` makes every select shrink to one shared width and the longest label truncates (visible on `public-works` today as “Year (new to…”). |
+
+`check:a11y` now enforces the five rules above (P1–P5): `visually-hidden` beside a display
+utility, an `<a>` inside `li.page-item.disabled`, a text glyph in a `page-link`, text inside
+a pagination `<nav>`, `mb-0` on `ul.pagination`. Nine files known to be on the old markup are
+listed in `PAGINATION_DRIFT` in `scripts/check-a11y.js` so the build stays green while they
+are aligned; any new occurrence fails, and an entry that stops drifting fails too. Run
+`npm run check:pagination` for the worklist with line numbers.
+
+**`public-projects.html` is the first template on the new pattern** — read it, or the kit
+page, as the reference. It had a bare result count and no pagination; it now carries the
+full bar top and bottom (page size + sort right, `Projects pagination (top)` / `(bottom)`),
+with the counts standing in for a full directory (84 projects, 5 pages) while only 4 of the
+cards are written out. The other nine files still carry the old markup — alignment is tracked
+in `notes/PLAN-kit-gaps-from-templates.md`, Tier 2 item 6.
+
+---
+
 ## Backoffice status model + card completion (v2.10, 2026-07-30)
 
 No class changes. The backoffice aligns to raven's state model and the cards fill out:
