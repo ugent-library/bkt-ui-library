@@ -182,6 +182,32 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ---
 
+### `query-builder.js`
+
+**Purpose:** Advanced search, phase 2 — turns a condition row into an "any of these" OR group
+in place and back again, and keeps the readable sentence under "Your query" in sync. A row
+becomes a group where it stands (it becomes the group's first alternative, so a group and a row
+are interchangeable at the top level); removing alternatives until one is left collapses the
+group back to a plain row; "Add condition" appends an AND row at the top level. Rebuilds the
+`and` / `or` separators, the per-row action set, and the action labels (each names the condition
+it removes) after every change. Markup hooks: `#qb-conditions`, `[data-qb-item]`,
+`[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-field|op|value]`,
+`[data-qb-actions]`, `[data-qb-preview]`, `[data-qb-add-condition]`.
+
+**Loaded by:** `public-search-advanced.html`. Inert unless the page shows a `[data-qb-preview]`,
+so it does nothing in the phase-1 state.
+
+**Listens for:** click / input / change inside `#qb-conditions`, click on
+`[data-qb-add-condition]`
+
+**Dispatches:** nothing
+
+**Prototype-only:** yes — it exists so the group interaction can be judged before it is built.
+Production renders the condition list server-side. The result count is not simulated: it stays
+as rendered while the sentence updates.
+
+---
+
 ### `people-search.js`
 
 **Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. (The works Author filter is a text stub today; production would resolve it through this widget.)
