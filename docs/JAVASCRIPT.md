@@ -188,10 +188,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 ### `query-builder.js`
 
 **Purpose:** Advanced search, phase 2 — turns a condition row into an "any of these" OR group
-in place and back again, and keeps the readable sentence under "Your query" in sync. A row
-becomes a group where it stands (it becomes the group's first alternative, so a group and a row
-are interchangeable at the top level); removing alternatives until one is left collapses the
-group back to a plain row; "Add condition" appends an AND row at the top level. Rebuilds the
+in place and back again, and keeps the readable sentence under "Your query" in sync. "Add condition" appends an AND row at the top level. Rebuilds the
 `and` / `or` separators, the per-row action set, and the action labels (each names the condition
 it removes) after every change. Markup hooks: `#qb-conditions`, `[data-qb-item]`,
 `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-field|op|value]`,
