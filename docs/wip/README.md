@@ -14,6 +14,6 @@ Supporting material, read as needed:
 
 - [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md) — what the full query log says about how the power tiers are actually used.
 - [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) — 208 acceptance cases (all values are fixtures), the gate for "every existing query keeps working". Method: [`QUERY-BUILDER-GOLDEN-SET-METHOD.md`](QUERY-BUILDER-GOLDEN-SET-METHOD.md).
-- [`QUERY-BUILDER-PHASE-2.md`](QUERY-BUILDER-PHASE-2.md) — OR rule groups and test-against-a-record: designed now, built later.
+- [`QUERY-BUILDER-PHASE-2.md`](QUERY-BUILDER-PHASE-2.md) — OR rule groups: designed now, built later.
 
 Two documents these reference live in `notes/`, which is not in the repository: `PLAN-measurement.md` (the house measurement standard, product-owned) and `REPORT-search-log-analysis.md` (the base search-log analysis). Ask if you need them — they are candidates for sharing in their own right.

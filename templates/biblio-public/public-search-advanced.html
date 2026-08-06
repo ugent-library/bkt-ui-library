@@ -1,17 +1,27 @@
 <!-- @title: Advanced search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: phase-1, phase-2 -->
+<!-- @states: phase-1, phase-1-empty, phase-2, phase-2-empty -->
 
 <!--
   ADVANCED SEARCH — one query builder for the power tier.
 
   Replaces both legacy tiers (advanced form + expert query language). Bet:
-  notes/BET-query-builder.md · design detail + evidence: notes/DESIGN-query-builder.md ·
-  acceptance cases: notes/GOLDEN-QUERY-SET.md · phase 2 design: notes/PLAN-query-builder-phase2.md.
+  docs/WIP/QUERY-BUILDER-BET.md · design detail + evidence: docs/WIP/QUERY-BUILDER-DESIGN.md ·
+  acceptance cases: docs/WIP/QUERY-BUILDER-GOLDEN-SET.md · phase 2 design: docs/WIP/QUERY-BUILDER-PHASE-2.md.
 
-  States = phases, per repo convention (docs/SERVER.md → Template states):
-    phase-1  the definition of done for the first live release
-    phase-2  adds OR rule groups (AND-first) and “test against a record”
+  States = phases, each with the page at zero conditions, per repo convention
+  (docs/SERVER.md → Template states):
+    phase-1        the definition of done for the first live release
+    phase-1-empty  the same page with nothing built yet — a first visit, and where
+                   “Clear all conditions” and removing the last row both land
+    phase-2        adds OR rule groups (AND-first)
+    phase-2-empty  zero conditions in phase 2 — the same page again, because a group
+                   is a state of a row and there is no row yet
+
+  The empty state keeps the page's outline: the same four sections in the same order,
+  with honest contents. Only what a query produces waits — the link, the embed, the
+  API call, the save — because a builder whose sections come and go as you delete rows
+  is a page that moves under the hands of the person using it.
 
   Phase 3 (record type as first choice — people, organizations, projects) needs
   room, not a design: it lands in the conditions heading, where the word
@@ -52,8 +62,7 @@
           <h1 class="mb-3">Advanced search</h1>
           <p class="lead mb-5">
             Build a precise search, watch how many works it matches, and take it with you as a
-            link, an embed, or an API call. For keyword and known-item lookups,
-            <a href="public-works.html">search all research output</a>.
+            link, an embed, or an API call.
           </p>
         </div>
       </div>
@@ -586,7 +595,7 @@
                  back, and keeps the sentence under “Your query” in sync. Every action
                  sits on the thing it acts on — “Add an alternative” on the row, “Remove
                  group” on the group, “Add condition” under the list for a new AND row.
-                 Interaction, collapse and delete rules: notes/PLAN-query-builder-phase2.md -->
+                 Interaction, collapse and delete rules: docs/WIP/QUERY-BUILDER-PHASE-2.md -->
             <div class="border rounded-3 p-3 bt-bg-alt" role="group"
               aria-labelledby="p2-group-1-label" data-qb-item data-qb-group>
               <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
@@ -783,26 +792,153 @@
             </div>
             <!-- @state -->
 
+            <!-- @state: phase-1-empty phase-2-empty -->
+
+            <!-- ── EMPTY — nothing built yet ───────────────────────────────────
+                 Three routes arrive here and all three land in the same place: a first
+                 visit, “Clear all conditions”, and removing the last row (PHASE-2 doc
+                 § Deleting).
+
+                 One empty row, not zero rows: the row is the instruction. Picking the
+                 field is what produces the operator list and the value widget, so the
+                 field select is the first thing under the cursor and the row teaches the
+                 mechanism by being used. The row carries no × while it is the only row
+                 and still empty — there is nothing to remove, and a builder you cannot
+                 type into stays unreachable.
+
+                 Phase 2 adds nothing here, which is why both empty states share this
+                 block: a group is a state of a row, and a row with no value has no
+                 alternative to offer, so “Add an alternative” arrives with the first
+                 value. -->
+            <div class="row g-2 align-items-center" data-qb-row data-qb-item>
+              <div class="col-12 col-md-4">
+                <label class="visually-hidden" for="empty-field">Field, condition 1</label>
+                <select class="form-select" id="empty-field" data-qb-field>
+                  <optgroup label="Text and topic">
+                    <option selected>Any field</option>
+                    <option>Title</option>
+                    <option>Abstract</option>
+                    <option>Keyword</option>
+                  </optgroup>
+                  <optgroup label="People, organizations and projects">
+                    <option>Contributor</option>
+                    <option>Organization</option>
+                    <option>Project</option>
+                  </optgroup>
+                  <optgroup label="Publication">
+                    <option>Type</option>
+                    <option>Article type</option>
+                    <option>Miscellaneous type</option>
+                    <option>Conference type</option>
+                    <option>Conference name</option>
+                    <option>Host publication (journal, book, series)</option>
+                    <option>Publisher</option>
+                    <option>Language</option>
+                    <option>Publication year</option>
+                    <option>Publication status</option>
+                    <option>Classification</option>
+                    <option>VABB approved</option>
+                    <option>External research output</option>
+                    <option>Date added to Biblio</option>
+                  </optgroup>
+                  <optgroup label="Identifiers">
+                    <option>Biblio ID</option>
+                    <option>DOI, ISSN, ISBN or handle</option>
+                  </optgroup>
+                  <optgroup label="Full text">
+                    <option>Full text access</option>
+                    <option>Full text version</option>
+                    <option>Embargo</option>
+                    <option>Has full text</option>
+                    <option>Copyright statement</option>
+                  </optgroup>
+                  <optgroup label="Journal metrics">
+                    <option>Journal category</option>
+                    <option>Journal impact factor</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div class="col-7 col-md-3">
+                <label class="visually-hidden" for="empty-op">Operator, condition 1</label>
+                <select class="form-select" id="empty-op" data-qb-op>
+                  <option selected>contains</option>
+                  <option>contains all of</option>
+                  <option>contains any of</option>
+                  <option>does not contain</option>
+                </select>
+              </div>
+              <div class="col-12 col-md">
+                <label class="visually-hidden" for="empty-val">Words, condition 1</label>
+                <input type="text" class="form-control" id="empty-val" data-qb-value value=""
+                  placeholder="A title, a name, a topic, a DOI&hellip;">
+              </div>
+              <!-- query-builder.js fills this once the row has a value -->
+              <div class="col-auto d-flex gap-1" data-qb-actions></div>
+            </div>
+
+            <p class="form-text mt-2 mb-0">
+              <em>Any field</em> searches titles, abstracts, keywords and contributor names at
+              once. Choose a different field and the conditions and the input follow it.
+            </p>
+            <!-- @state -->
+
           </div><!-- /conditions -->
 
-          <div class="mt-3">
+          <div class="d-flex flex-wrap gap-2 mt-3">
             <!-- Adds an AND row at the top level. An "or" is never added here — it is
                  added on the row it belongs to, which turns that row into a group. -->
             <button type="button" class="btn btn-secondary btn-sm" data-qb-add-condition>
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add condition
             </button>
+
+            <!-- @state: phase-1 phase-2 -->
+            <!-- Starting over as one act; deleting the rows one by one is the alternative,
+                 and it is how the empty state gets reached by accident. -->
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-clear>
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+              Clear all conditions
+            </button>
+            <!-- @state -->
           </div>
         </section>
 
-        <!-- ═══ Live count + readable preview ═══════════════════════════════════════
-             One request feeds both: the count is a page-size-0 index query, fired on
-             complete conditions only, debounced, superseded requests cancelled
-             (DESIGN item 3). Without it the builder stays fully usable.
-             The preview is the query as one sentence, human labels throughout,
-             copyable (DESIGN item 5).
+        <!-- ═══ Your query — the count, the readback, the results ════════════════════
+             Three things, in the order they answer a question: how many (the count),
+             what did I just build (the sentence), where do I get them (the actions).
+
+             One request feeds count and preview: the count is a page-size-0 index query,
+             fired on complete conditions only, debounced, superseded requests cancelled
+             (DESIGN item 3). Without it the builder stays fully usable. The preview is
+             the query as one sentence, human labels throughout, copyable (DESIGN item 5).
              What gets announced is the count, not the sentence: the count is the answer,
-             the sentence is a readback of what the user just typed. -->
+             the sentence is a readback of what the user just typed.
+
+             HOW PEOPLE GET THE RESULTS — the results page shows them. “Show results”
+             submits the built query to the works search, which already owns showing,
+             filtering, sorting and exporting a result set; the bet's no-go keeps that
+             page as it is, so the builder authors a query and hands it over.
+
+             That is a round trip rather than a one-way door, for two reasons:
+             · the count here already answers “does my query work”, so a session that
+               never presses the button is a successful session (DESIGN, measurement
+               caveats — copying is measured, never scored);
+             · the results page carries the query in its URL and links back to Advanced
+               search from its toolbar, so that link reopens the builder on the same
+               query. The golden set already requires URL → builder state → URL
+               unchanged, so the return path asks for no new contract — it asks for
+               raven's URL grammar to exist (BET, rabbit hole 1).
+
+             Results stay off this page on purpose: rendering them here would be a second
+             results implementation beside the one that already has the facets, the sort,
+             the paging and the export.
+
+             One open decision, load-bearing: a query string stops resolving past about
+             2,000 characters, and the biggest real queries reach 9,336 (763 pasted IDs).
+             The link, the embed, the API call and this button all carry the query the
+             same way, so they meet that wall together and one answer serves all four — a
+             submit that redirects to a short server-side id, or the saved search as the
+             artifact that travels. -->
 
         <!-- @state: phase-1 -->
         <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
@@ -841,6 +977,12 @@
               <span class="btn-text">Copy query</span>
             </button>
           </div>
+          <p class="form-text mb-0">
+            The results list holds this query: filter, sort and export it there, and come back
+            here through <em>Advanced search</em> to change a condition. This query carries 763
+            pasted IDs, too long for the address bar — how it travels is the open decision under
+            <em>Use this search</em>.
+          </p>
         </section>
         <!-- @state -->
 
@@ -879,6 +1021,79 @@
               <span class="btn-text">Copy query</span>
             </button>
           </div>
+          <p class="form-text mb-0">
+            The results list holds this query: filter, sort and export it there, and come back
+            here through <em>Advanced search</em> to change a condition.
+          </p>
+        </section>
+        <!-- @state -->
+
+        <!-- The empty state keeps this section, and the count is the reason: it starts at
+             everything and falls with every condition. That fall is the feedback the whole
+             page runs on, so it is on screen before the first condition exists — and it makes
+             “Show results” at zero conditions honest rather than broken: it is the full list.
+             Copy and save are the two things that wait, because there is nothing yet to copy
+             or to name. -->
+
+        <!-- @state: phase-1-empty -->
+        <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+        <section aria-labelledby="p1e-query-heading" class="border rounded-3 p-3 p-md-4 mb-5 bt-bg-alt">
+          <h2 id="p1e-query-heading" class="h5 mb-3">Your query</h2>
+
+          <div id="p1e-readout" aria-live="polite"
+            hx-get="/search/query-readout"
+            hx-trigger="change from:#qb-conditions delay:500ms"
+            hx-target="this"
+            hx-swap="innerHTML"
+            hx-indicator="#p1e-updating">
+            <p class="h3 mb-3">All 312,456 publications</p>
+            <p class="mb-0" id="p1e-preview">No conditions yet.</p>
+          </div>
+          <p class="htmx-indicator small text-muted mt-2 mb-0" id="p1e-updating" aria-live="polite">
+            Updating the count&hellip;
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">
+              <i class="if if-search" aria-hidden="true"></i>
+              Show results
+            </button>
+          </div>
+          <p class="form-text mb-0">
+            With no conditions this is all of Biblio — the same list <em>Research output</em>
+            shows. Add a condition and watch the number fall.
+          </p>
+        </section>
+        <!-- @state -->
+
+        <!-- @state: phase-2-empty -->
+        <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
+        <section aria-labelledby="p2e-query-heading" class="border rounded-3 p-3 p-md-4 mb-5 bt-bg-alt">
+          <h2 id="p2e-query-heading" class="h5 mb-3">Your query</h2>
+
+          <div id="p2e-readout" aria-live="polite"
+            hx-get="/search/query-readout"
+            hx-trigger="change from:#qb-conditions delay:500ms"
+            hx-target="this"
+            hx-swap="innerHTML"
+            hx-indicator="#p2e-updating">
+            <p class="h3 mb-3">All 312,456 publications</p>
+            <p class="mb-0" id="p2e-preview" data-qb-preview>No conditions yet.</p>
+          </div>
+          <p class="htmx-indicator small text-muted mt-2 mb-0" id="p2e-updating" aria-live="polite">
+            Updating the count&hellip;
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">
+              <i class="if if-search" aria-hidden="true"></i>
+              Show results
+            </button>
+          </div>
+          <p class="form-text mb-0">
+            With no conditions this is all of Biblio — the same list <em>Research output</em>
+            shows. Add a condition and watch the number fall.
+          </p>
         </section>
         <!-- @state -->
 
@@ -888,6 +1103,40 @@
       <section aria-labelledby="output-heading" class="mb-5">
         <h2 id="output-heading" class="h5 mb-3">Use this search</h2>
 
+        <!-- What blocks a query from travelling blocks all three outputs at once — the
+             embed's src and the API call carry the query exactly the way the link does. So
+             the warning sits above the tabs, once, instead of hiding in the URL tab. -->
+        <!-- @state: phase-1 -->
+        <div class="alert alert-warning" id="query-ceiling-p1">
+          <h3 class="h6">This search is too long to travel in a URL</h3>
+          <p class="mb-0">
+            It carries 763 pasted IDs, close to 10,000 characters. Links stop resolving reliably
+            past about 2,000, and the link, the embed and the API call all carry the query the
+            same way — so save this search and share the saved link instead. This is the observed
+            maximum in the 2026-H1 log, not a hypothetical: 34 real queries pass 2,000 characters
+            today, the longest at 9,336.
+          </p>
+        </div>
+        <!-- @state -->
+
+        <!-- @state: phase-2 -->
+        <div class="alert alert-warning" id="query-group-p2">
+          <h3 class="h6">This search has an “any of these” group</h3>
+          <p class="mb-0">
+            Groups become shareable once raven's public URL grammar serialises them — for the
+            link, the embed and the API call alike. Until then, save this search and share the
+            saved link.
+          </p>
+        </div>
+        <!-- @state -->
+
+        <!-- @state: phase-1-empty phase-2-empty -->
+        <div class="bt-blank-slate bt-blank-slate--muted">
+          <p>A search with at least one condition becomes a link, an embed and an API call here.</p>
+        </div>
+        <!-- @state -->
+
+        <!-- @state: phase-1 phase-2 -->
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="tab-url" type="button" role="tab"
@@ -924,28 +1173,6 @@
               to design — it has to carry <em>is not</em> (phase 1) and <em>any of these</em> groups
               (phase 2), which today's public search parameters do not express.
             </p>
-
-            <!-- @state: phase-1 -->
-            <div class="alert alert-warning mb-0" id="url-ceiling-p1">
-              <h3 class="h6">This search is too long for a link</h3>
-              <p class="mb-0">
-                It carries 763 pasted IDs, close to 10,000 characters. Links stop resolving reliably
-                past about 2,000, so save this search and share the saved link instead. This is the
-                observed maximum in the 2026-H1 log, not a hypothetical: 34 real queries pass 2,000
-                characters today, the longest at 9,336.
-              </p>
-            </div>
-            <!-- @state -->
-
-            <!-- @state: phase-2 -->
-            <div class="alert alert-warning mb-0" id="url-group-p2">
-              <h3 class="h6">This search has an “any of these” group</h3>
-              <p class="mb-0">
-                Groups become shareable once raven's public URL grammar serialises them. Until then,
-                save this search and share the saved link.
-              </p>
-            </div>
-            <!-- @state -->
           </div>
 
           <!-- ── Embed ────────────────────────────────────────────────────────────── -->
@@ -1014,6 +1241,7 @@
           </div>
 
         </div>
+        <!-- @state -->
       </section>
 
       <!-- ═══ Save this search ════════════════════════════════════════════════════ -->
@@ -1023,6 +1251,11 @@
           A saved search keeps running: open it later and it returns what matches then. It is also
           the shareable form of a search that is too long for a link.
         </p>
+        <!-- @state: phase-1-empty phase-2-empty -->
+        <p class="form-text mb-0">Saving waits for the first condition.</p>
+        <!-- @state -->
+
+        <!-- @state: phase-1 phase-2 -->
         <!-- real impl: form POST /saved-searches, login required -->
         <div class="row g-2 align-items-end">
           <div class="col-12 col-md-6">
@@ -1037,52 +1270,9 @@
             </button>
           </div>
         </div>
-        <p class="form-text">Saving asks you to log in. Everything else on this page works without an account.</p>
+        <p class="form-text">Saving asks you to log in.</p>
+        <!-- @state -->
       </section>
-
-      <!-- @state: phase-2 -->
-      <!-- ═══ Test against a record (phase 2) ═════════════════════════════════════
-           The cheapest debugging feature in the set: one record, evaluated condition
-           by condition, turns “no results” from a dead end into a pointed fix.
-           real impl: works typeahead resolving to one record id, then a per-condition
-           evaluation of that record against the built query -->
-      <section aria-labelledby="test-heading" class="mb-5">
-        <h2 id="test-heading" class="h5 mb-2">Test against a record</h2>
-        <p>
-          Check the query against a publication you know should match. Each condition reports
-          separately, so a query that returns nothing tells you which condition to fix.
-        </p>
-
-        <div class="row g-2 align-items-end mb-4">
-          <div class="col-12 col-md-8">
-            <label class="form-label" for="test-record">Publication</label>
-            <input type="search" class="form-control" id="test-record"
-              value="Cooling co-benefits of urban tree networks in compact European cities">
-          </div>
-          <div class="col-auto">
-            <button type="button" class="btn btn-secondary">
-              <i class="if if-check-double" aria-hidden="true"></i>
-              Test
-            </button>
-          </div>
-        </div>
-
-        <div class="border rounded-3 p-3 p-md-4">
-          <p class="h6 mb-3" role="status">Doesn't match, because condition 2 fails.</p>
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2">
-              <i class="if if-check-circle text-success" aria-hidden="true"></i>
-              <strong>Passes</strong> — either host publication is Nature Photonics or publisher is
-              Springer. This record: published by Springer.
-            </li>
-            <li>
-              <i class="if if-close-circle-fill text-danger" aria-hidden="true"></i>
-              <strong>Fails</strong> — publication year is 2020. This record: 2025.
-            </li>
-          </ul>
-        </div>
-      </section>
-      <!-- @state -->
 
     </div>
   </main>

@@ -35,7 +35,7 @@ One page, **Advanced search**, replacing both tiers. It always shows the builder
 - Save this search (login); everything else works anonymously
 - the measurement the success measures need (design doc)
 
-**Phase 2** completes expression parity: OR rule groups, AND-first, plus test-against-a-record. **Phase 3** opens new territory: record type as first choice — people, organizations, projects.
+**Phase 2** completes expression parity: OR rule groups, AND-first. **Phase 3** opens new territory: record type as first choice — people, organizations, projects.
 
 ## Constraints
 

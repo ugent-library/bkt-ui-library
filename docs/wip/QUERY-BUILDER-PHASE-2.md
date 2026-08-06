@@ -1,4 +1,4 @@
-# Phase 2 — OR rule groups and test-against-a-record
+# Phase 2 — OR rule groups
 
 *Designed now so phase 1's layout leaves room; built later, and only on the evidence in §4.
 Bet: [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) · design detail:
@@ -6,9 +6,8 @@ Bet: [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) · design detail:
 [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) · drawn as the `phase-2` state of
 `templates/biblio-public/public-search-advanced.html`.*
 
-Scope: two features. **OR rule groups** (AND-first: the top level stays AND-joined rows, a row
-can be an "any of these" group, one level deep) and **test against a record** (pick a known
-publication, per condition show pass/fail).
+Scope: one feature. **OR rule groups** — AND-first: the top level stays AND-joined rows, a row
+can be an "any of these" group, one level deep.
 
 ---
 
@@ -150,22 +149,12 @@ substituted with client-side events (the design doc rules that out explicitly).
 
 ---
 
-## 5. Test against a record
+## 5. Per-condition evaluation — moved out of scope
 
-**What it needs:** one record id, and a per-condition evaluation of that record against the
-built query. The record comes from a works typeahead; the evaluation is the same query the count
-already runs, scoped to one document, reported per clause instead of as a total. No new field, no
-new index, no new grammar.
-
-**What it shows:** a verdict sentence — "Doesn't match, because condition 2 fails" — over a list
-that reports each condition separately, in words, with the record's actual value beside the
-failing one ("publication year is 2020. This record: 2025."). Words, not only colour or icons.
-
-**Why it is the cheapest debugging feature in the set:** the expensive failure on this page is a
-correct-looking query that returns nothing, because every condition looks right and the user
-cannot tell which one is wrong. The live count reports the symptom; this reports the cause, from
-machinery that already exists. It also answers the support question directly — a bibliographer
-can send "condition 2 fails on this record" instead of a screenshot of an empty result list.
+Checking a built query against a known record, condition by condition, was drafted here as a user
+feature. It is not one: the audience for that answer is us, verifying the builder against the
+golden set, not a researcher building a list. It stays a QA tool. If support ever needs it for
+curators, it belongs in the backoffice, not on public Advanced search.
 
 ---
 
