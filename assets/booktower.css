@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*! Booktower 00fcb41/2026-08-06 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -2435,7 +2436,9 @@ img.bt-navbar__logo {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
-  flex-shrink: 0;
+  /* wrap + shrinkable: an unshrinkable row of controls overflowed the viewport
+     below ~600px instead of stacking */
+  flex-wrap: wrap;
 }
 
 .bt-toolbar__right:only-child {
