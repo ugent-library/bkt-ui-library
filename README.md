@@ -115,17 +115,24 @@ Vercel builds separately with `npm run build`.
 The prototype is not public yet. Access is controlled in the Vercel dashboard,
 not in this repository — there is no auth code here and there should not be.
 
-1. Open the project in the Vercel dashboard → **Settings** → **Deployment Protection**
-2. Under **Vercel Authentication**, toggle it on
-3. Set the environment to **All Deployments**, so production is covered and not
-   just previews
-4. **Save**
+**Vercel Authentication** is on, set to **Standard Protection** (Settings →
+Deployment Protection). That is the free tier and the default for new team
+projects: everything is behind a Vercel login except a production *custom*
+domain. There is no custom domain, so `bkt-ui.vercel.app` and every preview are
+covered. Anyone in the Ghent University Library team can open them once logged
+in; Viewer seats are free, so read-only teammates cost nothing.
 
-Everyone in the Ghent University Library team can then open the site once logged
-into Vercel. Viewer seats are free, so teammates who only need to look do not
-cost anything — add them under **Settings** → **Members** with the Viewer role.
+The **All Deployments** option in that same dropdown needs the Advanced
+Deployment Protection add-on at $150 per month. It only adds coverage for
+production custom domains. Don't.
+
 For someone outside the team, use **Share** on a deployment to generate a
-shareable link instead of turning protection off.
+shareable link rather than turning protection off.
+
+As a second layer, `vercel.json` sends `X-Robots-Tag: noindex, nofollow` on
+every response, so a prototype that looks like Biblio cannot end up in search
+results if protection is ever lifted. Remove that header the day this is meant
+to be found.
 
 ---
 

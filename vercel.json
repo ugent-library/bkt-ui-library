@@ -7,5 +7,11 @@
       "includeFiles": "{assets,base,elements,foundations,getting-started,patterns,product,server,shell,templates}/**"
     }
   },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index?__path=$1" }]
 }
