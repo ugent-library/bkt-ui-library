@@ -1,11 +1,8 @@
 /**
- * sidebar-toggle.js
- * Backoffice sidebar collapse/expand toggle.
+ * sidebar-toggle.js — backoffice sidebar collapse/expand toggle.
+ * See docs/JAVASCRIPT.md.
  *
- * The toggle button controls the nav referenced by aria-controls and keeps
- * aria-expanded / aria-label in sync with the visual slim state.
- *
- * Also initialises Bootstrap tooltips on all sidebar nav links so they remain
+ * Also initialises Bootstrap tooltips on sidebar nav links so they stay
  * discoverable in slim (icon-only) mode.
  */
 (function () {
@@ -32,7 +29,6 @@
     updateToggleState(button, sidebar, willBeSlim);
   });
 
-  // Initialise Bootstrap tooltips on sidebar nav links.
   // Runs after DOMContentLoaded so Bootstrap is guaranteed to be available.
   document.addEventListener('DOMContentLoaded', function () {
     var tooltipEls = document.querySelectorAll('.bt-sidebar a.nav-link[data-bs-toggle="tooltip"]');
