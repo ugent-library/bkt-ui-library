@@ -1,5 +1,8 @@
 # The rendered HTML contract
 
+> Comment conventions for this area: `docs/CODE-COMMENTS.md`.
+
+
 How a consuming app (raven, pre-ingest, &hellip;) relates to Booktower's prototypes, and what "the prototype is the source of truth" means once real template languages, data, and permissions are involved.
 
 The core rule:

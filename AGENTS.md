@@ -171,9 +171,7 @@ Never cite an unopened source. A citation is a promise that the source says what
 
 ### Comments
 
-Default to **no comment**. Add one only when a later change would break something you wouldn't quickly catch — a **silent or non-local failure**: it breaks a different element, depends on order, relies on a value defined elsewhere, or must match an external spec / a check outside visual review (WCAG contrast, a z-index tier, a query-param that must match raven). If breaking it fails **loudly and locally** — visible at once in review or the browser — omit the comment. Never restate what the code does; a few words when one is kept.
-
-A comment annotates the code that is there, not the change that produced it. Anything a reader could only understand by knowing the diff — what was tried, what broke, what was removed — belongs in the commit message. A comment explaining deleted code has nothing to annotate; delete it too. Warning signs in a draft comment: *was, earlier, previously, used to, no longer, removed, instead of, fixed*.
+Default to **no comment**; keep one only when a later change would break something silently or non-locally. Never history, never commented-out code, never a restatement of the declaration below. The full convention, with the categories that are *not* explanations (section banners, file headers, HTML directives): `docs/CODE-COMMENTS.md`. Enforced in part by `npm run check:comments`.
 
 ### A note on confidence
 
