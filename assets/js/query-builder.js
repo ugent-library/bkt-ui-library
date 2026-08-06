@@ -55,9 +55,10 @@
       '<i class="if if-add if--xs" aria-hidden="true"></i> Add an alternative</button>' + remove;
   }
 
-  function dress(row, mode, n) {
+  function dress(row, mode, n, sole) {
     const cell = row.querySelector('[data-qb-actions]');
-    if (cell) cell.innerHTML = actions(row, mode);
+    // a sole empty row has nothing to remove and no alternative to offer
+    if (cell) cell.innerHTML = sole && !value(row) ? '' : actions(row, mode);
     Object.keys(NOUNS).forEach(key => {
       const el = part(row, key);
       const label = el && row.querySelector('label[for="' + el.id + '"]');
@@ -120,12 +121,16 @@
           dress(a, 'alternative', j + 1);
         });
       } else {
-        dress(item, 'condition', i + 1);
+        dress(item, 'condition', i + 1, top.length === 1);
       }
     });
 
-    if (!top.length) {
-      preview.textContent = 'All publications.';
+    const filled = top.some(item => item.hasAttribute('data-qb-group')
+      ? alts(item).some(value)
+      : value(item));
+
+    if (!filled) {
+      preview.textContent = 'No conditions yet.';
       return;
     }
     const sentence = top.map(item => item.hasAttribute('data-qb-group')
@@ -173,6 +178,19 @@
       const copy = copyOf(source);
       copy.setAttribute('data-qb-item', '');
       list.append(copy);
+      sync();
+    });
+  }
+
+  const clear = document.querySelector('[data-qb-clear]');
+  if (clear) {
+    clear.addEventListener('click', () => {
+      const source = list.querySelector('[data-qb-row]');
+      if (!source) return;
+      const fresh = copyOf(source);
+      fresh.setAttribute('data-qb-item', '');
+      items().forEach(item => item.remove());
+      list.append(fresh);
       sync();
     });
   }

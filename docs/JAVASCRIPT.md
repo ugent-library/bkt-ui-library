@@ -188,17 +188,19 @@ Remove the `-stub.js` files when wiring real endpoints.
 ### `query-builder.js`
 
 **Purpose:** Advanced search, phase 2 — turns a condition row into an "any of these" OR group
-in place and back again, and keeps the readable sentence under "Your query" in sync. "Add condition" appends an AND row at the top level. Rebuilds the
+in place and back again, and keeps the readable sentence under "Your query" in sync. "Add condition" appends an AND row at the top level; "Clear all conditions" leaves one empty row — the empty state. Rebuilds the
 `and` / `or` separators, the per-row action set, and the action labels (each names the condition
-it removes) after every change. Markup hooks: `#qb-conditions`, `[data-qb-item]`,
+it removes) after every change. A sole empty row carries no actions (nothing to remove, no
+alternative to offer) and the sentence reads "No conditions yet." until a value exists. Markup
+hooks: `#qb-conditions`, `[data-qb-item]`,
 `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-field|op|value]`,
-`[data-qb-actions]`, `[data-qb-preview]`, `[data-qb-add-condition]`.
+`[data-qb-actions]`, `[data-qb-preview]`, `[data-qb-add-condition]`, `[data-qb-clear]`.
 
 **Loaded by:** `public-search-advanced.html`. Inert unless the page shows a `[data-qb-preview]`,
-so it does nothing in the phase-1 state.
+so it does nothing in the phase-1 states.
 
 **Listens for:** click / input / change inside `#qb-conditions`, click on
-`[data-qb-add-condition]`
+`[data-qb-add-condition]` and `[data-qb-clear]`
 
 **Dispatches:** nothing
 
