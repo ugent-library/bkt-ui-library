@@ -91,8 +91,15 @@ the file. It may not restate how the component is *used* — that is `CLASS-USAG
 ```
 
 Use the element's id, or the class that distinguishes it. Put one where the opening tag
-is far enough away that finding it means scrolling. Never as an opening label — an
-opener next to a named element restates it.
+is far enough away that finding it means scrolling.
+
+An opening label is a different thing and answers a different question. At the element,
+the class already tells you what it is; while scrolling, the comment is the only line at
+that indent that reads as a word. So label a block you would otherwise hunt for — around
+forty lines and up in practice — and nothing shorter. `<!-- Title -->` over a three-line
+`<h2 class="bt-work-card__title">` is noise; `<!-- Header -->` over ninety-seven lines is
+a landmark. A missing label reads as "not a landmark", never as "forgotten", so this one
+does not need to be exhaustive.
 
 **HTML directives** (`@state`, `@surface`, `@include`) are a machine-read vocabulary,
 not comments. They are documented in `SERVER.md` and `SURFACES.md` and nothing here
@@ -108,7 +115,9 @@ reading the compiled file.
 
 ## What is checked
 
-`npm run check:comments` (part of `npm test`) fails the build on history words and on
-commented-out code in `assets/` and `shell/`. Restatement is not mechanically
-detectable — it needs a pass over your own diff, reading each comment against the code
-it sits above, deleting by default.
+`npm run check:comments` (part of `npm test`) fails the build on code that has been
+commented out rather than deleted, in `assets/` and `shell/`. That is the only rule here
+a machine can decide. History and restatement are not mechanically detectable — an
+earlier attempt matched on words like *was* and *removed*, which catch real cases once
+and then only misfire. They need a pass over your own diff, reading each comment against
+the code it sits above, deleting by default.

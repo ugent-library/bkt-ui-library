@@ -1,16 +1,10 @@
-// Fails the build on changelog in code (AGENTS.md § Comments): a comment that only
-// makes sense to someone who saw the diff. History belongs in the commit message.
+// Fails the build on code that has been commented out to park it (docs/CODE-COMMENTS.md).
 const fs = require('fs');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
 const dirs = [['assets', 'scss'], ['assets', 'js'], ['shell', 'scss']];
 const skip = /_icon-font\.scss$/;
-
-const HISTORY = [
-  /\bwas\b/i, /\bwere\b/i, /\bearlier\b/i, /\bpreviously\b/i,
-  /\bused to\b/i, /\bno longer\b/i, /\bremoved\b/i,
-];
 
 const files = [];
 for (const d of dirs) {
@@ -33,23 +27,13 @@ for (const file of files) {
   src.split('\n').forEach((l, i) => {
     if (DEAD.test(l)) hits.push(`${path.relative(root, file)}:${i + 1}  ${l.trim().slice(0, 80)}  (commented-out code)`);
   });
-  const comments = [
-    ...src.matchAll(/\/\/[^\n]*/g),
-    ...src.matchAll(/\/\*[\s\S]*?\*\//g),
-  ];
-  for (const m of comments) {
-    if (!HISTORY.some(re => re.test(m[0]))) continue;
-    const line = src.slice(0, m.index).split('\n').length;
-    const text = m[0].replace(/\s+/g, ' ').trim();
-    hits.push(`${path.relative(root, file)}:${line}  ${text.slice(0, 100)}`);
-  }
 }
 
 if (hits.length) {
   console.error(
-    'Comments that carry history or dead code, not explanation (AGENTS.md § Comments):\n  ' +
+    'Code commented out rather than deleted (docs/CODE-COMMENTS.md):\n  ' +
     hits.join('\n  ') +
-    '\nHistory goes in the commit message; dead code goes in git.'
+    '\nDelete it — the commit you delete it in is the record.'
   );
   process.exit(1);
 }
