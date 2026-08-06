@@ -62,6 +62,12 @@ Canonical compositions with project conventions (pagination + result count,
 cite modal) get kit recipes — see `notes/PLAN-kit-gaps-from-templates.md` —
 but the components themselves stay undocumented Bootstrap.
 
+**Modal ARIA** — the opener carries `tabindex="-1"`, `aria-labelledby`, and, on a
+confirmation, `aria-describedby` pointing at the consequence sentence (never at
+`.modal-body`). It carries no `role`, `aria-modal` or `aria-hidden`: Bootstrap's JS sets
+those on show and removes them on hide, and a static `aria-hidden` fails `check:html`.
+Reference: `templates/biblio-researcher/lists.html`. Reasoning: `docs/ACCESSIBILITY.md` E6.
+
 **Results bar** — the pagination + count + read-controls composition is pinned in
 `patterns/pagination.html`: a `bt-toolbar` with `nav > ul.pagination` and the count in
 `__left`, page size / sort / more actions in `__right`. The count is a sibling of the

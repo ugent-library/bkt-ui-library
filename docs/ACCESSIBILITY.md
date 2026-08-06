@@ -29,6 +29,7 @@ One-line digest — reasoning and markup live in the lettered sections:
 - **Focus after swaps (D4):** search results — focus stays on the input; deposit step advance — focus to the new step's `<h2>`; modal close — back to the trigger.
 - **Filter tags and facet checkboxes carry full labels (I2, I3):** action + value ("Remove filter: Type is Journal article"); facet labels include the count, visible count `aria-hidden`.
 - **`text-muted` only for supplementary content (G4)** — never for information needed to complete a task.
+- **Modal ARIA state is Bootstrap's (E6):** templates set `tabindex="-1"`, `aria-labelledby`, and `aria-describedby` on confirmations only — never `role`, `aria-modal` or `aria-hidden`.
 
 ---
 
@@ -244,6 +245,24 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:html` enfo
 
 **E5. We use button groups for view toggle buttons.** The view toggle (card/table view) is a pair of buttons, not a tab panel. `role="tab"` requires an associated `role="tabpanel"` and Arrow-key navigation — that is not what this component does. We do not invent a new view-toggle.
 
+**E6. Modal ARIA state belongs to Bootstrap, not to the template.** Bootstrap's modal JS sets `role="dialog"` and `aria-modal="true"` on the `.modal` element when it opens, and swaps them for `aria-hidden="true"` when it closes. Declaring any of the three in markup duplicates runtime state, and static `aria-hidden="true"` fails `check:html`'s `hidden-focusable` rule because a modal contains focusable children. Nothing is lost by omitting them: a closed `.modal` is `display: none`, so it is outside the accessibility tree either way, and the attributes appear at exactly the moment the dialog becomes visible.
+
+The template owns the two naming attributes, which Bootstrap never sets:
+
+```html
+<!-- ✓ Correct -->
+<div class="modal fade" id="delete-list-modal" tabindex="-1"
+  aria-labelledby="delete-list-modal-title" aria-describedby="delete-list-modal-desc">
+
+<!-- ✗ Wrong — runtime state hardcoded, and aria-hidden fails check:html -->
+<div class="modal fade" id="delete-list-modal" tabindex="-1"
+  aria-labelledby="delete-list-modal-title" aria-modal="true" role="dialog">
+```
+
+**`aria-describedby` points at the sentence that states the consequence, never at `.modal-body`.** On open, the description is announced after the accessible name — so it must be the stakes ("The works stay in Biblio. Only the list goes."), not the whole body. Pointing at `.modal-body` makes a screen reader read every control inside it as the description. A modal whose body is a form or a tab set carries no `aria-describedby`; its title carries the meaning. Confirmations (`delete-list-modal`, `return-modal`, `pickup-modal`) have one; `export-modal` and `cite-modal` do not.
+
+`role="alertdialog"` is the ARIA APG pattern for destructive confirmations, but Bootstrap overwrites `role` with `dialog` on every show, so it cannot survive. Do not set it.
+
 ---
 
 ## F. Tables
@@ -399,4 +418,6 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 □ Sortable columns: aria-sort on <th>
 □ No information conveyed by colour alone
 □ text-muted used only for supplementary, non-critical content
+□ Modal: aria-labelledby present; no static role / aria-modal / aria-hidden
+□ Confirmation modal: aria-describedby points at the consequence sentence
 ```

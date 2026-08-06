@@ -6,6 +6,34 @@ system, or do I reach for something new?"
 
 ---
 
+## Modal ARIA — Bootstrap owns the runtime attributes (v2.12, 2026-08-06)
+
+No class changes; visually inert except the two delete-list confirmations, whose footer
+buttons lost `btn-sm` to match the other eight modals.
+
+An accessible-relationship change, so it is a contract change for consumers even though
+no class moved. All ten modal openers across `templates/` now carry only `class`, `id`,
+`tabindex="-1"` and `aria-labelledby`:
+
+- **`role="dialog"` / `aria-modal="true"` removed from static markup.** Bootstrap's modal
+  JS sets both on show and removes them on hide (5.3.3 `modal.js`, `_showElement` /
+  `_hideModal`), so markup values only duplicated runtime state. A closed `.modal` is
+  `display: none` and outside the accessibility tree either way — nothing was announced
+  before, nothing is lost now.
+- **`aria-hidden="true"` is not the replacement.** Bootstrap's documented static markup
+  includes it, but it fails `check:html`'s `hidden-focusable` rule — a modal contains
+  focusable children. Carry none of the three.
+- **`aria-describedby` added to the three confirmations** (`delete-list-modal`,
+  `return-modal`, `pickup-modal`), pointing at the sentence that states the consequence,
+  never at `.modal-body` — a body-level description makes a screen reader announce every
+  control in it. `export-modal` and `cite-modal` get none: their bodies are a form and a
+  tab set, and their titles carry the meaning.
+- **`role="alertdialog"` is unavailable.** The APG pattern for destructive confirmations,
+  but Bootstrap overwrites `role` with `dialog` on every show.
+
+Rule: `docs/ACCESSIBILITY.md` E6 · consumer duty: `docs/CONSUMING-BOOKTOWER.md`
+accessibility baseline · reference example: `templates/biblio-researcher/lists.html`.
+
 ## Pagination pattern — the results bar (v2.11, 2026-08-06)
 
 The pagination bar is pinned in the new kit page `patterns/pagination.html` (pagination and
