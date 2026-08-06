@@ -5,6 +5,10 @@
   The list card is the same source pattern used by the Projects panel in
   public-researcher-detail.html.
 
+  PLACEHOLDER: the counts (84 projects, 5 pages) stand for a full directory;
+  only 4 of the 20 cards of page 1 are written out. Pagination is styled only —
+  raven owns the behaviour.
+
   Partials:
     @include: templates/partials/public-header.html
     @include: templates/partials/public-footer.html
@@ -128,7 +132,43 @@
       <div class="container py-5">
         <div class="bt-toolbar mb-3">
           <div class="bt-toolbar__left">
-            <p class="text-muted small mb-0" aria-live="polite">Showing 1–4 of 4 results</p>
+            <div class="bt-toolbar__item">
+              <!-- Results bar: /patterns/pagination.html -->
+              <nav aria-label="Projects pagination (top)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?page=5">5</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small" aria-live="polite">Showing 1&ndash;20 of 84 projects</span>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item">
+              <label for="pdir-page-size" class="visually-hidden">Projects per page</label>
+              <select id="pdir-page-size" class="form-select form-select-sm">
+                <option value="10">10 per page</option>
+                <option value="20" selected>20 per page</option>
+                <option value="50">50 per page</option>
+              </select>
+            </div>
+            <div class="bt-toolbar__item">
+              <!-- sort set still open -->
+              <label for="pdir-sort" class="visually-hidden">Sort by</label>
+              <select id="pdir-sort" class="form-select form-select-sm">
+                <option value="relevance">Relevance</option>
+                <option value="start-desc" selected>Start year (new to old)</option>
+                <option value="start-asc">Start year (old to new)</option>
+                <option value="title-asc">Title (A&ndash;Z)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -225,6 +265,28 @@
             </div>
           </li>
         </ul>
+
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <!-- Results bar: /patterns/pagination.html -->
+              <nav aria-label="Projects pagination (bottom)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?page=5">5</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small">Showing 1&ndash;20 of 84 projects</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 

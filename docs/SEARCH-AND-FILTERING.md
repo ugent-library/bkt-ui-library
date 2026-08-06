@@ -200,7 +200,8 @@ discovery is the autocomplete and the entity directories.
 
 "Show me this org's / person's / project's output" is funnelled onto the entity **detail
 page**, which is the scoped view. Those pages keep an embedded works listing with its
-read/browse controls — work cards, sort, page size, pagination. What they do *not* carry is
+read/browse controls — work cards, sort, page size, pagination (the bar itself:
+`patterns/pagination.html`). What they do *not* carry is
 the filter/analysis subsystem: narrowing by facet is delegated to the shared `public-works`
 space via an explicit **Refine in search** action that pre-scopes by the entity
 (`public-works.html?org=` / `?project=` / `?person=`). The entity scope lands there as an

@@ -1,0 +1,430 @@
+<!-- @title: Pagination — Booktower Design System -->
+<!-- @surface: public -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Pagination</h1>
+    <p class="lead">Pagination itself is plain Bootstrap (<code>ul.pagination</code>). What this page pins is the bar around it: a <code>bt-toolbar</code> carrying the page links and the result count on the left, and the reading controls — page size, sort, more actions — on the right.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Results bar</h2>
+    <p class="mb-4">The canonical composition, at the head of a result list (<a href="/templates/biblio-public/public-works.html">public-works</a>). Left says where you are, right says how you read. The count sits beside the pagination but <strong>outside</strong> the <code>&lt;nav&gt;</code> — it is a status, not a link — and carries <code>aria-live="polite"</code> so a page or filter change is announced. Everyone reads the same string, at every width. Sort options are a stub: the sort set is still open.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Public search — pagination + count left, controls right</h3>
+      <div class="ds-demo-body">
+
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <nav aria-label="Results pagination">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?page=18">18</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small" aria-live="polite">Showing 1&ndash;50 of 879 results</span>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item">
+              <label for="pg-size" class="visually-hidden">Results per page</label>
+              <select id="pg-size" class="form-select form-select-sm">
+                <option value="10">10 per page</option>
+                <option value="25">25 per page</option>
+                <option value="50" selected>50 per page</option>
+                <option value="100">100 per page</option>
+              </select>
+            </div>
+            <div class="bt-toolbar__item">
+              <label for="pg-sort" class="visually-hidden">Sort by</label>
+              <select id="pg-sort" class="form-select form-select-sm">
+                <option value="relevance">Relevance</option>
+                <option value="year-desc" selected>Year (new to old)</option>
+                <option value="year-asc">Year (old to new)</option>
+                <option value="title-asc">Title (A&ndash;Z)</option>
+              </select>
+            </div>
+            <div class="bt-toolbar__item">
+              <div class="dropdown">
+                <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown" aria-label="More search actions">
+                  <i class="if if-more" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li><a class="dropdown-item" href="#">
+                    <i class="if if-pin if--sm me-2" aria-hidden="true"></i> Save search
+                  </a></li>
+                  <li><a class="dropdown-item" href="#">
+                    <i class="if if-download if--sm me-2" aria-hidden="true"></i> Export results
+                  </a></li>
+                  <li><a class="dropdown-item" href="#">
+                    <i class="if if-rss-fill if--sm me-2" aria-hidden="true"></i> Subscribe to feed
+                  </a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Page range and states</h2>
+    <p class="mb-4">The range is compact: first, current &plusmn;1, last, with <code>&hellip;</code> for the gaps. An inert item is a <code>&lt;span class="page-link"&gt;</code> inside <code>li.page-item.disabled</code> — never a disabled <code>&lt;a href&gt;</code>, which stays clickable and focusable (<a href="https://getbootstrap.com/docs/5.3/components/pagination/#disabled-and-active-states">Bootstrap: disabled and active states</a>). The arrows are <code>if-chevron-left</code> / <code>if-chevron-right</code>, inheriting the link&rsquo;s size. The <code>&lt;nav&gt;</code> labels in the demos below carry a suffix only so several bars can sit on this one kit page &mdash; for a real page, take the label from the <a href="#aria">ARIA table</a>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">First page — previous is inert</h3>
+      <div class="ds-demo-body">
+        <nav aria-label="Results pagination, first page">
+          <ul class="pagination pagination-sm">
+            <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+            <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+            <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+            <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+            <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+            <li class="page-item"><a class="page-link" href="?page=18">18</a></li>
+            <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Middle — a gap on both sides</h3>
+      <div class="ds-demo-body">
+        <nav aria-label="Results pagination, middle page">
+          <ul class="pagination pagination-sm">
+            <li class="page-item"><a class="page-link" href="?page=49" aria-label="Previous page"><i class="if if-chevron-left" aria-hidden="true"></i></a></li>
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+            <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+            <li class="page-item"><a class="page-link" href="?page=49">49</a></li>
+            <li class="page-item active"><a class="page-link" href="?page=50" aria-current="page">50</a></li>
+            <li class="page-item"><a class="page-link" href="?page=51">51</a></li>
+            <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+            <li class="page-item"><a class="page-link" href="?page=52">52</a></li>
+            <li class="page-item"><a class="page-link" href="?page=51" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Few pages — every page shown, no gap</h3>
+      <div class="ds-demo-body">
+        <nav aria-label="Results pagination, short list">
+          <ul class="pagination pagination-sm">
+            <li class="page-item"><a class="page-link" href="?page=1" aria-label="Previous page"><i class="if if-chevron-left" aria-hidden="true"></i></a></li>
+            <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+            <li class="page-item active"><a class="page-link" href="?page=2" aria-current="page">2</a></li>
+            <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+            <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">One page — the bar keeps the count, drops the pagination</h3>
+      <div class="ds-demo-body">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <span class="text-muted small" aria-live="polite">Showing 1&ndash;27 of 27 results</span>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item">
+              <label for="pg-sort-single" class="visually-hidden">Sort by</label>
+              <select id="pg-sort-single" class="form-select form-select-sm">
+                <option value="relevance">Relevance</option>
+                <option value="year-desc" selected>Year (new to old)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Repeated bar — long list</h2>
+    <p class="mb-4">A long list repeats the bar under the results so you can page on without scrolling back. The top bar owns the live region; the bottom one repeats the same text as plain status. Each <code>&lt;nav&gt;</code> gets a distinguishing label &mdash; <em>Results pagination (top)</em> / <em>(bottom)</em> (rule A5). Live on the <a href="/templates/biblio-public/public-researcher-detail.html">researcher</a> and <a href="/templates/biblio-public/public-project-detail.html">project</a> detail pages, where the top bar carries the controls and the bottom bar only pages.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">One list, two bars &mdash; distinct nav labels, one live count</h3>
+      <div class="ds-demo-body">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <nav aria-label="Results pagination (top)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?page=8">8</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small" aria-live="polite">Showing 1&ndash;20 of 147 results</span>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item">
+              <label for="pg-sort-top" class="visually-hidden">Sort by</label>
+              <select id="pg-sort-top" class="form-select form-select-sm">
+                <option value="relevance">Relevance</option>
+                <option value="year-desc" selected>Year (new to old)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <p class="alert alert-info my-3">20 result cards render here &mdash; see <a href="/patterns/work-card.html">Work card</a>.</p>
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <nav aria-label="Results pagination (bottom)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?page=8">8</a></li>
+                  <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small">Showing 1&ndash;20 of 147 results</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Backoffice — list footer</h2>
+    <p class="mb-4">In the backoffice list shell the bar is the pinned footer of the scrolling result column: the same <code>bt-toolbar</code> inside <code>u-main__content-footer</code> (see <a href="/patterns/layout-shells.html">Layout shells</a>). Same composition, denser surface. Live on <a href="/templates/biblio-team/curate.html">curate</a> and <a href="/templates/biblio-researcher/search-researcher.html">search-researcher</a>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Footer bar — backoffice surface</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <div class="u-main__content-footer">
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <nav aria-label="Records pagination">
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                    <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted small" aria-live="polite">Showing 1&ndash;20 of 4,831 records</span>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <label for="pg-size-bo" class="visually-hidden">Results per page</label>
+                <select id="pg-size-bo" class="form-select form-select-sm">
+                  <option value="20" selected>20 per page</option>
+                  <option value="50">50 per page</option>
+                  <option value="100">100 per page</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">A&ndash;Z browse bar</h2>
+    <p class="mb-4">Browsing an alphabetical index reuses <code>ul.pagination</code> for the letter row: same affordance, same keyboard behaviour, no second component. It is a browse control, not pagination, so it gets its own label and stays full size &mdash; the letter row and the pagination under it match each other. A letter with no entries is <code>disabled</code>. Live on <a href="/templates/biblio-public/public-researchers.html">public-researchers</a>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Letter index, then pages within the letter</h3>
+      <div class="ds-demo-body">
+
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <nav aria-label="Browse researchers by surname">
+                <ul class="pagination flex-wrap">
+                  <li class="page-item"><a class="page-link" href="?browse=A">A</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=B">B</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=C">C</a></li>
+                  <li class="page-item active"><a class="page-link" href="?browse=D" aria-current="page">D</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=E">E</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=F">F</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=G">G</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=H">H</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=I">I</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=J">J</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=K">K</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=L">L</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=M">M</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=N">N</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=O">O</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=P">P</a></li>
+                  <li class="page-item disabled"><span class="page-link">Q</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=R">R</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=S">S</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=T">T</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=U">U</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=V">V</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=W">W</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=X">X</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=Y">Y</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=Z">Z</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <i class="if if-corner-down-right-line" aria-hidden="true"></i>
+            </div>
+            <div class="bt-toolbar__item">
+              <nav aria-label="Pages within letter D">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;page=49" aria-label="Previous page"><i class="if if-chevron-left" aria-hidden="true"></i></a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;page=1">1</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;page=49">49</a></li>
+                  <li class="page-item active"><a class="page-link" href="?browse=D&amp;page=50" aria-current="page">50</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;page=51">51</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;page=52">52</a></li>
+                  <li class="page-item"><a class="page-link" href="?browse=D&amp;page=51" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small" aria-live="polite">Showing 491&ndash;500 of 517 researchers with a surname starting with D</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3" id="aria">ARIA &mdash; what each part is named</h2>
+    <p class="mb-3">The <code>&lt;nav&gt;</code> label answers &ldquo;which pagination is this?&rdquo;. House rule A5 wants every <code>&lt;nav&gt;</code> on the page distinctly labelled, so the label depends on how many there are:</p>
+
+    <table class="table table-sm align-middle" aria-label="Pagination nav labels by situation">
+      <thead>
+        <tr><th scope="col">Situation</th><th scope="col">Label</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>One list, one bar</td>
+          <td><code>aria-label="Results pagination"</code></td>
+        </tr>
+        <tr>
+          <td>One list, a bar above and below it</td>
+          <td><code>"Results pagination (top)"</code> and <code>"Results pagination (bottom)"</code> &mdash; position is what distinguishes them, and it tells a screen-reader user where they landed</td>
+        </tr>
+        <tr>
+          <td>Two different lists on one page (detail-page tabs, a letter index and its pages)</td>
+          <td>name what is paginated, not where it sits: <code>"Research output pagination"</code>, <code>"Records pagination"</code>, <code>"Pages within letter D"</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="mb-3">The rest is fixed, whatever the situation:</p>
+    <table class="table table-sm align-middle" aria-label="ARIA per part of the bar">
+      <thead>
+        <tr><th scope="col">Part</th><th scope="col">Carries</th><th scope="col">Why</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>The count, on the bar at the head of the list</td>
+          <td><code>aria-live="polite"</code></td>
+          <td>Paging, sorting and filtering all rewrite it; polite announces the new range without interrupting. Not <code>role="status"</code> &mdash; the house rules keep that for confirmations.</td>
+        </tr>
+        <tr>
+          <td>The count, on a repeated bar below the results</td>
+          <td>nothing</td>
+          <td>Same string, already announced by the bar above. Two live regions announce the same change twice.</td>
+        </tr>
+        <tr>
+          <td>Numbered page links and browse letters</td>
+          <td>nothing beyond their text</td>
+          <td>&ldquo;2&rdquo; is a name, and the labelled <code>&lt;nav&gt;</code> plus the list around it are the context WCAG 2.4.4 asks for at AA. Naming them <code>"Page 2"</code> so they stand alone in a links list is 2.4.9 &mdash; AAA, above our target. Do not add it.</td>
+        </tr>
+        <tr>
+          <td>Current page link</td>
+          <td><code>aria-current="page"</code></td>
+          <td><code>li.page-item.active</code> is the visual half; <code>aria-current</code> is the spoken half.</td>
+        </tr>
+        <tr>
+          <td>Arrow links</td>
+          <td><code>aria-label="Previous page"</code> / <code>"Next page"</code>, and <code>aria-hidden="true"</code> on the icon</td>
+          <td>An icon has no accessible name. The label sits on the link, never on the <code>&lt;i&gt;</code>.</td>
+        </tr>
+        <tr>
+          <td>Inert arrows and empty letters (<code>span.page-link</code>)</td>
+          <td>nothing</td>
+          <td>Not focusable, no text, so nothing is announced. <code>aria-disabled</code> would describe a control that is not there.</td>
+        </tr>
+        <tr>
+          <td>The <code>&hellip;</code> gaps</td>
+          <td><code>aria-hidden="true"</code> on the <code>&lt;li&gt;</code></td>
+          <td>A visual shorthand for skipped pages, not a destination.</td>
+        </tr>
+        <tr>
+          <td>Page size and sort <code>&lt;select&gt;</code></td>
+          <td><code>&lt;label class="visually-hidden"&gt;</code></td>
+          <td>The chosen option (&ldquo;50 per page&rdquo;) reads as the value; the label says what the value is for.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Rules</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body">
+        <ul class="mb-0">
+          <li><strong>The <code>&lt;nav&gt;</code> wraps the <code>&lt;ul&gt;</code> only.</strong> The count is a sibling in <code>bt-toolbar__left</code>. Inside the nav it would be read as part of the navigation.</li>
+          <li><strong>The count is one string, visible at every width</strong> &mdash; <em>Showing 1&ndash;50 of 879 results</em>. No hidden copy: <code>visually-hidden</code> would hide &ldquo;Showing&rdquo; from sighted readers too, and pairing it with <code>d-none d-md-inline-block</code> removes it from the accessibility tree below <code>md</code> instead of revealing it. The bar wraps before the sentence does.</li>
+          <li><strong>Inert items are <code>&lt;span class="page-link"&gt;</code> in <code>li.page-item.disabled</code></strong> &mdash; arrows at the ends of the range, letters with no entries, the <code>&hellip;</code> gaps. The gaps also take <code>aria-hidden="true"</code>: they are a visual shorthand, not a destination.</li>
+          <li><strong>Arrows are icons</strong> &mdash; <code>if-chevron-left</code> / <code>if-chevron-right</code>, <code>aria-hidden</code>, sized by the link they sit in. The link carries <code>aria-label="Previous page"</code> / <code>"Next page"</code>: an icon has no accessible name of its own.</li>
+          <li><strong>The current page is <code>li.page-item.active</code> + <code>aria-current="page"</code> on the link.</strong> It keeps its <code>href</code> &mdash; a copyable URL for where you are.</li>
+          <li><strong>Size follows the bar.</strong> A results bar uses <code>pagination-sm</code>; a browse index and its letter pages stay full size. One size per bar, and the two bars of one list match.</li>
+          <li><strong>No <code>mb-0</code> on <code>ul.pagination</code>.</strong> The base reset already zeroes list margins.</li>
+          <li><strong>Every child of <code>__left</code> / <code>__right</code> is a <code>bt-toolbar__item</code>.</strong> For a <code>form-select</code> it is load-bearing: as a direct flex child its <code>width: 100%</code> collapses every select to one shared width and the longest label truncates.</li>
+          <li><strong>Narrow screens stack, they do not scroll.</strong> The bar wraps in reading order &mdash; pagination, count, then the controls, which wrap among themselves below roughly 600px.</li>
+          <li><strong>Changing sort or page size returns to page&nbsp;1</strong> &mdash; a page number only means something against a fixed order (see <a href="/patterns/search-and-filtering.html">Search and filtering</a>).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
