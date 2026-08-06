@@ -5,6 +5,7 @@
 //   A2  <main id="main-content"> on every page template
 //   A5  every <nav> has an aria-label, distinct within the file
 //   B2  icon-only buttons/links carry aria-label
+//   P1-P5  the pagination bar, per patterns/pagination.html
 const fs = require('fs');
 const path = require('path');
 
@@ -55,6 +56,76 @@ for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', '
       problems.push(`${f}:${line}: icon-only <${m[1]}> without accessible name`);
     }
   }
+}
+
+// ── P1-P5 — the pagination bar ───────────────────────────────────────────────
+// No class changed with the v2.11 markup, so check:classes can't see this drift.
+// Files below are known to be on the pre-v2.11 markup: their findings are
+// reported but don't fail. Remove a file from the set when you align it — an
+// entry that no longer drifts fails, so the list can't go stale.
+const PAGINATION_DRIFT = new Set([
+  'templates/biblio-public/public-works.html',
+  'templates/biblio-public/public-researchers.html',
+  'templates/biblio-public/public-researcher-detail.html',
+  'templates/biblio-public/public-project-detail.html',
+  'templates/biblio-public/public-organisation-detail.html',
+  'templates/biblio-researcher/search-researcher.html',
+  'templates/biblio-team/curate.html',
+  'patterns/search-and-filtering.html',
+  'patterns/layout-shells.html',
+]);
+const DISPLAY_UTIL = /\bd-(none|block|inline|inline-block|flex|(sm|md|lg|xl|xxl)-(none|block|inline|inline-block|flex))\b/;
+const known = new Map();
+
+for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', 'getting-started'])) {
+  const html = read(f);
+  const found = [];
+  const at = i => html.slice(0, i).split('\n').length;
+
+  // P1 — visually-hidden is not responsive: a display utility beside it hides
+  // the text from assistive tech at some widths instead of revealing it.
+  for (const m of html.matchAll(/class="([^"]*\bvisually-hidden\b[^"]*)"/g))
+    if (DISPLAY_UTIL.test(m[1]))
+      found.push(`${at(m.index)}: visually-hidden with a display utility ("${m[1]}")`);
+
+  // P2 — an inert page item is a <span>; a disabled <a href> stays clickable.
+  for (const m of html.matchAll(/<li\b([^>]*)>([\s\S]*?)<\/li>/g)) {
+    const cls = (m[1].match(/class="([^"]*)"/) || [])[1] || '';
+    if (/\bpage-item\b/.test(cls) && /\bdisabled\b/.test(cls) && /<a\b/.test(m[2]))
+      found.push(`${at(m.index)}: <a> inside li.page-item.disabled (use <span class="page-link">)`);
+  }
+
+  // P3 — arrows are icons, not text glyphs.
+  for (const m of html.matchAll(/<(a|span)\b[^>]*\bpage-link\b[^>]*>([\s\S]*?)<\/\1>/g))
+    if (/[‹›«»]|&[lr]saquo;|&[lr]aquo;/.test(m[2]))
+      found.push(`${at(m.index)}: text glyph in a page-link (use if-chevron-left/-right)`);
+
+  // P4 — the count is a status, not navigation: it belongs beside the <nav>.
+  for (const m of html.matchAll(/<nav\b[^>]*>([\s\S]*?)<\/nav>/g)) {
+    if (!/class="[^"]*\bpagination\b/.test(m[1])) continue;
+    const outside = m[1].replace(/<ul\b[\s\S]*<\/ul>/, '').replace(/<[^>]*>/g, '')
+      .replace(/&[a-z]+;/g, ' ').trim();
+    if (outside) found.push(`${at(m.index)}: text inside a pagination <nav> ("${outside.slice(0, 40)}")`);
+  }
+
+  // P5 — the base reset already zeroes list margins.
+  for (const m of html.matchAll(/<ul\b[^>]*class="([^"]*)"/g))
+    if (/\bpagination\b/.test(m[1]) && /\bmb-0\b/.test(m[1]))
+      found.push(`${at(m.index)}: redundant mb-0 on ul.pagination`);
+
+  if (!found.length) continue;
+  if (PAGINATION_DRIFT.has(f)) { known.set(f, found); continue; }
+  problems.push(...found.map(p => `${f}:${p}`));
+}
+
+for (const f of PAGINATION_DRIFT)
+  if (!known.has(f)) problems.push(`${f}: aligned — remove it from PAGINATION_DRIFT in this script`);
+
+if (known.size) {
+  const n = [...known.values()].reduce((a, v) => a + v.length, 0);
+  console.log(`check-a11y: pre-v2.11 pagination markup — ${n} finding(s) in ${known.size} known file(s), npm run check:pagination for the list.`);
+  if (process.argv.includes('--drift'))
+    for (const [f, found] of known) console.log(`  ${f}\n    ` + found.join('\n    '));
 }
 
 if (problems.length) {
