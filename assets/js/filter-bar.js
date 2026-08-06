@@ -1,7 +1,6 @@
 /**
- * filter-bar.js — generic chip + editor filter bar (the filter picker pattern,
- * patterns/filter-picker.html). One engine, one config per bar; it self-discovers
- * which bars are on the page by their id prefix and wires each independently.
+ * filter-bar.js — chip + editor filter bar (patterns/filter-picker.html).
+ * See docs/JAVASCRIPT.md.
  *
  * Bars: works (wf-), researchers (rdir-), projects (pdir-).
  * Prototype-only: chips are client-side and do not refilter the list yet.

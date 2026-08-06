@@ -1,20 +1,11 @@
 /**
- * suggest-panel.js
- * Show/hide and keyboard behaviour for the autocomplete suggestion panel.
+ * suggest-panel.js — show/hide and keyboard behaviour for the autocomplete panel.
+ * See docs/JAVASCRIPT.md.
  *
  * Requires in the host page:
  *   #q                — the search input
  *   #suggest-panel    — the panel wrapper (must exist in DOM at page load)
  *   #suggest-wrapper  — the container (used for outside-click detection)
- *
- * The panel inner content is swapped by HTMX on every keyup.
- * This script handles visibility, result-row keyboard navigation, and the
- * type-filter tabs rendered inside the panel.
- *
- * Row routing — "type decides":
- *   Every row navigates via its href. People → profile, Works → detail,
- *   Org → org detail page, Project → project detail page, Keyword → filtered
- *   search (/search?keyword=). The box navigates; it never applies filters.
  */
 
 (function () {

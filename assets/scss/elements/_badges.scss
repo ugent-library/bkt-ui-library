@@ -1,17 +1,6 @@
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
 
-/*
-  Colour: use Bootstrap's text-bg-* helper, not bg-* + text-*. text-bg-*
-  pairs background with a contrasting foreground in one class; the overrides
-  below swap in Booktower tokens. Bootstrap's .text-bg-* helper sets its
-  background and (auto-contrast) colour with !important, so the overrides must
-  use !important too — otherwise Bootstrap's stock colours win. Icons inherit
-  colour from the badge, so no per-icon rule is required.
-
-  All solid badges carry white text; backgrounds are stepped dark enough to
-  clear WCAG AA (4.5:1) against white.
-*/
-
+/* Colour with text-bg-*, never bg-* + text-* — see CLASS-USAGE.md */
 .badge {
   --bs-badge-border-radius: var(--bt-radius-pill);
   --bs-badge-font-size: var(--bt-text-xs);
@@ -56,7 +45,7 @@
   color: var(--bt-gray-700) !important;
 }
 
-/* Soft variants — pale background, dark on-tone text. No Bootstrap equivalent. */
+/* Soft variants — no Bootstrap equivalent */
 .badge.text-bg-primary-light {
   background: var(--bt-blue-100) !important;
   color: var(--bt-blue-900) !important;

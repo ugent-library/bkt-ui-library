@@ -1,17 +1,8 @@
 /**
- * Booktower UI Library — Dev Server
- * Pure Node.js, zero external dependencies.
+ * Booktower UI Library — dev server. Pure Node.js, zero external dependencies.
+ * See docs/SERVER.md.
  *
- * - Serves static files from project root
- * - Scans folder structure → builds nav automatically
- * - Templates are grouped by subdirectory (one subdir = one app), collapsible
- * - Injects shell chrome into every HTML page
- * - Live reload via minimal WebSocket implementation
- * - HTMX partial responses: ?partial=true strips shell
- * - Template HTML view: ?view=html shows source with copy button
- * - Template states: @states meta + <!-- @state: name --> blocks + ?state= param
- *
- * Exports the bare request handler. `node server.js` additionally listens and
+ * Exports the bare request handler; `node server.js` additionally listens and
  * watches files; the Vercel function (api/index.js) imports the handler alone.
  * See the Deployment section of README.md.
  *

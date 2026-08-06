@@ -8,33 +8,6 @@
    Apply data-surface="public" or data-surface="backoffice" to <body>
    or any layout container. Mix within a page if needed.
 
-   Active surface tokens:
-     --s-heading-font          font-family for headings
-     --s-heading-weight        font-weight for headings
-     --s-heading-leading       line-height for headings
-     --s-heading-color         heading colour
-     --s-body-color            body text colour
-     --s-body-font             font-family for body text
-     --s-body-size             base font size
-     --s-body-leading          line-height for body text
-     --s-lead-font             font-family for .lead
-     --s-display-weight        font-weight for .display-*
-     --s-display-leading       line-height for .display-*
-     --s-bg                    page background colour
-     --s-link-color            link colour
-     --s-link-hover-color      link hover colour
-     --s-bg-dark               .bt-bg-dark background
-     --s-text-muted            .text-muted colour
-     --s-topbar-height         application topbar height
-
-   TODO — to be activated as components are built:
-     --s-section-gap       gap between major page sections
-     --s-card-pad          padding inside cards
-     --s-card-radius       border-radius for cards
-     --s-card-shadow       default card shadow
-     --s-card-shadow-hover card shadow on hover/focus
-     --s-input-pad-y/x     form input padding
-     --s-btn-pad-y/x       button padding
 */
 
 
@@ -51,7 +24,7 @@ body,
   --s-body-color:           var(--bt-blue-900);
   --s-text-muted:           var(--bt-text-muted);
   --s-body-font:            var(--bt-font-sans);
-  --s-body-size:            0.9375rem;           /* 15px — compact for a data-dense tool */
+  --s-body-size:            0.9375rem;
   --s-body-leading:         1.5;
   --s-lead-font:            var(--bt-font-sans);
   --s-lead-color:           var(--bt-blue-900);
@@ -81,21 +54,21 @@ body,
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
 [data-surface="public"] {
-  --s-heading-weight:       700;                /* confident, editorial */
+  --s-heading-weight:       700;
   --s-heading-color:        var(--bt-blue-800);
-  --s-heading-leading:      1.05;               /* tight — typeset, deliberate */
+  --s-heading-leading:      1.05;
   --s-body-color:           var(--bt-blue-900);
-  --s-body-size:            1rem;               /* 16px — reading comfort */
-  --s-body-leading:         1.6;                /* generous contrast against tight headings */
+  --s-body-size:            1rem;
+  --s-body-leading:         1.6;
   --s-lead-color:           var(--bt-blue-800);
   --s-display-weight:       700;
-  --s-display-leading:      1.0;                /* monumental at large size */
-  --s-bg:                   var(--bt-bg-paper); /* warm off-white, faintly rosy — editorial, not clinical */
+  --s-display-leading:      1.0;
+  --s-bg:                   var(--bt-bg-paper);
   --s-link-color:           var(--bt-blue-800);
   --s-link-hover-color:     var(--bt-blue-600);
   --s-bg-dark:              var(--bt-blue-800);
   --s-topbar-height:        var(--bt-sp-16);
-  --s-text-muted:           var(--bt-blue-gray-550); /* cool muted — gray with a hint of brand blue */
+  --s-text-muted:           var(--bt-blue-gray-550);
   --bs-secondary-color:     var(--s-text-muted);
   --bs-secondary-color-rgb: var(--bt-blue-gray-550-rgb);
 }

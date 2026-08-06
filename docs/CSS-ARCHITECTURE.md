@@ -1,5 +1,8 @@
 # CSS architecture and authoring rules
 
+> Comment conventions for this area: `docs/CODE-COMMENTS.md`.
+
+
 The full rulebook for writing CSS in this repo: what Bootstrap owns, where styles live, how classes are named, and how to override safely. `docs/CLASSES.md` (generated) says what exists; `docs/CLASS-USAGE.md` says how to compose it; this file says how to add to it. Patterns themselves are documented in the kit — not here.
 
 ---

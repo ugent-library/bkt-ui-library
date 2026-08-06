@@ -1,12 +1,7 @@
 /**
- * filter-sheet.js — mobile: fold the works filter-bar into the Filters offcanvas.
+ * filter-sheet.js — folds the works filter-bar into the mobile Filters offcanvas.
+ * See docs/JAVASCRIPT.md.
  *
- * At <lg it relocates the picker list, editor, and clear-all into the sheet, turns the
- * record dimensions into a drill-in list (each row shows its applied value + a chevron),
- * and makes tapping a row swap the sheet to that filter's editor with a back button;
- * Apply or back returns to the list. Desktop keeps the toolbar picker/editor untouched.
- *
- * One filter-bar.js instance, one state — moving the nodes preserves its handlers.
  * Prototype-only; rides on filter-bar.js (wf-).
  */
 (function () {
