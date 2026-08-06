@@ -1,5 +1,4 @@
-// Vercel function entry. The deployment runs the same request handler as
-// `npm run dev`; only the listening socket and live reload are left behind.
+// Vercel function entry. See README.md.
 const handler = require('../server.js');
 
 // The catch-all rewrite in vercel.json passes the requested path as __path,

@@ -39,9 +39,14 @@ under `prefers-reduced-motion`, or a value another file reads, is the case.
 it. If a reader can only understand it by knowing the diff — what was tried, what
 broke, what a value used to be — it belongs in the commit message.
 
-**Disabled code.** Do not put `//` in front of rules you might want back. Nobody after
-you can tell whether it is waiting for something or simply forgotten, so it stays
-forever. Delete it; the commit you delete it in is the record.
+**Disabled code — in `assets/` and `shell/`.** Do not put `//` in front of rules you
+might want back. Nobody after you can tell whether it is waiting for something or simply
+forgotten, so it stays forever. Delete it; the commit you delete it in is the record.
+
+This does not apply to `templates/` and the kit pages. Those are a prototype: blocking
+markup out to finish in a later phase is how the work gets done, and a rule that made
+you delete it would cost more than the clutter. `npm run check:comments` only looks at
+`assets/` and `shell/` for this reason.
 
 **Restating the declaration.** If the comment can be derived by reading the three
 lines under it, it is noise. This is the most common failure and no linter catches it.
