@@ -57,9 +57,14 @@ an icon **with a visible label** inside that badge: `· if-eye Public` or
 plain `bt-work-card__meta-item` ("Open access", "Restricted access", "Embargo until
 <date>"), never as a badge on the backoffice.
 
-Open questions: what a researcher sees between submit and review; whether a returned
-record stays public; what record-level `restricted` (institution) means on the public
-site — for the issues discussion, not parked here.
+Record-level `restricted` (M, 2026-08-06): a work that must be deposited but whose
+metadata cannot be revealed publicly — recorded, not exposed. On cards it renders as
+"Not public"; there is no third rendering. Open: the value's *name* — `restricted`
+collides with restricted file access; a raven naming question.
+
+Open questions: what a researcher sees between submit and review; and — since
+visibility and workflow are separate axes, returning a record does not change its
+visibility — whether policy wants an automatic visibility flip on return.
 
 ### Messages on backoffice cards
 

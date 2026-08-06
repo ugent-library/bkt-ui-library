@@ -8,7 +8,7 @@ title: "[area] "
 Title: [area] verb + deliverable + scope, e.g.
 "[public] Align work detail page with Booktower prototype: Journal Article"
 
-House rules: docs/WRITING-RULES.md — do not invent, personas, open
+House rules: docs/SPEC-WRITING.md — do not invent, personas, open
 questions, what-not-how, point don't paste. Template-specific:
 
 - The prototype is the spec. If the issue text and the prototype
@@ -99,8 +99,11 @@ View at `localhost:3111/<template path>`
 
 ## Open questions
 
-<!-- Per docs/WRITING-RULES.md: only what genuinely needs someone else —
-     curator or reviewer policy, calls belonging to another team, what the
-     dev settles while implementing, and "does raven model this, and if not
-     do we build it or drop it?". Log the question with its concrete
-     options. Anything strategic goes to docs/. Delete if none. -->
+<!-- Per docs/SPEC-WRITING.md: only what genuinely needs someone else —
+     curator or reviewer policy, calls belonging to another team, and "does
+     raven model this, and if not do we build it or drop it?". Leave out
+     questions the dev team resolves in implementation whether or not we ask
+     (where a config key lives, which mechanism serves a view): a question
+     earns its place only when the answer changes what we design or what a
+     user sees (M, 2026-08-06). Log the question with its concrete options.
+     Anything strategic goes to docs/. Delete if none. -->

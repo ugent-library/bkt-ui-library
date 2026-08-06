@@ -2,7 +2,7 @@
 
 *Draft for the <team> · Evidence: [`REPORT-….md`](…) · Design detail: [`DESIGN-….md`](…)*
 
-<!-- House rules: docs/WRITING-RULES.md — do not invent, personas, open questions,
+<!-- House rules: docs/SPEC-WRITING.md — do not invent, personas, open questions,
      what-not-how. Calibration and anti-patterns: the product-bet-writer skill.
      One to two pages. Save as notes/BET-<topic>.md.
      Delete these comments as you fill them in. -->

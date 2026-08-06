@@ -86,7 +86,7 @@
 
           <!-- Journal info — title links to the ISSN-scoped works search (Identifier chip),
                Rule 3: a journal names a set of works. Harvard card format:
-               docs/WORK-CARD-REFERENCE-STYLES.md. -->
+               docs/wip/WORK-CARD-REFERENCE-STYLES.md. -->
           <p class="mb-4">
             (<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.
           </p>
@@ -421,7 +421,7 @@
            Top 3 matches by keyword similarity. Similar keywords are highlighted in the list. Clicking the "More" link takes the user to a filtered search results page with all related research output. TBD: can we filter by "or" in the search results page?-->
           <section aria-labelledby="related-heading" class="mb-5">
             <h2 id="related-heading" class="h4 mb-3">Related research output</h2>
-            <!-- Renders server-side: public content is never lazy-loaded (crawlers do not run HTMX).
+            <!-- Renders server-side: public information renders server-side: JS rendering is not guaranteed for scholarly crawlers and harvesters. Interaction-only widgets may load on demand.
                  Content generated from server/content/related-works.js. raven note: similarity is an
                  expensive query — how to serve it without lazy-load (cache, precompute) is an open
                  question for raven, recorded in the #125 discussion. -->

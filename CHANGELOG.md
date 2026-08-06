@@ -154,7 +154,7 @@ Behaviour changes:
   (search-advanced-builder embed preview) dropped `.card`.
 - Access state on cards is always a badge (DOMAIN-VOCABULARY mapping); the
   bordered-item and bare-sentence renderings are gone from public cards.
-- Public `__pub` line follows `docs/WORK-CARD-REFERENCE-STYLES.md` (Harvard,
+- Public `__pub` line follows `docs/wip/WORK-CARD-REFERENCE-STYLES.md` (Harvard,
   `<cite>`, linked `<time>` year); `·` separator spans removed on public.
 
 Swept: search-result-cards.js, public-works.html, public-project-detail.html,
@@ -274,7 +274,7 @@ meta line version · access · format · size).
 
 ## Bootstrap gap audit (v2.2, 2026-07-03)
 
-Full findings in `docs/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
+Full findings in `docs/analysis/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
 
 **Fixed bugs:** `.form-select` caret restored (a `background:` shorthand had erased it); `bt-blank-slate` compiled again (its partial was never `@use`d); `--bs-info-rgb` matched to `--bt-blue`; disabled/toggled primary buttons no longer fall back to stock Bootstrap blue; slim-sidebar badge counts hide properly; reduced-motion no longer makes spinners blur.
 
@@ -367,7 +367,7 @@ is unchanged.
 
 ## Status key
 
-**Note:** This changelog tracks migration from `old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in the generated `docs/CLASSES.md` (usage notes in `AGENTS.md`).
+**Note:** This changelog tracks migration from `docs/analysis/old-ui-kit-css/main.css` only. Classes that are new to v2 with no old-system equivalent are not listed here — they live in the generated `docs/CLASSES.md` (usage notes in `AGENTS.md`).
 
 | Symbol | Meaning |
 |--------|---------|

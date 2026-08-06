@@ -1,5 +1,5 @@
 // Handover coverage: every custom class block in the old UI kit
-// (docs/old-ui-kit-css/main.css, prefixes bc-/c-/u-) must be mentioned in
+// (docs/analysis/old-ui-kit-css/main.css, prefixes bc-/c-/u-) must be mentioned in
 // CHANGELOG.md's OLD→v2 tables, so old apps can look up every class they use
 // and raven can trust the migration map.
 // Reports gaps; exits 1 when any exist. Not yet part of `npm test` — wire it
@@ -10,7 +10,7 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 
-const oldCss = read('docs/old-ui-kit-css/main.css');
+const oldCss = read('docs/analysis/old-ui-kit-css/main.css');
 const changelog = read('CHANGELOG.md');
 
 const blocks = new Set();

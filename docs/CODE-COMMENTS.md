@@ -1,7 +1,7 @@
 # Code comments
 
 Applies to SCSS, JS and HTML in this repo. Prose in bets, issues and design docs
-follows `WRITING-RULES.md` instead.
+follows `SPEC-WRITING.md` instead.
 
 **The default is no comment.** Code that needs prose to be readable usually needs
 better names or smaller rules. A comment is a claim that the code alone is not

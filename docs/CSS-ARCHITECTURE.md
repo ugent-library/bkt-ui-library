@@ -37,7 +37,7 @@ If you proceed with a new class, state in a comment: which Bootstrap component y
 
 ## Overriding Bootstrap safely
 
-Three rules, each earned by a real bug (see `docs/AUDIT-BOOTSTRAP-GAPS.md`):
+Three rules, each earned by a real bug (see `docs/analysis/AUDIT-BOOTSTRAP-GAPS.md`):
 
 **Feed variables, don't fight selectors.** Where a `--bs-*` component variable exists, set it — you inherit Bootstrap's state handling (`:hover`, `.active`, `btn-check:checked`, `:disabled`) instead of re-implementing part of it. Verify the variable exists in the dist first; several past overrides targeted variables that were never real.
 

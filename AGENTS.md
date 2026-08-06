@@ -48,7 +48,7 @@ When sources disagree, trust in this order:
 3. The contracts — `docs/ACCESSIBILITY.md`, `docs/RENDERED-HTML-CONTRACT.md`, raven's `docs/public-site-semantics.md`
 4. Kit pages and prototype templates as canonical examples
 5. The guides — this file and the rest of `docs/`
-6. Historical audits and `CHANGELOG.md` — findings at a point in time, never the current contract
+6. Historical audits (`docs/analysis/`) and `CHANGELOG.md` — findings at a point in time, never the current contract. Shared drafts live in `docs/wip/` — visible, not yet contracts.
 
 ---
 
@@ -89,6 +89,7 @@ When a new session begins on this project, execute these steps before writing an
    | JavaScript | `docs/JAVASCRIPT.md` — rules, file registry, event contract, loading order |
    | Kit server behaviour — template states, mock endpoints | `docs/SERVER.md` |
    | Creating or changing a kit doc page (`foundations/`, `elements/`, `patterns/`) | `docs/KIT-PAGES.md` |
+   | Writing a bet, issue, or design doc | `docs/SPEC-WRITING.md` — the house rules for all specs |
    | Drafting an implementation issue | `docs/ISSUE-TEMPLATE.md` + the `biblio-issue-writer` skill; raven's `AGENTS.md` owns the issue → branch → commit → PR chain |
    | Writing or reviewing a product bet | `docs/PRODUCT-BET-TEMPLATE.md` + the `product-bet-writer` skill |
    | A field, status, or entity that might need modelling | raven is the source of truth — check its schema and catalog docs (`docs/metadata-*.md` in the raven repo) before inventing a concept here |
