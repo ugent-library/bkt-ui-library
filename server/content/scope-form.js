@@ -40,14 +40,14 @@ module.exports = function renderScopeForm({ scoped = true, names = ['Faculty of 
   ${summary}
   <section aria-labelledby="org-scope-heading" class="bg-white rounded-3 bt-border mb-4">
     <div class="px-4 py-3 border-bottom">
-      <h2 id="org-scope-heading" class="h6 fw-semibold mb-0">Organisations</h2>
+      <h2 id="org-scope-heading" class="h6 fw-semibold mb-0">Organizations</h2>
       <p class="text-muted small mb-0 mt-1">
         Add one or more faculties, departments, or research groups.
       </p>
     </div>
     ${renderScopeList(names)}
     <div class="px-4 py-3">
-      <label for="org-search" class="form-label small">Add an organisation</label>
+      <label for="org-search" class="form-label small">Add an organization</label>
       <div class="position-relative">
         <input
           type="search"
@@ -66,12 +66,12 @@ module.exports = function renderScopeForm({ scoped = true, names = ['Faculty of 
         <div id="org-suggest"
           class="position-absolute start-0 end-0 top-100 bg-white border rounded-3 shadow mt-1 overflow-hidden"
           role="listbox"
-          aria-label="Organisation suggestions"
+          aria-label="Organization suggestions"
           hx-on::after-swap="this.hidden = this.textContent.trim().length === 0; document.getElementById('org-search')?.setAttribute('aria-expanded', this.hidden ? 'false' : 'true')"
           hidden></div>
       </div>
       <span id="org-suggest-indicator" class="htmx-indicator text-muted small mt-1 d-block" aria-live="polite">
-        Searching organisations&hellip;
+        Searching organizations&hellip;
       </span>
     </div>
   </section>

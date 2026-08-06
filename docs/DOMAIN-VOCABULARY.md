@@ -11,7 +11,7 @@ The central entity. A publication, dataset, software, or other research output p
 
 - Stored as a raven record: a header envelope (id, type, `visibility`, `deposit_status`, timestamps) plus source-partitioned fields that reconcile into one projection (`raven/docs/architecture-overview.md`)
 - Has a `kind` (see Work kind), a `deposit_status`, and a `visibility` (see Work status — two axes)
-- The UI renders the reconciled projection with relations resolved (contributors, files, organisations, projects) — templates never join
+- The UI renders the reconciled projection with relations resolved (contributors, files, organizations, projects) — templates never join
 - A Work that never went public can be hard-deleted; once public it is only ever soft-deleted into a tombstone (see Deletion, withdrawal, retraction)
 
 ### Work kind
@@ -111,7 +111,7 @@ Ordered by `pos` (fracdex) — order is semantically meaningful (author order on
 
 In the UI: rendered in `bt-work-card__authors` on cards, and as the editable people list in the deposit flow. UGent-affiliated contributors are distinguished from external ones.
 
-### Organisation
+### Organization
 An institutional entity (faculty, department, research group, university). Hierarchical — an org can be `part_of` another, with temporal bounds on that relationship.
 
 In the UI: shown as metadata on the detail page sidebar, as affiliation labels on contributors in the deposit flow, and as a facet filter in the backoffice list.
@@ -132,7 +132,7 @@ In the UI: not directly visible to end users, but determines which action button
 ### Candidate
 A possible Work collected by an automated harvester (Web of Science, ORCID, arXiv, etc.). Not a Work until explicitly accepted by a curator or the submitting researcher.
 
-In the UI: the "Suggestions" section in the backoffice sidebar. Shown as a review queue — accept or reject. The badge count on "Suggestions" reflects pending candidates matched to the current user's works or organisation.
+In the UI: the "Suggestions" section in the backoffice sidebar. Shown as a review queue — accept or reject. The badge count on "Suggestions" reflects pending candidates matched to the current user's works or organization.
 
 ### Revision and events
 One transaction boundary in the audit trail. Every record-touching write runs through raven's `Revise`; one revision id stamps every event the write produced (`record_created`, `record_updated`, `deposit_submitted`, `deposit_returned`, `deposit_reviewed`, `visibility_changed`, `file_embargo_lifted`, …). Events carry the actor and an optional free-text comment — the workflow back-and-forth rides on them.
@@ -217,8 +217,8 @@ Two distinct user contexts. Must never be conflated. Determined by `data-surface
 ### ~~Researcher profile page (public)~~ ✓ `templates/biblio-public/public-researcher-detail.html`
 A public-facing page for a `PersonIdentity`. Shows: name, affiliation(s), linked works, ORCID and other identifiers. The A–Z researcher directory that links to these is `public-researchers.html`.
 
-### ~~Organisation page (public)~~ ✓ `templates/biblio-public/public-organisation-detail.html`
-A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. The organisation directory that links to these is `public-organisations.html`.
+### ~~Organization page (public)~~ ✓ `templates/biblio-public/public-organisation-detail.html`
+A landing page for a faculty, department, or research group. Shows: name, hierarchy (parent org), linked works, linked projects, linked people. The organization directory that links to these is `public-organisations.html`.
 
 ### ~~Project page (public)~~ ✓ `templates/biblio-public/public-project-detail.html`
 A page for a funded research project. In progress. Shows: title, funder, period, PI and members, linked works. Connects to the Research Explorer. The project directory that links to these is `public-projects.html`; its list cards reuse the Projects-panel card source from the researcher detail prototype.
@@ -230,7 +230,7 @@ A named set of Works, editable by curators. Used for OAI-PMH sets, open access s
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
 
 ### Candidate review (backoffice) — not yet prototyped
-The inbox for harvested Work candidates. Filtering by source (WoS, ORCID), confidence, person, and organisation. Accept/reject actions with a reason. Reducing manual registration burden for researchers is an explicit UB2030 goal — this interface is doing strategic work.
+The inbox for harvested Work candidates. Filtering by source (WoS, ORCID), confidence, person, and organization. Accept/reject actions with a reason. Reducing manual registration burden for researchers is an explicit UB2030 goal — this interface is doing strategic work.
 
 ### ~~Curator review queue (backoffice)~~ ✓ `templates/biblio-team/`
 The curator-side view of the `submitted → public` workflow. Dashboard, queue overview (Wachtrij), single-record review with inline editing and AI suggestions, team health overview. Distinct from the researcher deposit flow.
@@ -281,8 +281,8 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | `public-work-detail.html` | Work detail page |
 | `public-researchers.html` | Researcher directory (A–Z browse) |
 | `public-researcher-detail.html` | Researcher profile (PersonIdentity) |
-| `public-organisations.html` | Organisation directory |
-| `public-organisation-detail.html` | Organisation landing page |
+| `public-organisations.html` | Organization directory |
+| `public-organisation-detail.html` | Organization landing page |
 | `public-project-detail.html` | Project detail page (in progress) |
 | `public-projects.html` | Project directory |
 

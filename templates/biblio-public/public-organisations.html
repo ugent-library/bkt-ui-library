@@ -1,7 +1,7 @@
-<!-- @title: Organisations — Biblio UGent -->
+<!-- @title: Organizations — Biblio UGent -->
 <!-- @surface: public -->
 <!--
-  Public organisation directory — institutional org tree (index, not detail).
+  Public organization directory — institutional org tree (index, not detail).
   Companion to public-researchers.html. The problem is the inverse of person
   browse: hierarchical data, not flat. So NO A–Z bar and NO pagination.
 
@@ -55,23 +55,23 @@
         <nav aria-label="Breadcrumb">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="public-index.html">Biblio UGent</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Organisations</li>
+            <li class="breadcrumb-item active" aria-current="page">Organizations</li>
           </ol>
         </nav>
 
-        <h1 class="mb-4">Organisations</h1>
+        <h1 class="mb-4">Organizations</h1>
 
         <!-- ── Scoped search + typeahead ──────────────────────────────────────
              Searches WITHIN this directory only. The typeahead below is a
              working prototype: directory-search.js filters the inline example
              dataset as you type (it does not filter the org tree below). In
-             production this becomes GET /organisations/suggest?q=&hellip; -->
-        <form role="search" aria-label="Search organisations"
+             production this becomes GET /organizations/suggest?q=&hellip; -->
+        <form role="search" aria-label="Search organizations"
           action="/templates/biblio-public/public-organisations.html">
-          <div class="position-relative" id="suggest-wrapper" data-directory-search="organisations">
+          <div class="position-relative" id="suggest-wrapper" data-directory-search="organizations">
 
             <label for="q" class="visually-hidden">
-              Search organisations by name, ID, or type
+              Search organizations by name, ID, or type
             </label>
 
             <div class="input-group input-group-lg mb-3">
@@ -82,7 +82,7 @@
                 name="q"
                 class="form-control"
                 value="Bioscience"
-                placeholder="Search organisations by name, code, or type&hellip;"
+                placeholder="Search organizations by name, code, or type&hellip;"
                 autocomplete="off"
                 role="combobox"
                 aria-autocomplete="list"
@@ -93,7 +93,7 @@
 
             <!-- Typeahead panel — populated client-side by directory-search.js. -->
             <div id="suggest-panel" class="bt-suggest-panel"
-              role="listbox" aria-label="Organisation suggestions" hidden></div>
+              role="listbox" aria-label="Organization suggestions" hidden></div>
 
             <!-- Example dataset powering the typeahead (prototype only). -->
             <script type="application/json" data-suggest-source>
@@ -136,8 +136,8 @@
           </div>
         </div>
 
-        <ul class="list-group gap-3" aria-label="Organisation tree">
-          <li class="card" data-organisation-type="university">
+        <ul class="list-group gap-3" aria-label="Organization tree">
+          <li class="card" data-organization-type="university">
             <div class="card-header ps-4">
               <div class="d-flex align-items-start gap-3">
                 <span class="bt-avatar bt-avatar--large bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
@@ -162,7 +162,7 @@
             </div>
             <div class="card-body p-0 pb-3">
               <ul class="list-unstyled">
-                <li data-organisation-type="faculty">
+                <li data-organization-type="faculty">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bt-avatar--large bg-faculty-lw flex-shrink-0" aria-hidden="true">
@@ -189,7 +189,7 @@
                     </div>
                   </div>
                   <ul id="dept-lw" class="list-unstyled ms-5 ps-5 border-start mb-2 collapse">
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -201,7 +201,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -213,7 +213,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -225,7 +225,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -239,7 +239,7 @@
                     </li>
                   </ul>
                 </li>
-                <li data-organisation-type="faculty">
+                <li data-organization-type="faculty">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bt-avatar--large bg-faculty-we flex-shrink-0" aria-hidden="true">
@@ -266,7 +266,7 @@
                     </div>
                   </div>
                   <ul id="dept-we" class="list-unstyled ms-5 ps-5 border-start mb-2 collapse">
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -278,7 +278,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -290,7 +290,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -302,7 +302,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -314,7 +314,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -328,7 +328,7 @@
                     </li>
                   </ul>
                 </li>
-                <li data-organisation-type="faculty">
+                <li data-organization-type="faculty">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bt-avatar--large bg-faculty-la flex-shrink-0" aria-hidden="true">
@@ -355,7 +355,7 @@
                     </div>
                   </div>
                   <ul id="dept-la" class="list-unstyled ms-5 ps-5 border-start mb-2 collapse">
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -367,7 +367,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -379,7 +379,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -391,7 +391,7 @@
                         </div>
                       </div>
                     </li>
-                    <li data-organisation-type="department" class="pt-2 pb-3">
+                    <li data-organization-type="department" class="pt-2 pb-3">
                       <div class="row me-2">
                         <div class="col-12 col-lg-6 d-flex ps-0">
                           <div>
@@ -408,7 +408,7 @@
               </ul>
             </div>
           </li>
-          <li class="card" data-organisation-type="university_hospital">
+          <li class="card" data-organization-type="university_hospital">
             <div class="card-header ps-4 border-bottom-0">
               <div class="d-flex align-items-start gap-3">
                 <span class="bt-avatar bt-avatar--large bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
@@ -431,7 +431,7 @@
               </div>
             </div>
           </li>
-          <li class="card" data-organisation-type="branch_campus">
+          <li class="card" data-organization-type="branch_campus">
             <div class="card-header ps-4">
               <div class="d-flex align-items-start gap-3">
                 <span class="bt-avatar bt-avatar--large bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
@@ -459,7 +459,7 @@
             </div>
             <div class="card-body p-0 pb-3">
               <ul class="list-unstyled">
-                <li data-organisation-type="department" class="py-1">
+                <li data-organization-type="department" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar flex-shrink-0 me-1 ms-1" aria-hidden="true">
@@ -481,7 +481,7 @@
               </ul>
             </div>
           </li>
-          <li class="card" data-organisation-type="university_college">
+          <li class="card" data-organization-type="university_college">
             <div class="card-header ps-4">
               <div class="d-flex align-items-start gap-3">
                 <span class="bt-avatar bt-avatar--large bt-avatar--outline bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
@@ -500,7 +500,7 @@
             </div>
             <div class="card-body p-0 pb-3">
               <ul class="list-unstyled">
-                <li data-organisation-type="university_college" class="py-1">
+                <li data-organization-type="university_college" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
@@ -520,7 +520,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-organisation-type="university_college" class="py-1">
+                <li data-organization-type="university_college" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
@@ -540,7 +540,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-organisation-type="university_college" class="py-1">
+                <li data-organization-type="university_college" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
@@ -563,7 +563,7 @@
               </ul>
             </div>
           </li>
-          <li class="card" data-organisation-type="research_center">
+          <li class="card" data-organization-type="research_center">
             <div class="card-header ps-4">
               <div class="d-flex align-items-start gap-3">
                 <span class="bt-avatar bt-avatar--large bt-avatar--outline bt-avatar--square flex-shrink-0 mt-3" aria-hidden="true">
@@ -582,7 +582,7 @@
             </div>
             <div class="card-body p-0 pb-3">
               <ul class="list-unstyled">
-                <li data-organisation-type="research_center" class="py-1">
+                <li data-organization-type="research_center" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
@@ -602,7 +602,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-organisation-type="research_center" class="py-1">
+                <li data-organization-type="research_center" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">
@@ -622,7 +622,7 @@
                     </div>
                   </div>
                 </li>
-                <li data-organisation-type="research_center" class="py-1">
+                <li data-organization-type="research_center" class="py-1">
                   <div class="p-3 ps-4">
                     <div class="d-flex">
                       <span class="bt-avatar bg-white flex-shrink-0 me-1 ms-1" aria-hidden="true">

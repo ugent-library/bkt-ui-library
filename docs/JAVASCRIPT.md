@@ -1,5 +1,8 @@
 # JavaScript architecture
 
+> Comment conventions for this area: `docs/CODE-COMMENTS.md`.
+
+
 The Booktower UI Library uses vanilla JavaScript with custom events for component communication. No framework dependencies.
 
 ---
@@ -142,7 +145,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `directory-search.js`
 
-**Purpose:** Scoped typeahead for a single directory page (Researchers, Organisations). Filters an inline JSON dataset client-side and renders suggestion rows; does not filter the page's result list.
+**Purpose:** Scoped typeahead for a single directory page (Researchers, Organizations). Filters an inline JSON dataset client-side and renders suggestion rows; does not filter the page's result list.
 
 **Loaded by:** `public-researchers.html`, `public-organisations.html`, `public-projects.html`
 
@@ -163,9 +166,9 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
 
 **Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author, Organisation, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
-- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organisation, Current or alumni.
-- `pdir-` — project directory (`public-projects.html`, bar inline): Organisation, Status, Year (range).
+- `wf-` — public works (`public-works.html`): Author, Organization, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
+- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization, Current or alumni.
+- `pdir-` — project directory (`public-projects.html`, bar inline): Organization, Status, Year (range).
 
 **Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
 
@@ -178,7 +181,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 **Dispatches:** nothing
 
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organisation tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organization tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
 
 ---
 
@@ -227,7 +230,7 @@ as rendered while the sentence updates.
 
 ### `org-tree.js`
 
-**Purpose:** Expand/collapse-all toggle for the public organisation tree. Toggles every `.collapse` inside the `[aria-label="Organisation tree"]` region via Bootstrap's Collapse API and keeps the button's `aria-expanded` and label text in sync.
+**Purpose:** Expand/collapse-all toggle for the public organization tree. Toggles every `.collapse` inside the `[aria-label="Organization tree"]` region via Bootstrap's Collapse API and keeps the button's `aria-expanded` and label text in sync.
 
 **Loaded by:** `templates/biblio-public/public-organisations.html`
 

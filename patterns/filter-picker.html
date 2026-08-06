@@ -16,7 +16,7 @@
     <p>The full flow, end to end:</p>
     <ol class="small">
       <li>User clicks <strong>Add filter</strong> → Bootstrap dropdown opens showing the picker</li>
-      <li>User clicks a filter item (e.g. <em>Organisation</em>) → dropdown closes, editor panel appears over the result list</li>
+      <li>User clicks a filter item (e.g. <em>Organization</em>) → dropdown closes, editor panel appears over the result list</li>
       <li>User sets a value → clicks <strong>Apply</strong> → editor closes, a chip appears in the active filter bar</li>
       <li>User clicks a chip → editor reopens pre-populated for editing</li>
       <li>User clicks × on a chip → filter removed</li>
@@ -29,14 +29,14 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker</h2>
-    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organisation and membership; the project directory swaps in Organisation, status, and a period range; public works uses the search-it set — Author, Organisation, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor (checklist), not the picker.</p>
+    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization and membership; the project directory swaps in Organization, status, and a period range; public works uses the search-it set — Author, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor (checklist), not the picker.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Researcher directory picker</h3>
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
           <div class="bt-dropdown-scroll">
-            <button class="dropdown-item" type="button" data-filter="organisation">Organisation</button>
+            <button class="dropdown-item" type="button" data-filter="organization">Organization</button>
             <button class="dropdown-item" type="button" data-filter="status">Current or alumni</button>
           </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
           <div class="bt-dropdown-scroll">
             <button class="dropdown-item active" type="button" aria-current="true">
-              Organisation
+              Organization
               <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
             </button>
             <button class="dropdown-item" type="button">Current or alumni</button>
@@ -76,14 +76,14 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for pick-from-a-set values — the works record filters (Author, Organisation, Project, Keywords) and the directory Organisation. Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
+    <p class="mb-4">Used for pick-from-a-set values — the works record filters (Author, Organization, Project, Keywords) and the directory Organization. Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Checklist</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-checklist-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-checklist-title">Organisation</p>
-          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select Organisation">
+          <p class="bt-panel__title" id="fe-checklist-title">Organization</p>
+          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select Organization">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="fv-we" checked>
               <label class="form-check-label" for="fv-we">Sciences</label>
@@ -178,7 +178,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — text</h2>
-    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — author, organisation, project, keywords — are searchable checklists instead; see above.)</p>
+    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — author, organization, project, keywords — are searchable checklists instead; see above.)</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Text</h3>
@@ -245,7 +245,7 @@
               <div class="dropdown-menu p-0">
                 <div class="bt-dropdown-scroll">
                   <button class="dropdown-item" type="button">Author</button>
-                  <button class="dropdown-item" type="button">Organisation</button>
+                  <button class="dropdown-item" type="button">Organization</button>
                   <button class="dropdown-item" type="button">Project</button>
                 </div>
               </div>

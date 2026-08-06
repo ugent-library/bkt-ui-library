@@ -5,7 +5,7 @@
  *
  * Bars: works (wf-), researchers (rdir-), projects (pdir-).
  * Prototype-only: chips are client-side and do not refilter the list yet.
- * Organisation (tree search), project, and keyword filters are backend-dependent;
+ * Organization (tree search), project, and keyword filters are backend-dependent;
  * the journal is reached through the Identifier filter (ISSN), not a venue search.
  */
 
@@ -80,17 +80,17 @@
   const CONFIGS = {
     'wf-': {
       author:       { label: 'Author', type: 'checklist', values: AUTHORS },
-      organisation: { label: 'Organisation', type: 'checklist', values: ORG },
+      organization: { label: 'Organization', type: 'checklist', values: ORG },
       project:      { label: 'Project', type: 'checklist', values: PROJECTS },
       keywords:    { label: 'Keywords', type: 'checklist', values: KEYWORDS },
       identifier:  { label: 'Identifier', type: 'text', placeholder: 'DOI, ISSN, ISBN, arXiv, or handle…' },
     },
     'rdir-': {
-      organisation: { label: 'Organisation', type: 'checklist', values: ORG },
+      organization: { label: 'Organization', type: 'checklist', values: ORG },
       status:       { label: 'Current or alumni', type: 'boolean', yesLabel: 'Current members', noLabel: 'Alumni' },
     },
     'pdir-': {
-      organisation: { label: 'Organisation', type: 'checklist', values: ORG },
+      organization: { label: 'Organization', type: 'checklist', values: ORG },
       status:       { label: 'Status', type: 'boolean', yesLabel: 'Active', noLabel: 'Completed' },
       year:         { label: 'Year', type: 'year-range' },
     },
