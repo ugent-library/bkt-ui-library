@@ -84,18 +84,15 @@ endpoint lands). A doc you have to already know about does not reach the person 
 the file. It may not restate how the component is *used* — that is `CLASS-USAGE.md` /
 `JAVASCRIPT.md`.
 
-**HTML block markers.** A closing marker mirrors the opening tag's id or component
-class, on the closing tag:
+**HTML block markers.** A closing marker names the block it ends, on the closing tag:
 
 ```html
 </div><!-- /c-results-list -->
 ```
 
-Put one on every layout region (`u-main__*`, `u-layout--*`) and every component root
-(`bt-*`). Never on a generic wrapper, and never as an opening label — an opener next to
-a named element restates it. The rule keys off what the element is, not how long the
-block is, so a missing marker always means "not a region", never "someone judged it
-short".
+Use the element's id, or the class that distinguishes it. Put one where the opening tag
+is far enough away that finding it means scrolling. Never as an opening label — an
+opener next to a named element restates it.
 
 **HTML directives** (`@state`, `@surface`, `@include`) are a machine-read vocabulary,
 not comments. They are documented in `SERVER.md` and `SURFACES.md` and nothing here
