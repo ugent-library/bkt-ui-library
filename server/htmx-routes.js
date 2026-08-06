@@ -156,26 +156,6 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
     return respond(c.renderJournalSuggestions(), 260);
   }
 
-  if (/^\/organisations\/.+\/works$/.test(urlPath) && method === 'GET') {
-    return respond(c.renderWorksFeed(), 450);
-  }
-
-  if (/^\/organisations\/.+\/persons$/.test(urlPath) && method === 'GET') {
-    return respond(c.renderPeopleList(), 420);
-  }
-
-  if (/^\/organisations\/.+\/projects$/.test(urlPath) && method === 'GET') {
-    return respond(c.renderProjectsList(), 420);
-  }
-
-  if (/^\/projects\/.+\/works$/.test(urlPath) && method === 'GET') {
-    return respond(c.renderWorksFeed(), 450);
-  }
-
-  if (/^\/persons\/.+\/works$/.test(urlPath) && method === 'GET') {
-    return respond(c.renderWorksFeed(), 450);
-  }
-
   if (urlPath === '/partials/authors-full' && method === 'GET') {
     return respond(c.renderExpandedAuthors(), 380);
   }
