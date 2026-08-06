@@ -11,6 +11,10 @@
  * - Template HTML view: ?view=html shows source with copy button
  * - Template states: @states meta + <!-- @state: name --> blocks + ?state= param
  *
+ * Exports the bare request handler. `node server.js` additionally listens and
+ * watches files; the Vercel function (api/index.js) imports the handler alone.
+ * See the Deployment section of README.md.
+ *
  * HTMX endpoint map + mock content live in server/ :
  *   server/htmx-routes.js   URL → fragment routing for the prototype
  *   server/content.js       the injected research output, researchers, etc.
@@ -35,6 +39,10 @@ const { handleTemplateHtmx } = require('./server/htmx-routes');
 const PORT    = process.env.PORT || 3111;
 const WS_PORT = process.env.WS_PORT || (process.env.PORT ? Number(PORT) + 1 : 3001);
 const ROOT    = __dirname;
+
+// The dev server (listening socket, live reload, file watcher) is local-only.
+// On Vercel the exported handler is all that runs.
+const IS_DEV  = !process.env.VERCEL;
 
 // ─── Bootstrap delivery: jsDelivr CDN, pinned to 5.3.3 ───────────────────────
 //
@@ -84,6 +92,8 @@ const MIME = {
 };
 
 // ─── Nav sections — order matters ─────────────────────────────────────────────
+// Adding a section? Add its directory to `functions.includeFiles` in vercel.json
+// too, or the pages 404 on the deployment while working locally.
 const SECTIONS = [
   { dir: 'getting-started', label: 'Getting started' },
   { dir: 'foundations', label: 'Foundations' },
@@ -351,7 +361,7 @@ function injectShell(filePath, html, currentPath, activeState) {
       }).join('\n')}
     </div>`).join('\n');
 
-  const liveReload = `
+  const liveReload = !IS_DEV ? '' : `
   <script>
     (function() {
       let ws;
@@ -440,8 +450,8 @@ function sourceView(filePath, html) {
 </html>`;
 }
 
-// ─── HTTP server ──────────────────────────────────────────────────────────────
-const server = http.createServer(async (req, res) => {
+// ─── Request handler ──────────────────────────────────────────────────────────
+const handler = async (req, res) => {
   const [urlPath, queryString = ''] = req.url.split('?');
   const params = Object.fromEntries(new URLSearchParams(queryString));
 
@@ -530,66 +540,73 @@ const server = http.createServer(async (req, res) => {
   html = injectShell(filePath, html, urlPath, activeState);
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(html);
-});
+};
 
-server.listen(PORT, () => {
-  console.log('\n  ◎ Booktower UI Library');
-  console.log('  ──────────────────────────────────────');
-  console.log(`  http://localhost:${PORT}`);
-  console.log('\n  Drop .html files into:');
-  console.log('    foundations/  elements/  patterns/  templates/<app-name>/ product/');
-  console.log('  Sidebar rebuilds automatically.\n');
-});
+module.exports = handler;
 
-// ─── WebSocket server (live reload, no deps) ──────────────────────────────────
-const clients = new Set();
-
-const wsServer = http.createServer();
-wsServer.on('upgrade', (req, socket) => {
-  const key    = req.headers['sec-websocket-key'];
-  const accept = crypto
-    .createHash('sha1')
-    .update(key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
-    .digest('base64');
-
-  socket.write(
-    'HTTP/1.1 101 Switching Protocols\r\n' +
-    'Upgrade: websocket\r\n' +
-    'Connection: Upgrade\r\n' +
-    `Sec-WebSocket-Accept: ${accept}\r\n\r\n`
-  );
-
-  clients.add(socket);
-  socket.on('close', () => clients.delete(socket));
-  socket.on('error', () => { try { socket.destroy(); } catch {} clients.delete(socket); });
-});
-
-wsServer.listen(WS_PORT);
-
-function broadcast() {
-  const payload = Buffer.from('reload');
-  const frame   = Buffer.alloc(2 + payload.length);
-  frame[0] = 0x81;
-  frame[1] = payload.length;
-  payload.copy(frame, 2);
-  for (const s of clients) {
-    try { s.write(frame); } catch { clients.delete(s); }
-  }
-}
-
-// ─── File watcher (built-in fs.watch, recursive) ──────────────────────────────
-let debounce;
-const WATCH = ['shell', 'assets', 'foundations', 'elements', 'patterns', 'templates', 'product'];
-
-for (const dir of WATCH) {
-  const abs = path.join(ROOT, dir);
-  if (!fs.existsSync(abs)) continue;
-  fs.watch(abs, { recursive: true }, (event, filename) => {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => {
-      process.stdout.write(`  ↺  ${dir}/${filename}\n`);
-      invalidateNav();
-      broadcast();
-    }, 80);
+// ─── Dev server ───────────────────────────────────────────────────────────────
+// Listening sockets and the file watcher are local-only; the Vercel function
+// imports the handler above and nothing else.
+if (IS_DEV) {
+  http.createServer(handler).listen(PORT, () => {
+    console.log('\n  ◎ Booktower UI Library');
+    console.log('  ──────────────────────────────────────');
+    console.log(`  http://localhost:${PORT}`);
+    console.log('\n  Drop .html files into:');
+    console.log('    foundations/  elements/  patterns/  templates/<app-name>/ product/');
+    console.log('  Sidebar rebuilds automatically.\n');
   });
+
+  // ─── WebSocket server (live reload, no deps) ──────────────────────────────────
+  const clients = new Set();
+
+  const wsServer = http.createServer();
+  wsServer.on('upgrade', (req, socket) => {
+    const key    = req.headers['sec-websocket-key'];
+    const accept = crypto
+      .createHash('sha1')
+      .update(key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
+      .digest('base64');
+
+    socket.write(
+      'HTTP/1.1 101 Switching Protocols\r\n' +
+      'Upgrade: websocket\r\n' +
+      'Connection: Upgrade\r\n' +
+      `Sec-WebSocket-Accept: ${accept}\r\n\r\n`
+    );
+
+    clients.add(socket);
+    socket.on('close', () => clients.delete(socket));
+    socket.on('error', () => { try { socket.destroy(); } catch {} clients.delete(socket); });
+  });
+
+  wsServer.listen(WS_PORT);
+
+  const broadcast = () => {
+    const payload = Buffer.from('reload');
+    const frame   = Buffer.alloc(2 + payload.length);
+    frame[0] = 0x81;
+    frame[1] = payload.length;
+    payload.copy(frame, 2);
+    for (const s of clients) {
+      try { s.write(frame); } catch { clients.delete(s); }
+    }
+  };
+
+  // ─── File watcher (built-in fs.watch, recursive) ──────────────────────────────
+  let debounce;
+  const WATCH = ['shell', 'assets', 'foundations', 'elements', 'patterns', 'templates', 'product'];
+
+  for (const dir of WATCH) {
+    const abs = path.join(ROOT, dir);
+    if (!fs.existsSync(abs)) continue;
+    fs.watch(abs, { recursive: true }, (event, filename) => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        process.stdout.write(`  ↺  ${dir}/${filename}\n`);
+        invalidateNav();
+        broadcast();
+      }, 80);
+    });
+  }
 }
