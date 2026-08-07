@@ -62,7 +62,7 @@ Sources); ⚑ marks a field that is 08's question.
 | `conference_abstract` | `(year) [proceedings_title.] conference.name, conference.location.` | `(2024) IFToMM World Congress, Tokyo.` |
 | `conference_poster` | as `conference_abstract` | `(2024) IFToMM World Congress, Tokyo.` |
 | `conference_presentation` | `(year) conference.name, conference.location.` | `(2024) IFToMM World Congress, Tokyo.` |
-| `preprint` | `(year) publisher [Preprint].` — whether `publisher` holds the server name is raven's call ⚑ | `(2026) bioRxiv [Preprint].` |
+| `preprint` | `(year) publisher [Preprint].` — `publisher` holds the preprint server (bioRxiv, arXiv, SSRN) | `(2026) bioRxiv [Preprint].` |
 | `working_paper` | `(year) place_of_publication: publisher (series_title).` | `(2025) Ghent: Ghent University Faculty of Economics.` |
 | `report` | `(year) Report report_number. place_of_publication: publisher (series_title).` | `(2025) Report RPT-42. Brussels: Agentschap Natuur en Bos.` |
 | `doctoral_thesis` | `(year) PhD thesis. awarding_institution.` — awarding institution, never the publisher field | `(2024) PhD thesis. Ghent University.` |
