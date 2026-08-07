@@ -31,15 +31,13 @@ Every type's line is the same sequence, rendering only the slots its fields fill
 - **position** — `volume(issue)`, or `day month` on dated types.
 - **pages** — `pp. start–end`; `article_number` where an e-only article has none.
 
-Five exceptions, the whole list:
+Four exceptions, the whole list:
 
 - `book_part` prefixes its container with `in`.
 - `book` and `edited_book` carry `edition edn.` before the imprint.
 - `doctoral_thesis` fills the imprint slot with the awarding institution, never a
   publisher.
 - `preprint` renders `[Preprint]` after the imprint, not as a leading genre word.
-- `dataset` and `software` render the year alone; their publisher belongs to the
-  backoffice scan.
 
 A type with nothing but a year — `other`, or any future type before its fields are
 mapped — renders `(year)`. There is no separate fallback rule: the order is the rule.
@@ -73,8 +71,8 @@ Sources); ⚑ marks a field that is 08's question.
 | `online_post` | `(year) publisher, day month.` — publisher holds the issuing publication (Substack, group blog) per raven's field note | `(2025) Open Access Belgium, 1 September.` |
 | `media_appearance` | `(year) venue, day month.` | `(2025) Universiteit van Vlaanderen, 5 November.` |
 | `lecture` | `(year) venue, day month.` — location sits inside `venue` per its field definition | `(2025) UGent Data Stewards seminar, Ghent, 20 October.` |
-| `dataset` | `(year)` — bare, as on the old public site; publisher (Zenodo) shows in the backoffice scan only | `(2026)` |
-| `software` | as `dataset`; version field is raven's question ⚑ | `(2026)` |
+| `dataset` | `(year) publisher.` — publisher holds the repository, as on `preprint`; its applies-to gap is 08's question ⚑ | `(2026) Zenodo.` |
+| `software` | as `dataset`; version field is raven's question ⚑ | `(2026) Zenodo.` |
 | `other` | the order, with whatever fields it carries | `(2024)` |
 
 ### Decisions
@@ -83,8 +81,10 @@ The per-type rules live in the order, exceptions and table above. What earns a
 place here is the reasoning that would otherwise be lost:
 
 - **Where old biblio showed a field raven lacks, the card keeps showing it**, with a
-  note per case (⚑ below). Where old biblio showed nothing — the public dataset
-  line — the card stays bare.
+  note per case (⚑ below).
+- **The repository is the venue** — `dataset` and `software` compose
+  `(year) publisher.`, as `preprint` does. Old biblio's bare dataset line came from
+  a shared template with no repository slot, not from a decision to hide it.
 - **Genre words stay** — "PhD thesis.", "Report RPT-42.", "[Preprint]" render even
   though the type badge names the type: each explains the field that follows it, and
   the line stays readable out of context. Year-only lines were considered and
@@ -108,8 +108,8 @@ are not in raven's registry:
   the card keeps them.
 - `software`: no version field.
 - Docs inconsistency: the migration map carries biblio dataset `Publisher` → raven
-  `publisher`, but the imprint applies-to list omits `dataset`. The backoffice scan
-  needs it.
+  `publisher`, but the imprint applies-to list omits `dataset`. The public line and
+  the backoffice scan both need it.
 
 ---
 
