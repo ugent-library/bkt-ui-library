@@ -174,6 +174,12 @@ Never cite an unopened source. A citation is a promise that the source says what
 
 Default to **no comment**; keep one only when a later change would break something silently or non-locally. Never history, never commented-out code, never a restatement of the declaration below. The full convention, with the categories that are *not* explanations (section banners, file headers, HTML directives): `docs/CODE-COMMENTS.md`. Enforced in part by `npm run check:comments`.
 
+### Session scope and reading
+
+One page or feature per session; follow-up work starts a fresh session with the session-start prompt. The planning notes are the bridge between sessions: record load-bearing decisions and open questions the moment they're made, so the next session starts from the notes instead of re-deriving the conversation.
+
+Docs from the session-start map are read in full, per step 1. Code and template files: locate with Grep, read the matching span — full reads are for reviews.
+
 ### A note on confidence
 
 Generated code sounds confident regardless of whether it is correct. Confidence is not a reliability signal. Before finalising any output, check:
