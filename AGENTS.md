@@ -199,3 +199,5 @@ Frame information active and positive: say what a thing **is**, not what it isn'
 Default to **build-and-show, not ask-and-record.** Take the obvious option, implement it, and show the result for review — the user vetoes in review. Reserve questions for genuinely load-bearing forks.
 
 This is an HTML prototype, so keep process light: planning notes stay local (they're gitignored) and are updated only when a load-bearing decision changes; commit in coherent chunks without ceremony; verify by confirming the files you touched add no new errors, plus a browser eyeball. Keep strict only what has real downstream cost — the accessibility pre-flight, no invented CSS classes, and flagging raven-dependent work.
+
+When a task would run better another way — investigation via a subagent, a new topic in a fresh session — flag it before starting.

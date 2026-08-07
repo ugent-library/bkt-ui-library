@@ -11,6 +11,11 @@ source, or say you did not. Applies with double force to numbers (trace them; a
 sample statistic is not a population one), claims about what a system does or does
 not have (read the code), and other teams' decisions (name them as theirs).
 
+Before sourcing a claim, check it is ours to make. Precision that belongs to the
+implementer or another team is deleted, not evidenced — the cheapest way to not
+invent something is to not claim it. Evidence-gathering is for claims the document
+cannot drop.
+
 Something with no answer gets one of two treatments, never a third:
 
 1. **Flagged** as an open question naming the concrete options and who decides.
