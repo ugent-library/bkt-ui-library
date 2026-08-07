@@ -33,8 +33,20 @@ const walk = dir => {
 };
 walk(root);
 
+// AGENTS.md names the design principles inline; the page is the only copy of their
+// content. Renaming one there would leave AGENTS.md quietly wrong — this fails instead.
+const principles = [...read('foundations/design-principles.html')
+  .matchAll(/<span class="form-label">(\d\d)<\/span>\s*<h2[^>]*>([^<]+)<\/h2>/g)]
+  .map(m => `${m[1]} ${m[2]}`);
+const namedInGuide = [...read('AGENTS.md').matchAll(/\*\*(\d\d [^*]+)\*\*/g)].map(m => m[1]);
+const driftedPrinciples = principles.length
+  ? principles.filter(p => !namedInGuide.includes(p))
+  : ['no principles parsed from foundations/design-principles.html'];
+
 console.log(`Rule refs in AGENTS.md/CLASS-USAGE.md missing from docs/ACCESSIBILITY.md: ${missing.size}`);
 for (const r of [...missing].sort()) console.log(`  ${r}`);
 console.log(`Files referencing the pre-rename working-guide filename: ${stale.length}`);
 for (const f of stale.sort()) console.log(`  ${f}`);
-process.exit(missing.size || stale.length ? 1 : 0);
+console.log(`Design principles on the page but not named in AGENTS.md: ${driftedPrinciples.length}`);
+for (const p of driftedPrinciples) console.log(`  ${p}`);
+process.exit(missing.size || stale.length || driftedPrinciples.length ? 1 : 0);

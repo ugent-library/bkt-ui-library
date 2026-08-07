@@ -6,6 +6,39 @@ system, or do I reach for something new?"
 
 ---
 
+## Design principles move into the kit — and into the gates (v2.14, 2026-08-07)
+
+No class or CSS changes. Three URLs change.
+
+| Old URL | v2.14 |
+|---|---|
+| `/base/ai-guidelines.html` | removed — `AGENTS.md` is the working guide |
+| `/base/integration.html` | removed — `docs/CONSUMING-BOOKTOWER.md` is the integration contract |
+| `/base/design-principles.html` | `/foundations/design-principles.html` |
+
+`base/` is gone. Two of its pages predated the AGENTS.md restructure and
+duplicated docs that are now the source of truth. The third moved to
+`foundations/`, where the checks can see it: `check:classes`, `check:a11y` and
+`check:html` all glob `templates elements patterns foundations
+getting-started`, so HTML outside those five directories is validated by
+nothing. `base/` never was — the principles page carried `font-serif`, a class
+defined in no stylesheet, undetected for the page's whole life.
+
+The page now holds six principles rather than four. **05 Trust is placed
+deliberately** and **06 Quality is reached in cycles** come from the Biblio
+2030 working strategy: metadata increasingly arrives machine-generated, some of
+it publishes with nobody having read it, and deposit is non-blocking with
+quality reached through curation cycles. **02** gained the public/backoffice
+surface split and the limit in both directions — invented complexity is ours to
+remove, responsibility is not. **03** gained the long tail, **04** machines as
+readers. Each principle carries a pass/fail test; the conflicts section resolves
+eight standing tensions and names one open question for Open Science Policy.
+
+`AGENTS.md` names all six inline, and `check:doc-refs` fails when the guide and
+the page disagree — the page stays the only copy of their content.
+
+**Consumers: nothing to re-copy.** Update any link to `/base/*`.
+
 ## Work card — BEM wrappers, and the block absorbs its only modifier (v2.13, 2026-08-07)
 
 Three classes added, four names retired. Supersedes v2.8's "Bootstrap structural

@@ -80,6 +80,7 @@ When a new session begins on this project, execute these steps before writing an
 
    | Task touches | Read first |
    |---|---|
+   | Any design decision — layout, wording, what to show, which of two directions | `foundations/design-principles.html` — the six principles and their tests |
    | Scoping any new page or feature | `docs/SURFACES.md` — the public vs backoffice surface test |
    | Audience, personas, or legibility questions | `docs/RESEARCH-PERSONAS.md` — the public personas anchor the surface and vocabulary tests |
    | Domain meaning — entities, statuses, badges, review workflow | `docs/DOMAIN-VOCABULARY.md`, `docs/DOMAIN-CONTEXT.md` |
@@ -117,6 +118,8 @@ step 1. You're working on the booktower-ui-library.
 ## Non-negotiables
 
 The always-on rules. Each links to its full version — the pointer here is the reminder, the doc is the law.
+
+**Design principles.** Six principles, each carrying a pass/fail test; the tests are what choose when two directions compete: **01 Structure is the style** · **02 Opinions over options** · **03 The past and the future share the same grid** · **04 Knowledge wants to move** · **05 Trust is placed deliberately** · **06 Quality is reached in cycles**. The page holds the tests, the Do/Don't lists, and the standing conflicts between principles: `foundations/design-principles.html`. It is the only copy — cite it, and read it before deciding.
 
 **Surfaces.** Every layout container carries `data-surface="public"` or `data-surface="backoffice"` — it activates the surface tokens; skipping it produces inconsistent UIs. Which surface: `docs/SURFACES.md`. What the tokens do, and how the kit injects a default: `docs/UI-LAYER.md` and `docs/SURFACES.md` → Declaring the surface.
 
