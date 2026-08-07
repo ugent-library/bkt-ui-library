@@ -37,15 +37,8 @@
     Type scale — rem values by necessity, type doesn't snap to a 4px grid.
     Never write .875rem in component code — always reference a token.
 
-    px at 16px root:
-      xs   = 12px   badges, tight UI labels
-      sm   = 14px   secondary text, small buttons
-      base = 16px   body default
-      md   = 18px   lead text, card titles
-      lg   = 22px   h3, section headings
-      xl   = 28px   h2, page headings
-      2xl  = 36px   h1, display headings
-      3xl  = 48px   hero display only
+    xs badges and tight UI labels · sm secondary text, small buttons ·
+    md lead text, card titles · lg h3 · xl h2 · 2xl h1 · 3xl hero only
   */
   --bt-text-xs: 0.75rem;
   --bt-text-sm: 0.875rem;
@@ -53,8 +46,8 @@
   --bt-text-md: 1.125rem;
   --bt-text-lg: 1.375rem;
   --bt-text-xl: 1.75rem;
-  --bt-text-2xl: 2.5rem; /* was 2.25rem — larger for public monumental h1 */
-  --bt-text-3xl: 3.5rem; /* was 3rem — hero display needs more mass */
+  --bt-text-2xl: 2.5rem;
+  --bt-text-3xl: 3.5rem;
   /* ── Spacing — 4px base ────────────────────────────────────────────────────── */
   --bt-sp-1: 0.25rem;
   --bt-sp-2: 0.5rem;
@@ -78,14 +71,14 @@
       base → 38px  (21 + 7 + 7 + 1px border×2)
       lg   → 44px  (21px @ 16px + 10 + 10 + border×2)
   */
-  --bt-btn-pad-y-xs: 0.25rem; /*  5px */
-  --bt-btn-pad-x-xs: 0.3rem; /* 10px */
-  --bt-btn-pad-y-sm: 0.3125rem; /*  5px */
-  --bt-btn-pad-x-sm: 0.625rem; /* 10px */
-  --bt-btn-pad-y: 0.4375rem; /*  7px */
-  --bt-btn-pad-x: 0.875rem; /* 14px */
-  --bt-btn-pad-y-lg: 0.625rem; /* 10px */
-  --bt-btn-pad-x-lg: 1.125rem; /* 18px */
+  --bt-btn-pad-y-xs: 0.25rem;
+  --bt-btn-pad-x-xs: 0.3rem;
+  --bt-btn-pad-y-sm: 0.3125rem;
+  --bt-btn-pad-x-sm: 0.625rem;
+  --bt-btn-pad-y: 0.4375rem;
+  --bt-btn-pad-x: 0.875rem;
+  --bt-btn-pad-y-lg: 0.625rem;
+  --bt-btn-pad-x-lg: 1.125rem;
   /* ── Borders & radius ──────────────────────────────────────────────────────── */
   --bt-border: 1px solid var(--bt-border-color);
   --bt-radius-sm: 2px;
@@ -296,33 +289,6 @@
    Apply data-surface="public" or data-surface="backoffice" to <body>
    or any layout container. Mix within a page if needed.
 
-   Active surface tokens:
-     --s-heading-font          font-family for headings
-     --s-heading-weight        font-weight for headings
-     --s-heading-leading       line-height for headings
-     --s-heading-color         heading colour
-     --s-body-color            body text colour
-     --s-body-font             font-family for body text
-     --s-body-size             base font size
-     --s-body-leading          line-height for body text
-     --s-lead-font             font-family for .lead
-     --s-display-weight        font-weight for .display-*
-     --s-display-leading       line-height for .display-*
-     --s-bg                    page background colour
-     --s-link-color            link colour
-     --s-link-hover-color      link hover colour
-     --s-bg-dark               .bt-bg-dark background
-     --s-text-muted            .text-muted colour
-     --s-topbar-height         application topbar height
-
-   TODO — to be activated as components are built:
-     --s-section-gap       gap between major page sections
-     --s-card-pad          padding inside cards
-     --s-card-radius       border-radius for cards
-     --s-card-shadow       default card shadow
-     --s-card-shadow-hover card shadow on hover/focus
-     --s-input-pad-y/x     form input padding
-     --s-btn-pad-y/x       button padding
 */
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
 /* Also on [data-surface="backoffice"] so a backoffice container nested in a
@@ -337,7 +303,7 @@ body,
   --s-body-color: var(--bt-blue-900);
   --s-text-muted: var(--bt-text-muted);
   --s-body-font: var(--bt-font-sans);
-  --s-body-size: 0.9375rem; /* 15px — compact for a data-dense tool */
+  --s-body-size: 0.9375rem;
   --s-body-leading: 1.5;
   --s-lead-font: var(--bt-font-sans);
   --s-lead-color: var(--bt-blue-900);
@@ -365,21 +331,21 @@ body,
 
 /* ── Public — only what differs ─────────────────────────────────────────────── */
 [data-surface=public] {
-  --s-heading-weight: 700; /* confident, editorial */
+  --s-heading-weight: 700;
   --s-heading-color: var(--bt-blue-800);
-  --s-heading-leading: 1.05; /* tight — typeset, deliberate */
+  --s-heading-leading: 1.05;
   --s-body-color: var(--bt-blue-900);
-  --s-body-size: 1rem; /* 16px — reading comfort */
-  --s-body-leading: 1.6; /* generous contrast against tight headings */
+  --s-body-size: 1rem;
+  --s-body-leading: 1.6;
   --s-lead-color: var(--bt-blue-800);
   --s-display-weight: 700;
-  --s-display-leading: 1.0; /* monumental at large size */
-  --s-bg: var(--bt-bg-paper); /* warm off-white, faintly rosy — editorial, not clinical */
+  --s-display-leading: 1.0;
+  --s-bg: var(--bt-bg-paper);
   --s-link-color: var(--bt-blue-800);
   --s-link-hover-color: var(--bt-blue-600);
   --s-bg-dark: var(--bt-blue-800);
   --s-topbar-height: var(--bt-sp-16);
-  --s-text-muted: var(--bt-blue-gray-550); /* cool muted — gray with a hint of brand blue */
+  --s-text-muted: var(--bt-blue-gray-550);
   --bs-secondary-color: var(--s-text-muted);
   --bs-secondary-color-rgb: var(--bt-blue-gray-550-rgb);
 }
@@ -495,8 +461,6 @@ body,
 .nav {
   --bs-nav-link-color: var(--bt-blue-800);
   --bs-nav-link-hover-color: var(--bt-blue-700);
-  /* link padding stays Bootstrap's 1rem — an sp-1 override here (never active
-     until the batch-2 rename) makes tabs unusably tight */
 }
 
 .nav-tabs {
@@ -581,7 +545,7 @@ h2 {
 
 h3 {
   font-size: var(--bt-text-lg);
-  font-weight: 300; /* light weight at mid-size — refined, not loud */
+  font-weight: 300;
 }
 
 h4 {
@@ -598,7 +562,7 @@ h5 {
 h6 {
   font-size: var(--bt-text-base);
   font-style: italic;
-  font-weight: 300; /* light weight at small size — label-like, subtle */
+  font-weight: 300;
 }
 
 .display-1,
@@ -636,7 +600,7 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 500;
-  opacity: 0.65; /* pulls back from heading colour so it reads as a label, not a heading */
+  opacity: 0.65;
 }
 
 .display-6 {
@@ -883,7 +847,6 @@ code, kbd, pre, samp {
   margin-top: var(--bt-sp-1);
 }
 
-/* Pill search input with inset search icon */
 .form-control-search {
   border-radius: var(--bt-radius-pill);
   background-color: var(--bt-bg-alt);
@@ -1057,9 +1020,9 @@ code, kbd, pre, samp {
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 600;
-  font-size: var(--bt-text-sm); /* 14px */
+  font-size: var(--bt-text-sm);
   border-radius: var(--bt-radius);
-  padding: var(--bt-btn-pad-y) var(--bt-btn-pad-x); /* 7px 14px → ~38px tall */
+  padding: var(--bt-btn-pad-y) var(--bt-btn-pad-x);
   display: inline-flex;
   align-items: center;
   gap: var(--bt-sp-2);
@@ -1067,20 +1030,20 @@ code, kbd, pre, samp {
 }
 
 .btn-xs {
-  font-size: var(--bt-text-xs); /* stay at 14px — don't go smaller */
+  font-size: var(--bt-text-xs);
   padding: var(--bt-btn-pad-y-xs) var(--bt-btn-pad-x-xs);
   gap: var(--bt-sp-1);
 }
 
 .btn-sm {
-  font-size: var(--bt-text-sm); /* stay at 14px — don't go smaller */
-  padding: var(--bt-btn-pad-y-sm) var(--bt-btn-pad-x-sm); /* 5px 10px → 32px tall */
+  font-size: var(--bt-text-sm);
+  padding: var(--bt-btn-pad-y-sm) var(--bt-btn-pad-x-sm);
   gap: var(--bt-sp-1);
 }
 
 .btn-lg {
-  font-size: var(--bt-text-base); /* 16px */
-  padding: var(--bt-btn-pad-y-lg) var(--bt-btn-pad-x-lg); /* 10px 18px → 44px tall */
+  font-size: var(--bt-text-base);
+  padding: var(--bt-btn-pad-y-lg) var(--bt-btn-pad-x-lg);
   gap: var(--bt-sp-2);
 }
 
@@ -1242,7 +1205,7 @@ a.btn-danger,
 }
 
 .btn .htmx-indicator {
-  gap: var(--bt-sp-2); /* space between spinner and loading text */
+  gap: var(--bt-sp-2);
 }
 
 /* ── Bootstrap outline variants ─────────────────────────────────────────────── */
@@ -1351,17 +1314,7 @@ a.btn-danger,
 }
 
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
-/*
-  Colour: use Bootstrap's text-bg-* helper, not bg-* + text-*. text-bg-*
-  pairs background with a contrasting foreground in one class; the overrides
-  below swap in Booktower tokens. Bootstrap's .text-bg-* helper sets its
-  background and (auto-contrast) colour with !important, so the overrides must
-  use !important too — otherwise Bootstrap's stock colours win. Icons inherit
-  colour from the badge, so no per-icon rule is required.
-
-  All solid badges carry white text; backgrounds are stepped dark enough to
-  clear WCAG AA (4.5:1) against white.
-*/
+/* Colour with text-bg-*, never bg-* + text-* — see CLASS-USAGE.md */
 .badge {
   --bs-badge-border-radius: var(--bt-radius-pill);
   --bs-badge-font-size: var(--bt-text-xs);
@@ -1412,7 +1365,7 @@ a.btn-danger,
   color: var(--bt-gray-700) !important;
 }
 
-/* Soft variants — pale background, dark on-tone text. No Bootstrap equivalent. */
+/* Soft variants — no Bootstrap equivalent */
 .badge.text-bg-primary-light {
   background: var(--bt-blue-100) !important;
   color: var(--bt-blue-900) !important;
@@ -1566,7 +1519,6 @@ a.badge:focus-visible {
 }
 
 /* -- bt-section -- */
-/* Making sure the landing pages have enough breathing room */
 .bt-section-landing {
   padding: calc(var(--bt-sp-12) * 3) 0;
 }
@@ -1739,7 +1691,7 @@ a.badge:focus-visible {
 /*
   Metadata line outside a work card — the file rows on the public detail page and
   the typography demos. Inside a card the card's own __meta / __meta-item own this
-  job; keeping both there was two names for one idea.
+  job.
 */
 .bt-meta-list {
   font-size: var(--bt-text-sm);
@@ -2183,7 +2135,7 @@ img.bt-navbar__logo {
   padding-top: var(--bt-sp-3);
 }
 
-.bt-work-card .card-header {
+.bt-work-card__header {
   background: transparent;
   border-bottom: none;
   padding: var(--bt-sp-4) 0 var(--bt-sp-3);
@@ -2194,18 +2146,17 @@ img.bt-navbar__logo {
   margin-bottom: 0;
 }
 
-.bt-work-card .card-body {
+.bt-work-card__body {
   padding: 0 0 var(--bt-sp-2);
 }
 
-.bt-work-card .card-footer {
+.bt-work-card__footer {
   background: transparent;
   border-top: none;
   padding: var(--bt-sp-2) 0 var(--bt-sp-4);
   color: var(--bt-gray-500);
 }
 
-/* Title */
 .bt-work-card__title {
   font-size: var(--bt-text-md);
   line-height: 1.35;
@@ -2224,7 +2175,6 @@ img.bt-navbar__logo {
   text-underline-offset: 2px;
 }
 
-/* Authors */
 .bt-work-card__authors {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
@@ -2250,7 +2200,6 @@ img.bt-navbar__logo {
   margin-right: var(--bt-sp-1);
 }
 
-/* Publication line */
 .bt-work-card__pub {
   font-size: var(--bt-text-sm);
   color: var(--bt-gray-600);
@@ -2268,7 +2217,6 @@ img.bt-navbar__logo {
   text-decoration: underline;
 }
 
-/* Meta row: access badge + type item(s) */
 .bt-work-card__meta {
   display: flex;
   flex-wrap: wrap;
@@ -2288,7 +2236,6 @@ img.bt-navbar__logo {
   margin-right: var(--bt-sp-1);
 }
 
-/* Action row */
 .bt-work-card__actions {
   display: flex;
   align-items: center;
@@ -2412,8 +2359,6 @@ img.bt-navbar__logo {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  /* an earlier `min-height: --s-topbar-height` (missing var()) was invalid and
-     never applied — removed rather than fixed to avoid a rendering change */
   padding: var(--bt-sp-2) 0;
   gap: var(--bt-sp-4);
   width: 100%;
@@ -2436,8 +2381,6 @@ img.bt-navbar__logo {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
-  /* wrap + shrinkable: an unshrinkable row of controls overflowed the viewport
-     below ~600px instead of stacking */
   flex-wrap: wrap;
 }
 
@@ -2475,7 +2418,6 @@ img.bt-navbar__logo {
   margin-bottom: var(--bt-sp-2);
 }
 
-/* bt-toolbar modifier */
 .bt-toolbar--bordered {
   border-bottom: var(--bt-border);
 }
@@ -2489,20 +2431,7 @@ img.bt-navbar__logo {
    ── 2. u-layout--app ─────────────────────────────────────────────────────────
    Backoffice shell. Sticky navbar + sticky left sidebar + flexible main area.
 
-   THE MAIN AREA USES SIMPLE REGION CLASSES:
-
-   Add/remove these blocks as needed:
-     u-main__header      (optional)  ← sticky at top (never scrolls)
-     u-main__body                    ← middle layout row, fills available height
-     u-main__footer      (optional)  ← sticky at bottom (never scrolls)
-
-   If the body needs a left sidebar (filters, facets):
-     .u-main__body.u-main__body--split
-       └─ .u-main__sidebar         ← left column (scrolls)
-       └─ .u-main__content         ← right column shell
-            ├─ .u-main__content-header  ← optional fixed pane header
-            ├─ .u-main__content-body    ← scrollable pane body
-            └─ .u-main__content-footer  ← optional fixed pane footer
+   Region classes and their nesting: docs/UI-LAYER.md.
 
    ═══════════════════════════════════════════════════════════════════════════════ */
 /* ── 1. u-layout--public ─────────────────────────────────────────────────────── */
@@ -3732,22 +3661,9 @@ i[class^=if-]:before, i[class*=" if-"]:before {
    ICON SYSTEM — UGent icon font (.if)
    ═══════════════════════════════════════════════════════════════════════════════
 
-   USAGE RULES:
-
-   Icon + visible text (icon is decorative — most common):
-     <button type="button">
-       <i class="if if-download" aria-hidden="true"></i>
-       Download PDF
-     </button>
-
-   Icon alone — label MUST be on the button, NOT the icon:
-     <button type="button" aria-label="Close dialog">
-       <i class="if if-close" aria-hidden="true"></i>
-     </button>
-
-   NEVER:
-     <i class="if if-close" aria-label="Close">  ← label on wrong element
-     <i class="if if-download">                   ← no label anywhere
+   The label goes on the button, never on the icon: every .if carries
+   aria-hidden="true", and an icon-only button carries aria-label.
+   Examples and the rest of the rule: docs/ACCESSIBILITY.md B2.
 */
 /*
   .if sits inside inline-flex containers (buttons, links).
@@ -3761,7 +3677,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   justify-content: center;
   line-height: 1;
   flex-shrink: 0;
-  /* inherit font-size from parent by default */
 }
 
 /*
@@ -3878,7 +3793,7 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 /* Background + readable foreground, keyed by live Biblio org code.
    White text where the brand colour clears 3:1; dark ink on the lighter
    faculties (lw, tw, eb, pp, la, ps) where white would fail. Reused by
-   bt-avatar faculty chips and the organisation directory. */
+   bt-avatar faculty chips and the organization directory. */
 .bg-faculty-lw {
   background-color: var(--bt-faculty-lw);
   color: var(--bt-blue-900);

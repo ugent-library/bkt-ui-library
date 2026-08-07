@@ -96,14 +96,14 @@
 
   <section class="ds-section" id="contexts">
     <h2 class="h4 mb-3">One card across roles and views</h2>
-    <p class="mb-2 col-8">One layout everywhere. What varies per context: the <strong>role</strong> (researcher or curator; proxy later), the <strong>capability</strong> (editing your own work, reviewing someone else's, or read-only), and the <strong>view</strong> — in a filterable overview the year, journal and project are clickable filters; in a plain list they are text. Statuses and visibility per <code>docs/DOMAIN-VOCABULARY.md</code> (Work status — two axes).</p>
+    <p class="mb-2 col-8">One layout everywhere. What varies per context: the <strong>role</strong> (researcher or curator; proxy later), the <strong>capability</strong> (editing your own work, reviewing someone else's, or read-only), and the <strong>view</strong> — the year, journal, project and publisher parts are filter links on every card, landing on the works overview with that filter applied; on the overview itself and in backoffice lists the click narrows the list in view. Container and publisher links are string searches on the name. Statuses and visibility per <code>docs/DOMAIN-VOCABULARY.md</code> (Work status — two axes).</p>
     <p class="mb-4 col-8 text-muted small">The missing-metadata warning is automated and role-specific: researchers see what they must supply (full text, DOI or WoS ID, title, abstract, authors, keywords, projects); curators see the bibliographic completeness list (journal, publisher, year, ISSN, volume, issue, pages).</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Researcher — own draft, editable</h3>
       <div class="ds-demo-body" data-surface="backoffice">
         <article class="bt-work-card" aria-labelledby="wc-mx-01">
-          <div class="card-header">
+          <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-warning">Draft · <i class="if if-eye-off" aria-hidden="true"></i> Not public</span>
               <span class="bt-work-card__meta-item">Journal article</span>
@@ -114,7 +114,7 @@
               </a>
             </div>
           </div>
-          <div class="card-body">
+          <div class="bt-work-card__body">
             <p id="wc-mx-01" class="bt-work-card__title"><a href="#">Canopy microclimate buffering across European forests</a></p>
             <p class="bt-work-card__authors">De Pauw, K., Vangansbeke, P.</p>
             <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
@@ -136,7 +136,7 @@
       <h3 class="ds-demo-label">Researcher — reviewed record, read-only</h3>
       <div class="ds-demo-body" data-surface="backoffice">
         <article class="bt-work-card" aria-labelledby="wc-mx-02">
-          <div class="card-header">
+          <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-success">Reviewed · <i class="if if-eye" aria-hidden="true"></i> Public</span>
               <span class="bt-work-card__meta-item">Open access</span>
@@ -148,7 +148,7 @@
               </a>
             </div>
           </div>
-          <div class="card-body">
+          <div class="bt-work-card__body">
             <p id="wc-mx-02" class="bt-work-card__title"><a href="#">Urban forests as essential infrastructure for climate resilience</a></p>
             <p class="bt-work-card__authors">De Pauw, K., Esperon-Rodriguez, M., Arndt, S. K.</p>
             <p class="bt-work-card__pub"><time datetime="2026">2026</time><span class="text-muted mx-1" aria-hidden="true">·</span><span>Plants People Planet</span></p>
@@ -161,7 +161,7 @@
       <h3 class="ds-demo-label">Curator — submitted, reviewing</h3>
       <div class="ds-demo-body" data-surface="backoffice">
         <article class="bt-work-card" aria-labelledby="wc-mx-03">
-          <div class="card-header">
+          <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-info">Submitted · <i class="if if-eye" aria-hidden="true"></i> Public</span>
               <span class="bt-work-card__meta-item">Restricted access</span>
@@ -176,7 +176,7 @@
               </a>
             </div>
           </div>
-          <div class="card-body">
+          <div class="bt-work-card__body">
             <p id="wc-mx-03" class="bt-work-card__title"><a href="#">Overdue athletes salaries in professional football</a></p>
             <p class="bt-work-card__authors">Vandercruysse, L., Vander Beken, T., Vermeersch, A.</p>
             <p class="bt-work-card__pub"><time datetime="2024">2024</time><span class="text-muted mx-1" aria-hidden="true">·</span><span>Eur. J. Crime Crim. Law Crim. Justice</span></p>
@@ -190,7 +190,7 @@
         </article>
       </div>
     </div>
-    <p class="mb-0 col-8 text-muted small">Proxy is a later axis — see <code>notes/PLAN-work-card.md</code>. In these plain-list demos nothing in the reference line links; the live filterable examples are <code>curate.html</code> and <code>search-researcher.html</code>, where year and journal filter the list.</p>
+    <p class="mb-0 col-8 text-muted small">Proxy is a later axis — see <code>notes/PLAN-work-card.md</code>. In these static demos nothing in the reference line links; the live examples are <code>curate.html</code> and <code>search-researcher.html</code>, where year and journal narrow the list in place.</p>
   </section>
 
 
@@ -207,7 +207,7 @@
       <div class="ds-demo-body" data-surface="public">
 
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wc-pub-01">
-          <div class="card-header">
+          <div class="bt-work-card__header">
 
             <!-- Status badges -->
             <div class="bt-work-card__meta">
@@ -229,7 +229,7 @@
 
           </div>
 
-          <div class="card-body">
+          <div class="bt-work-card__body">
 
             <h2 class="bt-work-card__title" id="wc-pub-01">
               <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
@@ -256,7 +256,7 @@
       <h3 class="ds-demo-label">Public card — retracted</h3>
       <div class="ds-demo-body" data-surface="public">
         <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wc-pub-02">
-          <div class="card-header">
+          <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-danger">Retracted</span>
               <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
@@ -271,7 +271,7 @@
               </button>
             </div>
           </div>
-          <div class="card-body">
+          <div class="bt-work-card__body">
             <h2 id="wc-pub-02" class="bt-work-card__title">
               <a href="#">Dietary supplements and cognitive performance: a randomised trial</a>
             </h2>
@@ -301,7 +301,7 @@
       <div class="ds-demo-body" data-surface="backoffice">
 
         <article class="bt-work-card  bt-work-card--border-bottom" aria-labelledby="wc-cur-03">
-          <div class="card-header">
+          <div class="bt-work-card__header">
 
             <!-- Status badges -->
             <div class="bt-work-card__meta">
@@ -321,7 +321,7 @@
 
           </div>
 
-          <div class="card-body">
+          <div class="bt-work-card__body">
 
             <p class="bt-work-card__title" id="wc-cur-03">
               <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
@@ -384,7 +384,7 @@
       <div class="ds-demo-body" data-surface="backoffice">
 
         <article class="bt-work-card  bt-work-card--border-bottom" aria-labelledby="wc-cur-01">
-          <div class="card-header">
+          <div class="bt-work-card__header">
 
             <!-- Status badges -->
             <div class="bt-work-card__meta">
@@ -404,7 +404,7 @@
 
           </div>
 
-          <div class="card-body">
+          <div class="bt-work-card__body">
 
             <p class="bt-work-card__title" id="wc-cur-01">
               <a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
@@ -488,7 +488,7 @@
 
           </div>
 
-          <div class="card-footer d-flex flex-column gap-1">
+          <div class="bt-work-card__footer d-flex flex-column gap-1">
 
             <!-- Biblio ID + audit -->
             <div class="bt-work-card__meta align-items-center">
