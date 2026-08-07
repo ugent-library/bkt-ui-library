@@ -48,6 +48,11 @@ building.
 
 A question that could have been answered in the room is a defect.
 
+## Clear instructions beat storytelling
+
+Where text lists what something does, write instructions: one statement per
+sentence, subject first. A sentence someone acts on reads once.
+
 ## The what, never the how
 
 State the outcome and the behaviour. No framework idioms, library calls, data
