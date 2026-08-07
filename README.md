@@ -143,7 +143,6 @@ to be found.
 - [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
 - [Consuming Booktower](docs/CONSUMING-BOOKTOWER.md) — Integration contract for using this library in another app
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
-- [Integration](base/integration.html) — Using the design system in apps
 - [Bootstrap gap audit](docs/analysis/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
 - [Working guide](AGENTS.md) — **Read before your first change.** For humans and AI agents, any tool. Routes to the rules: [CSS authoring](docs/CSS-ARCHITECTURE.md) (naming, Bootstrap-first, where styles live), the [accessibility rules + checklist](docs/ACCESSIBILITY.md), and the rest of `docs/`.
 - [Contributing](CONTRIBUTING.md) — how work flows, what gates a change, who decides what.
