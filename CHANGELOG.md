@@ -6,25 +6,39 @@ system, or do I reach for something new?"
 
 ---
 
-## Work card wrappers — BEM elements replace Bootstrap names (v2.13, 2026-08-07)
+## Work card — BEM wrappers, and the block absorbs its only modifier (v2.13, 2026-08-07)
 
-Three classes added, three Bootstrap names retired inside the card. Supersedes
-v2.8's "Bootstrap structural regions stay": without a `.card` ancestor, every
-declaration Bootstrap ships for these classes resolves against undefined
-`--bs-card-*` variables, and `_booktower-work-card.scss` overrode the rest —
-the wrappers were Bootstrap in name only.
+Three classes added, four names retired. Supersedes v2.8's "Bootstrap structural
+regions stay": without a `.card` ancestor, every declaration Bootstrap ships for
+these classes resolves against undefined `--bs-card-*` variables, and
+`_booktower-work-card.scss` overrode the rest — the wrappers were Bootstrap in
+name only.
 
 | Old markup (selectors deleted) | v2.13 |
 |---|---|
 | `div.card-header` (inside `bt-work-card`) | `div.bt-work-card__header` |
 | `div.card-body` (inside `bt-work-card`) | `div.bt-work-card__body` |
 | `div.card-footer` (inside `bt-work-card`) | `div.bt-work-card__footer` |
+| `bt-work-card bt-work-card--border-bottom` | `bt-work-card` |
 
-Declarations are unchanged — the rename is pure. Real Bootstrap `.card`
-components everywhere else keep `card-*`. Contract change for consumers:
-re-copying `booktower.css` and renaming the wrappers is one change — the old
-`.bt-work-card .card-*` selectors are gone from the compiled CSS, so old markup
-with new CSS loses the card's header/body/footer layout.
+`bt-work-card--border-bottom` is retired because every card carried it: a
+modifier no card ever omits is the block. Its declarations (`border-bottom`,
+vertical padding) moved to `.bt-work-card`, which the rename had otherwise left
+with no rule of its own. Same specificity, same source order, same rendering.
+
+The wrappers also dropped four declarations that only cancelled Bootstrap —
+`background: transparent` and `border-bottom: none` on `__header`,
+`background: transparent` and `border-top: none` on `__footer`, plus
+`margin-bottom: 0`. All are the initial value on a `<div>` with no `card-*`
+class, so nothing moves. Every other declaration is unchanged.
+
+Real Bootstrap `.card` components everywhere else keep `card-*`.
+
+**Consumers: one contract change, one diff.** Re-copy `booktower.css`, rename
+the three wrappers, and drop `bt-work-card--border-bottom`. The old
+`.bt-work-card .card-*` and `.bt-work-card--border-bottom` selectors are gone
+from the compiled CSS, so old markup with new CSS loses the card's
+header/body/footer layout and the rule between cards.
 
 ## Modal ARIA — Bootstrap owns the runtime attributes (v2.12, 2026-08-06)
 
@@ -586,8 +600,8 @@ is unchanged.
 
 | OLD | v2 | Status | Notes |
 |-----|----|--------|-------|
-| `.card`, `.card-body`, `.card-title`, `.card-footer` | Same | ✅ Carried over | Bootstrap cards remain available. Domain-specific research cards build on Bootstrap card markup. |
-| `card--work`, `card-research`, `card-meta`, `card-actions`, `card-title`, `card-authors`, `card-publication` | `bt-work-card` and `bt-work-card__*` | 🔄 Renamed | Domain research-output card lives in `_booktower-work-card.scss`. |
+| `.card`, `.card-body`, `.card-title`, `.card-footer` | Same | ✅ Carried over | Bootstrap cards remain available for boxed containers. The work card is not one of them — see the row below. |
+| `card--work`, `card-research`, `card-meta`, `card-actions`, `card-title`, `card-authors`, `card-publication` | `bt-work-card` and `bt-work-card__*` | 🔄 Renamed | Domain research-output card lives in `_booktower-work-card.scss`. A border-separated list item, with its own `__header`/`__body`/`__footer` — it carries no `card-*` class (v2.13). |
 
 ---
 

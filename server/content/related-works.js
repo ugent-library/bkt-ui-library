@@ -9,7 +9,7 @@ function matchCard({ id, type, title, year, keywords }) {
       : `<a href="#" class="badge text-bg-secondary text-decoration-none">${label}</a>`)
     .join('\n        ');
   return `
-  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="${id}">
+  <li><article class="bt-work-card" aria-labelledby="${id}">
     <div class="card-header">
       <div class="bt-work-card__meta">
         <span class="bt-work-card__meta-item">${type}</span>

@@ -161,10 +161,12 @@ bt-toolbar__right
 bt-toolbar__title
 
 bt-work-card
-bt-work-card--border-bottom
 bt-work-card__actions
 bt-work-card__author
 bt-work-card__authors
+bt-work-card__body
+bt-work-card__footer
+bt-work-card__header
 bt-work-card__meta
 bt-work-card__meta-item
 bt-work-card__pub
@@ -588,9 +590,6 @@ btn-sm
 btn-success
 btn-warning
 card
-card-body
-card-footer
-card-header
 display-1
 display-2
 display-3

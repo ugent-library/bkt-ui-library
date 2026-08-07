@@ -6,7 +6,7 @@
 
 function card({ id, badges, title, authors, line }) {
   return `
-  <li><article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="${id}">
+  <li><article class="bt-work-card" aria-labelledby="${id}">
     <div class="card-header">
       <div class="bt-work-card__meta">
         ${badges}

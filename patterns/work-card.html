@@ -4,7 +4,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Work card</h1>
-    <p class="lead">The primary unit for displaying research output in list and search contexts. Three variants: backoffice curator, backoffice researcher, and public. The card uses Bootstrap's card component as a structural base, with surface tokens and a small set of custom classes for domain-specific content.</p>
+    <p class="lead">The primary unit for displaying research output in list and search contexts. Three variants: backoffice curator, backoffice researcher, and public. The card is a custom component — a border-separated list item rather than a boxed Bootstrap card — with surface tokens driving typography and a small set of classes for domain-specific content.</p>
   </header>
 
   <nav aria-label="On this page" class="mb-4">
@@ -22,7 +22,7 @@
 
   <section class="ds-section" id="grammar">
     <h2 class="h4 mb-3">Card grammar — region by region</h2>
-    <p class="mb-2 col-8">Every work card is the same five regions: <code>__meta</code> (a metadata row — access + type in the header, and departments / projects / VABB / provenance on the backoffice card), <code>__actions</code>, <code>__title</code>, <code>__authors</code> (of <code>__author</code> spans), and <code>__pub</code> (the reference line, composed per <a href="/docs/WORK-CARD-REFERENCE-STYLES.md">WORK-CARD-REFERENCE-STYLES</a>). Structural wrappers stay Bootstrap (<code>card-header</code>, <code>card-body</code>).</p>
+    <p class="mb-2 col-8">Every work card is the same five regions: <code>__meta</code> (a metadata row — access + type in the header, and departments / projects / VABB / provenance on the backoffice card), <code>__actions</code>, <code>__title</code>, <code>__authors</code> (of <code>__author</code> spans), and <code>__pub</code> (the reference line, composed per <a href="/docs/WORK-CARD-REFERENCE-STYLES.md">WORK-CARD-REFERENCE-STYLES</a>). The structural wrappers are <code>__header</code>, <code>__body</code> and <code>__footer</code>.</p>
     <p class="mb-2 col-8 text-muted small">The title element is surface- and outline-dependent: <code>&lt;h2&gt;</code> on public search results, <code>&lt;p&gt;</code> on backoffice lists, deeper heading levels where the page outline requires (project detail uses <code>&lt;h4&gt;</code> under year <code>&lt;h3&gt;</code>s). The <code>__title</code> class is purely visual — SCSS requires no specific tag.</p>
     <p class="mb-4 col-8 text-muted small">Access CTA states (Download, Log in, Select file, embargo text) live at <a href="/patterns/work-actions.html">Work actions</a>.</p>
 
@@ -206,7 +206,7 @@
       <h3 class="ds-demo-label">Public card — open access</h3>
       <div class="ds-demo-body" data-surface="public">
 
-        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wc-pub-01">
+        <article class="bt-work-card" aria-labelledby="wc-pub-01">
           <div class="bt-work-card__header">
 
             <!-- Status badges -->
@@ -255,7 +255,7 @@
     <div class="ds-demo">
       <h3 class="ds-demo-label">Public card — retracted</h3>
       <div class="ds-demo-body" data-surface="public">
-        <article class="bt-work-card bt-work-card--border-bottom" aria-labelledby="wc-pub-02">
+        <article class="bt-work-card" aria-labelledby="wc-pub-02">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-danger">Retracted</span>
@@ -300,7 +300,7 @@
       <h3 class="ds-demo-label">Researcher card — aligned with search-researcher.html</h3>
       <div class="ds-demo-body" data-surface="backoffice">
 
-        <article class="bt-work-card  bt-work-card--border-bottom" aria-labelledby="wc-cur-03">
+        <article class="bt-work-card" aria-labelledby="wc-cur-03">
           <div class="bt-work-card__header">
 
             <!-- Status badges -->
@@ -383,7 +383,7 @@
       <h3 class="ds-demo-label">Curator card — full metadata, aligned with curate.html</h3>
       <div class="ds-demo-body" data-surface="backoffice">
 
-        <article class="bt-work-card  bt-work-card--border-bottom" aria-labelledby="wc-cur-01">
+        <article class="bt-work-card" aria-labelledby="wc-cur-01">
           <div class="bt-work-card__header">
 
             <!-- Status badges -->
