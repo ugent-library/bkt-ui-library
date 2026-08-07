@@ -336,7 +336,20 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `add-author-form.html` | Deposit author add form |
 | `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
 
-**Vocabulary note:** All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge is how type is communicated, not separate nav sections.
+**Vocabulary note.** **Work** is the model — raven's entity, its `/works` routes and API. **Research output** is the UI copy, in both languages: *research output* / *onderzoeksoutput*, the word UGent's library already uses with researchers. A template saying "research outputs" over a `/works` route is correct, not drift.
+
+All Work kinds are called **research output** in the UI. Do not use "publications" as a category label. Do not create a separate "Datasets" tab or navigation item — datasets are research output with `kind=dataset`. The work kind badge is how type is communicated, not separate nav sections.
+
+**A list says what it is a list of.** Counts, pagination labels, filter and export actions name the entity on screen: `Showing 1–20 of 84 projects`, `aria-label="Researchers pagination"`, "Filter research outputs", "Export research outputs". A count is a count of something, and naming it means a label still makes sense read on its own — which is how a screen-reader user meets it, and how an export button is read before the file arrives.
+
+Count noun: **research outputs**, plural. "Research output" stays the singular collective for the category (a heading, a nav item, a type label); counting items pluralises it.
+
+Two places keep "results", because the entity is already there or would be repeated to no purpose:
+
+- **Facet value counts** — `aria-label="Open access (142 results)"`. Thirty values per sidebar, each already labelled; "142 research outputs" thirty times is noise for anyone listening to it.
+- **Suggest-panel tabs and other places the label names the entity already** — "People, 12 results", not "People, 12 people".
+
+A zero state is copy, not a count: "No results for … with these filters" is about the search coming back empty, and reads better than the entity name.
 
 ---
 

@@ -44,7 +44,7 @@ no way to leave one behind.
 **Deleting.** Three scopes, each next to what it deletes: an alternative's × removes that
 alternative (and collapses the group at one left); the group header's **Remove group** removes
 the whole group and its slot; a plain row's × removes the row. Removing the last row of all
-leaves the builder in its empty state, where the count reads "all publications" — the same
+leaves the builder in its empty state, where the count reads "all research outputs" — the same
 place a first visit starts.
 
 **Keyboard and AT.** The group is a `role="group"` labelled by its "Any of these" heading, so

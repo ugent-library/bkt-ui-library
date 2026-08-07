@@ -256,7 +256,7 @@
       <!-- Grid cell and drawer are separate elements: offcanvas on the column
            needs p-0, which breaks the g-5 gutter pairing (row negative margin
            stays, column padding gone → sidebar shifts left of the container). -->
-      <aside class="col-lg-3" aria-label="Filter results">
+      <aside class="col-lg-3" aria-label="Filter by">
       <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="filters-offcanvas" role="dialog"
         aria-labelledby="filters-offcanvas-title">
 
@@ -266,7 +266,7 @@
         <div class="offcanvas-header d-lg-none border-bottom">
           <div id="wf-head-list">
             <h2 class="h5 mb-0" id="filters-offcanvas-title">Filters</h2>
-            <span class="text-muted small" id="wf-sheet-count">179 results</span>
+            <span class="text-muted small" id="wf-sheet-count">179 research outputs</span>
           </div>
           <button type="button" class="btn btn-ghost px-0 fs-5" id="wf-head-back" hidden>
             <i class="if if-arrow-left" aria-hidden="true"></i>
@@ -531,7 +531,7 @@
             <span id="wf-clear-slot"></span>
             <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
               data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
-              Show 179 results
+              Show 179 research outputs
             </button>
           </div>
           <div class="align-items-center gap-2 d-none" id="wf-foot-detail">
@@ -600,7 +600,7 @@
                 <i class="if if-orcid" aria-hidden="true"></i>
                 0000-0002-4483-0141
                 <span class="mx-1" aria-hidden="true">·</span>
-                89 research output
+                89 research outputs
               </p>
             </div>
             <a href="/templates/biblio-public/public-researcher-detail.html"
@@ -619,7 +619,7 @@
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <!-- Pagination is only styled, does not work. Make it work according to bootstrap patterns. Pattern: /patterns/pagination.html -->
-            <nav aria-label="Results pagination" class="d-flex align-items-center gap-3">
+            <nav aria-label="Research output pagination (top)" class="d-flex align-items-center gap-3">
               <ul class="pagination pagination-sm mb-0">
                 <li class="page-item disabled">
                   <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
@@ -633,7 +633,7 @@
                   <a class="page-link" href="#" aria-label="Next page">›</a>
                 </li>
               </ul>
-              <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–27 of 27 results</span>
+              <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–27 of 27 research outputs</span>
             </nav>
           </div>
           <div class="bt-toolbar__right">
@@ -669,7 +669,7 @@
                   <button type="button" class="dropdown-item"
                     data-bs-toggle="modal" data-bs-target="#export-modal">
                     <i class="if if-download if--sm me-2" aria-hidden="true"></i>
-                    Export results
+                    Export research outputs
                   </button>
                 </li>
                 <li><a class="dropdown-item" href="/feed/search?q=Quantum+computing">
@@ -1610,7 +1610,7 @@
         </ol>
 
         <!-- Results bar: /patterns/pagination.html -->
-        <nav class="bt-toolbar mt-2 pt-3" aria-label="Results pagination, bottom">
+        <nav class="bt-toolbar mt-2 pt-3" aria-label="Research output pagination (bottom)">
           <div class="bt-toolbar__left">
             <ul class="pagination pagination-sm mb-0">
               <li class="page-item disabled">
@@ -1625,7 +1625,7 @@
                 <a class="page-link" href="#" aria-label="Next page">›</a>
               </li>
             </ul>
-            <span class="text-muted small"><span class="visually-hidden">Showing </span> 1–27 of 27 results</span>
+            <span class="text-muted small"><span class="visually-hidden">Showing </span> 1–27 of 27 research outputs</span>
           </div>
         </nav>
         <!-- @state -->
@@ -1634,7 +1634,7 @@
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <!-- [html-validate-disable-next no-dup-id -- @state blocks; one renders at a time] -->
-            <span class="text-muted small" aria-live="polite" id="result-count">0 results</span>
+            <span class="text-muted small" aria-live="polite" id="result-count">0 research outputs</span>
           </div>
         </div>
 
@@ -1672,14 +1672,14 @@
   </main>
 </div>
 
-<!-- Export results modal — formats + citation style. JCR/impact toggle
+<!-- Export research outputs modal — formats + citation style. JCR/impact toggle
      deliberately omitted (not exposed publicly). Endpoints are stubs. -->
 <div class="modal fade" id="export-modal" tabindex="-1"
   aria-labelledby="export-modal-title">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title h5" id="export-modal-title">Export 179 results</h2>
+        <h2 class="modal-title h5" id="export-modal-title">Export 179 research outputs</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

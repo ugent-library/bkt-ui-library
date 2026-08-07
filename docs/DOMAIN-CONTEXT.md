@@ -80,7 +80,7 @@ Templates should not conflate these. All backoffice pages include one sidebar pa
 
 ## Candidate review queue
 
-The "Suggestions" section in the backoffice sidebar shows Work candidates matched to the current user. A candidate is a possible publication harvested from an external source (WoS, ORCID) that has not yet been accepted or rejected.
+The "Suggestions" section in the backoffice sidebar shows Work candidates matched to the current user. A candidate is a possible work harvested from an external source (WoS, ORCID) that has not yet been accepted or rejected.
 
 Relevant UI states for a candidate:
 - **Pending** — awaiting review. Shows preview metadata from the source.

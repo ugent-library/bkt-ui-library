@@ -55,11 +55,12 @@ Application navigation   ← bt-navbar primary nav
 Section navigation       ← bt-sidebar
 Breadcrumb               ← breadcrumb nav
 Filter by                ← facet/filter aside (use aria-label on <aside>)
-Results pagination       ← pagination nav
-Results pagination (top) / (bottom) ← when one list repeats its pagination nav
+Research output pagination  ← pagination nav, named after what the list holds
+Research output pagination (top) / (bottom) ← when one list repeats its nav
+Projects pagination / Researchers pagination ← another list, another entity
 ```
 
-Pagination labels in full — single bar, repeated bar, several lists on one page — are pinned in the kit: `patterns/pagination.html`.
+A pagination nav is named after the entity in the list — the wording rule is `docs/DOMAIN-VOCABULARY.md`; the labels in full, single bar, repeated bar and several lists on one page, are pinned in the kit: `patterns/pagination.html`.
 
 **A6. Landmark regions used correctly.**
 - `<header>` for the topbar (`bt-navbar`)
