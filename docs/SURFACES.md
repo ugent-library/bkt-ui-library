@@ -10,7 +10,7 @@ names the general rule those decisions follow.
 | Surface | Subject | Users (personas) |
 |---|---|---|
 | **Public** | Knowledge — the research itself | Sue Kerr (academic reader), Pia Practice (practitioner), Carrie Curious (curious public), Cody Crawley (machine) |
-| **Backoffice** | Work — records as objects of labour | Everyone identified: Claire Searcher, Otto Thor, Paula Proksy, Stan Standish, Guy Guest, Marie Curator, Rhea View |
+| **Backoffice** | Work — records as objects of labour | Everyone identified: Claire Searcher and Otto Thor (researchers), Paula Proksy, Stan Standish and Guy Guest (proxies), Marie Curator (reviewer), Rhea View (review coordinator) |
 
 Personas are defined in `docs/RESEARCH-PERSONAS.md`.
 
@@ -42,7 +42,7 @@ Logging in does not move a user to the backoffice. Downloading a UGent-only
 everyone; the file's access gate answers "who are you" per resource. This is access
 control on public content, matching raven's `visibility` model.
 
-There is no owner layer on the public surface (M, 2026-07-30): a researcher viewing
+There is no owner layer on the public surface: a researcher viewing
 their own person page sees exactly what every visitor sees. Anything "mine" — drafts,
 subset exports, corrections — lives in the backoffice.
 
@@ -70,7 +70,7 @@ A professor exports his group's "WoS journal papers only" for his own website.
 Persona: fails — "my group's output" requires identity. Vocabulary: fails — "WoS" is
 expert. Not in current public Biblio either (verified: `biblio/views/hits_facets.tt`
 has no source facet). **Backoffice export**, on the researcher's own-output views;
-advanced search and the API are the future exception paths (M, 2026-07-30).
+advanced search and the API are the future exception paths.
 
 The public export (see `notes/PLAN-public-export.md`) stays: visitors export what
 public facets express — type, year, access.

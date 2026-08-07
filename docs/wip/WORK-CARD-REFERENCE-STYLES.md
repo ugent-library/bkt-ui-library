@@ -15,11 +15,41 @@ fields are raven's (`raven/docs/metadata-work-fields.md`).
 The line opens with the year: authors, title and access are the card's other regions.
 Dates render at the precision they carry — year-only stays the year.
 
-The examples below are rendered output, not invented — see Sources. They show the
-shape of each line; how raven produces it, and its exact punctuation, is the dev
-team's call.
+### One order
 
-### Per-type lines
+Every type's line is the same sequence, rendering only the slots its fields fill:
+
+    (year) genre. in container. event, imprint (series), position, pages.
+
+- **year** — the year part of `date`.
+- **genre** — the word that explains what follows: "PhD thesis.", "Report RPT-42."
+- **container** — the type's own: journal, host book, proceedings, magazine,
+  newspaper, venue.
+- **event** — conference name and location.
+- **imprint** — `place_of_publication: publisher`.
+- **series** — `series_title`, in parentheses.
+- **position** — `volume(issue)`, or `day month` on dated types.
+- **pages** — `pp. start–end`; `article_number` where an e-only article has none.
+
+Five exceptions, the whole list:
+
+- `book_part` prefixes its container with `in`.
+- `book` and `edited_book` carry `edition edn.` before the imprint.
+- `doctoral_thesis` fills the imprint slot with the awarding institution, never a
+  publisher.
+- `preprint` renders `[Preprint]` after the imprint, not as a leading genre word.
+- `dataset` and `software` render the year alone; their publisher belongs to the
+  backoffice scan.
+
+A type with nothing but a year — `other`, or any future type before its fields are
+mapped — renders `(year)`. There is no separate fallback rule: the order is the rule.
+How raven produces the line, and its exact punctuation, is the dev team's call.
+
+### Per-type lines (derived examples)
+
+What the order produces, type by type — for reading and review; the order and
+exceptions above are the intent. Examples are rendered output, not invented (see
+Sources); ⚑ marks a field that is 08's question.
 
 | Work type | Line composition | Example |
 |---|---|---|
@@ -45,44 +75,27 @@ team's call.
 | `lecture` | `(year) venue, day month.` — location sits inside `venue` per its field definition | `(2025) UGent Data Stewards seminar, Ghent, 20 October.` |
 | `dataset` | `(year)` — bare, as on the old public site; publisher (Zenodo) shows in the backoffice scan only | `(2026)` |
 | `software` | as `dataset`; version field is raven's question ⚑ | `(2026)` |
-| `other` | generic fallback | `(2024)` |
+| `other` | the order, with whatever fields it carries | `(2024)` |
 
-### Generic fallback
+### Decisions
 
-`other`, and any future type before it is styled, render `(year)` plus whatever
-styled fields they carry, in the order of the table. Today's uniform rule survives
-here as the floor; the per-type rules are the upgrade.
+The per-type rules live in the order, exceptions and table above. What earns a
+place here is the reasoning that would otherwise be lost:
 
-### Decisions (M, 2026-07-30 unless noted)
-
-- **E-only articles**: `article_number` renders where pages are absent.
-- **Book reviews render like journal articles** — raven gives them the same venue
-  and position fields.
-- **Conference lines carry name and location.**
-- **Host-book editors stay off chapter cards** — matches old biblio on both
-  surfaces; editors are a detail-page concern.
 - **Where old biblio showed a field raven lacks, the card keeps showing it**, with a
   note per case (⚑ below). Where old biblio showed nothing — the public dataset
   line — the card stays bare.
-- **Preprint server-in-`publisher`** is raven's concern; the line renders whatever
-  the field means.
 - **Genre words stay** — "PhD thesis.", "Report RPT-42.", "[Preprint]" render even
   though the type badge names the type: each explains the field that follows it, and
   the line stays readable out of context. Year-only lines were considered and
   rejected.
-- **Line parts stay linked** — year and container title remain clickable, as on the
-  old public site.
 - **Container and work titles render italic.** Review in the prototype.
-- **No classification badge on the public card** — A1/A2 are evaluation vocabulary,
-  and stay off the public surface.
-- **Contributor line follows the old public rule** — up to 10 names then `et al.`,
-  every name linked, UGent contributors with the `if-ghent-university` icon plus
-  visually-hidden "(UGent)", identifier icons keeping the hover popover
-  (`popover--sm popover--dark`, `elements/popovers.html`) with a visually-hidden
-  fallback. As built in `patterns/work-card.html`.
-- **`<cite>` on container titles** (M, 2026-08-06) — kept, with the caveat on
+- **`<cite>` on container titles** — kept, with the caveat on
   record: WHATWG reserves the element for a work's own title, and a container is
   arguably not that, so this is accepted practice rather than spec-endorsed.
+
+Card-level rules — links on line parts, the contributor line, no classification
+badge — live with the card grammar, not here.
 
 ### ⚑ Remaining — raven gaps to raise
 
@@ -102,7 +115,7 @@ are not in raven's registry:
 
 ## The backoffice line — metadata scan
 
-Named "metadata scan" (M, 2026-08-06). Deliberately **not** a citation: curators
+Named "metadata scan". Deliberately **not** a citation: curators
 scan fields, readers cite. It is the current production format (`SummaryParts()`,
 see `../analysis/WORK-CARD-CURRENT-STATE.md`), rekeyed to raven fields.
 
@@ -121,12 +134,9 @@ year · container · publisher · volume · (issue) · start–end
 - **publisher, volume, (issue), pages** — where the type carries them.
 
 Type-agnostic by construction: any of the 23 types renders whatever it has, so a new
-type needs no new rule.
-
-**Quirks, decided** (M, 2026-08-06): a lone first page renders as `p. 58`, never
-bare `58`; the abbreviation-to-full-title fallback stays, because a full name beats
-nothing; dates are formatted like every other date on the card (dd/mm/yyyy), never
-raw storage strings.
+type needs no new rule. Dates follow the backoffice format
+(`../DOMAIN-VOCABULARY.md` → "Dates in the UI"); exact rendering of the parts is the
+dev team's call, as on the public line.
 
 ---
 

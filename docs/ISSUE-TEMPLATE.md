@@ -41,9 +41,18 @@ questions, what-not-how, point don't paste. Template-specific:
         description. "Like GitHub" describes nothing: the reference
         drifts and the dev may not know it.
      3. Who wants what, and why. Name the user (persona from
-        docs/RESEARCH-PERSONAS.md), what they're trying to accomplish,
-        and why it matters to them. That sentence is the tiebreaker for
+        docs/RESEARCH-PERSONAS.md, written with its type: "Sue Kerr
+        (academic reader)"), what they're trying to accomplish, and
+        why it matters to them. That sentence is the tiebreaker for
         everything this issue leaves open.
+     Parity feature — re-creating what old Biblio already has, not an
+     improvement? Add a comparison table: one row per region, three
+     columns — Biblio public today, raven, expected. It sits alongside
+     prose 1-and-2, and replaces them only when it carries everything
+     they would. Departures then read off the last column. The raven column is the
+     one exception to the no-current-Raven rule above: coarse — what
+     renders, never fields or mechanics — and stamped with its check
+     date, because raven moves while the issue sits.
      Lead with the user, never with a backend gap. Whether raven models
      the data yet goes under Open questions, not here. Link a docs/
      decision record if one exists. Add one overview screenshot of the
@@ -105,5 +114,5 @@ View at `localhost:3111/<template path>`
      questions the dev team resolves in implementation whether or not we ask
      (where a config key lives, which mechanism serves a view): a question
      earns its place only when the answer changes what we design or what a
-     user sees (M, 2026-08-06). Log the question with its concrete options.
+     user sees (decided 2026-08-06). Log the question with its concrete options.
      Anything strategic goes to docs/. Delete if none. -->

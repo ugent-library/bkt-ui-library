@@ -93,7 +93,7 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 
 **Variant — the author checking their own footprint.** Bridges public + backoffice: is my record correct, is it OA, how many downloads? (ties to Claire Searcher's "search own records").
 
-> **Narrowed 2026-07-30.** Sue Kerr was a composite of every open-web visitor; the practitioner and citizen sub-audiences are now their own profiles (below). Researcher vs student may still split after public-surface testing.
+> **Narrowed.** Sue Kerr was a composite of every open-web visitor; the practitioner and citizen sub-audiences are now their own profiles (below). Researcher vs student may still split after public-surface testing.
 
 ## Pia Practice — "applies it, doesn't publish"
 **Public / discovery profile** · *outside the researcher community, professional stake*

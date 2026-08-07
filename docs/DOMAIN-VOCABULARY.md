@@ -57,7 +57,7 @@ an icon **with a visible label** inside that badge: `· if-eye Public` or
 plain `bt-work-card__meta-item` ("Open access", "Restricted access", "Embargo until
 <date>"), never as a badge on the backoffice.
 
-Record-level `restricted` (M, 2026-08-06): a work that must be deposited but whose
+Record-level `restricted`: a work that must be deposited but whose
 metadata cannot be revealed publicly — recorded, not exposed. On cards it renders as
 "Not public"; there is no third rendering. Open: the value's *name* — `restricted`
 collides with restricted file access; a raven naming question.
@@ -95,7 +95,7 @@ OAI-PMH deleted headers; normal reads and lists exclude them.
 The old biblio reasons — `withdrawn` (author request), `retracted` (integrity),
 `takedown` (legal) — have no raven counterpart yet. Scholarly *retraction* is not
 deletion: a retracted article stays public with a retraction notice (an editorial
-state). **Retraction will be built in raven; the timing is open** (M, 2026-07-30) —
+state). **Retraction will be built in raven; the timing is open** —
 the prototype designs ahead: a retracted work carries `badge text-bg-danger`
 "Retracted" on public and backoffice cards (the work stays public; the detail page
 carries the notice). See `notes/TOPLAN.md`, Backoffice.
@@ -145,6 +145,16 @@ One transaction boundary in the audit trail. Every record-touching write runs th
 In the UI: surfaces as a change history view on a Work detail page (who changed what, when), and as the review-message thread on deposit transitions.
 
 ---
+
+### Dates in the UI
+
+- **Public surface** — human-readable: "5 August 2026". Public work cards carry no
+  metadata timestamps; the only dates on them are the reference line's own and the
+  embargo badge's release date.
+- **Backoffice surface** — `dd/mm/yyyy hh:mm`, built for scanning.
+- **The backoffice card logs three moments**: who created the metadata and when;
+  who last changed it and when; and, where the record was also touched by the
+  system (an import, a background job), the last system change and when.
 
 ## Access and file concepts
 
@@ -261,7 +271,7 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
   (`badge text-bg-secondary`), told apart by icon: `if-lock` for restricted, `if-time` for
   embargo (which names the date). They are correct outcomes, not warnings — the orange
   `text-bg-warning` they used to wear read as an error and competed with open access
-- **closed access carries no icon** (M, 2026-08-04) — `badge text-bg-secondary`, text only.
+- **closed access carries no icon** — `badge text-bg-secondary`, text only.
   The lock is restricted's; reusing it would say the two states are the same thing
 - Works without full-text access should not look broken — restricted access is sometimes correct, but the UI should make open access feel like the norm
 

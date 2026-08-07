@@ -277,7 +277,7 @@ not indexed yet). **Research discipline** (raven `research_disciplines`) is a cl
 taxonomy, so its home — if it ever ships publicly — is a **sidebar checklist**, never the
 picker.
 
-Research discipline is **cut from the public surface** (M, 2026-07-21): no sidebar facet,
+Research discipline is **cut from the public surface**: no sidebar facet,
 not shown on detail pages. Grounds: the live Subject facet drew 392 uses / 269 sessions in
 seven months of query logs (~0.03% of results-page interactions) — it fails the "worth the
 space" test — and the vocabulary itself needs review before any public display (the scheme —
@@ -381,8 +381,8 @@ The redesign is grounded in a query-log analysis (≈102M logged interactions ov
 - **The simple box wins.** 98% of human searches use the simple box with bare keywords;
   the CQL query language and the advanced/expert tiers are, in practice, used far less.
   Invest in a fast, forgiving keyword box (ranking, typo tolerance, autosuggest).
-- **Refinement is a results-page behaviour — and it is mostly scoped links, not facets**
-  *(corrected 2026-07-21)*. Filter clauses appear in ~1% of typed searches, so narrowing
+- **Refinement is a results-page behaviour — and it is mostly scoped links, not facets.**
+  Filter clauses appear in ~1% of typed searches, so narrowing
   happens after arrival (Rule 2 stands). But the per-field split shows the ~49% of
   results-page interactions carrying filter clauses is almost entirely **link-follows** —
   clicking an author (~199k sessions / 7 months), keyword (~252k), or journal title
@@ -444,8 +444,8 @@ Why the tray, not a pill bar and not two separate entry points:
   unavailable when this was noted.)*
 - **One canonical state (Rule 1).** A pill bar plus a separate sheet would be two competing
   filter inputs; one tray keeps a single input surface and preserves chip-bar-as-readout.
-- **Refinement is a results-page behaviour (query log, Evidence above — corrected
-  2026-07-21).** Filter clauses appear in ~1% of typed searches; narrowing happens after
+- **Refinement is a results-page behaviour (query log, Evidence above).** Filter
+  clauses appear in ~1% of typed searches; narrowing happens after
   arrival, and measured checklist-facet usage is small — so the mobile filter surface
   should be a lightweight, discoverable results-page tray, not a heavy separate screen,
   more syntax, or anything that competes with the scoped links on the cards.
