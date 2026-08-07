@@ -1,7 +1,7 @@
 // Public search-result cards — one card per raven work type (23).
 // Actions: v1 per raven#141 — Cite + Add to list, no access CTA.
 // Add to list picker: patterns/panel.html.
-// Reference line: docs/wip/WORK-CARD-REFERENCE-STYLES.md (Harvard author-date, card variant).
+// Reference line: docs/wip/WORK-CARD-REFERENCE-STYLES.md, composed per work type.
 // All names, titles, dates: placeholder data.
 
 function card({ id, badges, title, authors, line }) {
@@ -80,7 +80,7 @@ ${card({
       author('Camille Vervoort'),
       author('Mark G. Tjoelker')
     ].join(',\n        ') + ' <span class="text-muted">et al.</span>',
-    line: `${year(2026)} <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 12&ndash;29.`
+    line: `${year(2026)} <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.`
   })}
 ${card({
     id: 'card-feed-02',
