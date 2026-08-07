@@ -128,7 +128,7 @@ A suggestion takes you to the thing it names, routed identically on every search
 | Organization | organization detail page | a record you visit (its page lists/searches its own output) |
 | Project | project detail page | a record you visit |
 | Keyword / tag | scoped works search (`?keyword=` / `?tag=`) | names a *set of works*, so it resolves to those works — the one forced exception |
-| Journal / host title (a link on cards and record pages — not a box suggestion) | identifier-scoped works search (`?issn=` / `?isbn=`) | names a *set of works* — the keyword logic applied to a venue; lands as an Identifier chip (Rule 5) |
+| Journal / host title (a link on cards and record pages — not a box suggestion) | works search on the title as text | names a *set of works* — the keyword logic applied to a venue; identifier filtering stays in the manual filter bar (Rule 5) |
 | Free text (Enter / Search) | works results (`?q=…`) | topical search enters the result space |
 
 **Submit vs. select.** Pressing Enter or clicking Search always submits the typed text as
@@ -158,11 +158,22 @@ server count; zero-result groups are omitted.
 
 The same routing governs the links inside result cards and work detail pages: an author
 name goes to the researcher page, a keyword badge to the keyword-scoped works search, a
-journal/host title to the identifier-scoped works search (its ISSN/ISBN). These
+journal/host title to a works search on the title as text. These
 link-follows are the measured volume path of results-page refinement — author ~199k,
 keyword ~252k, journal ~204k sessions over seven months of live logs (Evidence below) —
-so every one of them must be a working link, never decorative text. Publisher/platform
-names (e.g. Zenodo) are not a public scope and stay unlinked.
+so every one of them must be a working link, never decorative text.
+
+**Card filter links land on the works overview.** Every filter part on a card — the
+year, the journal/host title, the project, the publisher or platform name (e.g.
+Zenodo) — links to the works overview with that filter applied, wherever the card
+appears: a filterable overview, the embedded listing on a detail page, the record page
+itself. On the works overview and in the backoffice lists the same click narrows the
+list in view. A container or publisher link is a **string search on the name** — as
+live does today (`parent exact`); a card link never carries an ISSN/ISBN, identifier
+filtering is applied manually in the filter bar (Rule 5). The year link is feature
+parity with live. A caveat when reusing the numbers above: they were measured on
+today's live product, a different UI — they prove demand for the pattern, not the
+redesign.
 
 ### Every box, one grammar
 
@@ -343,8 +354,9 @@ ISSN, ISBN, arXiv, handle — scheme auto-detected, not one filter per scheme. F
 journal works through its ISSN (searching a venue by name is unreliable; the ISSN is exact),
 so there is **no separate Journal/venue filter**. The suggest panel additionally offers a
 known-item shortcut — pasting a full DOI jumps straight to the work — but the filter is not
-restricted to that. Journal/host titles on cards and record pages link into this filter
-(`?issn=` / `?isbn=` → an applied Identifier chip) — see Rule 3, Scoped links.
+restricted to that. The Identifier filter is applied manually via the picker;
+journal/host titles on cards link to a text search on the title instead — see Rule 3,
+Scoped links.
 
 ---
 
