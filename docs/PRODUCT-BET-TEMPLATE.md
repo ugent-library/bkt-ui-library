@@ -9,8 +9,8 @@
 
 ## Problem
 
-<!-- Who is hurting, at what, how we know. Name personas, one line each on what this
-     bet gives them. Say why not doing this is not an option, if that is true.
+<!-- Who is hurting, at what, how we know. Name personas with their type —
+     "Marie Curator (reviewer)" — one line each on what this bet gives them. Say why not doing this is not an option, if that is true.
      Verified numbers only; link the evidence document rather than reciting it.
      Then, only when something existing may not break: the constraints that hold
      throughout — an existing contract, permalinks, a usage level that may not drop.

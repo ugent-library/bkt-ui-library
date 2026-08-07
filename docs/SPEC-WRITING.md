@@ -29,8 +29,10 @@ An honest gap gets resolved; a plausible fabrication gets built.
 ## Name the persona, not "users"
 
 Where personas are documented (`docs/RESEARCH-PERSONAS.md`), name them: who, what
-they are trying to accomplish, why it matters to them. Personas are researched
-evidence; a list of job titles is not. Where a documented need maps onto a design
+they are trying to accomplish, why it matters to them. A persona name is a
+pseudonym; write it with the type it represents — Sue Kerr (academic reader),
+Marie Curator (reviewer) — so it reads without opening the personas doc.
+Personas are researched evidence; a list of job titles is not. Where a documented need maps onto a design
 element, say so. If no persona fits, name a concrete role and flag that the
 research is missing.
 

@@ -45,14 +45,6 @@ questions, what-not-how, point don't paste. Template-specific:
         (academic reader)"), what they're trying to accomplish, and
         why it matters to them. That sentence is the tiebreaker for
         everything this issue leaves open.
-     Parity feature — re-creating what old Biblio already has, not an
-     improvement? Add a comparison table: one row per region, three
-     columns — Biblio public today, raven, expected. It sits alongside
-     prose 1-and-2, and replaces them only when it carries everything
-     they would. Departures then read off the last column. The raven column is the
-     one exception to the no-current-Raven rule above: coarse — what
-     renders, never fields or mechanics — and stamped with its check
-     date, because raven moves while the issue sits.
      Lead with the user, never with a backend gap. Whether raven models
      the data yet goes under Open questions, not here. Link a docs/
      decision record if one exists. Add one overview screenshot of the
