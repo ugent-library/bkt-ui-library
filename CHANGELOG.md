@@ -26,9 +26,10 @@ defined in no stylesheet, undetected for the page's whole life.
 
 The page now holds six principles rather than four. **05 Trust is placed
 deliberately** and **06 Quality is reached in cycles** come from the Biblio
-2030 working strategy: metadata increasingly arrives machine-generated, some of
-it publishes with nobody having read it, and deposit is non-blocking with
-quality reached through curation cycles. **02** gained the public/backoffice
+2030 working strategy: metadata increasingly arrives from outside, imported
+values may publish without anyone here reading them while anything we generate
+ourselves waits for a person, and deposit is non-blocking with quality reached
+through curation cycles. **02** gained the public/backoffice
 surface split and the limit in both directions — invented complexity is ours to
 remove, responsibility is not. **03** gained the long tail, **04** machines as
 readers. Each principle carries a pass/fail test; the conflicts section resolves
