@@ -6,32 +6,30 @@ title: "[public] Work card: the access badge"
 
 ## Why
 
-Access on today's public card is an icon chosen partly by the reader's network. In
-raven it is one badge naming the state in words, the same for every reader. Which
-state a work is in follows the documented open-access definition — raven#164 owns
-that; this issue owns how the answer looks.
+Access on today's public card is an icon: a green arrow with "open access" when a
+file is open, the same arrow without the words when the reader's IP sits in a
+configured campus range and the file is restricted, a grey padlock when it is
+restricted and they are outside it. Embargo is not surfaced; private files render
+nothing.
 
-| State | Biblio public today | Raven (checked 2026-08-07) | Expected |
-|---|---|---|---|
-| Open | Green arrow with "open access" | "Open access" badge on the person page | **Open access** — coloured, open-access icon |
-| Restricted | The same arrow, wordless, from a campus IP; a grey padlock outside it | Nothing | **Restricted access** — neutral, lock icon, identical for every reader |
-| Embargo | Nothing | Nothing | **Embargo until \<date\>** — neutral, time icon, names the date |
-| Closed | Nothing | Nothing | **Closed access** — neutral, text only, no icon |
-| No files, or only private | Nothing | Nothing | No badge, no trace |
-
-Only open access carries colour: restricted and embargo are correct outcomes rather
-than warnings, so they are neutral and separated by icon, and closed access takes no
-icon at all, since the padlock is restricted's. The recipe per state is the ⚠️
-access-badge table in `CHANGELOG.md` (v2.10).
+In raven it is one badge naming the state in words, the same for every reader:
+**Open access**, **Restricted access**, **Embargo until \<date\>**, **Closed
+access**. Which state a work is in follows the documented open-access definition —
+raven#164 owns that; this issue owns how the answer looks. Only open access carries
+colour. Restricted and embargo are correct outcomes rather than warnings, so both
+render neutral and are told apart by their icons. Closed access renders as text
+alone — the padlock belongs to restricted. Colour, icon and class per state are
+fixed in `bkt-ui-library/docs/CLASS-USAGE.md` → Badges, and shown on the kit page.
 
 **A card may carry no access badge.** Eight of the 23 types routinely have no file,
 and a private file must leave no public trace — no badge, no count, not even the
-fact that a file exists. Absence is the display; there is no "no full text" badge.
+fact that a file exists. Showing nothing is the design; a card without an open,
+restricted or embargoed file simply has no access element.
 
 Carrie Curious (curious public) and Pia Practice (practitioner) both read
 "restricted" as broken unless the card says otherwise, and neither knows what an
 embargo is unless it names the date. Sue Kerr (academic reader) scans for the
-copy she can open — colour only where the answer is yes.
+works she can open — colour only where the answer is yes.
 
 > **Screenshot:** the four states on the kit page (`patterns/work-card.html`, the
 > `__meta` demo)
@@ -62,8 +60,8 @@ copy she can open — colour only where the answer is yes.
 The prototype covers **all four states plus the empty case**. We iterate on top.
 Flag ambiguity.
 
-- `text-bg-warning` on an access badge is wrong everywhere. Where an older template
-  still carries it, the CHANGELOG table wins.
+- Access badges use exactly the classes in that recipe; treat `text-bg-warning` on
+  any older template as drift to replace.
 - Icons are decorative; the badge text carries the meaning.
 
 _The prototype governs the visible page and markup. Machine-facing output

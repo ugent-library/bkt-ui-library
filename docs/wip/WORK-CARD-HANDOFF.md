@@ -1,0 +1,136 @@
+# Handoff — work-card issues (2026-08-07)
+
+Paste into a new session:
+
+```
+Read AGENTS.md in the booktower-ui-library repo root and follow the session start
+instructions. Then read notes/issues-work-card/HANDOFF.md and continue from it.
+Task: <state the task>.
+```
+
+## State
+
+14 documents in `notes/issues-work-card/` — two epics, eleven children, one
+amendment (07):
+
+- `00-EPIC-public.md` — children 01 grammar, 02 reference line, 03 access badge,
+  08 backend fields, 09 backend container filter. **Ready to file.** M files them.
+- `00-EPIC-backoffice.md` — children 04 card, 05 messages, 06 actions, 12 retracted
+  badge, 10 backend retraction, 11 backend missing-metadata. **Held**: the
+  backoffice pass has not run — no fast-lane screens, no proxy axis, no backoffice
+  detail view for a card title to open.
+- `07-match-card-amendment.md` — edits to raven#125, not a new issue.
+
+## Decisions 2026-08-07 — applied to the drafts
+
+- **No subtypes on cards.** Public epic's question closed; the sentence lives in
+  its Why.
+- **08 reference fields**: design intent is to build all four ⚑ fields; the
+  dev team confirms per field. The dataset publisher docs conflict is now its own
+  open question in 08.
+- **09 container filter**: matches the container title string, as public Biblio
+  does (`parent exact`); every container filters, publisher-as-venue names (Zenodo,
+  bioRxiv) included, so the identifier-coverage question is gone. Identifier
+  filtering (ISSN/ISBN) stays in the manual filter bar, never behind a card link.
+  A backoffice link matches the displayed string — short title if available,
+  otherwise the full title, keeping the old backoffice's behaviour. Closed in 09.
+- **Card filter links land on the works overview, on every card** — detail pages
+  included; on the overview itself and in backoffice lists the click narrows the
+  list in view. Year, container, project and publisher-as-venue names all link; the
+  year link is feature parity with live. In `docs/SEARCH-AND-FILTERING.md` (Rule 3
+  table, Scoped links, Identifier picker), 01, 02, 09, the public epic and the
+  work-card kit prose. Templates aligned: card links carry the `?container=`
+  placeholder; publisher-as-venue names (Zenodo, bioRxiv) link on public and
+  backoffice cards. Reading-list cards (`list-detail.html`) link the same way — year,
+  container and publisher point at the public works overview, since a personal list has
+  no result space of its own to narrow, exactly as on a detail page. An unlinked variant
+  was considered and dropped: it would make the work card conditional for one page.
+  Closed.
+- **Unlinking container titles was tried and reverted, same day.** Every
+  `?issn=`/`?isbn=` link was stripped from the prototype, 09 was dropped, and the
+  search doc's Rule 3 was rewritten — then all of it restored. Live biblio *does*
+  link the journal title on every card, and the resulting filter is
+  `cql: parent exact "<title>"`; the log report measures ~204k of those
+  link-follows over seven months. Don't reintroduce the removal. What the
+  screenshots opened instead: **live matches the parent title string, not an
+  identifier**. Decided: 09 keeps the title string, as public Biblio does. Every
+  container filters, so the identifier-coverage question is gone. The two-strings
+  follow-up (backoffice abbreviation vs public full title) is closed too: each
+  link matches what it displays.
+- **Retraction is not backoffice-only**: the public epic now says a retracted
+  work stays public, citable and marked, never hidden.
+- **Peer-review indicator removed** from the public epic — not sure it is wanted
+  at all. Diamond OA badge stays (wanted, no design).
+- **Soft-delete / replaced-by is public work too** — the epic says so; still
+  pending with M (design).
+- **Placeholder drift (`pp. 12–29`) verified fixed** in the templates; the stale
+  defect note is deleted from the public epic.
+- **Per-type line posed to development** (02): the reasoning against today's
+  single template is now in 02's Why; whether the composition is worth its
+  rendering cost is 02's open question for the dev team.
+- **The spec doc's durable home is raven**: `docs/wip/WORK-CARD-REFERENCE-STYLES.md`
+  is a WIP reference for critique and building; it, or the dev team's
+  interpretation of it, moves to raven with 02. Noted at the top of the doc.
+- **11 missing metadata**: filterable from the start, backoffice only; nothing
+  about completeness reaches the public surface. Question closed.
+- **06 / raven#141 anonymous Add to list**: the button shows for every visitor; an
+  anonymous click routes through login and back. M (design) carries it onto
+  raven#141.
+
+## Decisions this round — all applied to the drafts and docs
+
+- **Three sources, three weights.** The prototype is the spec; raven GitHub issues
+  are decisions, cited (#141, #164, #155/#156/#157/#159, #125, #167, #51, #153);
+  raven's code is neither — never cited, never a benchmark, never "drift". Backend
+  children 08–11 are phrased as the template's question: "does raven model this,
+  and if not do we build it or drop it?", with concrete options.
+- **Comparison tables tried and rejected** — a three-column parity table
+  (Biblio today | raven | expected) was added to the public epic, 01–03 and
+  `docs/ISSUE-TEMPLATE.md`, then reverted everywhere: prose in a table, no gain.
+  Don't reintroduce.
+- **The repository is the venue** — `dataset` and `software` compose
+  `(year) publisher.`, matching `preprint`; old biblio's bare dataset line was a
+  template accident. Spec doc and all prototype dataset/software cards updated;
+  dataset joins the ⚑ set, so 02 depends on 08 for five types.
+- **The reference line spec** (`docs/wip/WORK-CARD-REFERENCE-STYLES.md`) is one
+  order + four exceptions; the per-type table is derived examples. There is no
+  fallback rule: the order is the rule.
+- **Punctuation and line production are the dev team's.** The CSL render is
+  provenance for the examples — one line in Sources. Same for the scan line's
+  part rendering (`p. 58`-level detail is gone on purpose).
+- **Dates** (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI"):
+  public is human-readable ("5 August 2026"), no metadata timestamps on public
+  work cards; backoffice is `dd/mm/yyyy hh:mm`; the backoffice card logs who
+  created the metadata and when, who last changed it and when, and the last
+  system change and when.
+- **No decision stamps in docs** — state the rule; git holds when. Name an
+  authority only where a specific owner adjudicated. Derived rules cite the
+  derivation ("kept from old biblio", "per raven#164") — most decisions are
+  continuity with the existing product, not personal rulings.
+- **Point, don't paste**: What bullets link the spec doc instead of restating its
+  rows. Performance conventions (N+1) live in raven's AGENTS.md, never in issues.
+- `docs/SPEC-WRITING.md` gained: before sourcing a claim, check it is ours to
+  make — precision that belongs to the implementer is deleted, not evidenced.
+
+## Open questions standing — all external, each in its issue
+
+Visibility on return (04 — OSP with the curation lead); two in 10 (notice text —
+OSP; export exclusion — raven dev team); two in 08 for the dev team (per-field
+build confirmation; the dataset publisher docs conflict); the per-type line's
+rendering cost (02, dev team).
+
+## M's raven edits, still to do
+
+- **raven#125** — draft 07 is the amendment: lazy-load framing in three places is
+  M's to update; keyword contradiction needs one side picked; `AGENT.md` →
+  `AGENTS.md` path fix.
+- **raven#141** — same wrong `AGENT.md` path; carry the Add-to-list decision onto
+  it (the button shows for anonymous visitors; a click routes through login and
+  back).
+- **raven#51** — decide whether 04 becomes its body or its child.
+
+## Verify
+
+`npm test` — the check-a11y pagination findings are the known pre-v2.11 baseline.
+The `public-project-detail.html` KNOWN BROKEN defect stands; issues name it as a
+defect not to reproduce.

@@ -27,7 +27,7 @@ appears.
 
 - [ ] A work can be marked as retracted, and stays public when it is
 - [ ] The mark is available wherever the work is listed, not only on its own page
-- [ ] The mark is an editorial act with an actor and a moment — recoverable later
+- [ ] The mark records who made it and when, and can be undone later
 - [ ] Retraction is distinct from deletion, from a tombstone, and from author
       withdrawal
 
@@ -41,7 +41,8 @@ appears.
 ## Dependencies
 
 Blocks **12**, the retracted badge on both cards. Related: the display designs for
-soft delete and replaced-by are out of scope for the work card and pending with M.
+soft delete and replaced-by are out of scope for the work card and pending with
+M (design).
 
 ## Open questions
 
