@@ -53,6 +53,8 @@ scan".
       out "Restricted access" (03); a curator scanning a column does not need the noun
 - [ ] Room beside the status badge for the retracted badge — the badge itself is 12
 - [ ] The metadata scan line, per the spec doc
+- [ ] A work with no date reads as missing on the scan line; the public line omits
+      the year (02)
 - [ ] Curator card
   - departments as muted badges; projects as a stacked sub-list with funder
     references; VABB

@@ -169,7 +169,7 @@ Describes who can access a file. Per-file, not per-work. Field and values are ra
 
 Private files leave no public trace whatsoever: no count, no badge, no machine-facing output. Even revealing that a file *exists* is a patent risk (tech transfer). "All files private" renders identically to "no files".
 
-In summary views (cards, table rows), show the most permissive visibility across all files on the work.
+In summary views (cards, table rows), show the most permissive visibility across all files on the work. Where every file is embargoed, show the earliest release date among the deposited files — the full text, the dataset, the software — not supplementary material.
 
 ### Embargo
 A file can be under embargo: `lift_embargo_on` (release date) paired with `visibility_after_embargo` — restricted now, switching automatically on the date. The transition is applied by a background job. In the deposit form: the submitter chooses "Under embargo" as the OA status and sets a release date. After the embargo lifts, the dates are kept as a bibliographic record.
