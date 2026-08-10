@@ -48,8 +48,9 @@ scan".
   - institution-only visibility renders as "Not public" — there is no third
     rendering
 - [ ] All four statuses render, in both lists
-- [ ] File access as a plain metadata item: "Open access", "Restricted access",
-      "Embargo until \<date\>"
+- [ ] File access as a plain metadata item, in the backoffice's shorter wording:
+      "Open access", "Restricted", "Embargo until \<date\>". The public card spells
+      out "Restricted access" (03); a curator scanning a column does not need the noun
 - [ ] Room beside the status badge for the retracted badge — the badge itself is 12
 - [ ] The metadata scan line, per the spec doc
 - [ ] Curator card
@@ -61,6 +62,9 @@ scan".
     when (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI") — and the links row
 - [ ] Researcher card — own departments, no projects, no VABB
 - [ ] Year, journal and project are filter links in these lists (01)
+- [ ] Contributor names are links, as on the public card (01)
+- [ ] Three contributors, then the count alone ("+10 more authors") — the public
+      card's ten names and `et al.` are the reader's form, not the curator's (01)
 - `out of scope` Message blocks — 05. Action buttons — 06. The table view. A
   backoffice work detail view — card titles have no destination yet.
 
@@ -108,6 +112,11 @@ View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates
   card half.
 
 ## Open questions
+
+- **Where does a contributor name on a backoffice card go?** The public card links a
+  name to the researcher page. The backoffice has no person page of its own, so the
+  options are that same public page, or a name search inside the list. The prototype
+  links the names and marks the destination as a stub.
 
 - **Does returning a record change its visibility?** The two axes are independent,
   so returning leaves a record as public as it was, and a returned record would read
