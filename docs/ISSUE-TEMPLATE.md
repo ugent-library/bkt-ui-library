@@ -77,8 +77,12 @@ as-is. JS follows raven's frontend standards. Prototype URLs are
 placeholders, not real endpoints. UI copy goes through the translation files._
 <!-- Backoffice issue: delete the machine-facing sentence, keep the rest. -->
 
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
-View at `localhost:3111/<template path>`
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [<page>](https://bkt-ui.vercel.app/<template path>)
+<!-- Link every page the issue names. A reader who cannot open the prototype
+     cannot check the issue against it. -->
 
 ## Acceptance criteria
 

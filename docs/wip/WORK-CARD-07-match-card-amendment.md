@@ -60,6 +60,8 @@ recorded here as an input to that raven discussion, not a proposal.
 checklist. The file is `AGENTS.md`, and the checklist itself lives in
 `docs/ACCESSIBILITY.md`. raven#141 carries the same wrong path.
 
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
-View at `localhost:3111/templates/biblio-public/public-work-detail.html` and
-`localhost:3111/templates/biblio-public/public-work-detail-dataset.html`.
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [templates/biblio-public/public-work-detail.html](https://bkt-ui.vercel.app/templates/biblio-public/public-work-detail.html) and
+[templates/biblio-public/public-work-detail-dataset.html](https://bkt-ui.vercel.app/templates/biblio-public/public-work-detail-dataset.html).

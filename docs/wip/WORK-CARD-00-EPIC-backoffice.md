@@ -53,6 +53,13 @@ and "Messages on backoffice cards".
 > **Screenshot:** the curator list (`curate.html`) and the researcher's own list
 > (`search-researcher.html`)
 
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.html), the
+[researcher's own list](https://bkt-ui.vercel.app/templates/biblio-researcher/search-researcher.html) and the
+[work card pattern](https://bkt-ui.vercel.app/patterns/work-card.html).
+
 ## Children
 
 - [ ] **04 — Backoffice card.** Status, visibility, access as text, the scan line,

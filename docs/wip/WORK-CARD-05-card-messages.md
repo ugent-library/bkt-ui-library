@@ -76,10 +76,12 @@ _The prototype governs the visible page and markup. JS follows raven's frontend
 standards. Prototype URLs are placeholders. UI copy goes through the translation
 files._
 
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
-View at `localhost:3111/templates/biblio-team/curate.html`,
-`.../biblio-researcher/search-researcher.html`, and
-`localhost:3111/patterns/work-card.html`.
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates/biblio-team/curate.html),
+[templates/biblio-researcher/search-researcher.html](https://bkt-ui.vercel.app/templates/biblio-researcher/search-researcher.html), and the
+[patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.html).
 
 ## Acceptance criteria
 

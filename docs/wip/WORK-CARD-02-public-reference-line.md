@@ -74,8 +74,10 @@ _The prototype governs the visible page and markup. Machine-facing output
 by `docs/public-site-semantics.md` — preserve as-is. Prototype URLs are
 placeholders. UI copy goes through the translation files._
 
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
-View at `localhost:3111/templates/biblio-public/public-works.html`; spec in
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html); spec in
 `docs/wip/WORK-CARD-REFERENCE-STYLES.md`.
 
 ## Acceptance criteria

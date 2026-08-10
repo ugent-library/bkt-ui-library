@@ -37,6 +37,12 @@ nothing.
 
 > **Screenshot:** the works feed (`public-works.html`) — one card per work type
 
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [works feed](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html) and the
+[work card pattern](https://bkt-ui.vercel.app/patterns/work-card.html).
+
 ## Children
 
 - [ ] **01 — Card grammar and markup contract.** Ships first; the others fill

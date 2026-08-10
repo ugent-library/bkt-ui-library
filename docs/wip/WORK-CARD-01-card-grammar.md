@@ -102,9 +102,11 @@ by `docs/public-site-semantics.md` — preserve as-is. JS follows raven's fronte
 standards. Prototype URLs are placeholders. UI copy goes through the translation
 files._
 
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
-View at `localhost:3111/patterns/work-card.html`, and the surfaces it governs:
-`.../templates/biblio-public/public-works.html`, `.../templates/biblio-team/curate.html`.
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.html), and the surfaces it governs:
+[templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html), [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates/biblio-team/curate.html).
 
 ## Acceptance criteria
 

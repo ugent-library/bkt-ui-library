@@ -45,9 +45,11 @@ _The prototype governs the visible page and markup. Machine-facing output
 by `docs/public-site-semantics.md` — preserve as-is. UI copy goes through the
 translation files._
 
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library).
-View at `localhost:3111/patterns/work-card.html` and
-`.../biblio-researcher/search-researcher.html`.
+**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
+Run it locally with `npm start` and the same paths on `localhost:3111`.
+
+View the [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.html) and
+[templates/biblio-researcher/search-researcher.html](https://bkt-ui.vercel.app/templates/biblio-researcher/search-researcher.html).
 
 ## Acceptance criteria
 
