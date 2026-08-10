@@ -95,7 +95,7 @@ When a new session begins on this project, execute these steps before writing an
    | Writing a bet, issue, or design doc | `docs/SPEC-WRITING.md` — the house rules for all specs |
    | Drafting an implementation issue | `docs/ISSUE-TEMPLATE.md` + the `biblio-issue-writer` skill; raven's `AGENTS.md` owns the issue → branch → commit → PR chain |
    | Writing or reviewing a product bet | `docs/PRODUCT-BET-TEMPLATE.md` + the `product-bet-writer` skill |
-   | A field, status, or entity that might need modelling | raven is the source of truth — check its schema and catalog docs (`docs/metadata-*.md` in the raven repo) before inventing a concept here |
+   | A field, status, or entity that might need modelling | raven is the source of truth — check its schema and catalog docs (`docs/metadata-*.md` in the raven repo) before inventing a concept here. Read each catalog's scope paragraph before its field tables: the scope states what the catalog covers and what it deliberately leaves out, which usually settles whether a missing field is a gap at all |
    | Public record pages that crawlers or reference managers consume | raven's `docs/public-site-semantics.md` — the Rubric-audited contract |
    | Implementing or updating a prototype in a consuming app | `docs/RENDERED-HTML-CONTRACT.md`, `docs/CONSUMING-BOOKTOWER.md` |
 

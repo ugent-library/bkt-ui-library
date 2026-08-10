@@ -96,7 +96,9 @@ View at `localhost:3111/<template path>`
 
 ## Dependencies
 
-<!-- Blocked by / blocks: #issue links. Delete if none. -->
+<!-- Blocked by / blocks: #issue links. A child that is not filed yet is a bare
+     number (02, 09) — `#02` links to raven#2, an unrelated issue. Resolve the
+     bare numbers to #links once the issues exist. Delete if none. -->
 
 ## Open questions
 

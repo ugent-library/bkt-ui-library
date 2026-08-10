@@ -29,7 +29,7 @@ In raven one grammar serves every work card, and the payload is what varies:
   the name: inside its span, outside its link. What each icon shows is repeated
   as visually-hidden text inside the link.
 - **the reference line** — one line, composed per surface and per work type
-  (see issue #02).
+  (see issue 02).
 
 Three further rules apply:
 
