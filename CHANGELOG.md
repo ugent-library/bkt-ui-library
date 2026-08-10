@@ -6,23 +6,39 @@ system, or do I reach for something new?"
 
 ---
 
+## Advanced search becomes one builder in two renderings (v2.16, 2026-08-10)
+
+`public-search-advanced.html` keeps its address and loses its markup: the builder now
+lives in two partials, `search-advanced-conditions.html` and
+`search-advanced-actions.html`, rendered twice — as that page, and as a dialog over
+`public-works.html`. Both dead `/advanced-search` hrefs resolve.
+
+One class added: `modal-dialog--wide`, feeding `--bs-modal-width`. Usage note in
+`CLASS-USAGE.md`.
+
+Removed, with where each thing went:
+
+| Removed | Replaced by |
+|---|---|
+| The URL / Embed / API tab strip and the Save section inside the builder | The works toolbar actions group: Save search, Share, Export |
+| `#cite-modal` on `public-work-detail.html` | A Cite panel on the same button, matching Add to list beside it |
+| The unlabelled `⋯` dropdown on the works toolbar | Three labelled buttons |
+| Subscribe to feed as a menu item | The Feed tab inside Share |
+| The builder's `phase-1` / `phase-1-empty` / `phase-2` / `phase-2-empty` states | `built`, `advanced-empty`, `advanced-group`; `public-works.html` adds `advanced-condition` |
+
+Eleven fields left the public field list — seven that `SEARCH-AND-FILTERING.md` rule 5
+already places off the public surface, four awaiting an exposure decision. Pattern page:
+`patterns/query-builder.html`.
+
+---
+
 ## Token search retires; unused classes fail the gate (v2.15, 2026-08-10)
 
-Seventeen classes removed. The two advanced-search explorations they dressed —
-`search-advanced-token.html` and `search-advanced-builder.html` — are gone;
-`templates/biblio-public/public-search-advanced.html` with `query-builder.js`
-is the surviving direction.
-
-| Removed | Was |
-|---|---|
-| `token-bar`, `token-bar__clear`, `__display`, `__field`, `__indicator`, `__input`, `__sep`, `__token`, `__token--negated`, `__value`, `no-tokens` | the token input bar (`_booktower-token-bar.scss`, whole partial) |
-| `token-suggestions`, `__footer`, `__group`, `__hint`, `__item`, `__syntax-link` | its autocomplete panel |
-| `bt-code-block` | a 220px cap on one query-preview block |
-| `bt-scroll-frame` | a 280px vertical scroller, used once |
-
-Gone with them: `server/content/token-results.js` and its `/search` HTMX target.
-Use `.table-responsive` or `bt-dropdown-scroll` where `bt-scroll-frame` was;
-no replacement is needed for the rest.
+Seventeen classes removed: the `token-bar` and `token-suggestions` families,
+`bt-code-block`, `bt-scroll-frame`. All of them dressed the two advanced-search
+explorations deleted in 789ae7f; `public-search-advanced.html` with
+`query-builder.js` is the surviving direction. `server/content/token-results.js`
+and its `/search` HTMX target go with them.
 
 `check:classes` now **exits 1** on a class defined in `booktower.css` and used
 nowhere, matching the direction it already enforced for undefined classes. A
@@ -30,8 +46,7 @@ class kept on purpose goes in the `intentional` list in
 `scripts/check-classes.js` with a reason — so "used nowhere: 0" is an invariant
 the gate holds rather than a number someone reads.
 
-**Consumers: re-copy `assets/booktower.css`.** No template change unless you
-adapted the token bar.
+**Consumers: re-copy `assets/booktower.css`.**
 
 ## Design principles move into the kit — and into the gates (v2.14, 2026-08-07)
 

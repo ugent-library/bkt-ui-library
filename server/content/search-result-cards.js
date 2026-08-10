@@ -53,13 +53,16 @@ const researcher = '/templates/biblio-public/public-researcher-detail.html';
 
 // Icons sit outside the <a>: hover underline covers the name only; icon
 // spacing comes from .bt-work-card__author .if in SCSS.
-function author(name, { ugent = false, orcid = '' } = {}) {
+// linked: false is a contributor raven resolves to nothing — free text, an
+// organisation, a person with no public page. It renders muted, as plain text.
+function author(name, { ugent = false, orcid = '', linked = true } = {}) {
   let icons = '';
   if (ugent) icons += '<i class="if if-ghent-university" aria-hidden="true"></i>';
   if (orcid) icons += `<i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: ${orcid}" aria-hidden="true"></i>`;
   const labels = [ugent && 'UGent', orcid && `ORCID ${orcid}`].filter(Boolean);
   const vh = labels.length ? `<span class="visually-hidden"> (${labels.join(', ')})</span>` : '';
-  return `<span class="bt-work-card__author">${icons}<a href="${researcher}">${name}${vh}</a></span>`;
+  if (linked) return `<span class="bt-work-card__author">${icons}<a href="${researcher}">${name}${vh}</a></span>`;
+  return `<span class="bt-work-card__author text-muted">${icons}${name}${vh}</span>`;
 }
 
 const dePauw = () => author('Karen De Pauw', { ugent: true, orcid: '0000-0002-1234-5678' });
@@ -81,7 +84,7 @@ ${card({
       author('Sally A. Power'),
       author('David S. Ellsworth'),
       author('Eline Lauwers', { ugent: true }),
-      author('Camille Vervoort'),
+      author('Camille Vervoort', { linked: false }),
       author('Mark G. Tjoelker')
     ].join(',\n        ') + ' <span class="text-muted">et al. +3 more authors</span>',
     line: `${year(2026)} ${container('Plants People Planet')}, 8(1), pp. 14&ndash;19.`
@@ -177,7 +180,7 @@ ${card({
     id: 'card-feed-14',
     badges: oa + type('Report'),
     title: 'State of the urban forest in Flanders 2025',
-    authors: [dePauw(), author('Lien Poelmans')].join(', '),
+    authors: [dePauw(), author('Agentschap Natuur en Bos', { linked: false })].join(', '),
     line: `${year(2025)} Report RPT-42. Brussels: Agentschap Natuur en Bos.`
   })}
 ${card({
