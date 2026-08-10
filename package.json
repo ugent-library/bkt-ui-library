@@ -27,7 +27,7 @@
     "build:classes-doc": "node scripts/generate-classes-doc.js",
     "build:icons": "fantasticon",
     "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css",
-    "test": "npm run check:partials && npm run check:classes && npm run check:doc-refs && npm run check:js && npm run check:comments && npm run check:html && npm run check:a11y",
+    "test": "npm run check:partials && npm run check:classes && npm run check:doc-refs && npm run check:js && npm run check:comments && npm run check:generated && npm run check:html && npm run check:a11y",
     "check:doc-refs": "node scripts/check-doc-refs.js",
     "check:migration": "node scripts/check-migration.js",
     "check:partials": "node scripts/check-partials.js",
@@ -36,8 +36,10 @@
     "check:comments": "node scripts/check-comments.js",
     "check:html": "html-validate 'templates/**/*.html' 'elements/*.html' 'patterns/*.html' 'foundations/*.html' 'getting-started/*.html'",
     "check:a11y": "node scripts/check-a11y.js",
+    "check:generated": "node scripts/check-generated.js",
     "check:pagination": "node scripts/check-a11y.js --drift",
     "check:a11y-browser": "pa11y-ci",
+    "sync:demand": "node scripts/sync-demand.js",
     "watch:css": "sass --watch --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css"
   },
   "engines": {

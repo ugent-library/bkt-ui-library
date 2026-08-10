@@ -19,6 +19,8 @@ both `npm run dev` and the Vercel deployment.
 
 `server.js` injects `loadFragment` into `handleTemplateHtmx` so the route module stays free of the template engine. To add a content block: drop a file in `server/content/` that exports its `render*` function and add one line to `index.js`.
 
+**Blocks that are also inlined in a template are two copies of one thing.** Public lists render statically, so the cards from `search-result-cards.js` and `related-works.js` sit in the template files as well. Edit the module and the template in the same change: `npm run check:generated` renders each module and fails the build when an inlined card no longer matches it. Add a template to that script's `SOURCES` list when it starts carrying generated cards.
+
 ## Starting the Server
 
 ```bash
