@@ -43,7 +43,7 @@ Runs four static checks; run it after any template or SCSS editing session:
 | Check | Catches |
 |-------|---------|
 | `check:partials` | SCSS partials that exist but aren't `@use`d in `booktower.scss` (component would silently vanish from the compiled CSS) |
-| `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
+| `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero. A class kept without a demo goes in the `intentional` list in `scripts/check-classes.js`, with a reason |
 | `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
 | `check:a11y` | The house rules from docs/ACCESSIBILITY.md: one `<h1>` per template, `main#main-content`, distinct `aria-label` on every `<nav>`, accessible names on icon-only buttons |
 

@@ -197,7 +197,7 @@ tooltip 1080).
 
 | Token | Value | Used for |
 |-------|-------|----------|
-| `--bt-z-panel` | 1000 | Floating panels: suggest panel, token suggestions |
+| `--bt-z-panel` | 1000 | Floating panels: suggest panel, filter sheet |
 | `--bt-z-sticky` | 1020 | Sticky chrome: app navbar, sticky headers |
 | `--bt-z-overlay` | 1080 | Notifications / toasts — sits above modal (1055) |
 | `--bt-z-skip-link` | 1090 | Must beat everything to stay reachable |

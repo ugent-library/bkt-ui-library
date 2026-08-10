@@ -92,8 +92,6 @@ bt-border
 
 bt-btn-check__group
 
-bt-code-block
-
 bt-dropdown-scroll
 
 bt-file-drop
@@ -126,8 +124,6 @@ bt-panel__body--form
 bt-panel__body--year
 bt-panel__title
 bt-panel__year-input
-
-bt-scroll-frame
 
 bt-section-detail
 
@@ -483,8 +479,6 @@ min-w-0
 
 nav-title
 
-no-tokens
-
 people-result
 people-result__icon
 people-result__meta
@@ -507,24 +501,6 @@ text-bg-primary-light
 text-bg-success-light
 
 text-bg-warning-light
-
-token-bar
-token-bar__clear
-token-bar__display
-token-bar__field
-token-bar__indicator
-token-bar__input
-token-bar__sep
-token-bar__token
-token-bar__token--negated
-token-bar__value
-
-token-suggestions
-token-suggestions__footer
-token-suggestions__group
-token-suggestions__hint
-token-suggestions__item
-token-suggestions__syntax-link
 
 u-layout--app
 u-layout--public

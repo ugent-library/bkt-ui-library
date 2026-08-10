@@ -79,7 +79,6 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
   }
 
   if (urlPath === '/search' && method === 'GET') {
-    if (target === 'token-results') return respond(c.renderTokenResults(), 280);
     if (target === 'results-body') return respond(c.renderBackofficeResultsRows(), 280);
     if (target === 'results-list') return respond(c.renderWorksFeed(), 320);
     if (target === 'search-results') return respond(c.renderSearchResultCards(), 320);

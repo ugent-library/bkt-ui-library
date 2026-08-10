@@ -6,6 +6,33 @@ system, or do I reach for something new?"
 
 ---
 
+## Token search retires; unused classes fail the gate (v2.15, 2026-08-10)
+
+Seventeen classes removed. The two advanced-search explorations they dressed —
+`search-advanced-token.html` and `search-advanced-builder.html` — are gone;
+`templates/biblio-public/public-search-advanced.html` with `query-builder.js`
+is the surviving direction.
+
+| Removed | Was |
+|---|---|
+| `token-bar`, `token-bar__clear`, `__display`, `__field`, `__indicator`, `__input`, `__sep`, `__token`, `__token--negated`, `__value`, `no-tokens` | the token input bar (`_booktower-token-bar.scss`, whole partial) |
+| `token-suggestions`, `__footer`, `__group`, `__hint`, `__item`, `__syntax-link` | its autocomplete panel |
+| `bt-code-block` | a 220px cap on one query-preview block |
+| `bt-scroll-frame` | a 280px vertical scroller, used once |
+
+Gone with them: `server/content/token-results.js` and its `/search` HTMX target.
+Use `.table-responsive` or `bt-dropdown-scroll` where `bt-scroll-frame` was;
+no replacement is needed for the rest.
+
+`check:classes` now **exits 1** on a class defined in `booktower.css` and used
+nowhere, matching the direction it already enforced for undefined classes. A
+class kept on purpose goes in the `intentional` list in
+`scripts/check-classes.js` with a reason — so "used nowhere: 0" is an invariant
+the gate holds rather than a number someone reads.
+
+**Consumers: re-copy `assets/booktower.css`.** No template change unless you
+adapted the token bar.
+
 ## Design principles move into the kit — and into the gates (v2.14, 2026-08-07)
 
 No class or CSS changes. Three URLs change.

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 28c18bd/2026-08-07 */
+/*! Booktower 789ae7f/2026-08-10 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -109,7 +109,7 @@
     z-index. Local stacking inside an isolated component stays local.
     See docs/UI-LAYER.md.
   */
-  --bt-z-panel: 1000; /* floating panels: suggest, token suggestions */
+  --bt-z-panel: 1000; /* floating panels: suggest, filter sheet */
   --bt-z-sticky: 1020; /* sticky chrome: app navbar, sticky headers    */
   --bt-z-overlay: 1080; /* notifications / toasts — above modal (1055)  */
   --bt-z-skip-link: 1090; /* must beat everything to stay reachable       */
@@ -1591,11 +1591,6 @@ a.badge:focus-visible {
   overflow-y: auto;
 }
 
-.bt-scroll-frame {
-  max-height: 280px;
-  overflow-y: auto;
-}
-
 .bt-dropdown-scroll {
   max-height: 320px;
   overflow-y: auto;
@@ -1614,67 +1609,6 @@ a.badge:focus-visible {
 .bt-table-sticky-col th:nth-child(2),
 .bt-table-sticky-col td:nth-child(2) {
   box-shadow: inset 3px 0px 4px -2px var(--bt-border-color);
-}
-
-.bt-code-block {
-  max-height: 220px;
-}
-
-/* -- Token suggestions panel -- */
-.token-suggestions {
-  position: absolute;
-  z-index: var(--bt-z-panel);
-  background: var(--bt-white);
-  border: var(--bt-border);
-  border-radius: var(--bt-radius-md);
-  box-shadow: var(--bt-shadow-md);
-  width: 100%;
-  max-height: 380px;
-  overflow-y: auto;
-  margin-top: var(--bt-sp-1);
-}
-
-.token-suggestions__group {
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--bt-gray-500);
-  padding: var(--bt-sp-2) var(--bt-sp-3) var(--bt-sp-1);
-}
-
-.token-suggestions__group:not(:first-child) {
-  border-top: var(--bt-border);
-  margin-top: var(--bt-sp-1);
-  padding-top: var(--bt-sp-3);
-}
-
-.token-suggestions__item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--bt-sp-3);
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-  cursor: pointer;
-}
-
-.token-suggestions__item:hover,
-.token-suggestions__item[aria-selected=true] {
-  background: var(--bt-blue-50);
-}
-
-.token-suggestions__hint {
-  color: var(--bt-gray-500);
-  font-size: var(--bt-text-xs);
-}
-
-.token-suggestions__footer {
-  border-top: var(--bt-border);
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-}
-
-.token-suggestions__syntax-link {
-  font-size: var(--bt-text-xs);
-  color: var(--bt-gray-500);
 }
 
 [data-bs-toggle=collapse] .if-chevron-down,
@@ -2235,117 +2169,6 @@ img.bt-navbar__logo {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
-}
-
-/* -- Token bar -- */
-/* TODO: simplify, has too many specifics */
-.token-bar {
-  position: relative;
-  border: 1px solid var(--bt-border-color);
-  border-radius: var(--bt-radius);
-  background: var(--bt-white);
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  padding: 0 var(--bt-sp-3);
-  gap: var(--bt-sp-2);
-  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
-}
-
-.token-bar:focus-within {
-  border-color: var(--bt-blue-700);
-  box-shadow: 0 0 0 3px var(--bt-focus-ring);
-}
-
-.token-bar__display {
-  position: absolute;
-  inset: 0;
-  padding: 0 var(--bt-sp-3);
-  display: flex;
-  align-items: center;
-  gap: var(--bt-sp-2);
-  flex-wrap: wrap;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.token-bar__token {
-  display: inline-flex;
-  align-items: center;
-  background: var(--bt-blue-100);
-  border: 1px solid var(--bt-blue-200);
-  border-radius: var(--bt-radius-sm);
-  font-family: var(--bt-font-mono);
-  font-size: var(--bt-text-sm);
-  line-height: 1.6;
-  white-space: nowrap;
-  padding: 0 var(--bt-sp-1);
-}
-
-.token-bar__field {
-  color: var(--bt-blue-900);
-  font-weight: 600;
-}
-
-.token-bar__sep {
-  color: var(--bt-blue-500);
-}
-
-.token-bar__value {
-  color: var(--bt-blue-800);
-}
-
-.token-bar__token--negated {
-  background: var(--bt-red-50);
-  border-color: var(--bt-red-200);
-}
-
-.token-bar__token--negated .token-bar__field {
-  color: var(--bt-red-500);
-}
-
-.token-bar__input {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: var(--bt-font-mono);
-  font-size: var(--bt-text-sm);
-  color: transparent;
-  caret-color: var(--bt-gray-1000);
-  padding: 0;
-  min-width: 0;
-}
-
-.token-bar__input.no-tokens {
-  color: var(--bt-gray-1000);
-}
-
-.token-bar__clear {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  color: var(--bt-gray-400);
-  cursor: pointer;
-  padding: var(--bt-sp-1);
-  line-height: 1;
-  border-radius: var(--bt-radius-sm);
-  transition: color var(--bt-dur-fast);
-}
-
-.token-bar__clear:hover {
-  color: var(--bt-gray-700);
-}
-
-.token-bar__indicator {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  color: var(--bt-gray-400);
 }
 
 /* -- bt-toolbars -- */

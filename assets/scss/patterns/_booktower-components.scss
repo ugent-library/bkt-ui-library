@@ -133,11 +133,6 @@
   overflow-y: auto;
 }
 
-.bt-scroll-frame {
-  max-height: 280px;
-  overflow-y: auto;
-}
-
 // Per-dropdown width is set via --bs-dropdown-min-width, not here.
 // See CLASS-USAGE.md.
 .bt-dropdown-scroll {
@@ -173,50 +168,6 @@
     box-shadow: inset 3px 0px 4px -2px var(--bt-border-color);
   }
 }
-
-.bt-code-block {
-  max-height: 220px;
-}
-
-/* -- Token suggestions panel -- */
-
-.token-suggestions {
-  position: absolute;
-  z-index: var(--bt-z-panel);
-  background: var(--bt-white);
-  border: var(--bt-border);
-  border-radius: var(--bt-radius-md);
-  box-shadow: var(--bt-shadow-md);
-  width: 100%;
-  max-height: 380px;
-  overflow-y: auto;
-  margin-top: var(--bt-sp-1);
-}
-.token-suggestions__group {
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--bt-gray-500);
-  padding: var(--bt-sp-2) var(--bt-sp-3) var(--bt-sp-1);
-}
-.token-suggestions__group:not(:first-child) {
-  border-top: var(--bt-border);
-  margin-top: var(--bt-sp-1);
-  padding-top: var(--bt-sp-3);
-}
-.token-suggestions__item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--bt-sp-3);
-  padding: var(--bt-sp-2) var(--bt-sp-3);
-  cursor: pointer;
-}
-.token-suggestions__item:hover,
-.token-suggestions__item[aria-selected="true"] { background: var(--bt-blue-50); }
-.token-suggestions__hint { color: var(--bt-gray-500); font-size: var(--bt-text-xs); }
-.token-suggestions__footer { border-top: var(--bt-border); padding: var(--bt-sp-2) var(--bt-sp-3); }
-.token-suggestions__syntax-link { font-size: var(--bt-text-xs); color: var(--bt-gray-500); }
 
 // Show-more toggle caret. Keyed on aria-expanded, not :not(.collapsed):
 // Bootstrap adds .collapsed only after the first interaction, so a

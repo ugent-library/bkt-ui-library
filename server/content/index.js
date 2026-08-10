@@ -9,7 +9,6 @@ module.exports = {
   slugify: require('./slugify'),
   renderBackofficeResultsRows: require('./backoffice-results-rows'),
   renderSearchResultCards: require('./search-result-cards'),
-  renderTokenResults: require('./token-results'),
   renderQueryPreview: require('./query-preview'),
   renderConditionRow: require('./condition-row'),
   renderSavedSearchCard: require('./saved-search-card'),
