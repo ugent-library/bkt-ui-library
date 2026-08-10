@@ -63,20 +63,19 @@ amendment (07):
 - **Peer-review indicator removed** from the public epic — not sure it is wanted
   at all. Diamond OA badge stays (wanted, no design).
 - **Soft-delete / replaced-by is public work too** — the epic says so; still
-  pending with M (design).
+  undesigned.
 - **Placeholder drift (`pp. 12–29`) verified fixed** in the templates; the stale
   defect note is deleted from the public epic.
-- **Per-type line posed to development** (02): the reasoning against today's
+- **Per-type line posed as a question** (02): the reasoning against today's
   single template is now in 02's Why; whether the composition is worth its
-  rendering cost is 02's open question for the dev team.
+  rendering cost is 02's open question, and needs a team decision.
 - **The spec doc's durable home is raven**: `docs/wip/WORK-CARD-REFERENCE-STYLES.md`
-  is a WIP reference for critique and building; it, or the dev team's
-  interpretation of it, moves to raven with 02. Noted at the top of the doc.
+  is a WIP reference for critique and building; it, or the implementation's reading
+  of it, moves to raven with 02. Noted at the top of the doc.
 - **11 missing metadata**: filterable from the start, backoffice only; nothing
   about completeness reaches the public surface. Question closed.
 - **06 / raven#141 anonymous Add to list**: the button shows for every visitor; an
-  anonymous click routes through login and back. M (design) carries it onto
-  raven#141.
+  anonymous click routes through login and back. The rule belongs on raven#141.
 
 ## Decisions this round — all applied to the drafts and docs
 
@@ -96,7 +95,7 @@ amendment (07):
 - **The reference line spec** (`docs/wip/WORK-CARD-REFERENCE-STYLES.md`) is one
   order + four exceptions; the per-type table is derived examples. There is no
   fallback rule: the order is the rule.
-- **Punctuation and line production are the dev team's.** The CSL render is
+- **Punctuation and line production belong to the implementation.** The CSL render is
   provenance for the examples — one line in Sources. Same for the scan line's
   part rendering (`p. 58`-level detail is gone on purpose).
 - **Dates** (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI"):
@@ -104,21 +103,26 @@ amendment (07):
   work cards; backoffice is `dd/mm/yyyy hh:mm`; the backoffice card logs who
   created the metadata and when, who last changed it and when, and the last
   system change and when.
-- **No decision stamps in docs** — state the rule; git holds when. Name an
-  authority only where a specific owner adjudicated. Derived rules cite the
-  derivation ("kept from old biblio", "per raven#164") — most decisions are
-  continuity with the existing product, not personal rulings.
+- **No decision stamps in docs** — state the rule; git holds when. Name an owner
+  only where the answer sits outside the team. Derived rules cite the derivation
+  ("kept from old biblio", "per raven#164") — most decisions are continuity with the
+  existing product, not personal rulings.
 - **Point, don't paste**: What bullets link the spec doc instead of restating its
   rows. Performance conventions (N+1) live in raven's AGENTS.md, never in issues.
 - `docs/SPEC-WRITING.md` gained: before sourcing a claim, check it is ours to
   make — precision that belongs to the implementer is deleted, not evidenced.
 
-## Open questions standing — all external, each in its issue
+## Open questions standing, each in its issue
 
-Visibility on return (04 — OSP with the curation lead); two in 10 (notice text —
-OSP; export exclusion — raven dev team); two in 08 for the dev team (per-field
-build confirmation; the dataset publisher docs conflict); the per-type line's
-rendering cost (02, dev team).
+- **04** — does returning a record change its visibility? Open Science Policy with
+  the curation lead.
+- **10** — the retraction notice's text and source: Open Science Policy with the
+  curation lead. Whether a retracted work is excluded from exports or harvesting
+  sets: a team decision.
+- **02** — is the per-type line worth its rendering cost? A team decision.
+
+08 has none: raven keeps every field old Biblio carries, and the software version is
+dropped — raven defers the field past v1 and no records land in the type.
 
 ## M's raven edits, still to do
 

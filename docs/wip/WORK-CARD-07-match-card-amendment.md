@@ -45,9 +45,9 @@ lazily when scrolled into view"), the *What* ("loads on reveal, not at page load
 and an acceptance criterion ("section is not fetched until scrolled into view").
 That framing no longer matches how the public surface works: public information
 belongs in the served HTML, and only interaction-only widgets — an add-to-list
-panel's contents, a cite dialog's internals — may load on demand. **M (design) updates
-those three places.** Named here so this amendment is not read as silently contradicting
-them.
+panel's contents, a cite dialog's internals — may load on demand. **Those three
+places are corrected to match.** Named here so this amendment is not read as silently
+contradicting them.
 
 The similarity query's cost is the other half of that change: rendered with the
 page, the shared-keyword match is computed on every render unless it is cached or

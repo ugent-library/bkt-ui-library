@@ -67,11 +67,10 @@ and "Messages on backoffice cards".
 
 - **The card grammar** — 01, in the public epic. A backoffice row that needs a
   new region changes 01, never this card alone.
-- **The fast lane** behind "Complete metadata" — no screens yet, design pending
-  with M (design).
+- **The fast lane** behind "Complete metadata" — no screens yet.
 - **Proxy role**, **a backoffice work detail view**, **the table view**.
 - **Soft-delete and replaced-by display** — raven has tombstones and merge
-  redirects, no display design yet. Pending with M (design).
+  redirects, no display design yet.
 - **Candidate / suggestion card** — not prototyped.
 - **Per-field add links** — today's card turns an empty field into an inline link
   where the viewer may edit ("Add document type: full text", "Add department", "Add

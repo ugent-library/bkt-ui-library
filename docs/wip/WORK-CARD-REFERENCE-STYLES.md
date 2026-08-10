@@ -41,7 +41,8 @@ Four exceptions, the whole list:
 
 A type with nothing but a year — `other`, or any future type before its fields are
 mapped — renders `(year)`. There is no separate fallback rule: the order is the rule.
-How raven produces the line, and its exact punctuation, is the dev team's call.
+How raven produces the line, and its exact punctuation, belongs to the
+implementation.
 
 ### Per-type lines (derived examples)
 
@@ -140,8 +141,8 @@ year · container · publisher · volume · (issue) · start–end
 
 Type-agnostic by construction: any of the 23 types renders whatever it has, so a new
 type needs no new rule. Dates follow the backoffice format
-(`../DOMAIN-VOCABULARY.md` → "Dates in the UI"); exact rendering of the parts is the
-dev team's call, as on the public line.
+(`../DOMAIN-VOCABULARY.md` → "Dates in the UI"); exact rendering of the parts belongs
+to the implementation, as on the public line.
 
 ---
 

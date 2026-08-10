@@ -41,8 +41,7 @@ appears.
 ## Dependencies
 
 Blocks **12**, the retracted badge on both cards. Related: the display designs for
-soft delete and replaced-by are out of scope for the work card and pending with
-M (design).
+soft delete and replaced-by are out of scope for the work card, and undesigned.
 
 ## Open questions
 
@@ -54,6 +53,6 @@ M (design).
   with the curation lead.
 - **Is a retracted work excluded from anything?** Exports, harvesting sets, a
   researcher's own publication list. Options: included everywhere with the mark, or
-  excluded from selected outputs. Raven's decision — the dev team answers.
+  excluded from selected outputs. Needs a team decision.
 
 > No screenshot — backend. The badge is shown in 12.

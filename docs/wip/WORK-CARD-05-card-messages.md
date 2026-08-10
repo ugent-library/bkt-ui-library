@@ -53,8 +53,7 @@ than wait for a message and a reply.
 - [ ] Each block, and each line, renders only when it has content
 - [ ] A field the work type does not carry is never reported as missing
 - [ ] Blocks sit below the reference line, researcher block first
-- `out of scope` The fast lane behind "Complete metadata" — no screens yet, design
-  pending with M (design)
+- `out of scope` The fast lane behind "Complete metadata" — no screens yet
 - `out of scope` Writing, editing or replying to messages from the card
 - `out of scope` Message templates and assignment — own issue
 - `out of scope` **Per-field add links.** Today's backoffice card turns an empty
