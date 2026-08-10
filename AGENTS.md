@@ -181,7 +181,7 @@ Default to **no comment**; keep one only when a later change would break somethi
 
 ### Session scope and reading
 
-One page or feature per session; follow-up work starts a fresh session with the session-start prompt. The planning notes are the bridge between sessions: record load-bearing decisions and open questions the moment they're made, so the next session starts from the notes instead of re-deriving the conversation.
+Scope a session to what one review can absorb: several features go together when they share a spec, and unrelated work starts a fresh session with the session-start prompt. The planning notes are the bridge between sessions: record load-bearing decisions and open questions the moment they're made, so the next session starts from the notes instead of re-deriving the conversation.
 
 Docs from the session-start map are read in full, per step 1. Code and template files: locate with Grep, read the matching span — full reads are for reviews.
 
