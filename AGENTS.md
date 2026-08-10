@@ -37,6 +37,8 @@ The flow: demand starts in ProductBoard or emerges from a prototype → gets pro
 
 Cross-cutting disagreement: design decides how it looks, dev decides how it's built, product decides when.
 
+The lanes say which parts of a document each of us owns. They never say who a document is addressed to. An issue describes what the user sees and leaves the mechanism to the people building it — no field names, query shapes or endpoints. It is addressed to the team as a whole, so a question inside it needs a team decision rather than an assignment to "design" or to "the dev team". Where the answer sits outside the team, name them: Open Science Policy, the curation lead, another team's roadmap. The wording rules follow from this and live in `docs/SPEC-WRITING.md`.
+
 ---
 
 ## Source precedence
