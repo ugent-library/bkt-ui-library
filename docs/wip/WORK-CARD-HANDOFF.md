@@ -1,30 +1,51 @@
-# Handoff — work-card issues (2026-08-07)
+# Handoff — work-card issues
 
 Paste into a new session:
 
 ```
 Read AGENTS.md in the booktower-ui-library repo root and follow the session start
-instructions. Then read notes/issues-work-card/HANDOFF.md and continue from it.
+instructions. Then read docs/wip/WORK-CARD-HANDOFF.md and continue from it.
 Task: <state the task>.
 ```
 
 ## State
 
-14 documents in `notes/issues-work-card/` — two epics, eleven children, one
-amendment (07):
+Fifteen documents in `docs/wip/` besides this one, named `WORK-CARD-*` — two epics,
+eleven children, one amendment (07), plus `WORK-CARD-REFERENCE-STYLES.md`:
 
-- `00-EPIC-public.md` — children 01 grammar, 02 reference line, 03 access badge,
-  08 backend fields, 09 backend container filter. **Ready to file.** M files them.
-- `00-EPIC-backoffice.md` — children 04 card, 05 messages, 06 actions, 12 retracted
-  badge, 10 backend retraction, 11 backend missing-metadata. **Held**: the
-  backoffice pass has not run — no fast-lane screens, no proxy axis, no backoffice
-  detail view for a card title to open.
-- `07-match-card-amendment.md` — edits to raven#125, not a new issue.
+- `WORK-CARD-00-EPIC-public.md` — children 01 grammar, 02 reference line, 03 access
+  badge, 08 backend fields, 09 backend container filter. **Ready to file.** M files
+  them.
+- `WORK-CARD-00-EPIC-backoffice.md` — children 04 card, 05 messages, 06 actions, 12
+  retracted badge, 10 backend retraction, 11 backend missing-metadata. **Ready to
+  file once 04's policy question is answered**; the public epic goes first, because
+  01 blocks 04.
+- `WORK-CARD-07-match-card-amendment.md` — edits to raven#125, not a new issue.
+
+## Decisions 2026-08-10 — the backoffice epic's three blockers
+
+The epic was held on three missing screens. Two are out of scope, one is built.
+
+- **The fast lane is out of scope for the epic.** "Complete metadata" opens the
+  record's edit form; the scoped edit view stays a design of its own in
+  `notes/TOPLAN.md`. 05 and `DOMAIN-VOCABULARY` say so now, without the "until the
+  fast lane exists" hedge.
+- **The proxy role is out of scope for the epic.** Every action row in 06 belongs to
+  a researcher or a curator. Add a proxy variant once the role is designed;
+  `patterns/work-card.html` already names it as later, and `templates/biblio-proxy/`
+  is empty.
+- **Card titles have a destination.** A curator's title opens `curate-detail.html`,
+  the review console that already existed. A researcher's opens the new
+  `templates/biblio-researcher/work-detail.html` — a read view with edit entry
+  points, two states (returned, reviewed), card content per 04, the researcher message
+  block per 05, actions per 06. Both list views and both table views are wired.
+- **Session scope in `AGENTS.md`** now reads "scope a session to what one review can
+  absorb" instead of one page or feature per session (commit a398dc8).
 
 ## Decisions 2026-08-07 — applied to the drafts
 
-- **No subtypes on cards.** Public epic's question closed; the sentence lives in
-  its Why.
+- **No subtypes on cards.** The public epic's question is closed, and its Why now
+  states the rule.
 - **08 reference fields**: all four ⚑ fields are built — raven keeps every field
   old Biblio carries. The dataset publisher's docs conflict is 08's work; the
   software version is dropped, raven defers the field past v1 and no records land in
@@ -38,7 +59,7 @@ amendment (07):
 - **Card filter links land on the works overview, on every card** — detail pages
   included; on the overview itself and in backoffice lists the click narrows the
   list in view. Year, container, project and publisher-as-venue names all link; the
-  year link is feature parity with live. In `docs/SEARCH-AND-FILTERING.md` (Rule 3
+  year link is feature parity with live. Applied in `docs/SEARCH-AND-FILTERING.md` (Rule 3
   table, Scoped links, Identifier picker), 01, 02, 09, the public epic and the
   work-card kit prose. Templates aligned: card links carry the `?container=`
   placeholder; publisher-as-venue names (Zenodo, bioRxiv) link on public and
@@ -52,8 +73,8 @@ amendment (07):
   search doc's Rule 3 was rewritten — then all of it restored. Live biblio *does*
   link the journal title on every card, and the resulting filter is
   `cql: parent exact "<title>"`; the log report measures ~204k of those
-  link-follows over seven months. Don't reintroduce the removal. What the
-  screenshots opened instead: **live matches the parent title string, not an
+  link-follows over seven months. Don't reintroduce the removal. The screenshots
+  settled something else instead: **live matches the parent title string, not an
   identifier**. Decided: 09 keeps the title string, as public Biblio does. Every
   container filters, so the identifier-coverage question is gone. The two-strings
   follow-up (backoffice abbreviation vs public full title) is closed too: each
@@ -70,8 +91,8 @@ amendment (07):
   single template is now in 02's Why; whether the composition is worth its
   rendering cost is 02's open question, and needs a team decision.
 - **The spec doc's durable home is raven**: `docs/wip/WORK-CARD-REFERENCE-STYLES.md`
-  is a WIP reference for critique and building; it, or the implementation's reading
-  of it, moves to raven with 02. Noted at the top of the doc.
+  is a WIP reference for critique and building. The doc moves to raven with 02, or
+  the implementation's reading of it does. Noted at the top of the doc.
 - **11 missing metadata**: filterable from the start, backoffice only; nothing
   about completeness reaches the public surface. Question closed.
 - **06 / raven#141 anonymous Add to list**: the button shows for every visitor; an
@@ -81,7 +102,8 @@ amendment (07):
 
 - **Three sources, three weights.** The prototype is the spec; raven GitHub issues
   are decisions, cited (#141, #164, #155/#156/#157/#159, #125, #167, #51, #153);
-  raven's code is neither — never cited, never a benchmark, never "drift". Backend
+  raven's code is neither spec nor decision — never cited, never a benchmark, never
+  "drift". Backend
   children 08–11 are phrased as the template's question: "does raven model this,
   and if not do we build it or drop it?", with concrete options.
 - **Comparison tables tried and rejected** — a three-column parity table
@@ -96,8 +118,8 @@ amendment (07):
   order + four exceptions; the per-type table is derived examples. There is no
   fallback rule: the order is the rule.
 - **Punctuation and line production belong to the implementation.** The CSL render is
-  provenance for the examples — one line in Sources. Same for the scan line's
-  part rendering (`p. 58`-level detail is gone on purpose).
+  provenance for the examples — one line in Sources. The scan line's part rendering is
+  the same case; `p. 58`-level detail is left out on purpose.
 - **Dates** (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI"):
   public is human-readable ("5 August 2026"), no metadata timestamps on public
   work cards; backoffice is `dd/mm/yyyy hh:mm`; the backoffice card logs who
@@ -109,7 +131,7 @@ amendment (07):
   existing product, not personal rulings.
 - **Point, don't paste**: What bullets link the spec doc instead of restating its
   rows. Performance conventions (N+1) live in raven's AGENTS.md, never in issues.
-- `docs/SPEC-WRITING.md` gained: before sourcing a claim, check it is ours to
+- `docs/SPEC-WRITING.md` now says: before sourcing a claim, check it is ours to
   make — precision that belongs to the implementer is deleted, not evidenced.
 
 ## Open questions standing, each in its issue
@@ -127,11 +149,9 @@ dropped — raven defers the field past v1 and no records land in the type.
 ## M's raven edits, still to do
 
 - **raven#125** — draft 07 is the amendment: lazy-load framing in three places is
-  M's to update; keyword contradiction needs one side picked; `AGENT.md` →
-  `AGENTS.md` path fix.
-- **raven#141** — same wrong `AGENT.md` path; carry the Add-to-list decision onto
-  it (the button shows for anonymous visitors; a click routes through login and
-  back).
+  M's to update; keyword contradiction needs one side picked.
+- **raven#141** — carry the Add-to-list decision onto it (the button shows for
+  anonymous visitors; a click routes through login and back).
 - **raven#51** — decide whether 04 becomes its body or its child.
 
 ## Verify

@@ -58,7 +58,12 @@ Every dependency is a child here or a cited raven issue.
 
 ## Out of scope
 
-- **The backoffice card** — sibling epic, depends on 01.
+- **What the backoffice card shows** — status, messages, actions and the scan line
+  belong to the backoffice epic, not here. Both surfaces render the same card, and
+  its regions are defined once, in 01, for public and backoffice together. The
+  backoffice fills those regions with its own content instead of building a second
+  card. Where the backoffice needs a region that does not exist yet, add it in 01
+  so both surfaces get it.
 - **Retraction** — a retracted work stays public, citable and marked on both
   surfaces, never hidden: the correction is part of the scholarly record (12).
   The mark waits on raven modelling retraction (10); both sit in the backoffice
@@ -71,6 +76,27 @@ Every dependency is a child here or a cited raven issue.
   deleted or replaced record's URL still gets readers.
 - The **candidate card** — not prototyped; backoffice epic.
 
+## Which surfaces this changes
+
+Every raven view that lists works with a card:
+
+- the public works overview;
+- the embedded lists on the researcher, organisation and project pages;
+- the related-research panel on a record page.
+
+They are separate templates today; 01 makes them one. The public card keeps Cite and
+Add to list, whose contents raven#141 owns.
+
+## Done when
+
+- Every public work card renders the five regions from one template.
+- Each of the 23 work types renders a reference line, and none renders a stray
+  separator or a dangling `In`.
+- The four access states render, and a work with no public file carries no badge.
+- The year, the container and the project link on the cards that carry them, and each
+  lands on the works overview with that filter applied.
+- 01, 02, 03, 08 and 09 are closed.
+
 ## How this lands in raven
 
 Checked against open issues
@@ -81,8 +107,6 @@ Checked against open issues
   narrowed to the container.
 - raven#141 owns the public action row; raven#164 the open-access definition;
   raven#167 the lists pages; raven#125 the match card (amend, don't replace).
-- raven#125 and #141 point at `bkt-ui-library/AGENT.md`; the file is `AGENTS.md`
-  and the checklist is `docs/ACCESSIBILITY.md`.
 
 ## Prototype defects to fix on port — do not reproduce
 
