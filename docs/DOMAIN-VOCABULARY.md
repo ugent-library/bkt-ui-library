@@ -54,7 +54,7 @@ In the UI (backoffice cards): deposit status is the one badge — `draft` →
 `badge text-bg-danger`, `reviewed` → `badge text-bg-success` — and record visibility is
 an icon **with a visible label** inside that badge: `· if-eye Public` or
 `· if-eye-off Not public` — the icon never stands alone. Public cards never show deposit status or record visibility: a deliberate absence, the public card must not leak workflow. File access renders as a
-plain `bt-work-card__meta-item` ("Open access", "Restricted access", "Embargo until
+plain `bt-work-card__meta-item` ("Open access", "Restricted", "Embargo until
 <date>"), never as a badge on the backoffice.
 
 Record-level `restricted`: a work that must be deposited but whose
@@ -163,8 +163,8 @@ Describes who can access a file. Per-file, not per-work. Field and values are ra
 
 | Value | Label | Badge |
 |-------|-------|-------|
-| `public` | Open access | `badge text-bg-success` |
-| `restricted` | Restricted | `badge text-bg-warning` |
+| `public` | Open access | `badge text-bg-success` + `if-open-access` |
+| `restricted` | public: "Restricted access"; backoffice: "Restricted" | `badge text-bg-secondary` + `if-lock` |
 | `private` | backoffice: "Private" | never rendered on the public surface — not even a count |
 
 Private files leave no public trace whatsoever: no count, no badge, no machine-facing output. Even revealing that a file *exists* is a patent risk (tech transfer). "All files private" renders identically to "no files".
@@ -376,12 +376,18 @@ Record visibility rides *inside* the deposit-status badge as icon + visible labe
 (backoffice cards): `· if-eye Public` / `· if-eye-off Not public`. Record-level `restricted` (institution)
 awaits the issues discussion before it gets its own rendering.
 
-File access: on **public** cards a solid badge — open → `badge text-bg-success`,
-restricted → `badge text-bg-warning`, embargo → `badge text-bg-warning` + `if-time`.
-On **backoffice** cards never a badge — a plain `bt-work-card__meta-item` ("Open
-access", "Restricted access", "Embargo until <date>").
+File access: on **public** cards a badge, and only open access carries colour — open →
+`badge text-bg-success` + `if-open-access`, restricted → `badge text-bg-secondary` +
+`if-lock`, embargo → `badge text-bg-secondary` + `if-time`, naming the date ("Embargo
+until 1 May 2027"), closed → `badge text-bg-secondary`, text only. On **backoffice**
+cards never a badge — a plain `bt-work-card__meta-item` ("Open access", "Restricted",
+"Embargo until <date>"). The backoffice drops the noun so a curator scans a column;
+the public card keeps "Restricted access", which is what a reader outside academia
+understands.
 
-Work kind is always `badge text-bg-primary` (blue).
+Work kind is `badge text-bg-primary` (blue) on record pages; on cards it is a plain
+`bt-work-card__meta-item`, so the badge slot stays access (public) or deposit status
+(backoffice).
 
 ### Heritage / diamond OA badges
 

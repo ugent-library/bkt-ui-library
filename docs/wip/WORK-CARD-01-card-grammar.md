@@ -24,10 +24,16 @@ In raven one grammar serves every work card, and the payload is what varies:
   appears between two consecutive items in the same row.
 - **the actions row** — sits in the card header, opposite the metadata row.
 - **the title** — always a link, and the text a screen reader announces the card by.
-- **the contributor line** — prose. Names are separated by plain commas, up to
-  ten names, then `et al.`. Each name is a link. Identifier icons sit next to
-  the name: inside its span, outside its link. What each icon shows is repeated
-  as visually-hidden text inside the link.
+- **the contributor line** — prose. Names are separated by plain commas, and each name
+  is a link. Truncation follows the surface: the public card shows up to ten names,
+  then `et al.` **and** the count ("+3 more authors") — the academic form a reader
+  expects in a citation, and how many names are behind it; the backoffice card shows
+  three, then the count alone ("+10 more authors"), which is what a curator scans for.
+  Old Biblio truncates on both surfaces already — `et al.` at ten names on the public
+  card, "N more author(s)" at three in the backoffice. Carrying both on the public
+  card is the new part. Identifier icons sit next to the name: inside its span,
+  outside its link. What each icon shows is repeated as visually-hidden text inside
+  the link.
 - **the reference line** — one line, composed per surface and per work type
   (see issue 02).
 
@@ -38,12 +44,13 @@ Three further rules apply:
   carries no level. This is important for screen readers.
 - **result cards are a list** — an ordered list, one card per item, so the count and
   position are announced.
-- **card filter links land on the works overview** — the year, journal, project and
-  publisher parts link on every card, and the click lands on the works overview with
-  that filter applied; on the overview itself and in backoffice lists it narrows the
-  list in view. Container and publisher links are string searches on the name; a card
-  link never carries an ISSN/ISBN — identifier filtering is applied manually in the
-  filter bar (`docs/SEARCH-AND-FILTERING.md` Rule 3, Scoped links).
+- **card filter links land on the works overview** — the year, the container (journal,
+  host title, proceedings, magazine, newspaper, venue), the project and the publisher
+  where it is the container link on every card, and the click lands on the works
+  overview with that filter applied; on the overview itself and in backoffice lists it
+  narrows the list in view. Container and publisher links are string searches on the
+  name; a card link never carries an ISSN/ISBN — identifier filtering is applied
+  manually in the filter bar (`docs/SEARCH-AND-FILTERING.md` Rule 3, Scoped links).
 
 ### Notes on the target groups
 
@@ -93,8 +100,6 @@ carry fewer regions. We iterate on top. Flag ambiguity.
   `bt-work-card__header`, `__body` and `__footer`; `bt-work-card--researcher`
   looks plausible but does not exist in it.
 - Icons are the UGent icon font, and decorative — text carries the meaning.
-- `public-project-detail.html` breaks two of these rules; the broken lines are
-  marked `KNOWN BROKEN`. Port the corrected structure.
 
 _The prototype governs the visible page and markup. Machine-facing output
 (`citation_*` tags, Signposting, `?format=` alternates, crawl semantics) is governed
