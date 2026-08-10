@@ -110,29 +110,24 @@ own preview URL, which is the better thing to share while work is in progress.
 Nothing else changes: GitHub Actions keeps running `npm test` on its own, and
 Vercel builds separately with `npm run build`.
 
-### Keeping it off the public web
+### Keeping it out of search results
 
-The prototype is not public yet. Access is controlled in the Vercel dashboard,
-not in this repository — there is no auth code here and there should not be.
+Anyone with the link can open `bkt-ui.vercel.app` and every preview — share a URL
+and it opens, no account needed. `vercel.json` sends `X-Robots-Tag: noindex,
+nofollow` on every response, so a prototype that looks like Biblio stays out of
+search results. Remove that header the day this is meant to be found.
 
-**Vercel Authentication** is on, set to **Standard Protection** (Settings →
-Deployment Protection). That is the free tier and the default for new team
-projects: everything is behind a Vercel login except a production *custom*
-domain. There is no custom domain, so `bkt-ui.vercel.app` and every preview are
-covered. Anyone in the Ghent University Library team can open them once logged
-in; Viewer seats are free, so read-only teammates cost nothing.
+Access is controlled in the Vercel dashboard, not in this repository — there is no
+auth code here and there should not be. To put the deployments behind a login,
+turn on **Vercel Authentication** at Standard Protection (Settings → Deployment
+Protection): the free tier, covering `bkt-ui.vercel.app` and every preview, since
+there is no production custom domain. Anyone in the Ghent University Library team
+opens them once logged in, and Viewer seats are free. **Share** on a deployment
+then generates a link for someone outside the team.
 
 The **All Deployments** option in that same dropdown needs the Advanced
 Deployment Protection add-on at $150 per month. It only adds coverage for
 production custom domains. Don't.
-
-For someone outside the team, use **Share** on a deployment to generate a
-shareable link rather than turning protection off.
-
-As a second layer, `vercel.json` sends `X-Robots-Tag: noindex, nofollow` on
-every response, so a prototype that looks like Biblio cannot end up in search
-results if protection is ever lifted. Remove that header the day this is meant
-to be found.
 
 ---
 
