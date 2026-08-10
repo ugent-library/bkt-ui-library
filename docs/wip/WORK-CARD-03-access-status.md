@@ -6,25 +6,35 @@ title: "[public] Work card: the access badge"
 
 ## Why
 
-Access on today's public card is an icon: a green arrow with "open access" when a
-file is open, the same arrow without the words when the reader's IP sits in a
-configured campus range and the file is restricted, a grey padlock when it is
-restricted and they are outside it. Embargo is not surfaced; private files render
-nothing.
+Access on today's public card is an icon:
+
+- a green arrow with "open access" when a file is open
+- the same arrow without the words when the reader's IP sits in a configured campus
+  range and the file is restricted
+- a grey padlock when it is restricted and they are outside it
+
+Embargo is not surfaced, and private files render nothing.
 
 In raven it is one badge naming the state in words, the same for every reader:
 **Open access**, **Restricted access**, **Embargo until \<date\>**, **Closed
-access**. Which state a work is in follows the documented open-access definition —
-raven#164 owns that; this issue owns how the answer looks. Only open access carries
-colour. Restricted and embargo are correct outcomes rather than warnings, so both
-render neutral and are told apart by their icons. Closed access renders as text
-alone — the padlock belongs to restricted. Colour, icon and class per state are
-fixed in `bkt-ui-library/docs/CLASS-USAGE.md` → Badges, and shown on the kit page.
+access**.
+
+- which state a work is in follows the documented open-access definition —
+  raven#164 owns that; this issue owns how the answer looks;
+- only open access carries colour;
+- restricted and embargo are correct outcomes rather than warnings, so both render
+  neutral and are told apart by their icons;
+- closed access renders as text alone — the padlock belongs to restricted.
+
+Colour, icon and class per state are fixed in `bkt-ui-library/docs/CLASS-USAGE.md` →
+Badges, and shown on the kit page.
 
 **A card may carry no access badge.** Eight of the 23 types routinely have no file,
 and a private file must leave no public trace — no badge, no count, not even the
 fact that a file exists. Showing nothing is the design; a card without an open,
 restricted or embargoed file simply has no access element.
+
+### Notes on the target groups
 
 Carrie Curious (curious public) and Pia Practice (practitioner) both read
 "restricted" as broken unless the card says otherwise, and neither knows what an

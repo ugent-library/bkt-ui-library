@@ -6,20 +6,23 @@ title: "[public] Work card: the reference line, per work type"
 
 ## Why
 
-One line serves all nine types on biblio.ugent.be today: `(year) parent title. In
-series volume(issue). p.first-last`. `parent title` is the journal on an article,
-the host book on a chapter and the series on a book, with nothing to say which;
-pages render only when both ends are stored; publisher, place, conference, ISBN,
-ISSN, DOI, edition and genre never appear.
+One line serves all nine types on biblio.ugent.be today:
+`(year) parent title. In series volume(issue). p.first-last`. What that costs:
 
-In raven the line reads as a citation, composed per work type. It opens with the
-year — the authors, the title and the access route are the card's other regions, so
-the line carries where the work appeared and where inside it. Every type renders one
-shared order, filling only the slots its fields cover; a type with nothing mapped
-yet renders the year alone. Genre
-words stay ("PhD thesis.", "Report RPT-42.", "[Preprint]") — each explains the field
-after it. Container titles render in `<cite>`, italic, and are filter links on
-every card (01).
+- pages render only when the first and the last page are both stored; a first page
+  alone renders nothing;
+- publisher, place, conference, ISBN, ISSN, DOI, edition and genre never appear.
+
+In raven the line reads as a citation, composed per work type:
+
+- it opens with the year — the authors, the title and the access route are the card's
+  other regions, so the line carries where the work appeared and where inside it;
+- every type renders one shared order, filling only the slots its fields cover; a
+  type with nothing mapped yet renders the year alone;
+- genre words stay ("PhD thesis.", "Report RPT-42.", "[Preprint]") — each explains
+  the field after it;
+- container titles render in `<cite>`, italic, and are filter links on every card
+  (01).
 
 The gain sits in the non-article types: under today's template a thesis, a
 conference paper and a report render a nearly empty line. For journal articles —
@@ -31,9 +34,13 @@ per type.
 Compositions, rendered examples and the decisions behind them:
 `docs/wip/WORK-CARD-REFERENCE-STYLES.md`.
 
+### Notes on the target groups
+
 Sue Kerr (academic reader) reads the venue and the year to decide whether to open
-a hit, and copies the line to cite it. Pia Practice (practitioner) gets the same
-placement without an academic vocabulary.
+a hit, and copies the line to cite it. Pia Practice (practitioner) reads the same
+line for the same decision, from outside academia: she judges by the institution,
+the date and the kind of work, not by a venue's reputation, so the line has to say
+"PhD thesis.", "Report RPT-42." and "Ghent University." in words she already knows.
 
 > **Screenshot:** the works feed with one card per work type (`public-works.html`)
 
@@ -84,24 +91,26 @@ View at `localhost:3111/templates/biblio-public/public-works.html`; spec in
 ## Dependencies
 
 - Blocked by **01**; by **08** for reference entry, magazine article, newspaper
-  article, software and dataset.
+  article and dataset.
 - Year links narrow on raven#157, container on **09**, URL state is raven#156. The
   prototype's `?year=` and `?issn=` are placeholders, not a proposal — 09 matches the
   container title, not the identifier `?issn=` names.
 
 ## Open questions
 
-- **Is the per-type line worth building?** Today one template serves every
-  type, so a PhD thesis renders as "(2024)" — the awarding institution has no
-  slot — while composed per type it reads "(2024) PhD thesis. Ghent University."
-  Ten of the 23 types render such a bare "(year)" under today's template:
-  thesis, conference abstract, conference poster, conference presentation,
-  preprint, dataset, software, lecture, media appearance and online post. Nine
-  more keep a line but lose its identifying middle — a conference paper's
-  conference, a report's number and publisher, a magazine article's date. The
-  journal-shaped types barely change. The price is per-type rendering instead
-  of one template, bounded by one shared order plus four exceptions. The design
-  intent is to build it. Options: (a) compose per type, per the spec doc;
-  (b) keep one line for every type, as today. The dev team answers.
+- **Is the per-type line worth building?** Today one template serves every type, so
+  a PhD thesis renders as "(2024)" — the awarding institution has no slot — while
+  composed per type it reads "(2024) PhD thesis. Ghent University."
+
+  Ten of the 23 types render such a bare "(year)" under today's template: thesis,
+  conference abstract, conference poster, conference presentation, preprint,
+  dataset, software, lecture, media appearance and online post. Nine more keep a
+  line but lose its identifying middle — a conference paper's conference, a
+  report's number and publisher, a magazine article's date. The journal-shaped
+  types barely change.
+
+  The price is per-type rendering instead of one template, bounded by one shared
+  order plus four exceptions. Options: (a) compose per type, per the spec doc;
+  (b) keep one line for every type, as today. Needs a team decision.
 
 What raven does about the ⚑ fields is 08's question.

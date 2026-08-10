@@ -6,53 +6,70 @@ title: "[public][backoffice] Work card: one markup grammar for every surface"
 
 ## Why
 
-Today's cards are built per page: a Perl template on the public site, a templ
-component in the backoffice, a third for datasets there, none with named regions.
-The same visual row is composed differently wherever it appears.
+Today's cards are built per page:
+- a Perl template on the public site
+- a templ component in the backoffice
+- a third for datasets there
+
+None of the three names its regions, so the same visual row is composed differently
+wherever it appears.
 
 In raven one grammar serves every work card, and the payload is what varies:
 
-- **the metadata row** — the header row holds access and type. Departments,
-  projects, VABB and the provenance footer are also metadata rows. An item can
-  opt in to a separator; the separator only appears between two consecutive
-  items in the same row.
+- **the metadata row** — a row of items. On the public card the header row holds
+  access and type, and that is all it holds. The backoffice fills the same construct
+  more often: departments, projects and VABB are each their own metadata row, and the
+  provenance footer holds two more — the Biblio ID with its audit trail, and the
+  curator quick links (04). An item can opt in to a separator; the separator only
+  appears between two consecutive items in the same row.
 - **the actions row** — sits in the card header, opposite the metadata row.
-- **the title** — always a link, always the card's accessible name.
+- **the title** — always a link, and the text a screen reader announces the card by.
 - **the contributor line** — prose. Names are separated by plain commas, up to
   ten names, then `et al.`. Each name is a link. Identifier icons sit next to
   the name: inside its span, outside its link. What each icon shows is repeated
   as visually-hidden text inside the link.
-- **the reference line** — one line, composed per surface and per work type.
+- **the reference line** — one line, composed per surface and per work type
+  (see issue #02).
 
-Three further rules apply. The **title element follows the page outline** — `h2` on
-public results, `p` on backoffice lists, deeper where the outline requires; the
-class is visual and carries no level. **Result cards are a list**: an ordered list,
-one card per item, so the count and position are announced. And **card filter links
-land on the works overview**: the year, journal, project and publisher parts link on
-every card, and the click lands on the works overview with that filter applied — on
-the overview itself and in backoffice lists it narrows the list in view. Container
-and publisher links are string searches on the name; a card link never carries an
-ISSN/ISBN — identifier filtering is applied manually in the filter bar
-(`docs/SEARCH-AND-FILTERING.md` Rule 3, Scoped links).
+Three further rules apply:
+
+- **the title element follows the page outline** — `h2` on public results, `p` on
+  backoffice lists, deeper where the outline requires; the class is visual and
+  carries no level. This is important for screen readers.
+- **result cards are a list** — an ordered list, one card per item, so the count and
+  position are announced.
+- **card filter links land on the works overview** — the year, journal, project and
+  publisher parts link on every card, and the click lands on the works overview with
+  that filter applied; on the overview itself and in backoffice lists it narrows the
+  list in view. Container and publisher links are string searches on the name; a card
+  link never carries an ISSN/ISBN — identifier filtering is applied manually in the
+  filter bar (`docs/SEARCH-AND-FILTERING.md` Rule 3, Scoped links).
+
+### Notes on the target groups
 
 Marie Curator (reviewer) scans result lists all day in a narrow split-screen
 pane; Sue Kerr (academic reader) gets seconds per card. Both need the same
 information in the same place on every card. Neither ever sees the grammar.
 
+### How it ships
+
 Ships first, with the public card. **Every region is fillable, never hardcoded to the
-public card's contents.** The backoffice card is this same card with more on it —
-extra items and blocks, two regions rendered differently. 02, 03 and 09 fill them now;
-04–06 and 12 fill the rest later, without forking the card. A backoffice row that
-needs a region this contract lacks means changing this contract, never adding a
-one-off region on the backoffice card.
+public card's contents.**
+
+- The backoffice card is this same card with more on it — extra items and blocks,
+  two regions rendered differently.
+- 02, 03 and 09 fill regions now; 04–06 and 12 fill the rest later, without forking
+  the card.
+- A backoffice row that needs a region this contract lacks means changing this
+  contract, never adding a one-off region on the backoffice card.
 
 > **Screenshot:** the grammar section of the kit page (`patterns/work-card.html`)
 
 ## What
 
-- [ ] Card container: an `<article>` named by its title; Bootstrap card header,
-      body and footer stay as the structural wrappers; the border variant for
-      result lists
+- [ ] Card container: an `<article>` named by its title; `bt-work-card__header`,
+      `bt-work-card__body` and `bt-work-card__footer` are the structural wrappers;
+      the border variant for result lists
   - the body also takes block content below the reference line — the backoffice
     message blocks (05). The five regions define the grammar; the body can hold
     more

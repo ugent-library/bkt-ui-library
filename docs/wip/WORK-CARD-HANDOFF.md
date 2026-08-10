@@ -25,9 +25,10 @@ amendment (07):
 
 - **No subtypes on cards.** Public epic's question closed; the sentence lives in
   its Why.
-- **08 reference fields**: design intent is to build all four ⚑ fields; the
-  dev team confirms per field. The dataset publisher docs conflict is now its own
-  open question in 08.
+- **08 reference fields**: all four ⚑ fields are built — raven keeps every field
+  old Biblio carries. The dataset publisher's docs conflict is 08's work; the
+  software version is dropped, raven defers the field past v1 and no records land in
+  the type.
 - **09 container filter**: matches the container title string, as public Biblio
   does (`parent exact`); every container filters, publisher-as-venue names (Zenodo,
   bioRxiv) included, so the identifier-coverage question is gone. Identifier
@@ -88,7 +89,7 @@ amendment (07):
   (Biblio today | raven | expected) was added to the public epic, 01–03 and
   `docs/ISSUE-TEMPLATE.md`, then reverted everywhere: prose in a table, no gain.
   Don't reintroduce.
-- **The repository is the venue** — `dataset` and `software` compose
+- **The publisher is the container on `dataset`, `software` and `preprint`** — all three compose
   `(year) publisher.`, matching `preprint`; old biblio's bare dataset line was a
   template accident. Spec doc and all prototype dataset/software cards updated;
   dataset joins the ⚑ set, so 02 depends on 08 for five types.
