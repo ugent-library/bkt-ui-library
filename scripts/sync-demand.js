@@ -52,9 +52,11 @@ const plain = (html = '') => html
   .replace(/\n{3,}/g, '\n\n')
   .trim();
 
-const tagsOf = n => (n.tags ?? []).map(t => t.name ?? t).filter(Boolean);
+const tagsOf = n => (n.fields?.tags ?? []).map(t => t.name).filter(Boolean);
 const day = n => (n.createdAt ?? '').slice(0, 10);
-const title = n => n.title?.trim() || '(untitled)';
+const title = n => n.fields?.name?.trim() || '(untitled)';
+const linkOf = n => n.links?.html;
+const stateOf = n => (n.fields?.archived ? 'archived' : n.fields?.processed ? 'processed' : 'unprocessed');
 
 function byMonth(notes) {
   const months = new Map();
@@ -87,7 +89,7 @@ function writeIndex(notes) {
     `\`${n.id}\``,
     day(n),
     tagsOf(n).join(', '),
-    n.displayUrl ? `[${title(n)}](${n.displayUrl})` : title(n),
+    linkOf(n) ? `[${title(n)}](${linkOf(n)})` : title(n),
   ].filter(Boolean).join(' · ');
 
   const text = [
@@ -120,12 +122,13 @@ function writeBodies(notes) {
     const meta = [
       ['id', n.id],
       ['created', day(n)],
-      ['state', n.state],
-      ['source', n.source?.origin ?? n.source?.system],
+      ['type', n.type],
+      ['state', stateOf(n)],
+      ['source', n.metadata?.source?.system],
       ['tags', tagsOf(n).join(', ')],
-      ['link', n.displayUrl],
+      ['link', linkOf(n)],
     ].filter(([, v]) => v);
-    const text = plain(n.content);
+    const text = plain(n.fields?.content);
     return [`### ${title(n)}`, '', ...meta.map(([k, v]) => `- ${k}: ${v}`), '', ...(text ? [text, ''] : [])].join('\n');
   };
 
@@ -141,9 +144,9 @@ function writeBodies(notes) {
 // Field names and types, never values: the shape is what a mapping needs, and this output
 // gets pasted into chats and issues.
 const shape = (v, depth = 0) => {
-  if (Array.isArray(v)) return `array[${v.length}]` + (v.length && depth < 2 ? ` of ${shape(v[0], depth + 1)}` : '');
+  if (Array.isArray(v)) return `array[${v.length}]` + (v.length && depth < 3 ? ` of ${shape(v[0], depth + 1)}` : '');
   if (v && typeof v === 'object') {
-    return depth < 2
+    return depth < 3
       ? `{ ${Object.keys(v).map(k => `${k}: ${shape(v[k], depth + 1)}`).join(', ')} }`
       : 'object';
   }
