@@ -24,6 +24,31 @@ Something with no answer gets one of two treatments, never a third:
 
 An honest gap gets resolved; a plausible fabrication gets built.
 
+## Cite the demand
+
+ProductBoard holds the notes: helpdesk mail, interview quotes, requests. Two files in
+`notes/demand/` carry them into a spec — generated `INDEX.md` and hand-written
+`FINDINGS.md`. `notes/` is local, so sync before drafting.
+
+- `npm run sync:demand` regenerates `INDEX.md`. Each note takes one line: id, date, tags,
+  linked title. Months group the lines, and a tag tally closes the file.
+- `npm run sync:demand -- --bodies` also writes the note text to a temporary folder
+  outside the repo. Read it there, then delete it.
+- `INDEX.md` marks a note read once its id appears in `FINDINGS.md`. Write each conclusion
+  there in your own words, with the ids it rests on.
+
+A bet or an issue cites those ids: "researchers cannot find their own record (n-001,
+n-014)". The reader opens the note and checks the reading. Keep the conclusion in the
+document and the note text in ProductBoard.
+
+The index carries the need, not the person: id, date, tags and title, and the sync replaces
+any address in a note body with `[email]`. Who reported something stays in ProductBoard,
+behind the note link.
+
+Make corrections, tags and feature links in ProductBoard; the next sync picks them up. A
+need with no note behind it is an assumption and reads as one — record it in ProductBoard
+first.
+
 ## Anything decided in a meeting and left unwritten does not exist
 
 ## Name the persona, not "users"
