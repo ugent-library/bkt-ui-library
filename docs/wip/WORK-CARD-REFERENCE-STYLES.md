@@ -13,7 +13,8 @@ Composed per work type, keyed to raven's 23 types (`raven/docs/metadata-work-typ
 fields are raven's (`raven/docs/metadata-work-fields.md`).
 
 The line opens with the year: authors, title and access are the card's other regions.
-Dates render at the precision they carry — year-only stays the year.
+Dates render at the precision they carry — year-only stays the year. A work with no
+date renders no year; the public line never marks a field as missing.
 
 ### One order
 
@@ -44,6 +45,27 @@ mapped — renders `(year)`. There is no separate fallback rule: the order is th
 How raven produces the line, and its exact punctuation, belongs to the
 implementation.
 
+### Punctuation
+
+The examples below were rendered with a Harvard style (Cite Them Right) as a starting
+point, not as an authority. These rules are the line's, on the public surface:
+
+- the year comes first, in parentheses: `(2024)`;
+- a genre word closes with a full stop: `PhD thesis.`, `Report RPT-42.`;
+  `[Preprint]` closes the line instead of opening it;
+- the container is italic and carries no label, except `book_part`, which prefixes
+  it with `in`;
+- a full stop closes the container before an imprint or an event; commas separate
+  the remaining slots;
+- place and publisher join with a colon: `Ghent: Academia Press`;
+- volume and issue read `32(1)`, no space before the parenthesis;
+- pages read `pp. 58–79`, or `p. 7` for a single page, with an en dash;
+- a series closes the line in parentheses: `(FEB Working Paper Series)`;
+- the line ends with a full stop, unless the year is all it has.
+
+A slot with no value takes its separator with it: no dangling `in`, no `32()`, no
+double comma.
+
 ### Per-type lines (derived examples)
 
 What the order produces, type by type — for reading and review; the order and
@@ -73,7 +95,7 @@ Sources); ⚑ marks a field that is 08's question.
 | `media_appearance` | `(year) venue, day month.` | `(2025) Universiteit van Vlaanderen, 5 November.` |
 | `lecture` | `(year) venue, day month.` — location sits inside `venue` per its field definition | `(2025) UGent Data Stewards seminar, Ghent, 20 October.` |
 | `dataset` | `(year) publisher.` — publisher holds the repository, as on `preprint`; reconciling raven's applies-to gap is 08 ⚑ | `(2026) Zenodo.` |
-| `software` | as `dataset` — raven defers a software version field to after v1, and no records land in the type in v1 | `(2026) Zenodo.` |
+| `software` | as `dataset`, publisher included ⚑ — raven defers a software *version* field to after v1, and no records land in the type in v1 | `(2026) Zenodo.` |
 | `other` | the order, with whatever fields it carries | `(2024)` |
 
 ### Decisions
@@ -109,13 +131,14 @@ are not in raven's registry:
   Old biblio showed all three (as `misc`); the card keeps them.
 - `magazine_article` / `newspaper_article`: no pages field. Old biblio showed pages;
   the card keeps them.
-- `dataset`: two raven docs disagree on the publisher.
+- `dataset` and `software`: two raven docs disagree on the publisher.
   - the migration map (`metadata-work-types.md`) carries biblio's dataset publisher
     into `publisher`
   - the per-type applicability list (`metadata-work-fields.md`) leaves datasets out
 
-  Datasets carry one. The line reads `(2026) Zenodo.`, and the backoffice scan shows
-  the same field.
+  Both carry one — they compose the same line, so the question is settled once for
+  the pair. The line reads `(2026) Zenodo.`, and the backoffice scan shows the same
+  field.
 
 ---
 
@@ -131,7 +154,7 @@ Separated meta items, each part only when present:
 year · container · publisher · volume · (issue) · start–end
 ```
 
-- **year** — the year part of `date`.
+- **year** — the year part of `date`. Where a work carries none, the scan says so.
 - **container** — per type: `journal_abbreviations[0]` falling back to
   `journal_title` (journal_article, book_review, journal_issue); `book_title`
   (book_part); `proceedings_title` (conference types); `magazine_title` /

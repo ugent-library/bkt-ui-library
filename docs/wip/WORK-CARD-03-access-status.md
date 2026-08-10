@@ -55,6 +55,9 @@ works she can open — colour only where the answer is yes.
   - Embargo until \<date\> — neutral, time icon, badge names the date
   - Closed access — neutral, text only, no icon
 - [ ] One badge per work, per the definition in raven#164 — not one per file
+- [ ] Files that disagree: the badge shows the most permissive access across them,
+      and the earliest release date where all are embargoed. It reads the deposit —
+      the full text, the dataset, the software — not supplementary material
 - [ ] No access element when the work has no files, or only private ones
 - [ ] Every state renders identically logged in, logged out, on and off the UGent
       network — the badge states what the file is, not who the reader is
@@ -92,6 +95,7 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
       HTML, not only on screen
 - [ ] The embargo badge carries the release date in the public date format
       (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI")
+- [ ] A work whose files carry different embargo dates shows the earliest of them
 - [ ] The same record renders the same badge anonymously, logged in, and from the
       campus network
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/docs/ACCESSIBILITY.md`, plus:

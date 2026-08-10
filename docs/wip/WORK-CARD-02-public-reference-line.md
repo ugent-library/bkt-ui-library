@@ -15,6 +15,9 @@ One line serves all nine types on biblio.ugent.be today:
 
 In raven the line reads as a citation, composed per work type:
 
+- its punctuation is written down rather than left per slot — the spec doc states it,
+  and the kit page shows it. A Harvard style was the starting point for the examples,
+  not the authority;
 - it opens with the year — the authors, the title and the access route are the card's
   other regions, so the line carries where the work appeared and where inside it;
 - every type renders one shared order, filling only the slots its fields cover; a
@@ -51,7 +54,9 @@ the date and the kind of work, not by a venue's reputation, so the line has to s
       spec doc
 - [ ] `other`, and any type before its fields are mapped, renders the one order
       with whatever it carries
-- [ ] Date precision follows the stored date
+- [ ] Date precision follows the stored date; a work with no date renders the line
+      without a year, and the public card never says a field is missing (the
+      backoffice scan does — 04)
 - [ ] Container titles in `<cite>`, italic
 - [ ] Year and container are filter links on every card, landing on the works
       overview with the filter applied (01)
@@ -63,11 +68,12 @@ the date and the kind of work, not by a venue's reputation, so the line has to s
 - `out of scope` What the Cite action opens — raven#141 puts the trigger on the card
 
 The prototype covers **all 23 types** with placeholder data. Lines marked ⚑ in the
-spec carry a field that issue 08 must settle, and wait for it. We iterate on top.
+spec carry a field that issue 08 must settle, and wait for it. Dataset and software
+compose one line, so 08 settles them together. We iterate on top.
 Flag ambiguity.
 
-- The spec doc's examples are the shape of each line; how the line is produced, and
-  its exact punctuation, is the implementer's call.
+- The spec doc's examples are the shape of each line; how the line is produced is the
+  implementer's call, the punctuation is not.
 
 _The prototype governs the visible page and markup. Machine-facing output
 (`citation_*` tags, Signposting, `?format=` alternates, crawl semantics) is governed
@@ -93,7 +99,7 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
 ## Dependencies
 
 - Blocked by **01**; by **08** for reference entry, magazine article, newspaper
-  article and dataset.
+  article, dataset and software.
 - Year links narrow on raven#157, container on **09**, URL state is raven#156. The
   prototype's `?year=` and `?container=` parameters are placeholders, not a proposal —
   09 matches the container title as stored.

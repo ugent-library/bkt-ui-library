@@ -34,6 +34,18 @@ In raven one grammar serves every work card, and the payload is what varies:
   card is the new part. Identifier icons sit next to the name: inside its span,
   outside its link. What each icon shows is repeated as visually-hidden text inside
   the link.
+
+  **A name links where it resolves**, as in old Biblio:
+
+  - a contributor raven knows as a person — their page;
+  - any other named contributor — a search on the name;
+  - free text, an organisation, a person with no public page — muted text, no link.
+
+  **The role that fills the line is per type**: authors, and editors for `edited_book`
+  and `journal_issue`. The per-type table in
+  `docs/wip/WORK-CARD-REFERENCE-STYLES.md` names it per line. Supervisors stay off the
+  public card, as they stay out of a citation of a thesis; the backoffice card shows
+  them as "supervised by".
 - **the reference line** — one line, composed per surface and per work type
   (see issue 02).
 
@@ -46,7 +58,8 @@ Three further rules apply:
   position are announced.
 - **card filter links land on the works overview** — the year, the container (journal,
   host title, proceedings, magazine, newspaper, venue), the project and the publisher
-  where it is the container link on every card, and the click lands on the works
+  where it is the container. Each part is a link wherever the card carries it — a work
+  with no project shows no project link — and the click lands on the works
   overview with that filter applied; on the overview itself and in backoffice lists it
   narrows the list in view. Container and publisher links are string searches on the
   name; a card link never carries an ISSN/ISBN — identifier filtering is applied
@@ -83,15 +96,33 @@ public card's contents.**
 - [ ] Metadata row — every metadata row on the card, with the opt-in separator
 - [ ] Actions row — contents per 06 and raven#141
 - [ ] Title — link, accessible name, element per page outline
-- [ ] Contributor line — ten names then `et al.`, every name linked, icons outside
-      the link, visually-hidden identifier text inside it, "supervised by" on the
-      backoffice
+- [ ] Contributor line — public: ten names, then `et al.` and the count; backoffice:
+      three names, then the count. Icons outside the link, visually-hidden identifier
+      text inside it, "supervised by" on the backoffice
+- [ ] Contributor links — person page where raven knows the person, name search
+      otherwise, muted text where neither resolves
 - [ ] Reference line — composition per 02 (public) and 04 (backoffice)
 - [ ] List wrapper — result cards in an ordered list, one per item
-- [ ] Card filter links — year, journal, project and publisher linked on every card,
-      landing on the works overview with the filter applied; narrowing in place in
-      filterable lists
+- [ ] Card filter links — year, container, project and publisher-as-container, each
+      linked wherever the card carries that part, landing on the works overview with
+      the filter applied; narrowing in place in filterable lists
 - `out of scope` The card's CSS — it ships in the design system's stylesheet
+
+**Which surfaces this changes** — every raven view that lists works with a card:
+
+- the public works overview;
+- the embedded lists on the researcher, organisation and project pages;
+- the related-research panel on a record page;
+- the backoffice lists.
+
+They are separate templates today; this contract makes them one. The card keeps the
+actions it has — Cite and Add to list on the public card, review and edit on the
+backoffice — and 06 and raven#141 own their contents.
+
+**The markup is shared; the backoffice payload is not.** The public epic puts the
+backoffice card out of scope because status, messages and actions are the sibling
+epic's. Build every region fillable and the backoffice fills them differently, without
+forking the card.
 
 The prototype covers the **journal-article happy path** most fully; other types
 carry fewer regions. We iterate on top. Flag ambiguity.
@@ -129,6 +160,10 @@ View the [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.
 - Blocks 02 and 03 here, and 04, 05, 06 and 12 in the backoffice epic.
 - Filter links: year is raven#157, project and keyword raven#159, URL state
   raven#156, container **09**. Until one lands, render that part as text.
+- **Crawler treatment of those links** — `rel="nofollow"`, and whether the works
+  overview needs protecting from a faceted crawl trap — belongs to raven's
+  `docs/public-site-semantics.md`, audited by Rubric. Decide it there; this issue
+  invents no rule.
 
 ## Open questions
 
