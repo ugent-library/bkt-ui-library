@@ -2,7 +2,11 @@
 // keywords row below the reference line. Shared keywords are highlighted
 // with a visually-hidden text equivalent (never colour alone).
 
-function matchCard({ id, type, title, year, keywords }) {
+// Container link: a string search on the title, as live biblio runs it (09).
+const container = (title) =>
+  `<a href="/templates/biblio-public/public-works.html?container=${encodeURIComponent(title)}"><cite>${title}</cite></a>`;
+
+function matchCard({ id, type, title, year, line, keywords }) {
   const kw = keywords
     .map(({ label, shared }) => shared
       ? `<a href="#" class="badge text-bg-primary-light text-decoration-none">${label} <span class="visually-hidden">(shared keyword)</span></a>`
@@ -10,20 +14,20 @@ function matchCard({ id, type, title, year, keywords }) {
     .join('\n        ');
   return `
   <li><article class="bt-work-card" aria-labelledby="${id}">
-    <div class="card-header">
+    <div class="bt-work-card__header">
       <div class="bt-work-card__meta">
         <span class="bt-work-card__meta-item">${type}</span>
       </div>
     </div>
-    <div class="card-body">
-      <h3 id="${id}" class="bt-work-card__title"><a href="#">${title}</a></h3>
+    <div class="bt-work-card__body">
+      <h3 id="${id}" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">${title}</a></h3>
       <p class="bt-work-card__authors">
         <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
         <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
         <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
-        <span class="text-muted">+ 6 more</span>
+        <span class="text-muted">et al. +6 more authors</span>
       </p>
-      <p class="bt-work-card__pub">(<a href="#"><time datetime="${year}">${year}</time></a>)</p>
+      <p class="bt-work-card__pub">(<a href="/templates/biblio-public/public-works.html?year=${year}"><time datetime="${year}">${year}</time></a>) ${line}</p>
       <div class="d-flex flex-wrap gap-1">
         ${kw}
       </div>
@@ -39,6 +43,7 @@ ${matchCard({
     type: 'Journal article',
     title: 'Cooling co-benefits of urban tree networks in compact European cities',
     year: 2025,
+    line: `${container('Landscape and Urban Planning')}, 240, 104912.`,
     keywords: [
       { label: 'Green infrastructure', shared: true },
       { label: 'Trees', shared: false }
@@ -49,6 +54,7 @@ ${matchCard({
     type: 'Journal article',
     title: 'Planning biodiversity corridors through urban green infrastructure',
     year: 2024,
+    line: `${container('Urban Ecosystems')}, 27(3), pp. 455&ndash;470.`,
     keywords: [
       { label: 'Biodiversity', shared: false },
       { label: 'Urban climate', shared: true }
@@ -59,6 +65,7 @@ ${matchCard({
     type: 'Book chapter',
     title: 'Community-led climate adaptation in Flemish mid-sized cities',
     year: 2023,
+    line: `in ${container('Handbook of urban ecology')}. London: Routledge, pp. 210&ndash;228.`,
     keywords: [
       { label: 'Resilience', shared: true },
       { label: 'Ghent', shared: true },

@@ -164,13 +164,15 @@ keyword ~252k, journal ~204k sessions over seven months of live logs (Evidence b
 so every one of them must be a working link, never decorative text.
 
 **Card filter links land on the works overview.** Every filter part on a card — the
-year, the journal/host title, the project, the publisher or platform name (e.g.
-Zenodo) — links to the works overview with that filter applied, wherever the card
-appears: a filterable overview, the embedded listing on a detail page, the record page
-itself. On the works overview and in the backoffice lists the same click narrows the
-list in view. A container or publisher link is a **string search on the name** — as
-live does today (`parent exact`); a card link never carries an ISSN/ISBN, identifier
-filtering is applied manually in the filter bar (Rule 5). The year link is feature
+year, the container (journal, host title, proceedings, magazine, newspaper, and the
+venue a lecture, media appearance or online post appeared in), the project, and the
+publisher or platform name where it is the container (e.g. Zenodo) — links to the
+works overview with that filter applied, wherever the card appears: a filterable
+overview, the embedded listing on a detail page, the record page itself. On the works
+overview and in the backoffice lists the same click narrows the list in view. A
+container or publisher link is a **string search on the name** — as live does today
+(`parent exact`); a card link never carries an ISSN/ISBN, identifier filtering is
+applied manually in the filter bar (Rule 5). The year link is feature
 parity with live. A caveat when reusing the numbers above: they were measured on
 today's live product, a different UI — they prove demand for the pattern, not the
 redesign.

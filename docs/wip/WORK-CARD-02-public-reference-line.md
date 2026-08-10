@@ -95,8 +95,8 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
 - Blocked by **01**; by **08** for reference entry, magazine article, newspaper
   article and dataset.
 - Year links narrow on raven#157, container on **09**, URL state is raven#156. The
-  prototype's `?year=` and `?issn=` are placeholders, not a proposal — 09 matches the
-  container title, not the identifier `?issn=` names.
+  prototype's `?year=` and `?container=` parameters are placeholders, not a proposal —
+  09 matches the container title as stored.
 
 ## Open questions
 

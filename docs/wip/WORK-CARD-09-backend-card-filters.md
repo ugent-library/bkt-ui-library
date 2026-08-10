@@ -18,8 +18,9 @@ backoffice lists the click narrows the list in view (01).
 Year, project and keyword are owned by open raven issues (Dependencies). **The
 container** is covered by none:
 
-- it is the journal, proceedings volume, magazine or book, and the publisher where it
-  is the container itself (preprint, dataset, software: bioRxiv, Zenodo);
+- it is the journal, proceedings volume, magazine, newspaper or book; the venue a
+  lecture, media appearance or online post appeared in; and the publisher where it is
+  the container itself (preprint, dataset, software: bioRxiv, Zenodo);
 - it is the middle of every public reference line, and the part curators recognise a
   record by on the backoffice scan line;
 - whether raven's search already offers it is this issue's first question. Without
@@ -44,8 +45,9 @@ same link to browse, and never needs to know it is a filter.
 
 ## What
 
-- [ ] Filter works by **container** — the journal, proceedings, magazine, newspaper
-      or book the work appeared in, and the publisher where it is the container
+- [ ] Filter works by **container** — the journal, proceedings, magazine, newspaper or
+      book the work appeared in, the venue for the public-engagement types (lecture,
+      media appearance, online post), and the publisher where it is the container
       (preprint, dataset, software) — matched on the container title as stored
 - [ ] The filter is available on the public surface and in the backoffice lists
 - [ ] The link carries the same URL shape as the rest of the search state
@@ -54,7 +56,8 @@ same link to browse, and never needs to know it is a filter.
 
 - [ ] Clicking the journal on a card in a filterable list narrows that list to that
       venue
-- [ ] A container without an ISSN or ISBN filters like any other
+- [ ] Every container filters on its title, whether or not it carries an ISSN or
+      ISBN — a seminar venue filters like a journal
 - [ ] A backoffice link matches the displayed string — short title if available,
       otherwise the full title
 - [ ] The resulting URL can be copied, shared and reloaded to the same result set

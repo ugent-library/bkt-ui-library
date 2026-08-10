@@ -7,7 +7,7 @@
 function card({ id, badges, title, authors, line }) {
   return `
   <li><article class="bt-work-card" aria-labelledby="${id}">
-    <div class="card-header">
+    <div class="bt-work-card__header">
       <div class="bt-work-card__meta">
         ${badges}
       </div>
@@ -29,7 +29,7 @@ function card({ id, badges, title, authors, line }) {
         </div>
       </div>
     </div>
-    <div class="card-body">
+    <div class="bt-work-card__body">
       <h2 id="${id}" class="bt-work-card__title">
         <a href="/templates/biblio-public/public-work-detail.html">${title}</a>
       </h2>
@@ -40,11 +40,15 @@ function card({ id, badges, title, authors, line }) {
 }
 
 const oa = '<span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>';
-const embargo = '<span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span>';
+const embargo = '<span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 1 May 2027</span>';
 const type = (label) => `<span class="bt-work-card__meta-item">${label}</span>`;
 const restricted = '<span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Restricted access</span>';
 
 const year = (y) => `(<a href="public-works.html?year=${y}"><time datetime="${y}">${y}</time></a>)`;
+
+// Container link: a string search on the title, as live biblio runs it (09).
+const container = (title, label = `<cite>${title}</cite>`) =>
+  `<a href="public-works.html?container=${encodeURIComponent(title)}">${label}</a>`;
 const researcher = '/templates/biblio-public/public-researcher-detail.html';
 
 // Icons sit outside the <a>: hover underline covers the name only; icon
@@ -79,8 +83,8 @@ ${card({
       author('Eline Lauwers', { ugent: true }),
       author('Camille Vervoort'),
       author('Mark G. Tjoelker')
-    ].join(',\n        ') + ' <span class="text-muted">et al.</span>',
-    line: `${year(2026)} <a href="public-works.html?issn=2572-2611"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.`
+    ].join(',\n        ') + ' <span class="text-muted">et al. +3 more authors</span>',
+    line: `${year(2026)} ${container('Plants People Planet')}, 8(1), pp. 14&ndash;19.`
   })}
 ${card({
     id: 'card-feed-02',
@@ -101,21 +105,21 @@ ${card({
     badges: restricted + type('Book chapter'),
     title: 'Canopy cover in Flanders: patterns and policy',
     authors: [dePauw(), author('Jonas Maes')].join(', '),
-    line: `${year(2024)} in <a href="public-works.html?isbn=978-0-415-88700-1"><cite>Handbook of urban ecology</cite></a>. London: Routledge, pp. 100&ndash;120.`
+    line: `${year(2024)} in ${container('Handbook of urban ecology')}. London: Routledge, pp. 100&ndash;120.`
   })}
 ${card({
     id: 'card-feed-05',
     badges: oa + type('Book review'),
     title: 'Review of: Urban forests: a field guide to the trees of Flemish cities',
     authors: author('An Willems', { ugent: true }),
-    line: `${year(2025)} <a href="public-works.html?issn=1365-2745"><cite>Journal of Ecology Reviews</cite></a>, 12(2), pp. 301&ndash;303.`
+    line: `${year(2025)} ${container('Journal of Ecology Reviews')}, 12(2), pp. 301&ndash;303.`
   })}
 ${card({
     id: 'card-feed-06',
     badges: type('Reference entry'),
     title: 'Photosynthesis',
     authors: author('Tom Green'),
-    line: `${year(2023)} <cite>Encyclopedia of plant science</cite>. Amsterdam: Elsevier, pp. 455&ndash;460.`
+    line: `${year(2023)} ${container('Encyclopedia of plant science')}. Amsterdam: Elsevier, pp. 455&ndash;460.`
   })}
 ${card({
     id: 'card-feed-07',
@@ -125,14 +129,14 @@ ${card({
       author('Tom Vander Beken', { ugent: true, orcid: '0000-0003-2222-8888' }),
       author('An Vermeersch', { ugent: true })
     ].join(',\n        '),
-    line: `${year(2024)} <a href="public-works.html?issn=0928-9569"><cite>European Journal of Crime, Criminal Law and Criminal Justice</cite></a>, 32(1).`
+    line: `${year(2024)} ${container('European Journal of Crime, Criminal Law and Criminal Justice')}, 32(1).`
   })}
 ${card({
     id: 'card-feed-08',
     badges: oa + type('Conference paper'),
     title: 'Frequency-domain parameter tracking of single-actuated multi-body mechanisms',
     authors: [author('Foeke Vanbecelaere', { ugent: true }), author('Kurt Stockman')].join(', '),
-    line: `${year(2024)} <cite>Proceedings of the 12th IFToMM World Congress</cite>. IFToMM World Congress, Tokyo, pp. 1&ndash;8.`
+    line: `${year(2024)} ${container('Proceedings of the 12th IFToMM World Congress')}. IFToMM World Congress, Tokyo, pp. 1&ndash;8.`
   })}
 ${card({
     id: 'card-feed-09',
@@ -160,7 +164,7 @@ ${card({
     badges: oa + type('Preprint'),
     title: 'Canopy microclimate buffering across European forests: a continental synthesis',
     authors: [dePauw(), author('Pieter Vangansbeke')].join(', '),
-    line: `${year(2026)} bioRxiv [Preprint].`
+    line: `${year(2026)} ${container('bioRxiv', 'bioRxiv')} [Preprint].`
   })}
 ${card({
     id: 'card-feed-13',
@@ -188,49 +192,49 @@ ${card({
     badges: type('Magazine article'),
     title: 'De stad die zichzelf plant',
     authors: dePauw(),
-    line: `${year(2025)} <cite>Eos Wetenschap</cite>, 14 June, pp. 22&ndash;27.`
+    line: `${year(2025)} ${container('Eos Wetenschap')}, 14 June, pp. 22&ndash;27.`
   })}
 ${card({
     id: 'card-feed-17',
     badges: restricted + type('Newspaper article'),
     title: 'Universiteit plant stadsbos aan rand van Gent',
     authors: dePauw(),
-    line: `${year(2025)} <cite>De Standaard</cite>, 2 March, p. 7.`
+    line: `${year(2025)} ${container('De Standaard')}, 2 March, p. 7.`
   })}
 ${card({
     id: 'card-feed-18',
     badges: oa + type('Online post'),
     title: 'Why repositories should love preprints',
     authors: author('Evelien Smets', { ugent: true }),
-    line: `${year(2025)} <cite>Open Access Belgium</cite>, 1 September.`
+    line: `${year(2025)} ${container('Open Access Belgium')}, 1 September.`
   })}
 ${card({
     id: 'card-feed-19',
     badges: type('Media appearance'),
     title: 'Waarom de Boekentoren een schatkamer is',
     authors: author('Dries Moreels', { ugent: true }),
-    line: `${year(2025)} <cite>Universiteit van Vlaanderen</cite>, 5 November.`
+    line: `${year(2025)} ${container('Universiteit van Vlaanderen')}, 5 November.`
   })}
 ${card({
     id: 'card-feed-20',
     badges: type('Lecture'),
     title: 'Open science at scale: infrastructure for a university',
     authors: author('Evelien Smets', { ugent: true }),
-    line: `${year(2025)} UGent Data Stewards seminar, Ghent, 20 October.`
+    line: `${year(2025)} ${container('UGent Data Stewards seminar')}, Ghent, 20 October.`
   })}
 ${card({
     id: 'card-feed-21',
     badges: oa + type('Dataset'),
     title: 'Urban tree canopy cover measurements Belgium 2020–2025',
     authors: [dePauw(), author('Jonas Maes')].join(', '),
-    line: `${year(2026)}`
+    line: `${year(2026)} ${container('Zenodo', 'Zenodo')}.`
   })}
 ${card({
     id: 'card-feed-22',
     badges: oa + type('Software'),
     title: 'canopyR: canopy cover estimation toolkit',
     authors: author('Jonas Maes', { ugent: true }),
-    line: `${year(2026)}`
+    line: `${year(2026)} ${container('Zenodo', 'Zenodo')}.`
   })}
 ${card({
     id: 'card-feed-23',

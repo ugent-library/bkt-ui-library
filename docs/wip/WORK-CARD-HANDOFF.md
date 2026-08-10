@@ -137,5 +137,5 @@ dropped — raven defers the field past v1 and no records land in the type.
 ## Verify
 
 `npm test` — the check-a11y pagination findings are the known pre-v2.11 baseline.
-The `public-project-detail.html` KNOWN BROKEN defect stands; issues name it as a
-defect not to reproduce.
+The `public-project-detail.html` heading and list-wrapper defect is fixed: the 2026
+group has its `<h3>` and both year groups are lists.

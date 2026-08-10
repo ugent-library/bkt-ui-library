@@ -86,8 +86,6 @@ Checked against open issues
 
 ## Prototype defects to fix on port — do not reproduce
 
-- `public-project-detail.html` (`KNOWN BROKEN`): a year group without its `<h3>`,
-  so a card title jumps h2 → h4, and cards outside the list wrapper.
 - All `hx-*` URLs on cards are stubs.
 
 ## Open questions

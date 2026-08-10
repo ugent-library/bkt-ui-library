@@ -244,17 +244,14 @@
             </div>
 
 
-            <!-- KNOWN BROKEN (2026-08-04) — renders incorrectly, fix before implementation:
-                 1. the 2026 group has no <h3>, so the first card jumps h2 → h4 (skipped level);
-                 2. the cards are bare <div>s, not <ol class="list-unstyled mb-0"> > <li>,
-                    so AT announces no result count (docs/CLASS-USAGE.md → List wrapper).
-                 npm test passes anyway: check:a11y covers neither heading order nor list
-                 semantics. Prompt to extend it: notes/PLAN-work-card.md → a11y checks. -->
             <div id="project-output-list">
 
               <!-- Year group: 2026 -->
               <div class="my-5">
-                <article class="bt-work-card" aria-labelledby="card-title-proj-01">
+                <h3 class="h6 text-uppercase text-muted pb-2 mb-3">2026</h3>
+
+                <ol class="list-unstyled mb-0">
+                <li><article class="bt-work-card" aria-labelledby="card-title-proj-01">
                   <div class="bt-work-card__header">
                     <div class="bt-work-card__meta">
                       <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
@@ -293,7 +290,8 @@
                     </p>
                     <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?container=Plants%20People%20Planet"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.</p>
                   </div>
-                </article>
+                </article></li>
+                </ol>
 
               </div>
 
@@ -301,7 +299,8 @@
               <div class="mb-5">
                 <h3 class="h6 text-uppercase text-muted pb-2 mb-3">2025</h3>
 
-                <article class="bt-work-card" aria-labelledby="card-title-proj-02">
+                <ol class="list-unstyled mb-0">
+                <li><article class="bt-work-card" aria-labelledby="card-title-proj-02">
                   <div class="bt-work-card__header">
                     <div class="bt-work-card__meta">
                       <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
@@ -336,9 +335,9 @@
                     </p>
                     <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=Urban%20Forestry%20%26%20Urban%20Greening"><cite>Urban Forestry &amp; Urban Greening</cite></a>, 89, 128421.</p>
                   </div>
-                </article>
+                </article></li>
 
-                <article class="bt-work-card" aria-labelledby="card-title-proj-03">
+                <li><article class="bt-work-card" aria-labelledby="card-title-proj-03">
                   <div class="bt-work-card__header">
                     <div class="bt-work-card__meta">
                       <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Open access</span>
@@ -373,7 +372,8 @@
                     </p>
                     <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=Zenodo">Zenodo</a>.</p>
                   </div>
-                </article>
+                </article></li>
+                </ol>
 
               </div>
 

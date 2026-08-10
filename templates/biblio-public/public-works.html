@@ -637,46 +637,52 @@
             </nav>
           </div>
           <div class="bt-toolbar__right">
-            <label for="page-size" class="visually-hidden">Results per page</label>
-            <select id="page-size" class="form-select form-select-sm d-none d-lg-block">
-              <option value="10">10 per page</option>
-              <option value="25">25 per page</option>
-              <option value="50" selected>50 per page</option>
-              <option value="100">100 per page</option>
-            </select>
-            <!-- WORK IN PROGRESS: We do not know which sorting to use yet, do not build, just stub -->
-            <label for="sort-by" class="visually-hidden">Sort by</label>
-            <select id="sort-by" class="form-select form-select-sm d-none d-lg-block">
-              <option value="relevance">Relevance</option>
-              <option value="year-desc" selected>Year (new to old)</option>
-              <option value="year-asc">Year (old to new)</option>
-              <option value="title-asc">Title (A–Z)</option>
-              <option value="author-asc">First author (A–Z)</option>
-            </select>
-            <div class="dropdown">
-              <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
-                data-bs-toggle="dropdown"
-                aria-label="More search actions">
-                <i class="if if-more" aria-hidden="true"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <!-- Save search: modal not designed yet — just show stub link, do not add functionality -->
-                <li><a class="dropdown-item" href="#">
-                  <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
-                  Save search
-                </a></li>
-                <li>
-                  <button type="button" class="dropdown-item"
-                    data-bs-toggle="modal" data-bs-target="#export-modal">
-                    <i class="if if-download if--sm me-2" aria-hidden="true"></i>
-                    Export research outputs
-                  </button>
-                </li>
-                <li><a class="dropdown-item" href="/feed/search?q=Quantum+computing">
-                  <i class="if if-rss-fill if--sm me-2" aria-hidden="true"></i>
-                  Subscribe to feed
-                </a></li>
-              </ul>
+            <div class="bt-toolbar__item d-none d-lg-block">
+              <label for="page-size" class="visually-hidden">Results per page</label>
+              <select id="page-size" class="form-select form-select-sm">
+                <option value="10">10 per page</option>
+                <option value="25">25 per page</option>
+                <option value="50" selected>50 per page</option>
+                <option value="100">100 per page</option>
+              </select>
+            </div>
+            <div class="bt-toolbar__item d-none d-lg-block">
+              <!-- WORK IN PROGRESS: We do not know which sorting to use yet, do not build, just stub -->
+              <label for="sort-by" class="visually-hidden">Sort by</label>
+              <select id="sort-by" class="form-select form-select-sm">
+                <option value="relevance">Relevance</option>
+                <option value="year-desc" selected>Year (new to old)</option>
+                <option value="year-asc">Year (old to new)</option>
+                <option value="title-asc">Title (A–Z)</option>
+                <option value="author-asc">First author (A–Z)</option>
+              </select>
+            </div>
+            <div class="bt-toolbar__item">
+              <div class="dropdown">
+                <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
+                  data-bs-toggle="dropdown"
+                  aria-label="More search actions">
+                  <i class="if if-more" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <!-- Save search: modal not designed yet — just show stub link, do not add functionality -->
+                  <li><a class="dropdown-item" href="#">
+                    <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
+                    Save search
+                  </a></li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#export-modal">
+                      <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                      Export research outputs
+                    </button>
+                  </li>
+                  <li><a class="dropdown-item" href="/feed/search?q=Quantum+computing">
+                    <i class="if if-rss-fill if--sm me-2" aria-hidden="true"></i>
+                    Subscribe to feed
+                  </a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -726,8 +732,14 @@
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marieke J. Kiewiet<span class="visually-hidden"> (UGent)</span></a></span>,
               <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Sam Cuyvers</a></span>,
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a></span>
-              <span class="text-muted">et al.</span>
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Konstantinos Akritidis</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Lore Vandenberghe<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Pieter Van Der Meer</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Anneleen Cosijns<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Rafael Torres</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Ine De Backer<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Yannick Lammertyn</a></span>
+              <span class="text-muted">et al. +3 more authors</span>
             </p>
             <p class="bt-work-card__pub">
               (<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>)
@@ -739,7 +751,7 @@
         <li><article class="bt-work-card" aria-labelledby="card-title-s02">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo</span>
+              <span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 1 May 2027</span>
               <span class="bt-work-card__meta-item">Book chapter</span>
             </div>
             <div class="bt-work-card__actions">
@@ -849,7 +861,7 @@
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Tom Van Damme<span class="visually-hidden"> (UGent)</span></a></span>,
               <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Manuel Esperon-Rodriguez</a></span>,
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Mattias Billet<span class="visually-hidden"> (UGent)</span></a></span>
-              <span class="text-muted">et al.</span>
+              <span class="text-muted">et al. +6 more authors</span>
             </p>
             <p class="bt-work-card__pub">
               (<a href="public-works.html?year=2023"><time datetime="2023">2023</time></a>)
@@ -896,7 +908,7 @@
         <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">David S. Ellsworth</a></span>,
         <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
         <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Camille Vervoort</a></span>,
-        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Mark G. Tjoelker</a></span> <span class="text-muted">et al.</span></p>
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Mark G. Tjoelker</a></span> <span class="text-muted">et al. +3 more authors</span></p>
       <p class="bt-work-card__pub">(<a href="public-works.html?year=2026"><time datetime="2026">2026</time></a>) <a href="public-works.html?container=Plants%20People%20Planet"><cite>Plants People Planet</cite></a>, 8(1), pp. 14&ndash;19.</p>
     </div>
   </article></li>
@@ -1058,7 +1070,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">Photosynthesis</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Tom Green</a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2023"><time datetime="2023">2023</time></a>) <cite>Encyclopedia of plant science</cite>. Amsterdam: Elsevier, pp. 455&ndash;460.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2023"><time datetime="2023">2023</time></a>) <a href="public-works.html?container=Encyclopedia%20of%20plant%20science"><cite>Encyclopedia of plant science</cite></a>. Amsterdam: Elsevier, pp. 455&ndash;460.</p>
     </div>
   </article></li>
 
@@ -1123,7 +1135,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">Frequency-domain parameter tracking of single-actuated multi-body mechanisms</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Foeke Vanbecelaere<span class="visually-hidden"> (UGent)</span></a></span>, <span class="bt-work-card__author"><a href="/templates/biblio-public/public-researcher-detail.html">Kurt Stockman</a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) <cite>Proceedings of the 12th IFToMM World Congress</cite>. IFToMM World Congress, Tokyo, pp. 1&ndash;8.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2024"><time datetime="2024">2024</time></a>) <a href="public-works.html?container=Proceedings%20of%20the%2012th%20IFToMM%20World%20Congress"><cite>Proceedings of the 12th IFToMM World Congress</cite></a>. IFToMM World Congress, Tokyo, pp. 1&ndash;8.</p>
     </div>
   </article></li>
 
@@ -1322,7 +1334,7 @@
   <li><article class="bt-work-card" aria-labelledby="card-feed-15">
     <div class="bt-work-card__header">
       <div class="bt-work-card__meta">
-        <span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 01/05/2027</span><span class="bt-work-card__meta-item">Doctoral thesis</span>
+        <span class="badge text-bg-secondary"><i class="if if-time" aria-hidden="true"></i> Embargo until 1 May 2027</span><span class="bt-work-card__meta-item">Doctoral thesis</span>
       </div>
       <div class="bt-work-card__actions">
         <button type="button" class="btn btn-ghost btn-sm" aria-label="Cite: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques">
@@ -1379,7 +1391,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">De stad die zichzelf plant</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>Eos Wetenschap</cite>, 14 June, pp. 22&ndash;27.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=Eos%20Wetenschap"><cite>Eos Wetenschap</cite></a>, 14 June, pp. 22&ndash;27.</p>
     </div>
   </article></li>
 
@@ -1411,7 +1423,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">Universiteit plant stadsbos aan rand van Gent</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>De Standaard</cite>, 2 March, p. 7.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=De%20Standaard"><cite>De Standaard</cite></a>, 2 March, p. 7.</p>
     </div>
   </article></li>
 
@@ -1443,7 +1455,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">Why repositories should love preprints</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Evelien Smets<span class="visually-hidden"> (UGent)</span></a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>Open Access Belgium</cite>, 1 September.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=Open%20Access%20Belgium"><cite>Open Access Belgium</cite></a>, 1 September.</p>
     </div>
   </article></li>
 
@@ -1475,7 +1487,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">Waarom de Boekentoren een schatkamer is</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Dries Moreels<span class="visually-hidden"> (UGent)</span></a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <cite>Universiteit van Vlaanderen</cite>, 5 November.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=Universiteit%20van%20Vlaanderen"><cite>Universiteit van Vlaanderen</cite></a>, 5 November.</p>
     </div>
   </article></li>
 
@@ -1507,7 +1519,7 @@
         <a href="/templates/biblio-public/public-work-detail.html">Open science at scale: infrastructure for a university</a>
       </h2>
       <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Evelien Smets<span class="visually-hidden"> (UGent)</span></a></span></p>
-      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) UGent Data Stewards seminar, Ghent, 20 October.</p>
+      <p class="bt-work-card__pub">(<a href="public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="public-works.html?container=UGent%20Data%20Stewards%20seminar"><cite>UGent Data Stewards seminar</cite></a>, Ghent, 20 October.</p>
     </div>
   </article></li>
 
