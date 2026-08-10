@@ -1,6 +1,6 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: results, best-bet, no-results, query-empty -->
+<!-- @states: results, best-bet, no-results, query-empty, advanced-condition -->
 <!--
   Public search page — search-first with multi-entity autocomplete.
 
@@ -11,6 +11,16 @@
   Scripts:
     suggest-panel.js    — panel show/hide, keyboard nav
     filter-bar.js       — Add-filter picker + editor + chips (works config, wf- ids)
+    query-builder.js    — the Advanced search dialog: row → OR group, readback in sync
+
+  The Advanced search dialog is at the bottom: the chrome here, the contents in two shared
+  partials, so the dialog and the standalone builder page (public-search-advanced.html) are
+  one source. Every result state renders it holding a built six-condition query, which is
+  what opening it from a filtered list looks like; its empty and OR-group states live on the
+  standalone page and in patterns/query-builder.html.
+
+  The advanced-condition state is this page's own: the Full text access facet reporting that
+  an advanced condition holds it, instead of contradicting it with empty checkboxes.
 
   The Add-filter control (public discovery "search-it" dimensions) is wired by
   filter-bar.js: pick a filter → editor opens; a chip appears; click a chip to edit,
@@ -231,7 +241,13 @@
               </div>
               <div class="bt-toolbar__right">
                 <div class="bt-toolbar__item">
-                  <a href="/advanced-search" class="btn btn-ghost btn-sm">
+                  <!-- Opens the builder over this list, carrying the query and the chips
+                       as condition rows. The href is the no-JS path and the shareable
+                       address of the open builder; production renders it server-side, and
+                       here query-builder.js opens the dialog when it is present. -->
+                  <a href="public-works.html?advanced=1" class="btn btn-ghost btn-sm"
+                    data-bs-toggle="modal" data-bs-target="#advanced-search-modal">
+                    <i class="if if-search-eye-line" aria-hidden="true"></i>
                     Advanced search
                   </a>
                 </div>
@@ -283,6 +299,27 @@
         <div id="wf-sheet-main" class="p-3 p-lg-0">
 
         <!-- Access — first (OA-forward per UB2030) -->
+
+        <!-- The facet reports the advanced condition holding it; the chip stays the readout.
+             Reasoning and the rejected alternative: patterns/query-builder.html. -->
+        <!-- @state: advanced-condition -->
+        <fieldset>
+          <legend class="form-label h6 mb-2">Full text access</legend>
+          <div class="border rounded-3 p-3 bt-bg-alt">
+            <p class="mb-1">
+              <i class="if if-search-eye-line if--sm" aria-hidden="true"></i>
+              Set in advanced search
+            </p>
+            <p class="mb-2">is not <strong>Open access</strong></p>
+            <a href="public-works.html?advanced=1" class="btn btn-ghost btn-sm px-0"
+              data-bs-toggle="modal" data-bs-target="#advanced-search-modal">
+              Edit this condition
+            </a>
+          </div>
+        </fieldset>
+        <!-- @state -->
+
+        <!-- @state: results best-bet no-results query-empty -->
         <fieldset>
           <legend class="form-label h6 mb-2">Full text access</legend>
           <div class="d-flex form-check">
@@ -304,6 +341,7 @@
             <span class="text-muted small" aria-hidden="true">37</span>
           </div>
         </fieldset>
+        <!-- @state -->
 
         <hr>
 
@@ -657,32 +695,149 @@
                 <option value="author-asc">First author (A–Z)</option>
               </select>
             </div>
+            <!-- Actions, set level — the counterpart of a work card's Add to list / Cite row.
+                 Which action sits here and which is a panel: patterns/query-builder.html. -->
             <div class="bt-toolbar__item">
               <div class="dropdown">
-                <button class="btn btn-ghost btn-sm dropdown-toggle" type="button"
-                  data-bs-toggle="dropdown"
-                  aria-label="More search actions">
-                  <i class="if if-more" aria-hidden="true"></i>
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  <i class="if if-pin" aria-hidden="true"></i>
+                  Save search
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                  <!-- Save search: modal not designed yet — just show stub link, do not add functionality -->
-                  <li><a class="dropdown-item" href="#">
-                    <i class="if if-pin if--sm me-2" aria-hidden="true"></i>
-                    Save search
-                  </a></li>
-                  <li>
-                    <button type="button" class="dropdown-item"
-                      data-bs-toggle="modal" data-bs-target="#export-modal">
-                      <i class="if if-download if--sm me-2" aria-hidden="true"></i>
-                      Export research outputs
-                    </button>
-                  </li>
-                  <li><a class="dropdown-item" href="/feed/search?q=Quantum+computing">
-                    <i class="if if-rss-fill if--sm me-2" aria-hidden="true"></i>
-                    Subscribe to feed
-                  </a></li>
-                </ul>
+                <!-- real impl: form POST /saved-searches, login required -->
+                <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
+                  <label class="form-label" for="save-search-name">Name this search</label>
+                  <input type="text" class="form-control mb-2" id="save-search-name"
+                    value="Quantum computing &mdash; open access, 2015&ndash;2020">
+                  <p class="form-text mt-0">
+                    A saved search keeps running: open it later and it returns what matches then.
+                    It is also how a search too long for a link travels. Saving asks you to log in.
+                  </p>
+                  <button type="button" class="btn btn-secondary btn-sm">Save</button>
+                </div>
               </div>
+            </div>
+
+            <div class="bt-toolbar__item">
+              <div class="dropdown">
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  <i class="if if-share" aria-hidden="true"></i>
+                  Share
+                </button>
+                <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
+                  <ul class="nav nav-tabs mb-3" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="share-tab-link" type="button" role="tab"
+                        data-bs-toggle="tab" data-bs-target="#share-panel-link"
+                        aria-controls="share-panel-link" aria-selected="true">Link</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="share-tab-embed" type="button" role="tab"
+                        data-bs-toggle="tab" data-bs-target="#share-panel-embed"
+                        aria-controls="share-panel-embed" aria-selected="false">Embed</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="share-tab-api" type="button" role="tab"
+                        data-bs-toggle="tab" data-bs-target="#share-panel-api"
+                        aria-controls="share-panel-api" aria-selected="false">API</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="share-tab-feed" type="button" role="tab"
+                        data-bs-toggle="tab" data-bs-target="#share-panel-feed"
+                        aria-controls="share-panel-feed" aria-selected="false">Feed</button>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="share-panel-link" role="tabpanel"
+                      aria-labelledby="share-tab-link">
+                      <p>Bookmark or send this search. The link re-runs it, so it always shows what matches today.</p>
+                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-url">https://biblio.ugent.be/works?{query}</code>
+                      <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-clipboard data-clipboard-target="#share-url">
+                        <i class="if if-copy" aria-hidden="true"></i>
+                        <span class="btn-text">Copy link</span>
+                      </button>
+                      <p class="form-text mb-0">
+                        The link carries the query, never whether the builder was open. Placeholder:
+                        the public URL grammar is raven's to design.
+                      </p>
+                    </div>
+
+                    <div class="tab-pane fade" id="share-panel-embed" role="tabpanel"
+                      aria-labelledby="share-tab-embed">
+                      <p>Show a live list of these results on a department page or personal site.</p>
+                      <!-- Sort is new; citation style is the legacy ;style=apa and the info block the
+                           legacy ;hide_info=1 — the only two embed parameters in the wild. -->
+                      <div class="row g-3 mb-3">
+                        <div class="col-12 col-md-6">
+                          <label class="form-label" for="share-embed-sort">Sort</label>
+                          <select class="form-select form-select-sm" id="share-embed-sort">
+                            <option selected>Newest first</option>
+                            <option>Oldest first</option>
+                            <option>Most relevant</option>
+                          </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label class="form-label" for="share-embed-style">Citation style</label>
+                          <select class="form-select form-select-sm" id="share-embed-style">
+                            <option selected>APA</option>
+                            <option>MLA</option>
+                            <option>Chicago</option>
+                            <option>Vancouver</option>
+                          </select>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="share-embed-info" checked>
+                            <label class="form-check-label" for="share-embed-info">Show the Biblio info block</label>
+                          </div>
+                        </div>
+                      </div>
+                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-embed">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" width="100%" height="600" title="Research output — Biblio, Ghent University"&gt;&lt;/iframe&gt;</code>
+                      <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-clipboard data-clipboard-target="#share-embed">
+                        <i class="if if-copy" aria-hidden="true"></i>
+                        <span class="btn-text">Copy embed code</span>
+                      </button>
+                    </div>
+
+                    <div class="tab-pane fade" id="share-panel-api" role="tabpanel"
+                      aria-labelledby="share-tab-api">
+                      <p>Read these results from your own application, or refresh them into Excel or Power BI.</p>
+                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-api">GET https://biblio.ugent.be/api/works?{query}&amp;format=json</code>
+                      <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-clipboard data-clipboard-target="#share-api">
+                        <i class="if if-copy" aria-hidden="true"></i>
+                        <span class="btn-text">Copy request</span>
+                      </button>
+                      <p class="form-text mb-0">
+                        Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
+                        is raven's to define.
+                      </p>
+                    </div>
+
+                    <div class="tab-pane fade" id="share-panel-feed" role="tabpanel"
+                      aria-labelledby="share-tab-feed">
+                      <p>Follow this search in a feed reader. New matching research output arrives as it is published.</p>
+                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-feed">https://biblio.ugent.be/feed/search?{query}</code>
+                      <button type="button" class="btn btn-outline-secondary btn-sm"
+                        data-clipboard data-clipboard-target="#share-feed">
+                        <i class="if if-copy" aria-hidden="true"></i>
+                        <span class="btn-text">Copy feed address</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bt-toolbar__item">
+              <button type="button" class="btn btn-ghost btn-sm"
+                data-bs-toggle="modal" data-bs-target="#export-modal">
+                <i class="if if-download" aria-hidden="true"></i>
+                Export
+              </button>
             </div>
           </div>
         </div>
@@ -1731,8 +1886,32 @@
   </div>
 </div>
 
+<!-- The Advanced search dialog: chrome here, contents in two shared partials.
+     modal-dialog-scrollable pins the header and footer; the form must stay inside
+     the body or that breaks. Layout reasoning: patterns/query-builder.html. -->
+<div class="modal fade" id="advanced-search-modal" tabindex="-1"
+  aria-labelledby="advanced-search-title">
+  <div class="modal-dialog modal-xl modal-dialog--wide modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h4" id="advanced-search-title">Advanced search</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close advanced search"></button>
+      </div>
+      <div class="modal-body">
+        <!-- @include: templates/partials/search-advanced-conditions.html -->
+      </div>
+      <!-- d-block so the actions bar spans the footer instead of being packed to one end -->
+      <div class="modal-footer d-block">
+        <!-- @include: templates/partials/search-advanced-actions.html -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/assets/js/suggest-panel.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
 <script src="/assets/js/filter-sheet.js"></script>
+<script src="/assets/js/query-builder.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

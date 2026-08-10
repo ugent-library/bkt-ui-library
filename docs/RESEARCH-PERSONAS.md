@@ -119,6 +119,41 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 
 > **Personas motivate demand, not schema.** Feature demands these profiles generate (e.g. a lay summary field) route via ProductBoard → raven modelling, per AGENTS.md "What lives where". The prototype shows such features only as flagged open questions until the concept has an owner — a lay summary in particular carries a policy question (who writes it?) that belongs to OSP, given Biblio's core problem is administrative overhead.
 
+## Wim Webb — "his list, on his own site"
+**Public / discovery profile** · *builds a set, publishes it somewhere else*
+*Not from Biblio testing. Local signal: a UGent research group keeps a hand-curated publication list on its own site because industry partners consult it there (2026-01). Log signal: the only two embed parameters that exist in the wild, `;style=apa` and `;hide_info=1`, are this use.*
+
+- **Is:** a researcher or group leader with a website of his own — a group site, a personal page, a project site. Domain-literate, repository-illiterate: reads a field list fine, will never learn a query language.
+- **Does:** builds one query for his own output, copies an embed or an API address into his site, and does not come back. Judges the query by the count, not by reading the list.
+- **Wants:** a list that updates itself when he publishes; the citation style his field uses; a link he can hand to a colleague who then edits one criterion.
+- **Pain:** hand-kept lists rot and he knows it; he cannot tell whether the set is everything; the current embed's parameters are folklore, written down nowhere.
+- **Needs:** public fields only (anything unpublished sends him to the backoffice builder — `docs/SURFACES.md` test 1); an embed that survives a redesign; a readable link rather than an opaque one.
+- *Builds a set once, publishes it elsewhere, and never sees Biblio again.*
+
+## Ans Rapport — "the faculty page has to be right"
+**Public / discovery profile** · *builds a set for an audience that is not her*
+*Not from Biblio testing — inferred from the same embed signal as Wim Webb plus the departmental-page pattern; locally untested.*
+
+- **Is:** a communications or support officer for a faculty, department or research group. Not a researcher, not a curator, no stake in any single record.
+- **Does:** builds organization + year + type, embeds the result on a faculty or department page, checks it when someone complains.
+- **Wants:** to pick the right organization out of several similar names; a set she can trust without reading it; no login for something published openly.
+- **Pain:** two org names look equally plausible and nothing tells her which is the live one; a missing work reads as her mistake.
+- **Needs:** organization as a resolvable record, not a text field; the count as the thing she checks; plain language throughout — she has no repository vocabulary at all.
+- *Answers for a list she did not write, about work she did not do.*
+
+## Quinn Query — "gets it into a spreadsheet"
+**Public / discovery profile** · *takes the set out and computes on it*
+*Not from Biblio testing — inferred from the power-tier query log (~19 authored queries a day, paste batches to 763 identifiers) and Marie Curator's documented export-to-Excel demand; locally untested as a public profile.*
+
+- **Is:** an analyst outside the application: faculty support staff, a bibliometrician at another institution, a funder's reporting officer. Technical without being a developer — pastes a URL into Excel or Power BI, does not write code.
+- **Does:** builds a defined set, checks the count, downloads a file or points a refreshing query at it, then counts and cross-tabs elsewhere.
+- **Wants:** a spreadsheet with stable columns; a query address that still works next quarter; to paste a list of identifiers rather than type them.
+- **Pain:** multi-valued fields (authors, keywords) arrive unusable in a single cell; cannot tell whether the set is complete; a long identifier batch breaks the link.
+- **Needs:** a documented flat column contract; an address a refreshing tool can hold; a stated ceiling when a query outgrows a URL, rather than a silent truncation.
+- *Judges Biblio by what the file looks like when it opens somewhere else.*
+
+> **These three are the public Advanced search audience**, and their split decides the actions on it: Wim Webb and Ans Rapport want a **live** query (link, embed, API, feed), Quinn Query wants a **frozen** file (export). The reproducible-query need — a search someone else can re-run and get the same set — is **not** a fourth public profile: it is Marie Curator sharing filters as bookmarked URLs, which her profile above already records.
+
 ## Cody Crawley — "machine reader" (first-class user)
 **Machine / discovery profile**
 *Per COAR Next Generation Repositories + raven `public-site-semantics.md`.*

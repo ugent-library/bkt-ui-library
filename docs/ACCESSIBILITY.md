@@ -351,7 +351,7 @@ The public site is read by researchers, students, and automated agents (crawlers
 
 The authoritative contract for public crawl semantics, structured data, and render formats is raven's `docs/public-site-semantics.md`, audited by Rubric. Check it before changing anything a crawler or reference manager consumes.
 
-**H5. Tab panel pattern for citation formats.** The cite modal uses Bootstrap tabs. Each `<button role="tab">` must have `aria-controls` pointing to its panel, and each panel must have `role="tabpanel"` and `aria-labelledby` pointing back to its tab. Bootstrap handles this — do not strip the data attributes.
+**H5. Tab panel pattern for citation formats.** The cite panel uses Bootstrap tabs. Each `<button role="tab">` must have `aria-controls` pointing to its panel, and each panel must have `role="tabpanel"` and `aria-labelledby` pointing back to its tab. Bootstrap handles this — do not strip the data attributes.
 
 ---
 

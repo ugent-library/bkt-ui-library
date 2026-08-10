@@ -80,8 +80,9 @@ Lines: automated missing items from the curator list (journal, publisher, year, 
 volume, issue, pages); the **Internal note** (curator → curators; old biblio:
 "Librarian message").
 
-The researcher fast lane behind "Complete metadata" (edit view scoped to the missing
-fields) has no screens yet — `notes/TOPLAN.md`, Backoffice.
+"Complete metadata" opens the record's edit form. The researcher fast lane — an edit
+view scoped to the missing fields — is a separate design, out of scope for the
+work-card issues and tracked in `notes/TOPLAN.md`, Backoffice.
 
 ### Deletion, withdrawal, retraction
 
@@ -293,6 +294,7 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 |----------|------------------|
 | `public-index.html` | Public homepage |
 | `public-works.html` | Work search + results |
+| `public-search-advanced.html` | Advanced search — the query builder as a page |
 | `public-work-detail.html` | Work detail page |
 | `public-researchers.html` | Researcher directory (A–Z browse) |
 | `public-researcher-detail.html` | Researcher profile (PersonIdentity) |
@@ -307,8 +309,6 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 |----------|------------------|
 | `dashboard.html` | Researcher inbox + activity |
 | `search-researcher.html` | My research output list |
-| `search-advanced-builder.html` | Advanced filter builder |
-| `search-advanced-token.html` | Advanced filter token variant |
 | `settings-profile.html` | Settings — own profile (display name, contact, language) |
 | `settings-accounts.html` | Settings — connected accounts (ORCID, UGent login, WoS ResearcherID) |
 | `settings-scope.html` | Settings — curation work scope (orgs + output types); curator/proxy only in production |

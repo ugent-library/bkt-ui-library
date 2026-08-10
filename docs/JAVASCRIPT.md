@@ -196,8 +196,13 @@ hooks: `#qb-conditions`, `[data-qb-item]`,
 `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-field|op|value]`,
 `[data-qb-actions]`, `[data-qb-preview]`, `[data-qb-add-condition]`, `[data-qb-clear]`.
 
-**Loaded by:** `public-search-advanced.html`. Inert unless the page shows a `[data-qb-preview]`,
-so it does nothing in the phase-1 states.
+**Loaded by:** `public-works.html`, which renders the builder as a dialog, and
+`public-search-advanced.html`, which renders it as a page. Both include the same two
+partials, `search-advanced-conditions.html` and `search-advanced-actions.html`. The
+OR-group code runs where the page renders a `[data-qb-preview]`, which is the
+`advanced-group` state; `built` and `advanced-empty` leave it inert. It also opens the
+dialog when the URL carries `?advanced=1`, standing in for the server-side render.
+Pattern page: `patterns/query-builder.html`.
 
 **Listens for:** click / input / change inside `#qb-conditions`, click on
 `[data-qb-add-condition]` and `[data-qb-clear]`

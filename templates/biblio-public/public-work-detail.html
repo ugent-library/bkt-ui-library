@@ -166,10 +166,59 @@
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wd-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
-            <button type="button" class="btn btn-ghost" data-bs-toggle="modal" data-bs-target="#cite-modal">
-              <i class="if if-double-quotes" aria-hidden="true"></i>
-              Cite
-            </button>
+            <!-- A panel, matching Add to list beside it. Container rule:
+                 patterns/query-builder.html. -->
+            <div class="dropdown">
+              <button type="button" class="btn btn-ghost dropdown-toggle"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <i class="if if-double-quotes" aria-hidden="true"></i>
+                Cite
+              </button>
+              <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
+                <ul class="nav nav-tabs mb-3" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="cite-tab-apa" type="button" role="tab"
+                      data-bs-toggle="tab" data-bs-target="#cite-apa"
+                      aria-controls="cite-apa" aria-selected="true">APA</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cite-tab-mla" type="button" role="tab"
+                      data-bs-toggle="tab" data-bs-target="#cite-mla"
+                      aria-controls="cite-mla" aria-selected="false">MLA</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="cite-tab-chicago" type="button" role="tab"
+                      data-bs-toggle="tab" data-bs-target="#cite-chicago"
+                      aria-controls="cite-chicago" aria-selected="false">Chicago</button>
+                  </li>
+                </ul>
+                <div class="tab-content mb-3">
+                  <div class="tab-pane fade show active" id="cite-apa" role="tabpanel"
+                    aria-labelledby="cite-tab-apa">
+                    <div class="p-3 bt-bg-white border rounded font-monospace">
+                      De Pauw, K., Esperon&#8209;Rodriguez, M., &amp; Arndt, S. K. (2026). Urban forests as essential infrastructure for climate resilience and biodiversity. <em>Plants People Planet</em>, <em>8</em>(1), 14&ndash;19. https://doi.org/10.1002/ppp3.70125
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="cite-mla" role="tabpanel"
+                    aria-labelledby="cite-tab-mla">
+                    <div class="p-3 bt-bg-white border rounded font-monospace">
+                      De Pauw, Karen, et al. &ldquo;Urban Forests as Essential Infrastructure&hellip;&rdquo; <em>Plants People Planet</em>, vol. 8, no. 1, 2026, pp. 14&ndash;19.
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="cite-chicago" role="tabpanel"
+                    aria-labelledby="cite-tab-chicago">
+                    <div class="p-3 bt-bg-white border rounded font-monospace">
+                      De Pauw, Karen, Manuel Esperon&#8209;Rodriguez, and Stefan K. Arndt. 2026. &ldquo;Urban Forests&hellip;&rdquo; <em>Plants People Planet</em> 8 (1): 14&ndash;19.
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm"
+                  data-clipboard data-clipboard-target=".tab-pane.active .font-monospace">
+                  <i class="if if-copy" aria-hidden="true"></i>
+                  <span class="btn-text">Copy citation</span>
+                </button>
+              </div>
+            </div>
             <!-- <button type="button" class="btn btn-ghost">
               <i class="if if-share" aria-hidden="true"></i>
               Share
@@ -623,50 +672,3 @@
 
 <!-- @include: templates/partials/public-footer.html -->
 
-<!-- Cite modal -->
-<div class="modal fade" id="cite-modal" tabindex="-1" aria-labelledby="cite-modal-title">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title h5" id="cite-modal-title">Cite this research</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="nav nav-tabs mb-4" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#cite-apa" type="button" role="tab">APA</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cite-mla" type="button" role="tab">MLA</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cite-chicago" type="button" role="tab">Chicago</button>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane fade show active" id="cite-apa" role="tabpanel">
-            <div class="p-3 bg-white border rounded font-monospace">
-              De Pauw, K., Esperon‑Rodriguez, M., &amp; Arndt, S. K. (2026). Urban forests as essential infrastructure for climate resilience and biodiversity. <em>Plants People Planet</em>, <em>8</em>(1), 14–19. https://doi.org/10.1002/ppp3.70125
-            </div>
-          </div>
-          <div class="tab-pane fade" id="cite-mla" role="tabpanel">
-            <div class="p-3 bg-white border rounded font-monospace">
-              De Pauw, Karen, et al. "Urban Forests as Essential Infrastructure&hellip;" <em>Plants People Planet</em>, vol. 8, no. 1, 2026, pp. 14–19.
-            </div>
-          </div>
-          <div class="tab-pane fade" id="cite-chicago" role="tabpanel">
-            <div class="p-3 bg-white border rounded font-monospace">
-              De Pauw, Karen, Manuel Esperon‑Rodriguez, and Stefan K. Arndt. 2026. "Urban Forests&hellip;" <em>Plants People Planet</em> 8 (1): 14–19.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-clipboard data-clipboard-target=".tab-pane.active .font-monospace">
-          <span class="btn-text">Copy citation</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
