@@ -56,6 +56,17 @@ A question that could have been answered in the room is a defect.
 Where text lists what something does, write instructions: one statement per
 sentence, subject first. A sentence someone acts on reads once.
 
+## No riddles
+
+A rule names who or what acts, and what changes. Two tells that it does not:
+
+- a document does the acting — "01 gains it", "a region the backoffice needs and 01
+  lacks changes 01";
+- the reader resolves two references before the verb makes sense.
+
+Rewrite until the sentence reads aloud as an instruction to a person. Compression
+sounds authoritative and costs the reader a second pass.
+
 ## Enumerations become lists; reasoning stays prose
 
 A sentence listing three or more things becomes a list, and so does a paragraph
