@@ -477,6 +477,8 @@ is-selected
 
 min-w-0
 
+modal-dialog--wide
+
 nav-title
 
 people-result

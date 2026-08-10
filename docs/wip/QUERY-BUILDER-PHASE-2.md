@@ -4,7 +4,9 @@
 Bet: [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) · design detail:
 [`QUERY-BUILDER-DESIGN.md`](QUERY-BUILDER-DESIGN.md) · cases:
 [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) · drawn as the `phase-2` state of
-`templates/biblio-public/public-search-advanced.html`.*
+the `advanced-group` state of `templates/partials/search-advanced-conditions.html`, shared by
+the builder's two renderings — `templates/biblio-public/public-search-advanced.html` (page) and
+the dialog in `templates/biblio-public/public-works.html`.*
 
 Scope: one feature. **OR rule groups** — AND-first: the top level stays AND-joined rows, a row
 can be an "any of these" group, one level deep.

@@ -1,0 +1,262 @@
+<!-- @title: Query builder — Booktower Design System -->
+
+<div class="ds-page">
+  <header class="ds-page-header col-8">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Query builder</h1>
+    <p class="lead">Advanced search: condition rows in plain language, a live count, and a readable sentence of what you built. One builder for the power tier, replacing both legacy tiers — the advanced form and the expert query language. It exists in two renderings from one source, and the only difference between them is how you leave.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Why this layout</h2>
+    <p class="mb-4">Four decisions, with the alternatives that lost. Recorded because they will be re-litigated, and the reasons are cheaper to read than to rediscover.</p>
+
+    <h3 class="h5 mb-2">The builder takes the screen, as a dialog</h3>
+    <p class="mb-3">A real query runs to six or more rows, one of which can hold hundreds of pasted identifiers, so the builder needs concentration and room. An inline panel above the results gives it room and takes the concentration away: a page carrying a facet rail, a chip bar, a toolbar and twenty-seven cards is the least focused place on the site. A full-bleed overlay solves that and creates a different problem — with nothing visible around it, it reads as a page, and then "why is this not simply a page?" has no answer. An extra-large dialog keeps the result list showing at the edges, which is what tells someone this is a mode they are in and can leave, and the backdrop makes leaving obvious. Default dialog width was tried first and became a scrolling keyhole, which is what <code>modal-dialog--wide</code> exists to answer.</p>
+
+    <h3 class="h5 mb-2">The count answers the question being asked</h3>
+    <p class="mb-3">While building, the live question is "does my query work", and a count answers it in full. The list itself is a different question, answered by leaving. Rendering results inside the builder would mean a second implementation of a page that already owns sorting, paging, faceting and exporting — so the builder authors a query and hands it over, and a session that only ever watches the count is a successful session.</p>
+
+    <h3 class="h5 mb-2">One exit, because nothing is pending</h3>
+    <p class="mb-3">Every complete condition has already updated the URL, so there is nothing to apply and nothing to discard. That removes an apply and cancel pair, a dirty state, and the confirmation that follows it. <em>Show results</em>, Escape and the &times; all do the same thing.</p>
+
+    <h3 class="h5 mb-2">The builder holds conditions, the count and the readback</h3>
+    <p class="mb-0">Save this search and Share were drawn inside it first, on the reasoning that the artifact is the point and closing a dialog to reach it costs steps. That reasoning was too narrow. A query exists whether it was built here or ticked out of the facet rail, and the great majority of searches never open the builder — so keeping these two here alone would leave the common path unable to hand on what it found, while putting them in both places doubles the surface for one action. They also had to open from inside a dialog, which is what raised the panel-inside-a-dialog question in the first place; moving them out dissolves it rather than solving it. So they live once, with the results, in the works page actions group.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The dialog is a URL state</h2>
+    <p class="mb-3">Opening it adds <code>&amp;advanced=1</code> to the address, and closing it removes that again. Reload then returns to the builder on the same query instead of a blank list, which matters most after an accidental navigation. Back closes the dialog rather than leaving the page, which is what a full-screen overlay trains people to expect. And the address can be sent to someone: pasting it opens the builder with the query loaded, which is the answer to "how did you get this list?".</p>
+    <p class="mb-0">What <em>Share</em> hands out is deliberately different. The Link tab gives the clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In the prototype <code>query-builder.js</code> pushes and pops that parameter; in production it is <code>hx-push-url</code> and a server-rendered open dialog, so the address works with JavaScript switched off.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Two renderings, one source</h2>
+    <p class="mb-4">Where someone arrives from decides the shape. The contents are two shared partials — <code>search-advanced-conditions.html</code> and <code>search-advanced-actions.html</code> — so neither rendering can drift from the other.</p>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <div class="p-4 bt-bg-white rounded-3 h-100">
+          <p class="form-label mb-2">As a page</p>
+          <p>Arriving cold — a bookmark, a help page, a link from a colleague. There is no result list to preserve, so the builder gets a breadcrumb, a title, and a stable address to point at. You leave by the breadcrumb.</p>
+          <p class="mb-0"><a href="/templates/biblio-public/public-search-advanced.html">public-search-advanced.html</a></p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="p-4 bt-bg-white rounded-3 h-100">
+          <p class="form-label mb-2">As a dialog over the results</p>
+          <p>Refining a list already on screen. The list must not be navigated away from, so the builder opens over it and the list stays visible at the edges. You leave by the &times;, by Escape, or by <em>Show results</em>.</p>
+          <p class="mb-0"><a href="/templates/biblio-public/public-works.html?advanced=1">public-works.html?advanced=1</a></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0">The dialog is <code>modal-xl modal-dialog--wide modal-dialog-scrollable</code>. Scrollable pins the header and the footer and scrolls only the body, so the count and the exit stay on screen however long the condition list runs — and the form has to sit <em>inside</em> the body rather than wrapping all three, or that flex chain breaks and the footer leaves the screen. <code>modal-dialog--wide</code> widens it past <code>modal-xl</code>, because a condition row carries a field, an operator, a value and sometimes a role.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The condition row</h2>
+    <p class="mb-4">Field, operator, value, remove. The chosen field decides which operators are offered and which value widget appears — a static page cannot show that, so each row in the prototype carries one field's operator list and the rows together show the mechanism. Every control has a <code>visually-hidden</code> label naming its row: a bare select among identical selects is unnavigable by ear.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows, joined by and</h3></div>
+      <div class="ds-demo-body">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4">
+            <label class="visually-hidden" for="kit-qb-field">Field, condition 1</label>
+            <select class="form-select" id="kit-qb-field">
+              <optgroup label="Text and topic">
+                <option selected>Any field</option>
+                <option>Title</option>
+                <option>Abstract</option>
+                <option>Keyword</option>
+              </optgroup>
+              <optgroup label="People, organizations and projects">
+                <option>Contributor</option>
+                <option>Organization</option>
+                <option>Project</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="col-7 col-md-3">
+            <label class="visually-hidden" for="kit-qb-op">Operator, condition 1</label>
+            <select class="form-select" id="kit-qb-op">
+              <option selected>contains</option>
+              <option>contains all of</option>
+              <option>contains any of</option>
+              <option>does not contain</option>
+            </select>
+          </div>
+          <div class="col-12 col-md">
+            <label class="visually-hidden" for="kit-qb-val">Words, condition 1</label>
+            <input type="text" class="form-control" id="kit-qb-val" value="quantum computing">
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 1: any field contains quantum computing">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <p class="small text-muted my-2">and</p>
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-4">
+            <label class="visually-hidden" for="kit-qb-field-2">Field, condition 2</label>
+            <select class="form-select" id="kit-qb-field-2">
+              <optgroup label="Publication">
+                <option selected>Publication year</option>
+                <option>Type</option>
+                <option>Publisher</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="col-7 col-md-3">
+            <label class="visually-hidden" for="kit-qb-op-2">Operator, condition 2</label>
+            <select class="form-select" id="kit-qb-op-2">
+              <option selected>is between</option>
+              <option>is at least</option>
+              <option>is after</option>
+            </select>
+          </div>
+          <div class="col-12 col-md">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <label class="visually-hidden" for="kit-qb-from">First year, condition 2</label>
+                <input type="number" class="form-control" id="kit-qb-from" value="2015" min="1800" max="2100">
+              </div>
+              <div class="col-auto"><span class="small text-muted">and</span></div>
+              <div class="col">
+                <label class="visually-hidden" for="kit-qb-to">Last year, condition 2</label>
+                <input type="number" class="form-control" id="kit-qb-to" value="2020" min="1800" max="2100">
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 2: publication year is between 2015 and 2020">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, stated as a word between them rather than as a control: the top level is always AND-joined, and the heading above says so — <em>Show research output where all of these are true</em>. An <em>or</em> is never added at the top level; it is added on the row it belongs to, which turns that row into an <em>any of these</em> group.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The states</h2>
+    <p class="mb-4">Three, and they live on the standalone page as template states rather than being copied in here — the builder is too large to duplicate without the copy drifting from the original.</p>
+
+    <ul class="mb-4">
+      <li><a href="/templates/biblio-public/public-search-advanced.html?state=built">built</a> — a query already assembled: free text, two contributor rows (a co-author query, not a list), a year range, an <em>is not</em>, and a pasted batch of identifiers.</li>
+      <li><a href="/templates/biblio-public/public-search-advanced.html?state=advanced-empty">advanced-empty</a> — a first visit. One empty row rather than none: the row is the instruction, and picking the field is what produces the operator list and the value widget. It carries no &times; while it is the only row and still empty.</li>
+      <li><a href="/templates/biblio-public/public-search-advanced.html?state=advanced-group">advanced-group</a> — phase 2's <em>any of these</em> group, one level deep. A group is a state of a row, so it occupies the row's slot and collapses back to a plain row when one alternative is left.</li>
+    </ul>
+
+    <p class="mb-0">The same states render inside the dialog, since both renderings include the same partials. The dialog's host page adds one of its own, <code>advanced-condition</code>, for the sidebar case below.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">The count, and what belongs beside it</h2>
+    <p class="mb-4">The count is the answer the builder produces, so it opens the actions bar and carries the only <code>aria-live</code> — the readback sentence is not announced, because that would read someone's own typing back to them. There is no apply and no cancel: every complete condition has already updated the URL, so <em>Show results</em> is the one exit.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Actions bar</h3></div>
+      <div class="ds-demo-body">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <p class="h5 mb-0" aria-live="polite">1,284 research outputs match</p>
+          </div>
+          <div class="bt-toolbar__right">
+            <button type="button" class="btn btn-ghost">
+              <i class="if if-pin" aria-hidden="true"></i>
+              Save this search
+            </button>
+            <button type="button" class="btn btn-ghost">
+              <i class="if if-share" aria-hidden="true"></i>
+              Share
+            </button>
+            <button type="button" class="btn btn-primary">
+              <i class="if if-search" aria-hidden="true"></i>
+              Show results
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 mb-0">Nothing else is in this bar. Save this search and Share act on the query, and a query exists whether it was built here or ticked out of the facet rail — so they live with the results instead, in the works page's actions group. See <em>Why this layout</em>, decision 4.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Dialog, panel, or page</h2>
+    <p class="mb-4">One rule, so that neighbouring buttons don't behave differently for no reason.</p>
+
+    <div class="table-responsive mb-4">
+      <table class="table">
+        <thead>
+          <tr><th scope="col">Container</th><th scope="col">Content</th><th scope="col">Anchored to</th><th scope="col">Here</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Panel</th>
+            <td>a short choice, or one thing to copy</td>
+            <td>its button</td>
+            <td>Add to list, Cite, Share, Save search, filter editor</td>
+          </tr>
+          <tr>
+            <th scope="row">Dialog</th>
+            <td>a task needing the screen, or a consequence</td>
+            <td>nothing</td>
+            <td>Advanced search, Export, confirmations</td>
+          </tr>
+          <tr>
+            <th scope="row">Page</th>
+            <td>a surface someone arrives at</td>
+            <td>an address</td>
+            <td>the standalone builder</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mb-0">Two consequences follow. <strong>Cite became a panel</strong> on 2026-08-10: it hands over one string and sits in the same action row as Add to list, which was already a panel, and two adjacent buttons where one anchors to itself while the other takes over the screen is a difference people feel without being able to name it. <strong>A dialog never opens a dialog</strong>: if something reachable from inside the builder outgrows a panel, the answer is a step inside the same dialog — a back arrow swapping the body, as the mobile filters tray already does.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">When a facet cannot express the condition</h2>
+    <p class="mb-4">A built condition can say things a checkbox list cannot: <em>is not</em>, a range, a pasted batch. Applied filters surface as chips either way (<a href="/patterns/search-and-filtering.html">search &amp; filtering</a>, rule 4), and the facet whose dimension is held reports that instead of contradicting it with empty checkboxes. Live: the <a href="/templates/biblio-public/public-works.html?state=advanced-condition">advanced-condition</a> state.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Held by an advanced condition</h3></div>
+      <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
+        <fieldset>
+          <legend class="form-label h6 mb-2">Full text access</legend>
+          <div class="border rounded-3 p-3 bt-bg-alt">
+            <p class="mb-1">
+              <i class="if if-search-eye-line if--sm" aria-hidden="true"></i>
+              Set in advanced search
+            </p>
+            <p class="mb-2">is not <strong>Open access</strong></p>
+            <a href="/templates/biblio-public/public-works.html?advanced=1" class="btn btn-ghost btn-sm px-0">
+              Edit this condition
+            </a>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <p class="mt-4 mb-0">The rejected alternative is worth naming: translating <em>is not Open access</em> into the three other values ticked reads beautifully and loses work silently — unticking one of them turns a negation into an OR of two values, with nothing saying so.</p>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Where the rest lives</h2>
+    <ul class="mb-0">
+      <li>The simple box, the facet rail and the chip bar: <a href="/patterns/search-and-filtering.html">search &amp; filtering</a> and <a href="/patterns/facets.html">facets</a>.</li>
+      <li>The field list is public fields only. Which dimension belongs on which surface is settled in <code>docs/SEARCH-AND-FILTERING.md</code> rule 5; the fields this builder omits go to a backoffice builder.</li>
+      <li>Row and group behaviour and the readable sentence are wired by <code>assets/js/query-builder.js</code>, documented in <code>docs/JAVASCRIPT.md</code>.</li>
+      <li>Every URL in the prototype is a placeholder: the public URL grammar is a permanent permalink contract, and it is raven's to design.</li>
+    </ul>
+  </section>
+</div>

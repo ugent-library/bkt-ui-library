@@ -1,4 +1,33 @@
 // Advanced search, phase 2 — row ⇄ OR group + the readable sentence. See docs/JAVASCRIPT.md
+
+// The dialog is a URL state, so reload keeps it open, Back closes it instead of leaving the
+// page, and a pasted link opens it on the same query. Production pushes the URL server-side
+// with hx-push-url; the kit is static, so this stands in for that.
+document.addEventListener('DOMContentLoaded', function () {
+  const dialog = document.getElementById('advanced-search-modal');
+  if (!dialog) return;
+
+  const modal = bootstrap.Modal.getOrCreateInstance(dialog);
+  const isOpen = () => new URLSearchParams(location.search).has('advanced');
+  const withOpen = open => {
+    const url = new URL(location.href);
+    if (open) url.searchParams.set('advanced', '1');
+    else url.searchParams.delete('advanced');
+    return url;
+  };
+
+  if (isOpen()) modal.show();
+
+  dialog.addEventListener('show.bs.modal', () => {
+    if (!isOpen()) history.pushState({ advanced: true }, '', withOpen(true));
+  });
+  // Guarded, so closing in response to Back doesn't push a third entry
+  dialog.addEventListener('hide.bs.modal', () => {
+    if (isOpen()) history.pushState({}, '', withOpen(false));
+  });
+  window.addEventListener('popstate', () => (isOpen() ? modal.show() : modal.hide()));
+});
+
 (function () {
   const list = document.getElementById('qb-conditions');
   const preview = document.querySelector('[data-qb-preview]');
