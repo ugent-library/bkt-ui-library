@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower a15db96/2026-08-10 */
+/*! Booktower ee2b59c/2026-08-11 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -1372,6 +1372,12 @@ a.btn-danger,
   color: var(--bt-gray-700) !important;
 }
 
+.badge.text-bg-transparent {
+  background: transparent !important;
+  color: var(--bt-gray-700) !important;
+  border: 1px solid var(--bt-gray-200);
+}
+
 /* Soft variants — no Bootstrap equivalent */
 .badge.text-bg-primary-light {
   background: var(--bt-blue-100) !important;
@@ -2129,9 +2135,14 @@ img.bt-navbar__logo {
   text-decoration: underline;
 }
 
-/* One author: identifier icons + linked name, comma text nodes between authors.
-   Plain inline — inline-block creates break opportunities before the comma,
-   pushing it to the next line. Icons glue to the name (no whitespace in markup). */
+.bt-work-card__author {
+  white-space: nowrap;
+}
+
+.bt-work-card__author + .bt-work-card__author {
+  margin-left: var(--bt-sp-1);
+}
+
 .bt-work-card__author .if {
   margin-right: var(--bt-sp-1);
 }

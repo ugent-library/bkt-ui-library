@@ -73,9 +73,14 @@
   text-decoration: underline;
 }
 
-/* One author: identifier icons + linked name, comma text nodes between authors.
-   Plain inline — inline-block creates break opportunities before the comma,
-   pushing it to the next line. Icons glue to the name (no whitespace in markup). */
+.bt-work-card__author {
+  white-space: nowrap;
+}
+
+.bt-work-card__author + .bt-work-card__author {
+  margin-left: var(--bt-sp-1);
+}
+
 .bt-work-card__author .if {
   margin-right: var(--bt-sp-1);
 }
