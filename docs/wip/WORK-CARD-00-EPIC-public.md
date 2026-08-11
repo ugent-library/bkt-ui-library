@@ -22,8 +22,10 @@ works are listed. Everything today's card shows is kept, but:
 - cards carry no subtype and no classification badge, on either surface;
 - the reference line is composed per work type instead of one line for all
   (`docs/wip/WORK-CARD-REFERENCE-STYLES.md`);
-- access is a badge naming the state in words, replacing the icons arrow and padlock;
-- the year, project and container are filter links on every card, landing on the
+- access is a badge naming the state in words, replacing the icons arrow and padlock.
+  Open, restricted and embargo are the card's whole vocabulary; closed belongs to
+  the backoffice.
+- the year and the container are filter links on every card, landing on the
   works overview with that filter applied; on the overview itself and in backoffice
   lists the click narrows the list in view. The container link matches the title
   string, as public Biblio does today (09).
@@ -68,7 +70,7 @@ Every dependency is a child here or a cited raven issue.
   surfaces, never hidden: the correction is part of the scholarly record (12).
   The mark waits on raven modelling retraction (10); both sit in the backoffice
   epic.
-- **The public action row** — raven#141. **Access CTAs on cards** — raven#153.
+- **The public action row** — raven#141.
 - **Which works qualify as open access** — raven#164.
 - **The Diamond OA badge, certification etc.** — not in scope, needs to be decided
   by policy what our focus will be for the next years.
@@ -84,17 +86,17 @@ Every raven view that lists works with a card:
 - the embedded lists on the researcher, organisation and project pages;
 - the related-research panel on a record page.
 
-They are separate templates today; 01 makes them one. The public card keeps Cite and
-Add to list, whose contents raven#141 owns.
+They are separate templates today; 01 makes them one.
 
 ## Done when
 
 - Every public work card renders the five regions from one template.
 - Each of the 23 work types renders a reference line, and none renders a stray
   separator or a dangling `In`.
-- The four access states render, and a work with no public file carries no badge.
-- The year, the container and the project link on the cards that carry them, and each
-  lands on the works overview with that filter applied.
+- The three access states render, and a work with no reachable file — none, closed or
+  private — carries no badge.
+- The year and the container link on the cards that carry them, and each lands on the
+  works overview with that filter applied.
 - 01, 02, 03, 08 and 09 are closed.
 
 ## How this lands in raven
@@ -103,8 +105,8 @@ Checked against open issues
 
 - raven#155 (public search) puts "work-card + toolbar actions" out of its scope —
   the gap this epic fills. Its children own the year facet (#157), the
-  organisation / project / keyword filters (#159) and URL state (#156), so 09 is
-  narrowed to the container.
+  organisation / keyword filters (#159) and URL state (#156), so 09 is
+  narrowed to the container. Projects sit on the detail pages, not on cards.
 - raven#141 owns the public action row; raven#164 the open-access definition;
   raven#167 the lists pages; raven#125 the match card (amend, don't replace).
 

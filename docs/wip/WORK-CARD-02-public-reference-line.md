@@ -27,12 +27,15 @@ In raven the line reads as a citation, composed per work type:
 - container titles render in `<cite>`, italic, and are filter links on every card
   (01).
 
-The gain sits in the non-article types: under today's template a thesis, a
-conference paper and a report render a nearly empty line. For journal articles —
-the bulk of the records — the old and new lines are nearly identical, so nothing
+The gain sits in the non-article types. Ten of the 23 render a bare "(year)" under
+today's template, and nine more keep a line but lose its identifying middle — a
+conference paper's conference, a report's number and publisher, a magazine
+article's date; the per-type table in the spec doc names them. For journal articles
+— the bulk of the records — the old and new lines are nearly identical, so nothing
 is lost where today's line works. The cost is more rendering logic than one
-template, though the spec is one shared order plus four exceptions, not a rule
-per type.
+template, though the spec is one shared order plus four exceptions, not a rule per
+type. The line is the card's only statement of where a work appeared,
+and on ten types it says nothing today.
 
 Compositions, rendered examples and the decisions behind them:
 `docs/wip/WORK-CARD-REFERENCE-STYLES.md`.

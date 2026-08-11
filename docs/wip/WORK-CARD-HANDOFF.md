@@ -22,6 +22,70 @@ eleven children, one amendment (07), plus `WORK-CARD-REFERENCE-STYLES.md`:
   01 blocks 04.
 - `WORK-CARD-07-match-card-amendment.md` — edits to raven#125, not a new issue.
 
+## Decisions this round — prototype swept against the public epic
+
+A review of the filed public issues against the prototype produced these. All are
+applied to `docs/wip/` and the prototype; **the filed issues #180–#185 still carry
+the old wording** and are M's to update.
+
+- **Every contributor name is a link.** A contributor raven holds a page for goes to
+  that page; every other name — an external co-author, an organisation, free text —
+  runs a works search on itself (`?q=`), as old Biblio does. It is a **search, not an
+  author filter**: a name with a namesake returns both. The muted unlinked
+  contributor is gone from the card, the kit page, `docs/CLASS-USAGE.md` and
+  `docs/SEARCH-AND-FILTERING.md` (Rule 3 and Scoped links).
+- **Public cards carry no project part.** Projects live on the detail pages and in
+  backoffice cards. Year, container and publisher-as-container are the public card's filter
+  links; project is struck from 01, the public epic, the search doc and the kit prose.
+- **Ten names on both surfaces**, then the count; the public card puts `et al.`
+  before it. The backoffice's three-name truncation is dropped, and the
+  related-research panel follows the public rule. Supervisors stay on the backoffice
+  card.
+- **The publisher-as-container takes `<cite>` and the filter link** — Zenodo and
+  bioRxiv render like any other container name.
+- **Closed access should not be shown on the public page.** A public card's access
+  vocabulary is open, restricted and embargo; a work whose files are all closed carries
+  no access element on the public page, the way no file and a private file already do.
+  Closed or private renders on a backoffice record page's file rows with `if-forbid`
+  and in the backoffice cards.
+- **The card's CSS left the issue.** The border variant and the opt-in separator are
+  styling, documented in `docs/CLASS-USAGE.md`; 01 states neither.
+- **raven#141 was retitled and rescoped** to "Access CTA v1 — no direct file access".
+  It composes the public row; **raven#166 owns the Add to list panel** and already
+  settles the anonymous case; **Cite has no issue yet**. Every doc that said #141
+  owns Add to list is corrected.
+
+## Decisions — the identifier icon says where a name goes
+
+- **A page needs an ID.** Raven gives a person page to the contributors it holds a
+  person record for, and to no one else: two "Jan Janssens" without an ID cannot be
+  told apart. Profiles for people outside the institution are a later bridge.
+- **So the icon is the marker, and no new style is needed.** A name carrying the crest
+  or ORCID links to that person's page; a name carrying neither runs a works search on
+  itself. Applied in `search-result-cards.js` — `author()` now derives the destination
+  from the icons, so a crest without a page, or a page without a crest, cannot be
+  written.
+- **The public crest and the backoffice crest have to mean the same thing.** Today the
+  public card reads it as affiliation (it covers UZGent and GUK), the backoffice as
+  "has an internal person record" — `docs/analysis/WORK-CARD-CURRENT-STATE.md` flags
+  the split. The rule above collapses them.
+- **Placeholder roster made consistent.** Stefan K. Arndt is external everywhere, Jonas
+  Maes and Pieter Vangansbeke are UGent everywhere; before this each was both,
+  depending on the card.
+
+## Decisions — the contributor line reads as prose
+
+- **One name form on both surfaces**: first name, middle name initials, then surname,
+  "Mark B. De Moor".
+- **The icon binds to its own name.** `.bt-work-card__author` is `white-space:
+  nowrap`, and a left margin sits between consecutive spans. Without it the word
+  space after the comma (~3.5px at `--bt-text-sm`) matched the icon's own
+  `margin-right` (4px), so a crest floated between two names. CSS only.
+- **Considered and not taken**: a second typographic style for names that only run a
+  search, icons trailing the name, and dropping ORCID from the card. The link's
+  destination is not a distinction the reader can act on, and two link treatments
+  inside one name list cost more than they explain.
+
 ## Decisions 2026-08-10 — the backoffice epic's three blockers
 
 The epic was held on three missing screens. Two are out of scope, one is built.
@@ -41,6 +105,18 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   block per 05, actions per 06. Both list views and both table views are wired.
 - **Session scope in `AGENTS.md`** now reads "scope a session to what one review can
   absorb" instead of one page or feature per session (commit a398dc8).
+- **A retracted work is excluded from nothing** — result lists, exports, harvesting
+  sets and a researcher's own list all keep it, carrying the mark. How the mark
+  reaches each output is raven's to work out. 10's second question is closed and the
+  rule is in its What.
+- **Workflows and visibility have not been settled** — read from raven's source
+  once the checkout was connected, correcting a wrong claim in `DOMAIN-VOCABULARY`.
+  A record is created `private`; `Submit`, `Return` and `Review` each write
+  `deposit_status` and nothing else; visibility moves only through `SetVisibility`.
+  The axes meet in one place, the backoffice `set_to_reviewed` action, which reviews
+  and then applies the `reviewed_visibility` the curator picked — a choice, not a
+  consequence. The doc had said submit flips visibility to public on a UGent
+  decision; nothing in raven does that.
 
 ## Decisions 2026-08-07 — applied to the drafts
 
@@ -95,13 +171,14 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   the implementation's reading of it does. Noted at the top of the doc.
 - **11 missing metadata**: filterable from the start, backoffice only; nothing
   about completeness reaches the public surface. Question closed.
-- **06 / raven#141 anonymous Add to list**: the button shows for every visitor; an
-  anonymous click routes through login and back. The rule belongs on raven#141.
+- **06 / anonymous Add to list**: the button shows for every visitor; an anonymous
+  click routes through login and back. raven#166 owns the panel and already states
+  it, so nothing is pending — raven#141 composes the row, not the panel.
 
 ## Decisions this round — all applied to the drafts and docs
 
 - **Three sources, three weights.** The prototype is the spec; raven GitHub issues
-  are decisions, cited (#141, #164, #155/#156/#157/#159, #125, #167, #51, #153);
+  are decisions, cited (#141, #164, #166, #155/#156/#157/#159, #125, #167, #51, #153);
   raven's code is neither spec nor decision — never cited, never a benchmark, never
   "drift". Backend
   children 08–11 are phrased as the template's question: "does raven model this,
@@ -136,12 +213,8 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 
 ## Open questions standing, each in its issue
 
-- **04** — does returning a record change its visibility? Open Science Policy with
-  the curation lead.
 - **10** — the retraction notice's text and source: Open Science Policy with the
-  curation lead. Whether a retracted work is excluded from exports or harvesting
-  sets: a team decision.
-- **02** — is the per-type line worth its rendering cost? A team decision.
+  curation lead.
 
 08 has none: raven keeps every field old Biblio carries, and the software version is
 dropped — raven defers the field past v1 and no records land in the type.
@@ -150,8 +223,6 @@ dropped — raven defers the field past v1 and no records land in the type.
 
 - **raven#125** — draft 07 is the amendment: lazy-load framing in three places is
   M's to update; keyword contradiction needs one side picked.
-- **raven#141** — carry the Add-to-list decision onto it (the button shows for
-  anonymous visitors; a click routes through login and back).
 - **raven#51** — decide whether 04 becomes its body or its child.
 
 ## Verify

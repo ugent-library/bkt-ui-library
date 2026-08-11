@@ -27,6 +27,9 @@ appears.
 
 - [ ] A work can be marked as retracted, and stays public when it is
 - [ ] The mark is available wherever the work is listed, not only on its own page
+- [ ] A retracted work is excluded from nothing — result lists, exports, harvesting
+      sets and a researcher's own publication list all keep it. Carrying the mark
+      into each of those outputs is raven's to work out
 - [ ] The mark records who made it and when, and can be undone later
 - [ ] Retraction is distinct from deletion, from a tombstone, and from author
       withdrawal
@@ -51,8 +54,5 @@ soft delete and replaced-by are out of scope for the work card, and undesigned.
   retraction statement; (c) both, with one required. This decides what the detail
   page can show and whether curators need a field. Policy — Open Science Policy
   with the curation lead.
-- **Is a retracted work excluded from anything?** Exports, harvesting sets, a
-  researcher's own publication list. Options: included everywhere with the mark, or
-  excluded from selected outputs. Needs a team decision.
 
 > No screenshot — backend. The badge is shown in 12.

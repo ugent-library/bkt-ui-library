@@ -117,7 +117,9 @@ place here is the reasoning that would otherwise be lost:
 - **Container and work titles render italic.** Review in the prototype.
 - **`<cite>` on container titles** — kept, with the caveat on
   record: WHATWG reserves the element for a work's own title, and a container is
-  arguably not that, so this is accepted practice rather than spec-endorsed.
+  arguably not that, so this is accepted practice rather than spec-endorsed. The
+  publisher on `preprint`, `dataset` and `software` is the container, so it takes
+  `<cite>` and the filter link like any other container name.
 
 Card-level rules — links on line parts, the contributor line, no classification
 badge — live with the card grammar, not here.

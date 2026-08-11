@@ -43,8 +43,13 @@ scan".
 
 ## What
 
+TODO: what about missing information, depending on the responsibility
+of the viewer in the backoffice?
+
 - [ ] Deposit status badge with record visibility inside it
   - four statuses, one colour each; visibility as icon plus visible label
+  - [`TBD` the two axes are independent: no workflow transition writes visibility, so the
+    badge's two halves move separately and either can change without the other
   - institution-only visibility renders as "Not public" — there is no third
     rendering
 - [ ] All four statuses render, in both lists
@@ -122,10 +127,3 @@ and [templates/biblio-researcher/work-detail.html](https://bkt-ui.vercel.app/tem
   name to the researcher page. The backoffice has no person page of its own, so the
   options are that same public page, or a name search inside the list. The prototype
   links the names and marks the destination as a stub.
-
-- **Does returning a record change its visibility?** The two axes are independent,
-  so returning leaves a record as public as it was, and a returned record would read
-  "Returned · Public". The prototype shows "Not public", which assumes a flip.
-  Options: (a) returning leaves visibility untouched; (b) returning takes the record
-  off the public site. Policy — Open Science Policy with the curation lead. It
-  changes what the researcher and the reader see.

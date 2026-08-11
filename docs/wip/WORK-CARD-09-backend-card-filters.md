@@ -11,12 +11,12 @@ labels: backend
 ## Why
 
 The public site today links the year and the parent title on every card into a
-search. In raven the card's filter links — year, journal, project — land on the works
-overview with the filter applied, on every card; on the overview itself and in
-backoffice lists the click narrows the list in view (01).
+search. In raven the card's filter links — year, journal, project (only backoffice)
+— land on the works overview with the filter applied, on every card;
+on the overview itself and in backoffice lists the click narrows the list in view (01).
 
-Year, project and keyword are owned by open raven issues (Dependencies). **The
-container** is covered by none:
+Year is owned by an open raven issue (Dependencies). **The container** is covered by
+none:
 
 - it is the journal, proceedings volume, magazine, newspaper or book; the venue a
   lecture, media appearance or online post appeared in; and the publisher where it is
@@ -71,9 +71,9 @@ same link to browse, and never needs to know it is a filter.
   epic runs.
 - **Year** is a sidebar facet in raven#157; the card's year link narrows on it
   rather than on anything new.
-- **Project** and **keyword** are raven#159. The related-works panel's "more
-  related research" link (07) needs the keyword one, and raven#125's open question
-  about matching several keywords with OR semantics is its precondition.
+- **Keyword** is raven#159. The related-works panel's "more related research" link
+  (07) needs it, and raven#125's open question about matching several keywords with
+  OR semantics is its precondition.
 - The URL state contract is raven#156. The prototype's `?year=` and `?container=`
   parameters are placeholders, not a proposal.
 

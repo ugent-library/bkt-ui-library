@@ -16,23 +16,24 @@ Access on today's public card is an icon:
 Embargo is not surfaced, and private files render nothing.
 
 In raven it is one badge naming the state in words, the same for every reader:
-**Open access**, **Restricted access**, **Embargo until \<date\>**, **Closed
-access**.
+**Open access**, **Restricted access**, **Embargo until \<date\>**. Those three are
+the public card's whole vocabulary. **Closed access** is for backoffice.
 
 - which state a work is in follows the documented open-access definition —
   raven#164 owns that; this issue owns how the answer looks;
 - only open access carries colour;
 - restricted and embargo are correct outcomes rather than warnings, so both render
   neutral and are told apart by their icons;
-- closed access renders as text alone — the padlock belongs to restricted.
+- closed access renders in the backoffice only, not on the public site.
+  The padlock belongs to restricted, the `if-forbidden` icon belogns to closed access.
 
 Colour, icon and class per state are fixed in `bkt-ui-library/docs/CLASS-USAGE.md` →
 Badges, and shown on the kit page.
 
-**A card may carry no access badge.** Eight of the 23 types routinely have no file,
-and a private file must leave no public trace — no badge, no count, not even the
-fact that a file exists. Showing nothing is the design; a card without an open,
-restricted or embargoed file simply has no access element.
+**A public card may not carry a "no access" badge.** Eight of the 23 types routinely
+have no file and a private file must leave no public trace — no badge, no count,
+not even the fact that a file exists. Showing nothing is the design; a card without
+an open, restricted or embargoed file simply has no access element, closed files included.
 
 ### Notes on the target groups
 
@@ -41,11 +42,15 @@ Carrie Curious (curious public) and Pia Practice (practitioner) both read
 embargo is unless it names the date. Sue Kerr (academic reader) scans for the
 works she can open — colour only where the answer is yes.
 
-> **Screenshot:** the four states on the kit page (`patterns/work-card.html`, the
+> **Screenshot:** the states on the kit page (`patterns/work-card.html`, the
 > `__meta` demo)
+
+![The access badge states on the kit page](https://github.com/user-attachments/assets/2afffa60-eace-417b-9737-3b32d355c533)
 
 > **Screenshot:** a feed card with no access badge (a lecture or conference
 > presentation in `public-works.html`)
+
+![A feed card with no access badge](https://github.com/user-attachments/assets/fd1b9daf-e184-43d3-94b5-cc34253c8664)
 
 ## What
 
@@ -53,12 +58,12 @@ works she can open — colour only where the answer is yes.
   - Open access — coloured, open-access icon
   - Restricted access — neutral, lock icon
   - Embargo until \<date\> — neutral, time icon, badge names the date
-  - Closed access — neutral, text only, no icon
 - [ ] One badge per work, per the definition in raven#164 — not one per file
 - [ ] Files that disagree: the badge shows the most permissive access across them,
       and the earliest release date where all are embargoed. It reads the deposit —
       the full text, the dataset, the software — not supplementary material
-- [ ] No access element when the work has no files, or only private ones
+- [ ] No access element when the work has no files on public pages,
+  or only closed or private ones.
 - [ ] Every state renders identically logged in, logged out, on and off the UGent
       network — the badge states what the file is, not who the reader is
 - `out of scope` Access as plain text on backoffice cards — 04
@@ -70,7 +75,7 @@ works she can open — colour only where the answer is yes.
 - `out of scope` Withdrawal and takedown — deletion states, not badges; design
   pending, named in the backoffice epic
 
-The prototype covers **all four states plus the empty case**. We iterate on top.
+The prototype covers **the three states plus the empty case**. We iterate on top.
 Flag ambiguity.
 
 - Access badges use exactly the classes in that recipe; treat `text-bg-warning` on

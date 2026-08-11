@@ -8,7 +8,6 @@ title: "[backoffice] Work card: actions per role and state"
 > quiet, no access CTA. This issue is the backoffice half, which no issue covers.
 > Add to list shows for every visitor, and an anonymous click routes through login
 > and back — kept from today's behaviour, and what `patterns/panel.html` documents.
-> That rule belongs on raven#141.
 
 ## Why
 
