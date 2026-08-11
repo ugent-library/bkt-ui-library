@@ -246,7 +246,7 @@ ${card({
     id: 'card-feed-23',
     badges: type('Other'),
     title: 'Boekentoren restoration: photographic record 2012–2023',
-    authors: author('Sylvia Van Peteghem', { ugent: true }),
+    authors: author('Georges Van Peteghem', { ugent: true }),
     line: `${year(2024)}`
   })}
 </ol>`;
