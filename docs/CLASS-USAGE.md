@@ -42,6 +42,12 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 
 **Undemoed but kept** — `u-notifications`, `bt-toolbar__middle`, `u-main__sidebar--border-left`, and `alert--seamless-inbox` have no kit demo yet. Each mirrors an old-backoffice component (toasts/flash, `bc-toolbar-center`, sub-sidebar, inbox alerts), so they sit in the `intentional` list in `scripts/check-classes.js`; every other unused class fails the gate.
 
+**Modal width** — `modal-dialog--wide` is the only Booktower modal modifier: it sets
+`--bs-modal-width` and nothing else, so it stacks on `modal-dialog modal-xl` rather than
+replacing a Bootstrap size. Reach for it when a dialog holds form rows instead of prose;
+`modal-xl` first, this only when a row still wraps. Do not invent `modal-wide`,
+`modal-xxl` or a `bt-modal-*` family.
+
 **Popover modifiers** — `popover--sm`, `popover--dark`, applied via `data-bs-custom-class`, initialised by `assets/js/popovers.js`. Both feed `--bs-popover-*` variables only. Combine for the identifier-icon hover pattern in author lists (see `elements/popovers.html`).
 
 **Form variants** ⚠️ TBD — may not survive review. `form-control-search`: pill-shaped search input with an inset magnifier glyph, for standalone search fields outside `bt-toolbar` and `input-group--hero`.
@@ -53,13 +59,14 @@ class exists for them; getbootstrap.com is the reference:
 
 ```
 Modal        modal, modal-dialog, modal-content, modal-header/-body/-footer
-Tabs         nav nav-tabs + tab-content/tab-pane (also drives the cite modal)
+             (one Booktower modifier exists: modal-dialog--wide, see above)
+Tabs         nav nav-tabs + tab-content/tab-pane (also drives the cite panel)
 Breadcrumb   nav > ol.breadcrumb > li.breadcrumb-item (see rule H3)
 Pagination   ul.pagination pagination-sm  (the bar around it: patterns/pagination.html)
 ```
 
 Canonical compositions with project conventions (pagination + result count,
-cite modal) get kit recipes — see `notes/PLAN-kit-gaps-from-templates.md` —
+cite panel) get kit recipes — see `notes/PLAN-kit-gaps-from-templates.md` —
 but the components themselves stay undocumented Bootstrap.
 
 **Modal ARIA** — the opener carries `tabindex="-1"`, `aria-labelledby`, and, on a
