@@ -4,10 +4,10 @@ about: Port a booktower-ui-library prototype into raven
 title: "[epic] Backoffice work card — status, messages, actions"
 ---
 
-> **Not ready to file.** Drafted and grounded in prototype markup that exists, but
-> the backoffice pass has not run: the fast lane behind "Complete metadata", the
-> proxy role, and a backoffice detail view for a card title to open still need
-> screens, and 04 carries an open policy question. File the public epic first.
+> **Ready to file once 04's policy question is answered.** The card's three loose
+> ends are closed: card titles open a backoffice detail view — `curate-detail.html`
+> for a curator, `work-detail.html` for a researcher — and the fast lane and the
+> proxy role are out of scope for this epic. File the public epic first: 01 blocks 04.
 
 ## Why
 
@@ -74,8 +74,11 @@ View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.h
 
 - **The card grammar** — 01, in the public epic. A backoffice row that needs a
   new region changes 01, never this card alone.
-- **The fast lane** behind "Complete metadata" — no screens yet.
-- **Proxy role**, **a backoffice work detail view**, **the table view**.
+- **The fast lane** behind "Complete metadata" — the CTA opens the record's edit
+  form. The scoped edit view is a separate design, tracked in `notes/TOPLAN.md`.
+- **The proxy role.** Every row in 06 is a researcher's or a curator's. What a proxy
+  sees and may do is its own design, and the card gains its axis when that lands.
+- **The table view.**
 - **Soft-delete and replaced-by display** — raven has tombstones and merge
   redirects, no display design yet.
 - **Candidate / suggestion card** — not prototyped.

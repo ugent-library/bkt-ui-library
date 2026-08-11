@@ -67,8 +67,9 @@ scan".
 - [ ] Contributor names are links, as on the public card (01)
 - [ ] Three contributors, then the count alone ("+10 more authors") — the public
       card's ten names and `et al.` are the reader's form, not the curator's (01)
-- `out of scope` Message blocks — 05. Action buttons — 06. The table view. A
-  backoffice work detail view — card titles have no destination yet.
+- [ ] The card title opens the backoffice work detail view — the review console for
+      a curator, the researcher's own record page for a researcher
+- `out of scope` Message blocks — 05. Action buttons — 06. The table view.
 
 The prototype covers the **journal-article happy path** on both cards, plus a
 dataset draft, a returned record and a retracted one. We iterate on top. Flag
@@ -90,6 +91,8 @@ Run it locally with `npm start` and the same paths on `localhost:3111`.
 View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates/biblio-team/curate.html),
 [templates/biblio-researcher/search-researcher.html](https://bkt-ui.vercel.app/templates/biblio-researcher/search-researcher.html), and the
 [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.html) (roles and views).
+Card titles land on [templates/biblio-team/curate-detail.html](https://bkt-ui.vercel.app/templates/biblio-team/curate-detail.html)
+and [templates/biblio-researcher/work-detail.html](https://bkt-ui.vercel.app/templates/biblio-researcher/work-detail.html).
 
 ## Acceptance criteria
 
