@@ -119,7 +119,11 @@ When "Under embargo" is selected, a date picker must appear for the embargo lift
 
 ## The public surface is strategically primary
 
-The UB2030 plan makes clear that making research output open and discoverable to the world — not just to UGent staff — is a core institutional mission. The public surface of biblio.ugent.be is the primary interface for that mission.
+[UB2030](https://lib.ugent.be/en/info/ub2030/), the University Library's strategic plan, commits the library to "an active role in an open and fair knowledge landscape", to "repository-based Open Access and Diamond Open Access", and to "expanding its own digital infrastructure for the storage and management of research output, such as the Academic Bibliography". The link is the public landing page; the full document is internal.
+
+That the public surface of biblio.ugent.be is therefore the primary interface for that mission is our design conclusion, drawn from those commitments rather than stated by UB2030.
+
+UB2030 is library-wide. Biblio has its own strategy document, which is a separate source.
 
 This has practical consequences for UI work:
 - The public search and detail pages deserve the same design rigour as the backoffice, not less
