@@ -157,6 +157,16 @@ In the UI: surfaces as a change history view on a Work detail page (who changed 
   who last changed it and when; and, where the record was also touched by the
   system (an import, a background job), the last system change and when.
 
+### Names in the UI
+
+- **One form on both surfaces** — first name, middle name initials then surname:
+  "Mark B. De Moor". The backoffice's old sort-order form, "De Moor, B.",
+  puts a comma inside the name while the comma is also what separates one
+  name from the next, so a contributor line offers no way to tell where
+  one person ends and the next begins.
+- Sorting a list *by* surname is a different question from printing a name, and this
+  rule settles only the printing. This is an open question.
+
 ## Access and file concepts
 
 ### Visibility
@@ -272,9 +282,13 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
   (`badge text-bg-secondary`), told apart by icon: `if-lock` for restricted, `if-time` for
   embargo (which names the date). They are correct outcomes, not warnings — the orange
   `text-bg-warning` they used to wear read as an error and competed with open access
-- **closed access carries no icon** — `badge text-bg-secondary`, text only.
-  The lock is restricted's; reusing it would say the two states are the same thing
-- Works without full-text access should not look broken — restricted access is sometimes correct, but the UI should make open access feel like the norm
+- **closed access belongs to backoffice, not to public** — it renders on a backoffice
+  record page, with `if-forbid`, and backoffice cards. A card carries an access element
+  only for an open, restricted or embargoed file on public; a work whose files are all
+  closed shows none on public.
+  The lock is restricted's; reusing it would say the two states are the same thing.
+- Works without full-text access should not look broken — restricted access is sometimes
+  correct, but the UI should encourage people to read what's available.
 
 ---
 

@@ -124,6 +124,7 @@ A suggestion takes you to the thing it names, routed identically on every search
 | Row type | Destination | Why |
 |---|---|---|
 | Person | researcher detail page | a record you visit |
+| A contributor name raven holds no page for (a link on cards and record pages — not a box suggestion) | works search on the name as text (`?q=`) | there is no record to visit, so the name searches; a query, never an author filter |
 | Work | work detail page | a record you visit |
 | Organization | organization detail page | a record you visit (its page lists/searches its own output) |
 | Project | project detail page | a record you visit |
@@ -158,14 +159,20 @@ server count; zero-result groups are omitted.
 
 The same routing governs the links inside result cards and work detail pages: an author
 name goes to the researcher page, a keyword badge to the keyword-scoped works search, a
-journal/host title to a works search on the title as text. These
+journal/host title to a works search on the title as text. **Every contributor name is a
+link, on both surfaces, and its identifier icon says where it goes.** A page needs an
+identified person, so the crest marks exactly the names that have one. A name carrying
+no icon — an external co-author, an organisation, free text — runs a search on itself
+(`?q=`), the way old Biblio does: the result is what that string matches, not the output
+of one identified person, so two people of one name return one result set. An author
+filter scoped to a person needs the person, and that is exactly what this name lacks. These
 link-follows are the measured volume path of results-page refinement — author ~199k,
 keyword ~252k, journal ~204k sessions over seven months of live logs (Evidence below) —
 so every one of them must be a working link, never decorative text.
 
 **Card filter links land on the works overview.** Every filter part on a card — the
 year, the container (journal, host title, proceedings, magazine, newspaper, and the
-venue a lecture, media appearance or online post appeared in), the project, and the
+venue a lecture, media appearance or online post appeared in), and the
 publisher or platform name where it is the container (e.g. Zenodo) — links to the
 works overview with that filter applied, wherever the card appears: a filterable
 overview, the embedded listing on a detail page, the record page itself. On the works
