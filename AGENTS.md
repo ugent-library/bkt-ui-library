@@ -28,7 +28,7 @@ Four tools, one lane each. Don't duplicate one in another.
 
 | Tool | Owns | Decided by |
 |------|------|------------|
-| **ProductBoard** | Demand and priority — user needs and feedback, feature requests, the problem a page solves, roadmap status. The *why at the user-need level*. Demand is also discovered here, through prototyping. | Product |
+| **ProductBoard** | Demand and priority — user needs and feedback, feature requests, the problem a page solves, roadmap status. The *why at the user-need level*. Demand is also discovered here, through prototyping. Synced into `notes/demand/` by `npm run sync:demand`, so specs can cite the notes they rest on; corrections are made in ProductBoard, never in the sync. | Product |
 | **booktower-ui-library** (this repo) | The prototype and the design system — HTML, CSS classes, layout and interaction, the UI *how*. Concepts are prototyped here, not defined here. | Design |
 | **Raven** | The backend and the source of truth for the domain model — schema, field registry, work/organization/project catalogs, subtypes. What a concept *is*. | Dev |
 | **GitHub issues** (raven repo) | The build — implementation scope and acceptance criteria. Issues **start in this repo**: a prototype is scoped into issues (the `biblio-issue-writer` skill), then filed in the raven repo, where raven's issue → branch → commit → PR chain takes over. | Dev |
