@@ -502,6 +502,8 @@ text-bg-primary-light
 
 text-bg-success-light
 
+text-bg-transparent
+
 text-bg-warning-light
 
 u-layout--app

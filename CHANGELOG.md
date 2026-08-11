@@ -6,6 +6,49 @@ system, or do I reach for something new?"
 
 ---
 
+## Work card contributor links and access vocabulary settle (v2.17, 2026-08-11)
+
+One CSS rule changed and the public/backoffice prototype cards were swept to match
+the work-card contract.
+
+Contributor names now follow one rule on both surfaces: every name is a link, and
+the identifier icon says where it goes. A name with the UGent crest or ORCID links
+to the researcher page; a name with neither runs a works search on itself (`?q=`).
+The muted, unlinked contributor form is retired. Names print as First name,
+middle name initials then surname (`Mark B. De Moor`) on public cards,
+researcher cards, curator cards, deposit
+summaries and table fallbacks.
+
+`bt-work-card__author` now keeps each contributor together with
+`white-space: nowrap`, and adjacent contributors get a small left margin so a crest
+visually belongs to the following name rather than floating between two
+comma-separated names.
+
+Access badges on cards now have a three-state vocabulary only:
+
+| Work-card access state | Badge |
+|---|---|
+| Open access | `badge text-bg-success` + `if-open-access` |
+| Restricted access | `badge text-bg-secondary` + `if-lock` |
+| Embargo | `badge text-bg-secondary` + `if-time`, naming the date |
+| Embargo | `badge text-bg-transparent` + `if-forbid` |
+
+Closed access is backoffice only.
+
+The card-link contract also narrows: cards link year and
+container/publisher-as-container to the works overview, but projects live on detail
+pages. Publisher-as-container names such as Zenodo and bioRxiv render in `<cite>`
+like the other containers.
+
+Documentation updates in `docs/wip/` close three decisions: no workflow transition
+changes visibility; retracted works remain in result lists, exports, harvesting
+sets and researcher lists with the mark carried along; the per-type reference line
+is kept.
+
+**Consumers: re-copy `assets/booktower.css` and update work-card contributor
+markup.** There are no added or removed classes, but old muted/unlinked contributor
+markup no longer matches the contract.
+
 ## Advanced search becomes one builder in two renderings (v2.16, 2026-08-10)
 
 `public-search-advanced.html` keeps its address and loses its markup: the builder now
