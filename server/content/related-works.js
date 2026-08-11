@@ -22,9 +22,16 @@ function matchCard({ id, type, title, year, line, keywords }) {
     <div class="bt-work-card__body">
       <h3 id="${id}" class="bt-work-card__title"><a href="/templates/biblio-public/public-work-detail.html">${title}</a></h3>
       <p class="bt-work-card__authors">
-        <span class="bt-work-card__author"><a href="#">Karen De Pauw</a></span>,
-        <span class="bt-work-card__author"><a href="#">Manuel Esperon&#8209;Rodriguez</a></span>,
-        <span class="bt-work-card__author"><a href="#">Stefan K. Arndt</a></span>
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Manuel%20Esperon-Rodriguez">Manuel Esperon&#8209;Rodriguez</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Stefan%20K.%20Arndt">Stefan K. Arndt</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Ren%C3%A9e%20Prokopavicius">Renée Prokopavicius</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Sally%20A.%20Power">Sally A. Power</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=David%20S.%20Ellsworth">David S. Ellsworth</a></span>,
+        <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Camille%20Vervoort">Camille Vervoort</a></span>,
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>
         <span class="text-muted">et al. +6 more authors</span>
       </p>
       <p class="bt-work-card__pub">(<a href="/templates/biblio-public/public-works.html?year=${year}"><time datetime="${year}">${year}</time></a>) ${line}</p>

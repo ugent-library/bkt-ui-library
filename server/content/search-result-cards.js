@@ -47,22 +47,25 @@ const restricted = '<span class="badge text-bg-secondary"><i class="if if-lock" 
 const year = (y) => `(<a href="public-works.html?year=${y}"><time datetime="${y}">${y}</time></a>)`;
 
 // Container link: a string search on the title, as live biblio runs it (09).
-const container = (title, label = `<cite>${title}</cite>`) =>
-  `<a href="public-works.html?container=${encodeURIComponent(title)}">${label}</a>`;
+// The publisher is the container on preprint, dataset and software, so it takes
+// <cite> too.
+const container = (title) =>
+  `<a href="public-works.html?container=${encodeURIComponent(title)}"><cite>${title}</cite></a>`;
 const researcher = '/templates/biblio-public/public-researcher-detail.html';
 
 // Icons sit outside the <a>: hover underline covers the name only; icon
 // spacing comes from .bt-work-card__author .if in SCSS.
-// linked: false is a contributor raven resolves to nothing — free text, an
-// organisation, a person with no public page. It renders muted, as plain text.
-function author(name, { ugent = false, orcid = '', linked = true } = {}) {
+// An identifier icon means raven holds a person record, and only a person record
+// has a page — so the icons decide the destination. A name without one searches
+// for itself: a query, never an author filter.
+function author(name, { ugent = false, orcid = '' } = {}) {
   let icons = '';
   if (ugent) icons += '<i class="if if-ghent-university" aria-hidden="true"></i>';
   if (orcid) icons += `<i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: ${orcid}" aria-hidden="true"></i>`;
   const labels = [ugent && 'UGent', orcid && `ORCID ${orcid}`].filter(Boolean);
   const vh = labels.length ? `<span class="visually-hidden"> (${labels.join(', ')})</span>` : '';
-  if (linked) return `<span class="bt-work-card__author">${icons}<a href="${researcher}">${name}${vh}</a></span>`;
-  return `<span class="bt-work-card__author text-muted">${icons}${name}${vh}</span>`;
+  const href = icons ? researcher : `public-works.html?q=${encodeURIComponent(name)}`;
+  return `<span class="bt-work-card__author">${icons}<a href="${href}">${name}${vh}</a></span>`;
 }
 
 const dePauw = () => author('Karen De Pauw', { ugent: true, orcid: '0000-0002-1234-5678' });
@@ -78,13 +81,13 @@ ${card({
     authors: [
       dePauw(),
       author('Manuel Esperon-Rodriguez'),
-      author('Stefan K. Arndt', { ugent: true }),
+      author('Stefan K. Arndt'),
       author('Renée Prokopavicius'),
       author('Jonas Maes', { ugent: true }),
       author('Sally A. Power'),
       author('David S. Ellsworth'),
       author('Eline Lauwers', { ugent: true }),
-      author('Camille Vervoort', { linked: false }),
+      author('Camille Vervoort'),
       author('Mark G. Tjoelker')
     ].join(',\n        ') + ' <span class="text-muted">et al. +3 more authors</span>',
     line: `${year(2026)} ${container('Plants People Planet')}, 8(1), pp. 14&ndash;19.`
@@ -107,7 +110,7 @@ ${card({
     id: 'card-feed-04',
     badges: restricted + type('Book chapter'),
     title: 'Canopy cover in Flanders: patterns and policy',
-    authors: [dePauw(), author('Jonas Maes')].join(', '),
+    authors: [dePauw(), author('Jonas Maes', { ugent: true })].join(', '),
     line: `${year(2024)} in ${container('Handbook of urban ecology')}. London: Routledge, pp. 100&ndash;120.`
   })}
 ${card({
@@ -166,8 +169,8 @@ ${card({
     id: 'card-feed-12',
     badges: oa + type('Preprint'),
     title: 'Canopy microclimate buffering across European forests: a continental synthesis',
-    authors: [dePauw(), author('Pieter Vangansbeke')].join(', '),
-    line: `${year(2026)} ${container('bioRxiv', 'bioRxiv')} [Preprint].`
+    authors: [dePauw(), author('Pieter Vangansbeke', { ugent: true })].join(', '),
+    line: `${year(2026)} ${container('bioRxiv')} [Preprint].`
   })}
 ${card({
     id: 'card-feed-13',
@@ -180,7 +183,7 @@ ${card({
     id: 'card-feed-14',
     badges: oa + type('Report'),
     title: 'State of the urban forest in Flanders 2025',
-    authors: [dePauw(), author('Agentschap Natuur en Bos', { linked: false })].join(', '),
+    authors: [dePauw(), author('Agentschap Natuur en Bos')].join(', '),
     line: `${year(2025)} Report RPT-42. Brussels: Agentschap Natuur en Bos.`
   })}
 ${card({
@@ -229,15 +232,15 @@ ${card({
     id: 'card-feed-21',
     badges: oa + type('Dataset'),
     title: 'Urban tree canopy cover measurements Belgium 2020–2025',
-    authors: [dePauw(), author('Jonas Maes')].join(', '),
-    line: `${year(2026)} ${container('Zenodo', 'Zenodo')}.`
+    authors: [dePauw(), author('Jonas Maes', { ugent: true })].join(', '),
+    line: `${year(2026)} ${container('Zenodo')}.`
   })}
 ${card({
     id: 'card-feed-22',
     badges: oa + type('Software'),
     title: 'canopyR: canopy cover estimation toolkit',
     authors: author('Jonas Maes', { ugent: true }),
-    line: `${year(2026)} ${container('Zenodo', 'Zenodo')}.`
+    line: `${year(2026)} ${container('Zenodo')}.`
   })}
 ${card({
     id: 'card-feed-23',

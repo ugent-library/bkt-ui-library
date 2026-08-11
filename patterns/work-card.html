@@ -1,5 +1,6 @@
 <!-- @title: Work card — Booktower Design System -->
 <!-- @surface: public -->
+<!-- Note: the search queries are incorrect, for Raven -->
 <div class="ds-page">
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
@@ -42,7 +43,7 @@
           <span class="bt-work-card__meta-item">Doctoral thesis</span>
         </div>
         <div class="bt-work-card__meta mb-3">
-          <span class="badge text-bg-secondary">Closed access</span>
+          <span class="badge text-bg-transparent"><i class="if if-forbid" aria-hidden="true"></i> Closed access</span>
           <span class="bt-work-card__meta-item">Report</span>
         </div>
         <div class="bt-work-card__meta">
@@ -51,8 +52,8 @@
         </div>
       </div>
     </div>
-    <p class="mb-2 col-8 text-muted small">Only open access carries colour: <code>text-bg-success</code> + <code>if-open-access</code>. Restricted and embargo are neutral <code>text-bg-secondary</code> badges separated by icon — <code>if-lock</code>, <code>if-time</code> — because both are correct outcomes, not warnings. Closed access is the same neutral badge with no icon: the lock is restricted's.</p>
-    <p class="mb-4 col-8 text-muted small">No files, or all files private, means no access element at all — private leaves no public trace. The separator renders only <em>between</em> consecutive meta items of the same row, never after the last — a stacked sub-list (projects) draws none. Badges, links and plain spans sit in a row without being items: <code>__meta-item</code> is what asks for a separator. On the backoffice the badge slot belongs to deposit status + visibility icon, and access joins the meta items — see Roles &amp; views below.</p>
+    <p class="mb-2 col-8 text-muted small">Only open access carries colour: <code>text-bg-success</code> + <code>if-open-access</code>. Restricted and embargo are neutral <code>text-bg-secondary</code> badges separated by icon — <code>if-lock</code>, <code>if-time</code> — because both are correct outcomes, not warnings. Those three are the card's whole access vocabulary. <strong>Closed access belongs to a file, not to a work</strong>, so it renders on the file rows of a record page and never on a card; a work whose files are all closed carries no access element.</p>
+    <p class="mb-4 col-8 text-muted small">No files, or files that are all private or all closed, means no access element at all — private leaves no public trace. The separator renders only <em>between</em> consecutive meta items of the same row, never after the last — a stacked sub-list (projects) draws none. Badges, links and plain spans sit in a row without being items: <code>__meta-item</code> is what asks for a separator. On the backoffice the badge slot belongs to deposit status + visibility icon, and access joins the meta items — see Roles &amp; views below.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">__actions — Cite and Add to list on every card (v1)</h3>
@@ -74,13 +75,19 @@
         <p class="bt-work-card__authors mb-0">
           <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-bs-custom-class="popover--sm popover--dark" data-bs-container="body" data-bs-content="ORCID: 0000-0002-1234-5678" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent, ORCID 0000-0002-1234-5678)</span></a></span>,
           <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
-          <span class="bt-work-card__author"><a href="#">Manuel Esperon-Rodriguez</a></span>,
-          <span class="bt-work-card__author text-muted">Vlaamse Milieumaatschappij</span>
+          <span class="bt-work-card__author"><a href="?q=Manuel%20Esperon-Rodriguez">Manuel Esperon-Rodriguez</a></span>,
+          <span class="bt-work-card__author"><a href="?q=Vlaamse%20Milieumaatschappij">Vlaamse Milieumaatschappij</a></span>,
+          <span class="bt-work-card__author"><a href="?q=Ren%C3%A9e%20Prokopavicius">Renée Prokopavicius</a></span>,
+          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
+          <span class="bt-work-card__author"><a href="?q=Sally%20A.%20Power">Sally A. Power</a></span>,
+          <span class="bt-work-card__author"><a href="?q=David%20S.%20Ellsworth">David S. Ellsworth</a></span>,
+          <span class="bt-work-card__author"><a href="?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>,
+          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Foeke Vanbecelaere<span class="visually-hidden"> (UGent)</span></a></span>
           <span class="text-muted">et al. +6 more authors</span>
         </p>
       </div>
     </div>
-    <p class="mb-4 col-8 text-muted small">Authors are prose: comma text nodes between <code>__author</code> spans, on the public card up to ten names, then <span lang="la">et al.</span> and the count (“+6 more authors”); on the backoffice three names and the count alone — a reader gets the academic form and the size, a curator scans the number. Icons sit inside the span but outside the <code>&lt;a&gt;</code> — spacing comes from CSS, and the hover underline stays off the gap. The <code>visually-hidden</code> identifier text inside the link carries what the icons show. A contributor with nowhere to go &mdash; free text, an organisation, a person without a public page &mdash; renders as <code>text-muted</code> and carries no link.</p>
+    <p class="mb-4 col-8 text-muted small">Authors are prose: comma text nodes between <code>__author</code> spans, up to ten names on both surfaces, then the count of what is left (“+6 more authors”); the public card puts <span lang="la">et al.</span> before that count, the academic form a reader expects in a citation. Icons sit inside the span but outside the <code>&lt;a&gt;</code> — spacing comes from CSS, and the hover underline stays off the gap. The <code>visually-hidden</code> identifier text inside the link carries what the icons show. Every name is a link: a contributor raven holds a page for goes to that page, and any other name &mdash; an external co-author, an organisation, free text &mdash; runs a search on itself (<code>?q=</code>), as old Biblio does. That search is a query, never a filter scoped to the person.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">__pub — the reference line, per work type</h3>
@@ -103,7 +110,7 @@
 
   <section class="ds-section" id="contexts">
     <h2 class="h4 mb-3">One card across roles and views</h2>
-    <p class="mb-2 col-8">One layout everywhere. What varies per context: the <strong>role</strong> (researcher or curator; proxy later), the <strong>capability</strong> (editing your own work, reviewing someone else's, or read-only), and the <strong>view</strong> — the year, journal, project and publisher parts are filter links on every card, landing on the works overview with that filter applied; on the overview itself and in backoffice lists the click narrows the list in view. Container and publisher links are string searches on the name. Statuses and visibility per <code>docs/DOMAIN-VOCABULARY.md</code> (Work status — two axes).</p>
+    <p class="mb-2 col-8">One layout everywhere. What varies per context: the <strong>role</strong> (researcher or curator; proxy later), the <strong>capability</strong> (editing your own work, reviewing someone else's, or read-only), and the <strong>view</strong> — the year, journal and publisher parts are filter links on every card, landing on the works overview with that filter applied; on the overview itself and in backoffice lists the click narrows the list in view. Container and publisher links are string searches on the name. Statuses and visibility per <code>docs/DOMAIN-VOCABULARY.md</code> (Work status — two axes).</p>
     <p class="mb-4 col-8 text-muted small">The missing-metadata warning is automated and role-specific: researchers see what they must supply (full text, DOI or WoS ID, title, abstract, authors, keywords, projects); curators see the bibliographic completeness list (journal, publisher, year, ISSN, volume, issue, pages).</p>
 
     <div class="ds-demo">
@@ -124,8 +131,8 @@
           <div class="bt-work-card__body">
             <p id="wc-mx-01" class="bt-work-card__title"><a href="#">Canopy microclimate buffering across European forests</a></p>
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><a href="#">De Pauw, K.</a></span>,
-              <span class="bt-work-card__author"><a href="#">Vangansbeke, P.</a></span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Pieter Vangansbeke<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
             <div class="alert alert-warning alert--sm mb-0 mt-2" role="note" aria-label="For the researcher">
@@ -161,9 +168,9 @@
           <div class="bt-work-card__body">
             <p id="wc-mx-02" class="bt-work-card__title"><a href="#">Urban forests as essential infrastructure for climate resilience</a></p>
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><a href="#">De Pauw, K.</a></span>,
-              <span class="bt-work-card__author"><a href="#">Esperon-Rodriguez, M.</a></span>,
-              <span class="bt-work-card__author"><a href="#">Arndt, S. K.</a></span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=M.%20Esperon-Rodriguez">Marciella Esperon-Rodriguez</a></span>,
+              <span class="bt-work-card__author"><a href="?q=S.%20K.%20Arndt">Sue K. Arndt</a></span>
             </p>
             <p class="bt-work-card__pub"><time datetime="2026">2026</time><span class="text-muted mx-1" aria-hidden="true">·</span><span>Plants People Planet</span></p>
           </div>
@@ -193,9 +200,9 @@
           <div class="bt-work-card__body">
             <p id="wc-mx-03" class="bt-work-card__title"><a href="#">Overdue athletes salaries in professional football</a></p>
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><a href="#">Vandercruysse, L.</a></span>,
-              <span class="bt-work-card__author"><a href="#">Vander Beken, T.</a></span>,
-              <span class="bt-work-card__author"><a href="#">Vermeersch, A.</a></span>
+              <span class="bt-work-card__author"><a href="?q=L.%20Vandercruysse">Louise Vandercruysse</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Torry Vander Beken<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Arnold Vermeersch<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <p class="bt-work-card__pub"><time datetime="2024">2024</time><span class="text-muted mx-1" aria-hidden="true">·</span><span>Eur. J. Crime Crim. Law Crim. Justice</span></p>
             <div class="alert alert-light alert--sm mb-0 mt-2" role="note" aria-label="For curators">
@@ -255,10 +262,16 @@
 
             <!-- Authors with affiliation indicators -->
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Cooper, J.<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Simmons, B.<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="#">Palumbo, Z.</a></span>,
-              <span class="bt-work-card__author text-muted">Vlaamse Milieumaatschappij</span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=Z.%20Palumbo">Ziggy Palumbo</a></span>,
+              <span class="bt-work-card__author"><a href="?q=H.%20Nakamura">Hanna Nakamura</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Paco Declerck<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=A.%20Okonkwo">Augusto Okonkwo</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Louise Vermeersch<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=R.%20Baptista">Renata Baptista</a></span>,
+              <span class="bt-work-card__author"><a href="?q=N.%20Haddad">Nur Haddad</a></span>,
+              <span class="bt-work-card__author"><a href="?q=E.%20Lindqvist">Elias Lindqvist</a></span>
               <span class="text-muted">et al. +6 more authors</span>
             </p>
             <!-- Reference line -->
@@ -294,7 +307,7 @@
               <a href="#">Dietary supplements and cognitive performance: a randomised trial</a>
             </h2>
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><a href="#">Janssens, P.</a></span>, <span class="bt-work-card__author"><a href="#">Verbruggen, F.</a></span>
+              <span class="bt-work-card__author"><a href="?q=P.%20Janssens">Pierre P. Janssens</a></span>, <span class="bt-work-card__author"><a href="?q=F.%20Verbruggen">Frank F. Verbruggen</a></span>
             </p>
             <p class="bt-work-card__pub">(<a href="#"><time datetime="2019">2019</time></a>) <a href="#"><cite>Nutrition Research</cite></a>, 64, pp. 24&ndash;33.</p>
           </div>
@@ -348,12 +361,19 @@
 
             <!-- Authors with affiliation indicators -->
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Cooper, J.<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Simmons, B.<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="#">Palumbo, Z.</a></span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=Z.%20Palumbo">Ziggy Palumbo</a></span>,
+              <span class="bt-work-card__author"><a href="?q=H.%20Nakamura">Hanna Nakamura</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Paco Declerck<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=A.%20Okonkwo">Augusto Okonkwo</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Louise Vermeersch<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=R.%20Baptista">Renata Baptista</a></span>,
+              <span class="bt-work-card__author"><a href="?q=N.%20Haddad">Nur Haddad</a></span>,
+              <span class="bt-work-card__author"><a href="?q=E.%20Lindqvist">Elias Lindqvist</a></span>
               <span class="text-muted">+6 more authors</span>
               <span>supervised by</span>
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Howard, E.<span class="visually-hidden"> (UGent)</span></a></span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Ellis Howard<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <!-- Reference line -->
             <p class="bt-work-card__pub">
@@ -380,7 +400,7 @@
           </div>
         </article>
 
-        
+
 
       </div>
     </div>
@@ -429,12 +449,19 @@
 
             <!-- Authors with affiliation indicators -->
             <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Cooper, J.<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Simmons, B.<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="#">Palumbo, Z.</a></span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=Z.%20Palumbo">Ziggy Palumbo</a></span>,
+              <span class="bt-work-card__author"><a href="?q=H.%20Nakamura">Hanna Nakamura</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Paco Declerck<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=A.%20Okonkwo">Augusto Okonkwo</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Louise Vermeersch<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=R.%20Baptista">Renata Baptista</a></span>,
+              <span class="bt-work-card__author"><a href="?q=N.%20Haddad">Nur Haddad</a></span>,
+              <span class="bt-work-card__author"><a href="?q=E.%20Lindqvist">Elias Lindqvist</a></span>
               <span class="text-muted">+6 more authors</span>
               <span>supervised by</span>
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Howard, E.<span class="visually-hidden"> (UGent)</span></a></span>
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Ellis Howard<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <!-- Reference line -->
             <p class="bt-work-card__pub">
@@ -532,12 +559,8 @@
           </div>
         </article>
 
-        
-
       </div>
     </div>
   </section>
-
-
 
 </div>
