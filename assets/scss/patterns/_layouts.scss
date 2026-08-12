@@ -257,15 +257,14 @@
   gap: var(--bt-sp-2);
   padding: var(--bt-sp-2) var(--bt-sp-3);
   width: 100%;
+  position: relative;
 }
-.bt-sidebar a.nav-link:has(.badge--total) {
-  padding-right: var(--bt-sp-8);
+.bt-sidebar a.nav-link .if {
+  flex-shrink: 0;
 }
 .bt-sidebar .badge--total {
-  position: absolute;
-  top: 50%;
-  right: var(--bt-sp-3) !important;
-  transform: translateY(-50%) !important;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 .nav-link.active {
   background-color: var(--bt-gray-50);
@@ -289,6 +288,7 @@
   }
 
   .badge--total {
+    position: absolute;
     width: .5rem;
     height: .5rem;
     padding: 0 !important;
