@@ -1,5 +1,5 @@
 <!--
-  The Advanced search condition rows and the query readback. Used with
+  The Advanced search condition editor and query handoff rail. Used with
   search-advanced-actions.html by both renderings of the builder: the page
   public-search-advanced.html and the dialog in public-works.html.
 
@@ -13,812 +13,744 @@
      by form="qb-form". It cannot sit inside the form: that would break the dialog's
      header/body/footer chain and push the footer off the screen. -->
 <!-- [html-validate-disable-next wcag/h32 -- submit button bound externally by form="qb-form"] -->
-<form id="qb-form" action="public-works.html" method="get">
-
-        <!-- Goal-first framing — the sentence anchors what AND means. See
-             docs/wip/QUERY-BUILDER-DESIGN.md.
-             Phase 3 needs a row above this heading for the record-type choice, and the
-             heading's subject then follows it: "Show people where …". -->
-        <h3 id="conditions-heading" class="h5 mb-4">
+<form id="qb-form" class="bt-query-builder" action="public-works.html" method="get"
+  aria-labelledby="conditions-heading">
+  <div class="bt-query-builder__main">
+    <div class="bt-query-builder__editor">
+      <div class="bt-query-builder__heading">
+        <p class="form-label mb-1">Build the set</p>
+        <h3 id="conditions-heading" class="h5 mb-0">
           Show research output where all of these are true
         </h3>
+      </div>
 
-        <div id="qb-conditions">
-          <!-- @state: built results best-bet no-results query-empty advanced-condition -->
+      <div id="qb-conditions" class="bt-query-builder__conditions">
+        <!-- @state: built results best-bet no-results query-empty advanced-condition -->
 
-                <!-- ── Condition 1 — free text is an ordinary row ──────────────────────────
-                     Picking "contains any of" swaps this row's single input for the paste
-                     list of condition 6: OR'd free-text phrases are a value list too. -->
-                <div class="row g-2 align-items-center">
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p1-field-1">Field, condition 1</label>
-                    <select class="form-select" id="p1-field-1">
-                  <optgroup label="Text and topic">
-                    <option selected>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p1-op-1">Operator, condition 1</label>
-                    <select class="form-select" id="p1-op-1">
-                      <option selected>contains</option>
-                      <option>contains all of</option>
-                      <option>contains any of</option>
-                      <option>does not contain</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <label class="visually-hidden" for="p1-val-1">Words, condition 1</label>
-                    <input type="text" class="form-control" id="p1-val-1" value="quantum computing">
-                  </div>
-                  <div class="col-auto">
-                    <!-- real impl: removes the row server-side and re-renders the list -->
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Remove condition 1: any field contains quantum computing">
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">1</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Words or topic</p>
+            <p class="mb-0 small text-muted">Any searchable text</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p1-op-1">Operator, condition 1</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-1">
+              <option selected>contains</option>
+              <option>contains all of</option>
+              <option>contains any of</option>
+              <option>does not contain</option>
+            </select>
+            <label class="visually-hidden" for="p1-val-1">Words, condition 1</label>
+            <input type="text" class="form-control form-control-sm" id="p1-val-1"
+              value="quantum computing">
+          </div>
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 1: any field contains quantum computing">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
 
-                <p class="small text-muted my-2">and</p>
+        <p class="bt-query-builder__and">and</p>
 
-                <!-- ── Conditions 2 and 3 — two person rows are a co-author query ──────────
-                     DESIGN item 0: 14% of replayed traffic. This pair never collapses into
-                     one "is any of" list, and the readback below reads "and", not "any of".
-                     The role select is how the legacy author / editor / promoter fields
-                     disappear into raven's one contributors list. -->
-                <div class="row g-2 align-items-center">
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p1-field-2">Field, condition 2</label>
-                    <select class="form-select" id="p1-field-2">
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option selected>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p1-op-2">Operator, condition 2</label>
-                    <select class="form-select" id="p1-op-2">
-                      <option selected>is</option>
-                      <option>is not</option>
-                      <option>is any of</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <div class="row g-2">
-                      <div class="col-12 col-lg-7">
-                        <label class="visually-hidden" for="p1-val-2">Person, condition 2</label>
-                        <!-- real impl: person typeahead resolving to a person id (people-search.js) -->
-                        <input type="text" class="form-control" id="p1-val-2" value="Coppens, Jan (UGent)">
-                      </div>
-                      <div class="col-12 col-lg-5">
-                        <label class="visually-hidden" for="p1-role-2">Role, condition 2</label>
-                        <select class="form-select" id="p1-role-2">
-                          <option selected>in any role</option>
-                          <option>as author</option>
-                          <option>as editor</option>
-                          <option>as supervisor</option>
-                          <option>as translator</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-auto">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Remove condition 2: contributor is Coppens, Jan">
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">2</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Contributor</p>
+            <p class="mb-0 small text-muted">Person, any role by default</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p1-op-2">Operator, condition 2</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-2">
+              <option selected>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+            </select>
+            <label class="visually-hidden" for="p1-val-2">Person, condition 2</label>
+            <input type="text" class="form-control form-control-sm" id="p1-val-2"
+              value="Coppens, Jan (UGent)">
+            <label class="visually-hidden" for="p1-role-2">Role, condition 2</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-role-2">
+              <option selected>in any role</option>
+              <option>as author</option>
+              <option>as editor</option>
+              <option>as supervisor</option>
+              <option>as translator</option>
+            </select>
+            <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="collapse"
+              data-bs-target="#p1-name-parts-2" aria-expanded="false"
+              aria-controls="p1-name-parts-2">
+              Name parts
+              <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+            </button>
+            <div class="collapse bt-query-builder__name-parts" id="p1-name-parts-2">
+              <label class="visually-hidden" for="p1-first-name-2">First name, condition 2</label>
+              <input type="text" class="form-control form-control-sm" id="p1-first-name-2"
+                placeholder="First name">
+              <label class="visually-hidden" for="p1-middle-name-2">Middle name or initials, condition 2</label>
+              <input type="text" class="form-control form-control-sm" id="p1-middle-name-2"
+                placeholder="Initials">
+              <label class="visually-hidden" for="p1-last-name-2">Last name, condition 2</label>
+              <input type="text" class="form-control form-control-sm" id="p1-last-name-2"
+                placeholder="Last name">
+            </div>
+          </div>
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 2: contributor is Coppens, Jan">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
 
-                <p class="small text-muted my-2">and</p>
+        <p class="bt-query-builder__and">and</p>
 
-                <div class="row g-2 align-items-center">
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p1-field-3">Field, condition 3</label>
-                    <select class="form-select" id="p1-field-3">
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option selected>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p1-op-3">Operator, condition 3</label>
-                    <select class="form-select" id="p1-op-3">
-                      <option selected>is</option>
-                      <option>is not</option>
-                      <option>is any of</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <div class="row g-2">
-                      <div class="col-12 col-lg-7">
-                        <label class="visually-hidden" for="p1-val-3">Person, condition 3</label>
-                        <input type="text" class="form-control" id="p1-val-3" value="Verhoeven, Karen (UGent)">
-                      </div>
-                      <div class="col-12 col-lg-5">
-                        <label class="visually-hidden" for="p1-role-3">Role, condition 3</label>
-                        <select class="form-select" id="p1-role-3">
-                          <option selected>in any role</option>
-                          <option>as author</option>
-                          <option>as editor</option>
-                          <option>as supervisor</option>
-                          <option>as translator</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-auto">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Remove condition 3: contributor is Verhoeven, Karen">
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">3</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Contributor</p>
+            <p class="mb-0 small text-muted">Any of several people</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p1-op-3">Operator, condition 3</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-3">
+              <option>is</option>
+              <option>is not</option>
+              <option selected>is any of</option>
+            </select>
+            <div class="bt-query-builder__people-field" data-people-search>
+              <div class="bt-query-builder__people-input">
+                <span class="bt-query-builder__person-token">
+                  Coppens, Jan
+                  <button type="button" aria-label="Remove Coppens, Jan from condition 3">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </span>
+                <span class="bt-query-builder__person-token">
+                  Verhoeven, Karen
+                  <button type="button" aria-label="Remove Verhoeven, Karen from condition 3">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </span>
+                <label class="visually-hidden" for="p1-val-3">Add person, condition 3</label>
+                <input type="search" class="bt-query-builder__people-search" id="p1-val-3"
+                  data-ps-input placeholder="Add another person..." autocomplete="off">
+              </div>
+              <div data-ps-results class="people-results" role="listbox"
+                aria-label="People matching condition 3" hidden></div>
+              <p data-ps-hint class="form-text mb-0">
+                Search by name or ORCID. Selected people stay as pills in this condition.
+              </p>
+            </div>
+            <label class="visually-hidden" for="p1-role-3">Role, condition 3</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-role-3">
+              <option selected>in any role</option>
+              <option>as author</option>
+              <option>as editor</option>
+              <option>as supervisor</option>
+              <option>as translator</option>
+            </select>
+          </div>
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 3: contributor is Verhoeven, Karen">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
 
-                <p class="form-text mt-1 mb-0">
-                  Two contributor conditions find the works these people wrote together. To find works
-                  by either of them, use one condition with <em>is any of</em>.
-                </p>
+        <p class="form-text mt-1 mb-0">
+          Separate contributor rows find works these people wrote together. Person pills inside
+          one contributor row find works by any selected person.
+        </p>
 
-                <p class="small text-muted my-2">and</p>
+        <p class="bt-query-builder__and">and</p>
 
-                <!-- ── Condition 4 — year range ────────────────────────────────────────────
-                     The operator list is where >= and > stay distinguishable in plain
-                     language: "is at least" vs "is after". -->
-                <div class="row g-2 align-items-center">
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p1-field-4">Field, condition 4</label>
-                    <select class="form-select" id="p1-field-4">
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option selected>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p1-op-4">Operator, condition 4</label>
-                    <select class="form-select" id="p1-op-4">
-                      <option>is</option>
-                      <option>is not</option>
-                      <option>is any of</option>
-                      <option selected>is between</option>
-                      <option>is at least</option>
-                      <option>is at most</option>
-                      <option>is after</option>
-                      <option>is before</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <div class="row g-2 align-items-center">
-                      <div class="col">
-                        <label class="visually-hidden" for="p1-val-4-from">First year, condition 4</label>
-                        <input type="number" class="form-control" id="p1-val-4-from" value="2015" min="1800" max="2100">
-                      </div>
-                      <div class="col-auto"><span class="small text-muted">and</span></div>
-                      <div class="col">
-                        <label class="visually-hidden" for="p1-val-4-to">Last year, condition 4</label>
-                        <input type="number" class="form-control" id="p1-val-4-to" value="2020" min="1800" max="2100">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-auto">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Remove condition 4: publication year is between 2015 and 2020">
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">4</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Publication year</p>
+            <p class="mb-0 small text-muted">Range or exact year</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p1-op-4">Operator, condition 4</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-4">
+              <option>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+              <option selected>is between</option>
+              <option>is at least</option>
+              <option>is at most</option>
+              <option>is after</option>
+              <option>is before</option>
+            </select>
+            <label class="visually-hidden" for="p1-val-4-from">First year, condition 4</label>
+            <input type="number" class="form-control form-control-sm bt-query-builder__year"
+              id="p1-val-4-from" value="2015" min="1800" max="2100">
+            <span class="small text-muted">and</span>
+            <label class="visually-hidden" for="p1-val-4-to">Last year, condition 4</label>
+            <input type="number" class="form-control form-control-sm bt-query-builder__year"
+              id="p1-val-4-to" value="2020" min="1800" max="2100">
+          </div>
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 4: publication year is between 2015 and 2020">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
 
-                <p class="small text-muted my-2">and</p>
+        <p class="bt-query-builder__and">and</p>
 
-                <!-- ── Condition 5 — "is not" is a phase 1 operator, not an afterthought ──
-                     178 real queries (5.0%), most of them on full text access. This is also
-                     the condition the facet rail cannot express, which is why the sidebar
-                     needs a state for "held by an advanced condition". -->
-                <div class="row g-2 align-items-center">
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p1-field-5">Field, condition 5</label>
-                    <select class="form-select" id="p1-field-5">
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">5</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Full text access</p>
+            <p class="mb-0 small text-muted">Access condition</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p1-op-5">Operator, condition 5</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-5">
+              <option>is</option>
+              <option selected>is not</option>
+              <option>is any of</option>
+            </select>
+            <label class="visually-hidden" for="p1-val-5">Access, condition 5</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-val-5">
+              <option selected>Open access</option>
+              <option>Restricted</option>
+              <option>Under embargo</option>
+              <option>No full text</option>
+            </select>
+          </div>
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 5: full text access is not open access">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <p class="bt-query-builder__and">and</p>
+
+        <div class="bt-query-builder__row bt-query-builder__row--batch">
+          <div class="bt-query-builder__row-number" aria-hidden="true">6</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Biblio ID</p>
+            <p class="mb-0 small text-muted">Pasted list</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p1-op-6">Operator, condition 6</label>
+            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-6">
+              <option>is</option>
+              <option selected>is any of</option>
+            </select>
+            <label class="visually-hidden" for="p1-val-6">Biblio IDs, condition 6</label>
+            <textarea class="form-control form-control-sm font-monospace bt-query-builder__batch"
+              id="p1-val-6" rows="3" aria-describedby="p1-val-6-help">01K000000000 01K002F3EYDH 01K004Y6XWV2 01K007DACV8K 01K009WDVSP4 01K00CBHAR3N 01K00ETMSPH6 01K00H9R8MYQ 01K00KRVQKC8 01K00P7Z6HSS 01K00RQ2NG7A 01K00V664EMV</textarea>
+            <p class="form-text mb-0" id="p1-val-6-help">
+              763 IDs recognised. Paste a list separated by spaces, commas, or line breaks.
+            </p>
+          </div>
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
+            <button type="button" class="btn btn-ghost btn-sm"
+              aria-label="Remove condition 6: Biblio ID is any of 763 IDs">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <!-- @state -->
+
+        <!-- @state: advanced-empty -->
+        <div class="bt-query-builder__empty">
+          <p class="mb-2 fw-semibold">Start with one condition.</p>
+          <p class="mb-0">
+            Pick the kind of condition first. The builder then shows the operators and
+            value input that belong to that field.
+          </p>
+        </div>
+        <!-- @state -->
+
+        <!-- @state: advanced-group -->
+        <div class="bt-query-builder__group" role="group"
+          aria-labelledby="p2-group-1-label" data-qb-item data-qb-group>
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <p class="h6 mb-0" id="p2-group-1-label">Any of these</p>
+            <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+              Remove group
+            </button>
+          </div>
+
+          <div data-qb-alts>
+            <div class="bt-query-builder__row" data-qb-row>
+              <div class="bt-query-builder__row-number" aria-hidden="true">1a</div>
+              <div class="bt-query-builder__row-kind">
+                <label class="form-label mb-1" for="p2-field-1a">Field</label>
+                <select class="form-select form-select-sm" id="p2-field-1a" data-qb-field>
                   <optgroup label="Text and topic">
                     <option>Any field</option>
                     <option>Title</option>
                     <option>Abstract</option>
                     <option>Keyword</option>
                   </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
                   <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
+                    <option selected>Host publication (journal, book, series)</option>
                     <option>Publisher</option>
-                    <option>Language</option>
                     <option>Publication year</option>
                   </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option selected>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p1-op-5">Operator, condition 5</label>
-                    <select class="form-select" id="p1-op-5">
-                      <option>is</option>
-                      <option selected>is not</option>
-                      <option>is any of</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <label class="visually-hidden" for="p1-val-5">Access, condition 5</label>
-                    <select class="form-select" id="p1-val-5">
-                      <option selected>Open access</option>
-                      <option>Restricted</option>
-                      <option>Under embargo</option>
-                      <option>No full text</option>
-                    </select>
-                  </div>
-                  <div class="col-auto">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Remove condition 5: full text access is not open access">
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
+                </select>
+              </div>
+              <div class="bt-query-builder__phrase">
+                <label class="visually-hidden" for="p2-op-1a">Operator, alternative 1</label>
+                <select class="form-select form-select-sm bt-query-builder__select"
+                  id="p2-op-1a" data-qb-op>
+                  <option selected>is</option>
+                  <option>is not</option>
+                  <option>is any of</option>
+                  <option>contains</option>
+                </select>
+                <label class="visually-hidden" for="p2-val-1a">Value, alternative 1</label>
+                <input type="text" class="form-control form-control-sm" id="p2-val-1a"
+                  data-qb-value value="Nature Photonics">
+              </div>
+              <div class="bt-query-builder__row-actions" data-qb-actions></div>
+            </div>
 
-                <p class="small text-muted my-2">and</p>
+            <p class="bt-query-builder__or" data-qb-sep>or</p>
 
-                <!-- ── Condition 6 — "is any of" with paste ────────────────────────────────
-                     The primary OR affordance: 75% of human ORs are a value list within one
-                     field. Real batches run to 763 values / 9,336 characters, so the value
-                     cell is a scrolling textarea that keeps its row height whatever you
-                     paste — the list grows down inside the box, never sideways through the
-                     layout. Placeholder: the visible list is truncated to 48 identifiers;
-                     the count and the ceiling warning below carry the observed maximum. -->
-                <div class="row g-2 align-items-start">
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p1-field-6">Field, condition 6</label>
-                    <select class="form-select" id="p1-field-6">
+            <div class="bt-query-builder__row" data-qb-row>
+              <div class="bt-query-builder__row-number" aria-hidden="true">1b</div>
+              <div class="bt-query-builder__row-kind">
+                <label class="form-label mb-1" for="p2-field-1b">Field</label>
+                <select class="form-select form-select-sm" id="p2-field-1b" data-qb-field>
                   <optgroup label="Text and topic">
                     <option>Any field</option>
                     <option>Title</option>
                     <option>Abstract</option>
                     <option>Keyword</option>
                   </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
                   <optgroup label="Publication">
-                    <option>Type</option>
                     <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
+                    <option selected>Publisher</option>
                     <option>Publication year</option>
                   </optgroup>
-                  <optgroup label="Identifiers">
-                    <option selected>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p1-op-6">Operator, condition 6</label>
-                    <select class="form-select" id="p1-op-6">
-                      <option>is</option>
-                      <option selected>is any of</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <label class="visually-hidden" for="p1-val-6">Biblio IDs, condition 6</label>
-                    <textarea class="form-control font-monospace" id="p1-val-6" rows="4"
-                      aria-describedby="p1-val-6-help">01K000000000 01K002F3EYDH 01K004Y6XWV2 01K007DACV8K 01K009WDVSP4 01K00CBHAR3N 01K00ETMSPH6 01K00H9R8MYQ 01K00KRVQKC8 01K00P7Z6HSS 01K00RQ2NG7A 01K00V664EMV 01K00XNK9D2C 01K0104D2BFX 01K012KGH9XE 01K0152M08AZ 01K017HQF6RG 01K01A0TY561 01K01CFYD3KJ 01K01EZ1W213 01K01HE5B0EM 01K01KX8SYW5 01K01PCC8X9P 01K01RVFQVQ7 01K01VAK6T4R 01K01XSPNRJ9 01K0208T4PZT 01K022QXKNDB 01K025712KTW 01K027P4HJ8D 01K02A580GNY 01K02CMBFF3F 01K02F3EYDH0 01K02HJJDBYH 01K02M1NWAC2 01K02PGSB8SK 01K02RZWT774 01K02VF095MN 01K02XY3R426 01K030D772FQ 01K032WAP0X8 01K035BE4ZAS 01K037THKXRA 01K03A9N2W5V 01K03CRRHTKC 01K03F7W0S0X 01K03HPZFQEE 01K03M62YNVZ</textarea>
-                    <p class="form-text mb-0" id="p1-val-6-help">
-                      763 IDs recognised. Paste a list separated by spaces, commas, or line breaks.
-                    </p>
-                  </div>
-                  <div class="col-auto">
-                    <button type="button" class="btn btn-ghost btn-sm"
-                      aria-label="Remove condition 6: Biblio ID is any of 763 IDs">
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-          <!-- @state -->
-          <!-- @state: advanced-group -->
+                </select>
+              </div>
+              <div class="bt-query-builder__phrase">
+                <label class="visually-hidden" for="p2-op-1b">Operator, alternative 2</label>
+                <select class="form-select form-select-sm bt-query-builder__select"
+                  id="p2-op-1b" data-qb-op>
+                  <option selected>is</option>
+                  <option>is not</option>
+                  <option>is any of</option>
+                  <option>contains</option>
+                </select>
+                <label class="visually-hidden" for="p2-val-1b">Value, alternative 2</label>
+                <input type="text" class="form-control form-control-sm" id="p2-val-1b"
+                  data-qb-value value="Springer">
+              </div>
+              <div class="bt-query-builder__row-actions" data-qb-actions></div>
+            </div>
+          </div>
 
-                <!-- ── PHASE 2 — OR rule groups, AND-first ────────────────────────────────
-                     The top level stays AND-joined rows. A row can be an "any of these"
-                     group, one level deep. No per-row AND/OR toggle, no free nesting.
-                     Drawn case: golden C3.09 — (host publication OR publisher) AND year.
+          <div class="mt-3">
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt>
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add an alternative
+            </button>
+          </div>
+        </div>
 
-                     This state is clickable: query-builder.js turns a row into a group and
-                     back, and keeps the sentence under "Your query" in sync. Every action
-                     sits on the thing it acts on — "Add an alternative" on the row, "Remove
-                     group" on the group, "Add condition" under the list for a new AND row.
-                     Interaction, collapse and delete rules: docs/wip/QUERY-BUILDER-PHASE-2.md -->
-                <div class="border rounded-3 p-3 bt-bg-alt" role="group"
-                  aria-labelledby="p2-group-1-label" data-qb-item data-qb-group>
-                  <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-                    <p class="h6 mb-0" id="p2-group-1-label">Any of these</p>
-                    <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
-                      <i class="if if-close if--xs" aria-hidden="true"></i>
-                      Remove group
-                    </button>
-                  </div>
+        <p class="bt-query-builder__and" data-qb-sep>and</p>
 
-                  <div data-qb-alts>
-                    <div class="row g-2 align-items-center" data-qb-row>
-                      <div class="col-12 col-md-4">
-                        <label class="visually-hidden" for="p2-field-1a">Field, alternative 1</label>
-                        <select class="form-select" id="p2-field-1a" data-qb-field>
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                        </select>
-                      </div>
-                      <div class="col-7 col-md-3">
-                        <label class="visually-hidden" for="p2-op-1a">Operator, alternative 1</label>
-                        <select class="form-select" id="p2-op-1a" data-qb-op>
-                          <option selected>is</option>
-                          <option>is not</option>
-                          <option>is any of</option>
-                          <option>contains</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md">
-                        <label class="visually-hidden" for="p2-val-1a">Value, alternative 1</label>
-                        <input type="text" class="form-control" id="p2-val-1a" data-qb-value value="Nature Photonics">
-                      </div>
-                      <div class="col-auto d-flex gap-1" data-qb-actions>
-                        <!-- filled by query-builder.js: [Add an alternative] [remove] on a row,
-                             [remove] alone inside a group -->
-                      </div>
-                    </div>
+        <div class="bt-query-builder__row" data-qb-row data-qb-item>
+          <div class="bt-query-builder__row-number" aria-hidden="true">2</div>
+          <div class="bt-query-builder__row-kind">
+            <label class="form-label mb-1" for="p2-field-2">Field</label>
+            <select class="form-select form-select-sm" id="p2-field-2" data-qb-field>
+              <optgroup label="Publication">
+                <option selected>Publication year</option>
+                <option>Type</option>
+                <option>Publisher</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="p2-op-2">Operator, condition 2</label>
+            <select class="form-select form-select-sm bt-query-builder__select"
+              id="p2-op-2" data-qb-op>
+              <option selected>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+              <option>is between</option>
+            </select>
+            <label class="visually-hidden" for="p2-val-2">Value, condition 2</label>
+            <input type="text" class="form-control form-control-sm" id="p2-val-2"
+              data-qb-value value="2020">
+          </div>
+          <div class="bt-query-builder__row-actions" data-qb-actions></div>
+        </div>
+        <!-- @state -->
+      </div>
 
-                    <div class="row g-2 align-items-center" data-qb-row>
-                      <div class="col-12 col-md-4">
-                        <label class="visually-hidden" for="p2-field-1b">Field, alternative 2</label>
-                        <select class="form-select" id="p2-field-1b" data-qb-field>
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                        </select>
-                      </div>
-                      <div class="col-7 col-md-3">
-                        <label class="visually-hidden" for="p2-op-1b">Operator, alternative 2</label>
-                        <select class="form-select" id="p2-op-1b" data-qb-op>
-                          <option selected>is</option>
-                          <option>is not</option>
-                          <option>is any of</option>
-                          <option>contains</option>
-                        </select>
-                      </div>
-                      <div class="col-12 col-md">
-                        <label class="visually-hidden" for="p2-val-1b">Value, alternative 2</label>
-                        <input type="text" class="form-control" id="p2-val-1b" data-qb-value value="Springer">
-                      </div>
-                      <div class="col-auto d-flex gap-1" data-qb-actions>
-                        <!-- filled by query-builder.js -->
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="mt-3">
-                    <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt>
-                      <i class="if if-add if--xs" aria-hidden="true"></i>
-                      Add an alternative
-                    </button>
-                  </div>
-                </div>
-
-                <div class="row g-2 align-items-center" data-qb-row data-qb-item>
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="p2-field-2">Field, condition 2</label>
-                    <select class="form-select" id="p2-field-2" data-qb-field>
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option selected>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="p2-op-2">Operator, condition 2</label>
-                    <select class="form-select" id="p2-op-2" data-qb-op>
-                      <option selected>is</option>
-                      <option>is not</option>
-                      <option>is any of</option>
-                      <option>is between</option>
-                      <option>is at least</option>
-                      <option>is at most</option>
-                      <option>is after</option>
-                      <option>is before</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <label class="visually-hidden" for="p2-val-2">Value, condition 2</label>
-                    <input type="number" class="form-control" id="p2-val-2" data-qb-value value="2020" min="1800" max="2100">
-                  </div>
-                  <div class="col-auto d-flex gap-1" data-qb-actions>
-                    <!-- filled by query-builder.js -->
-                  </div>
-                </div>
-          <!-- @state -->
-          <!-- @state: advanced-empty -->
-
-                <!-- ── EMPTY — nothing built yet ───────────────────────────────────
-                     Four routes arrive here and all four land in the same place: a first
-                     visit, this standalone URL, "Clear all conditions", and removing the
-                     last row. Phase 2 adds nothing here, so the two phases share this one
-                     empty state: a group is a state of a row, and a row with no value has
-                     no alternative to offer.
-
-                     One empty row, not zero rows: the row is the instruction. Picking the
-                     field is what produces the operator list and the value widget, so the
-                     field select is the first thing under the cursor. The row carries no ×
-                     while it is the only row and still empty — there is nothing to remove,
-                     and a builder you cannot type into stays unreachable. -->
-                <div class="row g-2 align-items-center" data-qb-row data-qb-item>
-                  <div class="col-12 col-md-4">
-                    <label class="visually-hidden" for="empty-field">Field, condition 1</label>
-                    <select class="form-select" id="empty-field" data-qb-field>
-                  <optgroup label="Text and topic">
-                    <option selected>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="People, organizations and projects">
-                    <option>Contributor</option>
-                    <option>Organization</option>
-                    <option>Project</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Type</option>
-                    <option>Host publication (journal, book, series)</option>
-                    <option>Conference name</option>
-                    <option>Publisher</option>
-                    <option>Language</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                  <optgroup label="Identifiers">
-                    <option>Biblio ID</option>
-                    <option>DOI, ISSN, ISBN or handle</option>
-                  </optgroup>
-                  <optgroup label="Full text">
-                    <option>Full text access</option>
-                    <option>Has full text</option>
-                    <option>Embargo</option>
-                    <option>Licence</option>
-                  </optgroup>
-                    </select>
-                  </div>
-                  <div class="col-7 col-md-3">
-                    <label class="visually-hidden" for="empty-op">Operator, condition 1</label>
-                    <select class="form-select" id="empty-op" data-qb-op>
-                      <option selected>contains</option>
-                      <option>contains all of</option>
-                      <option>contains any of</option>
-                      <option>does not contain</option>
-                    </select>
-                  </div>
-                  <div class="col-12 col-md">
-                    <label class="visually-hidden" for="empty-val">Words, condition 1</label>
-                    <input type="text" class="form-control" id="empty-val" data-qb-value value=""
-                      placeholder="A title, a name, a topic, a DOI&hellip;">
-                  </div>
-                  <!-- query-builder.js fills this once the row has a value -->
-                  <div class="col-auto d-flex gap-1" data-qb-actions></div>
-                </div>
-
-                <p class="form-text mt-2 mb-0">
-                  <em>Any field</em> searches titles, abstracts, keywords and contributor names at
-                  once. Choose a different field and the operators and the input follow it.
-                </p>
-          <!-- @state -->
-        </div><!-- /conditions -->
-
-        <div class="d-flex flex-wrap gap-2 mt-3">
-          <!-- Adds an AND row at the top level. An "or" is never added here — it is
-               added on the row it belongs to, which turns that row into a group. -->
-          <button type="button" class="btn btn-secondary btn-sm" data-qb-add-condition>
+      <div class="bt-query-builder__add d-flex flex-wrap gap-2 align-items-center pt-3 mt-3">
+        <div class="dropdown">
+          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+            data-bs-auto-close="outside" aria-expanded="false">
             <i class="if if-add if--xs" aria-hidden="true"></i>
             Add condition
           </button>
+          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-choice-panel>
+            <div class="d-flex gap-3 align-items-start p-3">
+              <div>
+                <p class="h6 mb-1">What do you want to filter?</p>
+                <p class="mb-0 small text-muted">Pick a field. The right controls come next.</p>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-choice-close
+                aria-label="Close condition chooser">
+                <i class="if if-close if--xs" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="bt-query-builder__chooser-search">
+              <label class="visually-hidden" for="qb-condition-search">Search condition fields</label>
+              <i class="if if-search" aria-hidden="true"></i>
+              <input type="search" class="form-control form-control-sm" id="qb-condition-search"
+                placeholder="Search fields" autocomplete="off" data-qb-choice-search>
+            </div>
+            <div class="bt-query-builder__recent d-flex flex-wrap gap-2 align-items-center py-2 px-3"
+              role="group" aria-labelledby="qb-recent-fields">
+              <span class="bt-query-builder__recent-label" id="qb-recent-fields">Recent</span>
+              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
+                data-qb-label="Contributor" data-qb-next="define which contributor to match"
+                data-qb-detail="Search a resolved person, ORCID, or separate first name, initials, and last name."
+                data-qb-example="Coppens, Jan" data-qb-control="person selector with pills">
+                <i class="if if-user-search-line if--xs" aria-hidden="true"></i>
+                Contributor
+              </button>
+              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
+                data-qb-label="Host publication" data-qb-next="choose exact title or text match"
+                data-qb-detail="Journal, book, proceedings, magazine, newspaper, or venue title."
+                data-qb-example="Nature Photonics" data-qb-control="container title selector">
+                <i class="if if-book if--xs" aria-hidden="true"></i>
+                Host publication
+              </button>
+              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
+                data-qb-label="Publication year" data-qb-next="choose exact year, range, before, or after"
+                data-qb-detail="Use one year, a range, or a relative bound."
+                data-qb-example="2015-2020" data-qb-control="year range fields">
+                <i class="if if-calendar if--xs" aria-hidden="true"></i>
+                Publication year
+              </button>
+              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
+                data-qb-label="Identifier" data-qb-next="paste or search identifiers"
+                data-qb-detail="DOI, ISBN, ISSN, handle, ORCID, project key, or Biblio ID."
+                data-qb-example="10.1234/..." data-qb-control="identifier parser">
+                <i class="if if-list-unordered if--xs" aria-hidden="true"></i>
+                Identifier
+              </button>
+            </div>
+            <div class="bt-query-builder__chooser-body">
+              <div class="bt-query-builder__chooser-grid">
+                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-text">
+                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-text">Search text</h4>
+                  <button class="bt-query-builder__choice active" type="button" aria-current="true"
+                    data-qb-choice data-qb-label="Any field"
+                    data-qb-next="define which words should match"
+                    data-qb-detail="Search title, abstract, keywords, identifiers, and other public text."
+                    data-qb-example="quantum computing" data-qb-control="plain search field">
+                    <i class="if if-search" aria-hidden="true"></i>
+                    <span>Any field</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Title" data-qb-next="define how the title should match"
+                    data-qb-detail="Use when the title wording matters more than general topic."
+                    data-qb-example="machine learning" data-qb-control="text field">
+                    <i class="if if-file-text" aria-hidden="true"></i>
+                    <span>Title</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Abstract" data-qb-next="define how the abstract should match"
+                    data-qb-detail="Useful for concepts that may not appear in the title."
+                    data-qb-example="climate adaptation" data-qb-control="text field">
+                    <i class="if if-file-search-line" aria-hidden="true"></i>
+                    <span>Abstract</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Keyword" data-qb-next="define how keywords should match"
+                    data-qb-detail="Search author keywords. Keyword links are one of the measured refinement paths."
+                    data-qb-example="digital humanities" data-qb-control="keyword selector with pills">
+                    <i class="if if-bookmark-line" aria-hidden="true"></i>
+                    <span>Keyword</span>
+                  </button>
+                </section>
 
-          <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-          <!-- Starting over as one act; deleting the rows one by one is the alternative,
-               and it is how the empty state gets reached by accident. -->
-          <button type="button" class="btn btn-ghost btn-sm" data-qb-clear>
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-            Clear all conditions
+                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-people">
+                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-people">People &amp; context</h4>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Contributor" data-qb-next="define which contributor to match"
+                    data-qb-detail="Search a resolved person, ORCID, or separate first name, initials, and last name."
+                    data-qb-example="Coppens, Jan" data-qb-control="person selector with pills">
+                    <i class="if if-user-search-line" aria-hidden="true"></i>
+                    <span>Contributor</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Affiliation" data-qb-next="define how affiliation should match"
+                    data-qb-detail="Choose credited organizations and current person affiliations with clear labels."
+                    data-qb-example="Faculty of Sciences" data-qb-control="organization selector">
+                    <i class="if if-building" aria-hidden="true"></i>
+                    <span>Affiliation</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Project" data-qb-next="choose the project or identifier"
+                    data-qb-detail="Search project title, acronym, GISMO key, IWETO key, or linked output."
+                    data-qb-example="BOF project" data-qb-control="project selector">
+                    <i class="if if-database" aria-hidden="true"></i>
+                    <span>Project</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Supervisor" data-qb-next="define which supervisor to match"
+                    data-qb-detail="A contributor-role shortcut for thesis and dissertation searches."
+                    data-qb-example="Van den Bossche" data-qb-control="person selector with role preset">
+                    <i class="if if-user" aria-hidden="true"></i>
+                    <span>Supervisor</span>
+                  </button>
+                </section>
+
+                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-publication">
+                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-publication">Publication details</h4>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Publication type" data-qb-next="choose one or more types"
+                    data-qb-detail="Journal article, book, dataset, dissertation, and other public types."
+                    data-qb-example="Dataset" data-qb-control="closed value checklist">
+                    <i class="if if-book" aria-hidden="true"></i>
+                    <span>Publication type</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Publication year" data-qb-next="choose exact year, range, before, or after"
+                    data-qb-detail="Use one year, a range, or a relative bound."
+                    data-qb-example="2015-2020" data-qb-control="year range fields">
+                    <i class="if if-calendar" aria-hidden="true"></i>
+                    <span>Publication year</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Host publication" data-qb-next="choose exact title or text match"
+                    data-qb-detail="Journal, book, proceedings, magazine, newspaper, or venue title."
+                    data-qb-example="Nature Photonics" data-qb-control="container title selector">
+                    <i class="if if-file-word" aria-hidden="true"></i>
+                    <span>Host publication</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Publisher" data-qb-next="define the publisher text"
+                    data-qb-detail="Publishing house, issuing institution, platform, or online publication."
+                    data-qb-example="Springer" data-qb-control="text field">
+                    <i class="if if-check-circle" aria-hidden="true"></i>
+                    <span>Publisher</span>
+                  </button>
+                </section>
+
+                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-access">
+                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-access">Access &amp; identifiers</h4>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Full text access" data-qb-next="choose the access state"
+                    data-qb-detail="Filter by open, restricted, embargoed, or missing full text."
+                    data-qb-example="Open access" data-qb-control="closed value checklist">
+                    <i class="if if-lock" aria-hidden="true"></i>
+                    <span>Full text access</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Identifier" data-qb-next="paste or search identifiers"
+                    data-qb-detail="DOI, ISBN, ISSN, handle, ORCID, project key, or Biblio ID."
+                    data-qb-example="10.1234/..." data-qb-control="identifier parser">
+                    <i class="if if-list-unordered" aria-hidden="true"></i>
+                    <span>Identifier</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Classification" data-qb-next="choose a classification scheme"
+                    data-qb-detail="A1/A2/B1 and other public classification schemes."
+                    data-qb-example="A1" data-qb-control="scheme and value selector">
+                    <i class="if if-grid" aria-hidden="true"></i>
+                    <span>Classification</span>
+                  </button>
+                  <button class="bt-query-builder__choice" type="button" data-qb-choice
+                    data-qb-label="Research discipline" data-qb-next="choose a discipline term"
+                    data-qb-detail="Use configured discipline vocabularies; free concepts belong in keywords."
+                    data-qb-example="Social sciences" data-qb-control="taxonomy selector">
+                    <i class="if if-filter-3-line" aria-hidden="true"></i>
+                    <span>Research discipline</span>
+                  </button>
+                </section>
+              </div>
+
+              <div class="bt-query-builder__choice-detail" aria-live="polite">
+                <p class="form-label mb-1" data-qb-choice-title>Any field</p>
+                <p class="mb-2" data-qb-choice-detail>
+                  Search title, abstract, keywords, identifiers, and other public text.
+                </p>
+                <p class="mb-0 small text-muted">
+                  Example: <code data-qb-choice-example>quantum computing</code>
+                </p>
+                <p class="mb-0 small text-muted">
+                  Control: <span data-qb-choice-control>plain search field</span>
+                </p>
+              </div>
+            </div>
+            <div class="bt-query-builder__chooser-foot d-flex flex-wrap gap-2 align-items-center p-3">
+              <p class="mb-0 me-auto">
+                Next: <strong data-qb-choice-next>define which words should match</strong>
+              </p>
+              <button type="button" class="btn btn-primary btn-sm" data-qb-add-condition>
+                Continue
+              </button>
+              <button type="button" class="btn btn-ghost btn-sm" data-qb-choice-close>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm">
+          Paste a list
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm">
+          More fields
+        </button>
+        <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-clear>
+          Clear all
+        </button>
+      </div>
+
+      <div class="bt-query-builder__readback">
+        <p class="form-label mb-1">Your query</p>
+        <!-- @state: built results best-bet no-results query-empty advanced-condition -->
+        <p class="mb-0">
+          Research output where any field contains <strong>quantum computing</strong>,
+          contributor is <strong>Coppens, Jan</strong>, contributor is
+          <strong>Verhoeven, Karen</strong>, publication year is <strong>2015-2020</strong>,
+          full text access is not <strong>Open access</strong>, and Biblio ID is any of
+          <strong>763 IDs</strong>.
+        </p>
+        <!-- @state -->
+        <!-- @state: advanced-empty -->
+        <p class="mb-0">No conditions yet.</p>
+        <!-- @state -->
+        <!-- @state: advanced-group -->
+        <p class="mb-0" data-qb-preview>
+          Either host publication is <strong>Nature Photonics</strong> or publisher is
+          <strong>Springer</strong>, and publication year is <strong>2020</strong>.
+        </p>
+        <!-- @state -->
+      </div>
+    </div>
+
+    <aside class="bt-query-builder__handoff" aria-labelledby="qb-handoff-heading">
+      <div class="bt-query-builder__handoff-header">
+        <p class="form-label mb-1" id="qb-handoff-heading">Share this set</p>
+        <p class="mb-0 small text-muted">Same query, different handoff.</p>
+      </div>
+
+      <ul class="nav nav-tabs nav-fill" id="qb-handoff-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="qb-link-tab" data-bs-toggle="tab"
+            data-bs-target="#qb-link-panel" type="button" role="tab"
+            aria-controls="qb-link-panel" aria-selected="true">Link</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="qb-embed-tab" data-bs-toggle="tab"
+            data-bs-target="#qb-embed-panel" type="button" role="tab"
+            aria-controls="qb-embed-panel" aria-selected="false">Embed</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="qb-api-tab" data-bs-toggle="tab"
+            data-bs-target="#qb-api-panel" type="button" role="tab"
+            aria-controls="qb-api-panel" aria-selected="false">API</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="qb-feed-tab" data-bs-toggle="tab"
+            data-bs-target="#qb-feed-panel" type="button" role="tab"
+            aria-controls="qb-feed-panel" aria-selected="false">Feed</button>
+        </li>
+      </ul>
+
+      <div class="tab-content bt-query-builder__handoff-body" id="qb-handoff-tabs-content">
+        <div class="tab-pane fade show active" id="qb-link-panel" role="tabpanel"
+          aria-labelledby="qb-link-tab" tabindex="0">
+          <code class="bt-query-builder__code" id="qb-link-value">https://biblio.ugent.be/search?advanced={query}&amp;sort=newest</code>
+          <button type="button" class="btn btn-primary btn-sm w-100" data-clipboard
+            data-clipboard-target="#qb-link-value">
+            <i class="if if-copy if--xs" aria-hidden="true"></i>
+            <span class="btn-text">Copy link</span>
           </button>
-          <!-- @state -->
         </div>
 
-        <!-- ═══ Your query — the readback ══════════════════════════════════════════
-             The sentence is a readback of what the user just typed, so it is not
-             announced: the count is the answer, and the count lives in the footer where
-             it stays on screen. Human labels throughout, copyable (DESIGN item 5).
-
-             One request feeds count and readback: a page-size-0 index query, fired on
-             complete conditions only, debounced, superseded requests cancelled (DESIGN
-             item 3). Without it the builder stays fully usable. -->
-        <section aria-labelledby="query-heading" class="border rounded-3 p-3 p-md-4 mt-5 bt-bg-alt">
-          <h3 id="query-heading" class="h5 mb-3">Your query</h3>
-
-          <div id="qb-readback"
-            hx-get="/search/query-readout"
-            hx-trigger="change from:#qb-conditions delay:500ms"
-            hx-target="this"
-            hx-swap="innerHTML"
-            hx-indicator="#qb-updating">
-          <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-                <p class="mb-0" id="qb-preview">
-                  Any field contains <span class="badge text-bg-primary-light">quantum computing</span>
-                  and contributor is <span class="badge text-bg-primary-light">Coppens, Jan</span>
-                  and contributor is <span class="badge text-bg-primary-light">Verhoeven, Karen</span>
-                  and publication year is between <span class="badge text-bg-primary-light">2015</span>
-                  and <span class="badge text-bg-primary-light">2020</span>
-                  and full text access is not <span class="badge text-bg-primary-light">Open access</span>
-                  and Biblio ID is any of <span class="badge text-bg-primary-light">763 IDs</span>
-                </p>
-          <!-- @state -->
-          <!-- @state: advanced-group -->
-                <!-- A group reads as "either A or B" inside the one sentence; the top level
-                     keeps joining with "and". Shared conditions are never duplicated. -->
-                <p class="mb-0" id="qb-preview-p2" data-qb-preview>
-                  Either host publication is <span class="badge text-bg-primary-light">Nature Photonics</span>
-                  or publisher is <span class="badge text-bg-primary-light">Springer</span>,
-                  and publication year is <span class="badge text-bg-primary-light">2020</span>
-                </p>
-          <!-- @state -->
-          <!-- @state: advanced-empty -->
-                <p class="mb-0">
-                  No conditions yet, so this is all of Biblio — the same list <em>Research output</em>
-                  shows. Add a condition and watch the number below fall.
-                </p>
-          <!-- @state -->
+        <div class="tab-pane fade" id="qb-embed-panel" role="tabpanel"
+          aria-labelledby="qb-embed-tab" tabindex="0">
+          <code class="bt-query-builder__code" id="qb-embed-value">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" title="Research output — Biblio UGent"&gt;&lt;/iframe&gt;</code>
+          <div class="d-flex gap-2">
+            <select class="form-select form-select-sm" aria-label="Embed citation style">
+              <option selected>APA</option>
+              <option>MLA</option>
+              <option>Chicago</option>
+            </select>
+            <select class="form-select form-select-sm" aria-label="Embed sort order">
+              <option selected>Newest first</option>
+              <option>Oldest first</option>
+              <option>Title A-Z</option>
+            </select>
           </div>
+        </div>
 
-          <p class="htmx-indicator small text-muted mt-2 mb-0" id="qb-updating">
-            Updating the count&hellip;
-          </p>
+        <div class="tab-pane fade" id="qb-api-panel" role="tabpanel"
+          aria-labelledby="qb-api-tab" tabindex="0">
+          <code class="bt-query-builder__code" id="qb-api-value">https://biblio.ugent.be/api/works?{query}&amp;format=jsonl</code>
+          <button type="button" class="btn btn-ghost btn-sm w-100" data-clipboard
+            data-clipboard-target="#qb-api-value">
+            <i class="if if-copy if--xs" aria-hidden="true"></i>
+            <span class="btn-text">Copy API URL</span>
+          </button>
+        </div>
 
-          <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-          <div class="mt-3">
-            <button type="button" class="btn btn-outline-secondary btn-sm"
-              data-clipboard data-clipboard-target="#qb-readback">
-              <i class="if if-copy" aria-hidden="true"></i>
-              <span class="btn-text">Copy query</span>
-            </button>
-          </div>
-          <!-- @state -->
+        <div class="tab-pane fade" id="qb-feed-panel" role="tabpanel"
+          aria-labelledby="qb-feed-tab" tabindex="0">
+          <code class="bt-query-builder__code" id="qb-feed-value">https://biblio.ugent.be/feed/search?{query}</code>
+          <button type="button" class="btn btn-ghost btn-sm w-100" data-clipboard
+            data-clipboard-target="#qb-feed-value">
+            <i class="if if-rss-fill if--xs" aria-hidden="true"></i>
+            <span class="btn-text">Copy feed URL</span>
+          </button>
+        </div>
+      </div>
 
-          <!-- ── The query-length ceiling ──────────────────────────────────────────
-               A fact about the query, so it sits beside the query rather than in an
-               actions panel. A query string stops resolving reliably past about 2,000
-               characters and the biggest real query reaches 9,336 (763 pasted IDs); 34
-               real queries pass 2,000 today. What the UI needs from raven: a readable,
-               hand-editable link by default, and a short saved id as the overflow. Which
-               mechanism carries it is raven's call. -->
-          <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-              <div class="alert alert-warning mt-4 mb-0">
-                <h3 class="h6">This search is too long to travel in a link</h3>
-                <p class="mb-0">
-                  It carries 763 pasted IDs, close to 10,000 characters, and a link, an embed and
-                  an API call all carry the query the same way. Show the results, then save the
-                  search from the results toolbar and share the saved link instead.
-                </p>
-              </div>
-          <!-- @state -->
-          <!-- @state: advanced-group -->
-              <div class="alert alert-warning mt-4 mb-0">
-                <h3 class="h6">This search has an &ldquo;any of these&rdquo; group</h3>
-                <p class="mb-0">
-                  Groups become shareable as a link once raven's public URL grammar can write them
-                  down. Until then, show the results and save the search from the results toolbar.
-                </p>
-              </div>
-          <!-- @state -->
-        </section>
-
+      <!-- @state: built results best-bet no-results query-empty advanced-condition -->
+      <div class="alert alert-warning alert--sm mb-0">
+        This pasted list is too long for a durable link. Save the search before sharing.
+      </div>
+      <!-- @state -->
+    </aside>
+  </div>
 </form>

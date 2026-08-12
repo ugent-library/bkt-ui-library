@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function sep(word) {
     const p = document.createElement('p');
-    p.className = 'small text-muted my-2';
+    p.className = word === 'or' ? 'bt-query-builder__or' : 'bt-query-builder__and';
     p.setAttribute('data-qb-sep', '');
     p.textContent = word;
     return p;
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
     seq += 1;
     const labelId = 'qb-group-' + seq;
     const g = document.createElement('div');
-    g.className = 'border rounded-3 p-3 bt-bg-alt';
+    g.className = 'bt-query-builder__group';
     g.setAttribute('role', 'group');
     g.setAttribute('aria-labelledby', labelId);
     g.setAttribute('data-qb-item', '');
@@ -228,4 +228,81 @@ document.addEventListener('DOMContentLoaded', function () {
   list.addEventListener('change', sync);
 
   sync();
+})();
+
+(function () {
+  const panel = document.querySelector('[data-qb-choice-panel]');
+  if (!panel) return;
+
+  const search = panel.querySelector('[data-qb-choice-search]');
+  const choices = Array.from(panel.querySelectorAll('[data-qb-choice]'));
+  const groups = Array.from(panel.querySelectorAll('.bt-query-builder__choice-group'));
+  const title = panel.querySelector('[data-qb-choice-title]');
+  const detail = panel.querySelector('[data-qb-choice-detail]');
+  const example = panel.querySelector('[data-qb-choice-example]');
+  const control = panel.querySelector('[data-qb-choice-control]');
+  const next = panel.querySelector('[data-qb-choice-next]');
+
+  function closePanel() {
+    const toggle = panel.closest('.dropdown')?.querySelector('[data-bs-toggle="dropdown"]');
+    if (toggle && window.bootstrap) bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+  }
+
+  function activate(choice) {
+    choices.forEach(item => {
+      item.classList.toggle('active', item === choice);
+      if (item === choice) item.setAttribute('aria-current', 'true');
+      else item.removeAttribute('aria-current');
+    });
+    if (title) title.textContent = choice.dataset.qbLabel;
+    if (detail) detail.textContent = choice.dataset.qbDetail;
+    if (example) example.textContent = choice.dataset.qbExample;
+    if (control) control.textContent = choice.dataset.qbControl;
+    if (next) next.textContent = choice.dataset.qbNext;
+  }
+
+  function searchableText(choice) {
+    return [
+      choice.dataset.qbLabel,
+      choice.dataset.qbDetail,
+      choice.dataset.qbExample,
+      choice.dataset.qbControl,
+      choice.dataset.qbNext,
+      choice.textContent
+    ].join(' ').toLowerCase();
+  }
+
+  function filter() {
+    const needle = (search?.value || '').trim().toLowerCase();
+    let firstVisible = null;
+
+    choices.forEach(choice => {
+      const show = !needle || searchableText(choice).includes(needle);
+      choice.hidden = !show;
+      if (show && !firstVisible) firstVisible = choice;
+    });
+
+    groups.forEach(group => {
+      group.hidden = !group.querySelector('[data-qb-choice]:not([hidden])');
+    });
+
+    if (firstVisible) activate(firstVisible);
+    else if (title && detail && example && control && next) {
+      title.textContent = 'No matching field';
+      detail.textContent = 'Try a person, year, access, identifier, title, or affiliation.';
+      example.textContent = search?.value || '';
+      control.textContent = 'search';
+      next.textContent = 'search again';
+    }
+  }
+
+  choices.forEach(choice => {
+    choice.addEventListener('click', () => activate(choice));
+  });
+
+  if (search) search.addEventListener('input', filter);
+
+  panel.addEventListener('click', event => {
+    if (event.target.closest('[data-qb-choice-close], [data-qb-add-condition]')) closePanel();
+  });
 })();

@@ -4,7 +4,7 @@
   <header class="ds-page-header col-8">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Query builder</h1>
-    <p class="lead">Advanced search: condition rows in plain language, a live count, and a readable sentence of what you built. One builder for the power tier, replacing both legacy tiers — the advanced form and the expert query language. It exists in two renderings from one source, and the only difference between them is how you leave.</p>
+    <p class="lead">Advanced search: a dense sentence builder for a shareable research set. It keeps condition rows honest — field, operator and value stay visible — and keeps the handoff nearby as Link, Embed, API and Feed. One builder for the power tier, replacing both legacy tiers: the advanced form and the expert query language.</p>
   </header>
 
   <section class="ds-section">
@@ -20,14 +20,14 @@
     <h3 class="h5 mb-2">One exit, because nothing is pending</h3>
     <p class="mb-3">Every complete condition has already updated the URL, so there is nothing to apply and nothing to discard. That removes an apply and cancel pair, a dirty state, and the confirmation that follows it. <em>Show results</em>, Escape and the &times; all do the same thing.</p>
 
-    <h3 class="h5 mb-2">The builder holds conditions, the count and the readback</h3>
-    <p class="mb-0">Save this search and Share were drawn inside it first, on the reasoning that the artifact is the point and closing a dialog to reach it costs steps. That reasoning was too narrow. A query exists whether it was built here or ticked out of the facet rail, and the great majority of searches never open the builder — so keeping these two here alone would leave the common path unable to hand on what it found, while putting them in both places doubles the surface for one action. They also had to open from inside a dialog, which is what raised the panel-inside-a-dialog question in the first place; moving them out dissolves it rather than solving it. So they live once, with the results, in the works page actions group.</p>
+    <h3 class="h5 mb-2">The builder holds the handoff rail</h3>
+    <p class="mb-0">The page is not only a way to reach results; it authors the durable research set someone will bookmark, embed, feed into a tool or send to a colleague. Link, Embed, API and Feed therefore stay visible beside the rows. The count and <em>Show results</em> stay in the pinned exit bar, because they answer the immediate question — does this set match anything, and can I inspect it now? Save remains visible in the handoff rail as the honest answer to long pasted lists that outgrow a durable URL.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The dialog is a URL state</h2>
     <p class="mb-3">Opening it adds <code>&amp;advanced=1</code> to the address, and closing it removes that again. Reload then returns to the builder on the same query instead of a blank list, which matters most after an accidental navigation. Back closes the dialog rather than leaving the page, which is what a full-screen overlay trains people to expect. And the address can be sent to someone: pasting it opens the builder with the query loaded, which is the answer to "how did you get this list?".</p>
-    <p class="mb-0">What <em>Share</em> hands out is deliberately different. The Link tab gives the clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In the prototype <code>query-builder.js</code> pushes and pops that parameter; in production it is <code>hx-push-url</code> and a server-rendered open dialog, so the address works with JavaScript switched off.</p>
+    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In the prototype <code>query-builder.js</code> pushes and pops that parameter; in production it is <code>hx-push-url</code> and a server-rendered open dialog, so the address works with JavaScript switched off.</p>
   </section>
 
   <section class="ds-section">
@@ -56,82 +56,64 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The condition row</h2>
-    <p class="mb-4">Field, operator, value, remove. The chosen field decides which operators are offered and which value widget appears — a static page cannot show that, so each row in the prototype carries one field's operator list and the rows together show the mechanism. Every control has a <code>visually-hidden</code> label naming its row: a bare select among identical selects is unnavigable by ear.</p>
+    <p class="mb-4">A condition row is a phrase with its mechanics exposed: condition type, operator, value, and row actions. The common rows no longer start with the full field registry; they start with a typed condition such as Words, Contributor, Year, Access or Biblio ID. The <em>Field</em> action is where the deeper vocabulary lives. Every control still has a label naming its row: identical selects without row-specific labels are unnavigable by ear.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows, joined by and</h3></div>
       <div class="ds-demo-body">
-        <div class="row g-2 align-items-center">
-          <div class="col-12 col-md-4">
-            <label class="visually-hidden" for="kit-qb-field">Field, condition 1</label>
-            <select class="form-select" id="kit-qb-field">
-              <optgroup label="Text and topic">
-                <option selected>Any field</option>
-                <option>Title</option>
-                <option>Abstract</option>
-                <option>Keyword</option>
-              </optgroup>
-              <optgroup label="People, organizations and projects">
-                <option>Contributor</option>
-                <option>Organization</option>
-                <option>Project</option>
-              </optgroup>
-            </select>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">1</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Words or topic</p>
+            <p class="mb-0 small text-muted">Any searchable text</p>
           </div>
-          <div class="col-7 col-md-3">
+          <div class="bt-query-builder__phrase">
             <label class="visually-hidden" for="kit-qb-op">Operator, condition 1</label>
-            <select class="form-select" id="kit-qb-op">
+            <select class="form-select form-select-sm bt-query-builder__select" id="kit-qb-op">
               <option selected>contains</option>
               <option>contains all of</option>
               <option>contains any of</option>
               <option>does not contain</option>
             </select>
-          </div>
-          <div class="col-12 col-md">
             <label class="visually-hidden" for="kit-qb-val">Words, condition 1</label>
-            <input type="text" class="form-control" id="kit-qb-val" value="quantum computing">
+            <input type="text" class="form-control form-control-sm" id="kit-qb-val" value="quantum computing">
           </div>
-          <div class="col-auto">
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
             <button type="button" class="btn btn-ghost btn-sm"
               aria-label="Remove condition 1: any field contains quantum computing">
               <i class="if if-close if--xs" aria-hidden="true"></i>
             </button>
           </div>
         </div>
-        <p class="small text-muted my-2">and</p>
-        <div class="row g-2 align-items-center">
-          <div class="col-12 col-md-4">
-            <label class="visually-hidden" for="kit-qb-field-2">Field, condition 2</label>
-            <select class="form-select" id="kit-qb-field-2">
-              <optgroup label="Publication">
-                <option selected>Publication year</option>
-                <option>Type</option>
-                <option>Publisher</option>
-              </optgroup>
-            </select>
+        <p class="bt-query-builder__and">and</p>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-number" aria-hidden="true">2</div>
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Publication year</p>
+            <p class="mb-0 small text-muted">Range or exact year</p>
           </div>
-          <div class="col-7 col-md-3">
+          <div class="bt-query-builder__phrase">
             <label class="visually-hidden" for="kit-qb-op-2">Operator, condition 2</label>
-            <select class="form-select" id="kit-qb-op-2">
+            <select class="form-select form-select-sm bt-query-builder__select" id="kit-qb-op-2">
               <option selected>is between</option>
               <option>is at least</option>
               <option>is after</option>
             </select>
+            <label class="visually-hidden" for="kit-qb-from">First year, condition 2</label>
+            <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qb-from" value="2015" min="1800" max="2100">
+            <span class="small text-muted">and</span>
+            <label class="visually-hidden" for="kit-qb-to">Last year, condition 2</label>
+            <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qb-to" value="2020" min="1800" max="2100">
           </div>
-          <div class="col-12 col-md">
-            <div class="row g-2 align-items-center">
-              <div class="col">
-                <label class="visually-hidden" for="kit-qb-from">First year, condition 2</label>
-                <input type="number" class="form-control" id="kit-qb-from" value="2015" min="1800" max="2100">
-              </div>
-              <div class="col-auto"><span class="small text-muted">and</span></div>
-              <div class="col">
-                <label class="visually-hidden" for="kit-qb-to">Last year, condition 2</label>
-                <input type="number" class="form-control" id="kit-qb-to" value="2020" min="1800" max="2100">
-              </div>
-            </div>
-          </div>
-          <div class="col-auto">
+          <div class="bt-query-builder__row-actions">
+            <button type="button" class="btn btn-ghost btn-sm">
+              <i class="if if-edit if--xs" aria-hidden="true"></i>
+              Field
+            </button>
             <button type="button" class="btn btn-ghost btn-sm"
               aria-label="Remove condition 2: publication year is between 2015 and 2020">
               <i class="if if-close if--xs" aria-hidden="true"></i>
@@ -159,7 +141,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The count, and what belongs beside it</h2>
-    <p class="mb-4">The count is the answer the builder produces, so it opens the actions bar and carries the only <code>aria-live</code> — the readback sentence is not announced, because that would read someone's own typing back to them. There is no apply and no cancel: every complete condition has already updated the URL, so <em>Show results</em> is the one exit.</p>
+    <p class="mb-4">The count is the answer the builder produces, so it opens the pinned actions bar and carries the only <code>aria-live</code> — the readback sentence is not announced, because that would read someone's own typing back to them. There is no apply and no cancel: every complete condition has already updated the URL, so <em>Show results</em> is the one exit. Link, Embed, API and Feed live in the handoff rail beside the editor, where they stay findable without making the exit bar do two jobs.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Actions bar</h3></div>
@@ -169,14 +151,6 @@
             <p class="h5 mb-0" aria-live="polite">1,284 research outputs match</p>
           </div>
           <div class="bt-toolbar__right">
-            <button type="button" class="btn btn-ghost">
-              <i class="if if-pin" aria-hidden="true"></i>
-              Save this search
-            </button>
-            <button type="button" class="btn btn-ghost">
-              <i class="if if-share" aria-hidden="true"></i>
-              Share
-            </button>
             <button type="button" class="btn btn-primary">
               <i class="if if-search" aria-hidden="true"></i>
               Show results
@@ -186,7 +160,7 @@
       </div>
     </div>
 
-    <p class="mt-4 mb-0">Nothing else is in this bar. Save this search and Share act on the query, and a query exists whether it was built here or ticked out of the facet rail — so they live with the results instead, in the works page's actions group. See <em>Why this layout</em>, decision 4.</p>
+    <p class="mt-4 mb-0">Nothing else is in this bar. The rail beside the rows owns the shareable artifacts; the footer owns the count and the one way back to the result list.</p>
   </section>
 
   <section class="ds-section">
