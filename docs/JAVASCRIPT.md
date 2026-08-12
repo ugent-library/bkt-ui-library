@@ -251,12 +251,13 @@ as rendered while the sentence updates.
 
 ### `sidebar-toggle.js`
 
-**Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync.
+**Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync. Below `xl`, the main sidebar defaults to slim mode so narrow desktop panes keep the work area primary; crossing the `xl` breakpoint after load syncs the sidebar to the new viewport.
 
 **Loaded by:** backoffice pages via `templates/partials/main-sidebar.html`
 
 **Listens for:**
 - Click on `.bt-sidebar__toggle`
+- Viewport query changes: `(max-width: 1199.98px)`
 
 **Dispatches:** nothing
 
