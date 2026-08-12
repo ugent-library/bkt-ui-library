@@ -1,4 +1,4 @@
-// Related research match cards (raven#125) — standard work-card grammar,
+// Related research match cards (#125) — standard work-card grammar,
 // keywords row below the reference line. Shared keywords are highlighted
 // with a visually-hidden text equivalent (never colour alone).
 
