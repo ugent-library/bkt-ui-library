@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 8d14407/2026-08-11 */
+/*! Booktower b3400af/2026-08-12 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -2812,6 +2812,14 @@ img.bt-navbar__logo {
   grid-template-columns: minmax(0, var(--u-main-split-sidebar-width)) minmax(0, 1fr);
 }
 
+.u-main__body--filter-drawer {
+  --u-main-split-sidebar-width: 16rem;
+}
+
+.u-main__body--filter-drawer > .u-main__sidebar.offcanvas-xl {
+  --bs-offcanvas-width: min(22rem, 100vw);
+}
+
 /* Optional sticky footer — pagination, action bar, bulk actions, etc. */
 .u-main__footer {
   grid-row: 3;
@@ -2876,18 +2884,14 @@ img.bt-navbar__logo {
   padding: var(--u-main-pad-y) var(--u-main-pad-x);
 }
 
-@media (max-width: 70rem) {
-  .u-main__body--split {
+@media (max-width: 1199.98px) {
+  .u-main__body--filter-drawer {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
   }
-  .u-main__body--split > .u-main__sidebar {
-    grid-column: 1;
-    max-height: 16rem;
-    border-right: 0;
-    border-bottom: var(--bt-border);
+  .u-main__body--filter-drawer > .u-main__sidebar {
+    padding: 0;
   }
-  .u-main__body--split > .u-main__content {
+  .u-main__body--filter-drawer > .u-main__content {
     grid-column: 1;
   }
 }

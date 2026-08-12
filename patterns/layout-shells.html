@@ -147,20 +147,6 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Topbar height token</h2>
-    <p class="mb-3"><code>--s-topbar-height</code> is set in <code>_surfaces.scss</code>. If the topbar height ever changes, update the token in one place.</p>
-    <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">scss — _surfaces.scss</span><button type="button" class="ds-code-copy">Copy</button></div>
-<pre>
-/* In _layouts.scss — no fallback needed, token is always defined */
-.u-layout--app > .bt-sidebar {
-  top: var(--s-topbar-height);
-  height: calc(100vh - var(--s-topbar-height));
-}</pre>
-    </div>
-  </section>
-
-  <section class="ds-section">
     <h2 class="h4 mb-3">App Anatomy</h2>
     <p class="mb-4">Inside <code>u-layout--app &gt; main</code>, backoffice pages follow a consistent vertical stacking order. Use this to reason about what scrolls and what stays fixed.</p>
     <div class="ds-demo">
@@ -314,6 +300,46 @@
 &lt;/div&gt;</code></pre>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Filter Drawer Split</h2>
+    <p class="mb-3">Backoffice result-list pages can keep the split shell on wide screens and turn the facet pane into an explicit drawer below <code>xl</code>. Use this only for work queues and result lists where filters refine the list; settings, detail pages and section navigation keep the ordinary split body.</p>
+    <div class="ds-code">
+      <div class="ds-code-bar"><span class="ds-code-lang">html — backoffice result list</span><button type="button" class="ds-code-copy">Copy</button></div>
+<pre>&lt;div class="u-main__body u-main__body--split u-main__body--filter-drawer"&gt;
+  &lt;aside class="u-main__sidebar u-main__sidebar--border-right offcanvas-xl offcanvas-start"
+    tabindex="-1" id="result-filters" aria-label="Filter by"&gt;
+    &lt;div class="offcanvas-header d-xl-none border-bottom"&gt;
+      &lt;h2 class="h5 mb-0"&gt;Filters&lt;/h2&gt;
+      &lt;button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+        data-bs-target="#result-filters" aria-label="Close filters"&gt;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="offcanvas-body flex-column p-0"&gt;
+      &lt;div class="p-3"&gt;... facet fieldsets ...&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/aside&gt;
+
+  &lt;section class="u-main__content"&gt;
+    &lt;div class="u-main__content-header"&gt;
+      &lt;button type="button" class="btn btn-secondary btn-sm d-xl-none"
+        data-bs-toggle="offcanvas" data-bs-target="#result-filters"
+        aria-controls="result-filters"&gt;
+        &lt;i class="if if-filter-3-line if--sm" aria-hidden="true"&gt;&lt;/i&gt;
+        Filters
+      &lt;/button&gt;
+      ... search, active filters and readout ...
+    &lt;/div&gt;
+    &lt;div class="u-main__content-body"&gt;... result list ...&lt;/div&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</pre>
+    </div>
+    <div class="border rounded bg-white p-3 mt-3">
+      <p class="small text-uppercase text-muted fw-semibold mb-2">Rules</p>
+      <p class="mb-2">The modifier is page-scoped: <code>u-main__body--filter-drawer</code> belongs beside <code>u-main__body--split</code> only on backoffice result-list pages.</p>
+      <p class="mb-2">The trigger lives in the result-pane header, close to search, active filters, counts and list actions. The list remains the main subject when the pane is narrow.</p>
+      <p class="mb-0">Use Bootstrap's responsive Offcanvas classes for the drawer mechanics; the Booktower modifier only changes the split grid so the result pane takes the full width below <code>xl</code>.</p>
     </div>
   </section>
 

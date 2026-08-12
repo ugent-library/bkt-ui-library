@@ -85,10 +85,22 @@
       </div>
     </div>
 
-    <div class="u-main__body u-main__body--split">
+    <div class="u-main__body u-main__body--split u-main__body--filter-drawer">
 
       <!-- Facet sidebar — researcher variant (no scope, no saved views, no VABB) -->
-      <aside class="u-main__sidebar border-end" aria-label="Filter by">
+      <aside class="u-main__sidebar u-main__sidebar--border-right offcanvas-xl offcanvas-start"
+        tabindex="-1" id="researcher-filters-offcanvas" aria-label="Filter by">
+
+        <div class="offcanvas-header d-xl-none border-bottom">
+          <div>
+            <h2 class="h5 mb-0">Filters</h2>
+            <span class="text-muted small">4,831 research outputs</span>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            data-bs-target="#researcher-filters-offcanvas" aria-label="Close filters"></button>
+        </div>
+
+        <div class="offcanvas-body flex-column p-0">
         <div class="p-3">
 
           <!-- Status — researcher sees own works in all states -->
@@ -211,6 +223,18 @@
           </fieldset>
 
         </div>
+
+        </div>
+
+        <div class="d-xl-none p-3 border-top">
+          <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-ghost text-muted">Clear all</button>
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
+              data-bs-dismiss="offcanvas" data-bs-target="#researcher-filters-offcanvas">
+              Show 4,831 research outputs
+            </button>
+          </div>
+        </div>
       </aside>
 
       <!-- Results -->
@@ -221,6 +245,12 @@
             <label for="search-refine" class="visually-hidden">Search by title, author, DOI</label>
             <!-- real impl: form GET /works?q=… — raven owns search behaviour -->
             <div class="d-flex align-items-center gap-2 mb-3">
+              <button type="button" class="btn btn-secondary btn-sm d-xl-none flex-shrink-0"
+                data-bs-toggle="offcanvas" data-bs-target="#researcher-filters-offcanvas"
+                aria-controls="researcher-filters-offcanvas">
+                <i class="if if-filter-3-line if--sm" aria-hidden="true"></i>
+                Filters
+              </button>
               <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
               <input type="search" id="search-refine" class="form-control form-control-sm border-0 bg-transparent shadow-none"
                 placeholder="Search by title, author, DOI&hellip;">
@@ -229,7 +259,29 @@
 
           <div class="bt-toolbar m-0">
             <div class="bt-toolbar__left">
-              <span class="text-muted small">Showing all</span>
+              <div class="bt-toolbar__item">
+                <span class="text-muted">Filtered by:</span>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is Reviewed">
+                  Status: Reviewed
+                  <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="button" class="badge badge--outline" aria-label="Remove filter: Visibility is Public">
+                  Visibility: Public
+                  <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                </button>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted" aria-live="polite">812 research outputs</span>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="button" class="btn btn-ghost btn-sm text-muted py-0">
+                  Clear all
+                </button>
+              </div>
             </div>
             <!--
             Hidden for now

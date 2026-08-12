@@ -108,6 +108,14 @@
   grid-template-columns: minmax(0, var(--u-main-split-sidebar-width)) minmax(0, 1fr);
 }
 
+.u-main__body--filter-drawer {
+  --u-main-split-sidebar-width: 16rem;
+}
+
+.u-main__body--filter-drawer > .u-main__sidebar.offcanvas-xl {
+  --bs-offcanvas-width: min(22rem, 100vw);
+}
+
 /* Optional sticky footer — pagination, action bar, bulk actions, etc. */
 .u-main__footer {
   grid-row: 3;
@@ -170,6 +178,20 @@
   background: var(--bt-white);
   border-top: var(--bt-border);
   padding: var(--u-main-pad-y) var(--u-main-pad-x);
+}
+
+@media (max-width: 1199.98px) {
+  .u-main__body--filter-drawer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .u-main__body--filter-drawer > .u-main__sidebar {
+    padding: 0;
+  }
+
+  .u-main__body--filter-drawer > .u-main__content {
+    grid-column: 1;
+  }
 }
 
 

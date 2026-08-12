@@ -96,11 +96,23 @@
     </div>
 
     <!-- ══ Body: facet sidebar + results ══ -->
-    <div class="u-main__body u-main__body--split">
+    <div class="u-main__body u-main__body--split u-main__body--filter-drawer">
 
       <!-- ── Facet sidebar ── -->
       <!-- @include: templates/partials/backoffice-facet-sidebar.html (curator variant) -->
-      <aside class="u-main__sidebar u-main__sidebar--border-right" aria-label="Filter by">
+      <aside class="u-main__sidebar u-main__sidebar--border-right offcanvas-xl offcanvas-start"
+        tabindex="-1" id="curator-filters-offcanvas" aria-label="Filter by">
+
+        <div class="offcanvas-header d-xl-none border-bottom">
+          <div>
+            <h2 class="h5 mb-0">Filters</h2>
+            <span class="text-muted small">14 research outputs</span>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            data-bs-target="#curator-filters-offcanvas" aria-label="Close filters"></button>
+        </div>
+
+        <div class="offcanvas-body flex-column p-0">
 
         <div class="p-3">
           <!-- Scope -->
@@ -422,6 +434,18 @@
           </fieldset>
         </div>
 
+        </div>
+
+        <div class="d-xl-none p-3 border-top">
+          <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-ghost text-muted">Clear all</button>
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
+              data-bs-dismiss="offcanvas" data-bs-target="#curator-filters-offcanvas">
+              Show 14 research outputs
+            </button>
+          </div>
+        </div>
+
       </aside>
 
       <!-- ── Results column ── -->
@@ -432,6 +456,14 @@
 
           <div class="bt-toolbar bt-toolbar--bordered">
             <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item d-xl-none">
+                <button type="button" class="btn btn-secondary btn-sm"
+                  data-bs-toggle="offcanvas" data-bs-target="#curator-filters-offcanvas"
+                  aria-controls="curator-filters-offcanvas">
+                  <i class="if if-filter-3-line if--sm" aria-hidden="true"></i>
+                  Filters
+                </button>
+              </div>
               <div class="bt-toolbar__item" role="search" aria-label="Search within research output">
                 <label for="c-search-refine" class="visually-hidden">Search by title, author, DOI</label>
                 <!-- real impl: form GET /works?q=… — raven owns search behaviour -->
