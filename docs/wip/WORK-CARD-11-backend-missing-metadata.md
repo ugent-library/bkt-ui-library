@@ -9,9 +9,9 @@ labels: backend
 
 ## Why
 
-The message blocks in 05 open with a line naming what a record is missing, grouped by
-who needs to act on it. Nobody types that line. Raven needs to model completeness per
-record, ready for fifty cards on a curator's screen at once.
+The message blocks in #191 open with a line naming what a record is missing,
+grouped by who needs to act on it. Nobody types that line. Raven needs to model
+completeness per record, ready for fifty cards on a curator's screen at once.
 
 The groups are responsibility-shaped. The card needs missing items that reflect the
 active work profile, validation rules and the domain vocabulary's backoffice-message
@@ -60,7 +60,7 @@ choice as work still to resolve.
 
 ## Dependencies
 
-Blocks **05**.
+Blocks #191.
 
 Uses the profile system and the backoffice-message rules in
 `docs/DOMAIN-VOCABULARY.md`.

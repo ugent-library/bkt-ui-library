@@ -40,8 +40,8 @@ scan".
 
 ## What
 
-Missing-information blocks are scoped in 05 and 11; this issue reserves the card
-region they occupy.
+Missing-information blocks are scoped in #191 and #190; this issue
+reserves the card region they occupy.
 
 - [ ] Deposit status and record visibility badges
   - four statuses; visibility has a visible label
@@ -51,16 +51,16 @@ region they occupy.
 - [ ] File access as a plain metadata item, in the backoffice's shorter wording:
       "Open", "Restricted", "Embargo \<start date\> – \<end date\> ·
       Private → Open".
-      The public card spells out "Restricted access" (03); a curator scanning a
+      The public card spells out "Restricted access" (#183); a curator scanning a
       column does not need the noun. Embargo duration is out of scope for this issue
 - [ ] Missing metadata that affects scanning can appear in the same row as a compact
       marker, for example "Missing access"; the message blocks carry the full
       responsibility list
 - [ ] Room beside the status and visibility badges for the retracted indicator — the
-      indicator itself is 12
+      indicator itself is #193
 - [ ] The metadata scan line, per the spec doc
 - [ ] A work with no date reads as missing on the scan line; the public line omits
-      the year (02). Primary identity fields such as title do not use this missing
+      the year (#184). Primary identity fields such as title do not use this missing
       marker pattern
 - [ ] Curator card
   - departments; project names with project references; VABB
@@ -69,15 +69,16 @@ region they occupy.
     metadata and when, who last changed it and when, the last system change and
     when (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI") — and the links row
 - [ ] Researcher card — own departments and project names, no VABB
-- [ ] Year, journal and project are filter links in these lists (01)
-- [ ] Contributor names are links, as on the public card (01)
+- [ ] Year, journal and project are filter links in these lists (#180)
+- [ ] Contributor names are links, as on the public card (#180)
 - [ ] Three contributors, then the count alone ("+10 more authors") — the public
-      card's ten names and `et al.` are the reader's form, not the curator's (01)
+      card's ten names and `et al.` are the reader's form, not the curator's (#180)
 - [ ] Card title behavior follows role
   - researcher title is a link to the researcher's own record page
   - curator/reviewer title is plain text so parts of it can be copied; the action
     opens the work view or review flow
-- `out of scope` Message blocks — 05. Action buttons — 06. The table view.
+- `out of scope` Message blocks — #191. Action buttons — #194. The table
+  view.
 
 The prototype covers the **journal-article happy path** on both cards, the action
 matrix, a missing-access example, a dataset golden example, a software candidate
@@ -117,10 +118,10 @@ researcher title links land on [templates/biblio-researcher/work-detail.html](ht
 
 ## Dependencies
 
-- Blocked by **01**, which lands with the public epic.
-- Year links narrow on raven#157; container links need **09**. Project links use
-  raven#159 and the same URL state contract as the rest of the backoffice search.
-- raven#51 is the existing placeholder for the researcher's list page; this is its
+- Blocked by #180, which lands with the public epic #185.
+- Year links narrow on #157; container links need #182. Project links use
+  #159 and the same URL state contract as the rest of the backoffice search.
+- #51 is the existing placeholder for the researcher's list page; this is its
   card half.
 
 ## Open questions

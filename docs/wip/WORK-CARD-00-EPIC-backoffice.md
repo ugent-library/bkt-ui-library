@@ -4,11 +4,10 @@ about: Port a booktower-ui-library prototype into raven
 title: "[epic] Backoffice work card — status, messages, actions"
 ---
 
-> **Ready to file.** The card's loose ends are closed enough for implementation:
+> **Filed as #195.** The card's loose ends are closed enough for implementation:
 > researcher titles open their backoffice detail view, curator/reviewer titles stay
 > plain text for copying, and actions open the relevant work view. The fast lane and
-> proxy role are out of scope for this epic. File the public epic first if 01 is not
-> already filed; 01 blocks 04.
+> proxy role are out of scope for this epic. #185 is filed; #180 blocks #189.
 
 ## Why
 
@@ -65,22 +64,23 @@ View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.h
 
 ## Children
 
-- [ ] **04 — Backoffice card.** Status, visibility, access as text, the scan line,
-      the curator-only rows. Depends on 01.
-- [ ] **05 — Card messages.** Depends on 04 and 11.
-- [ ] **06 — Card actions per role and state.** Depends on 01 and 04.
-- [ ] **12 — Retracted badge**, public and backoffice. Depends on 10.
-- [ ] **10 — `backend` Retraction as a work state.**
-- [ ] **11 — `backend` Missing-metadata lists per record.**
+- [ ] **#189 — Backoffice card.** Status, visibility, access as text, the scan
+      line, the curator-only rows. Depends on #180.
+- [ ] **#191 — Card messages.** Depends on #189 and #190.
+- [ ] **#194 — Card actions per role and state.** Depends on #180 and #189.
+- [ ] **#193 — Retracted badge**, public and backoffice. Depends on #192.
+- [ ] **#192 — `backend` Retraction as a work state.**
+- [ ] **#190 — `backend` Missing-metadata lists per record.**
 
 ## Out of scope
 
-- **The card grammar** — 01, in the public epic. A backoffice row that needs a
-  new region changes 01, never this card alone.
+- **The card grammar** — #180, in the public epic #185. A backoffice row that needs a
+  new region changes #180, never this card alone.
 - **The fast lane** behind "Complete metadata" — the CTA opens the record's edit
   form. The scoped edit view is a separate design, tracked in `notes/TOPLAN.md`.
-- **The proxy role.** Every row in 06 is a researcher's or a curator's. What a proxy
-  sees and may do is its own design, and the card gains its axis when that lands.
+- **The proxy role.** Every row in #194 is a researcher's or a curator's. What
+  a proxy sees and may do is its own design, and the card gains its axis when that
+  lands.
 - **The table view.**
 - **Soft-delete and replaced-by display** — raven has tombstones and merge
   redirects, no display design yet.
@@ -88,10 +88,10 @@ View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.h
 - **Per-field add links** — today's card turns an empty field into an inline link
   where the viewer may edit ("Add document type: full text", "Add department", "Add
   licence"), and plain text where they may not. Parity work, not designed yet;
-  named in 05.
-- **The full retraction notice** on the public detail page — 12 covers the card
-  indicator and public card warning.
-- **Related research / match cards** — 07 replaces raven#125 for the public detail
+  named in #191.
+- **The full retraction notice** on the public detail page — #193 covers the
+  card indicator and public card warning.
+- **Related research / match cards** — #196 replaces #125 for the public detail
   page. It is useful card cleanup, but not required for backoffice parity.
 - **Writing or replying to messages** from the card, and message templates.
 
@@ -99,18 +99,21 @@ View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.h
 
 Checked against open issues, 2026-08-06.
 
-- **raven#51** is a one-line placeholder for the researcher's backoffice search
-  page, self-assigned, pointing at the same prototype 04 does. Either 04 becomes its
-  body or 04 is its child; #51's remaining text is the page, not the card.
-- **raven#125** was never picked up. 07 replaces it as a public-detail follow-up
+- **#51** is a one-line placeholder for the researcher's backoffice search
+  page, self-assigned, pointing at the same prototype #189 does. Either
+  #189 becomes its body or #189 is its child; #51's remaining text is the
+  page, not the card.
+- **#125** was never picked up. #196 replaces it as a public-detail follow-up
   outside this backoffice epic.
-- The public action row is outside this epic, so 06 is the backoffice half only.
+- The public action row is outside this epic, so #194 is the backoffice half
+  only.
 - Nothing covers the curator list card, the message blocks, retraction, or
-  missing-metadata. 04, 05, 10, 11 and 12 are new ground.
+  missing-metadata. #189, #191, #192, #190 and #193 are new
+  ground.
 
 ## Prototype defects to fix on port — do not reproduce
 
-- Two wordings for an embargoed file coexist in the templates. 04 governs the
+- Two wordings for an embargoed file coexist in the templates. #189 governs the
   backoffice form: one item, "Embargo \<start date\> – \<end date\> · Private
   → Open" when both dates and both access levels are available. Duration is out of
   scope for this epic.
@@ -120,5 +123,5 @@ Checked against open issues, 2026-08-06.
 
 One, in its child:
 
-- **Does a retraction carry its own notice text, and who writes it?** (10) Policy —
-  Open Science Policy with the curation lead.
+- **Does a retraction carry its own notice text, and who writes it?** (#192)
+  Policy — Open Science Policy with the curation lead.

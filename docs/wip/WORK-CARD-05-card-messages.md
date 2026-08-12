@@ -92,7 +92,7 @@ View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates
 
 ## Dependencies
 
-- Blocked by **04**, and by **11** for the two missing-items lists.
+- Blocked by #189, and by #190 for the two missing-items lists.
 
 ## Open questions
 

@@ -25,7 +25,7 @@ In raven the line reads as a citation, composed per work type:
 - genre words stay ("PhD thesis.", "Report RPT-42.", "[Preprint]") — each explains
   the field after it;
 - container titles render in `<cite>`, italic, and are filter links on every card
-  (01).
+  (#180).
 
 The gain sits in the non-article types. Ten of the 23 render a bare "(year)" under
 today's template, and nine more keep a line but lose its identifying middle — a
@@ -59,20 +59,20 @@ the date and the kind of work, not by a venue's reputation, so the line has to s
       with whatever it carries
 - [ ] Date precision follows the stored date; a work with no date renders the line
       without a year, and the public card never says a field is missing (the
-      backoffice scan does — 04)
+      backoffice scan does — #189)
 - [ ] Container titles in `<cite>`, italic
 - [ ] Year and container are filter links on every card, landing on the works
-      overview with the filter applied (01)
-- `out of scope` The backoffice metadata scan line — 04
+      overview with the filter applied (#180)
+- `out of scope` The backoffice metadata scan line — #189
 - `out of scope` Today's `?style=` URL feature on biblio.ugent.be, which swaps
   every card in a result list for one pre-rendered citation string (APA, MLA, …) —
   whether raven keeps it is a later decision, pending a discussion and a check of
   whether the feature is actually used
-- `out of scope` What the Cite action opens — raven#141 puts the trigger on the card
+- `out of scope` What the Cite action opens — #141 puts the trigger on the card
 
 The prototype covers **all 23 types** with placeholder data. Lines marked ⚑ in the
-spec carry a field that issue 08 must settle, and wait for it. Dataset and software
-compose one line, so 08 settles them together. We iterate on top.
+spec carry a field that #181 must settle, and wait for it. Dataset and software
+compose one line, so #181 settles them together. We iterate on top.
 Flag ambiguity.
 
 - The spec doc's examples are the shape of each line; how the line is produced is the
@@ -101,11 +101,11 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
 
 ## Dependencies
 
-- Blocked by **01**; by **08** for reference entry, magazine article, newspaper
+- Blocked by #180; by #181 for reference entry, magazine article, newspaper
   article, dataset and software.
-- Year links narrow on raven#157, container on **09**, URL state is raven#156. The
+- Year links narrow on #157, container on #182, URL state is #156. The
   prototype's `?year=` and `?container=` parameters are placeholders, not a proposal —
-  09 matches the container title as stored.
+  #182 matches the container title as stored.
 
 ## Open questions
 
@@ -124,4 +124,4 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
   order plus four exceptions. Options: (a) compose per type, per the spec doc;
   (b) keep one line for every type, as today. Needs a team decision.
 
-What raven does about the ⚑ fields is 08's question.
+What raven does about the ⚑ fields is #181.

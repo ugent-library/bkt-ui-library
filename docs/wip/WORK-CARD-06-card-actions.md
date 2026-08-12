@@ -4,8 +4,8 @@ about: Port a booktower-ui-library prototype into raven
 title: "[backoffice] Work card: actions per role and state"
 ---
 
-> The **public** card's action row is outside this issue: Add to list is raven#166,
-> access CTAs are raven#153, and Cite still needs its own issue. This issue is the
+> The **public** card's action row is outside this issue: Add to list is #166,
+> access CTAs are #153, and Cite still needs its own issue. This issue is the
 > backoffice half, which no issue covers.
 
 ## Why
@@ -54,9 +54,9 @@ identifies the record.
 - [ ] Each action's accessible name carries the record's title
 - [ ] Icon-only actions are fully named to assistive technology
 - [ ] Actions that navigate are links; actions that act on the page are buttons
-- `out of scope` The public action row. Add to list is raven#166; access CTAs are
-  raven#153; Cite still needs its own issue.
-- `out of scope` The curator quick-links row — part of 04
+- `out of scope` The public action row. Add to list is #166; access CTAs are
+  #153; Cite still needs its own issue.
+- `out of scope` The curator quick-links row — part of #189
 - `out of scope` Non-draft delete, soft-delete restore, Send to ORCID, batch actions
 
 The prototype covers **every row listed** in the matrix, plus representative card
@@ -87,7 +87,7 @@ View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates
 
 ## Dependencies
 
-- Blocked by **01** and **04**.
+- Blocked by #180 and #189.
 - Review, Continue, Edit & resubmit, Request changes and View public page each need
   a destination; where a flow does not exist yet the action waits rather than
   shipping as a dead link.

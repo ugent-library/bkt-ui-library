@@ -20,7 +20,7 @@ In raven it is one badge naming the state in words, the same for every reader:
 the public card's whole vocabulary. **Closed access** is for backoffice.
 
 - which state a work is in follows the documented open-access definition —
-  raven#164 owns that; this issue owns how the answer looks;
+  #164 owns that; this issue owns how the answer looks;
 - only open access carries colour;
 - restricted and embargo are correct outcomes rather than warnings, so both render
   neutral and are told apart by their icons;
@@ -58,7 +58,7 @@ works she can open — colour only where the answer is yes.
   - Open access — coloured, open-access icon
   - Restricted access — neutral, lock icon
   - Embargo until \<date\> — neutral, time icon, badge names the date
-- [ ] One badge per work, per the definition in raven#164 — not one per file
+- [ ] One badge per work, per the definition in #164 — not one per file
 - [ ] Files that disagree: the badge shows the most permissive access across them,
       and the earliest release date where all are embargoed. It reads the deposit —
       the full text, the dataset, the software — not supplementary material
@@ -66,10 +66,10 @@ works she can open — colour only where the answer is yes.
   or only closed or private ones.
 - [ ] Every state renders identically logged in, logged out, on and off the UGent
       network — the badge states what the file is, not who the reader is
-- `out of scope` Access as plain text on backoffice cards — 04
-- `out of scope` Which works qualify as open access — raven#164
-- `out of scope` Access CTAs on cards — raven#153
-- `out of scope` The retracted badge — 12, same row, waits on raven modelling
+- `out of scope` Access as plain text on backoffice cards — #189
+- `out of scope` Which works qualify as open access — #164
+- `out of scope` Access CTAs on cards — #153
+- `out of scope` The retracted badge — #193, same row, waits on raven modelling
   retraction
 - `out of scope` Diamond OA and heritage badges — no design yet
 - `out of scope` Withdrawal and takedown — deletion states, not badges; design
@@ -110,8 +110,8 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
 
 ## Dependencies
 
-- Blocked by **01**. Nothing else.
-- raven#164 decides which works qualify as open access; raven#141 settles the file
+- Blocked by #180. Nothing else.
+- #164 decides which works qualify as open access; #141 settles the file
   and access metadata the badge reads. Do not restate either.
 
 ## Open questions

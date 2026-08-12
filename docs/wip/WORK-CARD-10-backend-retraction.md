@@ -28,7 +28,7 @@ mark wherever it appears.
 
 ## Dependencies
 
-Blocks **12**, the retracted indicator on cards.
+Blocks #193, the retracted indicator on cards.
 
 ## Open questions
 

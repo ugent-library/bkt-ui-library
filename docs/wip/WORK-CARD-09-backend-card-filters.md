@@ -16,8 +16,8 @@ A card can link parts of its metadata line to filtered work lists.
 - On a detail page, the link opens the works overview with that filter applied.
 - In a filterable list, the link narrows the current list and updates the URL.
 
-Year is already covered by the sidebar facet in raven#157, and URL state by
-raven#156. Project and keyword filtering belong to raven#159. **Container is the
+Year is already covered by the sidebar facet in #157, and URL state by
+#156. Project and keyword filtering belong to #159. **Container is the
 missing filter**:
 
 - it is the journal, proceedings volume, magazine, newspaper or book; the venue a
@@ -70,15 +70,16 @@ same link to browse, and never needs to know it is a filter.
 
 ## Dependencies
 
-- Blocks the journal link in **01** and **02**, and in **04** when the backoffice
+- Blocks the journal link in #180 and #184, and in #189 when the backoffice
   epic runs.
-- **Year** is a sidebar facet in raven#157; the card's year link narrows on it
+- **Year** is a sidebar facet in #157; the card's year link narrows on it
   rather than on anything new.
-- **Project** is raven#159. Public cards do not show project links; backoffice
-  cards use project links in **04**.
-- **Keyword** is also raven#159. The related-works panel's "more related research"
-  link (07) needs it, including the OR/AND rule for several shared keywords.
-- The URL state contract is raven#156. The prototype's `?year=` and `?container=`
+- **Project** is #159. Public cards do not show project links; backoffice
+  cards use project links in #189.
+- **Keyword** is also #159. The related-works panel's "more related research"
+  link (#196) needs it, including the OR/AND rule for several shared keywords.
+- The URL state contract is #156. The prototype's `?year=` and `?container=`
   parameters are placeholders, not a proposal.
 
-> No screenshot — backend. The links it enables are shown in 01, 02, 04 and 07.
+> No screenshot — backend. The links it enables are shown in #180, #184, #189 and
+> #196.

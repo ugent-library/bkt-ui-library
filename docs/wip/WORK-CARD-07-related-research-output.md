@@ -4,7 +4,7 @@ about: Port a booktower-ui-library prototype into raven
 title: "[public] Work detail: related research output"
 ---
 
-> **Nice-to-have public follow-up.** This replaces raven#125, which was never
+> **Filed as #196.** This nice-to-have public follow-up replaces #125, which was never
 > picked up. It is outside the backoffice work-card epic.
 
 ## Why
@@ -15,12 +15,12 @@ other works: a reader who arrives deep-linked from Google can continue browsing
 without going back to search.
 
 The related item is a normal work card. The reader is scanning works, so the panel
-uses the card grammar from **01** — the same list wrapper and card regions as every
+uses the card grammar from #180 — the same list wrapper and card regions as every
 other public work list — plus one added keyword row that explains why the match is
 there.
 
 The section is public information and should be served with the page. The old
-lazy-load framing from raven#125 is dropped. The match query may still be expensive;
+lazy-load framing from #125 is dropped. The match query may still be expensive;
 cache, precompute, or another backend strategy is Raven's implementation decision.
 
 > **Screenshot:** the related research panel on the work detail page
@@ -30,7 +30,7 @@ cache, precompute, or another backend strategy is Raven's implementation decisio
 
 - [ ] Add a "Related research output" section to public work detail pages
 - [ ] Render up to three related works, ranked by shared-keyword similarity
-- [ ] Render each related work as a standard public work card, per **01**
+- [ ] Render each related work as a standard public work card, per #180
 - [ ] Add a keyword row to each related work card
   - shared keywords are marked and include text for screen readers
   - other displayed keywords remain available as keyword links
@@ -60,7 +60,7 @@ View the [templates/biblio-public/public-work-detail.html](https://bkt-ui.vercel
 ## Acceptance Criteria
 
 - [ ] Matches the prototype at the source-of-truth paths
-- [ ] Related works use the standard public work-card markup from **01**
+- [ ] Related works use the standard public work-card markup from #180
 - [ ] Card titles sit one level below the section heading
 - [ ] Shared keywords have a text equivalent that survives without sight
 - [ ] The section is absent when there are no related works
@@ -70,8 +70,8 @@ View the [templates/biblio-public/public-work-detail.html](https://bkt-ui.vercel
 
 ## Dependencies
 
-- Blocked by **01** for the shared work-card grammar.
-- The "More related research" link depends on raven#159 for keyword filtering and
+- Blocked by #180 for the shared work-card grammar.
+- The "More related research" link depends on #159 for keyword filtering and
   the final URL state.
 - The matching query needs a backend strategy before production if it is too
   expensive to compute on every render.
@@ -87,4 +87,4 @@ View the [templates/biblio-public/public-work-detail.html](https://bkt-ui.vercel
 
 - Should the "More related research" result set match any shared keyword or require
   all shared keywords? The prototype assumes a keyword-filtered works search, but
-  the OR/AND rule belongs with raven#159.
+  the OR/AND rule belongs with #159.

@@ -20,7 +20,7 @@ In raven one grammar serves every work card, and the payload is what varies:
   access and type, and that is all it holds. The backoffice fills the same construct
   more often: departments, projects and VABB are each their own metadata row, and the
   provenance footer holds two more — the Biblio ID with its audit trail, and the
-  curator quick links (04).
+  curator quick links (#189).
 - **the actions row** — sits in the card header, opposite the metadata row.
 - **the title** — always a link, and the text a screen reader announces the card by.
 - **the contributor line** — prose. First name, middle are printed as initials,
@@ -59,7 +59,7 @@ In raven one grammar serves every work card, and the payload is what varies:
   public card, as they stay out of a citation of a thesis; the backoffice card shows
   them as "supervised by".
 - **the reference line** — one line, composed per surface and per work type
-  (see issue 02).
+  (see #184).
 
 Three further rules apply:
 
@@ -91,8 +91,8 @@ public card's contents.**
 
 - The backoffice card is this same card with more on it — extra items and blocks,
   two regions rendered differently.
-- 02, 03 and 09 fill regions now; 04–06 and 12 fill the rest later, without forking
-  the card.
+- #184, #183 and #182 fill regions now; #189, #191,
+  #194 and #193 fill the rest later, without forking the card.
 - A backoffice row that needs a region this contract lacks means changing this
   contract, never adding a one-off region on the backoffice card.
 
@@ -103,17 +103,18 @@ public card's contents.**
 - [ ] Card container: an `<article>` named by its title; `bt-work-card__header`,
       `bt-work-card__body` and `bt-work-card__footer` are the structural wrappers
   - the body also takes block content below the reference line — the backoffice
-    message blocks (05). The five regions define the grammar; the body can hold
-    more
+    message blocks (#191). The five regions define the grammar; the body can
+    hold more
 - [ ] Metadata row — every metadata row on the card
-- [ ] Actions row — contents per 06, raven#141
+- [ ] Actions row — contents per #194, #141
 - [ ] Title — link, accessible name, element per page outline
 - [ ] Contributor line — ten names on both surfaces, then the count; the public card
       puts `et al.` before it. Icons outside the link, visually-hidden identifier text
       inside it, "supervised by" on the backoffice card only
 - [ ] Contributor links — person page where raven holds one, a works search on the
       name (`?q=`) for every other name, on both surfaces. No unlinked contributor
-- [ ] Reference line — composition per 02 (public) and 04 (backoffice)
+- [ ] Reference line — composition per #184 (public) and #189
+      (backoffice)
 - [ ] List wrapper — result cards in an ordered list, one per item
 - [ ] Card filter links — year, container and publisher-as-container, each linked
       wherever the card carries that part, landing on the surface's works overview
@@ -129,7 +130,7 @@ public card's contents.**
 
 They are separate templates today; this contract makes them one. The card keeps the
 actions it has — Cite and Add to list on the public card, review and edit on the
-backoffice — and 06, raven#141 owns its contents.
+backoffice — and #194, #141 owns its contents.
 
 **The markup is shared; the backoffice payload is not.** The public epic puts the
 backoffice card out of scope because status, messages and actions are the sibling
@@ -169,9 +170,10 @@ View the [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.
 
 ## Dependencies
 
-- Blocks 02 and 03 here, and 04, 05, 06 and 12 in the backoffice epic.
-- Filter links: year is raven#157, URL state raven#156, container **09**. Until one
-  lands, render that part as text.
+- Blocks #184 and #183 here, and #189, #191, #194 and
+  #193 in the backoffice epic.
+- Filter links: year is #157, URL state #156, container #182. Until
+  one lands, render that part as text.
 - **Crawler treatment of those links** — `rel="nofollow"`, and whether the works
   overview needs protecting from a faceted crawl trap — belongs to raven's
   `docs/public-site-semantics.md`, audited by Rubric. Decide it there; this issue

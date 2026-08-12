@@ -4,6 +4,8 @@ about: Port a booktower-ui-library prototype into raven
 title: "[epic] Public work card — grammar, reference line, access badge"
 ---
 
+> **Filed as #185.**
+
 ## Why
 
 The public card on biblio.ugent.be today:
@@ -28,7 +30,7 @@ works are listed. Everything today's card shows is kept, but:
 - the year and the container are filter links. From a detail page they open the
   works overview with the filter applied. From a filterable list they narrow the
   current list and update the URL. The container link matches the title string, as
-  public Biblio does today (09).
+  public Biblio does today (#182).
 
 ### Notes on the target groups
 
@@ -47,14 +49,14 @@ View the [works feed](https://bkt-ui.vercel.app/templates/biblio-public/public-w
 
 ## Children
 
-- [ ] **01 — Card grammar and markup contract.** Ships first; the others fill
+- [ ] **#180 — Card grammar and markup contract.** Ships first; the others fill
       regions it defines. Shared with the backoffice epic, which depends on it.
-- [ ] **02 — Public reference line.** One composition per work type, across the 23.
-      Depends on 01, and on 08 for five of them.
-- [ ] **03 — Access badge.** Open, restricted, embargo, closed, and the card that
-      carries none. Depends on 01.
-- [ ] **08 — `backend` Work fields the reference line needs.**
-- [ ] **09 — `backend` Filter works by container.**
+- [ ] **#184 — Public reference line.** One composition per work type, across the 23.
+      Depends on #180, and on #181 for five of them.
+- [ ] **#183 — Access badge.** Open, restricted, embargo, closed, and the card that
+      carries none. Depends on #180.
+- [ ] **#181 — `backend` Work fields the reference line needs.**
+- [ ] **#182 — `backend` Filter works by container.**
 
 Every dependency is a child here or a cited raven issue.
 
@@ -62,16 +64,16 @@ Every dependency is a child here or a cited raven issue.
 
 - **What the backoffice card shows** — status, messages, actions and the scan line
   belong to the backoffice epic, not here. Both surfaces render the same card, and
-  its regions are defined once, in 01, for public and backoffice together. The
+  its regions are defined once, in #180, for public and backoffice together. The
   backoffice fills those regions with its own content instead of building a second
-  card. Where the backoffice needs a region that does not exist yet, add it in 01
+  card. Where the backoffice needs a region that does not exist yet, add it in #180
   so both surfaces get it.
 - **Retraction** — a retracted work stays public, citable and marked on both
-  surfaces, never hidden: the correction is part of the scholarly record (12).
-  The mark waits on raven modelling retraction (10); both sit in the backoffice
+  surfaces, never hidden: the correction is part of the scholarly record (#193).
+  The mark waits on raven modelling retraction (#192); both sit in the backoffice
   epic.
-- **The public action row** — raven#141.
-- **Which works qualify as open access** — raven#164.
+- **The public action row** — #141.
+- **Which works qualify as open access** — #164.
 - **The Diamond OA badge, certification etc.** — not in scope, needs to be decided
   by policy what our focus will be for the next years.
 - **Soft-delete and replaced-by display** — undesigned, and public work too: a
@@ -86,7 +88,7 @@ Every raven view that lists works with a card:
 - the embedded lists on the researcher, organisation and project pages;
 - the related-research panel on a record page.
 
-They are separate templates today; 01 makes them one.
+They are separate templates today; #180 makes them one.
 
 ## Done when
 
@@ -97,18 +99,18 @@ They are separate templates today; 01 makes them one.
   private — carries no badge.
 - The year and the container link on the cards that carry them, and each lands on the
   works overview with that filter applied.
-- 01, 02, 03, 08 and 09 are closed.
+- #180, #184, #183, #181 and #182 are closed.
 
 ## How this lands in raven
 
 Checked against open issues
 
-- raven#155 (public search) puts "work-card + toolbar actions" out of its scope —
+- #155 (public search) puts "work-card + toolbar actions" out of its scope —
   the gap this epic fills. Its children own the year facet (#157), the
-  organisation / keyword filters (#159) and URL state (#156), so 09 is
+  organisation / keyword filters (#159) and URL state (#156), so #182 is
   narrowed to the container. Projects sit on the detail pages, not on cards.
-- raven#141 owns the public action row; raven#164 the open-access definition;
-  raven#167 the lists pages; 07 replaces raven#125 for the related research output
+- #141 owns the public action row; #164 the open-access definition;
+  #167 the lists pages; #196 for the related research output
   section on public work detail pages.
 
 ## Prototype defects to fix on port — do not reproduce
@@ -119,8 +121,8 @@ Checked against open issues
 
 One, in its child:
 
-- **Is the per-type reference line worth building?** (02) Ten of the 23 types render
+- **Is the per-type reference line worth building?** (#184) Ten of the 23 types render
   a bare "(year)" under today's single template, and nine more lose their
   identifying middle. The price is per-type rendering instead of one template. The
-  counts, the options and the case are in 02. You lose context. Dev team can evaluate
+  counts, the options and the case are in #184. You lose context. Dev team can evaluate
   whether this is too high of a cost.

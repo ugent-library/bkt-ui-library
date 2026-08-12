@@ -9,7 +9,7 @@ labels: backend
 
 ## Why
 
-Five reference lines in 02 carry a field raven's registry does not place yet. Raven
+Five reference lines in #184 carry a field raven's registry does not place yet. Raven
 keeps every field old Biblio already carries, so all five need a home in the
 registry: the reference entry's encyclopedia, publisher and pages sit under `misc`
 in old Biblio today, magazine and newspaper articles carry their pages, and the
@@ -20,7 +20,7 @@ Which types and which fields, marked ⚑ in the spec:
 
 ## What
 
-Per field: place it in raven's registry, and feed the line in 02 from the stored
+Per field: place it in raven's registry, and feed the line in #184 from the stored
 value.
 
 - [ ] **Reference entry** — the container title (the encyclopedia or dictionary),
@@ -42,16 +42,16 @@ value.
       model it
 - [ ] A dataset and a software record each render "(2026) Zenodo." from their stored
       publisher, on the public line and the backoffice scan
-- [ ] Each built field renders its line in 02 from real data, not placeholder text
+- [ ] Each built field renders its line in #184 from real data, not placeholder text
 - [ ] No type is given a field it should not carry
 - [ ] `make test` passes
 
 ## Dependencies
 
-Blocks the ⚑ types in **02**. The other 18 types do not wait for this.
+Blocks the ⚑ types in #184. The other 18 types do not wait for this.
 
 ## Open questions
 
 None.
 
-> No screenshot — backend. The lines these fields feed are shown in 02.
+> No screenshot — backend. The lines these fields feed are shown in #184.

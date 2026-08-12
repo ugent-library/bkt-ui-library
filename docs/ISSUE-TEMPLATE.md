@@ -101,7 +101,7 @@ View the [<page>](https://bkt-ui.vercel.app/<template path>)
 ## Dependencies
 
 <!-- Blocked by / blocks: #issue links. A child that is not filed yet is a bare
-     number (02, 09) — `#02` links to raven#2, an unrelated issue. Resolve the
+     number (02, 09) — `#02` links to #2, an unrelated issue. Resolve the
      bare numbers to #links once the issues exist. Delete if none. -->
 
 ## Open questions

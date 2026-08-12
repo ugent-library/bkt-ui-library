@@ -27,7 +27,7 @@ opens, downloads or cites the work.
 - [ ] The work keeps its access badge and reference line
 - [ ] A retracted work stays public and keeps appearing in result lists
 - `out of scope` The retraction notice on the detail page — own issue
-- `out of scope` Marking a work as retracted — the curator-facing act is 10
+- `out of scope` Marking a work as retracted — the curator-facing act is #192
 - `out of scope` Withdrawal and takedown — deletion states, design pending
 
 The prototype covers **a retracted public card and a retracted backoffice card**.
@@ -51,7 +51,7 @@ View the [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.
 
 ## Dependencies
 
-Blocked by **10**, which owns the mark this indicator shows, and **01**.
+Blocked by #192, which owns the mark this indicator shows, and #180.
 
 ## Out of scope
 
@@ -60,4 +60,4 @@ Blocked by **10**, which owns the mark this indicator shows, and **01**.
 
 ## Open questions
 
-None. Notice text is 10's.
+None. Notice text is #192's.

@@ -555,6 +555,7 @@ u-layout--app
 u-layout--public
 
 u-main__body
+u-main__body--filter-drawer
 u-main__body--split
 u-main__content
 u-main__content-body
@@ -645,6 +646,7 @@ ms-auto
 nav
 nav-link
 nav-tabs
+offcanvas-xl
 pagination
 progress
 show
