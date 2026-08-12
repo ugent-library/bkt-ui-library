@@ -258,15 +258,31 @@
             <li><article class="bt-work-card" aria-labelledby="r-card-title-01">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-success">Reviewed · <i class="if if-eye" aria-hidden="true"></i> Public</span>
-                  <span class="bt-work-card__meta-item">Open access</span>
+                  <span class="badge text-bg-success">Reviewed</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="bt-work-card__meta-item">Open</span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="#" class="btn btn-ghost btn-sm"
-                    aria-label="Edit: Entanglement entropy in quantum spin chains">
-                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
-                  </a>
+                  <div class="bt-work-card__action-group">
+                    <div class="dropdown">
+                      <button class="btn btn-ghost btn-sm bt-work-card__more-action" type="button" data-bs-toggle="dropdown"
+                        aria-label="More actions for Entanglement entropy in quantum spin chains">
+                        <i class="if if-more if--sm" aria-hidden="true"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="if if-bar-chart if--sm bt-work-card__dropdown-icon" aria-hidden="true"></i>View Altmetric</a></li>
+                      </ul>
+                    </div>
+                    <a href="#" class="btn btn-ghost btn-sm"
+                      aria-label="Request changes: Entanglement entropy in quantum spin chains">
+                      <i class="if if-message if--sm" aria-hidden="true"></i> Request changes
+                    </a>
+                    <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
+                      aria-label="View public page: Entanglement entropy in quantum spin chains">
+                      <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
+                    </a>
+                  </div>
                 </div>
               </div>
               <div class="bt-work-card__body">
@@ -289,7 +305,8 @@
             <li><article class="bt-work-card" aria-labelledby="r-card-title-02">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-info">Submitted · <i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="badge text-bg-info">Submitted</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
                   <span class="bt-work-card__meta-item">Restricted</span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
@@ -319,18 +336,26 @@
             <li><article class="bt-work-card" aria-labelledby="r-card-title-03">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-warning">Draft · <i class="if if-eye-off" aria-hidden="true"></i> Not public</span>
+                  <span class="badge text-bg-warning">Draft</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
                   <span class="bt-work-card__meta-item">Dataset</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="deposit-1-0-find.html" class="btn btn-outline-primary btn-sm"
-                    aria-label="Continue deposit: Climate forcing data over Belgium">
-                    Continue
-                  </a>
-                  <a href="#" class="btn btn-ghost btn-sm"
-                    aria-label="Edit: Climate forcing data over Belgium">
-                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
-                  </a>
+                  <div class="bt-work-card__action-group">
+                    <div class="dropdown">
+                      <button class="btn btn-ghost btn-sm bt-work-card__more-action" type="button" data-bs-toggle="dropdown"
+                        aria-label="More actions for Climate forcing data over Belgium">
+                        <i class="if if-more if--sm" aria-hidden="true"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li><button type="button" class="dropdown-item"><i class="if if-delete if--sm me-2" aria-hidden="true"></i>Delete draft</button></li>
+                      </ul>
+                    </div>
+                    <a href="deposit-1-0-find.html" class="btn btn-primary btn-sm"
+                      aria-label="Continue deposit: Climate forcing data over Belgium">
+                      <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Continue
+                    </a>
+                  </div>
                 </div>
               </div>
               <div class="bt-work-card__body">
@@ -343,8 +368,9 @@
                 </p>
                 <p class="bt-work-card__pub"><a href="?year=2025"><time datetime="2025">2025</time></a><span class="text-muted mx-1" aria-hidden="true">·</span><a href="?container=Zenodo">Zenodo</a></p>
 
-                <!-- Automated missing-metadata warning — researcher priorities:
-                     full text/dataset > identifier (DOI/WoS) > title, abstract, authors, keywords, projects -->
+                <!-- Automated missing-metadata warning — researcher-facing items:
+                     file or external object, file version, access-risk answers,
+                     abstract, contributors, keywords, projects, licence -->
                 <div class="alert alert-warning alert--sm mb-0 mt-2" role="note" aria-label="For the researcher">
                   <div class="d-flex align-items-start gap-2">
                     <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
@@ -361,12 +387,17 @@
             <li><article class="bt-work-card" aria-labelledby="r-card-title-04">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-success">Reviewed · <i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="badge text-bg-success">Reviewed</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
                   <span class="badge text-bg-danger">Retracted</span>
                   <span class="bt-work-card__meta-item">Doctoral thesis</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="#" class="btn btn-primary btn-sm"
+                  <a href="#" class="btn btn-ghost btn-sm"
+                    aria-label="Request changes: Adaptive reuse of postwar social housing">
+                    <i class="if if-message if--sm" aria-hidden="true"></i> Request changes
+                  </a>
+                  <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
                     aria-label="View public page: Adaptive reuse of postwar social housing">
                     <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
                   </a>
@@ -388,8 +419,9 @@
             <li><article class="bt-work-card" aria-labelledby="r-card-title-05">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-danger">Returned · <i class="if if-eye-off" aria-hidden="true"></i> Not public</span>
-                  <span class="bt-work-card__meta-item">Embargo until 01/05/2027</span>
+                  <span class="badge text-bg-danger">Returned</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                  <span class="bt-work-card__meta-item">Embargo 01/05/2026 &ndash; 01/05/2027 · Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
                 <div class="bt-work-card__actions">
@@ -447,11 +479,11 @@
                   </td>
                   <td><span class="badge text-bg-primary">Journal article</span></td>
                   <td>2025</td>
-                  <td><span class="badge text-bg-success">Reviewed · <i class="if if-eye" aria-hidden="true"></i> Public</span></td>
-                  <td>Open access</td>
+                  <td><span class="badge text-bg-success">Reviewed</span> <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span></td>
+                  <td>Open</td>
                   <td class="text-end">
-                    <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Entanglement entropy">
-                      <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
+                    <a href="#" class="btn btn-ghost btn-sm" aria-label="Request changes: Entanglement entropy">
+                      <i class="if if-message if--xs" aria-hidden="true"></i> Request changes
                     </a>
                   </td>
                 </tr>
@@ -462,8 +494,8 @@
                   </td>
                   <td><span class="badge text-bg-primary">Journal article</span></td>
                   <td>2025</td>
-                  <td><span class="badge text-bg-info">Submitted · <i class="if if-eye" aria-hidden="true"></i> Public</span></td>
-                  <td>Open access</td>
+                  <td><span class="badge text-bg-info">Submitted</span> <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span></td>
+                  <td>Open</td>
                   <td class="text-end">
                     <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Machine learning approaches">
                       <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
