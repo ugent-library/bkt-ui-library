@@ -162,7 +162,7 @@ ${card({
     id: 'card-feed-11',
     badges: type('Conference presentation'),
     title: 'Linked data for library collections: five years of lessons',
-    authors: author('Dries Moreels', { ugent: true }),
+    authors: author('Jeanne Moraals', { ugent: true }),
     line: `${year(2025)} DH Benelux, Leuven.`
   })}
 ${card({
@@ -218,7 +218,7 @@ ${card({
     id: 'card-feed-19',
     badges: type('Media appearance'),
     title: 'Waarom de Boekentoren een schatkamer is',
-    authors: author('Dries Moreels', { ugent: true }),
+    authors: author('Jeanne Moraals', { ugent: true }),
     line: `${year(2025)} ${container('Universiteit van Vlaanderen')}, 5 November.`
   })}
 ${card({
