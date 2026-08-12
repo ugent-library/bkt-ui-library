@@ -90,6 +90,7 @@ const SECTIONS = [
   { dir: 'foundations', label: 'Foundations' },
   { dir: 'elements',    label: 'Elements'    },
   { dir: 'patterns',    label: 'Patterns'    },
+  { dir: 'partials',    label: 'Partials'    },
   { dir: 'templates',   label: 'Templates'   },
   { dir: 'base',        label: 'base'        },
   { dir: 'product',     label: 'product'     },
@@ -117,6 +118,43 @@ function buildNav() {
 
   _navCache = SECTIONS.reduce((acc, section) => {
     const dirPath = path.join(ROOT, section.dir);
+
+    if (section.dir === 'partials') {
+      const partialSources = [
+        { dir: 'elements/partials',  label: 'Elements'  },
+        { dir: 'templates/partials', label: 'Templates' },
+      ];
+
+      const groups = partialSources
+        .map(source => {
+          const sourcePath = path.join(ROOT, source.dir);
+          if (!fs.existsSync(sourcePath)) return null;
+
+          const files = fs.readdirSync(sourcePath)
+            .filter(f => f.endsWith('.html'))
+            .sort()
+            .map(f => ({
+              name:       slugToLabel(f.replace('.html', '')),
+              path:       `/${source.dir}/${f}`,
+              isTemplate: true,
+              stateList:  getStateList(path.join(sourcePath, f)),
+            }));
+
+          return {
+            class: 'bt-nav-group',
+            id: `btn-nav-group-${source.dir.replace(/\//g, '-')}`,
+            label: source.label,
+            files,
+          };
+        })
+        .filter(g => g && g.files.length);
+
+      if (groups.length) {
+        acc.push({ ...section, files: [], groups });
+      }
+      return acc;
+    }
+
     if (!fs.existsSync(dirPath)) return acc;
 
     if (section.dir === 'templates') {
@@ -544,7 +582,7 @@ if (IS_DEV) {
     console.log('  ──────────────────────────────────────');
     console.log(`  http://localhost:${PORT}`);
     console.log('\n  Drop .html files into:');
-    console.log('    foundations/  elements/  patterns/  templates/<app-name>/ product/');
+    console.log('    foundations/  elements/  patterns/  partials/  templates/<app-name>/ product/');
     console.log('  Sidebar rebuilds automatically.\n');
   });
 

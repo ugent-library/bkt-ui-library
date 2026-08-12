@@ -98,6 +98,7 @@ A template represents its data-dependent variants as **states in one file** — 
 The server automatically generates navigation from the folder structure:
 
 - `foundations/`, `elements/`, `patterns/` → UI kit documentation
+- `partials` → virtual sidebar section that groups `elements/partials/*.html` and `templates/partials/*.html`
 - `templates/` → Prototypes, grouped by subdirectory (e.g., `biblio-public/`, `biblio-researcher/`, `biblio-team/`)
 - Other folders as needed
 

@@ -2,6 +2,14 @@
 
 How to build a documentation page in `foundations/`, `elements/`, or `patterns/`. Before creating a new page, read at least two existing pages and match their structure exactly.
 
+Partials are browseable in the kit sidebar too, but they are not documentation
+pages. Files under `elements/partials/` and `templates/partials/` are reusable
+HTML fragments, shown in the virtual **Partials** section between Patterns and
+Templates. Keep them fragment-shaped: no page header, no kit sections, and no
+shell chrome. Document the reusable pattern in `patterns/` when explanation or
+acceptance criteria are needed; expose the partial so implementers can inspect
+the exact included markup.
+
 ```html
 <!-- Page header — data-surface="public" for display heading style -->
 <header class="ds-page-header col-6" data-surface="public">
