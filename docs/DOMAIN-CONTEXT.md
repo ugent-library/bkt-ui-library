@@ -3,6 +3,8 @@
 This file explains how the booktower-ui-library relates to the `raven` backend — what the templates represent, how data flows into the UI, and what backend constraints shape UI decisions.
 
 For entity definitions and shared vocabulary, see `DOMAIN-VOCABULARY.md`.
+For field accountability, policy-risk values and review requests, see
+`RESPONSIBILITIES.md`.
 
 ---
 
@@ -51,7 +53,9 @@ The deposit form does not have a fixed field list. Which fields appear, in what 
 When prototyping a deposit form for a specific work kind:
 - The fields shown in the prototype are illustrative — they represent a plausible profile for that kind
 - Do not design form logic that assumes a fixed field set
-- The "Type" step (work kind selection) always comes first — it determines which fields follow
+- The system asks for evidence before it asks for type: identifier, source, file or
+  candidate record. Work kind selection is the fallback when inference cannot decide
+  enough.
 - A changed work kind reloads the form section with a different field set (HTMX swap)
 
 ---
@@ -114,6 +118,13 @@ The deposit form's "Full text & files" section has three OA status options that 
 | Restricted | `restricted` (no embargo date) |
 
 When "Under embargo" is selected, a date picker must appear for the embargo lift date. The background job (Catbird) handles the transition automatically — the curator does not need to manually lift it.
+
+Access level, licence, embargo, file version and the four doctoral-thesis questions
+are policy-risk values. They decide public-access risk, not ordinary description. A
+depositor who cannot answer must be able to record uncertainty. The accepted public
+record keeps the last accepted value while the Biblio team reviews the pending
+request; the unresolved fallback access state is still an open Biblio-team decision,
+informed by Open Science Policy.
 
 ---
 

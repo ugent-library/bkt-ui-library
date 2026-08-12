@@ -14,6 +14,82 @@ names the general rule those decisions follow.
 
 Personas are defined in `docs/RESEARCH-PERSONAS.md`.
 
+## Surface goals
+
+The surface test decides where a feature belongs. The goals decide what better means
+inside each surface.
+
+### Public surface goals
+
+**Goal 1 — make UGent research usable by people who do not work here.**
+The surface exists for readers outside the institution: Sue Kerr (academic reader),
+Pia Practice (practitioner), Carrie Curious (curious public), and Cody Crawley
+(machine). Success is a reader with no connection to UGent reaching and using the
+content.
+
+*Losing condition:* the surface only works for someone who already knows the
+repository, its vocabulary, or its structure.
+
+**Goal 2 — move knowledge onward.**
+The record page is a hub, not a destination. Citation managers, indexes, reference
+tools and assistants are first-class consumers alongside human readers. Success is
+the record leaving Biblio intact.
+
+*Losing condition:* a value a machine needs exists only inside rendered prose.
+
+**Goal 3 — carry the institution's credibility.**
+The page states what is known and never implies a check that has not happened.
+Principle 05 holds the rule; the goal is that a reader can trust the page without
+knowing our workflow.
+
+*Losing condition:* a reader cannot tell what has been verified and by whom.
+
+The public surface deliberately gives up completeness of the record, visibility of
+workflow, and expert precision. It shows less on purpose. A pending backoffice change
+never reaches the public surface; public pages show the last accepted record value.
+
+The public surface is not a shop window for institutional productivity, and it is not
+an interface staff also use. Both pressures are real and both are refused by Goal 1.
+
+### Backoffice surface goals
+
+**Goal 1 — reach a complete, correct record at the lowest total human cost.**
+Cost is placed on whoever it is cheapest for. This goal names Biblio's core problem:
+administrative overhead.
+
+*Losing condition:* effort is reduced for one entity by moving it to another, with no
+drop in the total.
+
+**Goal 2 — give each entity work that is theirs, visible and bounded.**
+A person sees what is theirs to answer, what is waiting, and what changed. Nobody
+carries the whole record. Submit/review and Biblio-team review are separate UX layers
+inside the backoffice.
+
+*Losing condition:* one screen serves every entity, so every entity sees every field.
+
+That split sits inside the backoffice. It is a second axis, not a redraw of the
+public/backoffice line this document's test decides. Use **Biblio team** unless a
+specific workflow needs the curator/reviewer distinction; the split is internal, not
+a researcher's mental model.
+
+**Goal 3 — let anyone who needs an answer get it without asking a person.**
+The backoffice is the workplace of everyone with a stake in the data, not the Biblio
+team's alone. Administration, policy monitoring and reporting each need a route to
+their own answers.
+
+*Losing condition:* a stakeholder's question arrives as a task for the Biblio team or
+as a demand for a new field.
+
+The backoffice deliberately gives up legibility to outsiders and the vocabulary test.
+Expert language, density and desktop-first are correct here.
+
+Internal boundaries must not become first-level user choices. Researchers deposit and
+manage research output. The system may route articles, books, datasets, software,
+theses and future output types to different rules after it has recognized the output,
+but the researcher should not carry the historical publication/dataset split or a
+growing type catalog as the first task. For accountability rules, see
+`docs/RESPONSIBILITIES.md`.
+
 ## The surface test
 
 A feature is public when **all four** hold:

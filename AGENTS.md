@@ -86,6 +86,7 @@ When a new session begins on this project, execute these steps before writing an
    | Scoping any new page or feature | `docs/SURFACES.md` — the public vs backoffice surface test |
    | Audience, personas, or legibility questions | `docs/RESEARCH-PERSONAS.md` — the public personas anchor the surface and vocabulary tests |
    | Domain meaning — entities, statuses, badges, review workflow | `docs/DOMAIN-VOCABULARY.md`, `docs/DOMAIN-CONTEXT.md` |
+   | Who is accountable for a field, who may answer it, policy-risk values, review requests, or AI suggestions | `docs/RESPONSIBILITIES.md` — accountability, trust and pending-change routing |
    | Building or changing a template | `docs/UI-LAYER.md`, `docs/CONSUMING-BOOKTOWER.md`, `docs/ACCESSIBILITY.md` |
    | Any new or changed CSS, class, or SCSS partial | `docs/CSS-ARCHITECTURE.md` — Bootstrap-first, where styles live, naming, safe overrides |
    | Any search box, facet sidebar, or filter picker | `docs/SEARCH-AND-FILTERING.md` |
@@ -143,7 +144,7 @@ The always-on rules. Each links to its full version — the pointer here is the 
 
 ## What to do when uncertain
 
-**About a domain or policy decision:** never invent a rule. Record it as an open question naming the concrete options. These decisions are made with business and development — who exactly (Open Science Policy, reviewers and curators, the dev team) depends on the question; don't assume the route. A prototype with an honest open question beats one with a plausible invented rule.
+**About a domain or policy decision:** never invent a rule. Record it as an open question naming the concrete options. These decisions are made with business and development — who exactly (Open Science Policy, the Biblio team, another team's roadmap) depends on the question; don't assume the route. A prototype with an honest open question beats one with a plausible invented rule.
 
 **About whether a concept should be modelled:** the prototype is not where domain concepts get defined — Raven is. Before inventing a field, status, or entity in a prototype, check whether Raven's schema, field registry, or catalogs already cover it. If it's genuinely new or ambiguous, flag it as an open question for a design discussion so it lands in Raven, not ad hoc in the prototype.
 

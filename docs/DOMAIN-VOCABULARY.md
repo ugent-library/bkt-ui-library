@@ -15,13 +15,39 @@ The central entity. A publication, dataset, software, or other research output p
 - A Work that never went public can be hard-deleted; once public it is only ever soft-deleted into a tombstone (see Deletion, withdrawal, retraction)
 
 ### Work kind
-The publication type. Determines which fields are active in the deposit form (profile-driven — see The profile system).
+The research-output type. Determines which fields are active in the deposit form (profile-driven — see The profile system).
 
 The authoritative list of work kinds lives in `raven/docs/raven-design.md`. It is not duplicated here, to avoid drift.
 
 All kinds are collectively referred to as **research output** — not "publications" or "publications and datasets". The term "publications" is not used in the UI. This is intentional: new kinds may be added in the future without requiring a UI redesign.
 
-In the UI: shown as a `badge text-bg-primary` badge and controls which form fields appear.
+In the UI: shown as a `badge text-bg-primary` badge and controls which form fields
+appear. The deposit flow asks for evidence first — an identifier, source, file or
+candidate record — and lets the system infer the work kind where it can. Asking the
+depositor to choose the kind is the fallback, not the first task.
+
+### Accepted value and pending request
+
+An **accepted value** is the value the public and backoffice record currently stand
+behind. A **pending request** is a proposed change waiting in the backoffice for the
+Biblio team to accept, decline or clarify. A work can carry multiple pending requests
+at once.
+
+Pending requests do not alter the public surface. Public pages keep showing the last
+accepted value until the Biblio team accepts the request. This is the workflow form of
+`docs/RESPONSIBILITIES.md`: review follows responsibility, not the whole record.
+
+### Policy-risk value
+
+A policy-risk value decides whether Biblio can expose a file or object without legal,
+contractual or institutional risk. Access level, licence, embargo, file version and
+the four doctoral-thesis questions are policy-risk values.
+
+When a depositor cannot answer a policy-risk question, the interface records the
+uncertainty, applies the safest configured access state, and creates a review request.
+The fallback state is still an open Biblio-team decision, informed by Open Science
+Policy. Until it is settled, designs must show explicit unresolved access instead of
+assuming closed, restricted or hidden.
 
 ### Work status — two axes
 
@@ -81,6 +107,9 @@ Lines: automated missing items the Biblio team is accountable for; the **Interna
 note** (curator → curators; old biblio: "Librarian message"). Examples include
 container, publisher, date/year, ISSN/ISBN, volume, issue, pages and policy-rule
 outcomes, when the active work profile and rules require them.
+
+In new responsibility-bounded workflows, missing policy-risk answers should become
+pending requests rather than whole-record locks where possible.
 
 "Complete metadata" opens the record's edit form. The researcher fast lane — an edit
 view scoped to the missing fields — is a separate design, out of scope for the
