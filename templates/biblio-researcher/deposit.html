@@ -1,0 +1,465 @@
+<!-- @title: Next deposit - Biblio -->
+<!-- @surface: backoffice -->
+<!-- WIP - next deposit concept based on the responsibility model; do not implement in raven yet -->
+<!--
+  Consolidated deposit wireframe.
+
+  Design intent:
+  - Ask for evidence before asking for work kind.
+  - Keep the happy path on one page once a candidate is recognized.
+  - Treat uncertainty on policy-risk values as a valid answer that creates a
+    bounded Biblio-team review request.
+  - Keep public values stable until accepted values change.
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/partials/backoffice-header.html -->
+  <!-- @include: templates/partials/main-sidebar.html -->
+  <!-- @active: dashboard -->
+
+  <main id="main-content">
+    <span id="deposit-status" role="status" aria-live="polite" class="visually-hidden"></span>
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h3 mb-0">Deposit research output</h1>
+            <p class="lead mb-0">Paste an identifier, upload a file, or add a link.</p>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="/templates/biblio-researcher/dashboard.html" class="btn btn-ghost btn-sm">
+              <i class="if if-arrow-left" aria-hidden="true"></i>
+              Back to dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg">
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+
+              <section class="card" aria-labelledby="start-deposit-heading">
+                <div class="card-body p-4">
+                  <h2 id="start-deposit-heading" class="h4 mb-2">Start with what you have</h2>
+                  <p class="mb-4">Biblio looks for the record first, then asks only for what is still missing.</p>
+
+                  <form action="/deposit/recognize" method="post">
+                    <label for="deposit-evidence" class="form-label">Identifier, source, file, link, or candidate record</label>
+                    <div class="input-group input-group-lg mb-3">
+                      <input type="text" id="deposit-evidence" name="evidence" class="form-control"
+                        value="10.1111/geb.13844" autocomplete="off"
+                        aria-describedby="deposit-evidence-hint">
+                      <button type="submit" class="btn btn-primary">
+                        <i class="if if-search" aria-hidden="true"></i>
+                        Find
+                      </button>
+                    </div>
+                    <p id="deposit-evidence-hint" class="form-text mb-3">
+                      DOI, PubMed ID, ORCID work, Web of Science candidate, repository link, dataset link, or a file.
+                    </p>
+                  </form>
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="bt-file-drop d-block h-100" for="deposit-file">
+                        <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
+                        <span class="bt-file-drop__text d-block">Drag a file here, or browse</span>
+                        <span class="bt-file-drop__hint d-block">PDF, DOCX, RIS, BibTeX, ZIP, dataset or software archive</span>
+                        <input type="file" id="deposit-file" name="deposit_file" class="visually-hidden">
+                      </label>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="border rounded bg-white h-100 p-3 d-flex flex-column justify-content-between gap-3">
+                        <div>
+                          <h3 class="h6 mb-2">Nothing to paste?</h3>
+                          <p class="small mb-0">Start manually when Biblio cannot recognize the output from evidence.</p>
+                        </div>
+                        <a href="#complete-heading" class="btn btn-outline-primary align-self-start">
+                          Enter manually
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="recognized-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
+                    <div>
+                      <h2 id="recognized-heading" class="h4 mb-2">Recognized output</h2>
+                      <p class="mb-0">Biblio found a likely match and inferred the kind from Crossref.</p>
+                    </div>
+                    <span class="badge text-bg-primary">Journal article</span>
+                  </div>
+
+                  <article class="border rounded bg-white p-3" aria-labelledby="recognized-title">
+                    <div class="d-flex align-items-start justify-content-between gap-3">
+                      <div class="min-w-0">
+                        <p id="recognized-title" class="fw-semibold mb-1">
+                          Urban forests as essential infrastructure for climate resilience and biodiversity
+                        </p>
+                        <p class="small mb-2">
+                          Marciella Esperon-Rodriguez, Karen De Pauw, Judith Van den Berg · 2026 · Global Ecology and Biogeography
+                        </p>
+                        <div class="d-flex flex-wrap gap-2">
+                          <span class="badge text-bg-secondary">Crossref</span>
+                          <span class="badge text-bg-light border">DOI 10.1111/geb.13844</span>
+                          <span class="badge text-bg-light border">No file yet</span>
+                        </div>
+                      </div>
+                      <div class="d-flex flex-column gap-2 flex-shrink-0">
+                        <a href="#complete-heading" class="btn btn-primary">Continue</a>
+                        <button type="button" class="btn btn-ghost btn-sm">This is not right</button>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="complete-heading">
+                <div class="card-body p-4">
+                  <h2 id="complete-heading" class="h4 mb-2" tabindex="-1">Complete the necessary bits</h2>
+                  <p class="mb-4">Imported values are ready unless you correct them. Policy-risk answers can be marked uncertain.</p>
+
+                  <div class="d-flex flex-column gap-5">
+                    <section aria-labelledby="found-heading">
+                      <div class="bt-title-toolbar mb-3">
+                        <h3 id="found-heading" class="h5 mb-0">What we found</h3>
+                        <button type="button" class="btn btn-ghost btn-sm">
+                          <i class="if if-edit if--sm" aria-hidden="true"></i>
+                          Correct
+                        </button>
+                      </div>
+                      <dl class="row mb-0">
+                        <dt class="col-sm-3 fw-normal text-muted">Title</dt>
+                        <dd class="col-sm-9">Urban forests as essential infrastructure for climate resilience and biodiversity</dd>
+                        <dt class="col-sm-3 fw-normal text-muted">Contributors</dt>
+                        <dd class="col-sm-9">Marciella Esperon-Rodriguez, Karen De Pauw, Judith Van den Berg</dd>
+                        <dt class="col-sm-3 fw-normal text-muted">Source</dt>
+                        <dd class="col-sm-9">Global Ecology and Biogeography · 2026 · Crossref</dd>
+                        <dt class="col-sm-3 fw-normal text-muted">Kind</dt>
+                        <dd class="col-sm-9 mb-0"><span class="badge text-bg-primary">Journal article</span></dd>
+                      </dl>
+                    </section>
+
+                    <section aria-labelledby="object-heading">
+                      <h3 id="object-heading" class="h5 mb-3">Full text, dataset, or software object</h3>
+                      <div class="border rounded bg-white p-3 mb-3 d-flex align-items-center gap-3">
+                        <i class="if if-file-pdf if--lg text-muted" aria-hidden="true"></i>
+                        <div class="flex-grow-1 min-w-0">
+                          <p class="fw-semibold mb-1">urban-forests-aam.pdf</p>
+                          <p class="small mb-0">Accepted manuscript · PDF · 2,1 MB</p>
+                        </div>
+                        <button type="button" class="btn btn-ghost btn-sm">Replace</button>
+                      </div>
+
+                      <fieldset>
+                        <legend class="form-label">Which version is this?</legend>
+                        <div class="row g-2">
+                          <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="file_version" id="version-aam" value="accepted" checked>
+                            <label class="btn btn-outline-primary w-100 text-start" for="version-aam">Accepted manuscript</label>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="file_version" id="version-published" value="published">
+                            <label class="btn btn-outline-primary w-100 text-start" for="version-published">Published version</label>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="file_version" id="version-unsure" value="unsure">
+                            <label class="btn btn-outline-secondary w-100 text-start" for="version-unsure">I am not sure</label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </section>
+
+                    <section aria-labelledby="description-heading">
+                      <h3 id="description-heading" class="h5 mb-3">Abstract and keywords</h3>
+                      <p class="small mb-3">These values help people find and understand the output. Check what Biblio found and correct what is wrong.</p>
+                      <div class="row g-3">
+                        <div class="col-md-7">
+                          <label for="abstract" class="form-label">Abstract</label>
+                          <textarea id="abstract" name="abstract" class="form-control" rows="5">Urban forests are increasingly recognized as climate infrastructure. This article compares urban canopy planning strategies and their effect on resilience, biodiversity, and heat mitigation.</textarea>
+                        </div>
+                        <div class="col-md-5">
+                          <label for="keywords" class="form-label">Keywords</label>
+                          <input type="text" id="keywords" name="keywords" class="form-control"
+                            value="urban climate; biodiversity; green infrastructure" autocomplete="off"
+                            aria-describedby="keywords-hint">
+                          <div id="keywords-hint" class="form-text">Separate keywords with semicolons.</div>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section aria-labelledby="access-heading">
+                      <h3 id="access-heading" class="h5 mb-3">Access and licence</h3>
+                      <fieldset class="mb-4">
+                        <legend class="form-label">Who may read or download this file?</legend>
+                        <div class="d-flex flex-column gap-2">
+                          <div class="form-check border rounded bg-white p-3 ps-5">
+                            <input class="form-check-input" type="radio" name="access" id="access-open" value="open">
+                            <label class="form-check-label fw-semibold" for="access-open">Open access</label>
+                            <div class="form-text">Anyone can read and download immediately.</div>
+                          </div>
+                          <div class="form-check border rounded bg-white p-3 ps-5">
+                            <input class="form-check-input" type="radio" name="access" id="access-embargo" value="embargo">
+                            <label class="form-check-label fw-semibold" for="access-embargo">Under embargo</label>
+                            <div class="form-text">The file becomes open access after a release date.</div>
+                            <div class="row mt-3">
+                              <div class="col-md-5">
+                                <label for="embargo-date" class="form-label">Release date</label>
+                                <input type="date" id="embargo-date" name="embargo_date" class="form-control" value="2027-05-01">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-check border rounded bg-white p-3 ps-5">
+                            <input class="form-check-input" type="radio" name="access" id="access-unsure" value="unsure" checked>
+                            <label class="form-check-label fw-semibold" for="access-unsure">I am not sure</label>
+                            <div class="form-text">Biblio uses the configured safest unresolved access state and creates a Biblio-team review request.</div>
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <fieldset>
+                        <legend class="form-label">Licence</legend>
+                        <div class="row g-2">
+                          <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="licence" id="licence-cc-by" value="cc-by">
+                            <label class="btn btn-outline-primary w-100 text-start" for="licence-cc-by">CC BY 4.0</label>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="licence" id="licence-source" value="source" checked>
+                            <label class="btn btn-outline-primary w-100 text-start" for="licence-source">Use source value</label>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="radio" class="btn-check" name="licence" id="licence-unsure" value="unsure">
+                            <label class="btn btn-outline-secondary w-100 text-start" for="licence-unsure">I am not sure</label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </section>
+
+                    <section aria-labelledby="project-heading">
+                      <h3 id="project-heading" class="h5 mb-3">Project and funding confirmation</h3>
+                      <div class="alert alert-info alert--sm mb-3">
+                        <p class="mb-0">
+                          <i class="if if-info-circle" aria-hidden="true"></i>
+                          Biblio found one likely project from the contributor list. Confirm it, change it, or enter the project yourself.
+                        </p>
+                      </div>
+                      <fieldset>
+                        <legend class="form-label">Which project or funding belongs to this output?</legend>
+                        <div class="border rounded bg-white p-3 mb-3">
+                          <div class="d-flex align-items-start justify-content-between gap-3">
+                            <div>
+                              <p class="fw-semibold mb-1">BOF24/GOA/014 - Climate-resilient urban ecosystems</p>
+                              <p class="small mb-0">Karen De Pauw · Department of Environment · 2024-2028</p>
+                            </div>
+                            <div class="d-flex gap-2 flex-shrink-0">
+                              <button type="button" class="btn btn-ghost btn-sm">
+                                <i class="if if-edit if--sm" aria-hidden="true"></i>
+                                Change
+                              </button>
+                              <button type="button" class="btn btn-ghost btn-sm">
+                                <i class="if if-delete if--sm" aria-hidden="true"></i>
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3 mb-3">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="project_confirm" id="project-yes" value="yes" checked>
+                            <label class="form-check-label" for="project-yes">Yes</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="project_confirm" id="project-no" value="no">
+                            <label class="form-check-label" for="project-no">No</label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="project_confirm" id="project-unsure" value="unsure">
+                            <label class="form-check-label" for="project-unsure">I am not sure</label>
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div class="row g-3">
+                        <div class="col-md-8">
+                          <label for="project-search" class="form-label">Find or enter another project</label>
+                          <input type="search" id="project-search" name="project_search" class="form-control"
+                            placeholder="Project name, funder, grant number, or free text"
+                            autocomplete="off">
+                        </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                          <button type="button" class="btn btn-outline-primary w-100">
+                            <i class="if if-add" aria-hidden="true"></i>
+                            Add project
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+
+                    <section aria-labelledby="details-heading">
+                      <details>
+                        <summary id="details-heading" class="h5">More details</summary>
+                        <div class="row g-3 mt-2">
+                          <div class="col-md-6">
+                            <label for="pagination" class="form-label">Pages</label>
+                            <input type="text" id="pagination" name="pagination" class="form-control"
+                              value="128-146" autocomplete="off">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="volume-issue" class="form-label">Volume and issue</label>
+                            <input type="text" id="volume-issue" name="volume_issue" class="form-control"
+                              value="33(4)" autocomplete="off">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="publisher" class="form-label">Publisher</label>
+                            <input type="text" id="publisher" name="publisher" class="form-control"
+                              value="Wiley" autocomplete="off">
+                          </div>
+                          <div class="col-md-6">
+                            <label for="issn" class="form-label">ISSN</label>
+                            <input type="text" id="issn" name="issn" class="form-control"
+                              value="1466-8238" autocomplete="off">
+                          </div>
+                        </div>
+                      </details>
+                    </section>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="uncertainty-heading">
+                <div class="card-body p-4">
+                  <h2 id="uncertainty-heading" class="h4 mb-3">Uncertainty state</h2>
+                  <div class="alert alert-warning mb-0">
+                    <p class="fw-semibold mb-1">
+                      <i class="if if-alert" aria-hidden="true"></i>
+                      Access marked uncertain
+                    </p>
+                    <p class="mb-0">
+                      The file will use the configured safest unresolved access state. The public record will not expose an unaccepted access value. The Biblio team receives one review request for access and licence.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="review-heading">
+                <div class="card-body p-4">
+                  <h2 id="review-heading" class="h4 mb-2">Review and submit</h2>
+                  <p class="mb-4">This is what changes when you submit.</p>
+
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <h3 class="h6">Public now</h3>
+                      <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                        <li><i class="if if-check text-success" aria-hidden="true"></i> Record metadata from Crossref</li>
+                        <li><i class="if if-check text-success" aria-hidden="true"></i> Researcher-verified abstract and keywords</li>
+                        <li><i class="if if-check text-success" aria-hidden="true"></i> Researcher-confirmed project link</li>
+                        <li><i class="if if-eye text-muted" aria-hidden="true"></i> The public page shows the current approved access and licence until review is done</li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">
+                      <h3 class="h6">Pending Biblio-team review</h3>
+                      <ul class="list-unstyled d-flex flex-column gap-2 mb-0">
+                        <li><i class="if if-lock text-muted" aria-hidden="true"></i> Access level for urban-forests-aam.pdf</li>
+                        <li><i class="if if-lock text-muted" aria-hidden="true"></i> Licence for urban-forests-aam.pdf</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <hr>
+
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-ghost">Save draft</button>
+                    <a href="#submitted-heading" class="btn btn-primary">Submit</a>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="submitted-heading">
+                <div class="card-body p-4">
+                  <h2 id="submitted-heading" class="h4 mb-3">Post-submit state</h2>
+                  <article class="bt-work-card bg-white" aria-labelledby="submitted-card-title">
+                    <div class="bt-work-card__header">
+                      <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="badge text-bg-info">submitted</span>
+                        <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                        <span class="badge text-bg-warning">2 pending review requests</span>
+                      </div>
+                      <p id="submitted-card-title" class="bt-work-card__title mb-1">
+                        Urban forests as essential infrastructure for climate resilience and biodiversity
+                      </p>
+                      <p class="bt-work-card__authors mb-0">
+                        <span class="bt-work-card__author">Marciella Esperon-Rodriguez</span>,
+                        <span class="bt-work-card__author">Karen De Pauw</span>,
+                        <span class="bt-work-card__author">Judith Van den Berg</span>
+                      </p>
+                    </div>
+                    <div class="bt-work-card__body">
+                      <div class="alert alert-warning alert--sm mb-0">
+                        <p class="mb-1"><strong>For you:</strong> no action needed now.</p>
+                        <p class="mb-0"><strong>Biblio team:</strong> access and licence need review. The public page keeps showing the current approved access and licence until the review is accepted.</p>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </section>
+            </div>
+
+            <aside class="col-xl-4" aria-labelledby="journey-heading">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h2 id="journey-heading" class="h5 mb-3">Happy-path journey</h2>
+                  <ol class="small d-flex flex-column gap-3 mb-0">
+                    <li>Start from evidence: DOI, source, file, link, or candidate.</li>
+                    <li>Confirm the recognized output and inferred kind.</li>
+                    <li>Add the object and answer only necessary risk questions.</li>
+                    <li>Use "I am not sure" for policy-risk values when needed.</li>
+                    <li>Submit: accepted values go public, pending requests go to the Biblio team.</li>
+                  </ol>
+                </div>
+              </div>
+
+              <div class="card mb-4">
+                <div class="card-body">
+                  <h2 class="h5 mb-3">Value states</h2>
+                  <dl class="mb-0 small">
+                    <dt>Imported</dt>
+                    <dd>Can be public when the source carries accountability.</dd>
+                    <dt>Researcher-confirmed</dt>
+                    <dd>Can be public when it is the researcher's question.</dd>
+                    <dt>Uncertain</dt>
+                    <dd>Uses safest unresolved fallback and creates a review request.</dd>
+                    <dt>AI-suggested</dt>
+                    <dd class="mb-0">Waits for an accountable person before it becomes record data.</dd>
+                  </dl>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="h5 mb-3">Open questions</h2>
+                  <ul class="small d-flex flex-column gap-2 mb-0">
+                    <li>What is the configured safest unresolved access state?</li>
+                    <li>Which imported sources may publish unread for each work kind?</li>
+                    <li>Which licence values can be safely derived from source data?</li>
+                    <li>When does a doctoral-thesis answer appear in the common happy path?</li>
+                    <li>Which Biblio-team queue owns access and licence review requests?</li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
