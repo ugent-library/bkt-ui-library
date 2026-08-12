@@ -6,6 +6,68 @@ system, or do I reach for something new?"
 
 ---
 
+## Experimental Advanced search builder shared rendering (v2.20, 2026-08-12)
+
+The public advanced-search flow now has a shared builder implementation that can
+render either as a full page or as a wide dialog over the results list. This builder itself is expermiental.
+
+- The advanced-search builder is implemented from the same condition and action
+  partials in both renderings, so the page and the overlay do not drift apart.
+- The builder cards and a dedicated query-builder pattern were added around the
+  public search flow, with the conditions/actions split made explicit for
+  consumer implementations.
+- The shell is now also documented to include partials cleanly, which keeps the
+  advanced-search variants consistent with the rest of the design-system layout
+  patterns.
+
+**Consumers:** re-copy `assets/booktower.css` after the CSS rebuild and update any
+advanced-search implementation to use the shared condition/action partials rather
+than maintaining two separate copies. This is a prototype contract change for the
+public search flow; there is no legacy migration from a prior builder markup to
+preserve.
+
+---
+
+## Backoffice shell + work-card contract alignment (v2.19, 2026-08-12)
+
+The latest batch adds one backoffice shell pattern and tightens the consumer-facing
+sidebars and work-card references that apps should mirror.
+
+- The app shell now supports a filter-drawer layout via
+  `u-main__body--filter-drawer` and the companion `u-main__sidebar` drawer
+  behaviour, so backoffice list screens can keep a narrow filter panel without
+  breaking the surrounding shell structure.
+- Sidebar count badges now stay visible in the expanded app sidebar and collapse
+  cleanly into the slim-dot state when `bt-sidebar--slim` is active. The main
+  sidebar markup was simplified so reusable links no longer rely on helper wrappers
+  like `d-inline-flex flex-shrink-0`.
+- Public work-card references were aligned across the kit templates and sample
+  result content so titles, access metadata, and related-work links match the
+  current card contract. No new CSS classes were introduced, but the markup and
+  route expectations now match the public work-card pattern.
+
+**Consumers:** re-copy `assets/booktower.css` after the CSS rebuild. The classes
+most directly affected are `bt-sidebar`, `bt-sidebar--slim`, and
+`badge--total`; if you mirror the main sidebar or work-card examples, remove the
+old helper wrappers and match the current contract instead of patching the output
+by hand.
+
+---
+
+## Sidebar badge layout fix and pattern sync (v2.18, 2026-08-12)
+
+Sidebar count badges now stay visible in the expanded app sidebar and collapse cleanly
+into the slim-dot state when `bt-sidebar--slim` is active. The main sidebar markup
+was simplified so reusable links no longer require helper wrappers like
+`d-inline-flex flex-shrink-0`.
+
+Documentation in `patterns/sidebar.html` was aligned with the actual
+`templates/partials/main-sidebar.html` partial, and a new issue draft was added to
+`docs/wip/SIDEBAR-TOGGLE-BACKOFFICE.md`.
+
+**Consumers:** re-copy `assets/booktower.css` after the CSS rebuild. The only
+classes affected are `bt-sidebar`, `bt-sidebar--slim`, and `badge--total`.
+
 ## Work card contributor links and access vocabulary settle (v2.17, 2026-08-11)
 
 One CSS rule changed and the public/backoffice prototype cards were swept to match
@@ -251,7 +313,7 @@ No class changes. The backoffice aligns to raven's state model and the cards fil
 - **Kit**: work-card page restructured — on-page nav; order grammar → roles &
   views → public → researcher → curator; duplicate demo cards removed; researcher
   demo re-labelled (was "Curator card"); public demo aligned to v1 actions (no
-  Download CTA per raven#141). "One card across roles and views" matrix section;
+  Download CTA per #141). "One card across roles and views" matrix section;
   add-to-list recipe renders open in flow. The Biblio message pattern = automated
   missing-metadata check + CTA + optional personalised curator note.
 - **Access badges changed** — see the table below; check any page you are working on that
@@ -427,7 +489,7 @@ own token — `--bs-dropdown-item-padding-y: 0.5rem` on `.dropdown-menu`, with
 ## Access CTA rules + formatting conventions (v2.3, 2026-07-13)
 
 No class changes. Behaviour and copy changes on the public surface;
-decision record is raven#141.
+decision record is #141.
 
 **Access CTA (cards + detail header):** split into v1 (parity with
 biblio.ugent.be) and v2 (extended). Templates show v1: full CTA on the
@@ -443,7 +505,7 @@ as text naming the post-embargo state), "Full Text at Publisher"
 
 **New kit page:** `patterns/work-actions.html` — CTA designs and
 styling (icon + button variant per CTA). Rules deliberately live in
-raven#141, not in the kit.
+#141, not in the kit.
 
 **New doc rules:** file selection for the access CTA
 (`docs/DOMAIN-VOCABULARY.md`: full_text only, published > accepted >
