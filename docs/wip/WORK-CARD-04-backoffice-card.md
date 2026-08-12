@@ -6,84 +6,86 @@ title: "[backoffice] Work card: deposit status, visibility, and the metadata sca
 
 ## Why
 
-The old backoffice card carries a status badge reading "Biblio public" / "Biblio
-draft" / "Biblio withdrawn" (the red one is what a *returned* record wears; other
-statuses render no badge), `Type: classification` — "Dissertation: U" on most
-non-article records — an access line from the single main file ("Public access -
-Open access"), three authors, department codes, VABB, timestamps and a curator-only
-links row.
+Backoffice cards extend the public card with workflow, visibility and administrative
+metadata. They replace old Biblio status labels with Raven vocabulary.
 
-In raven the card says state on the two axes raven models. **Deposit status is the
-badge**: draft, submitted, returned, reviewed. **Record visibility sits inside that
-badge**, as an icon plus a visible label — "Reviewed · Public", "Draft · Not
-public". All four statuses render on cards, returned included, in the researcher's
-list and the curator's alike.
+The card shows **deposit status** and **record visibility** side by side. Deposit
+status is draft, submitted, returned or reviewed. Visibility is Public or Private
+with a visible label. All four statuses render in researcher and curator lists.
 
-The two axes are independent: submitting makes a record public, review happens
-after that, and a record can end up reviewed yet not public.
+The two axes are independent: workflow transitions write deposit status, visibility
+moves through its own action, and a record can end up reviewed yet private.
 
-**File access is a plain metadata item**, never a badge — the badge slot belongs to
-the status. The reference line is the **metadata scan** — today's field-list format,
-kept. The rest of today's payload stays too: departments, projects, VABB, the Biblio
-ID, the audit stamps and the links row.
-
-Marie Curator (reviewer) says the status names are too long and "withdrawn" is
-overloaded to the point of breaking her flow; she triages by markers before
-opening anything. Claire Searcher (researcher) wants one list of everything under
-her name, drafts included.
+File access is a plain metadata item, never a badge. The backoffice reference line
+is the metadata scan. Departments, projects, VABB, Biblio ID, audit stamps and quick
+links stay on the card.
 
 Forms and vocabulary: `docs/DOMAIN-VOCABULARY.md` → "Work status — two axes". Scan
 line: `docs/wip/WORK-CARD-REFERENCE-STYLES.md` → "The backoffice line — metadata
 scan".
 
-> **Screenshot:** the curator list (`curate.html`) — four statuses down one column
+> **Screenshot:** curator submitted card with full backoffice payload
+> **Screenshot file:** `04-05-06--curator-submitted-card.png`
+
+> **Screenshot:** curator missing-access card
+> **Screenshot file:** `04-05-11--curator-missing-access-card.png`
 
 > **Screenshot:** the researcher's own list (`search-researcher.html`) with a draft
 > and a returned record
+> **Screenshot file:** `04-05-11--researcher-draft-card.png`
+
+> **Screenshot:** dataset golden type example
+> **Screenshot file:** `04--dataset-golden-card.png`
 
 ## What
 
-TODO: what about missing information, depending on the responsibility
-of the viewer in the backoffice?
+Missing-information blocks are scoped in 05 and 11; this issue reserves the card
+region they occupy.
 
-- [ ] Deposit status badge with record visibility inside it
-  - four statuses, one colour each; visibility as icon plus visible label
-  - [`TBD` the two axes are independent: no workflow transition writes visibility, so the
-    badge's two halves move separately and either can change without the other
-  - institution-only visibility renders as "Not public" — there is no third
-    rendering
+- [ ] Deposit status and record visibility badges
+  - four statuses; visibility has a visible label
+  - the two axes are independent: no workflow transition writes visibility, so the
+    badges move separately and either can change without the other
+  - non-public visibility renders as "Private" until Raven settles a more precise
+    display rule for institution-only records
 - [ ] All four statuses render, in both lists
 - [ ] File access as a plain metadata item, in the backoffice's shorter wording:
-      "Open access", "Restricted", "Embargo until \<date\>". The public card spells
-      out "Restricted access" (03); a curator scanning a column does not need the noun
-- [ ] Room beside the status badge for the retracted badge — the badge itself is 12
+      "Open", "Restricted", "Embargo \<start date\> – \<end date\> ·
+      Private → Open".
+      The public card spells out "Restricted access" (03); a curator scanning a
+      column does not need the noun. Embargo duration is out of scope for this issue
+- [ ] Missing metadata that affects scanning can appear in the same row as a compact
+      marker, for example "Missing access"; the message blocks carry the full
+      responsibility list
+- [ ] Room beside the status and visibility badges for the retracted indicator — the
+      indicator itself is 12
 - [ ] The metadata scan line, per the spec doc
 - [ ] A work with no date reads as missing on the scan line; the public line omits
-      the year (02)
+      the year (02). Primary identity fields such as title do not use this missing
+      marker pattern
 - [ ] Curator card
-  - departments as muted badges; projects as a stacked sub-list with funder
-    references; VABB
+  - departments; project names with project references; VABB
   - who submitted it or which import it came from, and how long ago
   - footer: the Biblio ID with its copy action, the audit stamps — who created the
     metadata and when, who last changed it and when, the last system change and
     when (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI") — and the links row
-- [ ] Researcher card — own departments, no projects, no VABB
+- [ ] Researcher card — own departments and project names, no VABB
 - [ ] Year, journal and project are filter links in these lists (01)
 - [ ] Contributor names are links, as on the public card (01)
 - [ ] Three contributors, then the count alone ("+10 more authors") — the public
       card's ten names and `et al.` are the reader's form, not the curator's (01)
-- [ ] The card title opens the backoffice work detail view — the review console for
-      a curator, the researcher's own record page for a researcher
+- [ ] Card title behavior follows role
+  - researcher title is a link to the researcher's own record page
+  - curator/reviewer title is plain text so parts of it can be copied; the action
+    opens the work view or review flow
 - `out of scope` Message blocks — 05. Action buttons — 06. The table view.
 
-The prototype covers the **journal-article happy path** on both cards, plus a
-dataset draft, a returned record and a retracted one. We iterate on top. Flag
-ambiguity.
+The prototype covers the **journal-article happy path** on both cards, the action
+matrix, a missing-access example, a dataset golden example, a software candidate
+example, and a retracted card.
 
 - The public card carries no deposit status and no record visibility — deliberate;
   it must not leak workflow.
-- Two embargo wordings coexist in the templates; `DOMAIN-VOCABULARY` governs —
-  "Embargo until \<date\>". Treat the others as drift.
 - The evaluation classification stays off the card on both surfaces.
 
 _The prototype governs the visible page and markup. JS follows raven's frontend
@@ -96,19 +98,20 @@ Run it locally with `npm start` and the same paths on `localhost:3111`.
 View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates/biblio-team/curate.html),
 [templates/biblio-researcher/search-researcher.html](https://bkt-ui.vercel.app/templates/biblio-researcher/search-researcher.html), and the
 [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.html) (roles and views).
-Card titles land on [templates/biblio-team/curate-detail.html](https://bkt-ui.vercel.app/templates/biblio-team/curate-detail.html)
-and [templates/biblio-researcher/work-detail.html](https://bkt-ui.vercel.app/templates/biblio-researcher/work-detail.html).
+Actions land on [templates/biblio-team/curate-detail.html](https://bkt-ui.vercel.app/templates/biblio-team/curate-detail.html);
+researcher title links land on [templates/biblio-researcher/work-detail.html](https://bkt-ui.vercel.app/templates/biblio-researcher/work-detail.html).
 
 ## Acceptance criteria
 
 - [ ] Matches the prototype at the source-of-truth paths
 - [ ] Each of the four statuses renders, in both lists
 - [ ] Visibility never renders as a bare icon
+- [ ] Status and visibility both render in the card metadata row
+- [ ] Curator/reviewer card titles are not links
 - [ ] Access is never a badge on a backoffice card
 - [ ] Every date on the card uses the backoffice format
       (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI")
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/docs/ACCESSIBILITY.md`, plus:
-  - [ ] Status and visibility are legible without colour
   - [ ] Card titles are not headings on these list pages
   - [ ] The copy action reports success to a screen reader
 - [ ] `make build` passes
@@ -116,14 +119,11 @@ and [templates/biblio-researcher/work-detail.html](https://bkt-ui.vercel.app/tem
 ## Dependencies
 
 - Blocked by **01**, which lands with the public epic.
-- Year and project links narrow on raven#157 and raven#159; the journal link needs
-  **09**.
+- Year links narrow on raven#157; container links need **09**. Project links use
+  raven#159 and the same URL state contract as the rest of the backoffice search.
 - raven#51 is the existing placeholder for the researcher's list page; this is its
   card half.
 
 ## Open questions
 
-- **Where does a contributor name on a backoffice card go?** The public card links a
-  name to the researcher page. The backoffice has no person page of its own, so the
-  options are that same public page, or a name search inside the list. The prototype
-  links the names and marks the destination as a stub.
+None.

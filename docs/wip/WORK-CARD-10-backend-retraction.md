@@ -1,38 +1,23 @@
 ---
 name: Implement design
 about: Port a booktower-ui-library prototype into raven
-title: "[backend] Retraction as a state a work can be in"
+title: "[backend] Retraction mark on works"
 labels: backend
 ---
 
-<!-- Child of the backoffice work-card epic. Backend. -->
-
 ## Why
 
-Old Biblio has retraction as one of three reasons a record leaves the site
-(`withdrawn`, `retracted`, `takedown`). A retraction is an editorial statement about
-the research, not a removal: the work stays public and citable, marked.
-
-Retraction will be built in raven; only the timing is open. No open
-raven issue covers it, and whether the work model already carries such a mark is
-this issue's first question. This is the backend half — a work can be marked, the
-mark travels with it wherever the work is listed, and the act is recoverable. The
-card side is 12.
-
-Marie Curator (reviewer) learns of a retraction from the publisher or the
-researcher and needs one place to record it that shows up wherever the work
-appears.
+A retraction is not a deletion. The work stays public and citable, but carries a
+mark wherever it appears.
 
 ## What
 
 - [ ] A work can be marked as retracted, and stays public when it is
 - [ ] The mark is available wherever the work is listed, not only on its own page
-- [ ] A retracted work is excluded from nothing — result lists, exports, harvesting
-      sets and a researcher's own publication list all keep it. Carrying the mark
-      into each of those outputs is raven's to work out
-- [ ] The mark records who made it and when, and can be undone later
-- [ ] Retraction is distinct from deletion, from a tombstone, and from author
-      withdrawal
+- [ ] A retracted work remains in result lists, exports, harvesting sets and the
+      researcher's own publication list
+- [ ] The mark records who made it and when
+- [ ] Retraction is distinct from deletion, tombstones and author withdrawal
 
 ## Acceptance
 
@@ -43,16 +28,14 @@ appears.
 
 ## Dependencies
 
-Blocks **12**, the retracted badge on both cards. Related: the display designs for
-soft delete and replaced-by are out of scope for the work card, and undesigned.
+Blocks **12**, the retracted indicator on cards.
 
 ## Open questions
 
-- **Does a retraction carry its own notice text, and who writes it?** The card
-  carries the mark; the detail page carries a notice. Options: (a) the notice is
-  free text a curator writes; (b) the notice is a link to the publisher's
-  retraction statement; (c) both, with one required. This decides what the detail
-  page can show and whether curators need a field. Policy — Open Science Policy
-  with the curation lead.
+- **Retraction notice:** free text, publisher link, or both? Policy — Open Science
+  Policy with the curation lead and lead dev.
 
-> No screenshot — backend. The badge is shown in 12.
+> No backend screenshot. Card output is shown in the public and backoffice
+> retraction screenshots.
+> **Screenshot files:** `10-12--public-retracted-card.png`,
+> `10-12--backoffice-retracted-card.png`

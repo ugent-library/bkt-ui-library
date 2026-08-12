@@ -25,10 +25,10 @@ works are listed. Everything today's card shows is kept, but:
 - access is a badge naming the state in words, replacing the icons arrow and padlock.
   Open, restricted and embargo are the card's whole vocabulary; closed belongs to
   the backoffice.
-- the year and the container are filter links on every card, landing on the
-  works overview with that filter applied; on the overview itself and in backoffice
-  lists the click narrows the list in view. The container link matches the title
-  string, as public Biblio does today (09).
+- the year and the container are filter links. From a detail page they open the
+  works overview with the filter applied. From a filterable list they narrow the
+  current list and update the URL. The container link matches the title string, as
+  public Biblio does today (09).
 
 ### Notes on the target groups
 
@@ -108,7 +108,8 @@ Checked against open issues
   organisation / keyword filters (#159) and URL state (#156), so 09 is
   narrowed to the container. Projects sit on the detail pages, not on cards.
 - raven#141 owns the public action row; raven#164 the open-access definition;
-  raven#167 the lists pages; raven#125 the match card (amend, don't replace).
+  raven#167 the lists pages; 07 replaces raven#125 for the related research output
+  section on public work detail pages.
 
 ## Prototype defects to fix on port — do not reproduce
 

@@ -11,16 +11,17 @@ Task: <state the task>.
 ## State
 
 Fifteen documents in `docs/wip/` besides this one, named `WORK-CARD-*` — two epics,
-eleven children, one amendment (07), plus `WORK-CARD-REFERENCE-STYLES.md`:
+twelve children, plus `WORK-CARD-REFERENCE-STYLES.md`:
 
 - `WORK-CARD-00-EPIC-public.md` — children 01 grammar, 02 reference line, 03 access
   badge, 08 backend fields, 09 backend container filter. **Ready to file.** M files
   them.
 - `WORK-CARD-00-EPIC-backoffice.md` — children 04 card, 05 messages, 06 actions, 12
-  retracted badge, 10 backend retraction, 11 backend missing-metadata. **Ready to
-  file once 04's policy question is answered**; the public epic goes first, because
-  01 blocks 04.
-- `WORK-CARD-07-match-card-amendment.md` — edits to raven#125, not a new issue.
+  retracted indicator, 10 backend retraction, 11 backend missing-metadata. **Ready
+  to file**; the public epic goes first if 01 is not already filed, because 01
+  blocks 04.
+- `WORK-CARD-07-related-research-output.md` — public-detail follow-up that replaces
+  raven#125. It is not part of the backoffice epic.
 
 ## Decisions this round — prototype swept against the public epic
 
@@ -37,9 +38,8 @@ the old wording** and are M's to update.
 - **Public cards carry no project part.** Projects live on the detail pages and in
   backoffice cards. Year, container and publisher-as-container are the public card's filter
   links; project is struck from 01, the public epic, the search doc and the kit prose.
-- **Ten names on both surfaces**, then the count; the public card puts `et al.`
-  before it. The backoffice's three-name truncation is dropped, and the
-  related-research panel follows the public rule. Supervisors stay on the backoffice
+- **Public cards show ten names; backoffice cards show three**, then the count. The
+  public card puts `et al.` before the count. Supervisors stay on the backoffice
   card.
 - **The publisher-as-container takes `<cite>` and the filter link** — Zenodo and
   bioRxiv render like any other container name.
@@ -51,9 +51,9 @@ the old wording** and are M's to update.
 - **The card's CSS left the issue.** The border variant and the opt-in separator are
   styling, documented in `docs/CLASS-USAGE.md`; 01 states neither.
 - **raven#141 was retitled and rescoped** to "Access CTA v1 — no direct file access".
-  It composes the public row; **raven#166 owns the Add to list panel** and already
-  settles the anonymous case; **Cite has no issue yet**. Every doc that said #141
-  owns Add to list is corrected.
+  It no longer owns the public action row; **raven#166 owns the Add to list panel**
+  and already settles the anonymous case; **Cite has no issue yet**. Every doc that
+  said #141 owns Add to list is corrected.
 
 ## Decisions — the identifier icon says where a name goes
 
@@ -98,19 +98,20 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   a researcher or a curator. Add a proxy variant once the role is designed;
   `patterns/work-card.html` already names it as later, and `templates/biblio-proxy/`
   is empty.
-- **Card titles have a destination.** A curator's title opens `curate-detail.html`,
-  the review console that already existed. A researcher's opens the new
+- **Title behavior is role-specific.** Researcher titles open the new
   `templates/biblio-researcher/work-detail.html` — a read view with edit entry
-  points, two states (returned, reviewed), card content per 04, the researcher message
-  block per 05, actions per 06. Both list views and both table views are wired.
+  points, two states (returned, reviewed), card content per 04, the researcher
+  message block per 05, actions per 06. Curator/reviewer titles stay plain text so
+  people can copy title fragments; the action row opens the work view or review
+  flow.
 - **Session scope in `AGENTS.md`** now reads "scope a session to what one review can
   absorb" instead of one page or feature per session (commit a398dc8).
 - **A retracted work is excluded from nothing** — result lists, exports, harvesting
   sets and a researcher's own list all keep it, carrying the mark. How the mark
   reaches each output is raven's to work out. 10's second question is closed and the
   rule is in its What.
-- **Workflows and visibility have not been settled** — read from raven's source
-  once the checkout was connected, correcting a wrong claim in `DOMAIN-VOCABULARY`.
+- **Workflows and visibility are separate axes** — read from raven's source once the
+  checkout was connected, correcting a wrong claim in `DOMAIN-VOCABULARY`.
   A record is created `private`; `Submit`, `Return` and `Review` each write
   `deposit_status` and nothing else; visibility moves only through `SetVisibility`.
   The axes meet in one place, the backoffice `set_to_reviewed` action, which reviews
@@ -169,11 +170,15 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 - **The spec doc's durable home is raven**: `docs/wip/WORK-CARD-REFERENCE-STYLES.md`
   is a WIP reference for critique and building. The doc moves to raven with 02, or
   the implementation's reading of it does. Noted at the top of the doc.
-- **11 missing metadata**: filterable from the start, backoffice only; nothing
-  about completeness reaches the public surface. Question closed.
+- **11 missing metadata**: backoffice cards get researcher-facing and
+  Biblio-team-facing missing-items groups; filtering/facets/counts for "Missing X"
+  are out of scope for this pass. Nothing about completeness reaches the public
+  surface. Compact metadata-row markers can show scan-critical missing values such
+  as access, but the responsibility block carries the full list. Primary identity
+  fields such as title do not use the marker pattern. Question closed.
 - **06 / anonymous Add to list**: the button shows for every visitor; an anonymous
   click routes through login and back. raven#166 owns the panel and already states
-  it, so nothing is pending — raven#141 composes the row, not the panel.
+  it, so nothing is pending for this card-actions pass.
 
 ## Decisions this round — all applied to the drafts and docs
 
@@ -221,8 +226,8 @@ dropped — raven defers the field past v1 and no records land in the type.
 
 ## M's raven edits, still to do
 
-- **raven#125** — draft 07 is the amendment: lazy-load framing in three places is
-  M's to update; keyword contradiction needs one side picked.
+- **raven#125** — close it in favour of 07. The replacement drops lazy-loading,
+  keeps the sparse/empty rules, and leaves keyword OR/AND semantics to raven#159.
 - **raven#51** — decide whether 04 becomes its body or its child.
 
 ## Verify

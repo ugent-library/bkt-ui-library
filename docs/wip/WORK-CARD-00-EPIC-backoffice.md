@@ -4,10 +4,11 @@ about: Port a booktower-ui-library prototype into raven
 title: "[epic] Backoffice work card — status, messages, actions"
 ---
 
-> **Ready to file once 04's policy question is answered.** The card's three loose
-> ends are closed: card titles open a backoffice detail view — `curate-detail.html`
-> for a curator, `work-detail.html` for a researcher — and the fast lane and the
-> proxy role are out of scope for this epic. File the public epic first: 01 blocks 04.
+> **Ready to file.** The card's loose ends are closed enough for implementation:
+> researcher titles open their backoffice detail view, curator/reviewer titles stay
+> plain text for copying, and actions open the relevant work view. The fast lane and
+> proxy role are out of scope for this epic. File the public epic first if 01 is not
+> already filed; 01 blocks 04.
 
 ## Why
 
@@ -20,17 +21,16 @@ through a separate component with their own access field and labels.
 
 In raven it is the public card's grammar with a backoffice payload:
 
-- **deposit status is the badge**, with record visibility inside it as an icon *and*
-  a visible label — "Reviewed · Public", "Draft · Not public". One badge carries
-  both axes, in words.
+- **deposit status is a badge**, and **record visibility is a separate neutral
+  badge** beside it — "Reviewed" and "Public", "Draft" and "Private".
 - **file access is a plain metadata item**, never a badge — the badge slot is the
   status's.
 - **the reference line is the metadata scan** — today's field-list format, kept:
   curators scan fields, readers cite.
 - **two message blocks, split by audience** — what the researcher must supply, and
   what curators say to each other.
-- **the actions row follows role and state** — review, edit, continue, edit &
-  resubmit, view public page.
+- **the actions row follows role and state** — review, view, edit, continue, edit &
+  resubmit, request changes, view public page, and delete draft when allowed.
 
 One card covers every kind: raven has a single Work entity, so the separate dataset
 component goes. What differs per type is which metadata it carries, never the layout
@@ -50,8 +50,11 @@ cannot see her own.
 Vocabulary and exact forms: `docs/DOMAIN-VOCABULARY.md` → "Work status — two axes"
 and "Messages on backoffice cards".
 
-> **Screenshot:** the curator list (`curate.html`) and the researcher's own list
-> (`search-researcher.html`)
+> **Screenshot:** the richer curator list (`curate.html`)
+> **Screenshot file:** `epic-backoffice-04-05-06-11--curate-cards.png`
+
+> **Screenshot:** the researcher's own list (`search-researcher.html`)
+> **Screenshot file:** `epic-backoffice-04-06--researcher-cards.png`
 
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
@@ -84,9 +87,12 @@ View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.h
 - **Candidate / suggestion card** — not prototyped.
 - **Per-field add links** — today's card turns an empty field into an inline link
   where the viewer may edit ("Add document type: full text", "Add department", "Add
-  license"), and plain text where they may not. Parity work, not designed yet;
+  licence"), and plain text where they may not. Parity work, not designed yet;
   named in 05.
-- **The retraction notice** on the public detail page — 12 is the badge.
+- **The full retraction notice** on the public detail page — 12 covers the card
+  indicator and public card warning.
+- **Related research / match cards** — 07 replaces raven#125 for the public detail
+  page. It is useful card cleanup, but not required for backoffice parity.
 - **Writing or replying to messages** from the card, and message templates.
 
 ## How this lands in raven
@@ -96,19 +102,23 @@ Checked against open issues, 2026-08-06.
 - **raven#51** is a one-line placeholder for the researcher's backoffice search
   page, self-assigned, pointing at the same prototype 04 does. Either 04 becomes its
   body or 04 is its child; #51's remaining text is the page, not the card.
-- **raven#141** owns the public action row, so 06 is the backoffice half only.
+- **raven#125** was never picked up. 07 replaces it as a public-detail follow-up
+  outside this backoffice epic.
+- The public action row is outside this epic, so 06 is the backoffice half only.
 - Nothing covers the curator list card, the message blocks, retraction, or
   missing-metadata. 04, 05, 10, 11 and 12 are new ground.
 
 ## Prototype defects to fix on port — do not reproduce
 
-- Two wordings for an embargoed file coexist in the templates. `DOMAIN-VOCABULARY`
-  governs: one item, "Embargo until \<date\>". 04 specifies it.
+- Two wordings for an embargoed file coexist in the templates. 04 governs the
+  backoffice form: one item, "Embargo \<start date\> – \<end date\> · Private
+  → Open" when both dates and both access levels are available. Duration is out of
+  scope for this epic.
 - All `hx-*` URLs on cards are stubs.
 
 ## Open questions
 
 One, in its child:
 
-- **Does returning a record change its visibility?** (04) Policy — Open Science
-  Policy with the curation lead.
+- **Does a retraction carry its own notice text, and who writes it?** (10) Policy —
+  Open Science Policy with the curation lead.

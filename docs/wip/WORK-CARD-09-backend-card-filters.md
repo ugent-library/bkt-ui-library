@@ -5,26 +5,28 @@ title: "[backend] Filter works by container — the venue a card links to"
 labels: backend
 ---
 
-<!-- Child of the public work-card epic. Backend. Narrow on purpose: the other
-     filters the card links to already have homes, listed under Dependencies. -->
+<!-- Child of the public work-card epic. Backend. Narrow on purpose: this issue
+     only covers the missing container filter. Year and URL state already have
+     homes, listed under Dependencies. -->
 
 ## Why
 
-The public site today links the year and the parent title on every card into a
-search. In raven the card's filter links — year, journal, project (only backoffice)
-— land on the works overview with the filter applied, on every card;
-on the overview itself and in backoffice lists the click narrows the list in view (01).
+A card can link parts of its metadata line to filtered work lists.
 
-Year is owned by an open raven issue (Dependencies). **The container** is covered by
-none:
+- On a detail page, the link opens the works overview with that filter applied.
+- In a filterable list, the link narrows the current list and updates the URL.
+
+Year is already covered by the sidebar facet in raven#157, and URL state by
+raven#156. Project and keyword filtering belong to raven#159. **Container is the
+missing filter**:
 
 - it is the journal, proceedings volume, magazine, newspaper or book; the venue a
   lecture, media appearance or online post appeared in; and the publisher where it is
   the container itself (preprint, dataset, software: bioRxiv, Zenodo);
 - it is the middle of every public reference line, and the part curators recognise a
   record by on the backoffice scan line;
-- whether raven's search already offers it is this issue's first question. Without
-  it the journal name is text and the most obvious click on the card does nothing.
+- without it the journal, repository, book or venue name is text, which is not
+  feature parity with the old Biblio.
 
 The filter matches the container title as stored, the way public Biblio does today
 (`parent exact "<title>"`):
@@ -45,10 +47,11 @@ same link to browse, and never needs to know it is a filter.
 
 ## What
 
-- [ ] Filter works by **container** — the journal, proceedings, magazine, newspaper or
-      book the work appeared in, the venue for the public-engagement types (lecture,
-      media appearance, online post), and the publisher where it is the container
-      (preprint, dataset, software) — matched on the container title as stored
+- [ ] Add a **container** filter for the journal, proceedings, magazine, newspaper
+      or book the work appeared in; the venue for public-engagement types (lecture,
+      media appearance, online post); and the publisher where the publisher is the
+      container (preprint, dataset, software)
+- [ ] Match the container title as stored
 - [ ] The filter is available on the public surface and in the backoffice lists
 - [ ] The link carries the same URL shape as the rest of the search state
 
@@ -71,9 +74,10 @@ same link to browse, and never needs to know it is a filter.
   epic runs.
 - **Year** is a sidebar facet in raven#157; the card's year link narrows on it
   rather than on anything new.
-- **Keyword** is raven#159. The related-works panel's "more related research" link
-  (07) needs it, and raven#125's open question about matching several keywords with
-  OR semantics is its precondition.
+- **Project** is raven#159. Public cards do not show project links; backoffice
+  cards use project links in **04**.
+- **Keyword** is also raven#159. The related-works panel's "more related research"
+  link (07) needs it, including the OR/AND rule for several shared keywords.
 - The URL state contract is raven#156. The prototype's `?year=` and `?container=`
   parameters are placeholders, not a proposal.
 

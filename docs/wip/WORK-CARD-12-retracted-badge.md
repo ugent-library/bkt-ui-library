@@ -1,44 +1,36 @@
 ---
 name: Implement design
 about: Port a booktower-ui-library prototype into raven
-title: "[public][backoffice] Work card: retracted badge"
+title: "[public][backoffice] Work card: retracted indicator"
 ---
 
 ## Why
 
-Old Biblio files retraction with author withdrawal and legal takedown, as reasons a
-record leaves the site. A retraction is not a removal: the work stays public and
-citable, and carries a mark saying the scholarly record was corrected.
-
-In raven the card carries that mark as one badge in the metadata row — red, the
-card's strongest colour — on the public card and the backoffice card alike. It is
-the only card element that speaks about the research itself rather than about the
-record or the file; that is why it may compete with the open-access badge for
-attention. The notice itself — what, by whom, why — belongs to the detail page.
-
-Sue Kerr (academic reader) scans a result list and downloads without opening the
-record, so the mark has to survive on the card. Marie Curator (reviewer) is the
-one who records it.
+A retracted work stays public and citable. Cards must show the mark before someone
+opens, downloads or cites the work.
 
 > **Screenshot:** the retracted public card (`patterns/work-card.html`, "Public card
 > — retracted")
+> **Screenshot file:** `10-12--public-retracted-card.png`
 
-> **Screenshot:** a retracted record in the researcher's list
-> (`search-researcher.html`) — the badge beside the status badge
+> **Screenshot:** a retracted backoffice record (`patterns/work-card.html`) — the
+> badge beside the status and visibility badges
+> **Screenshot file:** `10-12--backoffice-retracted-card.png`
 
 ## What
 
 - [ ] Retracted badge on the public card, in the metadata row
-- [ ] Retracted badge on the backoffice card, beside the deposit-status badge
-- [ ] The work keeps its access badge and reference line — the mark adds, it does
-      not replace
+- [ ] Compact public-card warning for retracted records: "Retracted: this record
+      has been retracted."
+- [ ] Retracted badge on the backoffice card, beside the deposit-status and
+      visibility badges
+- [ ] The work keeps its access badge and reference line
 - [ ] A retracted work stays public and keeps appearing in result lists
 - `out of scope` The retraction notice on the detail page — own issue
 - `out of scope` Marking a work as retracted — the curator-facing act is 10
 - `out of scope` Withdrawal and takedown — deletion states, design pending
 
-The prototype covers **a retracted public card and a retracted backoffice card**. We
-iterate on top. Flag ambiguity.
+The prototype covers **a retracted public card and a retracted backoffice card**.
 
 _The prototype governs the visible page and markup. Machine-facing output
 (`citation_*` tags, Signposting, `?format=` alternates, crawl semantics) is governed
@@ -55,16 +47,17 @@ View the [patterns/work-card.html](https://bkt-ui.vercel.app/patterns/work-card.
 
 - [ ] Matches the prototype at the source-of-truth paths
 - [ ] The badge appears on every surface that lists works
-- [ ] Passes the pre-flight checklist in `bkt-ui-library/docs/ACCESSIBILITY.md`, plus:
-  - [ ] The mark never rests on colour alone
-  - [ ] Badge contrast holds in both surface themes
 - [ ] `make build` passes
 
 ## Dependencies
 
-Blocked by **10**, which owns the mark this badge shows, and **01**.
+Blocked by **10**, which owns the mark this indicator shows, and **01**.
+
+## Out of scope
+
+- How retracted will be registered in the work.
+- How retracted will be shared in the OAI and other sharing methods.
 
 ## Open questions
 
-None. Notice text, who writes it, and whether a retracted work is excluded from any
-export are 10's.
+None. Notice text is 10's.

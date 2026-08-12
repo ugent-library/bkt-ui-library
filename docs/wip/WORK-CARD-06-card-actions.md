@@ -4,55 +4,63 @@ about: Port a booktower-ui-library prototype into raven
 title: "[backoffice] Work card: actions per role and state"
 ---
 
-> The **public** card's action row is specified in raven#141 — Cite and Add to list,
-> quiet, no access CTA. This issue is the backoffice half, which no issue covers.
-> Add to list shows for every visitor, and an anonymous click routes through login
-> and back — kept from today's behaviour, and what `patterns/panel.html` documents.
+> The **public** card's action row is outside this issue: Add to list is raven#166,
+> access CTAs are raven#153, and Cite still needs its own issue. This issue is the
+> backoffice half, which no issue covers.
 
 ## Why
 
-The old backoffice card carries a View button plus a dropdown mixing navigation with
-tools — publication, files, DOI, Web of Science, PubMed for curators, Altmetric for
-everyone else, delete where permitted. The action the record's state calls for is
-not among them: a review cannot start from the list, and a returned record offers
-its owner no way back in.
+The card action answers one question: what can this user do with this record now?
 
-In raven the row answers one question — what is there to do with this record, now,
-by me — so it follows role and state:
-
-- curator, **submitted** → Review (primary) + Edit as a quiet icon
-- curator, **returned** → View; the record is the researcher's turn
-- researcher, **draft** → Continue + Edit
+- curator, **submitted** → Review; editing happens inside the review mode when a
+  curator needs to intervene
+- curator, **returned** → View, not primary; the record is done; curators can still
+  intervene after opening the work
+- curator, **draft** → View
+- curator, **reviewed** → View, not primary; the record is done
+- researcher, **draft** → Continue, with Delete draft in the more menu for their
+  own draft
 - researcher, **returned** → Edit & resubmit; the label names both steps, because
   editing without resubmitting leaves the record where it was
-- researcher, **submitted** or **reviewed** → Edit, plus View public page where the
-  record is public
+- researcher, **submitted** → Edit; the record is awaiting review, but the owner can
+  still change it
+- researcher, **reviewed** → Request changes, plus View public page where the record
+  is public; View Altmetric sits in the more menu when an Altmetric link exists
 
-One primary per card at most. Every action names the record in its accessible name,
-so the fifth "Edit" in a list is not ambiguous. Actions that navigate are links —
-the rule raven#141 sets for the public row.
+One primary per card at most. Navigating actions are links. Every action name
+identifies the record.
 
-Marie Curator (reviewer) wants fewer things on the card and the review to start
-where she already is. Claire Searcher (researcher) and Otto Thor (researcher) want
-to correct their own records rather than ask someone to.
+> **Screenshot:** role/state action matrix
+> **Screenshot file:** `06--role-state-actions-matrix.png`
 
-> **Screenshot:** the five rows — curator submitted, curator returned, researcher
-> draft, researcher returned, researcher reviewed (`curate.html`,
-> `search-researcher.html`)
+> **Screenshot:** curator Review action and researcher submitted Edit action
+> **Screenshot files:** `04-05-06--curator-submitted-card.png`,
+> `06--researcher-submitted-edit-card.png`
+
+> **Screenshot:** researcher reviewed more menu with Altmetric
+> **Screenshot file:** `06--researcher-altmetric-more-menu.png`
 
 ## What
 
 - [ ] Backoffice actions per role and state, as listed above
+- [ ] Draft delete appears for the user's own draft. Raven grants `delete_draft`
+      on own draft works only; non-draft records and other users' drafts do not
+      show the action
+- [ ] Researcher draft actions render as one action group: more-actions menu for
+      Delete draft, then primary Continue
+- [ ] Researcher cards with an Altmetric link expose "View Altmetric" in the
+      more-actions menu
 - [ ] One primary per card at most
 - [ ] Each action's accessible name carries the record's title
 - [ ] Icon-only actions are fully named to assistive technology
 - [ ] Actions that navigate are links; actions that act on the page are buttons
-- `out of scope` The public action row — raven#141. Access CTAs — raven#153.
+- `out of scope` The public action row. Add to list is raven#166; access CTAs are
+  raven#153; Cite still needs its own issue.
 - `out of scope` The curator quick-links row — part of 04
-- `out of scope` Delete, Altmetric, Send to ORCID, batch actions
+- `out of scope` Non-draft delete, soft-delete restore, Send to ORCID, batch actions
 
-The prototype covers **every row listed**. The proxy role comes later. We iterate
-on top. Flag ambiguity.
+The prototype covers **every row listed** in the matrix, plus representative card
+examples. The proxy role comes later.
 
 - An action a user cannot perform is absent, not disabled.
 
@@ -74,14 +82,17 @@ View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates
 - [ ] The action names alone identify the record each acts on
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/docs/ACCESSIBILITY.md`, plus:
   - [ ] Keyboard reaches every action in list order
-  - [ ] Icon-only actions meet the minimum target size
+  - [ ] Icon-only actions have accessible names
 - [ ] `make build` passes
 
 ## Dependencies
 
 - Blocked by **01** and **04**.
-- Review, Continue, Edit and Edit & resubmit each need a destination; where a flow
-  does not exist yet the action waits rather than shipping as a dead link.
+- Review, Continue, Edit & resubmit, Request changes and View public page each need
+  a destination; where a flow does not exist yet the action waits rather than
+  shipping as a dead link.
+- The reviewer "next record" flow is a separate workflow issue. This issue only
+  makes the action available from the card.
 
 ## Open questions
 

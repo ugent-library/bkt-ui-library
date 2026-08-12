@@ -6,38 +6,30 @@ title: "[backoffice] Work card: message blocks for the researcher and for curato
 
 ## Why
 
-The old backoffice card carries one message: the Biblio message, an info alert with
-the curator's note to the researcher, shown to everyone who sees the card. What the
-record is missing is not on it — a curator opens the record to find out, and chases
-by email or helpdesk ticket.
+Backoffice cards show two message blocks, split by audience.
 
-In raven the card carries two blocks, split by audience. **"For the researcher"** —
-warning-toned, visible to researcher *and* curator — holds three lines in a fixed
-order: what is automatically missing from the researcher's own list, the Biblio
-message, and the call to action. **"For curators"** — quiet, marked with a padlock,
-curators only — holds the bibliographic completeness list and the internal note
-curators write to each other. The padlock marks the block as
-curator-only without needing a sentence. Lines stack, never columns: the card sits in a narrow
-split-screen pane. Nothing missing and no note means no block.
+**For the researcher** is warning-toned and visible to researcher and curator. It
+contains missing items, the Biblio message and the call to action.
+
+**For curators** is quiet, curator-only and marked with the padlock. It contains
+the bibliographic completeness list and the internal note.
 
 On a returned record the Biblio message is the return reason: one text, one
-field, no second place to store it.
-
-Both field lists are fixed in `docs/DOMAIN-VOCABULARY.md` → "Messages on backoffice
-cards": the researcher's covers what only they can supply, the curator's covers
-bibliographic work.
-
-Marie Curator (reviewer) asked for the list to show completeness — a complete
-record is not necessarily a correct one, and she needs to see which is which
-before opening anything. Otto
-Thor (researcher) and Stan Standish (proxy) want to fix their own records rather
-than wait for a message and a reply.
+field, no second place to store it. Nothing missing and no note means no block.
 
 > **Screenshot:** the researcher's view, warning block only
 > (`search-researcher.html`, the draft dataset)
+> **Screenshot file:** `04-05-11--researcher-draft-card.png`
 
 > **Screenshot:** a curator's view of the same kind of card, both blocks
 > (`curate.html`, first card)
+> **Screenshot file:** `04-05-06--curator-submitted-card.png`
+
+> **Screenshot:** missing-access marker with responsibility blocks
+> **Screenshot file:** `04-05-11--pattern-missing-access-card.png`
+
+> **Screenshot:** returned record message
+> **Screenshot file:** `05-06--researcher-returned-card.png`
 
 ## What
 
@@ -52,20 +44,23 @@ than wait for a message and a reply.
 - [ ] Each block, and each line, renders only when it has content
 - [ ] A field the work type does not carry is never reported as missing
 - [ ] Blocks sit below the reference line, researcher block first
+- [ ] When a missing value affects scanning, the card may also show a compact
+      metadata-row marker such as "Missing access"; the block remains the place that
+      lists the actionable bundle
+- [ ] Primary identity fields, such as title, do not use the metadata-row missing
+      marker pattern
 - `out of scope` The fast lane behind "Complete metadata" — an edit view scoped to
   the missing fields is its own design, tracked in `notes/TOPLAN.md`
 - `out of scope` Writing, editing or replying to messages from the card
 - `out of scope` Message templates and assignment — own issue
 - `out of scope` **Per-field add links.** Today's backoffice card turns an empty
   field into an inline link where the viewer may edit — "Add document type: full
-  text", "Add department", "Add license" — and plain text where they may not ("No
-  department(s)"). Parity work, not designed yet: the missing-items line names what
-  is missing, the add links are how you fix one from the card. Design with the
-  backoffice pass.
+  text", "Add department", "Add licence" — and plain text where they may not ("No
+  department(s)"). TBD, currently replaced by the cards messages.
 
 The prototype covers **a draft with items missing, a submitted record with both
-blocks, and a returned record whose only message is the return reason**. We iterate
-on top. Flag ambiguity.
+blocks, a missing-access metadata marker, and a returned record whose only message
+is the return reason**.
 
 - The curator block is not hidden from researchers — it is absent from what they
   are served.
