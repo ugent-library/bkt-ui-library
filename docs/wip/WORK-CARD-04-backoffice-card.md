@@ -13,8 +13,9 @@ The card shows **deposit status** and **record visibility** side by side. Deposi
 status is draft, submitted, returned or reviewed. Visibility is Public or Private
 with a visible label. All four statuses render in researcher and curator lists.
 
-The two axes are independent: workflow transitions write deposit status, visibility
-moves through its own action, and a record can end up reviewed yet private.
+The two axes are independent: deposit status and visibility render separately and can
+change separately. In UGent's deposit flow, submit also makes the record public, while
+a record can still end up reviewed yet private.
 
 File access is a plain metadata item, never a badge. The backoffice reference line
 is the metadata scan. Departments, projects, VABB, Biblio ID, audit stamps and quick
@@ -44,10 +45,8 @@ region they occupy.
 
 - [ ] Deposit status and record visibility badges
   - four statuses; visibility has a visible label
-  - the two axes are independent: no workflow transition writes visibility, so the
-    badges move separately and either can change without the other
-  - non-public visibility renders as "Private" until Raven settles a more precise
-    display rule for institution-only records
+  - the two axes render separately. In UGent's deposit flow, submit also makes the
+    record public; later visibility changes still move independently
 - [ ] All four statuses render, in both lists
 - [ ] File access as a plain metadata item, in the backoffice's shorter wording:
       "Open", "Restricted", "Embargo \<start date\> – \<end date\> ·

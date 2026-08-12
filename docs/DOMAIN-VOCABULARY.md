@@ -39,9 +39,10 @@ cards carry both.
 | `reviewed` | Curator stamped the editorial state. Terminal — there is no "published" status and no publish verb |
 
 **Record visibility** — whether the record is on the public site, independent of
-workflow. Raven values (`raven/visibility.go`): `private` (owners only), `restricted`
-(institution), `public` (world). Reviewed-and-private is a valid end state (embargoed,
-on-file, confidential — e.g. metadata that cannot be shown).
+workflow. Raven values (`raven/visibility.go`) include `private`, `restricted`, and
+`public`; work cards expose the UI axis as **Public** or **Private**. Reviewed-and-private
+is a valid end state (embargoed, on-file, confidential — e.g. metadata that cannot be
+shown).
 
 **Do not confuse record visibility with file access.** Raven uses the same word and
 vocabulary at two levels: the *record's* `visibility` says whether the record exists
@@ -49,40 +50,49 @@ on the public site; each *file's* `visibility` (plus embargo) says whether you c
 the full text or dataset. "Open access / Restricted" on a card is the file level, never
 the record level.
 
-In the UI (backoffice cards): deposit status is the one badge — `draft` →
+In the UI (backoffice cards): deposit status is one badge — `draft` →
 `badge text-bg-warning`, `submitted` → `badge text-bg-info`, `returned` →
-`badge text-bg-danger`, `reviewed` → `badge text-bg-success` — and record visibility is
-an icon **with a visible label** inside that badge: `· if-eye Public` or
-`· if-eye-off Not public` — the icon never stands alone. Public cards never show deposit status or record visibility: a deliberate absence, the public card must not leak workflow. File access renders as a
-plain `bt-work-card__meta-item` ("Open access", "Restricted", "Embargo until
-<date>"), never as a badge on the backoffice.
+`badge text-bg-danger`, `reviewed` → `badge text-bg-success`. Record visibility is a
+separate neutral badge with an icon **and a visible label**: `if-eye Public` or
+`if-eye-off Private` — the icon never stands alone. Public cards never show deposit
+status or record visibility: a deliberate absence, the public card must not leak
+workflow. File access renders as a plain `bt-work-card__meta-item` ("Open",
+"Restricted", "Embargo <start date> – <end date> · Private [if-arrow-right] Open"),
+never as a badge on the backoffice.
 
-Record-level `restricted`: a work that must be deposited but whose
-metadata cannot be revealed publicly — recorded, not exposed. On cards it renders as
-"Not public"; there is no third rendering. Open: the value's *name* — `restricted`
-collides with restricted file access; a raven naming question.
-
-Open questions: what a researcher sees between submit and review; and — since
-visibility and workflow are separate axes, returning a record does not change its
-visibility — whether policy wants an automatic visibility flip on return.
+In the researcher view, a submitted work is awaiting review but still editable by
+the owner. Raven keeps workflow and visibility as separate axes. In UGent's deposit
+flow, submit moves the workflow to `submitted` and makes the record `public`; review
+stamps the editorial state afterwards.
 
 ### Messages on backoffice cards
 
 Two blocks, split by audience — lines inside, never columns:
 
 **For the researcher** — `alert alert-warning alert--sm`, visible to researcher *and*
-curator. Lines, in order: automated missing items from the researcher list (full text,
-DOI/WoS, title, abstract, authors, keywords, projects); the **Biblio message**
-(curator → researcher note); the "Complete metadata" call to action.
+curator. Lines, in order: automated missing items the researcher is accountable for;
+the **Biblio message** (curator → researcher note); the "Complete metadata" call to
+action. Examples include the file or external object, file-version/access-risk answers,
+abstract, contributors, keywords, projects and licence, when the active work profile
+and rules require them.
 
 **For curators** — `alert alert-light alert--sm` with the `if-lock` icon, curator only.
-Lines: automated missing items from the curator list (journal, publisher, year, ISSN,
-volume, issue, pages); the **Internal note** (curator → curators; old biblio:
-"Librarian message").
+Lines: automated missing items the Biblio team is accountable for; the **Internal
+note** (curator → curators; old biblio: "Librarian message"). Examples include
+container, publisher, date/year, ISSN/ISBN, volume, issue, pages and policy-rule
+outcomes, when the active work profile and rules require them.
 
 "Complete metadata" opens the record's edit form. The researcher fast lane — an edit
 view scoped to the missing fields — is a separate design, out of scope for the
 work-card issues and tracked in `notes/TOPLAN.md`, Backoffice.
+
+Missing metadata that affects card scanning can also appear where the value would
+normally sit, as a compact metadata item: `Missing access`, `Missing year`, `Missing
+pages`. The metadata-row marker is a locator, not the work list: the responsibility
+block still carries the complete missing-items line and the action. Do not use this
+pattern for the card's identity fields, such as title; those are prevented or handled
+in the form/detail flow instead of turning the card title into "Missing title".
+Public cards never show internal missing-metadata markers.
 
 ### Deletion, withdrawal, retraction
 
@@ -204,8 +214,8 @@ Work kinds have **profiles** — YAML configuration files that define which fiel
 ## The review / curation workflow
 
 The deposit workflow (raven events: `deposit_submitted`, `deposit_returned`,
-`deposit_reviewed`). Submit sets visibility `public` (UGent decision); review stamps
-the editorial state afterwards.
+`deposit_reviewed`) changes the workflow state. Visibility is a separate axis; in
+UGent's deposit flow, submit also makes the record public.
 
 ```
 [draft] ──submit──► [submitted] ──review──► [reviewed]
@@ -386,16 +396,17 @@ A zero state is copy, not a count: "No results for … with these filters" is ab
 | `returned` | `badge text-bg-danger` | Red |
 | `reviewed` | `badge text-bg-success` | Green |
 
-Record visibility rides *inside* the deposit-status badge as icon + visible label
-(backoffice cards): `· if-eye Public` / `· if-eye-off Not public`. Record-level `restricted` (institution)
-awaits the issues discussion before it gets its own rendering.
+Record visibility is a separate neutral badge on backoffice cards: `if-eye Public` /
+`if-eye-off Private`.
 
 File access: on **public** cards a badge, and only open access carries colour — open →
 `badge text-bg-success` + `if-open-access`, restricted → `badge text-bg-secondary` +
 `if-lock`, embargo → `badge text-bg-secondary` + `if-time`, naming the date ("Embargo
 until 1 May 2027"), closed → `badge text-bg-secondary`, text only. On **backoffice**
-cards never a badge — a plain `bt-work-card__meta-item` ("Open access", "Restricted",
-"Embargo until <date>"). The backoffice drops the noun so a curator scans a column;
+cards never a badge — a plain `bt-work-card__meta-item` ("Open", "Restricted",
+"Embargo <start date> – <end date> · Private [if-arrow-right] Open" when both
+dates and both access levels are available). The backoffice drops the noun so a
+curator scans a column;
 the public card keeps "Restricted access", which is what a reader outside academia
 understands.
 
