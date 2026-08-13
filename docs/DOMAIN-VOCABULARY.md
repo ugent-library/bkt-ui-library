@@ -28,10 +28,11 @@ depositor to choose the kind is the fallback, not the first task.
 
 ### Accepted value and pending request
 
-An **accepted value** is the value the public and backoffice record currently stand
-behind. A **pending request** is a proposed change waiting in the backoffice for the
-Biblio team to accept, decline or clarify. A work can carry multiple pending requests
-at once.
+The record shows its **accepted values** — the values the Biblio team stands
+behind, on the public site and in the backoffice. A researcher, proxy or curator
+proposes a new value; that proposal is a **pending request**, and the Biblio team
+accepts it, declines it or asks for clarification. A work can carry multiple
+pending requests at once.
 
 Pending requests do not alter the public surface. Public pages keep showing the last
 accepted value until the Biblio team accepts the request. This is the workflow form of
@@ -60,21 +61,44 @@ cards carry both.
 | `deposit_status` | Meaning |
 |---|---|
 | `draft` | Being prepared; editable by the owner |
-| `submitted` | Handed to curation. UGent decision: visibility goes `public` on submit — review happens after publication |
+| `submitted` | Handed to curation. Review follows submit whatever the visibility. Submit puts the record on the public site by default; the depositor can keep it off (see Record visibility) |
 | `returned` | Sent back by a curator with a reason; owner edits and resubmits |
 | `reviewed` | Curator stamped the editorial state. Terminal — there is no "published" status and no publish verb |
 
 **Record visibility** — whether the record is on the public site, independent of
-workflow. Raven values (`raven/visibility.go`) include `private`, `restricted`, and
-`public`; work cards expose the UI axis as **Public** or **Private**. Reviewed-and-private
-is a valid end state (embargoed, on-file, confidential — e.g. metadata that cannot be
-shown).
+workflow. Raven values (`raven/visibility.go`) are `private`, `restricted`, and
+`public`; only `public` puts a record on the public site. The badge reads that
+outcome, never the stored value: `public` → **Public**, everything else →
+**Private**.
+
+Who moves visibility, mapped to raven's mechanisms:
+
+- **A draft is never visible.** Raven enforces this at the database level
+  (`records_draft_is_private`).
+- **Submit puts the record on the public site by default.** The depositor can keep
+  it off at submit, for research output metadata that can't be shown publicly.
+  Review follows submit either way — it does not depend on visibility.
+- **Return takes the record off the public site.**
+- **Visibility persists through review.** Reviewed-and-private is a valid end state
+  (confidential, on-file). A curator can change visibility at any time after
+  draft — a late publication, or a takedown.
+- **Trusted import sources seed visibility directly.** Harvested records never pass
+  through submit.
+
+The submit and return defaults are UGent deposit policy layered on raven's
+independent axes: raven's `Submit` and `Return` move the workflow state, and
+`SetVisibility` moves the visibility. How raven's duplicate gate (a move to
+`public` is refused while a duplicate is unresolved), tombstones, merges and soft
+deletes surface in the UI is parked for a later design pass.
 
 **Do not confuse record visibility with file access.** Raven uses the same word and
 vocabulary at two levels: the *record's* `visibility` says whether the record exists
 on the public site; each *file's* `visibility` (plus embargo) says whether you can get
 the full text or dataset. "Open access / Restricted" on a card is the file level, never
 the record level.
+
+An **external deposit's** access and embargo (data on Zenodo, EGA, …) still need
+their own mapping in raven. The UI maps to that field once it lands.
 
 In the UI (backoffice cards): deposit status is one badge — `draft` →
 `badge text-bg-warning`, `submitted` → `badge text-bg-info`, `returned` →
@@ -86,10 +110,9 @@ workflow. File access renders as a plain `bt-work-card__meta-item` ("Open",
 "Restricted", "Embargo <start date> – <end date> · Private [if-arrow-right] Open"),
 never as a badge on the backoffice.
 
-In the researcher view, a submitted work is awaiting review but still editable by
-the owner. Raven keeps workflow and visibility as separate axes. In UGent's deposit
-flow, submit moves the workflow to `submitted` and makes the record `public`; review
-stamps the editorial state afterwards.
+In the researcher view, a submitted work is awaiting review; its status reads
+"Submitted". After review the list shows "Reviewed" — for now, researchers see all
+four statuses on their own list.
 
 ### Messages on backoffice cards
 
@@ -107,6 +130,18 @@ Lines: automated missing items the Biblio team is accountable for; the **Interna
 note** (curator → curators; old biblio: "Librarian message"). Examples include
 container, publisher, date/year, ISSN/ISBN, volume, issue, pages and policy-rule
 outcomes, when the active work profile and rules require them.
+
+Where each text lives in raven:
+
+- **The internal note** maps to raven's record notes: standing, per record,
+  curator-only (`raven/note.go`, the `manage_notes` grant).
+- **The Biblio message** is the comment on a workflow action: submit, return,
+  review, or a requested change. A message always accompanies an action; there is
+  no standing Biblio message for now. On a returned record it is the return
+  reason — one text, one field.
+- **"Additional information"** (e.g. "the physical book misses pages 12–14") is
+  work metadata, not a message: raven's `notes` field on the work, where old
+  biblio's AdditionalInfo migrates. It stays out of the message blocks.
 
 In new responsibility-bounded workflows, missing policy-risk answers should become
 pending requests rather than whole-record locks where possible.
@@ -219,7 +254,7 @@ Describes who can access a file. Per-file, not per-work. Field and values are ra
 
 Private files leave no public trace whatsoever: no count, no badge, no machine-facing output. Even revealing that a file *exists* is a patent risk (tech transfer). "All files private" renders identically to "no files".
 
-In summary views (cards, table rows), show the most permissive visibility across all files on the work. Where every file is embargoed, show the earliest release date among the deposited files — the full text, the dataset, the software — not supplementary material.
+Summary views (cards, table rows) render raven's derived **work access**, `Work.Access()` (`raven/work.go`): one exclusive state per work — `open`, `embargo`, `restricted` or `none` — read from full-text files and external full-text links, the most useful reader outcome first. The embargo badge names the lift date of the full-text file that decides the state. `none` renders no access element. Raven owns the derivation; the card shows the answer. This is a third mechanism beside record visibility and per-file visibility — three raven concepts, three card surfaces.
 
 ### Embargo
 A file can be under embargo: `lift_embargo_on` (release date) paired with `visibility_after_embargo` — restricted now, switching automatically on the date. The transition is applied by a background job. In the deposit form: the submitter chooses "Under embargo" as the OA status and sets a release date. After the embargo lifts, the dates are kept as a bibliographic record.
@@ -243,8 +278,9 @@ Work kinds have **profiles** — YAML configuration files that define which fiel
 ## The review / curation workflow
 
 The deposit workflow (raven events: `deposit_submitted`, `deposit_returned`,
-`deposit_reviewed`) changes the workflow state. Visibility is a separate axis; in
-UGent's deposit flow, submit also makes the record public.
+`deposit_reviewed`) changes the workflow state. Visibility is a separate axis with
+its own defaults: submit puts the record on the public site unless the depositor
+keeps it off, and return takes it off (see "Work status — two axes").
 
 ```
 [draft] ──submit──► [submitted] ──review──► [reviewed]
@@ -255,6 +291,12 @@ UGent's deposit flow, submit also makes the record public.
                          ▼
                     [returned] ──resubmit──► [submitted]
 ```
+
+Raven models only these four states. The pending request — a researcher or proxy
+suggesting an edit, or a curator asking for one — is our design concept, defined
+under "Accepted value and pending request": it runs beside the deposit status and
+never moves it. The "Request changes" action creates one. Raven modelling is
+planned.
 
 Workflow transitions carry an optional free-text comment (raven's event `comment`
 field) — the back-and-forth between submitter and curator rides on the events:
@@ -427,7 +469,7 @@ A zero state is copy, not a count: "No results for … with these filters" is ab
 Record visibility is a separate neutral badge on backoffice cards: `if-eye Public` /
 `if-eye-off Private`.
 
-File access: on **public** cards a badge, and only open access carries colour — open →
+Work access (raven's `Work.Access()`): on **public** cards a badge, and only open access carries colour — open →
 `badge text-bg-success` + `if-open-access`, restricted → `badge text-bg-secondary` +
 `if-lock`, embargo → `badge text-bg-secondary` + `if-time`, naming the date ("Embargo
 until 1 May 2027"), closed → `badge text-bg-secondary`, text only. On **backoffice**
