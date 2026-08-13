@@ -1,5 +1,5 @@
 // Fails the build if an SCSS partial exists that booktower.scss doesn't @use.
-// Guards against silently missing components (see docs/analysis/AUDIT-BOOTSTRAP-GAPS.md §1.2).
+// Guards against silently missing components (bt-blank-slate once shipped uncompiled).
 const fs = require('fs');
 const path = require('path');
 

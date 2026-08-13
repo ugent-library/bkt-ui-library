@@ -517,7 +517,7 @@ meta line version · access · format · size).
 
 ## Bootstrap gap audit (v2.2, 2026-07-03)
 
-Full findings in `docs/analysis/AUDIT-BOOTSTRAP-GAPS.md`. The headlines:
+The findings doc is retired (2026-08-13); this section is the record of what it found and fixed. The headlines:
 
 **Fixed bugs:** `.form-select` caret restored (a `background:` shorthand had erased it); `bt-blank-slate` compiled again (its partial was never `@use`d); `--bs-info-rgb` matched to `--bt-blue`; disabled/toggled primary buttons no longer fall back to stock Bootstrap blue; slim-sidebar badge counts hide properly; reduced-motion no longer makes spinners blur.
 
