@@ -14,8 +14,9 @@ status is draft, submitted, returned or reviewed. Visibility is Public or Privat
 with a visible label. All four statuses render in researcher and curator lists.
 
 The two axes are independent: deposit status and visibility render separately and can
-change separately. In UGent's deposit flow, submit also makes the record public, while
-a record can still end up reviewed yet private.
+change separately. In UGent's deposit flow, submit puts the record on the public site
+by default — the depositor can keep it off — while a record can still end up reviewed
+yet private.
 
 File access is a plain metadata item, never a badge. The backoffice reference line
 is the metadata scan. Departments, projects, VABB, Biblio ID, audit stamps and quick
@@ -45,8 +46,8 @@ reserves the card region they occupy.
 
 - [ ] Deposit status and record visibility badges
   - four statuses; visibility has a visible label
-  - the two axes render separately. In UGent's deposit flow, submit also makes the
-    record public; later visibility changes still move independently
+  - the two axes render separately. In UGent's deposit flow, submit puts the record
+    on the public site by default; later visibility changes still move independently
 - [ ] All four statuses render, in both lists
 - [ ] File access as a plain metadata item, in the backoffice's shorter wording:
       "Open", "Restricted", "Embargo \<start date\> – \<end date\> ·
@@ -87,6 +88,8 @@ example, and a retracted card.
 - The public card carries no deposit status and no record visibility — deliberate;
   it must not leak workflow.
 - The evaluation classification stays off the card on both surfaces.
+- VABB and the Biblio ID are UGent deployment configuration, not core raven; the
+  card renders these rows when the deployment provides them.
 
 _The prototype governs the visible page and markup. JS follows raven's frontend
 standards. Prototype URLs are placeholders. UI copy goes through the translation
@@ -121,8 +124,6 @@ researcher title links land on [templates/biblio-researcher/work-detail.html](ht
 - Blocked by #180, which lands with the public epic #185.
 - Year links narrow on #157; container links need #182. Project links use
   #159 and the same URL state contract as the rest of the backoffice search.
-- #51 is the existing placeholder for the researcher's list page; this is its
-  card half.
 
 ## Open questions
 

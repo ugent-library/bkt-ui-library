@@ -97,14 +97,8 @@ View the [curator list](https://bkt-ui.vercel.app/templates/biblio-team/curate.h
 
 ## How this lands in raven
 
-Checked against open issues, 2026-08-06.
+Checked against open issues 2026-08-13.
 
-- **#51** is a one-line placeholder for the researcher's backoffice search
-  page, self-assigned, pointing at the same prototype #189 does. Either
-  #189 becomes its body or #189 is its child; #51's remaining text is the
-  page, not the card.
-- **#125** was never picked up. #196 replaces it as a public-detail follow-up
-  outside this backoffice epic.
 - The public action row is outside this epic, so #194 is the backoffice half
   only.
 - Nothing covers the curator list card, the message blocks, retraction, or

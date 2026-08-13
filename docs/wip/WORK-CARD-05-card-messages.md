@@ -35,8 +35,9 @@ field, no second place to store it. Nothing missing and no note means no block.
 
 - [ ] "For the researcher" block — warning alert, researcher and curator
   - missing items from the researcher list, in the documented priority order
-  - the Biblio message; on a returned record, the return reason from the record's
-    history
+  - the Biblio message: the comment on the record's latest workflow action. On a
+    returned record, the return reason from the record's history. A message always
+    accompanies an action; there is no standing Biblio message for now
   - the "Complete metadata" call to action, opening the record's edit form
 - [ ] "For curators" block — quiet alert with the padlock, curators only
   - missing items from the curator list
@@ -64,6 +65,9 @@ is the return reason**.
 
 - The curator block is not hidden from researchers — it is absent from what they
   are served.
+- The record's "additional information" (raven's `notes` work metadata, e.g. "the
+  physical book misses pages 12–14") is record metadata, not a message; it stays
+  out of both blocks.
 - Message text may contain URLs; the old card rendered them as links. Keep that,
   with the surrounding text escaped.
 
@@ -93,6 +97,9 @@ View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates
 ## Dependencies
 
 - Blocked by #189, and by #190 for the two missing-items lists.
+- Both texts come from storage raven already has — the internal note's text is a
+  record note, the Biblio message's text is the comment on the record's workflow
+  action. Neither block needs a new backend field.
 
 ## Open questions
 

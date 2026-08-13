@@ -28,6 +28,8 @@ depositor to choose the kind is the fallback, not the first task.
 
 ### Accepted value and pending request
 
+This flow is still experimental in both booktower-ui-library and Raven.
+
 The record shows its **accepted values** — the values the Biblio team stands
 behind, on the public site and in the backoffice. A researcher, proxy or curator
 proposes a new value; that proposal is a **pending request**, and the Biblio team
@@ -297,6 +299,12 @@ suggesting an edit, or a curator asking for one — is our design concept, defin
 under "Accepted value and pending request": it runs beside the deposit status and
 never moves it. The "Request changes" action creates one. Raven modelling is
 planned.
+
+A researcher edits their own record in two ways. When in draft, submitted or
+returned: they edit it directly, whatever the record's visibility.
+Once it is reviewed, they suggest a change, which becomes a pending request.
+Raven grants owner edits on drafts and returned records today; whether the owner
+also edits their own submitted record directly is still to clear out in raven.
 
 Workflow transitions carry an optional free-text comment (raven's event `comment`
 field) — the back-and-forth between submitter and curator rides on the events:

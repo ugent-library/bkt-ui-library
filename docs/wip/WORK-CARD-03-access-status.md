@@ -32,8 +32,8 @@ Badges, and shown on the kit page.
 
 **A public card may not carry a "no access" badge.** Eight of the 23 types routinely
 have no file and a private file must leave no public trace — no badge, no count,
-not even the fact that a file exists. Showing nothing is the design; a card without
-an open, restricted or embargoed file simply has no access element, closed files included.
+not even the fact that a file exists. Showing nothing is the design; a work whose
+derived access is `none` simply has no access element, closed files included.
 
 ### Notes on the target groups
 
@@ -59,11 +59,11 @@ works she can open — colour only where the answer is yes.
   - Restricted access — neutral, lock icon
   - Embargo until \<date\> — neutral, time icon, badge names the date
 - [ ] One badge per work, per the definition in #164 — not one per file
-- [ ] Files that disagree: the badge shows the most permissive access across them,
-      and the earliest release date where all are embargoed. It reads the deposit —
-      the full text, the dataset, the software — not supplementary material
-- [ ] No access element when the work has no files on public pages,
-  or only closed or private ones.
+- [ ] The state is raven's derived work access (`Work.Access()`): the card renders
+      the answer and derives nothing itself. The embargo badge names the lift date
+      of the full-text file that decides the state
+- [ ] No access element when the derived work access is `none` — no files, or only
+      closed or private ones
 - [ ] Every state renders identically logged in, logged out, on and off the UGent
       network — the badge states what the file is, not who the reader is
 - `out of scope` Access as plain text on backoffice cards — #189
@@ -100,7 +100,8 @@ View the [templates/biblio-public/public-works.html](https://bkt-ui.vercel.app/t
       HTML, not only on screen
 - [ ] The embargo badge carries the release date in the public date format
       (`docs/DOMAIN-VOCABULARY.md` → "Dates in the UI")
-- [ ] A work whose files carry different embargo dates shows the earliest of them
+- [ ] An embargo badge names the lift date of the full-text file raven's derived
+      work access decides the state by — never a date from another file
 - [ ] The same record renders the same badge anonymously, logged in, and from the
       campus network
 - [ ] Passes the pre-flight checklist in `bkt-ui-library/docs/ACCESSIBILITY.md`, plus:

@@ -27,6 +27,10 @@ The card action answers one question: what can this user do with this record now
 - researcher, **reviewed** → Request changes, plus View public page where the record
   is public; View Altmetric sits in the more menu when an Altmetric link exists
 
+A researcher edits their own record in two ways. When in draft, submitted or returned:
+they edit it directly, whatever the record's visibility.
+Once it is reviewed, they suggest a change, which becomes a pending request.
+
 One primary per card at most. Navigating actions are links. Every action name
 identifies the record.
 
@@ -63,6 +67,8 @@ The prototype covers **every row listed** in the matrix, plus representative car
 examples. The proxy role comes later.
 
 - An action a user cannot perform is absent, not disabled.
+- The Altmetric link is UGent deployment configuration, not core raven; the action
+  renders when the deployment provides the link.
 
 _The prototype governs the visible page and markup. JS follows raven's frontend
 standards. Prototype URLs are placeholders. UI copy goes through the translation
@@ -91,9 +97,18 @@ View the [templates/biblio-team/curate.html](https://bkt-ui.vercel.app/templates
 - Review, Continue, Edit & resubmit, Request changes and View public page each need
   a destination; where a flow does not exist yet the action waits rather than
   shipping as a dead link.
+- Request changes creates a pending request
+  (`bkt-ui-library/docs/DOMAIN-VOCABULARY.md` → "Accepted value and pending
+  request"): the record keeps its accepted values on the public site while the
+  request waits, and a message rides the request. Raven does not model pending
+  requests yet, design is also under review.
 - The reviewer "next record" flow is a separate workflow issue. This issue only
   makes the action available from the card.
 
 ## Open questions
 
-None.
+- **Can a researcher edit their own submitted record directly according to Raven?**
+  The design intends it — the two-way rule above. In raven today, an owner edits
+  their own drafts and returned records; only curators edit submitted records.
+  To clear out on the raven side; until then the Edit action on a researcher's
+  submitted card waits.
