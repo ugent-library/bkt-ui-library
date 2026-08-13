@@ -111,7 +111,6 @@ bt-navbar
 bt-navbar__brand
 bt-navbar__link
 bt-navbar__logo
-bt-navbar__nav
 bt-navbar__sep
 
 bt-panel
