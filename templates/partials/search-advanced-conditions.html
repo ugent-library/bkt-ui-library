@@ -71,56 +71,56 @@
 
         <div class="bt-query-builder__pick">
           <p class="fw-semibold mb-0">Or pick any field</p>
-          <div class="bt-query-builder__chooser-search">
-            <i class="if if-search" aria-hidden="true"></i>
+          <div class="d-flex align-items-center gap-2">
+            <i class="if if-search text-muted" aria-hidden="true"></i>
             <label class="visually-hidden" for="qb-field-search">Search fields</label>
             <input type="search" class="form-control form-control-sm" id="qb-field-search"
               placeholder="Search fields&hellip;" autocomplete="off" data-qb-choice-search>
           </div>
         </div>
         <div class="bt-query-builder__blank-columns">
-          <div class="bt-query-builder__choice-group" role="group" aria-labelledby="qb-g-subject">
+          <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-subject">
             <p class="bt-query-builder__choice-heading mb-2" id="qb-g-subject">Subject</p>
-            <div class="bt-query-builder__field-links">
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Words or topic" data-qb-template="qb-row-text">Words or topic</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Title" data-qb-template="qb-row-text">Title</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Abstract" data-qb-template="qb-row-text">Abstract</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Keyword" data-qb-template="qb-row-text">Keyword</button>
-            </div>
+            <ul class="list-unstyled d-grid gap-1">
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Words or topic" data-qb-template="qb-row-text">Words or topic</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Title" data-qb-template="qb-row-text">Title</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Abstract" data-qb-template="qb-row-text">Abstract</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Keyword" data-qb-template="qb-row-text">Keyword</button></li>
+            </ul>
           </div>
-          <div class="bt-query-builder__choice-group" role="group" aria-labelledby="qb-g-authors">
+          <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-authors">
             <p class="bt-query-builder__choice-heading mb-2" id="qb-g-authors">Authors</p>
-            <div class="bt-query-builder__field-links">
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Contributor" data-qb-template="qb-row-contributor">Contributor</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Affiliation" data-qb-template="qb-row-person">Affiliation</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Project" data-qb-template="qb-row-person">Project</button>
-            </div>
+            <ul class="list-unstyled d-grid gap-1">
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Contributor" data-qb-template="qb-row-contributor">Contributor</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Affiliation" data-qb-template="qb-row-person">Affiliation</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Project" data-qb-template="qb-row-person">Project</button></li>
+            </ul>
           </div>
-          <div class="bt-query-builder__choice-group" role="group" aria-labelledby="qb-g-publication">
+          <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-publication">
             <p class="bt-query-builder__choice-heading mb-2" id="qb-g-publication">Publication</p>
-            <div class="bt-query-builder__field-links">
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Host publication" data-qb-template="qb-row-text">Host publication</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Publisher" data-qb-template="qb-row-text">Publisher</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Language" data-qb-template="qb-row-choice">Language</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Access level" data-qb-template="qb-row-choice">Access level</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button>
-            </div>
+            <ul class="list-unstyled d-grid gap-1">
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Host publication" data-qb-template="qb-row-text">Host publication</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Publisher" data-qb-template="qb-row-text">Publisher</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Access level" data-qb-template="qb-row-choice">Access level</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -134,7 +134,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
           <label class="visually-hidden" for="qbp-role-1">Role, condition 1</label>
           <select class="bt-query-builder__field" id="qbp-role-1">
@@ -200,7 +201,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Words or topic</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
         </div>
         <div class="bt-query-builder__row-op">
@@ -246,7 +248,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
           <label class="visually-hidden" for="qb-role-2">Role, condition 2</label>
           <select class="bt-query-builder__field" id="qb-role-2">
@@ -312,7 +315,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
           <label class="visually-hidden" for="qb-role-3">Role, condition 3</label>
           <select class="bt-query-builder__field" id="qb-role-3">
@@ -385,7 +389,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Publication year</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
         </div>
         <div class="bt-query-builder__row-op">
@@ -440,7 +445,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Access level</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
         </div>
         <div class="bt-query-builder__row-op">
@@ -492,7 +498,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Identifier</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
         </div>
         <div class="bt-query-builder__row-op">
@@ -578,7 +585,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Host publication</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
         </div>
         <div class="bt-query-builder__row-op">
@@ -631,7 +639,8 @@
               <div class="dropdown">
                 <button type="button" class="bt-query-builder__field" data-qb-change-field
                   data-bs-toggle="dropdown" aria-expanded="false">Host publication</button>
-                <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+                <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
               </div>
             </div>
             <div class="bt-query-builder__row-op">
@@ -675,7 +684,8 @@
               <div class="dropdown">
                 <button type="button" class="bt-query-builder__field" data-qb-change-field
                   data-bs-toggle="dropdown" aria-expanded="false">Publisher</button>
-                <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+                <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
               </div>
             </div>
             <div class="bt-query-builder__row-op">
@@ -720,7 +730,8 @@
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add an alternative
             </button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
           <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
             Ungroup
@@ -739,7 +750,8 @@
               <div class="dropdown">
                 <button type="button" class="bt-query-builder__field" data-qb-change-field
                   data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
-                <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+                <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
               </div>
               <label class="visually-hidden" for="qbr-role-1a">Role, alternative 1</label>
               <select class="bt-query-builder__field" id="qbr-role-1a">
@@ -798,7 +810,8 @@
               <div class="dropdown">
                 <button type="button" class="bt-query-builder__field" data-qb-change-field
                   data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
-                <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+                <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
               </div>
               <label class="visually-hidden" for="qbr-role-1b">Role, alternative 2</label>
               <select class="bt-query-builder__field" id="qbr-role-1b">
@@ -859,7 +872,8 @@
               <i class="if if-add if--xs" aria-hidden="true"></i>
               Add an alternative
             </button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
           <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
             Ungroup
@@ -874,7 +888,8 @@
           <div class="dropdown">
             <button type="button" class="bt-query-builder__field" data-qb-change-field
               data-bs-toggle="dropdown" aria-expanded="false">Publication year</button>
-            <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+            <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
           </div>
         </div>
         <div class="bt-query-builder__row-op">
@@ -924,7 +939,8 @@
           Add a condition
         </button>
         <!-- Filled from #qb-chooser on first open: search, Common, then the grouped fields. -->
-        <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+        <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
       </div>
       <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-clear>
         Clear all
@@ -938,88 +954,86 @@
 <!-- The chooser, defined once. Every entry point carries an empty slot that the JS fills on
      first open, so the panel appears at the control that asked for it. -->
   <template id="qb-chooser">
-    <div data-qb-choice-panel>
-      <div class="bt-query-builder__chooser-search">
-        <i class="if if-search" aria-hidden="true"></i>
+      <div class="bt-panel__body border-top-0 d-flex align-items-center gap-2">
+        <i class="if if-search text-muted" aria-hidden="true"></i>
         <label class="visually-hidden" for="qb-condition-search">Search condition fields</label>
         <input type="search" class="form-control form-control-sm" id="qb-condition-search"
           placeholder="Search fields&hellip;" autocomplete="off" data-qb-choice-search>
       </div>
-      <div class="bt-query-builder__choice-group p-3 pb-2" role="group"
+      <div class="min-w-0 p-3 pb-2" data-qb-choice-group role="group"
         aria-labelledby="qbp-g-common">
         <p class="bt-query-builder__choice-heading mb-2" id="qbp-g-common">Common</p>
-          <button class="bt-query-builder__choice" type="button" data-qb-choice
+          <button class="dropdown-item bt-query-builder__choice" type="button" data-qb-choice
             data-qb-label="Contributor" data-qb-template="qb-row-contributor">
-            <i class="if if-user-search-line" aria-hidden="true"></i>
+            <i class="if if-user-search-line text-muted" aria-hidden="true"></i>
             <span><strong>Contributor</strong> <span class="text-muted">a person, any role by default</span></span>
           </button>
-          <button class="bt-query-builder__choice" type="button" data-qb-choice
+          <button class="dropdown-item bt-query-builder__choice" type="button" data-qb-choice
             data-qb-label="Publication year" data-qb-template="qb-row-year">
-            <i class="if if-calendar" aria-hidden="true"></i>
+            <i class="if if-calendar text-muted" aria-hidden="true"></i>
             <span><strong>Publication year</strong> <span class="text-muted">exact, range, before, after</span></span>
           </button>
-          <button class="bt-query-builder__choice" type="button" data-qb-choice
+          <button class="dropdown-item bt-query-builder__choice" type="button" data-qb-choice
             data-qb-label="Publication type" data-qb-template="qb-row-choice">
-            <i class="if if-book" aria-hidden="true"></i>
+            <i class="if if-book text-muted" aria-hidden="true"></i>
             <span><strong>Publication type</strong> <span class="text-muted">article, book, dataset…</span></span>
           </button>
-          <button class="bt-query-builder__choice" type="button" data-qb-choice
+          <button class="dropdown-item bt-query-builder__choice" type="button" data-qb-choice
             data-qb-label="Identifier" data-qb-template="qb-row-batch">
-            <i class="if if-list-unordered" aria-hidden="true"></i>
+            <i class="if if-list-unordered text-muted" aria-hidden="true"></i>
             <span><strong>Identifier</strong> <span class="text-muted">DOI, ISSN, ISBN — or paste a list</span></span>
           </button>
-          <button class="bt-query-builder__choice" type="button" data-qb-choice
+          <button class="dropdown-item bt-query-builder__choice" type="button" data-qb-choice
             data-qb-label="Affiliation" data-qb-template="qb-row-person">
-            <i class="if if-building" aria-hidden="true"></i>
+            <i class="if if-building text-muted" aria-hidden="true"></i>
             <span><strong>Affiliation</strong> <span class="text-muted">faculty, department, group</span></span>
           </button>
       </div>
-      <div class="bt-query-builder__chooser-body border-top">
-          <div class="bt-query-builder__choice-group" role="group" aria-labelledby="qbp-g-subject">
+      <div class="bt-panel__body bt-panel__body--grid">
+          <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qbp-g-subject">
             <p class="bt-query-builder__choice-heading mb-2" id="qbp-g-subject">Subject</p>
-            <div class="bt-query-builder__field-links">
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Words or topic" data-qb-template="qb-row-text">Words or topic</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Title" data-qb-template="qb-row-text">Title</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Abstract" data-qb-template="qb-row-text">Abstract</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Keyword" data-qb-template="qb-row-text">Keyword</button>
-            </div>
+            <ul class="list-unstyled d-grid gap-1">
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Words or topic" data-qb-template="qb-row-text">Words or topic</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Title" data-qb-template="qb-row-text">Title</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Abstract" data-qb-template="qb-row-text">Abstract</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Keyword" data-qb-template="qb-row-text">Keyword</button></li>
+            </ul>
           </div>
-          <div class="bt-query-builder__choice-group" role="group" aria-labelledby="qbp-g-authors">
+          <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qbp-g-authors">
             <p class="bt-query-builder__choice-heading mb-2" id="qbp-g-authors">Authors</p>
-            <div class="bt-query-builder__field-links">
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Contributor" data-qb-template="qb-row-contributor">Contributor</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Affiliation" data-qb-template="qb-row-person">Affiliation</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Project" data-qb-template="qb-row-person">Project</button>
-            </div>
+            <ul class="list-unstyled d-grid gap-1">
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Contributor" data-qb-template="qb-row-contributor">Contributor</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Affiliation" data-qb-template="qb-row-person">Affiliation</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Project" data-qb-template="qb-row-person">Project</button></li>
+            </ul>
           </div>
-          <div class="bt-query-builder__choice-group" role="group" aria-labelledby="qbp-g-publication">
+          <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qbp-g-publication">
             <p class="bt-query-builder__choice-heading mb-2" id="qbp-g-publication">Publication</p>
-            <div class="bt-query-builder__field-links">
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Host publication" data-qb-template="qb-row-text">Host publication</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Publisher" data-qb-template="qb-row-text">Publisher</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Language" data-qb-template="qb-row-choice">Language</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Access level" data-qb-template="qb-row-choice">Access level</button>
-              <button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
-                data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button>
-            </div>
+            <ul class="list-unstyled d-grid gap-1">
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Host publication" data-qb-template="qb-row-text">Host publication</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Publisher" data-qb-template="qb-row-text">Publisher</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Access level" data-qb-template="qb-row-choice">Access level</button></li>
+              <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+                data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
+            </ul>
           </div>
       </div>
-    </div>
   </template>
 
 <!-- The markup a chooser pick clones. One template per value shape; the field name is written
@@ -1031,7 +1045,8 @@
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
       </div>
       <div class="bt-query-builder__row-op">
@@ -1071,7 +1086,8 @@
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
       </div>
       <div class="bt-query-builder__row-op">
@@ -1118,7 +1134,8 @@
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
         <label class="visually-hidden" for="qb-t-contributor-role">Role</label>
         <select class="bt-query-builder__field" id="qb-t-contributor-role">
@@ -1171,7 +1188,8 @@
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
       </div>
       <div class="bt-query-builder__row-op">
@@ -1216,7 +1234,8 @@
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
       </div>
       <div class="bt-query-builder__row-op">
@@ -1257,7 +1276,8 @@
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
       </div>
       <div class="bt-query-builder__row-op">
@@ -1307,7 +1327,8 @@
             <i class="if if-add if--xs" aria-hidden="true"></i>
             Add an alternative
           </button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
+          <div class="dropdown-menu p-0 bt-panel bt-panel--xwide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
           Ungroup

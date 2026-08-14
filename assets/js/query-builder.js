@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
         choice.hidden = Boolean(needle) &&
           !(choice.dataset.qbLabel + ' ' + choice.textContent).toLowerCase().includes(needle);
       });
-      scope.querySelectorAll('.bt-query-builder__choice-group').forEach(group => {
+      scope.querySelectorAll('[data-qb-choice-group]').forEach(group => {
         group.hidden = !group.querySelector('[data-qb-choice]:not([hidden])');
       });
     });

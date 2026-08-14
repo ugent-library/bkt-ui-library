@@ -14,6 +14,11 @@
   min-width: min(480px, 100vw - 2rem);
 }
 
+.bt-panel--xwide {
+  max-width: 40rem;
+  min-width: min(40rem, 100vw - 2rem);
+}
+
 .bt-panel__title {
   padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
   margin-bottom: 0;
@@ -85,3 +90,16 @@
   align-items: center;
 }
 .bt-panel__year-input { width: 120px; }
+
+/* Column grid for grouped option lists (the query builder's field chooser) */
+.bt-panel__body--grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--bt-sp-4);
+}
+
+@media (max-width: 991.98px) {
+  .bt-panel__body--grid {
+    grid-template-columns: 1fr;
+  }
+}

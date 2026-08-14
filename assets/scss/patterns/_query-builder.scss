@@ -238,40 +238,6 @@
   border-top: var(--bt-border);
 }
 
-.bt-query-builder__pick .bt-query-builder__chooser-search {
-  padding: 0;
-  border-bottom: 0;
-}
-
-.bt-query-builder__chooser-body {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bt-sp-4);
-  padding: var(--bt-sp-3);
-}
-
-.bt-query-builder__chooser {
-  width: min(40rem, calc(100vw - var(--bt-sp-8)));
-  overflow: hidden;
-}
-
-.bt-query-builder__chooser-search {
-  display: grid;
-  grid-template-columns: 1.25rem minmax(0, 22rem);
-  gap: var(--bt-sp-2);
-  align-items: center;
-  padding: var(--bt-sp-3);
-  border-bottom: var(--bt-border);
-}
-
-.bt-query-builder__chooser-search i {
-  color: var(--s-text-muted);
-}
-
-.bt-query-builder__choice-group {
-  min-width: 0;
-}
-
 .bt-query-builder__choice-heading {
   margin-bottom: var(--bt-sp-2);
   color: var(--s-text-muted);
@@ -281,47 +247,29 @@
   text-transform: uppercase;
 }
 
+/* Rides on .dropdown-item; the icon column is what aligns the labels (.if has no fixed width). */
 .bt-query-builder__choice {
   display: grid;
   grid-template-columns: 1.375rem minmax(0, 1fr);
   gap: var(--bt-sp-2);
-  width: 100%;
   min-height: 2rem;
-  padding: var(--bt-sp-1) var(--bt-sp-2);
-  color: var(--bt-text);
-  text-align: left;
-  background-color: transparent;
-  border: 0;
-  border-radius: var(--bt-radius);
-}
-
-.bt-query-builder__choice:hover,
-.bt-query-builder__choice:focus-visible {
-  color: var(--bt-blue-900);
-  background-color: var(--bt-blue-100);
-}
-
-.bt-query-builder__choice i {
-  color: var(--s-text-muted);
 }
 
 .bt-query-builder__choice[hidden] {
   display: none;
 }
 
-.bt-query-builder__field-links {
-  display: grid;
-  gap: var(--bt-sp-1);
-}
-
 /* These add a condition rather than navigate, so they carry no underline until reached. */
-.bt-query-builder__field-links .btn-link {
+.bt-query-builder__blank-columns .btn-link,
+.bt-panel__body--grid .btn-link {
   color: var(--bt-text);
   text-decoration: none;
 }
 
-.bt-query-builder__field-links .btn-link:hover,
-.bt-query-builder__field-links .btn-link:focus-visible {
+.bt-query-builder__blank-columns .btn-link:hover,
+.bt-query-builder__blank-columns .btn-link:focus-visible,
+.bt-panel__body--grid .btn-link:hover,
+.bt-panel__body--grid .btn-link:focus-visible {
   color: var(--bt-blue-900);
   text-decoration: underline;
 }
@@ -380,8 +328,7 @@
   }
 
   .bt-query-builder__blank-columns,
-  .bt-query-builder__starts,
-  .bt-query-builder__chooser-body {
+  .bt-query-builder__starts {
     grid-template-columns: 1fr;
   }
 }

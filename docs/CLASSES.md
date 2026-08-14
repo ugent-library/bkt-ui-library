@@ -115,11 +115,13 @@ bt-navbar__sep
 
 bt-panel
 bt-panel--wide
+bt-panel--xwide
 bt-panel__actions
 bt-panel__body
 bt-panel__body--boolean
 bt-panel__body--checklist
 bt-panel__body--form
+bt-panel__body--grid
 bt-panel__body--year
 bt-panel__title
 bt-panel__year-input
@@ -129,14 +131,9 @@ bt-query-builder__batch
 bt-query-builder__blank
 bt-query-builder__blank-columns
 bt-query-builder__choice
-bt-query-builder__choice-group
 bt-query-builder__choice-heading
-bt-query-builder__chooser
-bt-query-builder__chooser-body
-bt-query-builder__chooser-search
 bt-query-builder__exit
 bt-query-builder__field
-bt-query-builder__field-links
 bt-query-builder__group
 bt-query-builder__group-foot
 bt-query-builder__group-label
