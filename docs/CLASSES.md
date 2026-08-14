@@ -137,7 +137,6 @@ bt-query-builder__field
 bt-query-builder__group
 bt-query-builder__group-foot
 bt-query-builder__group-label
-bt-query-builder__more
 bt-query-builder__people-field
 bt-query-builder__people-input
 bt-query-builder__people-search

@@ -180,12 +180,16 @@ document.addEventListener('DOMContentLoaded', function () {
         alts(item).forEach((row, j) => {
           row.classList.add('bt-query-builder__row--alt');
           if (j && !isSeparator(row.previousElementSibling)) row.before(separator('or'));
+          // With remove promoted out of the menu, "Add an 'or'" is all it holds — and a row
+          // already inside a group has no use for it, so the whole menu hides.
           const or = row.querySelector('[data-qb-or]');
-          if (or) or.closest('li').remove();
+          if (or) or.closest('.dropdown').hidden = true;
           nameRow(row);
         });
       } else {
         item.classList.remove('bt-query-builder__row--alt');
+        const or = item.querySelector('[data-qb-or]');
+        if (or) or.closest('.dropdown').hidden = false;
         nameRow(item);
       }
     });
