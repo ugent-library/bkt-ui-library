@@ -4,17 +4,6 @@
   count. Bootstrap has form rows, cards and tabs, but nothing of this shape.
 */
 
-.bt-query-builder__editor {
-  min-width: 0;
-  background-color: var(--bt-white);
-  border: var(--bt-border);
-}
-
-.bt-query-builder__heading {
-  padding: var(--bt-sp-4);
-  border-bottom: var(--bt-border);
-}
-
 /* ── Rows ─────────────────────────────────────────────────────────────────── */
 
 .bt-query-builder__row {
@@ -156,42 +145,6 @@
   flex-wrap: wrap;
   gap: var(--bt-sp-1);
   align-items: center;
-  min-height: 2.375rem;
-  padding: var(--bt-sp-1);
-  background-color: var(--bt-white);
-  border: var(--bt-border);
-}
-
-.bt-query-builder__person-token {
-  display: inline-flex;
-  gap: var(--bt-sp-1);
-  align-items: center;
-  max-width: 100%;
-  min-height: var(--bt-sp-6);
-  padding: 0 var(--bt-sp-1) 0 var(--bt-sp-2);
-  overflow: hidden;
-  color: var(--bt-blue-900);
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  background-color: var(--bt-blue-100);
-  border: 1px solid var(--bt-blue-200);
-  border-radius: var(--bt-radius);
-}
-
-.bt-query-builder__person-token button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
-  padding: 0;
-  color: inherit;
-  background: transparent;
-  border: 0;
-}
-
-.bt-query-builder__person-token button:hover {
-  background-color: color-mix(in srgb, var(--bt-blue-200) 45%, transparent);
 }
 
 .bt-query-builder__people-search {
@@ -255,14 +208,10 @@
   border-top: var(--bt-border);
 }
 
+/* Rides on .card; keeps the tighter --bt-radius, since .card is overridden to --bt-radius-xl. */
 .bt-query-builder__start {
-  display: flex;
-  flex-direction: column;
   gap: var(--bt-sp-2);
   padding: var(--bt-sp-4);
-  text-align: left;
-  background-color: var(--bt-white);
-  border: var(--bt-border);
   border-radius: var(--bt-radius);
 }
 
@@ -276,31 +225,12 @@
   box-shadow: 0 1px 6px rgba(26, 24, 20, 0.08);
 }
 
-.bt-query-builder__start-head {
-  display: flex;
-  gap: var(--bt-sp-2);
-  align-items: center;
-  font-weight: 600;
-}
-
-.bt-query-builder__start-body {
-  color: var(--s-text-muted);
-  font-size: var(--bt-text-sm);
-}
-
 .bt-query-builder__start-shape {
   margin-top: auto;
   padding: var(--bt-sp-1) var(--bt-sp-2);
   color: var(--s-text-muted);
   font-size: var(--bt-text-xs);
   background-color: var(--bt-bg-alt);
-  border-radius: var(--bt-radius);
-}
-
-.bt-query-builder__start-slot {
-  padding: 0 var(--bt-sp-1);
-  color: var(--bt-blue-900);
-  background-color: var(--bt-blue-100);
   border-radius: var(--bt-radius);
 }
 

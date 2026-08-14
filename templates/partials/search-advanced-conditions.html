@@ -25,8 +25,8 @@
 <!-- [html-validate-disable-next wcag/h32 -- submit button bound externally by form="qb-form"] -->
 <form id="qb-form" action="public-works.html" method="get"
   aria-labelledby="conditions-heading">
-  <div class="bt-query-builder__editor">
-    <div class="bt-query-builder__heading">
+  <div class="card rounded-0">
+    <div class="card-header bg-transparent p-3">
       <h3 id="conditions-heading" class="h5 mb-0">
         Show research output where all of these are true
       </h3>
@@ -40,32 +40,32 @@
       <div class="bt-query-builder__blank">
         <p class="fw-semibold mb-3">Start with what every result should have in common</p>
         <div class="bt-query-builder__starts">
-          <button type="button" class="bt-query-builder__start" data-qb-choice
+          <button type="button" class="card text-start bt-query-builder__start" data-qb-choice
             data-qb-label="Contributor" data-qb-template="qb-row-contributor">
-            <span class="bt-query-builder__start-head">
+            <span class="d-flex align-items-center gap-2 fw-semibold">
               <i class="if if-user-search-line" aria-hidden="true"></i>A person
             </span>
-            <span class="bt-query-builder__start-body">Everything one researcher contributed to, in any role.</span>
+            <span class="text-muted small">Everything one researcher contributed to, in any role.</span>
             <span class="bt-query-builder__start-shape font-monospace">Contributor &middot; is &middot;
-              <span class="bt-query-builder__start-slot">a person</span></span>
+              <span class="badge text-bg-primary-light">a person</span></span>
           </button>
-          <button type="button" class="bt-query-builder__start" data-qb-choice
+          <button type="button" class="card text-start bt-query-builder__start" data-qb-choice
             data-qb-label="Affiliation" data-qb-template="qb-row-person">
-            <span class="bt-query-builder__start-head">
+            <span class="d-flex align-items-center gap-2 fw-semibold">
               <i class="if if-building" aria-hidden="true"></i>A faculty or group
             </span>
-            <span class="bt-query-builder__start-body">Output credited to an organization. Add a year to report on it.</span>
+            <span class="text-muted small">Output credited to an organization. Add a year to report on it.</span>
             <span class="bt-query-builder__start-shape font-monospace">Affiliation &middot; is &middot;
-              <span class="bt-query-builder__start-slot">a faculty</span></span>
+              <span class="badge text-bg-primary-light">a faculty</span></span>
           </button>
-          <button type="button" class="bt-query-builder__start" data-qb-choice
+          <button type="button" class="card text-start bt-query-builder__start" data-qb-choice
             data-qb-label="Identifier" data-qb-template="qb-row-batch">
-            <span class="bt-query-builder__start-head">
+            <span class="d-flex align-items-center gap-2 fw-semibold">
               <i class="if if-list-unordered" aria-hidden="true"></i>A list you already have
             </span>
-            <span class="bt-query-builder__start-body">Paste DOIs, ISSNs or Biblio IDs. The scheme is read per value.</span>
+            <span class="text-muted small">Paste DOIs, ISSNs or Biblio IDs. The scheme is read per value.</span>
             <span class="bt-query-builder__start-shape font-monospace">Identifier &middot; is any of &middot;
-              <span class="bt-query-builder__start-slot">a pasted list</span></span>
+              <span class="badge text-bg-primary-light">a pasted list</span></span>
           </button>
         </div>
 
@@ -148,8 +148,8 @@
         </div>
         <div class="bt-query-builder__row-value">
           <div class="bt-query-builder__people-field" data-people-search>
-            <div class="bt-query-builder__people-input">
-              <span class="bt-query-builder__person-token">
+            <div class="form-control bt-query-builder__people-input">
+              <span class="badge text-bg-primary-light d-inline-flex align-items-center gap-1" data-qb-token>
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                 Jan Coppens
                 <button type="button" aria-label="Remove Jan Coppens from condition 1">
@@ -254,8 +254,8 @@
         </div>
         <div class="bt-query-builder__row-value">
           <div class="bt-query-builder__people-field" data-people-search>
-            <div class="bt-query-builder__people-input">
-              <span class="bt-query-builder__person-token">
+            <div class="form-control bt-query-builder__people-input">
+              <span class="badge text-bg-primary-light d-inline-flex align-items-center gap-1" data-qb-token>
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                 Jan Coppens
                 <button type="button" aria-label="Remove Jan Coppens from condition 2">
@@ -314,15 +314,15 @@
         </div>
         <div class="bt-query-builder__row-value">
           <div class="bt-query-builder__people-field" data-people-search>
-            <div class="bt-query-builder__people-input">
-              <span class="bt-query-builder__person-token">
+            <div class="form-control bt-query-builder__people-input">
+              <span class="badge text-bg-primary-light d-inline-flex align-items-center gap-1" data-qb-token>
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                 Karen Verhoeven
                 <button type="button" aria-label="Remove Karen Verhoeven from condition 3">
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                 </button>
               </span>
-              <span class="bt-query-builder__person-token">
+              <span class="badge text-bg-primary-light d-inline-flex align-items-center gap-1" data-qb-token>
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                 Els De Smet
                 <button type="button" aria-label="Remove Els De Smet from condition 3">
@@ -737,8 +737,8 @@
             </div>
             <div class="bt-query-builder__row-value">
               <div class="bt-query-builder__people-field" data-people-search>
-                <div class="bt-query-builder__people-input">
-                  <span class="bt-query-builder__person-token">
+                <div class="form-control bt-query-builder__people-input">
+                  <span class="badge text-bg-primary-light d-inline-flex align-items-center gap-1" data-qb-token>
                     <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                     Jan Coppens
                     <button type="button" aria-label="Remove Jan Coppens from alternative 1">
@@ -790,8 +790,8 @@
             </div>
             <div class="bt-query-builder__row-value">
               <div class="bt-query-builder__people-field" data-people-search>
-                <div class="bt-query-builder__people-input">
-                  <span class="bt-query-builder__person-token">
+                <div class="form-control bt-query-builder__people-input">
+                  <span class="badge text-bg-primary-light d-inline-flex align-items-center gap-1" data-qb-token>
                     <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                     Jan Coppens
                     <button type="button" aria-label="Remove Jan Coppens from alternative 2">
@@ -1056,7 +1056,7 @@
       </div>
       <div class="bt-query-builder__row-value">
         <div class="bt-query-builder__people-field" data-people-search>
-          <div class="bt-query-builder__people-input">
+          <div class="form-control bt-query-builder__people-input">
             <label class="visually-hidden" for="qb-t-person-val">Add a name</label>
             <input type="search" class="bt-query-builder__people-search" id="qb-t-person-val"
               data-ps-input placeholder="Search a name..." autocomplete="off">
@@ -1104,7 +1104,7 @@
       </div>
       <div class="bt-query-builder__row-value">
         <div class="bt-query-builder__people-field" data-people-search>
-          <div class="bt-query-builder__people-input">
+          <div class="form-control bt-query-builder__people-input">
             <label class="visually-hidden" for="qb-t-contributor-val">Add a name</label>
             <input type="search" class="bt-query-builder__people-search" id="qb-t-contributor-val"
               data-ps-input placeholder="Search a name..." autocomplete="off">

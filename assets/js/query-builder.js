@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function valueOf(row) {
     const cell = row.querySelector('.bt-query-builder__row-value');
     if (!cell) return '';
-    const tokens = Array.from(cell.querySelectorAll('.bt-query-builder__person-token'))
+    const tokens = Array.from(cell.querySelectorAll('[data-qb-token]'))
       .map(token => token.textContent.trim());
     if (tokens.length) return tokens.join(', ');
     return Array.from(cell.querySelectorAll('input:not([type="search"]), select, textarea'))
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function () {
       el.id = next;
     });
     copy.querySelectorAll('input, textarea').forEach(el => { el.value = ''; });
-    copy.querySelectorAll('.bt-query-builder__person-token').forEach(el => el.remove());
+    copy.querySelectorAll('[data-qb-token]').forEach(el => el.remove());
     return copy;
   }
 
