@@ -6,6 +6,40 @@ system, or do I reach for something new?"
 
 ---
 
+## Slim sidebar keeps its labels, and its tooltips wait for slim (v2.21, 2026-08-14)
+
+An icon-only sidebar link now carries its own name. In `bt-sidebar--slim` the link
+and button text is hidden from view and stays in the accessibility tree, so a screen
+reader reads the same label a sighted user reads in the expanded rail. Tooltips
+follow the same state: `sidebar-toggle.js` enables them in slim mode and disables
+them while the sidebar is expanded, where they repeated a label already on screen.
+
+- `.bt-sidebar__label` and `.btn-text` are visually hidden inside
+  `.bt-sidebar--slim` rather than `display: none`. That span names the link in both
+  states.
+- A sidebar link takes no `aria-label`. Bootstrap moves `title` to
+  `data-bs-original-title` when it initialises a tooltip, so `title` never becomes
+  the accessible name, and an `aria-label` would replace the visible text with a
+  second string to keep in sync.
+- Each sidebar `title` repeats its visible label word for word.
+- Slim mode styles count badges only: every badge on a sidebar link is a count
+  badge, so `.badge:not(.badge--total)` left the stylesheet.
+- The CSS build runs autoprefixer from a repo script against `.browserslistrc`, so
+  the compiled file carries vendor prefixes the previous build omitted.
+  `shell/shell.css` now carries the same build stamp as `assets/booktower.css`.
+
+| Removed | Replaced by |
+|---------|-------------|
+| `bt-navbar__nav` | nothing — the class was unused |
+| `aria-label` on a sidebar nav link | `.bt-sidebar__label`, which slim mode keeps in the accessibility tree |
+
+**Consumers:** re-copy `assets/booktower.css`; the icon fonts are unchanged since
+v2.20. Delete any `aria-label` you added to a sidebar link, and read each link's
+`title` against its visible label. Where you mirror `sidebar-toggle.js`, enable the
+tooltips with the slim state instead of at page load.
+
+---
+
 ## Experimental Advanced search builder shared rendering (v2.20, 2026-08-12)
 
 The public advanced-search flow now has a shared builder implementation that can
