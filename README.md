@@ -46,7 +46,7 @@ Run after any template or SCSS editing session. (`docs/CI.md` points here.)
 | `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
 | `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
 | `check:a11y` | The house rules from [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md); source: `scripts/check-a11y.js` |
-| `check:stamp` | Committed compiled CSS that came from `watch:css` instead of `npm run build` — watch output has no stamp and no vendor prefixes |
+| `check:stamp` | Committed compiled CSS that came from `watch:css` instead of `npm run build` (watch output carries no stamp and no vendor prefixes) |
 
 A class kept without a demo goes in the `intentional` list in `scripts/check-classes.js`, with a reason. Each check also runs alone: `npm run check:classes`, etc.
 
@@ -137,7 +137,7 @@ The kit deploys on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**,
 
 ## Browser support
 
-Browser support follows Bootstrap: [`.browserslistrc`](.browserslistrc) is a verbatim copy of the pinned version's list, and every build enforces it — autoprefixer adds the vendor prefixes those browsers need to the compiled CSS. Autoprefixer's browser data (`caniuse-lite`) ages; when the build warns about outdated data, run `npx update-browserslist-db` and rebuild — the compiled CSS may change with it.
+Browser support follows Bootstrap: [`.browserslistrc`](.browserslistrc) is a verbatim copy of the pinned version's list. Every build enforces it: autoprefixer adds the vendor prefixes those browsers need to the compiled CSS. Autoprefixer's browser data (`caniuse-lite`) ages, and the build warns when it has. Run `npx update-browserslist-db`, then rebuild. The refresh may change the compiled CSS.
 
 ---
 

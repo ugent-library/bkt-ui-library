@@ -27,7 +27,7 @@
     "stamp:css": "node scripts/stamp-css.js",
     "build:classes-doc": "node scripts/generate-classes-doc.js",
     "build:icons": "fantasticon",
-    "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css && postcss assets/booktower.css shell/shell.css --use autoprefixer --replace --no-map",
+    "build:css": "sass --no-source-map assets/scss/booktower.scss:assets/booktower.css shell/scss/shell.scss:shell/shell.css && node scripts/prefix-css.js",
     "test": "npm run check:notes-private && npm run check:partials && npm run check:classes && npm run check:doc-refs && npm run check:js && npm run check:comments && npm run check:generated && npm run check:stamp && npm run check:html && npm run check:a11y",
     "check:doc-refs": "node scripts/check-doc-refs.js",
     "check:migration": "node scripts/check-migration.js",
@@ -52,7 +52,7 @@
     "autoprefixer": "^10.5.4",
     "fantasticon": "^4.1.0",
     "html-validate": "^11.5.5",
-    "postcss-cli": "^11.0.1",
+    "postcss": "^8.5.26",
     "sass": "^1.94.0"
   }
 }
