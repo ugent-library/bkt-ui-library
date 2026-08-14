@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 1ea65b7/2026-08-14 */
+/*! Booktower dbfa69e/2026-08-14 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -1969,7 +1969,13 @@ a.bt-avatar--outline:hover:not(:disabled) {
 /* -- bt-query-builder -- */
 /*
   Condition editor: a field | operator | value | actions grid, closed by a bar carrying the
-  count. Bootstrap has form rows, cards and tabs, but nothing of this shape.
+  count. Bootstrap checked and rejected for what survives here: .row/.col-* for the row grid
+  (the columns are fixed-width and shared by every row, not per-row spans);
+  .list-group-item-action for __choice (it brings borders and its own list contract — the
+  choice rides on .dropdown-item instead and keeps only its icon-column grid); .card for
+  __group (a fieldset inside the editor card would nest card chrome — the group needs only
+  the inset band). The editor itself, the start cards and the person tokens do ride on
+  Bootstrap (card, card-header, badge).
 */
 /* ── Rows ─────────────────────────────────────────────────────────────────── */
 .bt-query-builder__row {

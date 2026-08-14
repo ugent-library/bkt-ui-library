@@ -249,22 +249,26 @@ Remove the `-stub.js` files when wiring real endpoints.
 ### `query-builder.js`
 
 **Purpose:** Advanced search, phase 2 — turns a condition row into an "any of these" OR group
-in place and back again, and keeps the readable sentence under "Your query" in sync. The add-condition chooser filters field choices, updates the selected-field detail rail, and closes on Continue or Cancel. "Add condition" appends an AND row at the top level; "Clear all conditions" leaves one empty row — the empty state. Rebuilds the
-`and` / `or` separators, the per-row action set, and the action labels (each names the condition
-it removes) after every change. A sole empty row carries no actions (nothing to remove, no
-alternative to offer) and the sentence reads "No conditions yet." until a value exists. Markup
-hooks: `#qb-conditions`, `[data-qb-item]`,
-`[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-field|op|value]`,
-`[data-qb-actions]`, `[data-qb-preview]`, `[data-qb-add-condition]`, `[data-qb-clear]`,
-`[data-qb-choice-panel]`, `[data-qb-choice-search]`, `[data-qb-choice]`,
-`[data-qb-choice-title|detail|example|control|next]`, `[data-qb-choice-close]`.
+(a `<fieldset>`) in place and collapses it back when one alternative is left. The chooser is
+cloned from `#qb-chooser` into the slot beside whichever control opened it, re-identified
+(`identify()` re-points `label[for]` and `aria-labelledby`), and its search filters the field
+choices. A chooser pick clones the row template the choice names and writes the label in.
+Rebuilds the `and` / `or` separators after every change, hides a row's ⋯ menu while it sits
+inside a group (with remove promoted out, "Add an 'or'" is all it holds), and rewrites the
+⋯ and remove buttons' accessible names from the row's current field, operator and value
+(`nameRow()`), so the remove control always names the condition it removes. Markup hooks:
+`#qb-conditions`, `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-sep]`,
+`[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`, `[data-qb-remove-group]`,
+`[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`, `[data-qb-count]`,
+`[data-qb-chooser-slot]`, `[data-qb-choice]` (+ `data-qb-label`/`data-qb-template`),
+`[data-qb-choice-search]`, `[data-qb-choice-group]`.
 
 **Loaded by:** `public-works.html`, which renders the builder as a dialog, and
 `public-search-advanced.html`, which renders it as a page. Both include the same two
-partials, `search-advanced-conditions.html` and `search-advanced-actions.html`. The
-OR-group code runs where the page renders a `[data-qb-preview]`, which is the
-`advanced-group` state; `built` and `advanced-empty` leave it inert. It also opens the
-dialog when the URL carries `?advanced=1`, standing in for the server-side render.
+partials, `search-advanced-conditions.html` and `search-advanced-actions.html`; the
+conditions partial itself includes `search-field-list.html` twice, so the blank state's
+field list and the chooser's cannot drift. It also opens the dialog when the URL carries
+`?advanced=1`, standing in for the server-side render.
 Pattern page: `patterns/query-builder.html`.
 
 **Listens for:** click / input / change inside `#qb-conditions`, input in
