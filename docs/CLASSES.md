@@ -147,7 +147,6 @@ bt-query-builder__people-field
 bt-query-builder__people-input
 bt-query-builder__people-search
 bt-query-builder__pick
-bt-query-builder__role
 bt-query-builder__row
 bt-query-builder__row--alt
 bt-query-builder__row--batch

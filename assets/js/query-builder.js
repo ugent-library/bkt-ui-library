@@ -218,27 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = event.target.closest('button');
     if (!button || !list.contains(button)) return;
 
-    if (button.hasAttribute('data-qb-change-role')) {
-      const picker = document.getElementById('qb-roles').content.firstElementChild.cloneNode(true);
-      button.replaceWith(picker);
-      identify(picker);
-      const select = picker.querySelector('select');
-      let settled = false;
-      const settle = () => {
-        if (settled) return;
-        settled = true;
-        const back = document.createElement('button');
-        back.type = 'button';
-        back.className = 'bt-query-builder__role';
-        back.setAttribute('data-qb-change-role', '');
-        back.textContent = select.options[select.selectedIndex].text;
-        picker.replaceWith(back);
-      };
-      select.addEventListener('change', settle);
-      select.addEventListener('blur', settle);
-      select.focus();
-      return;
-    }
     if (button.hasAttribute('data-qb-or')) {
       toGroup(button.closest('[data-qb-row]'));
     } else if (button.hasAttribute('data-qb-remove-group')) {

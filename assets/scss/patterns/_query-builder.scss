@@ -38,36 +38,26 @@
   min-width: 0;
 }
 
-/* The field name and the role are the controls that change them. The caret carries the
-   affordance; the text stays the row's statement. */
-.bt-query-builder__field,
-.bt-query-builder__role {
+/* The field button and the role select share the in-sentence style. The caret and the
+   appearance go; the text stays the row's statement. */
+.bt-query-builder__field {
   max-width: 100%;
   padding: 0;
+  color: var(--bt-text);
+  font-weight: 600;
   text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   background: transparent;
   border: 0;
   /* The affordance without a caret: a dotted rule, the convention for a value edited in place */
   border-bottom: 1px dotted var(--bt-gray-400);
-}
-
-.bt-query-builder__field {
-  color: var(--bt-text);
-  font-weight: 600;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.bt-query-builder__role {
-  color: var(--s-text-muted);
-  font-size: var(--bt-text-sm);
+  appearance: none;
 }
 
 .bt-query-builder__field:hover,
-.bt-query-builder__field:focus-visible,
-.bt-query-builder__role:hover,
-.bt-query-builder__role:focus-visible {
+.bt-query-builder__field:focus-visible {
   color: var(--bt-blue-900);
   border-bottom-color: var(--bt-blue-900);
   border-bottom-style: solid;

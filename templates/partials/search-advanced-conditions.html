@@ -136,7 +136,13 @@
               data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
             <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
           </div>
-          <button type="button" class="bt-query-builder__role" data-qb-change-role>in any role</button>
+          <label class="visually-hidden" for="qbp-role-1">Role, condition 1</label>
+          <select class="bt-query-builder__field" id="qbp-role-1">
+            <option selected>in any role</option>
+            <option>as author</option>
+            <option>as editor</option>
+            <option>as supervisor</option>
+          </select>
         </div>
         <div class="bt-query-builder__row-op">
           <label class="visually-hidden" for="qbp-op-1">Operator, condition 1</label>
@@ -242,7 +248,13 @@
               data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
             <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
           </div>
-          <button type="button" class="bt-query-builder__role" data-qb-change-role>in any role</button>
+          <label class="visually-hidden" for="qb-role-2">Role, condition 2</label>
+          <select class="bt-query-builder__field" id="qb-role-2">
+            <option selected>in any role</option>
+            <option>as author</option>
+            <option>as editor</option>
+            <option>as supervisor</option>
+          </select>
         </div>
         <div class="bt-query-builder__row-op">
           <label class="visually-hidden" for="qb-op-2">Operator, condition 2</label>
@@ -302,7 +314,13 @@
               data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
             <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
           </div>
-          <button type="button" class="bt-query-builder__role" data-qb-change-role>in any role</button>
+          <label class="visually-hidden" for="qb-role-3">Role, condition 3</label>
+          <select class="bt-query-builder__field" id="qb-role-3">
+            <option selected>in any role</option>
+            <option>as author</option>
+            <option>as editor</option>
+            <option>as supervisor</option>
+          </select>
         </div>
         <div class="bt-query-builder__row-op">
           <label class="visually-hidden" for="qb-op-3">Operator, condition 3</label>
@@ -725,7 +743,13 @@
                   data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
                 <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
               </div>
-              <button type="button" class="bt-query-builder__role" data-qb-change-role>as author</button>
+              <label class="visually-hidden" for="qbr-role-1a">Role, alternative 1</label>
+              <select class="bt-query-builder__field" id="qbr-role-1a">
+                <option>in any role</option>
+                <option selected>as author</option>
+                <option>as editor</option>
+                <option>as supervisor</option>
+              </select>
             </div>
             <div class="bt-query-builder__row-op">
               <label class="visually-hidden" for="qbr-op-1a">Operator, alternative 1</label>
@@ -778,7 +802,13 @@
                   data-bs-toggle="dropdown" aria-expanded="false">Contributor</button>
                 <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
               </div>
-              <button type="button" class="bt-query-builder__role" data-qb-change-role>as supervisor</button>
+              <label class="visually-hidden" for="qbr-role-1b">Role, alternative 2</label>
+              <select class="bt-query-builder__field" id="qbr-role-1b">
+                <option>in any role</option>
+                <option>as author</option>
+                <option>as editor</option>
+                <option selected>as supervisor</option>
+              </select>
             </div>
             <div class="bt-query-builder__row-op">
               <label class="visually-hidden" for="qbr-op-1b">Operator, alternative 2</label>
@@ -1092,7 +1122,13 @@
             data-bs-toggle="dropdown" aria-expanded="false">Field</button>
           <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-chooser-slot></div>
         </div>
-        <button type="button" class="bt-query-builder__role" data-qb-change-role>in any role</button>
+        <label class="visually-hidden" for="qb-t-contributor-role">Role</label>
+        <select class="bt-query-builder__field" id="qb-t-contributor-role">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
       </div>
       <div class="bt-query-builder__row-op">
         <label class="visually-hidden" for="qb-t-contributor-op">Operator</label>
@@ -1259,7 +1295,7 @@
     </div>
   </template>
 
-<!-- The group a row becomes, and the role list a contributor row swaps in. -->
+<!-- The group a row becomes. -->
   <template id="qb-group">
     <div class="bt-query-builder__group" role="group" data-qb-group>
       <p class="fw-semibold mb-0 bt-query-builder__group-label">
@@ -1282,14 +1318,3 @@
     </div>
   </template>
 
-  <template id="qb-roles">
-    <div>
-      <label class="visually-hidden" for="qb-t-role">Role</label>
-      <select class="form-select form-select-sm" id="qb-t-role">
-        <option selected>in any role</option>
-        <option>as author</option>
-        <option>as editor</option>
-        <option>as supervisor</option>
-      </select>
-    </div>
-  </template>
