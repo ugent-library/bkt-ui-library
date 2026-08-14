@@ -284,15 +284,22 @@ function applySidebarActive(fragment, activeKey) {
 }
 
 function resolveIncludes(body, filePath) {
-  return body.replace(/<!--\s*@include:\s*([^\s]+)\s*-->[ \t]*(?:\r?\n[ \t]*<!--\s*@active:\s*([\w-]+)\s*-->)?/g, (match, includePath, activeKey) => {
-    const abs = path.join(ROOT, includePath.trim());
-    if (!fs.existsSync(abs)) {
-      return `<!-- @include not found: ${includePath} -->`;
-    }
-    const raw = fs.readFileSync(abs, 'utf8');
-    const { body: fragment } = parseMetaAndBody(raw, abs);
-    return applySidebarActive(fragment, activeKey);
-  });
+  // Loops so a partial can itself @include a partial; capped in case of a cycle.
+  let out = body;
+  for (let depth = 0; depth < 10; depth += 1) {
+    const next = out.replace(/<!--\s*@include:\s*([^\s]+)\s*-->[ \t]*(?:\r?\n[ \t]*<!--\s*@active:\s*([\w-]+)\s*-->)?/g, (match, includePath, activeKey) => {
+      const abs = path.join(ROOT, includePath.trim());
+      if (!fs.existsSync(abs)) {
+        return `<!-- @include not found: ${includePath} -->`;
+      }
+      const raw = fs.readFileSync(abs, 'utf8');
+      const { body: fragment } = parseMetaAndBody(raw, abs);
+      return applySidebarActive(fragment, activeKey);
+    });
+    if (next === out) break;
+    out = next;
+  }
+  return out;
 }
 
 function stripHtmlComments(html) {
