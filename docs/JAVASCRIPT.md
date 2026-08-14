@@ -253,6 +253,8 @@ as rendered while the sentence updates.
 
 **Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync. Below `xl`, the main sidebar defaults to slim mode so narrow desktop panes keep the work area primary; crossing the `xl` breakpoint after load syncs the sidebar to the new viewport.
 
+It also owns the sidebar's link tooltips: created on first use, enabled in slim mode and disabled while the sidebar is expanded, where they would only repeat a label the reader already has. The tooltip is never the accessible name — that stays on `.bt-sidebar__label`. Why: `patterns/sidebar.html`, Collapsible — slim mode.
+
 **Loaded by:** backoffice pages via `templates/partials/main-sidebar.html`
 
 **Listens for:**
@@ -263,7 +265,7 @@ as rendered while the sentence updates.
 
 **Prototype-only:** no
 
-**TBD — persist collapsed state.** The toggle currently resets on every page load. In a server-rendered multi-page app that means the sidebar re-expands on every navigation, which is wrong for the users who prefer it folded in most of the time. The collapsed state must be remembered across page loads — and ideally read server-side (e.g. a cookie) so the first paint already renders collapsed, with no expand-then-collapse flash. Decide the mechanism (localStorage vs server-read cookie) before wiring this into a real deployment. Not yet implemented.
+**Persisting the collapsed state — decided, prototype does not implement it.** The prototype's toggle resets on every page load. In a server-rendered multi-page app that means the sidebar re-expands on every navigation, which is wrong for the users who prefer it folded. A consuming app persists the choice in a cookie the server reads, so the first paint already carries `bt-sidebar--slim` and there is no expand-then-collapse flash; localStorage was rejected because the server cannot see it. Raven implements this (issue #197). The prototype stays session-only: it has no server-side state to read a cookie in.
 
 ---
 

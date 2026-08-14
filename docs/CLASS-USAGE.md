@@ -18,7 +18,9 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 
 **Sub-sidebar navigation** — `.bt-sidebar a.nav-link` already applies `display:flex`, `align-items:center`, `gap`, and padding. Do not add `d-flex`/`align-items-center`/`gap-*`/`p-*` utilities on nav links inside `bt-sidebar`.
 
-**Backoffice list layout** — `bt-sidebar` is the sticky `<aside>` wrapping the facet groups. Results layouts use `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header`, `u-main__content-body`. Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
+**Sidebar link text** — wrap it in `.bt-sidebar__label`. Slim mode hides that span from view and keeps it in the accessibility tree, so it names the link in both states. Never add `aria-label` to a sidebar link; `patterns/sidebar.html` says why.
+
+**Backoffice list layout** — `u-main__sidebar` is the `<aside>` wrapping the facet groups; `bt-sidebar` is the app navigation rail and never a filter rail. Results layouts use `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header`, `u-main__content-body`. Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
 
 **Table** — plain Bootstrap: `<table class="table table-hover align-middle">`, `text-uppercase text-muted small` on `<thead>`. No custom table classes exist. Title cells: `fw-semibold text-reset text-decoration-none` on the link, `small text-muted mt-1` on the secondary line. Action cells: `text-end` on `<td>`, `btn-ghost btn-sm` buttons directly inside. Row selection: Bootstrap's `.table-active` on `<tr>` (`--bs-table-active-bg`/`--bs-table-hover-bg` overridden in `_layouts.scss`). `btn-ghost` is already quiet at rest — no reveal mechanism needed.
 

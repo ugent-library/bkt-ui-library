@@ -2,8 +2,8 @@
  * sidebar-toggle.js — backoffice sidebar collapse/expand toggle.
  * See docs/JAVASCRIPT.md.
  *
- * Also initialises Bootstrap tooltips on sidebar nav links so they stay
- * discoverable in slim (icon-only) mode.
+ * Also owns the sidebar's Bootstrap tooltips: created once, enabled only in
+ * slim mode.
  */
 (function () {
   if (window.btSidebarToggleInitialised) return;
@@ -15,6 +15,16 @@
     sidebar.classList.toggle('bt-sidebar--slim', isSlim);
     button.setAttribute('aria-expanded', String(!isSlim));
     button.setAttribute('aria-label', isSlim ? 'Expand sidebar' : 'Collapse sidebar');
+
+    sidebar.querySelectorAll('a.nav-link[data-bs-toggle="tooltip"]').forEach(function (link) {
+      var tooltip = bootstrap.Tooltip.getOrCreateInstance(link, { placement: 'right' });
+      if (isSlim) {
+        tooltip.enable();
+      } else {
+        tooltip.hide(); // disable() only blocks the next one
+        tooltip.disable();
+      }
+    });
   }
 
   function applyInitialState() {
@@ -55,10 +65,5 @@
   document.addEventListener('DOMContentLoaded', function () {
     applyInitialState();
     narrowSidebarQuery.addEventListener('change', syncWithViewport);
-
-    var tooltipEls = document.querySelectorAll('.bt-sidebar a.nav-link[data-bs-toggle="tooltip"]');
-    tooltipEls.forEach(function (el) {
-      new bootstrap.Tooltip(el, { placement: 'right' });
-    });
   });
 })();
