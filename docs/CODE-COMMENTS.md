@@ -8,6 +8,11 @@ better names or smaller rules. A comment is a claim that the code alone is not
 enough — most of the time that claim is false, and the comment rots while the code
 moves on.
 
+**A good comment tells only what neither the code nor another document tells by
+itself.** The two failures under [Never](#never) are the halves of that: you can read
+it off the code, or it is written down elsewhere already. Clearing this bar is
+necessary, not sufficient — the comment still has to pass the test below.
+
 ## The test for keeping one
 
 Add a comment only when a later change would break something **silently or
