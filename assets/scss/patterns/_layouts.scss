@@ -280,11 +280,18 @@
     padding-right: 0;
   }
 
-  .bt-sidebar__group-label,
-  .bt-sidebar__label,
-  .badge:not(.badge--total),
-  .btn-text {
+  .bt-sidebar__group-label {
     display: none;
+  }
+
+  .bt-sidebar__label,
+  .btn-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .badge--total {

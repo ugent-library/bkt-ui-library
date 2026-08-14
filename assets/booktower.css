@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 162a9b8/2026-08-14 */
+/*! Booktower b9f5145/2026-08-14 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -2984,11 +2984,18 @@ img.bt-navbar__logo {
   padding-left: 0;
   padding-right: 0;
 }
-.bt-sidebar--slim .bt-sidebar__group-label,
-.bt-sidebar--slim .bt-sidebar__label,
-.bt-sidebar--slim .badge:not(.badge--total),
-.bt-sidebar--slim .btn-text {
+.bt-sidebar--slim .bt-sidebar__group-label {
   display: none;
+}
+.bt-sidebar--slim .bt-sidebar__label,
+.bt-sidebar--slim .btn-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
+  white-space: nowrap;
 }
 .bt-sidebar--slim .badge--total {
   position: absolute;
