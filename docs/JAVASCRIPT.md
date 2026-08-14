@@ -256,7 +256,9 @@ choices. A chooser pick clones the row template the choice names and writes the 
 Rebuilds the `and` / `or` separators after every change, hides a row's ⋯ menu while it sits
 inside a group (with remove promoted out, "Add an 'or'" is all it holds), and rewrites the
 ⋯ and remove buttons' accessible names from the row's current field, operator and value
-(`nameRow()`), so the remove control always names the condition it removes. Markup hooks:
+(`nameRow()`), so the remove control always names the condition it removes. Emptying the
+list — Clear all, or removing the last condition — restores the blank state, cloned from
+`#qb-blank` and re-identified. Markup hooks:
 `#qb-conditions`, `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-sep]`,
 `[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`, `[data-qb-remove-group]`,
 `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`, `[data-qb-count]`,
@@ -266,8 +268,9 @@ inside a group (with remove promoted out, "Add an 'or'" is all it holds), and re
 **Loaded by:** `public-works.html`, which renders the builder as a dialog, and
 `public-search-advanced.html`, which renders it as a page. Both include the same two
 partials, `search-advanced-conditions.html` and `search-advanced-actions.html`; the
-conditions partial itself includes `search-field-list.html` twice, so the blank state's
-field list and the chooser's cannot drift. It also opens the dialog when the URL carries
+conditions partial itself includes `search-advanced-blank.html` twice (the advanced-empty
+state and `#qb-blank`) and `search-field-list.html` twice via the blank and the chooser,
+so neither the blank state nor the field list can drift. It also opens the dialog when the URL carries
 `?advanced=1`, standing in for the server-side render.
 Pattern page: `patterns/query-builder.html`.
 

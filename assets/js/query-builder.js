@@ -113,7 +113,21 @@ document.addEventListener('DOMContentLoaded', function () {
     sync();
     count();
     const first = row.querySelector('input, textarea, select');
-    if (first) first.focus();
+    if (first) {
+      first.focus();
+      first.scrollIntoView({ block: 'center' });
+    }
+  }
+
+  // The last condition going returns the builder to the blank state, cloned from #qb-blank.
+  function restoreBlank() {
+    if (items().length || list.querySelector('.bt-query-builder__blank')) return;
+    const template = document.getElementById('qb-blank');
+    if (!template) return;
+    const blank = template.content.firstElementChild.cloneNode(true);
+    identify(blank);
+    list.append(blank);
+    wireSearch(blank);
   }
 
   // ── Groups ──────────────────────────────────────────────────────────────────
@@ -170,10 +184,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── Keeping the whole thing consistent ──────────────────────────────────────
 
   function sync() {
-    list.querySelectorAll('[data-qb-sep]').forEach(el => el.remove());
+    // All of them, not only [data-qb-sep]: a removed row must not orphan its written-out "and"
+    list.querySelectorAll('.bt-query-builder__sep').forEach(el => el.remove());
 
     items().forEach((item, i) => {
-      // A hand-written separator can carry copy the JS has no business replacing
       if (i && !isSeparator(item.previousElementSibling)) item.before(separator('and'));
 
       if (item.hasAttribute('data-qb-group')) {
@@ -193,6 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
         nameRow(item);
       }
     });
+
+    restoreBlank();
   }
 
   // Bootstrap positions the panel against the control that opened it, so the chooser lives in

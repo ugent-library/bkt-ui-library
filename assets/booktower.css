@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower dbfa69e/2026-08-14 */
+/*! Booktower e7f1aed/2026-08-14 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -2037,6 +2037,26 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-bottom-style: solid;
 }
 
+/* The role select reads as a muted aside with its own quiet caret — no dotted rule,
+   which under a select reads as a button. */
+.bt-query-builder__role {
+  max-width: 100%;
+  padding: 0 1.125rem 0 0;
+  color: var(--s-text-muted);
+  font-size: var(--bt-text-sm);
+  text-align: left;
+  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23808080' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") right center/0.75rem no-repeat;
+  border: 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.bt-query-builder__role:hover,
+.bt-query-builder__role:focus-visible {
+  color: var(--bt-blue-900);
+}
+
 .bt-query-builder__row-op .form-select {
   width: auto;
   max-width: 100%;
@@ -2254,7 +2274,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 /* ── Exit bar ───────────────────────────────────────────────────────────────── */
 /* Static: the bar is last in its containing block, so a bottom-sticky rule never pins. */
-.bt-query-builder__exit {
+/* Compound with .bt-toolbar: its flush padding loads later and would win on order alone. */
+.bt-toolbar.bt-query-builder__exit {
   margin-top: -1px;
   padding: var(--bt-sp-3) var(--bt-sp-4);
   background-color: var(--bt-white);
