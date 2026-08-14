@@ -1,26 +1,50 @@
 <!--
-  The Advanced search count and submit. Used with search-advanced-conditions.html;
-  the submit reaches that form by form="qb-form".
+  The Advanced search exit bar: approximate count + the one exit. Used with
+  search-advanced-conditions.html; the submit reaches that form by form="qb-form".
 
-  Why the count stays in the pinned exit bar while Link/Embed/API/Feed live in
-  the builder's handoff rail: patterns/query-builder.html.
+  The count and the exit never leave the screen while the condition list is longer than the
+  viewport: bt-query-builder__exit is sticky to the viewport bottom on the page, and sits in
+  .modal-footer in the dialog rendering. The count is an approximation — "About …" — the
+  exact set is the results page's job. This is the only aria-live region in the builder.
+
+  Two of the four strings are too long for a 390px screen, so they carry a short form for
+  narrow widths. Both spans live in the one aria-live region; display:none keeps the hidden
+  one out of the announcement.
 -->
-<div class="bt-toolbar">
+<div class="bt-toolbar bt-query-builder__exit">
   <div class="bt-toolbar__left">
-    <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-    <p class="h5 mb-0" aria-live="polite">1,284 research outputs match</p>
+    <!-- @state: built advanced-group results best-bet no-results query-empty advanced-condition -->
+    <p class="h5 mb-0" aria-live="polite" data-qb-count>About 1,280 research outputs match</p>
     <!-- @state -->
-    <!-- @state: advanced-group -->
-    <p class="h5 mb-0" aria-live="polite">438 research outputs match</p>
+    <!-- @state: advanced-prefilled -->
+    <p class="h5 mb-0" aria-live="polite" data-qb-count>About 240 research outputs match</p>
     <!-- @state -->
     <!-- @state: advanced-empty -->
-    <p class="h5 mb-0" aria-live="polite">All 312,456 research outputs</p>
+    <p class="h5 mb-0" aria-live="polite" data-qb-count>
+      <span class="d-none d-lg-inline">About 312,000 research outputs</span>
+      <span class="d-lg-none">About 312,000</span>
+    </p>
+    <!-- @state -->
+    <!-- @state: advanced-zero -->
+    <p class="h5 mb-0 text-danger" aria-live="polite" data-qb-count>
+      <span class="d-none d-lg-inline">Nothing matches all conditions together &mdash; edit or
+        remove one</span>
+      <span class="d-lg-none">Nothing matches all conditions together &mdash; edit or remove one</span>
+    </p>
     <!-- @state -->
   </div>
   <div class="bt-toolbar__right">
+    <!-- @state: built advanced-group advanced-prefilled advanced-empty results best-bet no-results query-empty advanced-condition -->
     <button type="submit" form="qb-form" class="btn btn-primary">
       <i class="if if-search" aria-hidden="true"></i>
       Show results
     </button>
+    <!-- @state -->
+    <!-- @state: advanced-zero -->
+    <button type="submit" form="qb-form" class="btn btn-primary" disabled>
+      <i class="if if-search" aria-hidden="true"></i>
+      Show results
+    </button>
+    <!-- @state -->
   </div>
 </div>

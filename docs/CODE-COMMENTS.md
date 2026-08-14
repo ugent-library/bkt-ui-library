@@ -9,9 +9,9 @@ enough — most of the time that claim is false, and the comment rots while the 
 moves on.
 
 **A good comment tells only what neither the code nor another document tells by
-itself.** The two failures under [Never](#never) are the halves of that: you can read
-it off the code, or it is written down elsewhere already. Clearing this bar is
-necessary, not sufficient — the comment still has to pass the test below.
+itself.** Each of the two failures under [Never](#never) is one half: the code
+already says it, or a doc already says it. A comment that clears this bar still has
+to pass the test below.
 
 ## The test for keeping one
 
@@ -117,9 +117,9 @@ applies to them.
 
 ## Per language
 
-**SCSS** — `//` is stripped at compile; `/* */` ships to `booktower.css`, which
-consuming apps read. Use `//` unless the comment is deliberately addressed to someone
-reading the compiled file.
+**SCSS** — `/* */` is the house style, and it ships to `booktower.css`, which consuming
+apps read. Write every comment as one a consumer may read. `//` is stripped at compile;
+reach for it only to keep a note out of the compiled file.
 
 **HTML and JS** — every comment ships to the browser and is visible in view-source.
 

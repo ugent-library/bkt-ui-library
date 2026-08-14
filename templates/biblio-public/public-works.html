@@ -11,13 +11,15 @@
   Scripts:
     suggest-panel.js    — panel show/hide, keyboard nav
     filter-bar.js       — Add-filter picker + editor + chips (works config, wf- ids)
-    query-builder.js    — the Advanced search dialog: row → OR group, readback in sync
+    query-builder.js    — the Advanced search dialog: row → OR group, approximate count
 
   The Advanced search dialog is at the bottom: the chrome here, the contents in two shared
-  partials, so the dialog and the standalone builder page (public-search-advanced.html) are
-  one source. Every result state renders it holding a built six-condition query, which is
-  what opening it from a filtered list looks like; its empty and OR-group states live on the
-  standalone page and in patterns/query-builder.html.
+  partials, so the dialog and the page rendering (public-search-advanced.html) are one source.
+  Opening it pushes ?advanced=1, so the query is addressable; a plain request for that URL
+  returns the page rendering instead. Every result state renders the dialog holding a built
+  six-condition query, which is what opening it from a filtered list looks like; the empty,
+  prefilled, OR-group and zero states live on the page rendering and in
+  patterns/query-builder.html.
 
   The advanced-condition state is this page's own: the Full text access facet reporting that
   an advanced condition holds it, instead of contradicting it with empty checkboxes.

@@ -21,6 +21,67 @@ Every file in `assets/js/` must be listed in this document with:
 - which events it listens to
 - which events it dispatches
 - whether it is prototype-only (to be removed when the real endpoint exists)
+- whether it fails the test in "The prototype shows how it would work", and what
+  replaces it when someone rewrites it
+
+---
+
+## The prototype shows how it would work
+
+A prototype carries no code it does not need. A reader has to see how something
+works, and has to be able to open every variant of it — neither needs the thing
+to run, so JavaScript that only produces what a written-out state produces is
+code the page pays for and does not use.
+
+**The test:** name the before and the after. If both are states a reader can
+open, write two states. JavaScript earns its place where the *transition* is
+what the design is asking about — does watching a count change while you type
+help, does wrapping a row into a group read as one move. Two states cannot
+answer those.
+
+JavaScript also earns its place where the action happens outside the page — the
+clipboard, print, a download. No state can show a value landing on someone's
+clipboard, and the prototype has to survive a user test where copying is the
+task. The visible change stays on the control: a label and an icon swap, never
+the data around it.
+
+Behaviour a reader operates is the thing itself, and it stays implemented: the
+card/table toggle, keyboard navigation inside the suggest panel, the sidebar
+collapse. Each is an interaction someone performs rather than a variant they
+open, and the registry below marks them `Prototype-only: no`.
+
+The kit's own chrome sits outside the rule for the same reason. `shell/shell.js`
+runs the documentation site itself — the copy button on a code block, the state
+switcher, the page navigation. It serves the person reading the docs instead of
+prototyping a Biblio interaction, so it implements what it does and keeps
+working.
+
+Flag JavaScript that already fails the test; do not delete it on sight. Say in its
+entry below what should replace it, and rewrite it when someone is in that file
+anyway. A prototype page that still works is worth more than a rule applied the
+moment it is written.
+
+- Data-dependent variants are `@state` blocks in one file (`docs/SERVER.md` →
+  Template states). A count, a recognition summary, a warning that depends on how
+  much someone pasted: each is a state, with its values written by hand.
+- New nodes clone a `<template>` in the partial. JavaScript that builds markup as
+  strings overwrites the markup the partial documents, so the partial stops being
+  reviewable and the kit loses the thing it should be showing.
+- Domain vocabulary stays in the catalogs and contracts. Field names, operator
+  lists, statuses and labels copied into a JavaScript object drift, and no check
+  compares the copy with its source.
+- Written-in values say so. A number the prototype invents is a placeholder,
+  marked as one, never computed to look real.
+- A `-stub.js` file carries the fake responses, so deleting that file is how the
+  real endpoint arrives.
+
+| Reach for | Write instead |
+|---|---|
+| JavaScript that recognises what someone typed and reports on it | a state carrying the summary already written out |
+| JavaScript that inserts a warning once a threshold is crossed | a state that shows the warning |
+| JavaScript that computes a plausible number | one state per number the design needs to show |
+| JavaScript that renders a row from a field name | a `<template>` per row kind, cloned |
+| A JavaScript object listing fields, operators or statuses | a data attribute on the element that already names it |
 
 ---
 
@@ -265,7 +326,7 @@ It also owns the sidebar's link tooltips: created on first use, enabled in slim 
 
 **Prototype-only:** no
 
-**Persisting the collapsed state — decided, prototype does not implement it.** The prototype's toggle resets on every page load. In a server-rendered multi-page app that means the sidebar re-expands on every navigation, which is wrong for the users who prefer it folded. A consuming app persists the choice in a cookie the server reads, so the first paint already carries `bt-sidebar--slim` and there is no expand-then-collapse flash; localStorage was rejected because the server cannot see it. Raven implements this (issue #197). The prototype stays session-only: it has no server-side state to read a cookie in.
+**Persisting the collapsed state — decided; the prototype stays session-only.** The prototype's toggle resets on every page load. In a server-rendered multi-page app that means the sidebar re-expands on every navigation, which is wrong for the users who prefer it folded. A consuming app persists the choice in a cookie the server reads, so the first paint already carries `bt-sidebar--slim` and there is no expand-then-collapse flash. localStorage cannot carry it: the server never sees it. Raven implements this (issue #197). The prototype stays session-only: it has no server-side state to read a cookie in.
 
 ---
 

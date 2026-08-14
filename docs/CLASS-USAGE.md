@@ -18,7 +18,7 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 
 **Sub-sidebar navigation** — `.bt-sidebar a.nav-link` already applies `display:flex`, `align-items:center`, `gap`, and padding. Do not add `d-flex`/`align-items-center`/`gap-*`/`p-*` utilities on nav links inside `bt-sidebar`.
 
-**Sidebar link text** — wrap it in `.bt-sidebar__label`. Slim mode hides that span from view and keeps it in the accessibility tree, so it names the link in both states. Never add `aria-label` to a sidebar link; `patterns/sidebar.html` says why.
+**Sidebar link text** — wrap it in `.bt-sidebar__label`. Slim mode hides that span from view and keeps it in the accessibility tree, so it names the link in both states. Never add `aria-label` to a sidebar link — the reason is in `patterns/sidebar.html`.
 
 **Backoffice list layout** — `u-main__sidebar` is the `<aside>` wrapping the facet groups; `bt-sidebar` is the app navigation rail and never a filter rail. Results layouts use `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header`, `u-main__content-body`. Use `bt-toolbar` for search/filter bars, bulk action bars, and pagination rows — not custom classes.
 

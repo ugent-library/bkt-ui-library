@@ -1,20 +1,22 @@
 <!-- @title: Advanced search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: built, advanced-empty, advanced-group -->
+<!-- @states: built, advanced-empty, advanced-prefilled, advanced-group, advanced-zero -->
 
 <!--
-  Advanced search as a page: the address to point at, for arrivals with no result list
-  to preserve. The same two partials render as a dialog in public-works.html; the
-  difference between them is how you leave.
+  Advanced search as a page: what a plain request for ?advanced=1 returns, and the address
+  a copied link resolves to. The same two partials render as a dialog over public-works.html,
+  which is the low-entry route from a result list; the server tells the two apart by the
+  HX-Request header. On a phone this page is the full-bleed rendering.
 
-  Why both, and the states below: patterns/query-builder.html.
+  Why both, and the container decision: docs/handover/CHANGES.md, then
+  patterns/query-builder.html.
 -->
 
 <!-- @include: templates/partials/public-header.html -->
 
 <div class="u-layout--public" data-surface="public">
   <main id="main-content">
-    <div class="container pt-2 pb-5">
+    <div class="container pt-2 pb-4">
 
       <nav aria-label="Breadcrumb" class="mb-4">
         <ol class="breadcrumb">
@@ -28,19 +30,17 @@
         <div class="col-xl-9">
           <h1 class="mb-3">Advanced search</h1>
           <p class="lead mb-5">
-            Build a precise search, watch how many research outputs it matches, and take it with
-            you as a link, an embed, a feed or an API call.
+            Build a precise search and watch how many research outputs it matches. Saving,
+            sharing and exporting the set come after you show the results.
           </p>
         </div>
       </div>
 
       <!-- @include: templates/partials/search-advanced-conditions.html -->
 
-      <!-- The same actions bar the dialog pins in its footer. On a page it sits at the end of
-           the form, where the eye already is after the last condition. -->
-      <div class="border-top mt-5 pt-4">
-        <!-- @include: templates/partials/search-advanced-actions.html -->
-      </div>
+      <!-- The bar the dialog puts in its modal footer. Here it closes the editor box, so it
+           stays a direct child of the container and carries the box's side borders. -->
+      <!-- @include: templates/partials/search-advanced-actions.html -->
 
     </div>
   </main>

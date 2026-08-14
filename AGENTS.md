@@ -140,6 +140,8 @@ The always-on rules. Each links to its full version — the pointer here is the 
 
 **JavaScript.** No inline `<script>` on real pages (kit pages may demonstrate, never provide behaviour). Every file in `assets/js/` is documented in `docs/JAVASCRIPT.md` — rules, registry, and event contract live there.
 
+**Prototypes carry no superfluous code.** Name the before and the after — where both are states a reader can open, write the two states instead of JavaScript. JavaScript earns its place where the transition itself is what the design asks about, where the action happens outside the page (clipboard, print, download), and where behaviour a reader operates is the thing itself. Markup lives in the partial and new nodes clone a `<template>`, never strings built in JS; field names, operator lists and statuses stay in the catalogs and contracts. The test, the exception, and what it rules out: `docs/JAVASCRIPT.md` → The prototype shows how it would work.
+
 **Accessibility.** WCAG 2.1 AA minimum on every template. Agents produce correct static HTML but cannot test runtime behaviour after HTMX swaps; screen reader testing is a human responsibility. Full rules, the project-specific decisions, and the pre-flight checklist: `docs/ACCESSIBILITY.md`.
 
 **HTML patterns.** Semantic structure per `docs/ACCESSIBILITY.md` §A, forms per §C, HTMX behaviour per §D. All `hx-*` URLs in prototypes are stubs — documentation of intent, not working code; no `<form>` without a marked real submit path (C6's prototype exception). Data-dependent template variants are states inside one file, never separate files — syntax in `docs/SERVER.md` → Template states. Public record pages carry schema.org structured data — minimum payload in `docs/ACCESSIBILITY.md` H4.

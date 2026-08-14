@@ -136,3 +136,13 @@ params:
    normalized exact value, phrase match, or field-specific full-text query?
 8. What is the long-list permalink answer: saved search, short server-side list ID, POST-backed
    export/search artifact, or a hard limit?
+9. Do the works page's facet parameters round-trip into condition rows without loss? Arrival
+   from a filtered list renders each active facet as an editable row. Options: every public
+   facet maps onto a condition row; some facets stay outside the builder and the page says
+   which; or an arrival carrying an unmappable facet is refused.
+10. Can "is not" be honoured on a name-as-written text condition, where the value is a string
+    rather than a person record? Options: negate the string match; restrict "is not" to
+    resolved records; or drop "is not" from that field.
+11. Where does the approximate count come from? Options: the index `total`; the index `total`
+    under a `track_total_hits` cap, with a documented ceiling above which the count stops
+    being reported; or a count route separate from search.

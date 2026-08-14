@@ -56,65 +56,83 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The condition row</h2>
-    <p class="mb-4">A condition row is a phrase with its mechanics exposed: condition type, operator, value, and row actions. The common rows no longer start with the full field registry; they start with a typed condition such as Words, Contributor, Year, Access or Biblio ID. The <em>Field</em> action is where the deeper vocabulary lives. Every control still has a label naming its row: identical selects without row-specific labels are unnavigable by ear.</p>
+    <p class="mb-4">A condition row is a fixed grid: the field it asks about, the operator, the value, and the row's actions. The value column is the widest. The value is what the reader is saying, so the mechanics stay quiet beside it. A hairline separates one row from the next &mdash; no row numbers, no boxes. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Both controls sit at the base height. Mixing <code>form-control</code> with <code>form-select-sm</code> on one line puts a 38px control beside a 32px one.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows, joined by and</h3></div>
       <div class="ds-demo-body">
         <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">1</div>
           <div class="bt-query-builder__row-kind">
             <p class="mb-0 fw-semibold">Words or topic</p>
-            <p class="mb-0 small text-muted">Any searchable text</p>
           </div>
-          <div class="bt-query-builder__phrase">
+          <div class="bt-query-builder__row-op">
             <label class="visually-hidden" for="kit-qb-op">Operator, condition 1</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="kit-qb-op">
+            <select class="form-select" id="kit-qb-op">
               <option selected>contains</option>
-              <option>contains all of</option>
-              <option>contains any of</option>
               <option>does not contain</option>
             </select>
+          </div>
+          <div class="bt-query-builder__row-value">
             <label class="visually-hidden" for="kit-qb-val">Words, condition 1</label>
-            <input type="text" class="form-control form-control-sm" id="kit-qb-val" value="quantum computing">
+            <input type="text" class="form-control" id="kit-qb-val" value="quantum computing">
           </div>
           <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 1: any field contains quantum computing">
+            <div class="dropdown">
+              <button type="button" class="btn btn-ghost btn-sm bt-query-builder__more"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-label="More actions for condition 1">
+                <i class="if if-more if--xs" aria-hidden="true"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button type="button" class="dropdown-item" data-qb-or>
+                    <i class="if if-add if--xs me-2" aria-hidden="true"></i>or&hellip; &mdash; add an alternative
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+              aria-label="Remove condition 1: words or topic contains quantum computing">
               <i class="if if-close if--xs" aria-hidden="true"></i>
             </button>
           </div>
         </div>
         <p class="bt-query-builder__and">and</p>
         <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">2</div>
           <div class="bt-query-builder__row-kind">
             <p class="mb-0 fw-semibold">Publication year</p>
-            <p class="mb-0 small text-muted">Range or exact year</p>
           </div>
-          <div class="bt-query-builder__phrase">
+          <div class="bt-query-builder__row-op">
             <label class="visually-hidden" for="kit-qb-op-2">Operator, condition 2</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="kit-qb-op-2">
+            <select class="form-select" id="kit-qb-op-2">
               <option selected>is between</option>
               <option>is at least</option>
               <option>is after</option>
             </select>
+          </div>
+          <div class="bt-query-builder__row-value">
             <label class="visually-hidden" for="kit-qb-from">First year, condition 2</label>
-            <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qb-from" value="2015" min="1800" max="2100">
+            <input type="number" class="form-control bt-query-builder__year" id="kit-qb-from" value="2015" min="1800" max="2100">
             <span class="small text-muted">and</span>
             <label class="visually-hidden" for="kit-qb-to">Last year, condition 2</label>
-            <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qb-to" value="2020" min="1800" max="2100">
+            <input type="number" class="form-control bt-query-builder__year" id="kit-qb-to" value="2020" min="1800" max="2100">
           </div>
           <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
+            <div class="dropdown">
+              <button type="button" class="btn btn-ghost btn-sm bt-query-builder__more"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-label="More actions for condition 2">
+                <i class="if if-more if--xs" aria-hidden="true"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button type="button" class="dropdown-item" data-qb-or>
+                    <i class="if if-add if--xs me-2" aria-hidden="true"></i>or&hellip; &mdash; add an alternative
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
               aria-label="Remove condition 2: publication year is between 2015 and 2020">
               <i class="if if-close if--xs" aria-hidden="true"></i>
             </button>
@@ -123,7 +141,7 @@
       </div>
     </div>
 
-    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, stated as a word between them rather than as a control: the top level is always AND-joined, and the heading above says so — <em>Show research output where all of these are true</em>. An <em>or</em> is never added at the top level; it is added on the row it belongs to, which turns that row into an <em>any of these</em> group.</p>
+    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, stated as a word between them rather than as a control: the top level is always AND-joined, and the heading above says so — <em>Show research output where all of these are true</em>. An <em>or</em> belongs to a row, not to the top level. Open the row&rsquo;s <em>more</em> menu and pick <em>or&hellip;</em>, and the row becomes a group reading <em>&hellip;where any of these conditions is true</em>. The word <em>conditions</em> does work there. A row&rsquo;s own <em>is any of</em> lists values for one field; a group lists conditions. Drop the word and the two offers read the same.</p>
   </section>
 
   <section class="ds-section">
