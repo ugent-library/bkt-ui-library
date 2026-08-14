@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 197597f/2026-08-13 */
+/*! Booktower 162a9b8/2026-08-14 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -1481,8 +1481,8 @@ a.badge:focus-visible {
 
   Structure:
     <section class="bt-hero">
-      <div class="bt-hero__bg"><!-- SVG --></div>
-      <div class="bt-hero__content container"><!-- page content --></div>
+      <div class="bt-hero__bg"> (SVG) </div>
+      <div class="bt-hero__content container"> (page content) </div>
     </section>
 */
 .bt-hero {
@@ -1613,6 +1613,7 @@ a.badge:focus-visible {
 
 .bt-table-sticky-col th:first-child,
 .bt-table-sticky-col td:first-child {
+  position: -webkit-sticky;
   position: sticky;
   left: 0;
   z-index: 1;
@@ -1711,7 +1712,8 @@ a.bt-avatar:hover:not(:disabled) {
    Sized to a share of the chip so varied SVG aspect ratios sit inset,
    not edge-to-edge; object-fit keeps them undistorted. */
 .bt-avatar__img {
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   width: 50%;
   height: 50%;
 }
@@ -1838,6 +1840,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-radius: var(--bt-radius-lg);
   box-shadow: var(--bt-shadow-md);
   z-index: var(--bt-z-panel);
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
@@ -2254,6 +2258,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
 }
 
 .bt-query-builder__handoff {
+  position: -webkit-sticky;
   position: sticky;
   top: calc(var(--s-topbar-height, 0px) + var(--bt-sp-3));
 }
@@ -2350,6 +2355,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: center;
   padding: 0 var(--bt-sp-6);
   gap: var(--bt-sp-4);
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   min-height: var(--s-topbar-height);
@@ -2400,7 +2406,8 @@ img.bt-navbar__logo {
   text-decoration: underline;
   text-underline-offset: var(--bt-sp-2);
   text-decoration-thickness: 2px;
-  text-decoration-color: var(--bt-blue-900);
+  -webkit-text-decoration-color: var(--bt-blue-900);
+          text-decoration-color: var(--bt-blue-900);
   font-weight: 500;
 }
 

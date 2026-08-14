@@ -25,7 +25,7 @@ Open [http://localhost:3111](http://localhost:3111). Done.
 | `npm start` | Start server only (assumes already built) |
 | `npm run build` | Full one-time build: icons + CSS (fails if an SCSS partial isn't imported) |
 | `npm run build:icons` | Rebuild icon font from SVG sources only |
-| `npm run build:css` | Recompile SCSS to CSS only |
+| `npm run build:css` | Recompile SCSS to CSS and autoprefix it per [`.browserslistrc`](.browserslistrc) |
 | `npm test` | Run all static checks (see below) |
 
 You only need `build:icons` when you've added or changed an SVG in `assets/icon-font-source/`. Otherwise `npm run dev` is all you ever run.
@@ -46,6 +46,7 @@ Run after any template or SCSS editing session. (`docs/CI.md` points here.)
 | `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
 | `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
 | `check:a11y` | The house rules from [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md); source: `scripts/check-a11y.js` |
+| `check:stamp` | Committed compiled CSS that came from `watch:css` instead of `npm run build` — watch output has no stamp and no vendor prefixes |
 
 A class kept without a demo goes in the `intentional` list in `scripts/check-classes.js`, with a reason. Each check also runs alone: `npm run check:classes`, etc.
 
@@ -107,7 +108,7 @@ The integration contract: [`docs/CONSUMING-BOOKTOWER.md`](docs/CONSUMING-BOOKTOW
 
 ### No `dist` build step
 
-Booktower has no export command that bundles the consumer artifacts. Updating a consumer means copying the compiled files by hand, per the contract above. Every build stamps `booktower.css` with its source commit (`/*! Booktower <commit>/<date> */`), so a consumer's copy always names the state it came from.
+Booktower has no export command that bundles the consumer artifacts. Updating a consumer means copying the compiled files by hand, per the contract above. Every build stamps `booktower.css` and `shell.css` with their source commit (`/*! Booktower <commit>/<date> */`), so a consumer's copy always names the state it came from.
 
 This is deliberate. Updates happen on a low cadence, by a small group, and a missing font file fails loudly — broken icons render as empty squares within seconds. A build step would add machinery for a problem that doesn't exist yet. Revisit when the cadence increases, more people do updates, or a real second consumer deployment exists.
 
@@ -136,7 +137,7 @@ The kit deploys on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**,
 
 ## Browser support
 
-Browser support follows Bootstrap: [`.browserslistrc`](.browserslistrc) is a verbatim copy of the pinned version's list.
+Browser support follows Bootstrap: [`.browserslistrc`](.browserslistrc) is a verbatim copy of the pinned version's list, and every build enforces it — autoprefixer adds the vendor prefixes those browsers need to the compiled CSS. Autoprefixer's browser data (`caniuse-lite`) ages; when the build warns about outdated data, run `npx update-browserslist-db` and rebuild — the compiled CSS may change with it.
 
 ---
 

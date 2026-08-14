@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*! Booktower 162a9b8/2026-08-14 */
 /*
  * Booktower Design System — Shell
  * The chrome that wraps every page in the design system.
@@ -42,6 +43,7 @@ body {
 
 /* ─── Navigation ─────────────────────────────────────────────────────────────── */
 .bt-nav {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -122,6 +124,10 @@ body {
   color: var(--bt-white);
   outline: none;
   transition: background var(--bt-dur-fast), border-color var(--bt-dur-fast);
+}
+
+.bt-search::-moz-placeholder {
+  color: var(--bt-gray-400);
 }
 
 .bt-search::placeholder {
