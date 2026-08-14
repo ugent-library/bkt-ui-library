@@ -65,6 +65,9 @@
 .bt-query-builder__field {
   color: var(--bt-text);
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bt-query-builder__role {
@@ -81,12 +84,6 @@
   border-bottom-style: solid;
 }
 
-.bt-query-builder__row-kind > * {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .bt-query-builder__row-op .form-select {
   width: auto;
   max-width: 100%;
@@ -101,7 +98,7 @@
   min-width: 0;
 }
 
-.bt-query-builder__row-value > .form-control {
+.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year) {
   flex: 1 1 12rem;
   min-width: 8rem;
 }
@@ -111,9 +108,9 @@
 }
 
 .bt-query-builder__year {
-  flex: 0 0 5.5rem !important;
+  flex: 0 0 5.5rem;
   width: 5.5rem;
-  min-width: 5.5rem !important;
+  min-width: 5.5rem;
 }
 
 /* Keep the cap: Chromium reports field-sizing support and stops growing part-way
@@ -253,6 +250,9 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--bt-sp-4);
+  margin-top: var(--bt-sp-5);
+  padding-top: var(--bt-sp-4);
+  border-top: var(--bt-border);
 }
 
 .bt-query-builder__start {
@@ -403,14 +403,6 @@
   color: var(--bt-blue-900);
   text-decoration: underline;
 }
-
-.bt-query-builder__starts {
-  margin-top: var(--bt-sp-5);
-  padding-top: var(--bt-sp-4);
-  border-top: var(--bt-border);
-}
-
-
 
 .bt-query-builder__add {
   display: flex;

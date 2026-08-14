@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower a34fd1d/2026-08-14 */
+/*! Booktower 6bbf122/2026-08-14 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -1997,6 +1997,9 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__field {
   color: var(--bt-text);
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bt-query-builder__role {
@@ -2013,12 +2016,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-bottom-style: solid;
 }
 
-.bt-query-builder__row-kind > * {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .bt-query-builder__row-op .form-select {
   width: auto;
   max-width: 100%;
@@ -2033,7 +2030,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   min-width: 0;
 }
 
-.bt-query-builder__row-value > .form-control {
+.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year) {
   flex: 1 1 12rem;
   min-width: 8rem;
 }
@@ -2043,9 +2040,9 @@ a.bt-avatar--outline:hover:not(:disabled) {
 }
 
 .bt-query-builder__year {
-  flex: 0 0 5.5rem !important;
+  flex: 0 0 5.5rem;
   width: 5.5rem;
-  min-width: 5.5rem !important;
+  min-width: 5.5rem;
 }
 
 /* Keep the cap: Chromium reports field-sizing support and stops growing part-way
@@ -2181,6 +2178,9 @@ a.bt-avatar--outline:hover:not(:disabled) {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--bt-sp-4);
+  margin-top: var(--bt-sp-5);
+  padding-top: var(--bt-sp-4);
+  border-top: var(--bt-border);
 }
 
 .bt-query-builder__start {
@@ -2330,12 +2330,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__field-links .btn-link:focus-visible {
   color: var(--bt-blue-900);
   text-decoration: underline;
-}
-
-.bt-query-builder__starts {
-  margin-top: var(--bt-sp-5);
-  padding-top: var(--bt-sp-4);
-  border-top: var(--bt-border);
 }
 
 .bt-query-builder__add {

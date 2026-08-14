@@ -70,6 +70,28 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   const filled = row => Boolean(valueOf(row));
 
+  function conditionName(row) {
+    const field = row.querySelector('[data-qb-change-field]');
+    const op = row.querySelector('.bt-query-builder__row-op select');
+    let value = valueOf(row);
+    if (value.length > 60) value = value.slice(0, 57) + '…';
+    return [
+      field ? field.textContent.trim() : 'condition',
+      op && op.selectedIndex >= 0 ? op.options[op.selectedIndex].text : '',
+      value,
+    ].filter(Boolean).join(' ');
+  }
+
+  // The row's actions must always name the condition they act on — a screen reader user has to
+  // know which row a control removes. Rewritten on every sync, since the value changes.
+  function nameRow(row) {
+    const name = conditionName(row);
+    const more = row.querySelector('.bt-query-builder__row-actions [data-bs-toggle="dropdown"]');
+    if (more) more.setAttribute('aria-label', 'More actions for ' + name);
+    const remove = row.querySelector('[data-qb-remove]');
+    if (remove) remove.setAttribute('aria-label', 'Remove ' + name);
+  }
+
   // ── Adding a row ────────────────────────────────────────────────────────────
 
   // A pick names the template that carries its shape and the label to write into it. No row
@@ -99,19 +121,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // A template's controls carry no id, and a clone would repeat one. Pair each control with
   // its label here, once, at the moment the row enters the document.
-  function identify(row) {
-    row.querySelectorAll('[id]').forEach(control => {
-      const label = row.querySelector('label[for="' + control.id + '"]');
+  function identify(scope) {
+    scope.querySelectorAll('[id]').forEach(control => {
+      const old = control.id;
+      const label = scope.querySelector('label[for="' + old + '"]');
+      const labelledby = scope.querySelector('[aria-labelledby="' + old + '"]');
       seq += 1;
       control.id = 'qbn-' + seq;
       if (label) label.setAttribute('for', control.id);
+      if (labelledby) labelledby.setAttribute('aria-labelledby', control.id);
     });
   }
 
   function emptyCopy(row) {
     const copy = row.cloneNode(true);
     seq += 1;
-    copy.querySelectorAll('[id]').forEach(el => {
+    copy.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
       const label = copy.querySelector('label[for="' + el.id + '"]');
       const helped = copy.querySelector('[aria-describedby="' + el.id + '-help"]');
       const help = copy.querySelector('#' + el.id + '-help');
@@ -162,9 +187,11 @@ document.addEventListener('DOMContentLoaded', function () {
           if (j && !isSeparator(row.previousElementSibling)) row.before(separator('or'));
           const or = row.querySelector('[data-qb-or]');
           if (or) or.closest('li').remove();
+          nameRow(row);
         });
       } else {
         item.classList.remove('bt-query-builder__row--alt');
+        nameRow(item);
       }
     });
   }
@@ -175,7 +202,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const slot = event.target.parentElement?.querySelector('[data-qb-chooser-slot]');
     if (!slot) return;
     if (!slot.children.length) {
-      slot.append(document.getElementById('qb-chooser').content.cloneNode(true));
+      const chooser = document.getElementById('qb-chooser').content.cloneNode(true);
+      identify(chooser);
+      slot.append(chooser);
       wireSearch(slot);
     }
     const row = event.target.closest('[data-qb-row]');
