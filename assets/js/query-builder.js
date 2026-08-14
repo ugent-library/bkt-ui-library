@@ -42,12 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
     Array.from(list.querySelectorAll(':scope > [data-qb-row], :scope > [data-qb-group]'));
   const alts = group => Array.from(group.querySelectorAll('[data-qb-alts] > [data-qb-row]'));
   const isSeparator = el => Boolean(el) && el.classList &&
-    (el.classList.contains('bt-query-builder__and') ||
-     el.classList.contains('bt-query-builder__or'));
+    el.classList.contains('bt-query-builder__sep');
 
   function separator(word) {
     const p = document.createElement('p');
-    p.className = word === 'or' ? 'bt-query-builder__or' : 'bt-query-builder__and';
+    p.className = 'bt-query-builder__sep';
     p.setAttribute('data-qb-sep', '');
     p.textContent = word;
     return p;
@@ -155,10 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // alternative, so a group and a row are interchangeable at the top level.
   function toGroup(row) {
     const group = document.getElementById('qb-group').content.firstElementChild.cloneNode(true);
-    seq += 1;
-    const labelId = 'qb-group-c' + seq;
-    group.querySelector('.bt-query-builder__group-label').id = labelId;
-    group.setAttribute('aria-labelledby', labelId);
     row.replaceWith(group);
     group.querySelector('[data-qb-alts]').append(row, emptyCopy(row));
   }

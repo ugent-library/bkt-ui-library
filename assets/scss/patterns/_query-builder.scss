@@ -114,8 +114,7 @@
   color: var(--s-text-muted);
 }
 
-.bt-query-builder__and,
-.bt-query-builder__or {
+.bt-query-builder__sep {
   margin: 0;
   padding: var(--bt-sp-1) var(--bt-sp-4);
   color: var(--s-text-muted);
@@ -154,8 +153,11 @@
   border: var(--bt-border);
 }
 
+/* Undoes Reboot's legend float and heading-scale font size */
 .bt-query-builder__group-label {
+  float: none;
   padding: var(--bt-sp-3) var(--bt-sp-4) 0;
+  font-size: inherit;
 }
 
 .bt-query-builder__row--alt {
@@ -372,8 +374,7 @@
     grid-column: 1 / -1;
   }
 
-  .bt-query-builder__and,
-  .bt-query-builder__or {
+  .bt-query-builder__sep {
     background-color: var(--bt-bg-alt);
     border-block: var(--bt-border);
   }

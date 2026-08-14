@@ -125,7 +125,6 @@ bt-panel__title
 bt-panel__year-input
 
 bt-query-builder__add
-bt-query-builder__and
 bt-query-builder__batch
 bt-query-builder__blank
 bt-query-builder__blank-columns
@@ -142,7 +141,6 @@ bt-query-builder__group
 bt-query-builder__group-foot
 bt-query-builder__group-label
 bt-query-builder__more
-bt-query-builder__or
 bt-query-builder__people-field
 bt-query-builder__people-input
 bt-query-builder__people-search
@@ -155,6 +153,7 @@ bt-query-builder__row-actions
 bt-query-builder__row-kind
 bt-query-builder__row-op
 bt-query-builder__row-value
+bt-query-builder__sep
 bt-query-builder__start
 bt-query-builder__start-shape
 bt-query-builder__starts
