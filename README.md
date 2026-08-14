@@ -13,7 +13,7 @@ npm run dev
 
 Open [http://localhost:3111](http://localhost:3111). Done.
 
-`npm run dev` builds icons and CSS once, starts the server, and watches for CSS changes. Editing any `.scss` file recompiles and the browser reloads automatically.
+`npm run dev` builds icons and CSS once, starts the server, and watches for CSS changes. Edit any `.scss` file: the CSS recompiles and the browser reloads.
 
 ---
 
@@ -38,16 +38,16 @@ You only need `build:icons` when you've added or changed an SVG in `assets/icon-
 npm test
 ```
 
-Runs four static checks; run it after any template or SCSS editing session:
+Run after any template or SCSS editing session. (`docs/CI.md` points here.)
 
 | Check | Catches |
 |-------|---------|
 | `check:partials` | SCSS partials that exist but aren't `@use`d in `booktower.scss` (component would silently vanish from the compiled CSS) |
-| `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero. A class kept without a demo goes in the `intentional` list in `scripts/check-classes.js`, with a reason |
+| `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
 | `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
-| `check:a11y` | The house rules from docs/ACCESSIBILITY.md: one `<h1>` per template, `main#main-content`, distinct `aria-label` on every `<nav>`, accessible names on icon-only buttons |
+| `check:a11y` | The house rules from [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md); source: `scripts/check-a11y.js` |
 
-Each check also runs on its own: `npm run check:classes`, etc.
+A class kept without a demo goes in the `intentional` list in `scripts/check-classes.js`, with a reason. Each check also runs alone: `npm run check:classes`, etc.
 
 For a browser-grade WCAG scan (contrast, ARIA validity — things static checks can't see):
 
@@ -61,95 +61,7 @@ npm run check:a11y-browser   # terminal 2 — page list lives in .pa11yci
 
 ## Dependencies
 
-`node_modules/` is not committed — `package-lock.json` is the source of truth; `npm install` reproduces it. Install dev tools with `npm install -D <pkg>`: undeclared packages are deleted by the next install.
-
----
-
-## Deployment
-
-The kit is deployed on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**
-so the team can share links to kit pages and prototype templates. It runs the
-same `server.js` as `npm run dev` — pages are still auto-discovered, the shell
-is still injected, `?state=` and `?view=html` and the HTMX mock endpoints all
-behave the same. Only live reload is absent, because there is nothing to reload.
-
-### How it works
-
-`server.js` exports its request handler; the listening socket, live reload and
-the file watcher run only when `VERCEL` is unset. `api/index.js` imports that
-handler, Vercel runs it as a function, and `vercel.json` sends every request
-to it.
-
-| File | Role |
-|------|------|
-| `api/index.js` | Function entry — imports the handler, restores the requested path |
-| `vercel.json` | Build command, output directory, file bundling, catch-all rewrite |
-| `public/` | Vercel's output directory, deliberately empty ([why](public/README.md)) |
-
-The Node version is pinned to 22.x in `package.json`, matching CI. Vercel would
-otherwise default to 24.x.
-
-Three details worth knowing before you change any of them:
-
-- **`includeFiles` lists the served directories.** Vercel bundles `server.js`
-  and whatever it sees being `require`d, but it cannot see pages read at runtime
-  with `fs.readFileSync`. Every directory in the `SECTIONS` array in `server.js`
-  is listed in `vercel.json`. Add a section without adding it there and the
-  pages work locally but 404 on the deployment.
-- **`public/` must stay empty.** Static files win over the rewrite, so anything
-  in there would be served raw, without the shell.
-- **The rewrite carries the requested path in `__path`.** A rewritten request
-  can reach the function as `/api/index`, and the kit routes on `req.url`, so
-  `api/index.js` puts the path back before handing over. Belt and braces: if a
-  deployment shows `req.url` arriving intact, both halves can go.
-
-### Triggering a deploy
-
-Push to `main` — the production deployment rebuilds. Every pull request gets its
-own preview URL, which is the better thing to share while work is in progress.
-Nothing else changes: GitHub Actions keeps running `npm test` on its own, and
-Vercel builds separately with `npm run build`.
-
-### Keeping it out of search results
-
-Anyone with the link can open `bkt-ui.vercel.app` and every preview — share a URL
-and it opens, no account needed. `vercel.json` sends `X-Robots-Tag: noindex,
-nofollow` on every response, so a prototype that looks like Biblio stays out of
-search results. Remove that header the day this is meant to be found.
-
-Access is controlled in the Vercel dashboard, not in this repository — there is no
-auth code here and there should not be. To put the deployments behind a login,
-turn on **Vercel Authentication** at Standard Protection (Settings → Deployment
-Protection): the free tier, covering `bkt-ui.vercel.app` and every preview, since
-there is no production custom domain. Anyone in the Ghent University Library team
-opens them once logged in, and Viewer seats are free. **Share** on a deployment
-then generates a link for someone outside the team.
-
-The **All Deployments** option in that same dropdown needs the Advanced
-Deployment Protection add-on at $150 per month. It only adds coverage for
-production custom domains. Don't.
-
----
-
-## Documentation
-
-- [Server API](docs/SERVER.md) — Development server documentation
-- [Domain](docs/DOMAIN-VOCABULARY.md) — Research repository domain knowledge
-- [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
-- [Consuming Booktower](docs/CONSUMING-BOOKTOWER.md) — Integration contract for using this library in another app
-- [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
-- [Bootstrap gap audit](docs/analysis/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
-- [Working guide](AGENTS.md) — **Read before your first change.** For humans and AI agents, any tool. Routes to the rules: [CSS authoring](docs/CSS-ARCHITECTURE.md) (naming, Bootstrap-first, where styles live), the [accessibility rules + checklist](docs/ACCESSIBILITY.md), and the rest of `docs/`.
-- [Contributing](CONTRIBUTING.md) — how work flows, what gates a change, who decides what.
-
-## Browser Support
-
-The design system supports modern browsers that Bootstrap 5 supports:
-
-- Chrome 60+
-- Firefox 60+
-- Safari 12+
-- Edge 79+
+`package-lock.json` is the source of truth: `npm install` reproduces `node_modules/`, which stays uncommitted. Install dev tools with `npm install -D <pkg>` — the next install deletes undeclared packages.
 
 ---
 
@@ -166,94 +78,65 @@ The design system supports modern browsers that Bootstrap 5 supports:
 | `elements/` | UI kit docs: buttons, forms |
 | `patterns/` | UI kit docs: components |
 | `templates/` | Full-page prototype templates |
-| `templates/partials/` | Reusable HTML templates for common layouts |
+| `templates/partials/` | Reusable HTML fragments for common layouts |
 | `shell/` | UI kit navigation chrome (not part of the design system) |
-
----
-
-## Reusable templates
-
-For common page layouts, copy from `templates/partials/` and customize. These use only existing CSS classes from the design system:
-
-- `backoffice-overview.html` — Backoffice list view with sidebar, toolbar, filters, facets, and table results (uses `u-layout--app`, `u-main__sidebar`, etc.)
-- `templates/biblio-public/public-works.html` — Public search page with hero, filters, facets, and card results
-
-These include placeholder content and comments showing where to customize. The full HTML output remains copy-paste friendly for developers.
 
 ---
 
 ## Adding a page to the UI kit
 
-Drop an `.html` file into the right folder — the sidebar picks it up automatically.
-
-```
-foundations/   ← tokens, colours, typography, icons
-elements/      ← individual UI elements
-patterns/      ← multi-element components
-templates/     ← full-page prototypes
-```
-
-Minimal page template:
-
-```html
-<!-- @title: My Component -->
-
-<div class="ds-page">
-  <header class="ds-page-header col-6" data-surface="public">
-    <p class="ds-eyebrow">Patterns</p>
-    <h1 class="display-1">My Component</h1>
-    <p class="lead">Short description.</p>
-  </header>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Section heading</h2>
-    <div class="ds-demo">
-      <div class="ds-demo-label">Default</div>
-      <div class="ds-demo-body">
-        <!-- your HTML here -->
-      </div>
-    </div>
-  </section>
-</div>
-```
-
-The server injects Bootstrap, `booktower.css`, and the shell nav automatically. Full page conventions (`ds-*` structure, demo and code-block rules): [docs/KIT-PAGES.md](docs/KIT-PAGES.md).
-
-Pages without a surface declaration default to `backoffice`. To set a page to public:
-
-```html
-<!-- @surface: public -->
-```
+Drop an `.html` file into a kit folder (table above). The sidebar picks it up. The server injects Bootstrap, `booktower.css`, and the shell nav. Page conventions: [docs/KIT-PAGES.md](docs/KIT-PAGES.md).
 
 ---
 
 ## Adding an icon
 
-1. Drop an SVG into `assets/icon-font-source/`
-2. Run `npm run build:icons`
+Drop an SVG into `assets/icon-font-source/` and run `npm run build:icons`. SVG requirements and the icon list: [/foundations/icons.html](http://localhost:3111/foundations/icons.html).
 
-The font and CSS update automatically. SVGs must use filled paths only — no strokes, single colour, square viewBox.
+---
 
-See [/foundations/icons.html](http://localhost:3111/foundations/icons.html) for all icons. Click any icon to copy its class name.
+## Reusable templates
+
+Full-page prototypes live in `templates/`, grouped by product area. Reusable fragments — headers, sidebars, search widgets — live in `templates/partials/`. Every file uses only existing design-system classes (`npm test` enforces it). Placeholder marking is a work in progress — read a file before copying it. A starting point for a public search page: `templates/biblio-public/public-works.html`.
 
 ---
 
 ## Using the design system in another app
 
-See [`docs/CONSUMING-BOOKTOWER.md`](docs/CONSUMING-BOOKTOWER.md) for the full integration contract: which files to copy, where to place fonts, Bootstrap as a peer dependency, and the surface attribute.
+The integration contract: [`docs/CONSUMING-BOOKTOWER.md`](docs/CONSUMING-BOOKTOWER.md).
 
 ### No `dist` build step
 
-Booktower has no `npm run dist` or `make export` command that bundles the consumer artifacts. The update path is manual:
+Booktower has no export command that bundles the consumer artifacts. Updating a consumer means copying the compiled files by hand, per the contract above. Every build stamps `booktower.css` with its source commit (`/*! Booktower <commit>/<date> */`), so a consumer's copy always names the state it came from.
 
-```bash
-cp assets/booktower.css                  <consumer>/path/to/css/
-cp assets/fonts/icon-font.woff{,2}       <consumer>/path/to/css/fonts/
-```
+This is deliberate. Updates happen on a low cadence, by a small group, and a missing font file fails loudly — broken icons render as empty squares within seconds. A build step would add machinery for a problem that doesn't exist yet. Revisit when the cadence increases, more people do updates, or a real second consumer deployment exists.
 
-Every build stamps `booktower.css` with its source commit (`/*! Booktower <commit>/<date> */`), so a consumer's copy always names the state it came from.
+---
 
-This is deliberate. Updates happen on a low cadence, by a small group, and a missing font file fails loudly — broken icons render as empty squares within seconds of loading the page. A build step would add machinery for a problem that doesn't exist yet. Revisit when the update cadence increases, more people start doing updates, or a real second consumer deployment exists.
+## Deployment
+
+The kit deploys on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**, so the team can share links to kit pages and prototypes. Everything else: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
+---
+
+## Documentation
+
+- [Working guide](AGENTS.md) — **read before your first change**; for humans and AI agents, any tool.
+- [Contributing](CONTRIBUTING.md) — how work flows, what gates a change, who decides what.
+- [Server](docs/SERVER.md) — kit server behaviour: template states, mock endpoints
+- [Domain](docs/DOMAIN-VOCABULARY.md) — the research repository domain vocabulary
+- [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
+- [Consuming Booktower](docs/CONSUMING-BOOKTOWER.md) — Integration contract for using this library in another app
+- [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
+- [CI](docs/CI.md) — what CI runs, what it costs, the human's share
+- [Deployment](docs/DEPLOYMENT.md) — Vercel setup, the traps, access control
+- [Bootstrap gap audit](docs/analysis/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
+
+---
+
+## Browser support
+
+Browser support follows Bootstrap: [`.browserslistrc`](.browserslistrc) is a verbatim copy of the pinned version's list.
 
 ---
 

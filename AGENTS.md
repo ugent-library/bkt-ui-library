@@ -11,7 +11,7 @@ For everyone working in or with this repo — humans and AI agents, whatever the
 
 ## What this project is
 
-A design system and prototype environment for Ghent University Library applications. The primary case is **biblio.ugent.be** — the university's research output repository, built as raven; **pre-ingest** is the second consumer, and more applications will follow. Features are brought to life here, specs (bets, issues, design docs) are written here, and designs are created here. The prototype serves user testing and interviews on one hand, and consuming applications such as Raven on the other — as style guide, UX guide, and source of truth for layout. It is also where development, design, and product discover the right thing to build.
+A design system and prototype environment for Ghent University Library applications. The primary case is **biblio.ugent.be** — the university's research output repository, built as raven; **pre-ingest** is the second consumer, and more applications will follow. The team prototypes features here, writes specs (bets, issues, design docs) here, and creates designs here. The prototype serves user testing and interviews on one hand, and consuming applications such as Raven on the other — as style guide, UX guide, and source of truth for layout. It is also where development, design, and product discover the right thing to build.
 
 The system serves two distinct user contexts that must never be conflated:
 
@@ -28,7 +28,7 @@ Four tools, one lane each. Don't duplicate one in another.
 
 | Tool | Owns | Decided by |
 |------|------|------------|
-| **ProductBoard** | Demand and priority — user needs and feedback, feature requests, the problem a page solves, roadmap status. The *why at the user-need level*. Demand is also discovered here, through prototyping. Synced into `notes/demand/` by `npm run sync:demand`, so specs can cite the notes they rest on; corrections are made in ProductBoard, never in the sync. | Product |
+| **ProductBoard** | Demand and priority: user needs, feature requests, the problem a page solves, roadmap status — the *why at the user-need level*. Demand is also discovered here, through prototyping. Sync mechanics: `docs/SPEC-WRITING.md` → Cite the demand | Product |
 | **booktower-ui-library** (this repo) | The prototype and the design system — HTML, CSS classes, layout and interaction, the UI *how*. Concepts are prototyped here, not defined here. | Design |
 | **Raven** | The backend and the source of truth for the domain model — schema, field registry, work/organization/project catalogs, subtypes. What a concept *is*. | Dev |
 | **GitHub issues** (raven repo) | The build — implementation scope and acceptance criteria. Issues **start in this repo**: a prototype is scoped into issues (the `biblio-issue-writer` skill), then filed in the raven repo, where raven's issue → branch → commit → PR chain takes over. | Dev |
@@ -50,15 +50,21 @@ When sources disagree, trust in this order:
 3. The contracts — `docs/ACCESSIBILITY.md`, `docs/RENDERED-HTML-CONTRACT.md`, raven's `docs/public-site-semantics.md`
 4. Kit pages and prototype templates as canonical examples
 5. The guides — this file and the rest of `docs/`
-6. Historical audits (`docs/analysis/`) and `CHANGELOG.md` — findings at a point in time, never the current contract. Shared drafts live in `docs/wip/` — visible, not yet contracts.
+6. Historical audits (`docs/analysis/`) and `CHANGELOG.md` — findings at a point in time, never the current contract.
+
+Shared drafts live in `docs/wip/` — visible, not yet contracts.
 
 ---
 
 ## Consumers
 
-The prototype is the source of truth for layout and UX. When a consuming app's template and the prototype disagree, don't silently align to either side: flag the disagreement — it usually means the kit is missing something, or one side has a real problem — and resolve it in the kit, so every consumer gets the fix.
+The prototype is the source of truth for layout and UX. When a consuming app's template and the prototype disagree, flag it: the disagreement usually means the kit misses something, or one side has a real problem. Resolve it in the kit, so every consumer gets the fix.
 
-Reading is proportional to the task: implementing a pattern or page for the first time → the safe workflow in `docs/CONSUMING-BOOKTOWER.md`; changing an existing adapted template → the update rules in `docs/RENDERED-HTML-CONTRACT.md` plus the pattern's canonical example; re-syncing assets → the file table in `docs/CONSUMING-BOOKTOWER.md`.
+Reading is proportional to the task:
+
+- first implementation of a pattern or page → the safe workflow in `docs/CONSUMING-BOOKTOWER.md`
+- changing an existing adapted template → the update rules in `docs/RENDERED-HTML-CONTRACT.md` plus the pattern's canonical example
+- re-syncing assets → the file table in `docs/CONSUMING-BOOKTOWER.md`
 
 - **Ownership boundary** — Booktower defines what the browser receives; the consuming app defines how its server produces that output from application data. Adapt-once workflow, update rules, drift, and ownership comments: `docs/RENDERED-HTML-CONTRACT.md`.
 - **Integration contract** — which files to copy, where fonts go, Bootstrap as peer dependency, the surface attribute: `docs/CONSUMING-BOOKTOWER.md`.
@@ -93,10 +99,10 @@ When a new session begins on this project, execute these steps before writing an
    | JavaScript | `docs/JAVASCRIPT.md` — rules, file registry, event contract, loading order |
    | Kit server behaviour — template states, mock endpoints | `docs/SERVER.md` |
    | Creating or changing a kit doc page (`foundations/`, `elements/`, `patterns/`) | `docs/KIT-PAGES.md` |
-   | Writing a bet, issue, or design doc | `docs/SPEC-WRITING.md` — the house rules for all specs |
+   | Writing anything — a doc, README, bet, or issue | `docs/SPEC-WRITING.md` — universal rules first, spec-only rules after |
    | Drafting an implementation issue | `docs/ISSUE-TEMPLATE.md` + the `biblio-issue-writer` skill; raven's `AGENTS.md` owns the issue → branch → commit → PR chain |
    | Writing or reviewing a product bet | `docs/PRODUCT-BET-TEMPLATE.md` + the `product-bet-writer` skill |
-   | A field, status, or entity that might need modelling | raven is the source of truth — check its schema and catalog docs (`docs/metadata-*.md` in the raven repo) before inventing a concept here. Read each catalog's scope paragraph before its field tables: the scope states what the catalog covers and what it deliberately leaves out, which usually settles whether a missing field is a gap at all |
+   | A field, status, or entity that might need modelling | raven's schema and catalog docs (`docs/metadata-*.md` in the raven repo) — read each catalog's scope paragraph first; it usually settles whether a missing field is a gap at all |
    | Public record pages that crawlers or reference managers consume | raven's `docs/public-site-semantics.md` — the Rubric-audited contract |
    | Implementing or updating a prototype in a consuming app | `docs/RENDERED-HTML-CONTRACT.md`, `docs/CONSUMING-BOOKTOWER.md` |
 
@@ -174,7 +180,14 @@ When agent and developer disagree on a CSS, HTML, or accessibility approach, cit
 
 Don't just assert a position — name which source supports it and why. If no source can be cited, say so and defer to the developer's judgment or look it up.
 
-Never cite an unopened source. A citation is a promise that the source says what you claim. Before putting any external citation in a doc or issue, open the source and confirm it actually states the claim — a search-engine summary is **not** the source; it stitches together adjacent findings and citing it fabricates a citation. Cite only what the source states; anything reasoned or conventional is labelled as such, never dressed as research; if a source can't be read, don't attribute to it. When an internal source is corrected, grep its dependents and re-sync. A wrong citation in a durable doc is worse than no citation.
+Never cite an unopened source. A citation is a promise that the source says what you claim. A search-engine summary is **not** the source: it stitches together adjacent findings, and citing it fabricates a citation.
+
+- Open the source and confirm it states the claim before the citation lands in a doc or issue.
+- Label anything reasoned or conventional as such — never dress it as research.
+- A source you can't read gets no attribution.
+- When an internal source is corrected, grep its dependents and re-sync.
+
+A wrong citation in a durable doc is worse than no citation.
 
 ### Comments
 
@@ -204,7 +217,7 @@ Placeholder data must be announced as placeholder. Any claim about the real doma
 
 ### Writing in plans and docs
 
-Frame information active and positive: say what a thing **is**, not what it isn't. Lead with the affirmative statement. Reserve negation for genuine constraints where naming the rejected alternative is the point (e.g. "the query is not a chip").
+The house rules live in `docs/SPEC-WRITING.md` — the All writing section governs every document, including this one.
 
 ### Working mode: build-and-show
 
