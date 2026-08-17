@@ -22,6 +22,21 @@
 .min-w-0 { min-width: 0; }
 
 
+/* ── Forms ───────────────────────────────────────────────────────────────────── */
+
+/* A textarea that is as tall as what is in it: one line when empty, growing per line typed or
+   pasted, shrinking again when lines go. field-sizing does all of it — the rows attribute
+   becomes the fallback height for a browser without it, where query-builder.js sets the height
+   instead. The cap stays, because Chromium reports support and then stops growing part-way
+   through a long list; past it the box scrolls. Height only: a textarea that must fill its
+   column still carries its own width. */
+.bt-textarea-auto {
+  max-height: 14rem;
+  overflow-y: auto;
+  field-sizing: content;
+}
+
+
 /* ── Borders ─────────────────────────────────────────────────────────────────── */
 
 .bt-border { border: var(--bt-border); }

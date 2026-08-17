@@ -56,10 +56,10 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The condition row</h2>
-    <p class="mb-4">A condition row is a fixed grid: the field it asks about, the operator, the value, and the row's actions. The value column is the widest. The value is what the reader is saying, so the mechanics stay quiet beside it. A hairline separates one row from the next &mdash; no row numbers, no boxes. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Both controls sit at the base height. Mixing <code>form-control</code> with <code>form-select-sm</code> on one line puts a 38px control beside a 32px one.</p>
+    <p class="mb-4">A condition row reads left to right: the field it asks about, a role where the field takes one, the operator, the value, and the row's actions. The role is a select like any other &mdash; <em>Person</em>, <em>in any role</em>, <em>is any of</em>, the names &mdash; because narrowing to editors is the same kind of choice as picking the operator, not an aside on the field name. The field opens every row at a fixed width and the actions close it at one, so both line up down the list; the operator and the value sit inline between them, each as wide as it needs to be, and the value takes what is left. The value is what the reader is saying, so the mechanics stay quiet beside it &mdash; no row numbers, no boxes. A person value is its people, as badges, with a badge-style <em>Add a person</em> after them: picking a person is the same act as on the results page, so it opens the same searchable checklist the works filter bar opens for its person filter, and the badges sit in the row rather than inside a text field, because the row's value is a set of records and not something typed. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Every control in the row is the small size &mdash; <code>form-select-sm</code> and <code>form-control-sm</code> throughout &mdash; so the whole row sits at one 32px height and a query of six rows stays readable in one screen. Mixing the two sizes on one line is what puts a 38px control beside a 32px one.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows, joined by and</h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows</h3></div>
       <div class="ds-demo-body">
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
@@ -67,14 +67,14 @@
           </div>
           <div class="bt-query-builder__row-op">
             <label class="visually-hidden" for="kit-qb-op">Operator, condition 1</label>
-            <select class="form-select" id="kit-qb-op">
+            <select class="form-select form-select-sm w-auto mw-100" id="kit-qb-op">
               <option selected>contains</option>
               <option>does not contain</option>
             </select>
           </div>
           <div class="bt-query-builder__row-value">
             <label class="visually-hidden" for="kit-qb-val">Words, condition 1</label>
-            <input type="text" class="form-control" id="kit-qb-val" value="quantum computing">
+            <input type="text" class="form-control form-control-sm" id="kit-qb-val" value="quantum computing">
           </div>
           <div class="bt-query-builder__row-actions">
             <div class="dropdown">
@@ -97,14 +97,13 @@
             </button>
           </div>
         </div>
-        <p class="bt-query-builder__sep">and</p>
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
             <p class="mb-0 fw-semibold">Publication year</p>
           </div>
           <div class="bt-query-builder__row-op">
             <label class="visually-hidden" for="kit-qb-op-2">Operator, condition 2</label>
-            <select class="form-select" id="kit-qb-op-2">
+            <select class="form-select form-select-sm w-auto mw-100" id="kit-qb-op-2">
               <option selected>is between</option>
               <option>is at least</option>
               <option>is after</option>
@@ -112,10 +111,10 @@
           </div>
           <div class="bt-query-builder__row-value">
             <label class="visually-hidden" for="kit-qb-from">First year, condition 2</label>
-            <input type="number" class="form-control bt-query-builder__year" id="kit-qb-from" value="2015" min="1800" max="2100">
+            <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qb-from" value="2015" min="1800" max="2100">
             <span class="small text-muted">and</span>
             <label class="visually-hidden" for="kit-qb-to">Last year, condition 2</label>
-            <input type="number" class="form-control bt-query-builder__year" id="kit-qb-to" value="2020" min="1800" max="2100">
+            <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qb-to" value="2020" min="1800" max="2100">
           </div>
           <div class="bt-query-builder__row-actions">
             <div class="dropdown">
@@ -141,7 +140,7 @@
       </div>
     </div>
 
-    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, stated as a word between them rather than as a control: the top level is always AND-joined, and the heading above says so — <em>Show research output where all of these are true</em>. An <em>or</em> belongs to a row, not to the top level. Open the row&rsquo;s <em>more</em> menu and pick <em>or&hellip;</em>, and the row becomes a group reading <em>&hellip;where any of these conditions is true</em>. The word <em>conditions</em> does work there. A row&rsquo;s own <em>is any of</em> lists values for one field; a group lists conditions. Drop the word and the two offers read the same.</p>
+    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, and nothing between them says so: the top level is always AND-joined, the heading above states it once — <em>Show research output where all of these are true</em> — and a word repeated between every pair only restates that heading. The hairline is the join. An <em>or</em> is the case that does need saying, and it belongs to a row, not to the top level. Open the row&rsquo;s <em>more</em> menu and pick <em>or&hellip;</em>, and the row becomes a group reading <em>&hellip;where any of these conditions is true</em>. The word <em>conditions</em> does work there. A row&rsquo;s own <em>is any of</em> lists values for one field; a group lists conditions. Drop the word and the two offers read the same.</p>
   </section>
 
   <section class="ds-section">
@@ -166,7 +165,7 @@
       <div class="ds-demo-body">
         <div class="bt-toolbar">
           <div class="bt-toolbar__left">
-            <p class="h5 mb-0" aria-live="polite">1,284 research outputs match</p>
+            <p class="mb-0" aria-live="polite">1,284 research outputs match</p>
           </div>
           <div class="bt-toolbar__right">
             <button type="button" class="btn btn-primary">

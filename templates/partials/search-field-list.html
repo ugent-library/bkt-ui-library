@@ -2,50 +2,55 @@
   The advanced-search field list: the three groups every chooser shows, one entry per public
   phase-1 field. Included twice by search-advanced-conditions.html — the blank state's columns
   and the #qb-chooser panel — so the two lists cannot drift. The promoted heads (the blank
-  state's start cards, the panel's Common rows) stay per container, on purpose.
+  state's start cards) stay per container, on purpose.
   The field vocabulary is docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
   Ids repeat where both containers render; identify() re-ids every cloned chooser.
+
+  Plain dropdown-header + dropdown-item, as the works Add-filter menu uses: inside the chooser
+  panel they are padded rows with a hover band (the slot is a dropdown-menu, so Bootstrap's item
+  variables are in scope), and in the blank state's columns, where those variables are not
+  declared, the same markup falls back to a plain list of links.
 -->
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-subject">
-  <p class="bt-query-builder__choice-heading mb-2" id="qb-g-subject">Subject</p>
-  <ul class="list-unstyled d-grid gap-1">
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+  <p class="dropdown-header" id="qb-g-subject">Subject</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Words or topic" data-qb-template="qb-row-text">Words or topic</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Title" data-qb-template="qb-row-text">Title</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Abstract" data-qb-template="qb-row-text">Abstract</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Keyword" data-qb-template="qb-row-text">Keyword</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-authors">
-  <p class="bt-query-builder__choice-heading mb-2" id="qb-g-authors">Authors</p>
-  <ul class="list-unstyled d-grid gap-1">
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+  <p class="dropdown-header" id="qb-g-authors">Authors</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Person" data-qb-template="qb-row-contributor">Person</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Affiliation" data-qb-template="qb-row-person">Affiliation</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Project" data-qb-template="qb-row-person">Project</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-publication">
-  <p class="bt-query-builder__choice-heading mb-2" id="qb-g-publication">Publication</p>
-  <ul class="list-unstyled d-grid gap-1">
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+  <p class="dropdown-header" id="qb-g-publication">Publication</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Host publication" data-qb-template="qb-row-text">Host publication</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Publisher" data-qb-template="qb-row-text">Publisher</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Access level" data-qb-template="qb-row-choice">Access level</button></li>
-    <li><button class="btn btn-link btn-sm p-0 text-start" type="button" data-qb-choice
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
   </ul>
 </div>

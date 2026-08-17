@@ -14,13 +14,13 @@
 <div class="bt-toolbar bt-query-builder__exit">
   <div class="bt-toolbar__left">
     <!-- @state: built advanced-group results best-bet no-results query-empty advanced-condition -->
-    <p class="h5 mb-0" aria-live="polite" data-qb-count>About 1,280 research outputs match</p>
+    <p class="mb-0" aria-live="polite" data-qb-count>About 1,280 research outputs match</p>
     <!-- @state -->
     <!-- @state: advanced-prefilled -->
-    <p class="h5 mb-0" aria-live="polite" data-qb-count>About 240 research outputs match</p>
+    <p class="mb-0" aria-live="polite" data-qb-count>About 240 research outputs match</p>
     <!-- @state -->
     <!-- @state: advanced-empty -->
-    <p class="h5 mb-0" aria-live="polite" data-qb-count>
+    <p class="mb-0" aria-live="polite" data-qb-count>
       <span class="d-none d-lg-inline">About 312,000 research outputs</span>
       <span class="d-lg-none">About 312,000</span>
     </p>
@@ -34,6 +34,15 @@
     <!-- @state -->
   </div>
   <div class="bt-toolbar__right">
+    <!-- Beside the exit, not beside Add a condition: clearing and showing results are both ways
+         of leaving the query you have, so they sit together. Absent while there is nothing to
+         clear. -->
+    <!-- @state: built advanced-group advanced-prefilled advanced-zero results best-bet no-results query-empty advanced-condition -->
+    <button type="button" class="btn btn-ghost" data-qb-clear>
+      <i class="if if-close" aria-hidden="true"></i>
+      Clear all
+    </button>
+    <!-- @state -->
     <!-- @state: built advanced-group advanced-prefilled advanced-empty results best-bet no-results query-empty advanced-condition -->
     <button type="submit" form="qb-form" class="btn btn-primary">
       <i class="if if-search" aria-hidden="true"></i>

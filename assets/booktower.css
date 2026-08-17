@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower e7f1aed/2026-08-14 */
+/*! Booktower 82380d1/2026-08-17 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -1869,11 +1869,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   min-width: min(480px, 100vw - 2rem);
 }
 
-.bt-panel--xwide {
-  max-width: 40rem;
-  min-width: min(40rem, 100vw - 2rem);
-}
-
 .bt-panel__title {
   padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
   margin-bottom: 0;
@@ -1907,7 +1902,10 @@ a.bt-avatar--outline:hover:not(:disabled) {
   padding: var(--bt-sp-4);
 }
 
-/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio. */
+/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio.
+   --list is the same shape for rows that act instead of tick: one scrolling column, the group
+   headings inside it. */
+.bt-panel__body--list,
 .bt-panel__body--checklist,
 .bt-panel__body--boolean {
   padding: 0;
@@ -1954,37 +1952,26 @@ a.bt-avatar--outline:hover:not(:disabled) {
   width: 120px;
 }
 
-/* Column grid for grouped option lists (the query builder's field chooser) */
-.bt-panel__body--grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bt-sp-4);
-}
-
-@media (max-width: 991.98px) {
-  .bt-panel__body--grid {
-    grid-template-columns: 1fr;
-  }
-}
 /* -- bt-query-builder -- */
 /*
-  Condition editor: a field | operator | value | actions grid, closed by a bar carrying the
-  count. Bootstrap checked and rejected for what survives here: .row/.col-* for the row grid
-  (the columns are fixed-width and shared by every row, not per-row spans);
-  .list-group-item-action for __choice (it brings borders and its own list contract — the
-  choice rides on .dropdown-item instead and keeps only its icon-column grid); .card for
-  __group (a fieldset inside the editor card would nest card chrome — the group needs only
-  the inset band). The editor itself, the start cards and the person tokens do ride on
-  Bootstrap (card, card-header, badge).
+  Condition editor: a list of rows, closed by a bar carrying the count. A row is one flex line —
+  a fixed field lane, the operator and the value flowing beside it, the actions pinned right.
+  Bootstrap checked and rejected for what survives here: .list-group-item-action for the field
+  choices (it brings borders and its own list contract — a choice rides on .dropdown-item
+  instead); .card for __group (a fieldset inside the editor card would nest card chrome — the
+  group needs only the inset band). The editor itself, the start cards and the person tokens do
+  ride on Bootstrap (card, card-header, badge), and the blank state's two column layouts on .row.
 */
 /* ── Rows ─────────────────────────────────────────────────────────────────── */
+/* The field starts the row and the actions end it, so those two keep a fixed width and line
+   up down the list; the operator and the value read as one inline phrase between them, each
+   as wide as it needs to be. */
 .bt-query-builder__row {
-  display: grid;
-  grid-template-columns: 12rem 10rem minmax(0, 1fr) 4.5rem;
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--bt-sp-2) var(--bt-sp-4);
   align-items: center;
-  padding: var(--bt-sp-3) var(--bt-sp-4);
-  border-bottom: var(--bt-border);
+  padding: var(--bt-sp-4) var(--bt-sp-3);
 }
 
 .bt-query-builder__row--batch {
@@ -2007,11 +1994,16 @@ a.bt-avatar--outline:hover:not(:disabled) {
 }
 
 .bt-query-builder__row-kind {
+  flex: 0 0 12rem;
   min-width: 0;
 }
 
-/* The field button and the role select share the in-sentence style. The caret and the
-   appearance go; the text stays the row's statement. */
+.bt-query-builder__row-role,
+.bt-query-builder__row-op {
+  flex: 0 0 auto;
+}
+
+/* The in-sentence style: the caret and the appearance go, the text stays the row's statement. */
 .bt-query-builder__field {
   max-width: 100%;
   padding: 0;
@@ -2037,41 +2029,23 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-bottom-style: solid;
 }
 
-/* The role select reads as a muted aside with its own quiet caret — no dotted rule,
-   which under a select reads as a button. */
-.bt-query-builder__role {
-  max-width: 100%;
-  padding: 0 1.125rem 0 0;
-  color: var(--s-text-muted);
-  font-size: var(--bt-text-sm);
-  text-align: left;
-  background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23808080' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") right center/0.75rem no-repeat;
-  border: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-
-.bt-query-builder__role:hover,
-.bt-query-builder__role:focus-visible {
-  color: var(--bt-blue-900);
-}
-
+.bt-query-builder__row-role .form-select,
 .bt-query-builder__row-op .form-select {
-  width: auto;
-  max-width: 100%;
   color: var(--s-text-muted);
 }
 
 .bt-query-builder__row-value {
   display: flex;
+  flex: 1 1 12rem;
   flex-wrap: wrap;
   gap: var(--bt-sp-2);
   align-items: center;
   min-width: 0;
 }
 
-.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year) {
+/* A width, for the controls that sit along the cell. The batch cell stacks instead, so there the
+   basis would land on the height and freeze the textarea at 12rem — it sizes itself. */
+.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-textarea-auto) {
   flex: 1 1 12rem;
   min-width: 8rem;
 }
@@ -2086,22 +2060,18 @@ a.bt-avatar--outline:hover:not(:disabled) {
   min-width: 5.5rem;
 }
 
-/* Keep the cap: Chromium reports field-sizing support and stops growing part-way
-   through a long list. */
+/* The growing and the cap ride on .bt-textarea-auto; the batch box only has to fill its column. */
 .bt-query-builder__batch {
   width: 100%;
-  min-height: 4.75rem;
-  max-height: 14rem;
-  overflow-y: auto;
-  resize: vertical;
-  field-sizing: content;
 }
 
 .bt-query-builder__row-actions {
   display: flex;
+  flex: 0 0 4.5rem;
   gap: var(--bt-sp-1);
   align-items: center;
   justify-content: flex-end;
+  margin-left: auto;
 }
 
 .bt-query-builder__sep {
@@ -2138,13 +2108,11 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__group {
   margin: var(--bt-sp-3) var(--bt-sp-4);
   background-color: var(--bt-bg-alt);
-  border: var(--bt-border);
 }
 
 /* Undoes Reboot's legend float and heading-scale font size */
 .bt-query-builder__group-label {
-  float: none;
-  padding: var(--bt-sp-3) var(--bt-sp-4) 0;
+  padding: var(--bt-sp-3) var(--bt-sp-4);
   font-size: inherit;
 }
 
@@ -2170,22 +2138,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   padding: var(--bt-sp-6) var(--bt-sp-4) var(--bt-sp-8);
 }
 
-.bt-query-builder__blank-columns {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--bt-sp-6);
-}
-
 /* ── Starting cards ─────────────────────────────────────────────────────────── */
-.bt-query-builder__starts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--bt-sp-4);
-  margin-top: var(--bt-sp-5);
-  padding-top: var(--bt-sp-4);
-  border-top: var(--bt-border);
-}
-
 /* Rides on .card; keeps the tighter --bt-radius, since .card is overridden to --bt-radius-xl. */
 .bt-query-builder__start {
   gap: var(--bt-sp-2);
@@ -2200,7 +2153,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__start:hover,
 .bt-query-builder__start:focus-visible {
   border-color: var(--bt-blue-200);
-  box-shadow: 0 1px 6px rgba(26, 24, 20, 0.08);
+  box-shadow: var(--bt-shadow-sm);
 }
 
 .bt-query-builder__start-shape {
@@ -2218,58 +2171,20 @@ a.bt-avatar--outline:hover:not(:disabled) {
   flex-wrap: wrap;
   gap: var(--bt-sp-4);
   align-items: center;
-  justify-content: space-between;
   margin: var(--bt-sp-6) 0 var(--bt-sp-4);
-  padding-top: var(--bt-sp-4);
-  border-top: var(--bt-border);
 }
 
-.bt-query-builder__choice-heading {
-  margin-bottom: var(--bt-sp-2);
-  color: var(--s-text-muted);
-  font-size: var(--bt-text-xs);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+/* The blank state lays the same rows out in columns, outside a dropdown-menu: no hover band and
+   no padding reach them there, so they read as a list of links. They add a condition rather
+   than navigate, so the underline waits until one is reached. */
+.bt-query-builder__blank .dropdown-item {
+  padding-block: var(--bt-sp-1);
 }
 
-/* Rides on .dropdown-item; the icon column is what aligns the labels (.if has no fixed width). */
-.bt-query-builder__choice {
-  display: grid;
-  grid-template-columns: 1.375rem minmax(0, 1fr);
-  gap: var(--bt-sp-2);
-  min-height: 2rem;
-}
-
-.bt-query-builder__choice[hidden] {
-  display: none;
-}
-
-/* These add a condition rather than navigate, so they carry no underline until reached. */
-.bt-query-builder__blank-columns .btn-link,
-.bt-panel__body--grid .btn-link {
-  color: var(--bt-text);
-  text-decoration: none;
-}
-
-.bt-query-builder__blank-columns .btn-link:hover,
-.bt-query-builder__blank-columns .btn-link:focus-visible,
-.bt-panel__body--grid .btn-link:hover,
-.bt-panel__body--grid .btn-link:focus-visible {
+.bt-query-builder__blank .dropdown-item:hover,
+.bt-query-builder__blank .dropdown-item:focus-visible {
   color: var(--bt-blue-900);
   text-decoration: underline;
-}
-
-.bt-query-builder__add {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-2);
-  align-items: center;
-  padding: var(--bt-sp-3) var(--bt-sp-4);
-}
-
-.bt-query-builder__add .dropdown {
-  position: static;
 }
 
 /* ── Exit bar ───────────────────────────────────────────────────────────────── */
@@ -2280,7 +2195,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   padding: var(--bt-sp-3) var(--bt-sp-4);
   background-color: var(--bt-white);
   border: var(--bt-border);
-  box-shadow: 0 -2px 8px rgba(26, 24, 20, 0.06);
+  box-shadow: var(--bt-shadow);
 }
 
 .modal-footer .bt-query-builder__exit {
@@ -2293,24 +2208,20 @@ a.bt-avatar--outline:hover:not(:disabled) {
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 991.98px) {
   .bt-query-builder__row {
-    grid-template-columns: minmax(0, 1fr) 4.5rem;
     align-items: start;
   }
-  .bt-query-builder__row-actions {
-    grid-row: 1;
-    grid-column: 2;
+  /* The field and its actions share the first line; the phrase below them gets the full width */
+  .bt-query-builder__row-kind {
+    flex: 1 1 auto;
   }
   .bt-query-builder__row-op,
   .bt-query-builder__row-value {
-    grid-column: 1/-1;
+    flex-basis: 100%;
+    order: 1;
   }
   .bt-query-builder__sep {
     background-color: var(--bt-bg-alt);
     border-block: var(--bt-border);
-  }
-  .bt-query-builder__blank-columns,
-  .bt-query-builder__starts {
-    grid-template-columns: 1fr;
   }
 }
 /* UNDER REVIEW DO NOT TAKE AS TRUTH */
@@ -4040,6 +3951,19 @@ i[class^=if-]:before, i[class*=" if-"]:before {
    text truncation. Named in Bootstrap's utility style, not bt-*. */
 .min-w-0 {
   min-width: 0;
+}
+
+/* ── Forms ───────────────────────────────────────────────────────────────────── */
+/* A textarea that is as tall as what is in it: one line when empty, growing per line typed or
+   pasted, shrinking again when lines go. field-sizing does all of it — the rows attribute
+   becomes the fallback height for a browser without it, where query-builder.js sets the height
+   instead. The cap stays, because Chromium reports support and then stops growing part-way
+   through a long list; past it the box scrolls. Height only: a textarea that must fill its
+   column still carries its own width. */
+.bt-textarea-auto {
+  max-height: 14rem;
+  overflow-y: auto;
+  field-sizing: content;
 }
 
 /* ── Borders ─────────────────────────────────────────────────────────────────── */

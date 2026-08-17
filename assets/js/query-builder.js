@@ -44,11 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const isSeparator = el => Boolean(el) && el.classList &&
     el.classList.contains('bt-query-builder__sep');
 
-  function separator(word) {
+  // Only an OR group carries a separator: the top level is AND-joined, which the heading over
+  // the rows states once.
+  function separator() {
     const p = document.createElement('p');
     p.className = 'bt-query-builder__sep';
     p.setAttribute('data-qb-sep', '');
-    p.textContent = word;
+    p.textContent = 'or';
     return p;
   }
 
@@ -148,6 +150,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function emptyCopy(row) {
     const copy = row.cloneNode(true);
+    // The copy starts with its panels unopened — a filled slot cloned along would repeat every
+    // id inside it. Each control fills its own slot on first open anyway.
+    copy.querySelectorAll('[data-qb-chooser-slot], [data-qb-person-slot]')
+      .forEach(slot => slot.replaceChildren());
     seq += 1;
     copy.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
       const label = copy.querySelector('label[for="' + el.id + '"]');
@@ -173,27 +179,22 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function unwrap(group) {
-    const left = alts(group);
-    left.forEach((row, i) => {
-      group.before(row);
-      if (i < left.length - 1) group.before(separator('and'));
-    });
+    alts(group).forEach(row => group.before(row));
     group.remove();
   }
 
   // ── Keeping the whole thing consistent ──────────────────────────────────────
 
   function sync() {
-    // All of them, not only [data-qb-sep]: a removed row must not orphan its written-out "and"
+    // A removed alternative must not orphan its "or": they all go, the loop puts back the
+    // ones a group still needs.
     list.querySelectorAll('.bt-query-builder__sep').forEach(el => el.remove());
 
-    items().forEach((item, i) => {
-      if (i && !isSeparator(item.previousElementSibling)) item.before(separator('and'));
-
+    items().forEach(item => {
       if (item.hasAttribute('data-qb-group')) {
         alts(item).forEach((row, j) => {
           row.classList.add('bt-query-builder__row--alt');
-          if (j && !isSeparator(row.previousElementSibling)) row.before(separator('or'));
+          if (j && !isSeparator(row.previousElementSibling)) row.before(separator());
           // With remove promoted out of the menu, "Add an 'or'" is all it holds — and a row
           // already inside a group has no use for it, so the whole menu hides.
           const or = row.querySelector('[data-qb-or]');
@@ -211,9 +212,20 @@ document.addEventListener('DOMContentLoaded', function () {
     restoreBlank();
   }
 
-  // Bootstrap positions the panel against the control that opened it, so the chooser lives in
-  // a template and is cloned into that control's own slot the first time it opens.
+  // Bootstrap positions the panel against the control that opened it, so a panel shared by many
+  // controls lives in a template and is cloned into that control's own slot the first time it
+  // opens: the field chooser, and the person picker the works filter bar opens too.
   document.addEventListener('show.bs.dropdown', event => {
+    const people = event.target.parentElement?.querySelector('[data-qb-person-slot]');
+    if (people) {
+      if (!people.children.length) {
+        const picker = document.getElementById('qb-person-picker').content.cloneNode(true);
+        identify(picker);
+        people.append(picker);
+      }
+      return;
+    }
+
     const slot = event.target.parentElement?.querySelector('[data-qb-chooser-slot]');
     if (!slot) return;
     if (!slot.children.length) {
@@ -233,7 +245,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = event.target.closest('button');
     if (!button || !list.contains(button)) return;
 
-    if (button.hasAttribute('data-qb-or')) {
+    if (button.hasAttribute('data-qb-person-add')) {
+      addPeople(button.closest('[data-qb-row]'), button.closest('[data-qb-person-slot]'));
+      closeDropdown(button);
+    } else if (button.hasAttribute('data-qb-person-cancel')) {
+      closeDropdown(button);
+    } else if (button.closest('[data-qb-token]')) {
+      button.closest('[data-qb-token]').remove();
+    } else if (button.hasAttribute('data-qb-or')) {
       toGroup(button.closest('[data-qb-row]'));
     } else if (button.hasAttribute('data-qb-remove-group')) {
       unwrap(button.closest('[data-qb-group]'));
@@ -264,10 +283,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const choice = event.target.closest('[data-qb-choice]');
     if (!choice) return;
     addRow(choice);
-    const toggle = choice.closest('.dropdown')?.querySelector('[data-bs-toggle="dropdown"]');
-    if (toggle && window.bootstrap) bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+    closeDropdown(choice);
     if (pending.mode !== 'append') pending = { mode: 'append' };
   });
+
+  function closeDropdown(inside) {
+    const toggle = inside.closest('.dropdown')?.querySelector('[data-bs-toggle="dropdown"]');
+    if (toggle && window.bootstrap) bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+  }
 
   function wireSearch(scope) {
     const search = scope.querySelector('[data-qb-choice-search]');
@@ -285,6 +308,39 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   document.querySelectorAll('.bt-query-builder__blank').forEach(wireSearch);
+
+  // ── The person picker ───────────────────────────────────────────────────────
+
+  // The panel is the input, the tokens in the row are the value: what is ticked joins the row
+  // and the boxes clear, so the two never disagree. A name already in the row is not repeated.
+  function addPeople(row, panel) {
+    const cell = row.querySelector('.bt-query-builder__row-value');
+    const present = Array.from(row.querySelectorAll('[data-qb-token]'))
+      .map(el => el.textContent.trim());
+    panel.querySelectorAll('input[type="checkbox"]:checked').forEach(box => {
+      if (!present.includes(box.value)) cell.insertBefore(token(box.value), panel.parentElement);
+      box.checked = false;
+    });
+  }
+
+  function token(name) {
+    const node = document.getElementById('qb-person-token')
+      .content.firstElementChild.cloneNode(true);
+    node.querySelector('[data-qb-token-name]').textContent = name;
+    node.querySelector('button').setAttribute('aria-label', 'Remove ' + name);
+    return node;
+  }
+
+  // Search-within, as the same panel does in the works filter bar
+  list.addEventListener('input', event => {
+    const search = event.target.closest('[data-qb-person-search]');
+    if (!search) return;
+    const needle = search.value.trim().toLowerCase();
+    search.closest('[data-qb-person-slot]').querySelectorAll('.form-check').forEach(option => {
+      option.hidden = Boolean(needle) &&
+        !option.querySelector('label').textContent.toLowerCase().includes(needle);
+    });
+  });
 
   // ── The approximate count ───────────────────────────────────────────────────
 
@@ -320,7 +376,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Pasted identifier lists ─────────────────────────────────────────────────
 
-  // field-sizing does the growing where it exists; this is the fallback everywhere else
+  // field-sizing does the growing and the shrinking where it exists (.bt-textarea-auto); this is
+  // the fallback everywhere else
   const autogrow = CSS.supports('field-sizing', 'content') ? null : box => {
     box.style.height = 'auto';
     box.style.height = box.scrollHeight + 'px';
@@ -328,10 +385,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (autogrow) {
     list.addEventListener('input', event => {
-      const box = event.target.closest('.bt-query-builder__batch');
+      const box = event.target.closest('.bt-textarea-auto');
       if (box) autogrow(box);
     });
-    list.querySelectorAll('.bt-query-builder__batch').forEach(autogrow);
+    list.querySelectorAll('.bt-textarea-auto').forEach(autogrow);
   }
 
   sync();

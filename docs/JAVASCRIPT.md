@@ -253,7 +253,11 @@ Remove the `-stub.js` files when wiring real endpoints.
 cloned from `#qb-chooser` into the slot beside whichever control opened it, re-identified
 (`identify()` re-points `label[for]` and `aria-labelledby`), and its search filters the field
 choices. A chooser pick clones the row template the choice names and writes the label in.
-Rebuilds the `and` / `or` separators after every change, hides a row's ⋯ menu while it sits
+The person picker rides on the same slot mechanism, cloned from `#qb-person-picker` — the
+searchable checklist the works filter bar opens for its person filter. Add clones
+`#qb-person-token` per ticked name the row does not already carry, and clears the boxes; a
+token's × removes it. Rebuilds the `or` separators inside groups after every change (the top
+level is AND-joined, which the heading states, so it carries none), hides a row's ⋯ menu while it sits
 inside a group (with remove promoted out, "Add an 'or'" is all it holds), and rewrites the
 ⋯ and remove buttons' accessible names from the row's current field, operator and value
 (`nameRow()`), so the remove control always names the condition it removes. Emptying the
@@ -263,7 +267,9 @@ list — Clear all, or removing the last condition — restores the blank state,
 `[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`, `[data-qb-remove-group]`,
 `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`, `[data-qb-count]`,
 `[data-qb-chooser-slot]`, `[data-qb-choice]` (+ `data-qb-label`/`data-qb-template`),
-`[data-qb-choice-search]`, `[data-qb-choice-group]`.
+`[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-person-slot]`,
+`[data-qb-person-search]`, `[data-qb-person-add]`, `[data-qb-person-cancel]`,
+`[data-qb-token-name]`.
 
 **Loaded by:** `public-works.html`, which renders the builder as a dialog, and
 `public-search-advanced.html`, which renders it as a page. Both include the same two

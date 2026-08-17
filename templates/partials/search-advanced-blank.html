@@ -5,35 +5,40 @@
   <template id="qb-blank">, which the JS clones back in when the last condition goes.
 -->
 <div class="bt-query-builder__blank">
-  <p class="fw-semibold mb-3">Start with what every result should have in common</p>
-  <div class="bt-query-builder__starts">
-    <button type="button" class="card text-start bt-query-builder__start" data-qb-choice
-      data-qb-label="Person" data-qb-template="qb-row-contributor">
-      <span class="d-flex align-items-center gap-2 fw-semibold">
-        <i class="if if-user-search-line" aria-hidden="true"></i>A person
-      </span>
-      <span class="text-muted small">Everything one researcher contributed to, in any role.</span>
-      <span class="bt-query-builder__start-shape font-monospace">Person &middot; is &middot;
-        <span class="badge text-bg-primary-light">a person</span></span>
-    </button>
-    <button type="button" class="card text-start bt-query-builder__start" data-qb-choice
-      data-qb-label="Affiliation" data-qb-template="qb-row-person">
-      <span class="d-flex align-items-center gap-2 fw-semibold">
-        <i class="if if-building" aria-hidden="true"></i>A faculty or group
-      </span>
-      <span class="text-muted small">Output credited to an organization. Add a year to report on it.</span>
-      <span class="bt-query-builder__start-shape font-monospace">Affiliation &middot; is &middot;
-        <span class="badge text-bg-primary-light">a faculty</span></span>
-    </button>
-    <button type="button" class="card text-start bt-query-builder__start" data-qb-choice
-      data-qb-label="Identifier" data-qb-template="qb-row-batch">
-      <span class="d-flex align-items-center gap-2 fw-semibold">
-        <i class="if if-list-unordered" aria-hidden="true"></i>A list you already have
-      </span>
-      <span class="text-muted small">Paste DOIs, ISSNs or Biblio IDs. The scheme is read per value.</span>
-      <span class="bt-query-builder__start-shape font-monospace">Identifier &middot; is any of &middot;
-        <span class="badge text-bg-primary-light">a pasted list</span></span>
-    </button>
+  <div class="row row-cols-1 row-cols-lg-3 g-3">
+    <div class="col">
+      <button type="button" class="card text-start w-100 h-100 bt-query-builder__start" data-qb-choice
+        data-qb-label="Person" data-qb-template="qb-row-contributor">
+        <span class="d-flex align-items-center gap-2 fw-semibold">
+          <i class="if if-user-search-line" aria-hidden="true"></i>A person
+        </span>
+        <span class="text-muted small">Everything one researcher contributed to, in any role.</span>
+        <span class="bt-query-builder__start-shape font-monospace">Person &middot; is &middot;
+          <span class="badge text-bg-primary-light">a person</span></span>
+      </button>
+    </div>
+    <div class="col">
+      <button type="button" class="card text-start w-100 h-100 bt-query-builder__start" data-qb-choice
+        data-qb-label="Affiliation" data-qb-template="qb-row-person">
+        <span class="d-flex align-items-center gap-2 fw-semibold">
+          <i class="if if-building" aria-hidden="true"></i>A faculty or group
+        </span>
+        <span class="text-muted small">Output credited to an organization. Add a year to report on it.</span>
+        <span class="bt-query-builder__start-shape font-monospace">Affiliation &middot; is &middot;
+          <span class="badge text-bg-primary-light">a faculty</span></span>
+      </button>
+    </div>
+    <div class="col">
+      <button type="button" class="card text-start w-100 h-100 bt-query-builder__start" data-qb-choice
+        data-qb-label="Identifier" data-qb-template="qb-row-batch">
+        <span class="d-flex align-items-center gap-2 fw-semibold">
+          <i class="if if-list-unordered" aria-hidden="true"></i>A list you already have
+        </span>
+        <span class="text-muted small">Paste DOIs, ISSNs or Biblio IDs. The scheme is read per value.</span>
+        <span class="bt-query-builder__start-shape font-monospace">Identifier &middot; is any of &middot;
+          <span class="badge text-bg-primary-light">a pasted list</span></span>
+      </button>
+    </div>
   </div>
 
   <div class="bt-query-builder__pick">
@@ -45,7 +50,7 @@
         placeholder="Search fields&hellip;" autocomplete="off" data-qb-choice-search>
     </div>
   </div>
-  <div class="bt-query-builder__blank-columns">
+  <div class="row row-cols-1 row-cols-lg-4 g-4">
     <!-- @include: templates/partials/search-field-list.html -->
   </div>
 </div>
