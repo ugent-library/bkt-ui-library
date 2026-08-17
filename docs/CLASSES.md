@@ -125,9 +125,10 @@ bt-panel__body--year
 bt-panel__title
 bt-panel__year-input
 
+bt-query-builder__add
+bt-query-builder__alts
 bt-query-builder__batch
-bt-query-builder__blank
-bt-query-builder__exit
+bt-query-builder__conditions
 bt-query-builder__field
 bt-query-builder__group
 bt-query-builder__group-foot
@@ -135,19 +136,16 @@ bt-query-builder__group-label
 bt-query-builder__people-field
 bt-query-builder__people-input
 bt-query-builder__people-search
-bt-query-builder__pick
+bt-query-builder__phrase
 bt-query-builder__row
 bt-query-builder__row--alt
 bt-query-builder__row--batch
 bt-query-builder__row--last-changed
 bt-query-builder__row-actions
 bt-query-builder__row-kind
-bt-query-builder__row-op
-bt-query-builder__row-role
 bt-query-builder__row-value
 bt-query-builder__sep
-bt-query-builder__start
-bt-query-builder__start-shape
+bt-query-builder__token
 bt-query-builder__value-select
 bt-query-builder__year
 
@@ -609,6 +607,7 @@ display-3
 display-4
 display-5
 display-6
+dropdown
 dropdown-header
 dropdown-item
 dropdown-menu
@@ -626,7 +625,6 @@ is-invalid
 is-valid
 lead
 list-group
-modal-footer
 nav
 nav-link
 nav-tabs

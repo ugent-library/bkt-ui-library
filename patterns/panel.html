@@ -127,7 +127,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">In a dropdown</h2>
-    <p class="mb-4">On result cards the panel is the menu of a Bootstrap dropdown: <code>bt-panel bt-panel--wide</code> on the <code>.dropdown-menu</code> with <code>p-0</code>, and <code>data-bs-auto-close="outside"</code> on the toggle so ticking a box doesn't close it. HTMX drives the three jobs — <code>hx-get</code> re-renders the checklist, <code>hx-put</code> / <code>hx-delete</code> write membership with <code>hx-swap="none"</code> so the typed query survives, <code>hx-post</code> creates. Mirrors raven's <code>AddToListComponent</code>.</p>
+    <p class="mb-4">On result cards the panel is the menu of a Bootstrap dropdown: <code>bt-panel bt-panel--wide</code> on the <code>.dropdown-menu</code> &mdash; which zeroes the menu's own padding, since the bodies carry it &mdash; and <code>data-bs-auto-close="outside"</code> on the toggle so ticking a box doesn't close it. HTMX drives the three jobs — <code>hx-get</code> re-renders the checklist, <code>hx-put</code> / <code>hx-delete</code> write membership with <code>hx-swap="none"</code> so the typed query survives, <code>hx-post</code> creates. Mirrors raven's <code>AddToListComponent</code>.</p>
     <p class="mb-4">The search field triggers on <code>input</code>, never <code>keyup</code>: the field's own ✕ fires <code>input</code> and <code>search</code> only, so on <code>keyup</code> the list stays filtered after a clear.</p>
 
     <div class="ds-demo">
@@ -141,7 +141,7 @@
             hx-target="#atl-kit-panel" hx-swap="innerHTML" hx-indicator="#atl-kit-loading">
             <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
           </button>
-          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-kit-panel" role="dialog" aria-label="Add to list">
+          <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-kit-panel" role="dialog" aria-label="Add to list">
             <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-kit-loading" aria-live="polite">Loading your lists&hellip;</p>
           </div>
         </div>

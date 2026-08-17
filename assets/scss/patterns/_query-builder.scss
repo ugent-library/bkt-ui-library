@@ -1,29 +1,78 @@
 /* -- bt-query-builder -- */
 /*
-  Condition editor: a list of rows, closed by a bar carrying the count. A row is one flex line —
-  a fixed field lane, the operator and the value flowing beside it, the actions pinned right.
-  Bootstrap checked and rejected for what survives here: .list-group-item-action for the field
-  choices (it brings borders and its own list contract — a choice rides on .dropdown-item
-  instead); .card for __group (a fieldset inside the editor card would nest card chrome — the
-  group needs only the inset band). The editor itself, the start cards and the person tokens do
-  ride on Bootstrap (card, card-header, badge), and the blank state's two column layouts on .row.
+  Condition editor: the list of rows and nothing around it.
+  Bootstrap checked and rejected: .list-group-item-action for a field choice, which brings borders
+  and its own list contract, so a choice rides on .dropdown-item. .card for __group, which would
+  nest card chrome inside the host's box, so the group draws only its inset band.
 */
 
-/* ── Rows ─────────────────────────────────────────────────────────────────── */
+/* ── Lanes ────────────────────────────────────────────────────────────────── */
 
-/* The field starts the row and the actions end it, so those two keep a fixed width and line
-   up down the list; the operator and the value read as one inline phrase between them, each
-   as wide as it needs to be. */
-.bt-query-builder__row {
+.bt-query-builder__conditions,
+.bt-query-builder__alts {
+  display: grid;
+  grid-template-columns: fit-content(12rem) minmax(0, 1fr) max-content;
+  /* Keep both here: on a row they offset that subgrid's tracks and the lanes stop lining up. */
+  column-gap: var(--bt-sp-4);
+  padding-inline: var(--bt-sp-3);
+  container-type: inline-size;
+  container-name: qb-conditions;
+}
+
+.bt-query-builder__conditions > *,
+.bt-query-builder__alts > * {
+  grid-column: 1 / -1;
+}
+
+.bt-query-builder__phrase {
   display: flex;
   flex-wrap: wrap;
   gap: var(--bt-sp-2) var(--bt-sp-4);
   align-items: center;
-  padding: var(--bt-sp-4) var(--bt-sp-3);
+  min-width: 0;
+}
+
+/* Allow shrink and a tight line splits the value's contents; it moves down whole instead. */
+.bt-query-builder__phrase > .bt-query-builder__row-value {
+  flex: 1 0 auto;
+  max-width: 100%;
+}
+
+.bt-query-builder__phrase .form-select {
+  width: auto;
+  max-width: 100%;
+  color: var(--s-text-muted);
+}
+
+/* The editor's width, not the viewport's: the same partial is a page column and a wider dialog. */
+@container qb-conditions (max-width: 53rem) {
+  .bt-query-builder__row > .bt-query-builder__row-actions {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .bt-query-builder__row > .bt-query-builder__phrase {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+/* ── Rows ─────────────────────────────────────────────────────────────────── */
+
+.bt-query-builder__row {
+  display: grid;
+  grid-template-columns: subgrid;
+  row-gap: var(--bt-sp-2);
+  align-items: center;
+  padding-block: var(--bt-sp-4);
 }
 
 .bt-query-builder__row--batch {
-  align-items: start;
+  align-items: start !important;
+}
+
+.bt-query-builder__row--batch .bt-query-builder__phrase {
+  align-items: start !important;
 }
 
 .bt-query-builder__row--batch .bt-query-builder__row-value {
@@ -36,22 +85,11 @@
   box-shadow: inset 3px 0 0 var(--bt-red-700);
 }
 
-.bt-query-builder__row:hover,
-.bt-query-builder__row:focus-within {
-  background-color: var(--bt-gray-25);
-}
-
 .bt-query-builder__row-kind {
-  flex: 0 0 12rem;
   min-width: 0;
+  margin-right: var(--bt-sp-3);
 }
 
-.bt-query-builder__row-role,
-.bt-query-builder__row-op {
-  flex: 0 0 auto;
-}
-
-/* The in-sentence style: the caret and the appearance go, the text stays the row's statement. */
 .bt-query-builder__field {
   max-width: 100%;
   padding: 0;
@@ -75,22 +113,15 @@
   border-bottom-style: solid;
 }
 
-.bt-query-builder__row-role .form-select,
-.bt-query-builder__row-op .form-select {
-  color: var(--s-text-muted);
-}
-
 .bt-query-builder__row-value {
   display: flex;
-  flex: 1 1 12rem;
   flex-wrap: wrap;
   gap: var(--bt-sp-2);
   align-items: center;
   min-width: 0;
 }
 
-/* A width, for the controls that sit along the cell. The batch cell stacks instead, so there the
-   basis would land on the height and freeze the textarea at 12rem — it sizes itself. */
+/* The batch textarea sizes itself; a basis would land on its height. */
 .bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-textarea-auto) {
   flex: 1 1 12rem;
   min-width: 8rem;
@@ -106,18 +137,15 @@
   min-width: 5.5rem;
 }
 
-/* The growing and the cap ride on .bt-textarea-auto; the batch box only has to fill its column. */
 .bt-query-builder__batch {
   width: 100%;
 }
 
 .bt-query-builder__row-actions {
   display: flex;
-  flex: 0 0 4.5rem;
   gap: var(--bt-sp-1);
   align-items: center;
   justify-content: flex-end;
-  margin-left: auto;
 }
 
 .bt-query-builder__sep {
@@ -129,6 +157,12 @@
 }
 
 /* ── People value ──────────────────────────────────────────────────────────── */
+
+.bt-query-builder__token {
+  display: inline-flex;
+  gap: var(--bt-sp-1);
+  align-items: center;
+}
 
 .bt-query-builder__people-field {
   flex: 1 1 16rem;
@@ -154,11 +188,11 @@
 /* ── OR group ───────────────────────────────────────────────────────────────── */
 
 .bt-query-builder__group {
-  margin: var(--bt-sp-3) var(--bt-sp-4);
+  margin: var(--bt-sp-3) 0;
   background-color: var(--bt-bg-alt);
 }
 
-/* Undoes Reboot's legend float and heading-scale font size */
+/* Reboot sizes a legend on the heading scale. */
 .bt-query-builder__group-label {
   padding: var(--bt-sp-3) var(--bt-sp-4);
   font-size: inherit;
@@ -181,99 +215,21 @@
   border-top: var(--bt-border);
 }
 
-/* ── Adding a condition ────────────────────────────────────────────────────── */
-
-.bt-query-builder__blank {
-  padding: var(--bt-sp-6) var(--bt-sp-4) var(--bt-sp-8);
-}
-
-/* ── Starting cards ─────────────────────────────────────────────────────────── */
-
-/* Rides on .card; keeps the tighter --bt-radius, since .card is overridden to --bt-radius-xl. */
-.bt-query-builder__start {
-  gap: var(--bt-sp-2);
-  padding: var(--bt-sp-4);
-  border-radius: var(--bt-radius);
-}
-
-.bt-query-builder__start[hidden] {
-  display: none;
-}
-
-.bt-query-builder__start:hover,
-.bt-query-builder__start:focus-visible {
-  border-color: var(--bt-blue-200);
-  box-shadow: var(--bt-shadow-sm);
-}
-
-.bt-query-builder__start-shape {
-  margin-top: auto;
-  padding: var(--bt-sp-1) var(--bt-sp-2);
-  color: var(--s-text-muted);
-  font-size: var(--bt-text-xs);
-  background-color: var(--bt-bg-alt);
-  border-radius: var(--bt-radius);
-}
-
-/* The search sits on the field list's own divider, so its scope is the list under it. */
-.bt-query-builder__pick {
+.bt-query-builder__add {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--bt-sp-4);
+  gap: var(--bt-sp-2);
   align-items: center;
-  margin: var(--bt-sp-6) 0 var(--bt-sp-4);
-}
-
-/* The blank state lays the same rows out in columns, outside a dropdown-menu: no hover band and
-   no padding reach them there, so they read as a list of links. They add a condition rather
-   than navigate, so the underline waits until one is reached. */
-.bt-query-builder__blank .dropdown-item {
-  padding-block: var(--bt-sp-1);
-}
-
-.bt-query-builder__blank .dropdown-item:hover,
-.bt-query-builder__blank .dropdown-item:focus-visible {
-  color: var(--bt-blue-900);
-  text-decoration: underline;
-}
-
-/* ── Exit bar ───────────────────────────────────────────────────────────────── */
-
-/* Static: the bar is last in its containing block, so a bottom-sticky rule never pins. */
-/* Compound with .bt-toolbar: its flush padding loads later and would win on order alone. */
-.bt-toolbar.bt-query-builder__exit {
-  margin-top: -1px;
   padding: var(--bt-sp-3) var(--bt-sp-4);
-  background-color: var(--bt-white);
-  border: var(--bt-border);
-  box-shadow: var(--bt-shadow);
 }
 
-.modal-footer .bt-query-builder__exit {
-  margin-top: 0;
-  padding: 0;
-  border: 0;
-  box-shadow: none;
+.bt-query-builder__add .dropdown {
+  position: static;
 }
 
 /* ── Responsive ───────────────────────────────────────────────────────────── */
 
 @media (max-width: 991.98px) {
-  .bt-query-builder__row {
-    align-items: start;
-  }
-
-  /* The field and its actions share the first line; the phrase below them gets the full width */
-  .bt-query-builder__row-kind {
-    flex: 1 1 auto;
-  }
-
-  .bt-query-builder__row-op,
-  .bt-query-builder__row-value {
-    flex-basis: 100%;
-    order: 1;
-  }
-
   .bt-query-builder__sep {
     background-color: var(--bt-bg-alt);
     border-block: var(--bt-border);

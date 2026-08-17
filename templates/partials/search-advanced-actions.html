@@ -2,16 +2,16 @@
   The Advanced search exit bar: approximate count + the one exit. Used with
   search-advanced-conditions.html; the submit reaches that form by form="qb-form".
 
-  The count and the exit never leave the screen while the condition list is longer than the
-  viewport: bt-query-builder__exit is sticky to the viewport bottom on the page, and sits in
-  .modal-footer in the dialog rendering. The count is an approximation — "About …" — the
-  exact set is the results page's job. This is the only aria-live region in the builder.
+  The bar carries no chrome. The host decides what it sits on and what borders it: the page puts
+  it under the builder's box, the dialog puts it in .modal-footer.
+  The count is an approximation. The exact set is the results page's job. This is the only
+  aria-live region in the builder.
 
   Two of the four strings are too long for a 390px screen, so they carry a short form for
   narrow widths. Both spans live in the one aria-live region; display:none keeps the hidden
   one out of the announcement.
 -->
-<div class="bt-toolbar bt-query-builder__exit">
+<div class="bt-toolbar">
   <div class="bt-toolbar__left">
     <!-- @state: built advanced-group results best-bet no-results query-empty advanced-condition -->
     <p class="mb-0" aria-live="polite" data-qb-count>About 1,280 research outputs match</p>

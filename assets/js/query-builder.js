@@ -1,5 +1,5 @@
 // Advanced search — rows, OR groups, the chooser, and the approximate count.
-// See docs/JAVASCRIPT.md. Row grammar and states: docs/handover/CHANGES.md.
+// See docs/JAVASCRIPT.md. Row grammar and states: patterns/query-builder.html.
 
 // The dialog is a URL state, so reload keeps it open, Back closes it instead of leaving the
 // page, and a pasted link resolves to the page rendering. Production pushes the URL
@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const items = () =>
     Array.from(list.querySelectorAll(':scope > [data-qb-row], :scope > [data-qb-group]'));
   const alts = group => Array.from(group.querySelectorAll('[data-qb-alts] > [data-qb-row]'));
-  const isSeparator = el => Boolean(el) && el.classList &&
-    el.classList.contains('bt-query-builder__sep');
+  const isSeparator = el => Boolean(el) && el.nodeType === 1 &&
+    el.hasAttribute('data-qb-sep');
 
   // Only an OR group carries a separator: the top level is AND-joined, which the heading over
   // the rows states once.
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── Reading a row back ──────────────────────────────────────────────────────
 
   function valueOf(row) {
-    const cell = row.querySelector('.bt-query-builder__row-value');
+    const cell = row.querySelector('[data-qb-value]');
     if (!cell) return '';
     const tokens = Array.from(cell.querySelectorAll('[data-qb-token]'))
       .map(token => token.textContent.trim());
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function conditionName(row) {
     const field = row.querySelector('[data-qb-change-field]');
-    const op = row.querySelector('.bt-query-builder__row-op select');
+    const op = row.querySelector('[data-qb-op]');
     let value = valueOf(row);
     if (value.length > 60) value = value.slice(0, 57) + '…';
     return [
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // know which row a control removes. Rewritten on every sync, since the value changes.
   function nameRow(row) {
     const name = conditionName(row);
-    const more = row.querySelector('.bt-query-builder__row-actions [data-bs-toggle="dropdown"]');
+    const more = row.querySelector('[data-qb-actions] [data-bs-toggle="dropdown"]');
     if (more) more.setAttribute('aria-label', 'More actions for ' + name);
     const remove = row.querySelector('[data-qb-remove]');
     if (remove) remove.setAttribute('aria-label', 'Remove ' + name);
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
     else list.append(row);
     pending = { mode: 'append' };
 
-    const blank = list.querySelector('.bt-query-builder__blank');
+    const blank = list.querySelector('[data-qb-blank]');
     if (blank) blank.remove();
     sync();
     count();
@@ -121,11 +121,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // The last condition going returns the builder to the blank state, cloned from #qb-blank.
   function restoreBlank() {
-    if (items().length || list.querySelector('.bt-query-builder__blank')) return;
+    if (items().length || list.querySelector('[data-qb-blank]')) return;
     const template = document.getElementById('qb-blank');
-    if (!template) return;
+    if (!template || !template.content.firstElementChild) return;
     const blank = template.content.firstElementChild.cloneNode(true);
     identify(blank);
     list.append(blank);
@@ -188,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function sync() {
     // A removed alternative must not orphan its "or": they all go, the loop puts back the
     // ones a group still needs.
-    list.querySelectorAll('.bt-query-builder__sep').forEach(el => el.remove());
+    list.querySelectorAll('[data-qb-sep]').forEach(el => el.remove());
 
     items().forEach(item => {
       if (item.hasAttribute('data-qb-group')) {
@@ -307,14 +306,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  document.querySelectorAll('.bt-query-builder__blank').forEach(wireSearch);
+  document.querySelectorAll('[data-qb-blank]').forEach(wireSearch);
 
   // ── The person picker ───────────────────────────────────────────────────────
 
   // The panel is the input, the tokens in the row are the value: what is ticked joins the row
   // and the boxes clear, so the two never disagree. A name already in the row is not repeated.
   function addPeople(row, panel) {
-    const cell = row.querySelector('.bt-query-builder__row-value');
+    const cell = row.querySelector('[data-qb-value]');
     const present = Array.from(row.querySelectorAll('[data-qb-token]'))
       .map(el => el.textContent.trim());
     panel.querySelectorAll('input[type="checkbox"]:checked').forEach(box => {

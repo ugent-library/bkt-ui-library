@@ -26,7 +26,7 @@ One page, **Advanced search**, replacing both tiers. It always shows the builder
 
 **Definition of done for the first live release** — the smallest useful release, plus parity with what the old tiers already did:
 
-- condition rows for works, including the free-text row and "is not"
+- condition rows for works, including the free-text row and "is not" (TODO)
 - "is any of" with paste support
 - person conditions across roles, several AND-joined, kept distinct from a value list
 - year range
@@ -44,7 +44,7 @@ One page, **Advanced search**, replacing both tiers. It always shows the builder
 
 ## Risks and open design decisions
 
-1. **The URL grammar is a permalink contract, and it may block phase 1.** Raven's `QueryFilter` already expresses everything here; the public URL params do not — no OR-group, NOT or range serialization. Whatever grammar raven designs is authored once and can never change. It also has to answer for length: real batches run to hundreds of identifiers, past what a query string carries, so the contract needs a second form (saved search, a server-side list id, or a documented ceiling). **This is the one question in the whole track whose answer can be "impossible", so it gets asked as soon as the wireframe exists** — a wireframe shows raven what the URL must carry, and changing model is still free at that point. Waiting until implementation issues are written is the most expensive moment to find out.
+1. **The URL grammar is a permalink contract, and it may block phase 1.** Raven's `QueryFilter` already expresses everything here; the public URL params do not — no OR-group, NOT or range serialization. Whatever grammar raven designs is authored once and can never change. It also has to answer for length: real batches run to hundreds of identifiers, past what a query string carries, so the contract needs a second form (saved search, a server-side list id, or a documented ceiling). **This is the one question in the whole track whose answer can be "impossible", so it gets asked as soon as the prototype exists** — the prototype shows raven what the URL must carry, and changing model is still free at that point. Waiting until implementation issues are written is the most expensive moment to find out.
 2. **Legacy embed parameters must survive:** `;hide_info=1` and `;style=apa`. The second is a citation style, which is why the embed tab carries one.
 3. **Measurement continuity.** Raven's request logging must reproduce the legacy method taxonomy (form / link / direct / bot), or the baseline comparison silently breaks.
 4. **The legacy translator is a separate workstream**, with a ready-made requirements list: subset B of the golden query set. It does not gate the builder's design; it does gate launch.

@@ -260,24 +260,30 @@ token's × removes it. Rebuilds the `or` separators inside groups after every ch
 level is AND-joined, which the heading states, so it carries none), hides a row's ⋯ menu while it sits
 inside a group (with remove promoted out, "Add an 'or'" is all it holds), and rewrites the
 ⋯ and remove buttons' accessible names from the row's current field, operator and value
-(`nameRow()`), so the remove control always names the condition it removes. Emptying the
-list — Clear all, or removing the last condition — restores the blank state, cloned from
-`#qb-blank` and re-identified. Markup hooks:
+(`nameRow()`), so the remove control always names the condition it removes. Emptying the list,
+by Clear all or by removing the last condition, restores whatever `#qb-blank` holds and
+re-identifies it. That template may hold nothing, in which case Add a condition is the blank
+state. Markup hooks:
 `#qb-conditions`, `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-sep]`,
 `[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`, `[data-qb-remove-group]`,
 `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`, `[data-qb-count]`,
 `[data-qb-chooser-slot]`, `[data-qb-choice]` (+ `data-qb-label`/`data-qb-template`),
 `[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-person-slot]`,
 `[data-qb-person-search]`, `[data-qb-person-add]`, `[data-qb-person-cancel]`,
-`[data-qb-token-name]`.
+`[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`, `[data-qb-actions]`,
+`[data-qb-blank]`. Those four are the value cell, the operator select, the actions cell and the
+blank state's root: the file reads the row through them, never through the
+`bt-query-builder__row-*` classes, so a layout change can rename or drop a cell class without
+costing the row its accessible name. It writes two classes — `bt-query-builder__row--alt` and
+`bt-query-builder__sep` — because those are styling, which is the one direction that belongs in
+`classList`.
 
 **Loaded by:** `public-works.html`, which renders the builder as a dialog, and
 `public-search-advanced.html`, which renders it as a page. Both include the same two
-partials, `search-advanced-conditions.html` and `search-advanced-actions.html`; the
-conditions partial itself includes `search-advanced-blank.html` twice (the advanced-empty
-state and `#qb-blank`) and `search-field-list.html` twice via the blank and the chooser,
-so neither the blank state nor the field list can drift. It also opens the dialog when the URL carries
-`?advanced=1`, standing in for the server-side render.
+partials, `search-advanced-conditions.html` and `search-advanced-actions.html`, and each supplies
+its own heading, box and bar surface. The conditions partial holds the row templates, the chooser
+(which includes `search-field-list.html`) and `#qb-blank`. It also opens the dialog when the URL
+carries `?advanced=1`, standing in for the server-side render.
 Pattern page: `patterns/query-builder.html`.
 
 **Listens for:** click / input / change inside `#qb-conditions`, input in

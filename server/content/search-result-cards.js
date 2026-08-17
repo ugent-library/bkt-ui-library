@@ -23,7 +23,7 @@ function card({ id, badges, title, authors, line }) {
             hx-target="#atl-${id}-panel" hx-swap="innerHTML" hx-indicator="#atl-${id}-loading">
             <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
           </button>
-          <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-${id}-panel" role="dialog" aria-label="Add to list">
+          <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-${id}-panel" role="dialog" aria-label="Add to list">
             <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-${id}-loading" aria-live="polite">Loading your lists&hellip;</p>
           </div>
         </div>

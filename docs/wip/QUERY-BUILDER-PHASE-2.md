@@ -176,7 +176,7 @@ the field.
 artifacts of the legacy form. Translator-only (subset B); the builder has no field to offer.
 No other subset A case needs a sign-off exception.
 
-**Mapping questions the wireframe cannot settle** (they are raven-registry decisions, per the
+**Mapping questions the prototype cannot settle** (they are raven-registry decisions, per the
 design doc's field-selection section):
 
 1. **`author.affiliation` vs `affiliation`** (C1.73, 1 occurrence) — one field or two? The

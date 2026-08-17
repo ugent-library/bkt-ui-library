@@ -3,13 +3,11 @@
 <!-- @states: built, advanced-empty, advanced-prefilled, advanced-group, advanced-zero -->
 
 <!--
-  Advanced search as a page: what a plain request for ?advanced=1 returns, and the address
-  a copied link resolves to. The same two partials render as a dialog over public-works.html,
-  which is the low-entry route from a result list; the server tells the two apart by the
-  HX-Request header. On a phone this page is the full-bleed rendering.
+  Advanced search as a page: what a plain request for ?advanced=1 returns, and the address a copied
+  link resolves to. The same two partials render as a dialog over public-works.html, and the server
+  tells the two apart by the HX-Request header. On a phone this page is the full-bleed rendering.
 
-  Why both, and the container decision: docs/handover/CHANGES.md, then
-  patterns/query-builder.html.
+  Why there are two, and the container decision: patterns/query-builder.html.
 -->
 
 <!-- @include: templates/partials/public-header.html -->
@@ -36,11 +34,19 @@
         </div>
       </div>
 
-      <!-- @include: templates/partials/search-advanced-conditions.html -->
+      <div>
+        <h3 id="conditions-heading" class="h6">
+          Show research output where all of these are true:
+        </h3>
 
-      <!-- The bar the dialog puts in its modal footer. Here it closes the editor box, so it
-           stays a direct child of the container and carries the box's side borders. -->
-      <!-- @include: templates/partials/search-advanced-actions.html -->
+        <div class="bt-bg-white bt-border rounded-3">
+        <!-- @include: templates/partials/search-advanced-conditions.html -->
+        </div>
+
+        <div>
+          <!-- @include: templates/partials/search-advanced-actions.html -->
+        </div>
+      </div>
 
     </div>
   </main>
