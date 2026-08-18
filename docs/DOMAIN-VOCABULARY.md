@@ -150,7 +150,7 @@ pending requests rather than whole-record locks where possible.
 
 "Complete metadata" opens the record's edit form. The researcher fast lane — an edit
 view scoped to the missing fields — is a separate design, out of scope for the
-work-card issues and tracked in `notes/TOPLAN.md`, Backoffice.
+work-card issues and not yet designed.
 
 Missing metadata that affects card scanning can also appear where the value would
 normally sit, as a compact metadata item: `Missing access`, `Missing year`, `Missing
@@ -175,7 +175,7 @@ deletion: a retracted article stays public with a retraction notice (an editoria
 state). **Retraction will be built in raven; the timing is open** —
 the prototype designs ahead: a retracted work carries `badge text-bg-danger`
 "Retracted" on public and backoffice cards (the work stays public; the detail page
-carries the notice). See `notes/TOPLAN.md`, Backoffice.
+carries the notice).
 
 ### Person
 A real-world individual who contributed to research output. May be known only by name (external, unlinked) or linked to a canonical authority record.

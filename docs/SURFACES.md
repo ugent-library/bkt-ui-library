@@ -154,8 +154,8 @@ the strength of that one criterion: drop the WoS filter and the same query is pu
 is exactly what Wim Webb does in `docs/RESEARCH-PERSONAS.md`. Re-read 2026-08-10, when the
 test moved from motive to data.
 
-The public export (see `notes/PLAN-public-export.md`) stays: visitors export what
-public facets express — type, year, access.
+The public export stays: visitors export what public facets express — type, year,
+access. The export itself still needs to be designed.
 
 ## Declaring the surface
 

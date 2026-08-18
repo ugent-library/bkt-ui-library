@@ -84,8 +84,8 @@ Pagination   ul.pagination pagination-sm  (the bar around it: patterns/paginatio
 ```
 
 Canonical compositions with project conventions (pagination + result count,
-cite panel) get kit recipes — see `notes/PLAN-kit-gaps-from-templates.md` —
-but the components themselves stay undocumented Bootstrap.
+cite panel) get kit recipes, but the components themselves stay undocumented
+Bootstrap.
 
 **Modal ARIA** — the opener carries `tabindex="-1"`, `aria-labelledby`, and, on a
 confirmation, `aria-describedby` pointing at the consequence sentence (never at

@@ -131,7 +131,6 @@ The kit deploys on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**,
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [CI](docs/CI.md) — what CI runs, what it costs, the human's share
 - [Deployment](docs/DEPLOYMENT.md) — Vercel setup, the traps, access control
-- [Bootstrap gap audit](docs/analysis/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
 
 ---
 
