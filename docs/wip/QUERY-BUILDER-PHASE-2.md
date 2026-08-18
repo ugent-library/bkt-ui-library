@@ -165,16 +165,15 @@ curators, it belongs in the backoffice, not on public Advanced search.
 Run against subset A of [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) (the builder's contract;
 subset B is raven's translator work).
 
-**Buildable:** every C1 field × operator cell, every C2 paste batch, every C4 range, C5's stress
+**Buildable:** every C1 field × operator cell but C1.79, every C2 paste batch, every C4 range, C5's stress
 cases, and C8's embed parameters (citation style and info-block toggle are both on the Embed
-tab). C3 splits as §2 above: 3 signatures in the phase-2 state, the rest in phase 1. Journal
-metrics included — C1.79 `jcr.impact_factor > 5` is drawn, following the exposure rule (any
-field raven exposes publicly, the builder offers), so it is buildable as long as raven carries
-the field.
+tab). C3 splits as §2 above: 3 signatures in the phase-2 state, the rest in phase 1.
 
 **Not buildable, and why:** **C1.52, C1.60, C1.78, C1.82 (`field`, `for`, `of`)** — parse
 artifacts of the legacy form. Translator-only (subset B); the builder has no field to offer.
-No other subset A case needs a sign-off exception.
+**C1.79 `jcr.impact_factor > 5`** — the journal impact factor is a backoffice field
+(2026-08-18), so the public page drops it and the backoffice builder carries it. No other
+subset A case needs a sign-off exception.
 
 **Mapping questions the prototype cannot settle** (they are raven-registry decisions, per the
 design doc's field-selection section):
@@ -189,11 +188,12 @@ design doc's field-selection section):
    domain decision (`TOPLAN.md`). Exposure decision, not a layout one.
 
 **Two operator families the design doc's widget list does not name** (design item 1 lists text,
-select, person/record typeahead, year range, paste-a-list). Subset A needs both, and both are
-drawn as fields already:
+select, person/record typeahead, year range, paste-a-list). The boolean one is drawn as fields
+already; the numeric one follows the impact factor to the backoffice:
 
-4. **Numeric** — `jcr.impact_factor > 5` (C1.79) reads *is more than* / *is less than*, not the
-   year row's *is after* / *is before*. Same comparison, different words, because a year is a
+4. **Numeric** — the only numeric case is `jcr.impact_factor > 5` (C1.79), now a backoffice
+   field, so the public page needs no numeric widget. The backoffice builder does, and it reads
+   *is more than* / *is less than*, not the year row's *is after* / *is before*: a year is a
    point in time and an impact factor is a quantity.
 5. **Boolean** — `external exact 0` (C1.10, 257 occurrences), `embargo exact 0`,
    `vabb_approved exact 1`, `file` presence. These read *is yes* / *is no*, which is what design

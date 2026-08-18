@@ -99,7 +99,7 @@ Phase labels are proposals, not decisions. 208 cases.
 | C1.76 | `editor any "PERSON_1"` | 1 | A+B | phase 1 |  |
 | C1.77 | `file <> FILE_1` | 1 | A+B | phase 1 |  |
 | C1.78 | `for all "TEXT"` | 1 | B | translator-only | parse artifact — must not crash |
-| C1.79 | `jcr.impact_factor > 5` | 1 | A+B | phase 1 |  |
+| C1.79 | `jcr.impact_factor > 5` | 1 | A+B | not exposed | backoffice field — the public builder drops it |
 | C1.80 | `language <> eng` | 1 | A+B | phase 1 |  |
 | C1.81 | `misctype exact report` | 1 | A+B | phase 1 |  |
 | C1.82 | `of all "TEXT"` | 1 | B | translator-only | parse artifact — must not crash |

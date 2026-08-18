@@ -8,7 +8,7 @@
 
 ## Problem
 
-Advanced and expert search are two separately maintained UIs that fail the same audience differently: advanced search does not offer every field, operator or combination; expert search offers everything but you must already know the query language.
+Advanced and expert search are two separate UIs — two tabs, two mental models — that fail the same audience differently: advanced search does not offer every field, operator or combination; expert search offers everything but you must already know the query language.
 
 That audience is our documented personas (`docs/RESEARCH-PERSONAS.md`), and the fit is exact: **Marie Curator** (reviewer) lives in filters, asks for year ranges and combined search, and *shares her filters as bookmarked URLs* — she is why the permalink is the product. **Paula Proksy** (proxy) registers for a whole institute from WoS/EndNote lists: the paste-a-batch user. **Rhea View** (review coordinator) needs overview per record type per department to divide work: the saved search. **Claire Searcher** (researcher) wants one master list of everything under her name: the embed and export tabs. **Cody Crawley**, the machine reader, consumes the API contract. Few, and load-bearing: not replacing this surface is not an option.
 
@@ -26,7 +26,7 @@ One page, **Advanced search**, replacing both tiers. It always shows the builder
 
 **Definition of done for the first live release** — the smallest useful release, plus parity with what the old tiers already did:
 
-- condition rows for works, including the free-text row and "is not" (TODO)
+- condition rows for works, including the free-text row and "is not"
 - "is any of" with paste support
 - person conditions across roles, several AND-joined, kept distinct from a value list
 - year range
@@ -35,11 +35,11 @@ One page, **Advanced search**, replacing both tiers. It always shows the builder
 - Save this search (login); everything else works anonymously
 - the measurement the success measures need (design doc)
 
-**Phase 2** completes expression parity: OR rule groups, AND-first. **Phase 3** opens new territory: record type as first choice — people, organizations, projects.
+**Phase 2** completes expression parity: OR rule groups, AND-first.
 
 ## Constraints
 
-- 100% of existing embeds and queries keep working.
+- 100% of existing embeds, queries and saved searches keep working.
 - The power-tier share of human searches stays at least level against the 2.1% baseline.
 
 ## Risks and open design decisions
@@ -79,3 +79,5 @@ Copy and save are measured but are not success measures: a session that only che
 **Later:**
 
 3. Verify with users what the current tiers do well and what they don't — the log shows what people did, not what they failed to do.
+
+4. **Does Advanced search ever query the other catalogs — people, organizations, projects?** The builder searches research output, and so does every query behind it: the old tiers offered nothing else, so the log cannot show demand either way. A catalog choice above the conditions changes what the page returns rather than what it can express, so each catalog needs its own field list and its own result page; the public directories carry name lookup today. The options are to keep Advanced search on research output, to extend it once demand is evidenced, or to take it as a bet of its own. Neither phase 1 nor phase 2 forecloses the choice — the layout leaves room for it.

@@ -36,7 +36,7 @@ The builder invents no query model; it authors what raven has:
 - **`QueryFilter`** (`search.go`) — the filter grammar (see design item 2).
 - **Public search URLs** — `/works?q=…&facet=value`: free text plus terms filters. No OR-group, NOT, or range serialization yet; the URL grammar is raven's to design (bet, rabbit hole 1).
 - **Range filters** — not in the model yet; noted as "future: range" in `Facet.Type`.
-- **Saved searches** — `saved_searches` exists (user-scoped; running one redirects to the live search URL).
+- **Saved searches** — `saved_searches` exists (user-scoped; running one redirects to the live search URL). Legacy parity: old Biblio stores a saved search as a list of type `search`, which its owner can make public and share as a slug URL, and export. A shareable saved search is therefore parity, not a new concept — and design item 7 leans on it.
 - **Representations** — JSON/JSONL/CSL codecs exist, marshaled on demand; a public query-API surface is raven's to define.
 - **SRU 1.2** (`sru/`) — a library-standards protocol (Search/Retrieve via URL) for harvesters; deliberately minimal in raven. Not the builder's output target; the builder leaves it alone.
 

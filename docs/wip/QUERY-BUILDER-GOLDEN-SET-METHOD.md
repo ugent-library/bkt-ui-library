@@ -86,6 +86,7 @@ Exactly two exist in the wild, both attached to author-scoped queries: **`;hide_
 | `doi` | 645 | — | expose, with paste-a-list |
 | `external` | 257 | 18K | expose — external research output is already public on biblio and researchers record it themselves; needs a plain-language label |
 | `jcr.category` | never | 34K | expose if raven carries the field — journal metrics are in active use, so "never authored" is again a UI artifact |
+| `jcr.impact_factor` | 1 | — | **backoffice** (2026-08-18) — the backoffice reuses the builder with more fields; the public page drops it |
 | `field`, `for`, `of` | parse artifacts | — | translator must not crash; not builder fields |
 
 ## What this log cannot answer
