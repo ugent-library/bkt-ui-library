@@ -275,8 +275,8 @@ state. Markup hooks:
 blank state's root: the file reads the row through them, never through the
 `bt-query-builder__row-*` classes, so a layout change can rename or drop a cell class without
 costing the row its accessible name. It writes two classes — `bt-query-builder__row--alt` and
-`bt-query-builder__sep` — because those are styling, which is the one direction that belongs in
-`classList`.
+`visually-hidden` on the separators it builds — because those are styling, which is the one
+direction that belongs in `classList`.
 
 **Loaded by:** `public-works.html`, which renders the builder as a dialog, and
 `public-search-advanced.html`, which renders it as a page. Both include the same two

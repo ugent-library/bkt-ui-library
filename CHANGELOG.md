@@ -6,6 +6,39 @@ system, or do I reach for something new?"
 
 ---
 
+## The query builder sheds what was never its own (v2.22, 2026-08-18)
+
+The dotted in-place-edit affordance is now `bt-btn-inline-edit` in
+`elements/_buttons.scss`. It is the system's convention for a value edited in
+place, and an element-level class is where a second pattern can find it. The
+rest of the pass deletes query-builder rules that restated the base styles or
+styled elements that never render.
+
+- The "or" separator is `visually-hidden` in every template state and in what
+  `query-builder.js` builds, so its pill styling never rendered. The styling and
+  the class are gone; the JS hook stays `data-qb-sep`.
+- The group's OR legend carries `form-label h6 mb-2`, the same markup as every
+  other legend in the system.
+- Form controls inside a group take their background from
+  `_bootstrap-components.scss` like every other control. The group's own white
+  restated it and overrode the `:disabled` grey.
+- The operator selects drop their muted colour — a one-off look, not a system
+  variant.
+- The two `!important`s on the batch row are gone; the modifier already wins by
+  source order.
+
+| Removed | Replaced by |
+|---------|-------------|
+| `bt-query-builder__field` | `bt-btn-inline-edit` |
+| `bt-query-builder__batch` | nothing — the textarea already fills its value cell |
+| `bt-query-builder__sep` | `visually-hidden`; the JS hook stays `data-qb-sep` |
+| `bt-query-builder__group-label` | `form-label h6 mb-2` on the legend |
+
+**Consumers:** re-copy `assets/booktower.css` and `assets/js/query-builder.js`, and
+re-sync `search-advanced-conditions.html` against the class changes above.
+
+---
+
 ## Slim sidebar keeps its labels, and its tooltips wait for slim (v2.21, 2026-08-14)
 
 An icon-only sidebar link now carries its own name. In `bt-sidebar--slim` the link

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function separator(label = 'and') {
     const p = document.createElement('p');
-    p.className = 'bt-query-builder__sep visually-hidden';
+    p.className = 'visually-hidden';
     p.setAttribute('data-qb-sep', '');
 
     const span = document.createElement('span');

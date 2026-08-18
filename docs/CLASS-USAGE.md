@@ -29,14 +29,14 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 **Query builder** — the list owns the lanes and each row borrows them, so nothing in a row's markup says how wide anything is. Pattern page: `patterns/query-builder.html`.
 
 - **Lanes.** `bt-query-builder__conditions`, and `bt-query-builder__alts` for an OR group's inner list, are three-track grids: `fit-content(12rem) minmax(0, 1fr) max-content`. Every `bt-query-builder__row` is `grid-template-columns: subgrid`, which is what lines the field lane and the actions up down the list. A group's alternatives line up with each other, not with the rows outside it.
-- **A row carries three children and no layout classes**: `bt-query-builder__row-kind`, `bt-query-builder__phrase` (the role select, the operator select and `bt-query-builder__row-value`, wrapping as one unit and sharing one muted select style) and `bt-query-builder__row-actions`.
+- **A row carries three children and no layout classes**: `bt-query-builder__row-kind`, `bt-query-builder__phrase` (the role select, the operator select and `bt-query-builder__row-value`, wrapping as one unit) and `bt-query-builder__row-actions`.
 - **Never put horizontal padding or a gap on a row.** Either one offsets that subgrid's tracks from the list's and the lanes stop lining up, so the gutters and the side inset live on the list.
 - **The reflow is a `@container qb-conditions` query, not a media query.** Below 53rem the field and the actions keep the first line and the phrase takes the next. The same partial renders as a page column and as a wider dialog, so viewport width is the wrong measure.
 - **The host owns the surroundings**: the heading the form is named by, the box, and the surface under the bar. Both lists are transparent and unbordered.
 - **`query-builder.js` reads the row through `data-qb-value`, `data-qb-op` and `data-qb-actions`**, so renaming a cell class is a styling change and nothing more.
 - **Person tokens** are `badge text-bg-primary-light bt-query-builder__token` + `data-qb-token`, sitting in the value cell beside a `badge badge--outline` button that opens the person picker.
-- **The pasted-identifier box** is `form-control form-control-sm font-monospace bt-textarea-auto bt-query-builder__batch`, and its row needs `bt-query-builder__row--batch`: `bt-textarea-auto` sizes the box, and without the modifier the value cell's basis lands on the textarea's height.
-- **The field chooser** is `bt-panel bt-panel--wide` composed on `dropdown-menu` (see Panel). Field-list groups are `min-w-0` + `data-qb-choice-group`, each holding a `dropdown-header` and a `ul.list-unstyled` of `dropdown-item` rows.
+- **The pasted-identifier box** is `form-control form-control-sm font-monospace bt-textarea-auto`, and its row needs `bt-query-builder__row--batch`: `bt-textarea-auto` sizes the box, and without the modifier the value cell's basis lands on the textarea's height.
+- **The field chooser** opens from the field name, a `bt-btn-inline-edit` button. The panel is `bt-panel bt-panel--wide` composed on `dropdown-menu` (see Panel). Field-list groups are `min-w-0` + `data-qb-choice-group`, each holding a `dropdown-header` and a `ul.list-unstyled` of `dropdown-item` rows.
 - **The actions cell** is a ⋯ menu holding only "Add an 'or'" plus a `btn-ghost` remove button carrying `if-delete`; the remove control always names its condition.
 - **The blank state** is Add a condition and nothing else.
 

@@ -92,6 +92,8 @@ bt-border
 
 bt-btn-check__group
 
+bt-btn-inline-edit
+
 bt-dropdown-scroll
 
 bt-file-drop
@@ -128,12 +130,9 @@ bt-panel__year-input
 bt-query-builder
 bt-query-builder__add
 bt-query-builder__alts
-bt-query-builder__batch
 bt-query-builder__conditions
-bt-query-builder__field
 bt-query-builder__group
 bt-query-builder__group-foot
-bt-query-builder__group-label
 bt-query-builder__people-field
 bt-query-builder__people-input
 bt-query-builder__people-search
@@ -145,7 +144,6 @@ bt-query-builder__row--error
 bt-query-builder__row-actions
 bt-query-builder__row-kind
 bt-query-builder__row-value
-bt-query-builder__sep
 bt-query-builder__value-select
 bt-query-builder__year
 

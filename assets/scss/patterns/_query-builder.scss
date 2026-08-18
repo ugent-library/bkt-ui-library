@@ -19,7 +19,6 @@
 .bt-query-builder__alts {
   display: grid;
   grid-template-columns: fit-content(12rem) minmax(0, 1fr) max-content;
-  /* Keep both here: on a row they offset that subgrid's tracks and the lanes stop lining up. */
   column-gap: var(--bt-sp-4);
   container-type: inline-size;
   container-name: qb-conditions;
@@ -38,7 +37,6 @@
   min-width: 0;
 }
 
-/* Allow shrink and a tight line splits the value's contents; it moves down whole instead. */
 .bt-query-builder__phrase > .bt-query-builder__row-value {
   flex: 1 0 auto;
   max-width: 100%;
@@ -47,10 +45,8 @@
 .bt-query-builder__phrase .form-select {
   width: auto;
   max-width: 100%;
-  color: var(--s-text-muted);
 }
 
-/* The editor's width, not the viewport's: the same partial is a page column and a wider dialog. */
 @container qb-conditions (max-width: 53rem) {
   .bt-query-builder__row > .bt-query-builder__row-actions {
     grid-column: 3;
@@ -74,11 +70,11 @@
 }
 
 .bt-query-builder__row--batch {
-  align-items: start !important;
+  align-items: start;
 }
 
 .bt-query-builder__row--batch .bt-query-builder__phrase {
-  align-items: start !important;
+  align-items: start;
 }
 
 .bt-query-builder__row--batch .bt-query-builder__row-value {
@@ -95,29 +91,6 @@
   margin-right: var(--bt-sp-3);
 }
 
-.bt-query-builder__field {
-  max-width: 100%;
-  padding: 0;
-  color: var(--bt-blue-800);
-  font-weight: 600;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  background: transparent;
-  border: 0;
-  /* The affordance without a caret: a dotted rule, the convention for a value edited in place */
-  border-bottom: 1px dotted var(--bt-blue-800);
-  appearance: none;
-}
-
-.bt-query-builder__field:hover,
-.bt-query-builder__field:focus-visible {
-  color: var(--bt-blue-900);
-  border-bottom-color: var(--bt-blue-900);
-  border-bottom-style: solid;
-}
-
 .bt-query-builder__row-value {
   display: flex;
   flex-wrap: wrap;
@@ -126,7 +99,6 @@
   min-width: 0;
 }
 
-/* The batch textarea sizes itself; a basis would land on its height. */
 .bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-textarea-auto) {
   flex: 1 1 12rem;
   min-width: 8rem;
@@ -142,29 +114,11 @@
   min-width: 5.5rem;
 }
 
-.bt-query-builder__batch {
-  width: 100%;
-}
-
 .bt-query-builder__row-actions {
   display: flex;
   gap: var(--bt-sp-1);
   align-items: center;
   justify-content: flex-end;
-}
-
-.bt-query-builder__sep {
-  font-size: var(--bt-text-xs);
-  font-weight: 600;
-  display: inline-flex;
-  margin-bottom: 0;
-}
-
-.bt-query-builder__sep span {
-  display: inline-block;
-  padding: var(--bt-sp-1) var(--bt-sp-2);
-  background-color: var(--bt-gray-150);
-  border-radius: var(--bt-radius);
 }
 
 /* ── People value ──────────────────────────────────────────────────────────── */
@@ -199,19 +153,8 @@
   position: relative;
 }
 
-
-/* Reboot sizes a legend on the heading scale. */
-.bt-query-builder__group-label {
-  font-size: inherit;
-}
-
 .bt-query-builder__row--alt {
   border-bottom: 0;
-}
-
-.bt-query-builder__group .form-select,
-.bt-query-builder__group .form-control {
-  background-color: var(--bt-white);
 }
 
 .bt-query-builder__group-foot {
