@@ -249,6 +249,8 @@ if-alert-fill
 
 if-apache
 
+if-archive-line
+
 if-arrow-double-down
 
 if-arrow-double-up
@@ -269,7 +271,11 @@ if-article
 
 if-asterisk
 
+if-bank-line
+
 if-bar-chart
+
+if-barcode-line
 
 if-book
 
@@ -398,6 +404,8 @@ if-file-word
 if-filter-3-line
 
 if-forbid
+
+if-gallery-line
 
 if-ghent-university
 
