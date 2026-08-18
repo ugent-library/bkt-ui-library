@@ -6,6 +6,45 @@ system, or do I reach for something new?"
 
 ---
 
+## Picking a person is one pattern, and its list floats (v2.23, 2026-08-18)
+
+The people-search pattern page now owns both selection shapes: click-to-select
+rich rows in a form (deposit add-author, curate detail) and checkable rich rows
+in a panel checklist (the query builder's person picker; the works author filter
+adopts the same panel next). The row anatomy is the same everywhere — name with
+`<mark>`, affiliation, department, active years, ORCID, UGent ID — because two
+people with one name must be tellable apart before you pick one.
+
+- `.people-results` is an overlay: absolutely positioned inside its
+  `[data-people-search]` wrapper, white, shadowed, on the panel z-index. Results
+  appearing or clearing never reflow the form below the input.
+- Panel chrome is compact everywhere: the title fuses with the body directly
+  under it — no border under the title, dividers only between bodies — and the
+  title, body and actions paddings tightened one step.
+- A panel checklist row's label may carry the rich people-row content
+  (checkbox in place of the user icon); rows align flex-start so the box sits
+  on the label's first line.
+- `[hidden] { display: none !important; }` guards the hidden attribute against
+  authored display rules (`bt-toolbar`'s flex silently defeated it). Display
+  utilities still win — never put `d-*` on an element JS toggles with `hidden`;
+  the add-author confirmation slot moved its `d-flex` to an inner div for
+  exactly this reason.
+- The widget's `[data-ps-hint]` is the live region: the result count, the
+  searching state, and the no-results message announce there. Nothing but
+  `.people-result` rows goes inside the `[data-ps-results]` listbox.
+- The query builder's person picker rows carry `data-id`; submitting tokens by
+  id instead of display name is the next step. The stub's synthetic
+  `htmx:afterSwap` now carries `detail.target` like real HTMX, and
+  "Searching…" is a character, not an entity written through `textContent`.
+- The dev server sends `Cache-Control: no-store` on static assets, so a rebuilt
+  `booktower.css` shows without a hard refresh.
+
+**Consumers:** re-copy `assets/booktower.css`, `assets/js/people-search.js` and
+`assets/js/people-search-stub.js`, and re-sync `add-author-form.html`,
+`people-search-widget.html` and `search-advanced-conditions.html`.
+
+---
+
 ## The query builder sheds what was never its own (v2.22, 2026-08-18)
 
 The dotted in-place-edit affordance is now `bt-btn-inline-edit` in

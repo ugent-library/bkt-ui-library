@@ -3,6 +3,7 @@
   Endpoint: GET /partials/add-author-form
   Target: #author-form-area in backoffice-deposit-flow.html
 
+  Canonical pattern: patterns/people-search.html (click-to-select, single select).
   People search is handled by people-search.js (data-people-search widget).
   The form listens for the "people-search:select" event to know when a person
   is chosen; the widget fills data-ps-id and data-ps-name automatically.
@@ -49,20 +50,22 @@
         Type a name to search across UGent people and external authors.
       </p>
 
-      <!-- Selected person confirmation slot -->
-      <div data-ps-selected hidden
-        class="d-flex align-items-start gap-3 p-2 mt-2 bg-light border rounded">
-        <span class="people-result__icon" aria-hidden="true">
-          <i class="if if-user if--sm"></i>
-        </span>
-        <div class="flex-grow-1">
-          <div class="people-result__name" data-ps-selected-name></div>
-          <div class="people-result__meta" data-ps-selected-affiliation></div>
+      <!-- Selected person confirmation slot. d-flex would defeat the hidden toggle
+           (display utilities beat [hidden]), so the flex row is the inner div. -->
+      <div data-ps-selected hidden class="p-2 mt-2 bg-light border rounded">
+        <div class="d-flex align-items-start gap-3">
+          <span class="people-result__icon" aria-hidden="true">
+            <i class="if if-user if--sm"></i>
+          </span>
+          <div class="flex-grow-1">
+            <div class="people-result__name" data-ps-selected-name></div>
+            <div class="people-result__meta" data-ps-selected-affiliation></div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
+            aria-label="Clear selection">
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
         </div>
-        <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
-          aria-label="Clear selection">
-          <i class="if if-close if--xs" aria-hidden="true"></i>
-        </button>
       </div>
 
       <!-- Hidden fields filled by people-search.js on selection -->

@@ -824,8 +824,10 @@
 
 <!-- Picking a person is the same act here as on the results page, so it is the same panel: the
      searchable checklist the works filter bar opens for its person filter. Defined once and
-     cloned into the slot of the "Add a person" that asked for it, like the chooser above. The
-     names are placeholders — in production both panels come from one people search. -->
+     cloned into the slot of the "Add a person" that asked for it, like the chooser above.
+     Rows are the checkable rich rows from patterns/people-search.html — two people with the
+     same name must be tellable apart. The people are placeholders, mirroring the PEOPLE array
+     in people-search-stub.js — in production both panels come from one people search. -->
   <template id="qb-person-picker">
     <p class="bt-panel__title" id="qb-person-title">Person</p>
     <div class="bt-panel__body">
@@ -836,52 +838,209 @@
     <div class="bt-panel__body bt-panel__body--checklist" role="group"
       aria-labelledby="qb-person-title">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-1" value="Jane Doe">
-        <label class="form-check-label" for="qb-person-1">Jane Doe</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-1"
+          value="Marianne Testarosso" data-id="p1">
+        <label class="form-check-label" for="qb-person-1">
+          <span class="people-result__name">Marianne Testarosso</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Sciences
+          </span>
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            TW09
+          </span>
+          <span class="people-result__meta-item">2020–current</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0001-6123-2992
+          </span>
+          <span class="people-result__meta-item">000161232992</span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-2" value="Pieter De Vries">
-        <label class="form-check-label" for="qb-person-2">Pieter De Vries</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-2"
+          value="Pietro Testa" data-id="p2">
+        <label class="form-check-label" for="qb-person-2">
+          <span class="people-result__name">Pietro Testa</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            UGent Memorialis
+          </span>
+          <span class="people-result__meta-item">1902–1910</span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-3" value="Sofia Rossi">
-        <label class="form-check-label" for="qb-person-3">Sofia Rossi</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-3"
+          value="Lea Testut" data-id="p3">
+        <label class="form-check-label" for="qb-person-3">
+          <span class="people-result__name">Lea Testut</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            UGent Alumni
+          </span>
+          <span class="people-result__meta-item">2020–2024</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0002-6384-8725
+          </span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-4" value="Kwame Mensah">
-        <label class="form-check-label" for="qb-person-4">Kwame Mensah</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-4"
+          value="Jan Kiewiet" data-id="p5">
+        <label class="form-check-label" for="qb-person-4">
+          <span class="people-result__name">Jan Kiewiet</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Sciences
+          </span>
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            FW12
+          </span>
+          <span class="people-result__meta-item">2018–current</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0003-1234-5678
+          </span>
+          <span class="people-result__meta-item">000234561234</span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-5" value="Yuki Tanaka">
-        <label class="form-check-label" for="qb-person-5">Yuki Tanaka</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-5"
+          value="Sarah De Wolf" data-id="p6">
+        <label class="form-check-label" for="qb-person-5">
+          <span class="people-result__name">Sarah De Wolf</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Engineering
+          </span>
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            ENG03
+          </span>
+          <span class="people-result__meta-item">2015–current</span>
+          <span class="people-result__meta-item">000112233445</span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-6" value="Anna Nowak">
-        <label class="form-check-label" for="qb-person-6">Anna Nowak</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-6"
+          value="Thomas Van Damme" data-id="p7">
+        <label class="form-check-label" for="qb-person-6">
+          <span class="people-result__name">Thomas Van Damme</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Sciences
+          </span>
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            FW12
+          </span>
+          <span class="people-result__meta-item">2019–current</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0001-9876-5432
+          </span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-7" value="Lucas Martin">
-        <label class="form-check-label" for="qb-person-7">Lucas Martin</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-7"
+          value="John Doe" data-id="p-jd1">
+        <label class="form-check-label" for="qb-person-7">
+          <span class="people-result__name">John Doe</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Faculty of Performing Arts
+          </span>
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Burlesque &amp; Variety Studies
+          </span>
+          <span class="people-result__meta-item">2019–current</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0002-1234-5678
+          </span>
+          <span class="people-result__meta-item">000198274651</span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-8" value="Fatima El Amrani">
-        <label class="form-check-label" for="qb-person-8">Fatima El Amrani</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-8"
+          value="Jane Doe" data-id="p-jd2">
+        <label class="form-check-label" for="qb-person-8">
+          <span class="people-result__name">Jane Doe</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Faculty of Performing Arts
+          </span>
+          <span class="people-result__meta-item">
+            <i class="if if-building if--xs" aria-hidden="true"></i>
+            Stagecraft &amp; Neo-Burlesque
+          </span>
+          <span class="people-result__meta-item">2021–current</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0003-8765-4321
+          </span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-9" value="David Cohen">
-        <label class="form-check-label" for="qb-person-9">David Cohen</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-9"
+          value="Josephine Baker" data-id="p-jb1">
+        <label class="form-check-label" for="qb-person-9">
+          <span class="people-result__name">Josephine Baker</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">External</span>
+          <span class="people-result__meta-item">Folies Bergère, 1925–1956</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0001-9876-0001
+          </span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-10" value="Mei Chen">
-        <label class="form-check-label" for="qb-person-10">Mei Chen</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-10"
+          value="Gypsy Rose Lee" data-id="p-gr1">
+        <label class="form-check-label" for="qb-person-10">
+          <span class="people-result__name">Gypsy Rose Lee</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">External</span>
+          <span class="people-result__meta-item">Minsky's Burlesque, 1929–1937</span>
+          </span>
+        </label>
       </div>
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-11" value="Omar Haddad">
-        <label class="form-check-label" for="qb-person-11">Omar Haddad</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="qb-person-12" value="Elena Petrova">
-        <label class="form-check-label" for="qb-person-12">Elena Petrova</label>
+        <input class="form-check-input" type="checkbox" id="qb-person-11"
+          value="Dita Von Teese" data-id="p-dv1">
+        <label class="form-check-label" for="qb-person-11">
+          <span class="people-result__name">Dita Von Teese</span>
+          <span class="people-result__meta">
+          <span class="people-result__meta-item">External</span>
+          <span class="people-result__meta-item">Neo-Burlesque Revival, 1992–current</span>
+          <span class="people-result__meta-item">
+            <i class="if if-orcid if--xs" aria-hidden="true"></i>
+            0000-0004-5555-9999
+          </span>
+          </span>
+        </label>
       </div>
     </div>
     <div class="bt-panel__actions">

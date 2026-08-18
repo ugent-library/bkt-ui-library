@@ -1,14 +1,20 @@
 <!--
   Partial: people-search-widget.html
-  The reusable HTML shell for a people search field.
+  The reusable HTML shell for a people search field — the click-to-select
+  (single select) shape. Canonical pattern: patterns/people-search.html.
 
-  Include this wherever a person lookup is needed:
-    - Author filter editor (filter-editor.html)
+  Include this wherever a form resolves one PersonIdentity:
     - Add author form (add-author-form.html)
-    - Any future context that resolves a PersonIdentity
+    - Curate detail (biblio-team/curate-detail.html)
+  Multi-select contexts (author filter editor, query builder person picker)
+  use the checkable-rows panel instead — see the pattern page.
 
   The widget is initialised automatically by people-search.js via the
   data-people-search attribute. No per-page JS needed for the widget itself.
+  The results list is an overlay (positioned by the people-results CSS):
+  it floats over the form below the input and never reflows it.
+  [data-ps-hint] is the widget's live region: count, searching state and
+  the no-results message are announced there, never inside the listbox.
 
   Prototype: results come from people-search-stub.js (local PEOPLE array),
   which is the single data source. The input carries no hx-get.
@@ -20,13 +26,13 @@
 
 <div data-people-search>
 
-  <label for="ps-input" class="visually-hidden">Search by name or ORCID</label>
+  <label for="ps-input" class="form-label">Search by name or ORCID</label>
   <input
     type="search"
     id="ps-input"
     data-ps-input
     class="form-control form-control-sm"
-    placeholder="Search by name or ORCID&hellip;"
+    placeholder="e.g. De Pauw or 0000-0002-1234-5678"
     autocomplete="off">
 
   <div
@@ -37,7 +43,7 @@
     hidden>
   </div>
 
-  <p data-ps-hint class="text-muted small mt-2 mb-0">
+  <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0">
     Type a name to search across UGent people and external authors.
   </p>
 

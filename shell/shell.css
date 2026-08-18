@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower dca7c9b/2026-08-18 */
+/*! Booktower 5114770/2026-08-18 */
 /*
  * Booktower Design System — Shell
  * The chrome that wraps every page in the design system.
@@ -452,6 +452,12 @@ body[data-surface=public] .bt-content {
 
 .ds-demo-body {
   padding: var(--bt-sp-6) var(--bt-sp-5);
+}
+
+/* The people-search results list is a position:absolute overlay, so a demo showing it
+   open would collapse to the input's height and the list would cover the next section. */
+.ds-demo-body:has(.people-results:not([hidden])) {
+  min-height: 26rem;
 }
 
 .ds-demo-notes {

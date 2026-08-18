@@ -444,7 +444,7 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `search-suggest-panel.html` | Search autocomplete panel |
 | `public-header.html` | Public templates |
 | `public-footer.html` | Public templates |
-| `people-search-widget.html` | Deposit author search |
+| `people-search-widget.html` | Single-select person lookup shell (currently included nowhere — `add-author-form.html` carries its own copy) |
 | `add-author-form.html` | Deposit author add form |
 | `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
 

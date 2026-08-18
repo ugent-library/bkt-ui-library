@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*! Booktower 5114770/2026-08-18 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -712,6 +713,13 @@ code, kbd, pre, samp {
   outline: none;
 }
 
+/* An authored display (e.g. bt-toolbar's flex) silently defeats the hidden attribute;
+   this keeps hidden trustworthy. Display utilities (d-flex) still win — never put one
+   on an element JS toggles with hidden. */
+[hidden] {
+  display: none !important;
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;
@@ -1219,7 +1227,9 @@ a.btn-danger,
   background: transparent;
   border: 0;
   border-bottom: 1px dotted var(--bt-blue-800);
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .bt-btn-inline-edit:hover,
@@ -1654,6 +1664,7 @@ a.badge:focus-visible {
 
 .bt-table-sticky-col th:first-child,
 .bt-table-sticky-col td:first-child {
+  position: -webkit-sticky;
   position: sticky;
   left: 0;
   z-index: 1;
@@ -1752,7 +1763,8 @@ a.bt-avatar:hover:not(:disabled) {
    Sized to a share of the chip so varied SVG aspect ratios sit inset,
    not edge-to-edge; object-fit keeps them undistorted. */
 .bt-avatar__img {
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   width: 50%;
   height: 50%;
 }
@@ -1879,6 +1891,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-radius: var(--bt-radius-lg);
   box-shadow: var(--bt-shadow-md);
   z-index: var(--bt-z-panel);
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
@@ -1892,19 +1906,25 @@ a.bt-avatar--outline:hover:not(:disabled) {
 }
 
 .bt-panel__title {
-  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
+  padding: var(--bt-sp-3) var(--bt-sp-4) var(--bt-sp-2);
   margin-bottom: 0;
   font-weight: var(--s-display-weight);
-  border-bottom: 1px solid var(--bt-border);
 }
 
 .bt-panel__body {
   border-top: var(--bt-border);
-  padding: var(--bt-sp-6) var(--bt-sp-4);
+  padding: var(--bt-sp-4);
   gap: var(--bt-sp-4);
   display: flex;
   max-height: 240px;
   overflow-y: auto;
+}
+
+/* The title and the body under it are one header block — the divider belongs to
+   the boundary where the next body starts, never under the title. */
+.bt-panel__title + .bt-panel__body {
+  border-top: 0;
+  padding-top: 0;
 }
 
 :not(.bt-panel) > .bt-panel__body {
@@ -1916,7 +1936,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-panel__actions {
   display: flex;
   gap: var(--bt-sp-2);
-  padding: var(--bt-sp-4);
+  padding: var(--bt-sp-3) var(--bt-sp-4);
   border-top: var(--bt-border);
 }
 
@@ -1937,7 +1957,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-panel__body .form-check {
   display: flex;
-  align-items: center;
+  /* flex-start + the input's top offset keep the box on line 1 of multi-line rich labels. */
+  align-items: flex-start;
   gap: var(--bt-sp-2);
   margin: 0;
   padding: var(--bt-sp-2) var(--bt-sp-4);
@@ -1946,7 +1967,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-panel__body .form-check-input {
   float: none;
-  margin: 0;
+  margin: 0.25em 0 0;
   flex: 0 0 auto;
 }
 
@@ -1992,8 +2013,10 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__conditions,
 .bt-query-builder__alts {
   display: grid;
+  grid-template-columns: fit-content(12rem) minmax(0, 1fr) -webkit-max-content;
   grid-template-columns: fit-content(12rem) minmax(0, 1fr) max-content;
-  column-gap: var(--bt-sp-4);
+  -moz-column-gap: var(--bt-sp-4);
+       column-gap: var(--bt-sp-4);
   container-type: inline-size;
   container-name: qb-conditions;
 }
@@ -2154,6 +2177,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: center;
   padding: 0 var(--bt-sp-6);
   gap: var(--bt-sp-4);
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   min-height: var(--s-topbar-height);
@@ -2204,7 +2228,8 @@ img.bt-navbar__logo {
   text-decoration: underline;
   text-underline-offset: var(--bt-sp-2);
   text-decoration-thickness: 2px;
-  text-decoration-color: var(--bt-blue-900);
+  -webkit-text-decoration-color: var(--bt-blue-900);
+          text-decoration-color: var(--bt-blue-900);
   font-weight: 500;
 }
 
@@ -2213,9 +2238,21 @@ img.bt-navbar__logo {
   outline-offset: 2px;
 }
 
-/* -- People search (author filter editor) -- */
+/* -- People search (single-select widget) -- */
 /* TODO: simplify, has too many specifics */
+[data-people-search] {
+  position: relative;
+}
+
+/* The list is an overlay: results appearing or clearing must never reflow the form
+   below the input. No top offset — out of flow it stays at its in-flow spot. */
 .people-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: var(--bt-z-panel);
+  background: var(--bt-white);
+  box-shadow: var(--bt-shadow-md);
   border: var(--bt-border);
   border-radius: var(--bt-radius-md);
   overflow: hidden;
@@ -2790,7 +2827,8 @@ img.bt-navbar__logo {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip-path: inset(50%);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
   white-space: nowrap;
 }
 .bt-sidebar--slim .badge--total {

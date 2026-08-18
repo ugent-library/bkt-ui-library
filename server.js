@@ -543,7 +543,9 @@ const handler = async (req, res) => {
   const mime = MIME[ext] || 'application/octet-stream';
 
   if (ext !== '.html') {
-    res.writeHead(200, { 'Content-Type': mime });
+    // Without this, browsers heuristically cache assets and a rebuilt
+    // booktower.css doesn't show until a hard refresh.
+    res.writeHead(200, { 'Content-Type': mime, 'Cache-Control': 'no-store' });
     res.end(fs.readFileSync(filePath));
     return;
   }

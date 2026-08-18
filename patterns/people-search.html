@@ -5,7 +5,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">People search</h1>
-    <p class="lead">An inline search that resolves a person from the PersonIdentity index. Used in the author filter editor and the deposit flow add-author form. Not a modal — the results list appears directly below the input.</p>
+    <p class="lead">An inline search that resolves a person from the PersonIdentity index. One search, one rich result row, two selection shapes: click-to-select in a form (deposit add-author, curate detail) and checkable rows in a panel (author filter editor, query builder). Not a modal — the results list floats directly below the input, over whatever follows it.</p>
   </header>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -13,18 +13,24 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Empty — before typing</h2>
-    <p class="mb-4">The input is focused. No results list yet. The hint below the input explains what the field searches across.</p>
+    <p class="mb-4">The input is focused. No results list yet. The hint below the input explains what the field searches across. The hint is the widget's live region: it exists in the DOM from the start, and it announces the result count, the searching state and the no-results message.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Empty</h3>
       <div class="ds-demo-body" style="max-width: 420px;">
 
-        <label for="ps-empty" class="visually-hidden">Search for a person</label>
-        <input type="search" id="ps-empty" class="form-control form-control-sm"
-          placeholder="Search by name or ORCID&hellip;"
-          autocomplete="off">
-        <p class="text-muted small mt-2 mb-0">
-          Type a name to search across UGent people and external authors.
-        </p>
+        <div data-people-search>
+          <label for="ps-empty" class="form-label">Search by name or ORCID</label>
+          <input type="search" id="ps-empty" data-ps-input class="form-control form-control-sm"
+            placeholder="e.g. De Pauw or 0000-0002-1234-5678"
+            autocomplete="off">
+          <div data-ps-results class="people-results" role="listbox"
+            aria-label="People matching your search" hidden>
+          </div>
+          <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0">
+            Type a name to search across UGent people and external authors.
+          </p>
+        </div>
 
       </div>
     </div>
@@ -35,186 +41,24 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Results — query "doe"</h2>
-    <p class="mb-4">Results appear in a bordered list below the input. The query term is highlighted in the name with <code>&lt;mark&gt;</code>. Each row shows the person's affiliation, department, active years, and ORCID when available. UGent people show their UGent ID. External people show "External" as affiliation. Keyboard-navigable: Arrow keys move between rows, Enter selects.</p>
+    <p class="mb-4">Results appear in a bordered list below the input. The list is an overlay: it floats over the form beneath, so results appearing or clearing never push the form around. The query term is highlighted in the name with <code>&lt;mark&gt;</code>. Each row shows the affiliation, department, active years, ORCID and UGent ID the identity carries. External people show "External" as affiliation. Keyboard: ArrowDown moves from the input into the list and between rows, Enter or Space selects, Escape returns to the input. The hint announces the result count.</p>
 
     <div class="ds-demo">
+      <h3 class="ds-demo-label">Results</h3>
       <div class="ds-demo-body" style="max-width: 420px;">
 
-        <label for="ps-results" class="visually-hidden">Search for a person</label>
-        <input type="search" id="ps-results" class="form-control form-control-sm"
-          value="doe"
-          autocomplete="off">
-
-        <div class="people-results" role="listbox" aria-label="People matching your search">
-
-          <!-- UGent person — linked identity, full metadata -->
-          <div class="people-result" role="option" tabindex="0"
-            aria-label="John Doe, Faculty of Performing Arts">
-            <span class="people-result__icon" aria-hidden="true">
-              <i class="if if-user if--sm"></i>
-            </span>
-            <div>
-              <div class="people-result__name">
-                John <mark>Doe</mark>
-              </div>
-              <div class="people-result__meta">
-                <span class="people-result__meta-item">
-                  <i class="if if-building if--xs" aria-hidden="true"></i>
-                  Faculty of Performing Arts
-                </span>
-                <span class="people-result__meta-item">
-                  <i class="if if-building if--xs" aria-hidden="true"></i>
-                  Burlesque &amp; Variety Studies
-                </span>
-                <span class="people-result__meta-item">2019–current</span>
-                <span class="people-result__meta-item">
-                  <i class="if if-orcid if--xs" aria-hidden="true"></i>
-                  0000-0002-1234-5678
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- UGent person — linked, no department shown -->
-          <div class="people-result" role="option" tabindex="0"
-            aria-label="Jane Doe, Faculty of Performing Arts">
-            <span class="people-result__icon" aria-hidden="true">
-              <i class="if if-user if--sm"></i>
-            </span>
-            <div>
-              <div class="people-result__name">
-                Jane <mark>Doe</mark>
-              </div>
-              <div class="people-result__meta">
-                <span class="people-result__meta-item">
-                  <i class="if if-building if--xs" aria-hidden="true"></i>
-                  Faculty of Performing Arts
-                </span>
-                <span class="people-result__meta-item">
-                  <i class="if if-building if--xs" aria-hidden="true"></i>
-                  Stagecraft &amp; Neo-Burlesque
-                </span>
-                <span class="people-result__meta-item">2021–current</span>
-                <span class="people-result__meta-item">
-                  <i class="if if-orcid if--xs" aria-hidden="true"></i>
-                  0000-0003-8765-4321
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- External person — no UGent affiliation -->
-          <div class="people-result" role="option" tabindex="0"
-            aria-label="Josephine Baker, External">
-            <span class="people-result__icon" aria-hidden="true">
-              <i class="if if-user if--sm"></i>
-            </span>
-            <div>
-              <div class="people-result__name">Josephine Baker</div>
-              <div class="people-result__meta">
-                <span class="people-result__meta-item">External</span>
-                <span class="people-result__meta-item">Folies Bergère, 1925–1956</span>
-                <span class="people-result__meta-item">
-                  <i class="if if-orcid if--xs" aria-hidden="true"></i>
-                  0000-0001-9876-0001
-                </span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <p class="text-muted small mt-2 mb-0">3 people</p>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       3. SELECTED STATE
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Selected</h2>
-    <p class="mb-4">After the user clicks a row, the list collapses to show only the selected person. The row gets <code>.is-selected</code> — blue background, checkmark on the right. The input value updates to the person's name. The user can clear the selection to search again.</p>
-
-    <div class="ds-demo">
-      <div class="ds-demo-body" style="max-width: 420px;">
-
-        <label for="ps-selected" class="visually-hidden">Search for a person</label>
-        <input type="search" id="ps-selected" class="form-control form-control-sm"
-          value="Jane Doe"
-          autocomplete="off">
-
-        <div class="people-results" role="listbox" aria-label="People matching your search">
-          <div class="people-result is-selected" role="option" tabindex="0"
-            aria-label="Jane Doe, Faculty of Performing Arts" aria-selected="true">
-            <span class="people-result__icon" aria-hidden="true">
-              <i class="if if-user if--sm"></i>
-            </span>
-            <div>
-              <div class="people-result__name">Jane Doe</div>
-              <div class="people-result__meta">
-                <span class="people-result__meta-item">
-                  <i class="if if-building if--xs" aria-hidden="true"></i>
-                  Faculty of Performing Arts
-                </span>
-              </div>
-            </div>
-            <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       4. NO RESULTS
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">No results</h2>
-    <p class="mb-4">When the query returns nothing, the list shows a plain text message. No illustration, no secondary action — the user should refine their query or use "Add as external author" if available in the context.</p>
-
-    <div class="ds-demo">
-      <div class="ds-demo-body" style="max-width: 420px;">
-
-        <label for="ps-empty-results" class="visually-hidden">Search for a person</label>
-        <input type="search" id="ps-empty-results" class="form-control form-control-sm"
-          value="xyzzy"
-          autocomplete="off">
-
-        <div class="people-results" role="listbox" aria-label="People matching your search">
-          <div class="p-3 text-muted small">
-            No people found for "xyzzy"
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       5. INSIDE A FILTER EDITOR PANEL — usage in context
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">In context — author filter editor</h2>
-    <p class="mb-4">People search is always hosted inside a <code>.bt-panel--wide</code> panel. The panel provides the title, the action row (Apply / Cancel / Remove filter), and constrains the width. The search input and results list fill the available space between them.</p>
-
-    <div class="ds-demo">
-      <div class="ds-demo-body">
-
-        <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-demo-title" aria-modal="false">
-
-          <p class="h6" id="fe-demo-title">Author</p>
-
-          <label for="ps-context" class="visually-hidden">Search for a person</label>
-          <input type="search" id="ps-context" class="form-control form-control-sm mb-0"
+        <div data-people-search>
+          <label for="ps-results" class="form-label">Search by name or ORCID</label>
+          <input type="search" id="ps-results" data-ps-input class="form-control form-control-sm"
             value="doe"
             autocomplete="off">
 
-          <div class="people-results" role="listbox" aria-label="People matching your search">
+          <div data-ps-results class="people-results" role="listbox"
+            aria-label="People matching your search">
 
+            <!-- UGent person — linked identity, full metadata -->
             <div class="people-result" role="option" tabindex="0"
+              data-id="p-jd1" data-name="John Doe" data-affiliation="Faculty of Performing Arts"
               aria-label="John Doe, Faculty of Performing Arts">
               <span class="people-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
@@ -226,13 +70,24 @@
                     <i class="if if-building if--xs" aria-hidden="true"></i>
                     Faculty of Performing Arts
                   </span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Burlesque &amp; Variety Studies
+                  </span>
                   <span class="people-result__meta-item">2019–current</span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                    0000-0002-1234-5678
+                  </span>
+                  <span class="people-result__meta-item">000198274651</span>
                 </div>
               </div>
             </div>
 
-            <div class="people-result is-selected" role="option" tabindex="0"
-              aria-label="Jane Doe, Faculty of Performing Arts" aria-selected="true">
+            <!-- UGent person — no UGent ID on the identity -->
+            <div class="people-result" role="option" tabindex="0"
+              data-id="p-jd2" data-name="Jane Doe" data-affiliation="Faculty of Performing Arts"
+              aria-label="Jane Doe, Faculty of Performing Arts">
               <span class="people-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
               </span>
@@ -243,13 +98,22 @@
                     <i class="if if-building if--xs" aria-hidden="true"></i>
                     Faculty of Performing Arts
                   </span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Stagecraft &amp; Neo-Burlesque
+                  </span>
                   <span class="people-result__meta-item">2021–current</span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                    0000-0003-8765-4321
+                  </span>
                 </div>
               </div>
-              <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
             </div>
 
+            <!-- External person — no UGent affiliation -->
             <div class="people-result" role="option" tabindex="0"
+              data-id="p-jb1" data-name="Josephine Baker" data-affiliation="External"
               aria-label="Josephine Baker, External">
               <span class="people-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
@@ -259,20 +123,17 @@
                 <div class="people-result__meta">
                   <span class="people-result__meta-item">External</span>
                   <span class="people-result__meta-item">Folies Bergère, 1925–1956</span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                    0000-0001-9876-0001
+                  </span>
                 </div>
               </div>
             </div>
 
           </div>
 
-          <p class="text-muted small mt-2 mb-0" id="fe-demo-hint">3 people</p>
-
-          <div class="bt-panel__actions">
-            <button type="button" class="btn btn-primary btn-sm">Apply</button>
-            <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
-            <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto">Remove filter</button>
-          </div>
-
+          <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0">3 results</p>
         </div>
 
       </div>
@@ -280,112 +141,227 @@
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
-       6. HTML REFERENCE
+       3. SELECTED STATE
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">HTML</h2>
+    <h2 class="h4 mb-3">Selected</h2>
+    <p class="mb-4">After the user clicks a row, the list collapses to show only the selected person — name and affiliation, the rest of the metadata drops. The row gets <code>.is-selected</code> and <code>aria-selected="true"</code> — blue background, checkmark on the right. The input value updates to the person's name and the hint clears. The user can clear the selection to search again.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Search input + results list</h3>
-      <div class="ds-code">
-        <div class="ds-code-bar">
-          <span class="ds-code-lang">html</span>
-          <button type="button" class="ds-code-copy">Copy</button>
+      <h3 class="ds-demo-label">Selected</h3>
+      <div class="ds-demo-body" style="max-width: 420px;">
+
+        <div data-people-search>
+          <label for="ps-selected" class="form-label">Search by name or ORCID</label>
+          <input type="search" id="ps-selected" data-ps-input class="form-control form-control-sm"
+            value="Jane Doe"
+            autocomplete="off">
+
+          <div data-ps-results class="people-results" role="listbox"
+            aria-label="People matching your search">
+            <div class="people-result is-selected" role="option" tabindex="0"
+              data-id="p-jd2" data-name="Jane Doe" data-affiliation="Faculty of Performing Arts"
+              aria-label="Jane Doe, Faculty of Performing Arts" aria-selected="true">
+              <span class="people-result__icon" aria-hidden="true">
+                <i class="if if-user if--sm"></i>
+              </span>
+              <div>
+                <div class="people-result__name">Jane Doe</div>
+                <div class="people-result__meta">
+                  <span class="people-result__meta-item">Faculty of Performing Arts</span>
+                </div>
+              </div>
+              <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
+            </div>
+          </div>
+
+          <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0"></p>
         </div>
-<pre>&lt;label for="people-search-input" class="visually-hidden"&gt;Search for a person&lt;/label&gt;
-&lt;input type="search" id="people-search-input" class="form-control form-control-sm"
-  placeholder="Search by name or ORCID&hellip;"
-  autocomplete="off"
-  hx-get="/people/search"
-  hx-trigger="keyup changed delay:300ms"
-  hx-target="#people-results-list"
-  hx-indicator="#people-search-indicator"&gt;
 
-&lt;span id="people-search-indicator" class="htmx-indicator text-muted small" aria-live="polite"&gt;
-  Searching&hellip;
-&lt;/span&gt;
+      </div>
+    </div>
+  </section>
 
-&lt;div id="people-results-list" class="people-results" role="listbox"
-  aria-label="People matching your search" hidden&gt;
-  &lt;!-- populated by HTMX → people-search-results.html --&gt;
-&lt;/div&gt;
+  <!-- ══════════════════════════════════════════════════════════════════════
+       4. NO RESULTS
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">No results</h2>
+    <p class="mb-4">When the query returns nothing, the results list hides and the hint announces the no-results message — the message lives in the widget's live region, never inside the empty listbox. No illustration, no secondary action: the user refines the query, or in a deposit context falls back to "Add as external author".</p>
 
-&lt;p class="text-muted small mt-2 mb-0" id="people-hint"&gt;
-  Type a name to search across UGent people and external authors.
-&lt;/p&gt;</pre>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">No results</h3>
+      <div class="ds-demo-body" style="max-width: 420px;">
+
+        <div data-people-search>
+          <label for="ps-empty-results" class="form-label">Search by name or ORCID</label>
+          <input type="search" id="ps-empty-results" data-ps-input class="form-control form-control-sm"
+            value="xyzzy"
+            autocomplete="off">
+          <div data-ps-results class="people-results" role="listbox"
+            aria-label="People matching your search" hidden>
+          </div>
+          <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0">
+            No people found for "xyzzy"
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       5. CLICK-TO-SELECT RICH ROWS — single select in a form
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Click-to-select rich rows — single select in a form</h2>
+    <p class="mb-4">Two hosts pick one person at a time: the deposit flow's add-author form and the backoffice curate detail. The widget (<code>data-people-search</code>, driven by <code>people-search.js</code>) sits in the form without panel chrome or checkboxes. Clicking a rich row is terminal: the floating list closes, the person lands in the confirmation slot, and the row's <code>data-id</code> and <code>data-name</code> fill the form's hidden fields. The role select stays beside the widget, because a role belongs to one person. The clear button restarts the search. The "Not in the system? Add as external author" fallback exists only in these hosts, where you are creating an unlinked contributor on a work.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Add author — deposit flow, person selected</h3>
+      <div class="ds-demo-body">
+
+        <div class="card col-8">
+          <div class="card-body">
+            <p class="h6 mb-3">Add author</p>
+
+            <div class="mb-3" data-people-search>
+              <label for="ps-form-search" class="form-label">Search by name or ORCID</label>
+              <input type="search" id="ps-form-search" data-ps-input class="form-control form-control-sm"
+                value="Jane Doe" autocomplete="off">
+
+              <div data-ps-results class="people-results" role="listbox"
+                aria-label="People matching your search" hidden>
+              </div>
+
+              <div data-ps-selected class="p-2 mt-2 bg-light border rounded">
+                <div class="d-flex align-items-start gap-3">
+                  <span class="people-result__icon" aria-hidden="true">
+                    <i class="if if-user if--sm"></i>
+                  </span>
+                  <div class="flex-grow-1">
+                    <div class="people-result__name" data-ps-selected-name>Jane Doe</div>
+                    <div class="people-result__meta" data-ps-selected-affiliation>Faculty of Performing Arts</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
+                    aria-label="Clear selection">
+                    <i class="if if-close if--xs" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+
+              <p data-ps-hint aria-live="polite" class="text-muted small mt-1 mb-0"></p>
+            </div>
+
+            <div class="mb-0">
+              <label for="ps-form-role" class="form-label">Role</label>
+              <select id="ps-form-role" class="form-select form-select-sm w-auto">
+                <option value="author" selected>Author</option>
+                <option value="editor">Editor</option>
+                <option value="supervisor">Supervisor</option>
+                <option value="translator">Translator</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
 
+    <p class="mb-0 col-8 text-muted small">The full form, with the hidden fields, the external-author fallback and the submit actions, is the <code>add-author-form.html</code> partial.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       6. CHECKABLE RICH ROWS — multi-select in a panel
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Checkable rich rows — multi-select in a panel</h2>
+    <p class="mb-4">Two hosts pick several people at once: the works-page author filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>people-result__name</code> with <code>&lt;mark&gt;</code>, the <code>people-result__meta</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens.</p>
+
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Single result row</h3>
-      <div class="ds-code">
-        <div class="ds-code-bar">
-          <span class="ds-code-lang">html</span>
-          <button type="button" class="ds-code-copy">Copy</button>
+      <h3 class="ds-demo-label">Author filter editor — search-first, multi-select</h3>
+      <div class="ds-demo-body">
+
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Author">
+          <p class="bt-panel__title">Author</p>
+          <div class="bt-panel__body">
+            <label for="ps-check-search" class="visually-hidden">Search for a person</label>
+            <input type="search" id="ps-check-search" class="form-control form-control-sm"
+              value="doe" autocomplete="off">
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="People matching your search">
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="ps-check-jd1">
+              <label class="form-check-label" for="ps-check-jd1">
+                <span class="people-result__name">John <mark>Doe</mark></span>
+                <span class="people-result__meta">
+                  <span class="people-result__meta-item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Faculty of Performing Arts
+                  </span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Burlesque &amp; Variety Studies
+                  </span>
+                  <span class="people-result__meta-item">2019–current</span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                    0000-0002-1234-5678
+                  </span>
+                </span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="ps-check-jd2" checked>
+              <label class="form-check-label" for="ps-check-jd2">
+                <span class="people-result__name">Jane <mark>Doe</mark></span>
+                <span class="people-result__meta">
+                  <span class="people-result__meta-item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Faculty of Performing Arts
+                  </span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Stagecraft &amp; Neo-Burlesque
+                  </span>
+                  <span class="people-result__meta-item">2021–current</span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                    0000-0003-8765-4321
+                  </span>
+                </span>
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="ps-check-jb">
+              <label class="form-check-label" for="ps-check-jb">
+                <span class="people-result__name">Josephine Baker</span>
+                <span class="people-result__meta">
+                  <span class="people-result__meta-item">External</span>
+                  <span class="people-result__meta-item">Folies Bergère, 1925–1956</span>
+                  <span class="people-result__meta-item">
+                    <i class="if if-orcid if--xs" aria-hidden="true"></i>
+                    0000-0001-9876-0001
+                  </span>
+                </span>
+              </label>
+            </div>
+
+          </div>
+          <div class="bt-panel__actions">
+            <button type="button" class="btn btn-primary btn-sm">Apply</button>
+            <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
+          </div>
         </div>
-<pre>&lt;!-- Rendered by people-search-results.html partial --&gt;
-&lt;div class="people-result" role="option" tabindex="0"
-  data-id="p-jd2"
-  data-name="Jane Doe"
-  data-affiliation="Faculty of Performing Arts"
-  aria-label="Jane Doe, Faculty of Performing Arts"&gt;
 
-  &lt;span class="people-result__icon" aria-hidden="true"&gt;
-    &lt;i class="if if-user if--sm"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-
-  &lt;div&gt;
-    &lt;div class="people-result__name"&gt;Jane &lt;mark&gt;Doe&lt;/mark&gt;&lt;/div&gt;
-    &lt;div class="people-result__meta"&gt;
-      &lt;span class="people-result__meta-item"&gt;
-        &lt;i class="if if-building if--xs" aria-hidden="true"&gt;&lt;/i&gt;
-        Faculty of Performing Arts
-      &lt;/span&gt;
-      &lt;span class="people-result__meta-item"&gt;
-        &lt;i class="if if-building if--xs" aria-hidden="true"&gt;&lt;/i&gt;
-        Stagecraft &amp;amp; Neo-Burlesque
-      &lt;/span&gt;
-      &lt;span class="people-result__meta-item"&gt;2021–current&lt;/span&gt;
-      &lt;span class="people-result__meta-item"&gt;
-        &lt;i class="if if-orcid if--xs" aria-hidden="true"&gt;&lt;/i&gt;
-        0000-0003-8765-4321
-      &lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-&lt;/div&gt;</pre>
       </div>
     </div>
 
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Selected state — add <code>.is-selected</code> and <code>aria-selected="true"</code></h3>
-      <div class="ds-code">
-        <div class="ds-code-bar">
-          <span class="ds-code-lang">html</span>
-          <button type="button" class="ds-code-copy">Copy</button>
-        </div>
-<pre>&lt;div class="people-result is-selected" role="option" tabindex="0"
-  data-id="p-jd2" data-name="Jane Doe"
-  aria-label="Jane Doe, Faculty of Performing Arts"
-  aria-selected="true"&gt;
-
-  &lt;span class="people-result__icon" aria-hidden="true"&gt;
-    &lt;i class="if if-user if--sm"&gt;&lt;/i&gt;
-  &lt;/span&gt;
-
-  &lt;div&gt;
-    &lt;div class="people-result__name"&gt;Jane Doe&lt;/div&gt;
-    &lt;div class="people-result__meta"&gt;
-      &lt;span class="people-result__meta-item"&gt;Faculty of Performing Arts&lt;/span&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-
-  &lt;i class="if if-check ms-auto text-success" aria-hidden="true"&gt;&lt;/i&gt;
-
-&lt;/div&gt;</pre>
-      </div>
-    </div>
-
+    <p class="mb-0 col-8 text-muted small">External people already in the index appear as results here, as everywhere. The "Add as external author" fallback belongs to the deposit contexts only: a person in no index is not filterable.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -393,7 +369,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Classes</h2>
-    <p>These classes are currently defined in <code>assets/scss/patterns/_booktower-components.scss</code>. Larger patterns such as navbar, toolbar, and work-card have been split into their own partials, but people search still lives in the shared component stylesheet.</p>
+    <p>Defined in <code>assets/scss/patterns/_booktower-people-results.scss</code>.</p>
 
     <table class="table table-sm align-middle mt-3" aria-label="People search CSS classes">
       <thead class="text-uppercase text-muted small">
@@ -450,10 +426,9 @@
     <h2 class="h4 mb-3">Behaviour</h2>
     <ul class="small">
       <li>Search fires after 2 characters with a 300ms debounce.</li>
-      <li>In production: <code>hx-get="/people/search?q="</code> returning the <code>people-search-results.html</code> partial.</li>
-      <li>In the prototype: the JS array <code>PEOPLE</code> in <code>filter-editor.html</code> stands in for the server.</li>
+      <li>In production: <code>hx-get="/people/search?q="</code> returning the <code>people-search-results.html</code> partial. While the request is in flight, an <code>htmx-indicator</code> span with <code>aria-live="polite"</code> shows "Searching&hellip;".</li>
+      <li>In the prototype: the <code>PEOPLE</code> array in <code>assets/js/people-search-stub.js</code> stands in for the server.</li>
       <li>Clicking a row updates the input value, collapses the list to the selected state, and stores the person's <code>data-id</code> and <code>data-name</code> for the filter chip or form submission.</li>
-      <li>The <code>if-building</code> icon used for department is not in the verified icon list — use <code>if-building</code> as a fallback until confirmed.</li>
       <li>An unlinked (external) author is valid. The no-results state should lead to the "Add as external author" fallback if present in the host context (deposit form), not block submission.</li>
     </ul>
   </section>

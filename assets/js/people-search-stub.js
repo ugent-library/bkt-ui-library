@@ -85,25 +85,28 @@
       return;
     }
 
-    if (hint) hint.textContent = 'Searching&hellip;';
+    if (hint) hint.textContent = 'Searching…';
 
     timer = setTimeout(() => {
       const matches = PEOPLE.filter(p =>
         p.name.toLowerCase().includes(q) || (p.orcid && p.orcid.includes(q))
       );
 
-      results.innerHTML = matches.length
-        ? matches.map(p => renderRow(p, q)).join('')
-        : `<div class="p-3 text-muted small">No people found for "${input.value}"</div>`;
-
-      results.hidden = false;
+      // No-results lives in the hint (the live region), never inside the listbox —
+      // a message div is not a valid listbox child. See patterns/people-search.html.
+      results.innerHTML = matches.map(p => renderRow(p, q)).join('');
+      results.hidden = matches.length === 0;
 
       if (hint) hint.textContent = matches.length
         ? `${matches.length} result${matches.length !== 1 ? 's' : ''}`
-        : '';
+        : `No people found for "${input.value}"`;
 
-      // Fire the same event HTMX would fire so people-search.js can react
-      results.dispatchEvent(new Event('htmx:afterSwap', { bubbles: true }));
+      // Fire the same event HTMX would fire so people-search.js can react —
+      // real HTMX carries the swapped element in detail.target.
+      results.dispatchEvent(new CustomEvent('htmx:afterSwap', {
+        bubbles: true,
+        detail: { target: results }
+      }));
     }, 300);
   });
 

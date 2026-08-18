@@ -1,6 +1,17 @@
-/* -- People search (author filter editor) -- */
+/* -- People search (single-select widget) -- */
 /* TODO: simplify, has too many specifics */
+[data-people-search] {
+  position: relative;
+}
+/* The list is an overlay: results appearing or clearing must never reflow the form
+   below the input. No top offset — out of flow it stays at its in-flow spot. */
 .people-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: var(--bt-z-panel);
+  background: var(--bt-white);
+  box-shadow: var(--bt-shadow-md);
   border: var(--bt-border);
   border-radius: var(--bt-radius-md);
   overflow: hidden;

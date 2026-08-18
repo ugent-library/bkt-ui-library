@@ -248,35 +248,42 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `query-builder.js`
 
-**Purpose:** Advanced search, phase 2 — turns a condition row into an "any of these" OR group
-(a `<fieldset>`) in place and collapses it back when one alternative is left. The chooser is
-cloned from `#qb-chooser` into the slot beside whichever control opened it, re-identified
-(`identify()` re-points `label[for]` and `aria-labelledby`), and its search filters the field
-choices. A chooser pick clones the row template the choice names and writes the label in.
-The person picker rides on the same slot mechanism, cloned from `#qb-person-picker` — the
-searchable checklist the works filter bar opens for its person filter. Add clones
-`#qb-person-token` per ticked name the row does not already carry, and clears the boxes; a
-token's × removes it. Rebuilds the `or` separators inside groups after every change (the top
-level is AND-joined, which the heading states, so it carries none), hides a row's ⋯ menu while it sits
-inside a group (with remove promoted out, "Add an 'or'" is all it holds), and rewrites the
-⋯ and remove buttons' accessible names from the row's current field, operator and value
-(`nameRow()`), so the remove control always names the condition it removes. Emptying the list,
-by Clear all or by removing the last condition, restores whatever `#qb-blank` holds and
-re-identifies it. That template may hold nothing, in which case Add a condition is the blank
-state. Markup hooks:
-`#qb-conditions`, `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-sep]`,
-`[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`, `[data-qb-remove-group]`,
-`[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`, `[data-qb-count]`,
-`[data-qb-chooser-slot]`, `[data-qb-choice]` (+ `data-qb-label`/`data-qb-template`),
-`[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-person-slot]`,
-`[data-qb-person-search]`, `[data-qb-person-add]`, `[data-qb-person-cancel]`,
-`[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`, `[data-qb-actions]`,
-`[data-qb-blank]`. Those four are the value cell, the operator select, the actions cell and the
-blank state's root: the file reads the row through them, never through the
-`bt-query-builder__row-*` classes, so a layout change can rename or drop a cell class without
-costing the row its accessible name. It writes two classes — `bt-query-builder__row--alt` and
-`visually-hidden` on the separators it builds — because those are styling, which is the one
-direction that belongs in `classList`.
+**Purpose:** Advanced search — the condition rows, the field chooser, the person picker, the
+OR groups and the approximate count.
+
+- **The chooser** is cloned from `#qb-chooser` into the slot beside whichever control opened it
+  and re-identified (`identify()` re-points `label[for]` and `aria-labelledby`); its search
+  filters the field choices. A pick clones the row template the choice names and writes the
+  field label into it.
+- **The person picker** rides on the same slot mechanism, cloned from `#qb-person-picker` — the
+  searchable checklist the works filter bar opens for its person filter. Add clones
+  `#qb-person-token` per ticked name the row does not already carry and clears the boxes; a
+  token's × removes it.
+- **OR groups (phase 2)** turn a condition row into an "any of these" `<fieldset>` in place and
+  collapse it back to a plain row when one alternative is left. The `or` separators inside a
+  group are rebuilt after every change; the top level is AND-joined, which the heading states,
+  so it carries none. A row sitting inside a group hides its ⋯ menu — with remove promoted out,
+  "Add an 'or'" is all it holds.
+- **The accessible names** of the ⋯ and remove buttons are rewritten from the row's current
+  field, operator and value (`nameRow()`), so the remove control always names the condition it
+  removes.
+- **The blank state** returns when the list empties, by Clear all or by removing the last
+  condition: whatever `#qb-blank` holds is restored and re-identified. That template may hold
+  nothing, in which case Add a condition is the blank state.
+- **Markup hooks:** `#qb-conditions`, `[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`,
+  `[data-qb-sep]`, `[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`,
+  `[data-qb-remove-group]`, `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`,
+  `[data-qb-count]`, `[data-qb-chooser-slot]`, `[data-qb-choice]` (+
+  `data-qb-label`/`data-qb-template`), `[data-qb-choice-search]`, `[data-qb-choice-group]`,
+  `[data-qb-person-slot]`, `[data-qb-person-search]`, `[data-qb-person-add]`,
+  `[data-qb-person-cancel]`, `[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`,
+  `[data-qb-actions]`, `[data-qb-blank]`.
+- **The row is read through its data attributes, never its classes.** `[data-qb-value]`,
+  `[data-qb-op]`, `[data-qb-actions]` and `[data-qb-blank]` are the value cell, the operator
+  select, the actions cell and the blank state's root, so a layout change can rename or drop a
+  cell class without costing the row its accessible name. The file writes two classes —
+  `bt-query-builder__row--alt`, and `visually-hidden` on the separators it builds — because
+  those are styling, which is the one direction that belongs in `classList`.
 
 **Loaded by:** `public-works.html`, which renders the builder as a dialog, and
 `public-search-advanced.html`, which renders it as a page. Both include the same two
@@ -293,14 +300,15 @@ Pattern page: `patterns/query-builder.html`.
 **Dispatches:** nothing
 
 **Prototype-only:** yes — it exists so the group interaction can be judged before it is built.
-Production renders the condition list server-side. The result count is not simulated: it stays
-as rendered while the sentence updates.
+Production renders the condition list server-side and computes the count (field contract, open
+question 9). The prototype simulates the count with invented numbers, debounced, into the
+submit's `[data-qb-count]` span — the builder's one `aria-live` region.
 
 ---
 
 ### `people-search.js`
 
-**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. (The works Author filter is a text stub today; production would resolve it through this widget.)
+**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. The `[data-ps-hint]` element is the widget's live region: it announces the result count and the no-results message — nothing but `.people-result` rows goes inside the `[data-ps-results]` listbox. Pattern page: `patterns/people-search.html`. (The works Author filter is a text stub today; production would resolve it through this widget.)
 
 **Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`)
 

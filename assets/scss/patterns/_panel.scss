@@ -17,19 +17,25 @@
 }
 
 .bt-panel__title {
-  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
+  padding: var(--bt-sp-3) var(--bt-sp-4) var(--bt-sp-2);
   margin-bottom: 0;
   font-weight: var(--s-display-weight);
-  border-bottom: 1px solid var(--bt-border);
 }
 
 .bt-panel__body {
   border-top: var(--bt-border);
-  padding: var(--bt-sp-6) var(--bt-sp-4);
+  padding: var(--bt-sp-4);
   gap: var(--bt-sp-4);
   display: flex;
   max-height: 240px;
   overflow-y: auto;
+}
+
+/* The title and the body under it are one header block — the divider belongs to
+   the boundary where the next body starts, never under the title. */
+.bt-panel__title + .bt-panel__body {
+  border-top: 0;
+  padding-top: 0;
 }
 
 :not(.bt-panel) > .bt-panel__body {
@@ -41,7 +47,7 @@
 .bt-panel__actions {
   display: flex;
   gap: var(--bt-sp-2);
-  padding: var(--bt-sp-4);
+  padding: var(--bt-sp-3) var(--bt-sp-4);
   border-top: var(--bt-border);
 }
 
@@ -61,7 +67,8 @@
 }
 .bt-panel__body .form-check {
   display: flex;
-  align-items: center;
+  /* flex-start + the input's top offset keep the box on line 1 of multi-line rich labels. */
+  align-items: flex-start;
   gap: var(--bt-sp-2);
   margin: 0;
   padding: var(--bt-sp-2) var(--bt-sp-4);
@@ -69,7 +76,7 @@
 }
 .bt-panel__body .form-check-input {
   float: none;
-  margin: 0;
+  margin: 0.25em 0 0;
   flex: 0 0 auto;
 }
 .bt-panel__body .form-check:hover { background-color: var(--bt-gray-50); }

@@ -89,7 +89,10 @@
     results.addEventListener('htmx:afterSwap', () => {
       const count = results.querySelectorAll('.people-result').length;
       results.hidden = count === 0;
-      if (hint) hint.textContent = count ? `${count} result${count !== 1 ? 's' : ''}` : '';
+      // No-results lives in the hint (the live region), never inside the listbox.
+      if (hint) hint.textContent = count
+        ? `${count} result${count !== 1 ? 's' : ''}`
+        : `No people found for "${input.value}"`;
     });
 
     // ── Clear ────────────────────────────────────────────────────────────────
@@ -177,10 +180,12 @@
 
   // Re-init widgets that arrive via HTMX swap
   document.addEventListener('htmx:afterSwap', e => {
-    if (e.detail.target.matches?.('[data-people-search]')) {
-      initWidget(e.detail.target);
+    const target = e.detail?.target;
+    if (!target) return;
+    if (target.matches?.('[data-people-search]')) {
+      initWidget(target);
     }
-    e.detail.target.querySelectorAll?.('[data-people-search]').forEach(initWidget);
+    target.querySelectorAll?.('[data-people-search]').forEach(initWidget);
   });
 
   window.PeopleSearch = { init: initWidget, initAll };

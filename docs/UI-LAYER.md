@@ -232,4 +232,4 @@ A future npm package will replace the manual copy step.
 
 - Decide whether blank-slate is a component we should keep, or if it is just a card with text-center
 - Decide whether research-card is a component we should keep, or if it is just a card with text-center
-- Fix people-search
+- Finish the Add person unification: the works author filter still renders the bare name checklist, and the query builder submits person tokens by display name rather than id (the settled pattern: `patterns/people-search.html`)
