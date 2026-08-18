@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 5b9460c/2026-08-17 */
+/*! Booktower 7bad4de/2026-08-17 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -829,7 +829,7 @@ code, kbd, pre, samp {
 }
 
 .form-text {
-  font-size: var(--bt-text-xs);
+  font-size: var(--bt-text-sm);
   color: var(--bt-gray-700);
   margin-top: var(--bt-sp-1);
   line-height: 1.5;
@@ -1961,6 +1961,13 @@ a.bt-avatar--outline:hover:not(:disabled) {
   and its own list contract, so a choice rides on .dropdown-item. .card for __group, which would
   nest card chrome inside the host's box, so the group draws only its inset band.
 */
+.bt-query-builder {
+  background-color: var(--bt-white);
+  border: var(--bt-border);
+  margin-bottom: var(--bt-sp-3);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+}
+
 /* ── Lanes ────────────────────────────────────────────────────────────────── */
 .bt-query-builder__conditions,
 .bt-query-builder__alts {
@@ -1970,7 +1977,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   /* Keep both here: on a row they offset that subgrid's tracks and the lanes stop lining up. */
   -moz-column-gap: var(--bt-sp-4);
        column-gap: var(--bt-sp-4);
-  padding-inline: var(--bt-sp-3);
   container-type: inline-size;
   container-name: qb-conditions;
 }
@@ -1983,7 +1989,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__phrase {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--bt-sp-2) var(--bt-sp-4);
+  gap: var(--bt-sp-2) var(--bt-sp-3);
   align-items: center;
   min-width: 0;
 }
@@ -2016,7 +2022,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   display: grid;
   grid-template-columns: subgrid;
   row-gap: var(--bt-sp-2);
-  align-items: center;
+  align-items: baseline;
   padding-block: var(--bt-sp-4);
 }
 
@@ -2033,9 +2039,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: stretch;
 }
 
-.bt-query-builder__row--last-changed {
+.bt-query-builder__row--error {
   background-color: var(--bt-red-50);
-  box-shadow: inset 3px 0 0 var(--bt-red-700);
 }
 
 .bt-query-builder__row-kind {
@@ -2046,7 +2051,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__field {
   max-width: 100%;
   padding: 0;
-  color: var(--bt-text);
+  color: var(--bt-blue-800);
   font-weight: 600;
   text-align: left;
   overflow: hidden;
@@ -2055,7 +2060,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   background: transparent;
   border: 0;
   /* The affordance without a caret: a dotted rule, the convention for a value edited in place */
-  border-bottom: 1px dotted var(--bt-gray-400);
+  border-bottom: 1px dotted var(--bt-blue-800);
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -2104,20 +2109,20 @@ a.bt-avatar--outline:hover:not(:disabled) {
 }
 
 .bt-query-builder__sep {
-  margin: 0;
-  padding: var(--bt-sp-1) var(--bt-sp-4);
-  color: var(--s-text-muted);
   font-size: var(--bt-text-xs);
   font-weight: 600;
+  display: inline-flex;
+  margin-bottom: 0;
+}
+
+.bt-query-builder__sep span {
+  display: inline-block;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  background-color: var(--bt-gray-150);
+  border-radius: var(--bt-radius);
 }
 
 /* ── People value ──────────────────────────────────────────────────────────── */
-.bt-query-builder__token {
-  display: inline-flex;
-  gap: var(--bt-sp-1);
-  align-items: center;
-}
-
 .bt-query-builder__people-field {
   flex: 1 1 16rem;
   min-width: min(100%, 16rem);
@@ -2142,12 +2147,13 @@ a.bt-avatar--outline:hover:not(:disabled) {
 /* ── OR group ───────────────────────────────────────────────────────────────── */
 .bt-query-builder__group {
   margin: var(--bt-sp-3) 0;
+  padding: var(--bt-sp-4) var(--bt-sp-6);
   background-color: var(--bt-bg-alt);
+  position: relative;
 }
 
 /* Reboot sizes a legend on the heading scale. */
 .bt-query-builder__group-label {
-  padding: var(--bt-sp-3) var(--bt-sp-4);
   font-size: inherit;
 }
 
@@ -2164,8 +2170,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   display: flex;
   gap: var(--bt-sp-3);
   align-items: center;
-  padding: var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-3);
-  border-top: var(--bt-border);
+  padding: var(--bt-sp-3) 0 0;
 }
 
 .bt-query-builder__add {
@@ -2173,20 +2178,13 @@ a.bt-avatar--outline:hover:not(:disabled) {
   flex-wrap: wrap;
   gap: var(--bt-sp-2);
   align-items: center;
-  padding: var(--bt-sp-3) var(--bt-sp-4);
+  margin: var(--bt-sp-3) 0 var(--bt-sp-2) 0;
 }
 
 .bt-query-builder__add .dropdown {
   position: static;
 }
 
-/* ── Responsive ───────────────────────────────────────────────────────────── */
-@media (max-width: 991.98px) {
-  .bt-query-builder__sep {
-    background-color: var(--bt-bg-alt);
-    border-block: var(--bt-border);
-  }
-}
 /* UNDER REVIEW DO NOT TAKE AS TRUTH */
 /* -- bt-navbar -- */
 .bt-navbar {

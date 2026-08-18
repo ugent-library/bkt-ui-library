@@ -22,6 +22,7 @@
   aria-labelledby="conditions-heading">
 
   <div id="qb-conditions" class="bt-query-builder__conditions">
+    <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
 
     <!-- @state: advanced-empty -->
     <!-- @include: templates/partials/search-advanced-blank.html -->
@@ -40,24 +41,37 @@
         </div>
       </div>
       <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-role-1">Role, condition 1</label>
+        <select class="form-select form-select-sm" id="qb-role-1">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qb-op-1">Operator, condition 1</label>
+        <select class="form-select form-select-sm" id="qb-op-1" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-            <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
-              <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
-              Jan Coppens
-              <button type="button" aria-label="Remove Jan Coppens from condition 1">
-                <i class="if if-close if--xs" aria-hidden="true"></i>
-              </button>
-            </span>
-            <div class="dropdown">
-              <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
-                data-bs-auto-close="outside" aria-expanded="false"
-                aria-label="Add a person to condition 1">
-                <i class="if if-add if--xs" aria-hidden="true"></i>
-                Add a person
-              </button>
-              <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
-                aria-label="Add a person" data-qb-person-slot></div>
-            </div>
+          <span class="badge text-bg-primary-light" data-qb-token>
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Jan Coppens
+            <button type="button" aria-label="Remove Jan Coppens from condition 1">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false"
+              aria-label="Add a person to condition 1">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-person-slot></div>
+          </div>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -153,7 +167,7 @@
           <option>is any of</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
+          <span class="badge text-bg-primary-light" data-qb-token>
             <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
             Jan Coppens
             <button type="button" aria-label="Remove Jan Coppens from condition 2">
@@ -219,14 +233,14 @@
           <option>is not</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
+          <span class="badge text-bg-primary-light" data-qb-token>
             <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
             Karen Verhoeven
             <button type="button" aria-label="Remove Karen Verhoeven from condition 3">
               <i class="if if-close if--xs" aria-hidden="true"></i>
             </button>
           </span>
-          <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
+          <span class="badge text-bg-primary-light" data-qb-token>
             <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
             Els De Smet
             <button type="button" aria-label="Remove Els De Smet from condition 3">
@@ -392,7 +406,7 @@
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-val-6">Identifiers, condition 6</label>
           <textarea class="form-control form-control-sm font-monospace bt-textarea-auto bt-query-builder__batch" id="qb-val-6"
-            rows="3" aria-describedby="qb-val-6-help">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+            rows="3" aria-describedby="qb-val-6-help qb-val-6-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
   01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81 01KPQ4D2KG9E 01K30SYZCNAV
   01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF 01K4D2KG9EFW 01KHPQ4D2KG9
   01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX 01KJ30SYZCNA 01KZCNAVRHPQ
@@ -420,13 +434,23 @@
   01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX 01KJ30SYZCNA 01KZCNAVRHPQ
   01KCNAVRHPQ4 01KSYZCNAVRH 01K67MXJ30SY 01KKG9EFW5TB ISBN-onbekend zie-bijlage-3</textarea>
           <!-- Written out, not computed: the prototype shows what recognition reports, it does
-                not recognise. The counts match the sample above. -->
+                not recognise. The counts and the listed lines match the sample above. -->
           <p class="form-text mb-0" id="qb-val-6-help">
             Separate by spaces, commas, or line breaks.
-            <br>
-            <strong>160 identifiers recognised</strong> &middot; 156 Biblio IDs, 4 DOIs &middot;
-            2 lines not recognised &mdash; <a href="#">shown here</a>.
           </p>
+          <p class="form-text mb-0" id="qb-val-6-help">
+            <strong>160 identifiers recognised.</strong> 156 Biblio IDs, 4 DOIs.
+          </p>
+          <div class="alert alert-warning alert--sm m-0" id="qb-val-6-unrecognised">
+            <p class="mb-1">
+              <i class="if if-alert me-1" aria-hidden="true"></i>
+              <strong>2 lines were not recognised and are not being searched.</strong>
+            </p>
+            <ul class="font-monospace">
+              <li>ISBN-onbekend</li>
+              <li>zie-bijlage-3</li>
+            </ul>
+          </div>
           <div class="alert alert-warning alert--sm mb-0">
             A list this long outgrows a durable link. <a href="#">Save this search</a> to share it.
           </div>
@@ -436,7 +460,7 @@
         <div class="dropdown">
           <button type="button" class="btn btn-ghost btn-sm text-muted"
             data-bs-toggle="dropdown" aria-expanded="false"
-            aria-label="Actions for condition 6: identifier is any of 763 IDs">
+            aria-label="Actions for condition 6: identifier is any of 160 IDs">
             <i class="if if-more if--xs" aria-hidden="true"></i>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -448,7 +472,7 @@
           </ul>
         </div>
         <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-          aria-label="Remove condition 6: identifier is any of 763 IDs">
+          aria-label="Remove condition 6: identifier is any of 160 IDs">
           <i class="if if-delete if--xs" aria-hidden="true"></i>
         </button>
       </div>
@@ -456,10 +480,10 @@
     <!-- @state -->
 
     <!-- @state: advanced-zero -->
-    <!-- The recovery lives beside the count (actions partial); the last-changed row is
+    <!-- The recovery lives beside the count (actions partial); the error row is
           marked; nothing is auto-dropped. Per-condition pass/fail deliberately not shown
           (QUERY-BUILDER-DESIGN.md item 4: QA tool, not a page feature). -->
-    <div class="bt-query-builder__row bt-query-builder__row--last-changed" data-qb-row>
+    <div class="bt-query-builder__row bt-query-builder__row--error" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
           <button type="button" class="bt-query-builder__field" data-qb-change-field
@@ -478,7 +502,7 @@
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qbz-val-2">Value, condition 2</label>
           <input type="text" class="form-control form-control-sm" id="qbz-val-2" value="Nature Fotonics">
-          <span class="small text-danger">added last &mdash; nothing matches this spelling</span>
+          <span class="small text-danger">nothing matches this spelling</span>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -509,7 +533,7 @@
           back to a plain row when one alternative is left. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="bt-query-builder__group-label">
-        &hellip;where <em>any</em> of these conditions is true
+        &hellip;where <em>any</em> of these conditions is true:
       </legend>
       <div class="bt-query-builder__alts" data-qb-alts>
         <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
@@ -541,7 +565,9 @@
             </button>
           </div>
         </div>
-        <p class="bt-query-builder__sep" data-qb-sep>or</p>
+        <p class="bt-query-builder__sep visually-hidden" data-qb-sep>
+          <span>or</span>
+        </p>
         <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
           <div class="bt-query-builder__row-kind">
             <div class="dropdown">
@@ -573,7 +599,7 @@
       </div>
       <div class="bt-query-builder__group-foot">
         <div class="dropdown">
-          <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt
+          <button type="button" class="btn btn-secondary btn-xs" data-qb-add-alt
             data-bs-toggle="dropdown" aria-expanded="false">
             <i class="if if-add if--xs" aria-hidden="true"></i>
             Add an alternative
@@ -582,6 +608,7 @@
             aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+          <i class="if if-close" aria-hidden="true"></i>
           Ungroup
         </button>
       </div>
@@ -590,7 +617,7 @@
     <!-- A narrowed role only reads correctly inside an OR: one person, two roles. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="bt-query-builder__group-label">
-        &hellip;where <em>any</em> of these conditions is true
+        &hellip;where <em>any</em> of these conditions is true:
       </legend>
       <div class="bt-query-builder__alts" data-qb-alts>
         <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
@@ -617,7 +644,7 @@
               <option>is any of</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
+              <span class="badge text-bg-primary-light" data-qb-token>
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                 Jan Coppens
                 <button type="button" aria-label="Remove Jan Coppens from alternative 1">
@@ -643,7 +670,9 @@
             </button>
           </div>
         </div>
-        <p class="bt-query-builder__sep" data-qb-sep>or</p>
+        <p class="bt-query-builder__sep visually-hidden" data-qb-sep>
+          <span>or</span>
+        </p>
         <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
           <div class="bt-query-builder__row-kind">
             <div class="dropdown">
@@ -668,7 +697,7 @@
               <option>is any of</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
+              <span class="badge text-bg-primary-light" data-qb-token>
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
                 Jan Coppens
                 <button type="button" aria-label="Remove Jan Coppens from alternative 2">
@@ -697,7 +726,7 @@
       </div>
       <div class="bt-query-builder__group-foot">
         <div class="dropdown">
-          <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt
+          <button type="button" class="btn btn-secondary btn-xs" data-qb-add-alt
             data-bs-toggle="dropdown" aria-expanded="false">
             <i class="if if-add if--xs" aria-hidden="true"></i>
             Add an alternative
@@ -706,6 +735,7 @@
             aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+          <i class="if if-close" aria-hidden="true"></i>
           Ungroup
         </button>
       </div>
@@ -862,7 +892,7 @@
 
 <!-- One picked person. The crest marks an identified UGent person, as it does on the cards. -->
   <template id="qb-person-token">
-    <span class="badge text-bg-primary-light bt-query-builder__token" data-qb-token>
+    <span class="badge text-bg-primary-light" data-qb-token>
       <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
       <span data-qb-token-name></span>
       <button type="button" aria-label="Remove">
@@ -1158,12 +1188,12 @@
   <template id="qb-group">
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="bt-query-builder__group-label">
-        &hellip;where <em>any</em> of these conditions is true
+        &hellip;where <em>any</em> of these conditions is true:
       </legend>
       <div class="bt-query-builder__alts" data-qb-alts></div>
       <div class="bt-query-builder__group-foot">
         <div class="dropdown">
-          <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt
+          <button type="button" class="btn btn-secondary btn-xs" data-qb-add-alt
             data-bs-toggle="dropdown" aria-expanded="false">
             <i class="if if-add if--xs" aria-hidden="true"></i>
             Add an alternative
@@ -1172,6 +1202,7 @@
               aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+          <i class="if if-close" aria-hidden="true"></i>
           Ungroup
         </button>
       </div>

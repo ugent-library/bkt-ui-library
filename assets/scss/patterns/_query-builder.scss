@@ -6,6 +6,13 @@
   nest card chrome inside the host's box, so the group draws only its inset band.
 */
 
+.bt-query-builder {
+  background-color: var(--bt-white);
+  border: var(--bt-border);
+  margin-bottom: var(--bt-sp-3);
+  padding: var(--bt-sp-4) var(--bt-sp-6);
+}
+
 /* ── Lanes ────────────────────────────────────────────────────────────────── */
 
 .bt-query-builder__conditions,
@@ -14,7 +21,6 @@
   grid-template-columns: fit-content(12rem) minmax(0, 1fr) max-content;
   /* Keep both here: on a row they offset that subgrid's tracks and the lanes stop lining up. */
   column-gap: var(--bt-sp-4);
-  padding-inline: var(--bt-sp-3);
   container-type: inline-size;
   container-name: qb-conditions;
 }
@@ -27,7 +33,7 @@
 .bt-query-builder__phrase {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--bt-sp-2) var(--bt-sp-4);
+  gap: var(--bt-sp-2) var(--bt-sp-3);
   align-items: center;
   min-width: 0;
 }
@@ -63,7 +69,7 @@
   display: grid;
   grid-template-columns: subgrid;
   row-gap: var(--bt-sp-2);
-  align-items: center;
+  align-items: baseline;
   padding-block: var(--bt-sp-4);
 }
 
@@ -80,9 +86,8 @@
   align-items: stretch;
 }
 
-.bt-query-builder__row--last-changed {
+.bt-query-builder__row--error {
   background-color: var(--bt-red-50);
-  box-shadow: inset 3px 0 0 var(--bt-red-700);
 }
 
 .bt-query-builder__row-kind {
@@ -93,7 +98,7 @@
 .bt-query-builder__field {
   max-width: 100%;
   padding: 0;
-  color: var(--bt-text);
+  color: var(--bt-blue-800);
   font-weight: 600;
   text-align: left;
   overflow: hidden;
@@ -102,7 +107,7 @@
   background: transparent;
   border: 0;
   /* The affordance without a caret: a dotted rule, the convention for a value edited in place */
-  border-bottom: 1px dotted var(--bt-gray-400);
+  border-bottom: 1px dotted var(--bt-blue-800);
   appearance: none;
 }
 
@@ -149,20 +154,20 @@
 }
 
 .bt-query-builder__sep {
-  margin: 0;
-  padding: var(--bt-sp-1) var(--bt-sp-4);
-  color: var(--s-text-muted);
   font-size: var(--bt-text-xs);
   font-weight: 600;
+  display: inline-flex;
+  margin-bottom: 0;
+}
+
+.bt-query-builder__sep span {
+  display: inline-block;
+  padding: var(--bt-sp-1) var(--bt-sp-2);
+  background-color: var(--bt-gray-150);
+  border-radius: var(--bt-radius);
 }
 
 /* ── People value ──────────────────────────────────────────────────────────── */
-
-.bt-query-builder__token {
-  display: inline-flex;
-  gap: var(--bt-sp-1);
-  align-items: center;
-}
 
 .bt-query-builder__people-field {
   flex: 1 1 16rem;
@@ -188,13 +193,15 @@
 /* ── OR group ───────────────────────────────────────────────────────────────── */
 
 .bt-query-builder__group {
-  margin: var(--bt-sp-3) 0;
+  margin: var(--bt-sp-3) 0 ;
+  padding: var(--bt-sp-4) var(--bt-sp-6);
   background-color: var(--bt-bg-alt);
+  position: relative;
 }
+
 
 /* Reboot sizes a legend on the heading scale. */
 .bt-query-builder__group-label {
-  padding: var(--bt-sp-3) var(--bt-sp-4);
   font-size: inherit;
 }
 
@@ -211,8 +218,7 @@
   display: flex;
   gap: var(--bt-sp-3);
   align-items: center;
-  padding: var(--bt-sp-2) var(--bt-sp-4) var(--bt-sp-3);
-  border-top: var(--bt-border);
+  padding: var(--bt-sp-3) 0 0;
 }
 
 .bt-query-builder__add {
@@ -220,18 +226,9 @@
   flex-wrap: wrap;
   gap: var(--bt-sp-2);
   align-items: center;
-  padding: var(--bt-sp-3) var(--bt-sp-4);
+  margin: var(--bt-sp-3) 0 var(--bt-sp-2) 0;
 }
 
 .bt-query-builder__add .dropdown {
   position: static;
-}
-
-/* ── Responsive ───────────────────────────────────────────────────────────── */
-
-@media (max-width: 991.98px) {
-  .bt-query-builder__sep {
-    background-color: var(--bt-bg-alt);
-    border-block: var(--bt-border);
-  }
 }

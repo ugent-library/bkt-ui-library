@@ -44,13 +44,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const isSeparator = el => Boolean(el) && el.nodeType === 1 &&
     el.hasAttribute('data-qb-sep');
 
-  // Only an OR group carries a separator: the top level is AND-joined, which the heading over
-  // the rows states once.
-  function separator() {
+  function separator(label = 'and') {
     const p = document.createElement('p');
-    p.className = 'bt-query-builder__sep';
+    p.className = 'bt-query-builder__sep visually-hidden';
     p.setAttribute('data-qb-sep', '');
-    p.textContent = 'or';
+
+    const span = document.createElement('span');
+    span.textContent = label;
+    p.append(span);
+
     return p;
   }
 
@@ -185,27 +187,32 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── Keeping the whole thing consistent ──────────────────────────────────────
 
   function sync() {
-    // A removed alternative must not orphan its "or": they all go, the loop puts back the
-    // ones a group still needs.
+    // Remove all separators and rebuild them from the current document structure: OR only runs
+    // between alternatives within a group; AND only runs between top-level rows outside groups.
     list.querySelectorAll('[data-qb-sep]').forEach(el => el.remove());
 
     items().forEach(item => {
       if (item.hasAttribute('data-qb-group')) {
         alts(item).forEach((row, j) => {
           row.classList.add('bt-query-builder__row--alt');
-          if (j && !isSeparator(row.previousElementSibling)) row.before(separator());
+          if (j && !isSeparator(row.previousElementSibling)) row.before(separator('or'));
           // With remove promoted out of the menu, "Add an 'or'" is all it holds — and a row
           // already inside a group has no use for it, so the whole menu hides.
           const or = row.querySelector('[data-qb-or]');
           if (or) or.closest('.dropdown').hidden = true;
           nameRow(row);
         });
-      } else {
-        item.classList.remove('bt-query-builder__row--alt');
-        const or = item.querySelector('[data-qb-or]');
-        if (or) or.closest('.dropdown').hidden = false;
-        nameRow(item);
+        return;
       }
+
+      item.classList.remove('bt-query-builder__row--alt');
+      const prev = item.previousElementSibling;
+      if (prev && prev.matches('.bt-query-builder__row') && !isSeparator(prev)) {
+        item.before(separator('and'));
+      }
+      const or = item.querySelector('[data-qb-or]');
+      if (or) or.closest('.dropdown').hidden = false;
+      nameRow(item);
     });
 
     restoreBlank();

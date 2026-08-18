@@ -125,6 +125,7 @@ bt-panel__body--year
 bt-panel__title
 bt-panel__year-input
 
+bt-query-builder
 bt-query-builder__add
 bt-query-builder__alts
 bt-query-builder__batch
@@ -140,12 +141,11 @@ bt-query-builder__phrase
 bt-query-builder__row
 bt-query-builder__row--alt
 bt-query-builder__row--batch
-bt-query-builder__row--last-changed
+bt-query-builder__row--error
 bt-query-builder__row-actions
 bt-query-builder__row-kind
 bt-query-builder__row-value
 bt-query-builder__sep
-bt-query-builder__token
 bt-query-builder__value-select
 bt-query-builder__year
 
