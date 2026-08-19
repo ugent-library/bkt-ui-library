@@ -15,7 +15,7 @@ who wrote those four shapes.
 
 A row becomes a group where it stands, under a legend reading "…where any of these conditions is
 true". The word conditions is load-bearing: without it, a group and a row's own "is any of" read
-identically. The interaction in full: [`OR-GROUPS`](QUERY-BUILDER-OR-GROUPS.md).
+identically. The interaction in full: `docs/wip/QUERY-BUILDER-OR-GROUPS.md` in bkt-ui-library.
 
 ## What
 
