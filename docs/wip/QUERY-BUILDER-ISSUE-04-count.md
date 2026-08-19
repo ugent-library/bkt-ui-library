@@ -26,8 +26,8 @@ is how she knows the faculty page will be right.
 - [ ] The builder stays fully usable when the count is unavailable
 - `out of scope` The result list itself
 
-> **Screenshot:** the submit carrying a count (`templates/biblio-public/public-works.html?advanced=1`)
-> **Screenshot:** the zero-result state, `?state=advanced-zero`
+> **Screenshot:** the submit carrying a count (`templates/biblio-public/public-works.html?state=builder-full-query`)
+> **Screenshot:** the zero-result state, `?state=builder-no-results`
 
 _The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
 endpoints. UI copy goes through the translation files._
@@ -35,8 +35,8 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1) and
-its `?state=advanced-zero` rendering.
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query) and
+its `?state=builder-no-results` rendering.
 
 ## Acceptance criteria
 

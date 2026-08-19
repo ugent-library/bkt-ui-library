@@ -20,7 +20,7 @@ it, and Cody Crawley (machine reader) reads the addresses they produce.
 Every URL the old tiers produced keeps working, and every query anyone authored on them stays
 expressible on the fields for each surface. We parked a few legacy index names: nobody used them in the
 logged period, and we take that to mean no reader needs them in a builder.
-We assume a query API is the likelier home for them.A translated query carrying one still resolves.
+We assume a query API is the likelier home for them. A translated query carrying one still resolves.
 A copied link has to keep resolving too, which is the harder promise: it must hold every condition
 the builder can build, and keep "by both of these people" distinct from "by either of them".
 
@@ -40,7 +40,7 @@ the builder can build, and keep "by both of these people" distinct from "by eith
 
 Raven settles how an address carries a query before the rest starts.
 
-> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?advanced=1`)
+> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?state=builder-full-query`)
 
 _The prototype governs the visible page and markup. Machine-facing output is governed by
 `docs/public-site-semantics.md` — preserve as-is. Prototype URLs are placeholders, not real
@@ -49,7 +49,7 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1)
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and the [pattern page](https://bkt-ui.vercel.app/patterns/query-builder.html).
 
 ## Acceptance criteria

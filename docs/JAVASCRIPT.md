@@ -207,20 +207,20 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `search-clear.js`
 
-**Purpose:** Keeps the search box's inline × in step with the box: it shows while the field
-holds text and goes when the field is empty. Binds structurally — each `.bt-search-clear`
-reads the input in front of it — so one file serves every public search box, and the `hidden`
-attribute in the markup stays the no-JS state.
+**Purpose:** Keeps the inline × in step with its box: it shows while the field holds text, and a
+button-shaped clear empties the field when clicked. Binds structurally, so one file serves every
+search box and the `hidden` attribute in the markup stays the no-JS state.
 
 **Loaded by:** `public-index.html`, `public-works.html`, `public-researchers.html`,
 `public-organisations.html`, `public-projects.html`
 
-**Listens for:** `input` on the field in front of each `.bt-search-clear`
+**Listens for:** `input` on the field in front of each `.bt-search-clear`, and `click` on a clear
+that is a `<button>`
 
 **Dispatches:** nothing
 
-**Prototype-only:** no (someone types in the box and the affordance answers; the clear itself
-navigates, so it needs no script)
+**Prototype-only:** no (typing is the trigger and the clearing is real; a link-shaped clear needs
+no script)
 
 ---
 

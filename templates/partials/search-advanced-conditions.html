@@ -1,13 +1,14 @@
 <!--
   The Advanced search condition editor: the builder itself and nothing around it. The host supplies
   the heading this form is named by (id="conditions-heading"), the box it sits in and the bar under
-  it. Both renderings are documented at patterns/query-builder.html.
+  it — search-advanced-dialog.html, on public-works.html. The layout is argued at
+  patterns/query-builder.html.
 
   Top-level items are this element's direct [data-qb-row] and [data-qb-group] children, so a row
   carries no extra marker attribute.
 
   The built blocks also name public-works.html's own states (results, best-bet, no-results,
-  query-empty, advanced-condition). A block renders only when the active state names it, and the
+  no-query, facet-set-in-builder). A block renders only when the active state names it, and the
   works page always has one of those active. Drop them and the dialog renders empty; no check
   catches it.
 
@@ -15,7 +16,7 @@
   docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, and docs/SEARCH-AND-FILTERING.md rule 5 keeps curation
   fields off the public surface. Values and URLs are placeholders; raven owns the public URL
   grammar.
-  States: advanced-empty, advanced-prefilled, built, advanced-group, advanced-zero.
+  States: builder-empty, builder-one-condition, builder-full-query, builder-or-group, builder-no-results.
 -->
 <!-- [html-validate-disable-next wcag/h32 -- submit button bound externally by form="qb-form"] -->
 <form id="qb-form" action="public-works.html" method="get"
@@ -24,11 +25,11 @@
   <div id="qb-conditions" class="bt-query-builder__conditions">
     <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
 
-    <!-- @state: advanced-empty -->
+    <!-- @state: builder-empty -->
     <!-- @include: templates/partials/search-advanced-blank.html -->
     <!-- @state -->
 
-    <!-- @state: advanced-prefilled -->
+    <!-- @state: builder-one-condition -->
     <!-- Arrival from an entity page or a filtered list: the scope is already a row,
           editable and removable like any other. The usual case, not an extra. -->
     <div class="bt-query-builder__row" data-qb-row>
@@ -97,7 +98,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: built advanced-zero results best-bet no-results query-empty advanced-condition -->
+    <!-- @state: builder-full-query builder-no-results results best-bet no-results no-query facet-set-in-builder -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -141,7 +142,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: built results best-bet no-results query-empty advanced-condition -->
+    <!-- @state: builder-full-query results best-bet no-results no-query facet-set-in-builder -->
 
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
@@ -479,7 +480,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: advanced-zero -->
+    <!-- @state: builder-no-results -->
     <!-- The recovery lives beside the count (actions partial); the error row is
           marked; nothing is auto-dropped. Per-condition pass/fail is deliberately not shown: it
           is how we check the builder against the golden set, not something a reader needs. -->
@@ -528,7 +529,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: advanced-group -->
+    <!-- @state: builder-or-group -->
     <!-- An OR group is a state of a row, made by the row's "or…" action; it collapses
           back to a plain row when one alternative is left. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
@@ -787,7 +788,7 @@
 
   </div>
 
-  <!-- @state: advanced-empty built advanced-prefilled advanced-group advanced-zero results best-bet no-results query-empty advanced-condition -->
+  <!-- @state: builder-empty builder-full-query builder-one-condition builder-or-group builder-no-results results best-bet no-results no-query facet-set-in-builder -->
   <div class="bt-query-builder__add">
     <div class="dropdown">
       <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="dropdown"

@@ -27,36 +27,12 @@
   <section class="ds-section">
     <h2 class="h4 mb-3">The dialog is a URL state</h2>
     <p class="mb-3">Opening it adds <code>&amp;advanced=1</code> to the address, and closing it removes that again. Reload then returns to the builder on the same query instead of a blank list, which matters most after an accidental navigation. Back closes the dialog rather than leaving the page, which is what a full-screen overlay trains people to expect. And the address can be sent to someone: pasting it opens the builder with the query loaded, which is the answer to "how did you get this list?".</p>
-    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In the prototype <code>query-builder.js</code> pushes and pops that parameter; in production it is <code>hx-push-url</code> and a server-rendered open dialog, so the address works with JavaScript switched off.</p>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Two renderings, one source</h2>
-    <p class="mb-4">Where someone arrives from decides the shape. The builder itself is two shared partials, <code>search-advanced-conditions.html</code> and <code>search-advanced-actions.html</code>, so neither rendering can drift from the other. Everything around it belongs to the host: each supplies its own heading, its own box and its own surface under the bar.</p>
-
-    <div class="row g-4 mb-4">
-      <div class="col-md-6">
-        <div class="p-4 bt-bg-white rounded-3 h-100">
-          <p class="form-label mb-2">As a page</p>
-          <p>Arriving cold — a bookmark, a help page, a link from a colleague. There is no result list to preserve, so the builder gets a breadcrumb, a title, and a stable address to point at. You leave by the breadcrumb.</p>
-          <p class="mb-0"><a href="/templates/biblio-public/public-search-advanced.html">public-search-advanced.html</a></p>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="p-4 bt-bg-white rounded-3 h-100">
-          <p class="form-label mb-2">As a dialog over the results</p>
-          <p>Refining a list already on screen. The list must not be navigated away from, so the builder opens over it and the list stays visible at the edges. You leave by the &times;, by Escape, or by <em>Show results</em>.</p>
-          <p class="mb-0"><a href="/templates/biblio-public/public-works.html?advanced=1">public-works.html?advanced=1</a></p>
-        </div>
-      </div>
-    </div>
-
-    <p class="mb-0">The dialog is <code>modal-xl modal-dialog--wide modal-dialog-scrollable</code>. Scrollable pins the header and the footer and scrolls only the body, so the count and the exit stay on screen however long the condition list runs — and the form has to sit <em>inside</em> the body rather than wrapping all three, or that flex chain breaks and the footer leaves the screen. <code>modal-dialog--wide</code> widens it past <code>modal-xl</code>, because a condition row carries a field, an operator, a value and sometimes a role.</p>
+    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In the prototype <code>query-builder.js</code> pushes and pops that parameter and the kit renders the open dialog as five <code>?state=</code> variants of the works page; in production it is <code>hx-push-url</code> and a server-rendered open dialog, so the address works with JavaScript switched off.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The condition row</h2>
-    <p class="mb-4">A condition row reads left to right: the field it asks about, a role where the field takes one, the operator, the value, and the row's actions. The role is a select like any other &mdash; <em>Person</em>, <em>in any role</em>, <em>is any of</em>, the names &mdash; because narrowing to editors is the same kind of choice as picking the operator, not an aside on the field name. The lanes belong to the list, not to the rows: the condition list is a three-track grid and every row borrows those tracks, so the field lane and the actions line up down the list without a single row stating a width. The lane is as wide as the longest field name in that list &mdash; no measurement to keep in sync, and the same width in the dialog as on the page &mdash; capped so one long name cannot reshape the editor. The operator sits at the width of its longest option and the value takes what is left. When the row runs out of room the field keeps the first line with the actions pinned to its right, and the role, operator and value drop to the next line as one phrase; a value moves whole rather than breaking apart, because it will not shrink below its own content. That threshold reads the width of the editor rather than of the screen, since the same partial is narrower as a page column than as a dialog. The value is what the reader is saying, so the mechanics stay quiet beside it &mdash; no row numbers, no boxes. A person value is its people, as badges, with a badge-style <em>Add a person</em> after them: picking a person is the same act as on the results page, so it opens the shared searchable people checklist &mdash; the checkable rich rows settled on the <a href="/patterns/people-search.html">people-search pattern page</a>, which the works author filter adopts too &mdash; and the badges sit in the row rather than inside a text field, because the row's value is a set of records and not something typed. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Every control in the row is the small size &mdash; <code>form-select-sm</code> and <code>form-control-sm</code> throughout &mdash; so the whole row sits at one 32px height and a query of six rows stays readable in one screen. Mixing the two sizes on one line is what puts a 38px control beside a 32px one.</p>
+    <p class="mb-4">A condition row reads left to right: the field it asks about, a role where the field takes one, the operator, the value, and the row's actions. The role is a select like any other &mdash; <em>Person</em>, <em>in any role</em>, <em>is any of</em>, the names &mdash; because narrowing to editors is the same kind of choice as picking the operator, not an aside on the field name. The lanes belong to the list, not to the rows: the condition list is a three-track grid and every row borrows those tracks, so the field lane and the actions line up down the list without a single row stating a width. The lane is as wide as the longest field name in that list &mdash; no measurement to keep in sync &mdash; capped so one long name cannot reshape the editor. The operator sits at the width of its longest option and the value takes what is left. When the row runs out of room the field keeps the first line with the actions pinned to its right, and the role, operator and value drop to the next line as one phrase; a value moves whole rather than breaking apart, because it will not shrink below its own content. That threshold reads the width of the editor rather than of the screen, because a phone renders the dialog full-bleed and a desktop does not. The value is what the reader is saying, so the mechanics stay quiet beside it &mdash; no row numbers, no boxes. A person value is its people, as badges, with a badge-style <em>Add a person</em> after them: picking a person is the same act as on the results page, so it opens the shared searchable people checklist &mdash; the checkable rich rows settled on the <a href="/patterns/people-search.html">people-search pattern page</a>, which the works author filter adopts too &mdash; and the badges sit in the row rather than inside a text field, because the row's value is a set of records and not something typed. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Every control in the row is the small size &mdash; <code>form-select-sm</code> and <code>form-control-sm</code> throughout &mdash; so the whole row sits at one 32px height and a query of six rows stays readable in one screen. Mixing the two sizes on one line is what puts a 38px control beside a 32px one.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows</h3></div>
@@ -145,17 +121,17 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The states</h2>
-    <p class="mb-4">Five, and they live on the standalone page as template states rather than being copied in here — the builder is too large to duplicate without the copy drifting from the original.</p>
+    <p class="mb-4">Five, and they live on the works page as template states rather than being copied in here — the builder is too large to duplicate without the copy drifting from the original. Each renders the open dialog over the list the query would have produced, so the page behind it is never blank.</p>
 
     <ul class="mb-4">
-      <li><a href="/templates/biblio-public/public-search-advanced.html?state=built">built</a> — a query already assembled: free text, two person rows (a co-author query, not a list), a year range, an <em>is not</em>, and a pasted batch of identifiers.</li>
-      <li><a href="/templates/biblio-public/public-search-advanced.html?state=advanced-empty">advanced-empty</a> — a first visit. Add a condition and nothing else: the field chooser is what produces the operator list and the value widget, so the empty page offers the one control that opens it.</li>
-      <li><a href="/templates/biblio-public/public-search-advanced.html?state=advanced-prefilled">advanced-prefilled</a> — arrival from an entity page or a filtered list: the scope is already a row, editable and removable like any other. The usual case, not an extra.</li>
-      <li><a href="/templates/biblio-public/public-search-advanced.html?state=advanced-group">advanced-group</a> — the <em>any of these</em> group, one level deep. A group is a state of a row, so it occupies the row's slot and collapses back to a plain row when one alternative is left.</li>
-      <li><a href="/templates/biblio-public/public-search-advanced.html?state=advanced-zero">advanced-zero</a> — a query matching nothing: the failing condition is marked in place, the submit reads <em>No results</em>, and nothing is auto-dropped.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-full-query">builder-full-query</a> — a query already assembled: free text, two person rows (a co-author query, not a list), a year range, an <em>is not</em>, and a pasted batch of identifiers.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-empty">builder-empty</a> — a first visit. Add a condition and nothing else: the field chooser is what produces the operator list and the value widget, so the empty builder offers the one control that opens it.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-one-condition">builder-one-condition</a> — arrival from an entity page or a filtered list: the scope is already a row, editable and removable like any other. The usual case, not an extra.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-or-group">builder-or-group</a> — the <em>any of these</em> group, one level deep. A group is a state of a row, so it occupies the row's slot and collapses back to a plain row when one alternative is left.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-no-results">builder-no-results</a> — a query matching nothing: the failing condition is marked in place, the submit reads <em>No results</em>, and nothing is auto-dropped.</li>
     </ul>
 
-    <p class="mb-0">The same states render inside the dialog, since both renderings include the same partials. The dialog's host page adds one of its own, <code>advanced-condition</code>, for the sidebar case below.</p>
+    <p class="mb-0">The same states render inside the dialog, since both renderings include the same partials. The dialog's host page adds one of its own, <code>facet-set-in-builder</code>, for the sidebar case below.</p>
   </section>
 
   <section class="ds-section">
@@ -209,7 +185,7 @@
             <th scope="row">Page</th>
             <td>a surface someone arrives at</td>
             <td>an address</td>
-            <td>the standalone builder</td>
+            <td>the result list, which the builder opens over and never replaces</td>
           </tr>
         </tbody>
       </table>
@@ -220,7 +196,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">When a facet cannot express the condition</h2>
-    <p class="mb-4">A built condition can say things a checkbox list cannot: <em>is not</em>, a range, a pasted batch. Applied filters surface as chips either way (<a href="/patterns/search-and-filtering.html">search &amp; filtering</a>, rule 4), and the facet whose dimension is held reports that instead of contradicting it with empty checkboxes. Live: the <a href="/templates/biblio-public/public-works.html?state=advanced-condition">advanced-condition</a> state.</p>
+    <p class="mb-4">A built condition can say things a checkbox list cannot: <em>is not</em>, a range, a pasted batch. Applied filters surface as chips either way (<a href="/patterns/search-and-filtering.html">search &amp; filtering</a>, rule 4), and the facet whose dimension is held reports that instead of contradicting it with empty checkboxes. Live: the <a href="/templates/biblio-public/public-works.html?state=facet-set-in-builder">facet-set-in-builder</a> state.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Held by an advanced condition</h3></div>

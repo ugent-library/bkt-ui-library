@@ -1,16 +1,15 @@
 <!--
   The advanced-search field list: the three groups every chooser shows, one entry per public
   field. The drawn list trails the field ledger in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md,
-  which is the source until the drawing catches up. Included twice by search-advanced-conditions.html — the blank state's columns
-  and the #qb-chooser panel — so the two lists cannot drift. The promoted heads (the blank
-  state's start cards) stay per container, on purpose.
-  The field vocabulary is docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
-  Ids repeat where both containers render; identify() re-ids every cloned chooser.
+  which is the source until the drawing catches up.
+
+  Included by search-advanced-conditions.html, inside the #qb-chooser template, so every row's
+  chooser holds the same list. Ids repeat because each row clones that template; identify()
+  re-ids every clone.
 
   Plain dropdown-header + dropdown-item, as the works Add-filter menu uses: inside the chooser
-  panel they are padded rows with a hover band (the slot is a dropdown-menu, so Bootstrap's item
-  variables are in scope), and in the blank state's columns, where those variables are not
-  declared, the same markup falls back to a plain list of links.
+  panel they are padded rows with a hover band, because the slot is a dropdown-menu and Bootstrap's
+  item variables are in scope there. Outside one, the same markup falls back to a plain list of links.
 -->
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-subject">
   <p class="dropdown-header" id="qb-g-subject">Subject</p>

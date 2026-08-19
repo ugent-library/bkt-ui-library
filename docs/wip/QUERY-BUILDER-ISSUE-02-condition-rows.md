@@ -24,10 +24,13 @@ field by its name, in a list she can read.
 - [ ] The twenty-one public fields, each showing the operators and the qualifier of the field
 - [ ] Picking a field in the chooser replaces that row's field in place, and the chooser is
       searchable
+- [ ] Two rows on one field are allowed and nothing warns: a second Person row means both people,
+      which is a real question. When such a query matches nothing, the offer to turn the rows into a
+      group is where the reader recovers — 07
 - `out of scope` The value inputs behind each operator — 03
 - `out of scope` The count on the submit — 04
 
-> **Screenshot:** the builder with three rows (`templates/biblio-public/public-works.html?advanced=1`)
+> **Screenshot:** the builder with several condition rows (`templates/biblio-public/public-works.html?state=builder-full-query`)
 > **Screenshot:** the field chooser open over a row
 
 _The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
@@ -36,8 +39,8 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1) and
-its blank state, `?state=advanced-empty`.
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query) and
+its blank state, `?state=builder-empty`.
 
 ## Acceptance criteria
 

@@ -19,7 +19,9 @@ setting the team can change without redrawing the page, since the decision is no
   alternatives. A second row on the same field adds a condition rather than an alternative: two
   Person rows mean both people, not either of them.
 - One field can ask a question in more than one way, and the qualifier says which: on Person it is
-  the role, on Published in the kind of container. The field list offers one entry per question a
+  the role, on Published in the kind of container. A field earns a qualifier only where the value
+  stays the same kind of thing however the qualifier is set, and where *any* is a real answer. Where
+  either fails, the questions become separate entries. The field list offers one entry per question a
   reader asks, not one per legacy index name.
 - Any field whose values are a list takes a pasted batch. Lines it cannot read are reported,
   and a list that outgrows a durable link points at Save this search.
@@ -141,9 +143,17 @@ the value.
 | `visibility` | Record visibility | — | is, is not, is any of | — |
 | `deposit_status` | Deposit status | — | is, is not, is any of | — |
 | `classification` | Classification | `classification` | is, is not, is any of | — |
-| `vabb` | VABB `TBD` | `vabb_approved`, `vabbtype`, `vabbyear` | is, is not, is any of | which VABB fact |
-| `date` | Date | `datecreated`, `dateupdated`, `defence.date` | is at least, is at most, is between | which date |
-| `journal_ranking` | Journal ranking | `jcr.impact_factor`, `jcr.category`, `jcr.categoryquartile`, `jcr.categorydecile`, `jcr.categoryvigintile` | is, is not, is any of · is more than, is less than, is between | the metric |
+| `vabb_evaluation` | VABB evaluation `TBD` | `vabb_approved` | is, is not | — |
+| `vabb_type` | VABB type `TBD` | `vabbtype` | is, is not, is any of | — |
+| `vabb_year` | VABB submission year `TBD` | `vabbyear` | is, is at least, is at most, is between | — |
+| `date_created` | Date created | `datecreated` | is at least, is at most, is between | — |
+| `date_changed` | Date last changed | `dateupdated` | is at least, is at most, is between | — |
+| `date_defended` | Date defended | `defence.date` | is at least, is at most, is between | — |
+| `jcr_impact_factor` | JCR impact factor `TBD` | `jcr.impact_factor` | is more than, is less than, is between | — |
+| `jcr_category` | JCR category `TBD` | `jcr.category` | is, is not, is any of | — |
+| `jcr_quartile` | JCR category quartile `TBD` | `jcr.categoryquartile` | is, is not, is any of | — |
+| `jcr_decile` | JCR category decile `TBD` | `jcr.categorydecile` | is, is not, is any of | — |
+| `jcr_vigintile` | JCR category vigintile `TBD` | `jcr.categoryvigintile` | is, is not, is any of | — |
 
 **Classification is UGent's own publication typology** — A1 an article in the Web of Science, A2 an
 article in an international peer reviewed journal, B1 a book, D1 a doctoral thesis, and so on to V and
@@ -152,19 +162,20 @@ work rather than a verdict anyone passes on it. It sits in the backoffice becaus
 and evaluation vocabulary, and the surface setting can move it later.
 
 **VABB is a different assertion, made outside UGent** — whether a work counts for the Flemish list,
-and in which VABB type. The row carries which VABB fact a reader means: the evaluation, the type, or
-the submission year. `TBD` whether it is exposed at all.
+and in which VABB type. Three facts, so three entries: the evaluation is a yes or no, the type is a
+code, the submission year is a year. `TBD` whether any of them is exposed at all.
 
-**Date carries which date in the row** — created, last changed, defended. Biblio also recorded when
-a depositor submitted a record and when a librarian approved it, and open question 1 settles what
-carries those.
+**Each date is its own entry** — created, last changed, defended — because *any date* is not a
+question anyone asks. Biblio also recorded when a depositor submitted a record and when a librarian
+approved it, and open question 1 settles what carries those.
 
-**Journal ranking carries the metric in the row** — impact factor, category, category quartile,
-decile, vigintile — and the operators follow the metric, since a category is a value and a quartile is
-a rank. Every metric describes the journal rather than the work, and it changes with each yearly JCR
-edition, so it belongs to the journal and is read through it. Two answers come before the row is
-built: who holds the Clarivate licence and what it permits, and where a journal's own data lives.
-`TBD` whether this lives on the public or backoffice side.
+**Each JCR metric is its own entry** — impact factor, category, quartile, decile, vigintile —
+because both the value and the operators change with the metric: a category is a value, an impact
+factor is a number, and a quartile is a rank out of four where a vigintile is one out of twenty. Every
+metric describes the journal rather than the work, and it changes with each yearly JCR edition, so it
+belongs to the journal and is read through it. Two answers come before the rows are built: who holds
+the Clarivate licence and what it permits, and where a journal's own data lives. `TBD` whether these
+live on the public or backoffice side.
 
 ## Undecided
 

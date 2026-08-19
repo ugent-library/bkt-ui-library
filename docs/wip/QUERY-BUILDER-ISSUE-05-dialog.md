@@ -36,9 +36,9 @@ needs an address she can bookmark and hand on.
 - [ ] A filter a condition holds reports that in the sidebar, with a way to edit the condition
 - `out of scope` The result list, its filters and its sorting
 
-> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?advanced=1`)
+> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?state=builder-full-query`)
 > **Screenshot:** the sidebar reporting a filter held by a condition
-> (`templates/biblio-public/public-works.html?state=advanced-condition`)
+> (`templates/biblio-public/public-works.html?state=facet-set-in-builder`)
 
 _The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
 endpoints. UI copy goes through the translation files._
@@ -46,7 +46,7 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1)
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and the [pattern page](https://bkt-ui.vercel.app/patterns/query-builder.html).
 
 ## Acceptance criteria

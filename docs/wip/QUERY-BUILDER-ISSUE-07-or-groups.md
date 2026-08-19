@@ -25,9 +25,11 @@ identically. The interaction in full: `docs/wip/QUERY-BUILDER-OR-GROUPS.md` in b
 - [ ] A group and a plain row are told apart when read aloud, not only when seen
 - [ ] The control that ends a group reads "Split into 'and' rows", because the click turns "either
       of these" into "both of these" and usually empties the set
+- [ ] The reverse is offered where it is needed: a query matching nothing, with two rows on one
+      field, offers to make those rows a group. Nothing is prevented and nothing is auto-dropped
 - [ ] Back undoes it, because the address carries the query
 
-> **Screenshot:** a group of two alternatives, `?state=advanced-group`
+> **Screenshot:** a group of two alternatives, `?state=builder-or-group`
 
 _The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
 endpoints. UI copy goes through the translation files._
@@ -35,8 +37,8 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1) at
-`?state=advanced-group`.
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-or-group) at
+`?state=builder-or-group`.
 
 ## Acceptance criteria
 

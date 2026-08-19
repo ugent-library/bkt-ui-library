@@ -13,9 +13,22 @@ system, or do I reach for something new?"
 unfiltered list, so someone arriving cold still lands in the builder. The two partials,
 `search-advanced-conditions.html` and `search-advanced-actions.html`, stay as they are.
 
-The five builder states — `built`, `advanced-empty`, `advanced-prefilled`, `advanced-group` and
-`advanced-zero` — merge into the works template's state set, and every kit link that pointed at a
-state on the retired page points at `public-works.html` instead.
+The five builder states merge into the works template's state set and are renamed to say which axis
+they belong to and what they show: `builder-full-query`, `builder-empty`, `builder-one-condition`,
+`builder-or-group`, `builder-no-results`. Two works states are renamed with them — `query-empty`
+becomes `no-query`, so it stops reading as a sibling of `builder-empty`, and `advanced-condition`
+becomes `facet-set-in-builder`, which is what it shows. Every kit link that pointed at a state on the
+retired page points at `public-works.html` instead.
+
+The dialog's chrome moves to `search-advanced-dialog.html`. The works page holds two wrappers around
+that one include — `modal fade` for the five list states, `modal fade show` for the five builder
+states — so shut and shown cannot drift. `?advanced=1` is still what the browser pushes and what
+production reads; the prototype server renders the open dialog from `?state=` instead.
+
+A builder state reuses the list regions of the state behind it, which is three state-list edits and no
+duplicated markup: `builder-empty` sits over the unfiltered list, the other four over the result list.
+`facet-set-in-builder` joins those lists too, and stops rendering as a page with no search box, no
+cards and no toolbar.
 
 What decided it: 990 of the 1,601 sessions that used the power tier in six months already had a
 result list on screen, and keeping that list is what the dialog is for. Evidence:

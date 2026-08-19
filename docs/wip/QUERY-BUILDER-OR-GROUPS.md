@@ -2,7 +2,7 @@
 
 *How a condition row becomes an alternative, and which queries need it. Bet:
 [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) · cases:
-[`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) · drawn as the `advanced-group` state
+[`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) · drawn as the `builder-or-group` state
 of `templates/partials/search-advanced-conditions.html`, which the builder renders as a dialog over
 `templates/biblio-public/public-works.html`.*
 
