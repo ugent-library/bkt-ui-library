@@ -92,6 +92,16 @@ options.
 A table earns its place only where the cells are fragments. Full-sentence cells are prose in a
 table, harder to read than the paragraph they came from.
 
+### The drawing is not described twice
+
+Every issue links the prototype and asserts that the build matches it, so the drawing has already
+said everything it shows. A line describing what the reader can open and look at is a copy that goes
+stale while the original moves on. So the requirements name what the drawing cannot show — what is
+announced, what happens on reload, what must not be dropped, what settles rather than flickers — plus
+what a contract governs rather than the page. The test: if opening the linked prototype answers it,
+cut it. Cutting a line is never a reason to add a screenshot: a screenshot is a snapshot at filing
+time, and the link is the thing that stays true.
+
 ### A section with nothing in it goes
 
 A heading with no content under it, or with a line saying there is nothing to report, costs the
@@ -106,6 +116,12 @@ markup, tables and code rot.
 
 The rule runs inside a document too. Where a sentence says what the list four lines below says,
 the sentence goes. Two homes for one fact means both drift, and the reader reads it twice.
+
+**Point for the values a reader looks up, never for the behaviour a reader has to be told.** This is
+the rule's own failure mode: a pointer is shorter than a description, so it wins on length and loses
+the reader. "The row in the anatomy the field ledger sets out" sends a developer elsewhere and lets a
+document act; "the row in the anatomy depending on the selected field" says what the interface does,
+and the ledger still holds the values.
 
 ### Cut to the aim for its type
 
