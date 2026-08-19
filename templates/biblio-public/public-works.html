@@ -1,7 +1,6 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: results, best-bet, no-results, no-query, facet-set-in-builder,
-     builder-full-query, builder-empty, builder-one-condition, builder-or-group, builder-no-results -->
+<!-- @states: results, best-bet, no-results, no-query, facet-set-in-builder, builder-full-query, builder-empty, builder-one-condition, builder-or-group, builder-no-results -->
 <!--
   Public search page — search-first with multi-entity autocomplete.
 
@@ -14,17 +13,16 @@
     filter-bar.js       — Add-filter picker + editor + chips (works config, wf- ids)
     query-builder.js    — the Advanced search dialog: row → OR group, approximate count
 
-  The Advanced search dialog is at the bottom, and it renders here or nowhere: search-advanced-dialog.html
-  holds its chrome, the two builder partials hold its contents. This page has ten states on two axes.
-  Five say what the list holds — results, best-bet, no-results, no-query, facet-set-in-builder — and
-  render the dialog shut. Five say what the builder holds — builder-full-query, builder-empty,
-  builder-one-condition, builder-or-group, builder-no-results — and render it open over the same list.
-  A builder state reuses the list regions of the state behind it: builder-empty sits over the
-  unfiltered list, the other four over the result list.
+  The Advanced search dialog is at the bottom, once, shut: search-advanced-dialog.html holds its
+  chrome, the two builder partials hold its contents. This page has ten states on two axes.
+  Five say what the list holds — results, best-bet, no-results, no-query, facet-set-in-builder.
+  Five say what the builder holds — builder-full-query, builder-empty, builder-one-condition,
+  builder-or-group, builder-no-results — and each marks it open over the same list. A builder
+  state reuses the list regions of the state behind it: builder-empty sits over the unfiltered
+  list, the other four over the result list.
 
-  Opening the dialog pushes ?advanced=1 in the browser, so the query is addressable. The prototype
-  server does not read that parameter — ?state= is what renders the open dialog here, and in
-  production the address does it, per patterns/query-builder.html.
+  In production the address renders the open dialog; here ?state= does, per
+  patterns/query-builder.html.
 
   The facet-set-in-builder state is this page's own: the Full text access facet reporting that
   an advanced condition holds it, instead of contradicting it with empty checkboxes.
@@ -1922,23 +1920,14 @@
   </div>
 </div>
 
-<!-- The Advanced search dialog. The chrome is one partial; the only difference between the two
-     renderings is this element, so shut and shown are two @state blocks around the same include.
-     In production the address renders the open dialog; here the state does. -->
-<!-- [html-validate-disable-block no-dup-id -- @state variants of one dialog; only one renders] -->
-<!-- @state: results best-bet no-results no-query facet-set-in-builder -->
+<!-- Ungated on purpose: a @state block cannot wrap this include — docs/SERVER.md. -->
 <div class="modal fade" id="advanced-search-modal" tabindex="-1"
   aria-labelledby="advanced-search-title">
   <!-- @include: templates/partials/search-advanced-dialog.html -->
 </div>
-<!-- @state -->
 
 <!-- @state: builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
-<div class="modal fade show d-block" id="advanced-search-modal" tabindex="-1"
-  aria-labelledby="advanced-search-title">
-  <!-- @include: templates/partials/search-advanced-dialog.html -->
-</div>
-<div class="modal-backdrop fade show"></div>
+<div hidden data-qb-open></div>
 <!-- @state -->
 
 <script src="/assets/js/suggest-panel.js"></script>

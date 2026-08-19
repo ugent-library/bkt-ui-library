@@ -127,7 +127,6 @@ bt-panel__body--year
 bt-panel__title
 bt-panel__year-input
 
-bt-query-builder
 bt-query-builder__add
 bt-query-builder__alts
 bt-query-builder__conditions
