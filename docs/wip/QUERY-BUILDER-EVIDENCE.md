@@ -46,6 +46,28 @@ fields humans never authored are almost all fields the old UI never offered — 
 - **Direct-traffic uniqueness** — 51% of direct queries are unique (full-data figure from the main
   report; the 1:1009 sample structurally overestimates it).
 
+## How people reach the power tier
+
+Session-level pass, 2026-08-19: the same 3,589 authored queries grouped by the log's session id,
+1,601 sessions. Counted once per session, at the first power query:
+
+| at the first power query of the session | sessions | share |
+|---|---:|---:|
+| a result list was already on screen | 990 | 61.8% |
+| the power query is the session's first search action | 611 | 38.2% |
+
+- **The route in is the simple box.** Of those 990 sessions, 810 typed a simple search first
+  (81.8%), 77 landed on a query page from outside, 53 followed a scoped link, and 50 were refining
+  on a results page.
+- **Per query** the share with a list already on screen is 74.0%, and it holds between 61.6% and
+  70.7% when sessions above 20 power queries are dropped and the list has to have appeared within
+  30 minutes.
+- **A third come back to edit.** More than one power query in 36.7% of the sessions that had a list
+  and 35.2% of those that did not; median 1, mean 2.2. Two events in a session sit 34 seconds apart
+  at the median, and 94.5% fall within 30 minutes.
+- **The session id behaves like a session.** No session spans more than 24 hours (median 184
+  seconds, p90 3.4 hours), and none of the 1,601 carries a bot-tagged event.
+
 ## What the deltas between the two tiers show
 
 Absence from the authored log is not evidence of no need — the old advanced UI only offered the fields it offered. The tier delta makes the gap visible:
@@ -122,6 +144,8 @@ rested on.
 
 - **Intent and outcome.** The log records nothing about what a query returned, so a query that found nothing is invisible. Recording that one fact alongside the query is what buys it.
 - **Whether an authored query satisfied the author.** Only that it was submitted.
+- **Whether a list was on screen.** The log records queries, not page views, so someone who read
+  a record page before opening the power tier counts as arriving cold. 38.2% is a ceiling.
 - **Which distinct permalinks matter most.** We counted shapes, not URLs (deliberately: privacy and memory). Ranking literal URLs needs a separate pass with a retention rule.
 - **URL-level context.** The log carries the query, not the full request URL, so embed parameters only surface where they were glued into the query string. Fuller embed evidence needs webserver access logs.
 - **Anything about people.** By construction.
