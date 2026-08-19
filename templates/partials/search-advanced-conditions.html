@@ -11,7 +11,7 @@
   works page always has one of those active. Drop them and the dialog renders empty; no check
   catches it.
 
-  Public phase-1 fields only. The field list and its per-field operators are in
+  Public fields only, and the drawn set trails the ledger. The field list and its per-field operators are in
   docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, and docs/SEARCH-AND-FILTERING.md rule 5 keeps curation
   fields off the public surface. Values and URLs are placeholders; raven owns the public URL
   grammar.
@@ -481,8 +481,8 @@
 
     <!-- @state: advanced-zero -->
     <!-- The recovery lives beside the count (actions partial); the error row is
-          marked; nothing is auto-dropped. Per-condition pass/fail deliberately not shown
-          (QUERY-BUILDER-DESIGN.md item 4: QA tool, not a page feature). -->
+          marked; nothing is auto-dropped. Per-condition pass/fail is deliberately not shown: it
+          is how we check the builder against the golden set, not something a reader needs. -->
     <div class="bt-query-builder__row bt-query-builder__row--error" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -609,7 +609,7 @@
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
           <i class="if if-close" aria-hidden="true"></i>
-          Ungroup
+          Split into &lsquo;and&rsquo; rows
         </button>
       </div>
     </fieldset>
@@ -736,7 +736,7 @@
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
           <i class="if if-close" aria-hidden="true"></i>
-          Ungroup
+          Split into &lsquo;and&rsquo; rows
         </button>
       </div>
     </fieldset>
@@ -1362,7 +1362,7 @@
         </div>
         <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
           <i class="if if-close" aria-hidden="true"></i>
-          Ungroup
+          Split into &lsquo;and&rsquo; rows
         </button>
       </div>
     </fieldset>

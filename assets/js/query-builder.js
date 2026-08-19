@@ -351,14 +351,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── The approximate count ───────────────────────────────────────────────────
 
   // Invented numbers: the prototype has no index behind it. What is being shown is the shape
-  // — "About N", debounced, in the builder's one live region. Where the real number comes
-  // from is open question 10 in QUERY-BUILDER-FIELD-CONTRACT.md.
+  // — "Show ± N results" on the submit, debounced, the builder's one live region. Where the
+  // real number comes from is open question 9 in QUERY-BUILDER-FIELD-CONTRACT.md.
   const TOTAL = 312000;
   let debounce = null;
 
-  function write(text) {
+  function write(n) {
     const el = document.querySelector('[data-qb-count]');
-    if (el) el.textContent = text;
+    if (el) el.textContent = 'Show ± ' + n.toLocaleString('en').replaceAll(',', ' ') + ' results';
   }
 
   function count() {
@@ -366,12 +366,9 @@ document.addEventListener('DOMContentLoaded', function () {
       ? (alts(item).some(filled) ? 1 : 0)
       : (filled(item) ? 1 : 0)), 0);
 
-    if (!conditions) {
-      write('About ' + TOTAL.toLocaleString('en') + ' research outputs — add a condition to narrow');
-      return;
-    }
-    const estimate = Math.max(10, Math.round(TOTAL / Math.pow(4, conditions) / 10) * 10);
-    write('About ' + estimate.toLocaleString('en') + ' research outputs match');
+    write(conditions
+      ? Math.max(10, Math.round(TOTAL / Math.pow(4, conditions) / 10) * 10)
+      : TOTAL);
   }
 
   list.addEventListener('input', () => {
