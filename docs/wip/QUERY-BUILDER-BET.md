@@ -1,83 +1,87 @@
 # Product bet — one query builder for the power tier
 
-*Draft for the raven team · Evidence: [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md), [`QUERY-BUILDER-GOLDEN-SET-METHOD.md`](QUERY-BUILDER-GOLDEN-SET-METHOD.md) · Design detail: [`QUERY-BUILDER-DESIGN.md`](QUERY-BUILDER-DESIGN.md)*
-
 ## The bet
 
-**We believe one visual query builder can replace both Advanced search and Expert search without reducing what power users rely on** — every query the old tiers could express stays expressible, and every URL they ever produced keeps working.
+One visual query builder replaces Advanced and Expert search. Every query anyone authored on the old tiers stays expressible, on the fields each surface offers, and every URL they ever produced keeps working.
 
 ## Problem
 
-Advanced and expert search are two separate UIs — two tabs, two mental models — that fail the same audience differently: advanced search does not offer every field, operator or combination; expert search offers everything but you must already know the query language.
+Advanced search does not offer every field, operator or combination. Expert search offers everything, but requires knowing the query language.
 
-That audience is our documented personas (`docs/RESEARCH-PERSONAS.md`), and the fit is exact: **Marie Curator** (reviewer) lives in filters, asks for year ranges and combined search, and *shares her filters as bookmarked URLs* — she is why the permalink is the product. **Paula Proksy** (proxy) registers for a whole institute from WoS/EndNote lists: the paste-a-batch user. **Rhea View** (review coordinator) needs overview per record type per department to divide work: the saved search. **Claire Searcher** (researcher) wants one master list of everything under her name: the embed and export tabs. **Cody Crawley**, the machine reader, consumes the API contract. Few, and load-bearing: not replacing this surface is not an option.
+On the public site the builder serves the people who build a set out of the bibliography, plus the machines that read what those people publish ([`RESEARCH-PERSONAS.md`](../RESEARCH-PERSONAS.md)):
 
-> **Evidence, in three numbers.** Humans author ~19 power queries a day. Those queries produce the URLs that carry **63%** of all Biblio traffic. The power tiers are **2.1%** of human searches (2026-H1). The rest is in the two reports.
+- Wim Webb (researcher with a site of his own) embeds his group's output elsewhere. `;style=apa` and `;hide_info=1` are his use.
+- Ans Rapport (faculty communications officer) embeds organization + year + type on a faculty page, and checks the count.
+- Quinn Query (analyst outside the application) pastes an identifier batch and exports a file.
+- Cody Crawley (machine reader) consumes the addresses the other three produce.
+
+The backoffice reuses the builder with more fields exposed, for Marie Curator (bibliographic reviewer) and Rhea View (review coordinator).
+
+> Humans author ~19 power queries a day. Their URLs carry 63% of Biblio traffic. The power tiers are 2.1% of human searches (2026-H1). Evidence: [`EVIDENCE`](QUERY-BUILDER-EVIDENCE.md).
 
 ## Appetite
 
-*[To be set by the team.]* Phase 1 is the bet: it ships and is evaluated before phase 2 or 3 is committed.
+To be set by the team. One release: the builder replaces both tiers or neither, because a release without OR rule groups expresses less than expert search does today.
 
 ## Capability
 
-**A user can express every common power query without writing query language, and hand the result to someone else as a URL, an embed or an API call.**
+**A user expresses a power query without writing query language, and hands the result on as a URL, an embed or an API call.**
 
-One page, **Advanced search**, replacing both tiers. It always shows the builder, the query in readable form, the URL, the live count and Save this search. Conditions are rows — field + operator + value in plain language, where the field's type drives the operators and the widget. Free text is an ordinary row. Any list-capable field takes a pasted batch. A person condition matches any contributor role, optionally narrowed, and several person rows can be AND-joined — the co-author query.
+Advanced search replaces both tiers: a dialog over the results list and a page for cold arrivals, from the same two partials. A condition is a row — field, operator and value in plain language — and the field's type decides the operators and the widget. Top-level rows AND-join, so two person rows are the co-author query. Detail: [`FIELD-CONTRACT`](QUERY-BUILDER-FIELD-CONTRACT.md) for fields and operators, [`OR-GROUPS`](QUERY-BUILDER-OR-GROUPS.md) for the group, `patterns/query-builder.html` for the drawn layout. More complex searches are deferred to API access.
 
-**Definition of done for the first live release** — the smallest useful release, plus parity with what the old tiers already did:
+The release:
 
-- condition rows for works, including the free-text row and "is not"
-- "is any of" with paste support
-- person conditions across roles, several AND-joined, kept distinct from a value list
-- year range
-- live result count and readable query preview
-- URL / Embed / API tabs; embed with sort, citation style and info-block toggle
-- Save this search (login); everything else works anonymously
-- the measurement the success measures need (design doc)
-
-**Phase 2** completes expression parity: OR rule groups, AND-first.
+- condition rows, including free text and `is not`
+- `is any of` with paste support, and OR rule groups for alternatives across fields
+- person rows that name the role they count, several AND-joined for the co-contributor query
+- year range (covers most other year cases)
+- approximate count on the submit (TBC)
+- Share: Link, Embed, API, Feed; embed with sort, citation style and info-block toggle
+- Save this search for logged-in users; everything else anonymous
+- the measurement the success measures need ([`MEASUREMENT`](QUERY-BUILDER-MEASUREMENT.md))
 
 ## Constraints
 
-- 100% of existing embeds, queries and saved searches keep working.
-- The power-tier share of human searches stays at least level against the 2.1% baseline.
+Existing embeds, queries and saved searches keep working. The power-tier share of human searches stays level with the 2.1% baseline.
 
-## Risks and open design decisions
+## Risks
 
-1. **The URL grammar is a permalink contract, and it may block phase 1.** Raven's `QueryFilter` already expresses everything here; the public URL params do not — no OR-group, NOT or range serialization. Whatever grammar raven designs is authored once and can never change. It also has to answer for length: real batches run to hundreds of identifiers, past what a query string carries, so the contract needs a second form (saved search, a server-side list id, or a documented ceiling). **This is the one question in the whole track whose answer can be "impossible", so it gets asked as soon as the prototype exists** — the prototype shows raven what the URL must carry, and changing model is still free at that point. Waiting until implementation issues are written is the most expensive moment to find out.
-2. **Legacy embed parameters must survive:** `;hide_info=1` and `;style=apa`. The second is a citation style, which is why the embed tab carries one.
-3. **Measurement continuity.** Raven's request logging must reproduce the legacy method taxonomy (form / link / direct / bot), or the baseline comparison silently breaks.
-4. **The legacy translator is a separate workstream**, with a ready-made requirements list: subset B of the golden query set. It does not gate the builder's design; it does gate launch.
+1. Request logging must reproduce the legacy method taxonomy (form / link / direct / bot), or the baseline comparison breaks silently. Answered before the release ships, since it sets the baseline.
+2. `;hide_info=1` and `;style=apa` must survive.
+3. The legacy translator is a separate workstream, defined by the development team.
 
 ## No-gos
 
-- No changes to the simple search box or results page (owned by `PLAN-search-query-state.md`).
-- No curator analysis features — workflow status, cross-tabs, bulk operations stay backoffice/BI.
-- No new query language, no URL grammar invented in the prototype.
-- No mass-user features: this page is reached deliberately.
+- The simple search box and the results page.
+- Curator analysis: workflow status, cross-tabs and bulk operations stay in the backoffice.
+- A new query language, or a URL grammar invented in the prototype.
+- Mass-user features. This page is reached deliberately.
 
 ## How we know it works
 
-Two measures, no more:
+1. **The golden query set passes** — 100% of subset B, every subset A case authorable or signed off as not exposed. No such gate exists today. A gate before launch, not a dashboard: [`GOLDEN-SET`](QUERY-BUILDER-GOLDEN-SET.md), 194 cases.
+2. **The power-tier share of human searches holds** — baseline 2.1% (2026-H1), year over year on matching academic periods. No growth target: there is no basis for one.
 
-1. **The golden query set passes.** Baseline: no such gate exists today. Threshold: 100% of subset B (what the translator must translate) and every subset A case either authorable in the builder or explicitly signed off as phase 2 / not-exposed. Cases come from the real logged queries — every field, operator, OR shape, paste batch and range humans used, plus the machine structures carrying 98.9% of replayed traffic. A test gate before launch, not a dashboard; it is how "100% keeps working" gets verified. Draft: [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md), 208 cases.
-2. **Power-tier share of human searches.** Baseline: 2.1% of human searches (~19/day, 2026-H1). Threshold: not lower, year-over-year on matching academic periods. A slow trend at this volume, never a weekly number — and no growth target, because we have no basis for one.
-
-Copy and save are measured but are not success measures: a session that only checks the live count is a success with zero copies, and manual URL selection is invisible.
+Copies and saves are measured and not scored: a session that only reads the count succeeds with zero copies.
 
 ## The ask
 
-**Go / no-go on phase 1.** Then: read the capability as the goal and tell us what is wrong or impossible, and whether the definition of done can stand for the first live release. Timing and approach are yours.
+Go or no-go. Then say what is wrong or impossible in the capability, and whether it stands as one release.
 
 ## Open questions
 
-**Blockers for phase 1:**
+Blocking the release:
 
-1. **Field selection** against raven's field registry — the rule is: any field raven exposes publicly, the builder offers. Without the mapping the condition rows have no vocabulary. Mapping in the design doc.
-2. **Query-length ceiling** — see risk 1; a decision is needed before the builder can promise Paula's paste batches.
+1. **Does the public URL grammar need to change, and how far?** raven's internal `QueryFilter` expresses AND rows, OR groups, negation and ranges. The public works URL carries less: a year range, plus one OR group that combines a list of years with a range. No public param has carried a negation, and `is not` has 178 authored queries behind it. raven settles three things:
 
-**Later:**
+   - whether an OR group can hold any field, not only the year
+   - what a negated condition looks like in a URL
+   - how long a URL may be, when real batches reach 763 identifiers and 9,336 characters
 
-3. Verify with users what the current tiers do well and what they don't — the log shows what people did, not what they failed to do.
+   The grammar is written once and can never change, so we ask as soon as the prototype exists, while the model can still change cheaply. The answer can be "impossible".
+2. **Field selection** — twenty-one public fields and the backoffice set: [`FIELD-CONTRACT`](QUERY-BUILDER-FIELD-CONTRACT.md).
 
-4. **Does Advanced search ever query the other catalogs — people, organizations, projects?** The builder searches research output, and so does every query behind it: the old tiers offered nothing else, so the log cannot show demand either way. A catalog choice above the conditions changes what the page returns rather than what it can express, so each catalog needs its own field list and its own result page; the public directories carry name lookup today. The options are to keep Advanced search on research output, to extend it once demand is evidenced, or to take it as a bet of its own. Neither phase 1 nor phase 2 forecloses the choice — the layout leaves room for it.
+Later:
+
+3. **What do the current tiers do well?** The log shows what people did, not what they failed to do. Answering it needs users.
+4. **Does Advanced search ever query the people, organization or project catalogs?** The old tiers offered nothing else, so the log shows no demand either way, and each catalog would need its own field list and result page. Keep it on research output, extend it on evidenced demand, or make it a bet of its own.

@@ -129,8 +129,8 @@ subset exports, corrections — lives in the backoffice.
 
 A feature being public on biblio.ugent.be today does not carry it into the new public
 surface; it re-takes the test. Precedent: classification (A1/A2) is a public facet in
-current Biblio and is deliberately cut from the new public surface (curator vocabulary
-— fails test 4; settled in `docs/SEARCH-AND-FILTERING.md`). The reverse also holds:
+current Biblio and is cut from the new public surface, keeping only a backoffice home (curator
+vocabulary — fails test 4; settled in `docs/SEARCH-AND-FILTERING.md`). The reverse also holds:
 absence from current Biblio is evidence, not a veto.
 
 ## Exceptions — deliberate, named, not the default

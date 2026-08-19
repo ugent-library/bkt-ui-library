@@ -1,8 +1,9 @@
 # Search & filtering
 
-The settled interaction model for the **public** search & filtering surface. Backoffice,
-advanced, and expert search reuse the same primitives but expose more dimensions; they are
-separate surfaces, deepened later and out of scope here.
+The settled interaction model for the **public** search & filtering surface. Backoffice
+search reuses the same primitives with more dimensions and is deepened separately. **Advanced
+search — one query builder replacing the legacy advanced and expert tiers — is in design:**
+`docs/wip/README.md` § Query builder; its pattern page is `patterns/query-builder.html`.
 
 For the component markup this composes, see the kit pages: `elements/search-bar.html`
 (search form), `patterns/filter-picker.html` (Add-filter picker + editor + chips),
@@ -20,8 +21,7 @@ record — the settled decisions survive here if the notes disappear.
 
 ## The five rules
 
-Everything below follows from five rules. They define the public search surface;
-backoffice / advanced / expert search reuse the same primitives and are deepened separately.
+Everything below follows from five rules. They define the public search surface.
 
 1. **The URL is the truth.** One canonical query state lives in the URL. The search box,
    the sidebar, the Add-filter picker, and the chip bar are all views onto that one
@@ -255,7 +255,7 @@ A dimension's shape decides its home. This is the taxonomy in full:
 | Ordinal / continuous | **Sidebar range** | Year |
 | High-cardinality *records* | **Add-filter picker + typeahead** | Author, Organization, Project |
 | Open concept / free vocabulary | **Query box** | topic |
-| Curation / workflow / expert | **Not public** — backoffice / advanced / expert (surfaces TBD) | status, classification (A1/A2…), full-text version (COAR), subtype, tags, created/updated dates |
+| Curation / workflow / expert | **Not public** — backoffice, including its extended builder | status, subtype, tags, created/updated dates |
 
 **Sidebar inclusion test.** A dimension earns a public sidebar slot only if it is: closed &
 low-cardinality, countable per value, broad across research output, legible to a
@@ -273,21 +273,22 @@ typeahead).
 ### What is not public
 
 Curation, workflow, and expert dimensions are deliberately kept off the public surface —
-status, classification (A1/A2…), full-text version, subtype, research group, librarian tags,
-created/updated dates — as is cross-tab / bulk / impact analysis. These belong to the
-backoffice and advanced/expert search: separate surfaces that reuse the same primitives but
-expose more dimensions. That some dimensions show in the backoffice and deliberately not on
-public *is* the split — but the backoffice search UI itself is undecided and is deepened
+status, subtype, research group, librarian tags, created/updated dates — as is cross-tab /
+bulk / impact analysis. These belong to the
+backoffice, whose extended builder reuses the public Advanced search component with more
+fields (`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md` holds the field ledger). Public Advanced
+search offers public fields only; the backoffice search UI itself is undecided and is deepened
 elsewhere, not here.
 
-**Access vs. version and classification (settled, prior sessions).** The public sidebar
-carries only **Access** ("can I read it?"). **Full-text version** (the COAR published /
-accepted / author-version distinction) and **classification** (A1/A2/… research-evaluation
-tags) are backoffice + advanced/expert filters, not public discovery axes: version is a
-repository-savvy distinction, shown per record on the work detail file line rather than as a
-public facet, and classification is a curator tag. Publisher-side publication status is not
-a separate axis — raven models it as `PublicationVersions`, which the full-text-version
-filter surfaces. Indexing `publication_version` as a facet is raven work not yet done.
+**Access vs. version and classification.** The public sidebar carries only **Access** ("can
+I read it?"). **Full-text version** — the COAR published / accepted / author-version
+distinction — earns no sidebar slot either, because it is a repository-savvy distinction and
+the record shows it per file. It is a field in public Advanced search, on the same reading that
+put publication status there: the builder has no space budget and the sidebar does.
+**Classification** (A1/A2/… research-evaluation tags) is a curator tag, so it earns no public
+slot; it is a backoffice builder field, and the field ledger holds its values. Publisher-side publication status is not a
+separate axis; raven models it as `PublicationVersions`, which the full-text-version field
+surfaces. Indexing `publication_version` is raven work not yet done.
 
 ### Keywords vs. Research discipline — two dimensions, not one (settled)
 
@@ -359,13 +360,17 @@ rather than removing it is our choice, for list stability.
 ### Identifier — one filter, scheme auto-detected
 
 The picker's **Identifier** filter matches any value in the work's `identifiers` bag — DOI,
-ISSN, ISBN, arXiv, handle — scheme auto-detected, not one filter per scheme. Filtering by a
-journal works through its ISSN (searching a venue by name is unreliable; the ISSN is exact),
-so there is **no separate Journal/venue filter**. The suggest panel additionally offers a
-known-item shortcut — pasting a full DOI jumps straight to the work — but the filter is not
-restricted to that. The Identifier filter is applied manually via the picker;
-journal/host titles on cards link to a text search on the title instead — see Rule 3,
-Scoped links.
+ISSN, ISBN, arXiv, handle — scheme auto-detected, not one filter per scheme. In the picker,
+filtering by a journal works through its ISSN, so there is **no separate Journal/venue filter
+here**. A picker filter has to resolve to a countable value. raven holds a journal name as text
+on each work, not as an authority record. People filter by the name instead, and the current
+biblio offers them nothing else: its advanced form carries the name and no ISSN option at all.
+Two routes carry the name — a card's or record's journal title links to a text search on it,
+per Rule 3, Scoped links, and Advanced search's **Published in** row matches the name as
+printed and narrows to journals on request. The ISSN stays the exact route, and machines and
+permalinks use it. The suggest panel additionally offers a known-item shortcut — pasting a full
+DOI jumps straight to the work — but the filter is not restricted to that. The Identifier
+filter is applied manually via the picker.
 
 ---
 
