@@ -75,11 +75,13 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <p><strong>The × clears the query and leaves the filters standing.</strong> The field's border encloses it, and Search stays a segment beside the field. An empty box carries <code>hidden</code> on the same anchor, and the field reclaims the space. The chips carry their own <strong>Clear all filters</strong>, so each clear does only what sits next to it. Rule 2 in <code>docs/SEARCH-AND-FILTERING.md</code> holds both.</p>
+        <p>Every box on the public surface takes this ×, and a field that carries it shows no other: where the field is <code>type="search"</code>, WebKit and Blink would draw a clear of their own, and the system suppresses it. One act, one shape, on every box.</p>
         <p>The clear is an anchor:</p>
         <ul class="mb-3">
           <li><code>btn btn-ghost bt-search-clear</code>, placed before the submit button</li>
           <li><code>aria-label="Clear search"</code> and an <code>if-close</code> icon</li>
           <li>an <code>href</code> pointing at the current URL minus <code>q</code>, so the filter params ride along</li>
+          <li>or, where the box filters a list in place and there is no address to go to, a <code>&lt;button type="button"&gt;</code> — <code>search-clear.js</code> empties the field and the list re-filters</li>
         </ul>
         <p class="mb-0"><strong>Rule:</strong> scope varies, structure does not. When adding a fifth listing surface, copy this skeleton verbatim and change only the copy, the <code>action</code>, and the one behaviour hook. Do not rename the IDs — <code>suggest-panel.js</code> binds <code>#q</code> / <code>#suggest-panel</code> / <code>#suggest-wrapper</code>; <code>directory-search.js</code> binds structurally via <code>[data-directory-search]</code>.</p>
       </div>
@@ -271,15 +273,18 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Compact / toolbar search — backoffice</h2>
-    <p class="mb-4">The compact variant for inline filtering inside a <code>.bt-toolbar</code> — filtering a list, searching within a deposit, live-filtering. Plain Bootstrap <code>.input-group</code> (no size modifier, no pill) with <code>.form-control-search</code>. Used in the backoffice overview; not a public-discovery bar.</p>
+    <p class="mb-4">The compact variant for inline filtering inside a <code>.bt-toolbar</code> — filtering a list, searching within a deposit, live-filtering. Bootstrap <code>.input-group.input-group-sm</code> with <code>.form-control-search</code>. Used in the backoffice overview; not a public-discovery bar. It takes the same clear one size down: <code>bt-search-clear</code> reads the group's size, so a compact field gets a smaller circle and nothing else changes.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Compact — <code>.form-control-search</code></h3></div>
       <div class="ds-demo-body">
         <label for="search-compact" class="visually-hidden">Search research output</label>
-        <div class="input-group">
+        <div class="input-group input-group-sm">
           <input type="search" class="form-control form-control-search" id="search-compact"
-            placeholder="Search by title, author, DOI&hellip;">
+            value="quantum" placeholder="Search by title, author, DOI&hellip;">
+          <button type="button" class="btn btn-ghost bt-search-clear" aria-label="Clear search">
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
           <button class="btn btn-primary" type="button">Search</button>
         </div>
       </div>

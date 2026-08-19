@@ -99,6 +99,17 @@
   --bt-search-clear-inset: 0.375rem;  /* circle to the field's trailing edge */
 }
 
+/* Compact fields take the same clear, one step smaller — the size follows
+   Bootstrap's own group size, so no separate modifier to remember. */
+.input-group-sm:has(> .bt-search-clear) {
+  --bt-search-clear-size:  1.5rem;
+  --bt-search-clear-inset: 0.25rem;
+}
+
+.input-group-sm > .bt-search-clear {
+  font-size: var(--bt-text-sm);
+}
+
 .input-group > .bt-search-clear {
   display: inline-flex;
   align-items: center;
@@ -130,6 +141,17 @@
 .input-group > .form-control:has(+ .bt-search-clear:not([hidden])) {
   padding-right: calc(var(--bt-search-clear-size) + var(--bt-search-clear-inset) + 0.5rem);
   margin-right: calc((var(--bt-search-clear-size) + var(--bt-search-clear-inset)) * -1);
+}
+
+/*
+  A search-typed field draws its own clear in WebKit and Blink whenever it holds
+  a value, and Firefox draws none. Where the box carries ours, ours is the only
+  one, so no box shows two clears or two shapes of one act. Hiding the
+  pseudo-element is convention rather than spec — MDN documents the selector and
+  not the recipe.
+*/
+.form-control:has(+ .bt-search-clear)::-webkit-search-cancel-button {
+  -webkit-appearance: none;
 }
 
 /* The hero bar holds every control in flow, so nothing overlaps to pad for. */

@@ -621,6 +621,7 @@ form-select
 form-select-sm
 form-text
 input-group
+input-group-sm
 invalid-feedback
 is-invalid
 is-valid
