@@ -27,7 +27,7 @@ field by its name, in a list she can read.
 - `out of scope` The value inputs behind each operator — 03
 - `out of scope` The count on the submit — 04
 
-> **Screenshot:** the built page with three rows (`public-search-advanced.html`)
+> **Screenshot:** the builder with three rows (`templates/biblio-public/public-works.html?advanced=1`)
 > **Screenshot:** the field chooser open over a row
 
 _The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
@@ -36,7 +36,7 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [page](https://bkt-ui.vercel.app/templates/biblio-public/public-search-advanced.html) and
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1) and
 its blank state, `?state=advanced-empty`.
 
 ## Acceptance criteria

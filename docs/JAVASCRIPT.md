@@ -305,10 +305,9 @@ OR groups and the approximate count.
   `bt-query-builder__row--alt`, and `visually-hidden` on the separators it builds — because
   those are styling, which is the one direction that belongs in `classList`.
 
-**Loaded by:** `public-works.html`, which renders the builder as a dialog, and
-`public-search-advanced.html`, which renders it as a page. Both include the same two
-partials, `search-advanced-conditions.html` and `search-advanced-actions.html`, and each supplies
-its own heading, box and bar surface. The conditions partial holds the row templates, the chooser
+**Loaded by:** `public-works.html`, which renders the builder as a dialog over the result list. It
+includes two partials, `search-advanced-conditions.html` and `search-advanced-actions.html`, and
+supplies the heading, the box and the bar surface around them. The conditions partial holds the row templates, the chooser
 (which includes `search-field-list.html`) and `#qb-blank`. It also opens the dialog when the URL
 carries `?advanced=1`, standing in for the server-side render.
 Pattern page: `patterns/query-builder.html`.

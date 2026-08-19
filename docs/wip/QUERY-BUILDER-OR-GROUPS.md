@@ -3,8 +3,7 @@
 *How a condition row becomes an alternative, and which queries need it. Bet:
 [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) · cases:
 [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) · drawn as the `advanced-group` state
-of `templates/partials/search-advanced-conditions.html`, shared by the builder's two renderings —
-`templates/biblio-public/public-search-advanced.html` (page) and the dialog in
+of `templates/partials/search-advanced-conditions.html`, which the builder renders as a dialog over
 `templates/biblio-public/public-works.html`.*
 
 Scope: one feature. **OR rule groups** — AND-first: the top level stays AND-joined rows, a row

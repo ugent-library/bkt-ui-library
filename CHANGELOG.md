@@ -6,6 +6,21 @@ system, or do I reach for something new?"
 
 ---
 
+## Advanced search is one dialog, and the page is retired (v2.24, 2026-08-19)
+
+`public-search-advanced.html` goes. The builder renders once, as a dialog over
+`public-works.html` at `?advanced=1`, and an empty query is a legal state: the dialog opens over the
+unfiltered list, so someone arriving cold still lands in the builder. The two partials,
+`search-advanced-conditions.html` and `search-advanced-actions.html`, stay as they are.
+
+The five builder states — `built`, `advanced-empty`, `advanced-prefilled`, `advanced-group` and
+`advanced-zero` — merge into the works template's state set, and every kit link that pointed at a
+state on the retired page points at `public-works.html` instead.
+
+What decided it: 990 of the 1,601 sessions that used the power tier in six months already had a
+result list on screen, and keeping that list is what the dialog is for. Evidence:
+`docs/wip/QUERY-BUILDER-EVIDENCE.md`. This supersedes the two-renderings entry below (v2.16).
+
 ## Picking a person is one pattern, and its list floats (v2.23, 2026-08-18)
 
 The people-search pattern page now owns both selection shapes: click-to-select

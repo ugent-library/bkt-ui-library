@@ -30,7 +30,7 @@ the builder can build, and keep "by both of these people" distinct from "by eith
 - [ ] 02 — condition rows: the field chooser, the operators, add and remove
 - [ ] 03 — the value input per field type, including pasted lists
 - [ ] 04 — the approximate count on the submit
-- [ ] 05 — the page, and the dialog over the results list
+- [ ] 05 — the dialog over the results list, at one address
 - [ ] 06 — Share and Save this search on the results toolbar
 - [ ] 07 — OR rule groups: alternatives across two fields
 - `out of scope` The legacy-query translator. Separate workstream, requirements in subset B of the
@@ -40,7 +40,7 @@ the builder can build, and keep "by both of these people" distinct from "by eith
 
 Raven settles how an address carries a query before the rest starts.
 
-> **Screenshot:** the built page (`templates/biblio-public/public-search-advanced.html`)
+> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?advanced=1`)
 
 _The prototype governs the visible page and markup. Machine-facing output is governed by
 `docs/public-site-semantics.md` — preserve as-is. Prototype URLs are placeholders, not real
@@ -49,9 +49,8 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [page](https://bkt-ui.vercel.app/templates/biblio-public/public-search-advanced.html), the
-[dialog](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1) and the
-[pattern page](https://bkt-ui.vercel.app/patterns/query-builder.html).
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1)
+and the [pattern page](https://bkt-ui.vercel.app/patterns/query-builder.html).
 
 ## Acceptance criteria
 

@@ -397,7 +397,6 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 |----------|------------------|
 | `public-index.html` | Public homepage |
 | `public-works.html` | Work search + results |
-| `public-search-advanced.html` | Advanced search — the query builder as a page |
 | `public-work-detail.html` | Work detail page |
 | `public-researchers.html` | Researcher directory (A–Z browse) |
 | `public-researcher-detail.html` | Researcher profile (PersonIdentity) |

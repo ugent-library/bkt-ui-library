@@ -27,7 +27,7 @@ To be set by the team. One release: the builder replaces both tiers or neither, 
 
 **A user expresses a power query without writing query language, and hands the result on as a URL, an embed or an API call.**
 
-Advanced search replaces both tiers: a dialog over the results list and a page for cold arrivals, from the same two partials. A condition is a row — field, operator and value in plain language — and the field's type decides the operators and the widget. Top-level rows AND-join, so two person rows are the co-author query. Detail: [`FIELD-CONTRACT`](QUERY-BUILDER-FIELD-CONTRACT.md) for fields and operators, [`OR-GROUPS`](QUERY-BUILDER-OR-GROUPS.md) for the group, `patterns/query-builder.html` for the drawn layout. More complex searches are deferred to API access.
+Advanced search replaces both tiers with one dialog over the results list, at one address, built from two partials. A condition is a row — field, operator and value in plain language — and the field's type decides the operators and the widget. Top-level rows AND-join, so two person rows are the co-author query. Detail: [`FIELD-CONTRACT`](QUERY-BUILDER-FIELD-CONTRACT.md) for fields and operators, [`OR-GROUPS`](QUERY-BUILDER-OR-GROUPS.md) for the group, `patterns/query-builder.html` for the drawn layout. More complex searches are deferred to API access.
 
 The release:
 

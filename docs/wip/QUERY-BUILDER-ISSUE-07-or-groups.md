@@ -35,7 +35,7 @@ endpoints. UI copy goes through the translation files._
 **Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
 Run it locally with `npm start` and the same paths on `localhost:3111`.
 
-View the [page](https://bkt-ui.vercel.app/templates/biblio-public/public-search-advanced.html) at
+View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?advanced=1) at
 `?state=advanced-group`.
 
 ## Acceptance criteria
