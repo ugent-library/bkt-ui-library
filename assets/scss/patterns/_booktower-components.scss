@@ -35,28 +35,110 @@
   z-index: 1;
 }
 
+/*
+  The hero bar draws the field, and the controls sit inside it in flow: the
+  buttons used to float over the input absolutely, which put a second control
+  (the clear) on top of the first and let typed text run under both. The input
+  keeps Bootstrap's sizing and drops its own border and ring, so the bar is one
+  unit — the ring is the bar's, on :focus-within.
+*/
 .input-group--hero {
-  input.form-control {
-    border-radius: var(--bt-radius-lg) !important;
-    width: 100%;
-    position: relative;
-    font-size: var(--bt-text-md);
-    height: 3.3rem;
-  }
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.4rem;
+  background-color: var(--bt-white);
+  border: 1px solid var(--bt-gray-300);
+  border-radius: var(--bt-radius-lg);
+  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
+}
 
-  a.btn,
-  button.btn {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
-    border-radius: var(--bt-radius-md) !important;
-    font-size: var(--bt-text);
-  }
+.input-group--hero:focus-within {
+  border-color: var(--bt-blue-700);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-sm);
+}
 
-  input.form-control:focus + .btn,
-  input.form-control:focus {
-    z-index: 5;
-  }
+.input-group--hero > .form-control,
+.input-group--hero > .form-control:focus {
+  height: 2.5rem;
+  font-size: var(--bt-text-md);
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/*
+  Bootstrap squares the inner corners of every input-group child so segments
+  join into one control. The hero's buttons are separate objects sitting in the
+  bar, and the × is a circle, so both take their radius back — !important is
+  what reaches, since the squaring selectors carry five :not()s each.
+*/
+.input-group--hero > .btn {
+  border-radius: var(--bt-radius-md) !important;
+  font-size: var(--bt-text);
+}
+
+
+/* -- bt-search-clear -- */
+/*
+  The search box's inline clear: the field's border encloses the ×, and the
+  submit button stays a segment beside the field.
+
+  Bootstrap's own input-group places every control outside the field, and
+  .btn-close draws a background-image × that cannot carry the icon font, so
+  neither covers this. Both controls therefore stay flex children, which keeps
+  Bootstrap owning their radii, sizing and states, and the field reaches under
+  the × instead: it pulls its own trailing edge past the button with a negative
+  margin and reserves the same width as padding. The two distances read one
+  variable — setting the size twice is how text ends up under the glyph.
+
+  The pull is margin-right, on the field. Bootstrap sets margin-left on every
+  input-group child but the first, at a specificity no sane selector reaches.
+*/
+.input-group:has(> .bt-search-clear) {
+  --bt-search-clear-size:  2rem;      /* the circle */
+  --bt-search-clear-inset: 0.375rem;  /* circle to the field's trailing edge */
+}
+
+.input-group > .bt-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  flex: 0 0 auto;
+  width: var(--bt-search-clear-size);
+  height: var(--bt-search-clear-size);
+  padding: 0;
+  font-size: var(--bt-text);
+  border-radius: 50% !important;
+  /* the hover lands on the × as a circle, so it reads as one small target
+     rather than a block the width of the field's gutter */
+  --bs-btn-hover-bg: var(--bt-gray-100);
+  --bs-btn-hover-color: var(--bt-gray-1000);
+  --bs-btn-active-bg: var(--bt-gray-100);
+  /* above the focused field's z-index: 5, or its opaque background covers the
+     glyph while someone is typing */
+  z-index: 6;
+  margin-right: var(--bt-search-clear-inset);
+}
+
+/*
+  Only the listing shape needs this: its field carries the border the × sits
+  inside, and Search sits outside that border. So the field reaches under the
+  button, and reserves the circle, the inset and a text gap as padding. An empty
+  box hides its × and takes the space back.
+*/
+.input-group > .form-control:has(+ .bt-search-clear:not([hidden])) {
+  padding-right: calc(var(--bt-search-clear-size) + var(--bt-search-clear-inset) + 0.5rem);
+  margin-right: calc((var(--bt-search-clear-size) + var(--bt-search-clear-inset)) * -1);
+}
+
+/* The hero bar holds every control in flow, so nothing overlaps to pad for. */
+.input-group--hero > .bt-search-clear {
+  margin-right: 0;
+}
+.input-group--hero > .form-control:has(+ .bt-search-clear:not([hidden])) {
+  padding-right: 0.75rem;
+  margin-right: 0;
 }
 
 

@@ -102,6 +102,7 @@ Load order matters. Scripts must be declared in this sequence in any template th
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>  <!-- prototype only -->
 <script src="/assets/js/suggest-panel.js"></script>
+<script src="/assets/js/search-clear.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
 ```
 
@@ -201,6 +202,25 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Dispatches:** nothing
 
 **Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub suggestions are server-rendered into the panel)
+
+---
+
+### `search-clear.js`
+
+**Purpose:** Keeps the search box's inline × in step with the box: it shows while the field
+holds text and goes when the field is empty. Binds structurally — each `.bt-search-clear`
+reads the input in front of it — so one file serves every public search box, and the `hidden`
+attribute in the markup stays the no-JS state.
+
+**Loaded by:** `public-index.html`, `public-works.html`, `public-researchers.html`,
+`public-organisations.html`, `public-projects.html`
+
+**Listens for:** `input` on the field in front of each `.bt-search-clear`
+
+**Dispatches:** nothing
+
+**Prototype-only:** no (someone types in the box and the affordance answers; the clear itself
+navigates, so it needs no script)
 
 ---
 

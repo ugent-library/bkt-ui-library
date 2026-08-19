@@ -85,6 +85,8 @@ replacing a Bootstrap size. Reach for it when a dialog holds form rows instead o
 
 **Form variants** ⚠️ TBD — may not survive review. `form-control-search`: pill-shaped search input with an inset magnifier glyph, for standalone search fields outside `bt-toolbar` and `input-group--hero`.
 
+**Search box inline clear** — `bt-search-clear` is the floating × inside a search field: a circle that carries its hover as a circle, not as a block the width of the field's gutter. It goes on a `btn btn-ghost` **between the input and the submit button**, with `aria-label="Clear search"` and `if-close`. In the listing box the field reaches under it, so any other order leaves the × outside the border; in an `input-group--hero` bar every control sits in flow and the order just reads. Toggle it with the `hidden` attribute — never a `d-*` utility, which strands the field's reserved gutter — and `search-clear.js` keeps it in step with what the box holds. Demo: `elements/search-bar.html`.
+
 ## Used straight from Bootstrap — no custom classes, do not invent any
 
 Like Table and Facets sidebar above, these components are plain Bootstrap. No `bt-*`

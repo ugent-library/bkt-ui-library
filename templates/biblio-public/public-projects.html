@@ -59,6 +59,11 @@
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false">
+              <!-- The × clears the query only: its href drops q and keeps every other
+                   param (Rule 2). Stub URL — production re-renders the current URL without q. -->
+              <a class="btn btn-ghost bt-search-clear" href="public-projects.html" aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
@@ -294,6 +299,7 @@
 </div>
 
 <script src="/assets/js/directory-search.js"></script>
+<script src="/assets/js/search-clear.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

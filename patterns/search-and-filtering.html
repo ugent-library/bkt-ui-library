@@ -105,6 +105,7 @@
   <section class="ds-section">
     <h2 class="h4 mb-3">Assembled — a public results page</h2>
     <p class="mb-4">The parts in place on <a href="/templates/biblio-public/public-works.html">public-works</a>: search box on top, the chip bar (readout) and Add-filter picker (input) below it, the facet rail on the left, and the results toolbar above the list. The live page carries the <code>hx-*</code> wiring and the suggest-panel content; here they are static. The bar is one <code>bt-toolbar</code>, inlined identically on works and the directory pages — shown on its own in <a href="/patterns/filter-picker.html">Filter picker → The assembled bar</a>.</p>
+    <p class="mb-4">Both clears sit here, and each does only what sits next to it. The × inside the field drops <code>q</code> and leaves the chips standing. <strong>Clear all filters</strong> drops the chips and leaves the query. A full reset is the two together, so there is no third button. <a href="/elements/search-bar.html">Search bar</a> documents the ×.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Public assembly</h3></div>
@@ -115,11 +116,14 @@
           <div class="position-relative" id="saf-suggest-wrapper">
             <label for="saf-q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
             <div class="input-group input-group-lg mb-3">
-              <input type="search" id="saf-q" name="q" class="form-control"
+              <input type="text" inputmode="search" id="saf-q" name="q" class="form-control"
                 value="Quantum computing"
                 placeholder="Search by title, author, DOI, or keyword&hellip;"
                 autocomplete="off" role="combobox" aria-autocomplete="list"
                 aria-controls="saf-suggest-panel" aria-expanded="false">
+              <a class="btn btn-ghost bt-search-clear" href="?access=open&amp;year=2024" aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <div id="saf-suggest-panel" class="bt-suggest-panel" role="listbox"

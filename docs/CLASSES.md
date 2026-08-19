@@ -147,6 +147,8 @@ bt-query-builder__row-value
 bt-query-builder__value-select
 bt-query-builder__year
 
+bt-search-clear
+
 bt-section-detail
 
 bt-section-landing
@@ -618,6 +620,7 @@ form-label
 form-select
 form-select-sm
 form-text
+input-group
 invalid-feedback
 is-invalid
 is-valid

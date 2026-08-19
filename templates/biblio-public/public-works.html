@@ -60,6 +60,9 @@
             </label>
 
             <!-- Box value derives from ?q= (Rule 1), so it varies per state. -->
+            <!-- The × clears the query only: its href drops q and keeps every filter param
+                 (Rule 2). Production re-renders the current URL without q; here ?state= is the
+                 kit's own, so the click lands on the empty box. An empty box hides the ×. -->
             <!-- [html-validate-disable-block no-dup-id, form-dup-name -- @state blocks; one renders at a time] -->
             <!-- @state: results -->
             <div class="input-group input-group-lg mb-3">
@@ -81,6 +84,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=query-empty&amp;access=open&amp;author=jane-doe&amp;keywords=climate-change"
+                aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -104,6 +111,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=query-empty&amp;access=open"
+                aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -127,6 +138,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=query-empty&amp;access=open&amp;author=jane-doe&amp;keywords=climate-change"
+                aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -150,6 +165,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=query-empty&amp;access=open"
+                aria-label="Clear search" hidden>
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -1921,6 +1940,7 @@
 </div>
 
 <script src="/assets/js/suggest-panel.js"></script>
+<script src="/assets/js/search-clear.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
 <script src="/assets/js/filter-sheet.js"></script>
 <script src="/assets/js/people-search.js"></script>

@@ -142,6 +142,12 @@
                   role="combobox" aria-autocomplete="list" aria-controls="suggest-panel" aria-expanded="false"
                   data-hx-get="/search/suggest" data-hx-trigger="keyup changed delay:200ms, focus"
                   data-hx-target="#suggest-panel" data-hx-swap="innerHTML" data-hx-indicator="#suggest-indicator">
+                <!-- The × clears the query. On the landing there is nothing else to keep, so
+                     its href is the bare box; search-clear.js shows it once the box has text. -->
+                <a class="btn btn-ghost bt-search-clear" href="public-index.html#search"
+                  aria-label="Clear search" hidden>
+                  <i class="if if-close" aria-hidden="true"></i>
+                </a>
                 <button class="btn btn-primary" type="submit">Search</button>
               </div>
               <div id="suggest-panel" class="bt-suggest-panel" role="listbox"
@@ -381,5 +387,6 @@
 </main>
 
 <script src="/assets/js/suggest-panel.js"></script>
+<script src="/assets/js/search-clear.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

@@ -4,19 +4,23 @@
   <header class="ds-page-header col-6">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Search bar</h1>
-    <p class="lead">A pill-shaped search field with an inset submit button. Built as a modifier on Bootstrap's <code>.input-group</code> — Bootstrap handles the flex layout, border joining, and sizing scale; the modifier adds the pill shape, the whole-bar focus ring, and search-cancel suppression.</p>
+    <p class="lead">A search field with its controls inside it. Bootstrap's <code>.input-group</code> handles the flex layout, the border joining and the sizing scale; the modifiers add the two shapes the public surface uses — the hero bar, and the listing box with an inline clear.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Default</h2>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Default — <code>.input-group.input-group--hero</code></h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Default, query present — <code>.input-group.input-group--hero</code></h3></div>
       <div class="ds-demo-body">
         <form role="search" class="input-group input-group--hero" aria-label="Search research output" action="/search">
           <label class="visually-hidden" for="search-default">Search research output</label>
-          <input class="form-control" type="search" id="search-default" name="q"
+          <input class="form-control" type="text" inputmode="search" id="search-default" name="q"
+            value="Quantum computing"
             placeholder="Search by title, author, or DOI&hellip;" autocomplete="off">
+          <a class="btn btn-ghost bt-search-clear" href="?" aria-label="Clear search">
+            <i class="if if-close" aria-hidden="true"></i>
+          </a>
           <button class="btn btn-primary" type="submit">Search</button>
         </form>
       </div>
@@ -25,14 +29,14 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Large — hero placement</h2>
-    <p class="mb-4">Add Bootstrap's own <code>.input-group-lg</code> and <code>input-group--hero</code> for the hero variant. Bootstrap scales the input and button; the modifier adjusts only the button inset margin.</p>
+    <p class="mb-4">Add Bootstrap's own <code>.input-group-lg</code> and <code>input-group--hero</code> for the hero variant. Bootstrap scales the input and the buttons; the modifier keeps them inside the bar.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Large — <code>.input-group.input-group--hero.input-group-lg</code></h3></div>
       <div class="ds-demo-body">
         <form role="search" class="input-group input-group--hero input-group-lg" aria-label="Search research output" action="/search">
           <label class="visually-hidden" for="search-lg">Search research output</label>
-          <input class="form-control" type="search" id="search-lg" name="q"
+          <input class="form-control" type="text" inputmode="search" id="search-lg" name="q"
             placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
           <button class="btn btn-primary" type="submit">Search</button>
         </form>
@@ -45,16 +49,20 @@
     <p class="mb-4">The canonical search form in every public listing header — research output, researchers, organizations, projects. Square <code>.input-group-lg</code> (not the hero pill), an autocomplete <code>.bt-suggest-panel</code> overlay, and the full combobox ARIA wiring. The structure is identical on all four pages; only the <em>scope</em> varies — the placeholder and <code>aria-label</code> copy, the <code>action</code>, and the behaviour hook (works carries <code>hx-*</code> for omni-suggest; the directories carry <code>data-directory-search</code> for client-side typeahead). IDs are the generic <code>q</code> / <code>suggest-wrapper</code> / <code>suggest-panel</code> on every page.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Listing header — <code>.input-group.input-group-lg</code> + <code>.bt-suggest-panel</code></h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Listing header, query present — <code>.input-group.input-group-lg</code> + <code>.bt-suggest-panel</code></h3></div>
       <div class="ds-demo-body">
         <form role="search" aria-label="Search research output" action="/search">
           <div class="position-relative" id="suggest-wrapper">
             <label for="q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
             <div class="input-group input-group-lg">
               <input type="text" inputmode="search" id="q" name="q" class="form-control"
+                value="Quantum computing"
                 placeholder="Search by title, author, DOI, or keyword&hellip;"
                 autocomplete="off" role="combobox" aria-autocomplete="list"
                 aria-controls="suggest-panel" aria-expanded="false">
+              <a class="btn btn-ghost bt-search-clear" href="?access=open" aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <div id="suggest-panel" class="bt-suggest-panel" role="listbox"
@@ -66,6 +74,13 @@
 
     <div class="ds-demo">
       <div class="ds-demo-body">
+        <p><strong>The × clears the query and leaves the filters standing.</strong> The field's border encloses it, and Search stays a segment beside the field. An empty box carries <code>hidden</code> on the same anchor, and the field reclaims the space. The chips carry their own <strong>Clear all filters</strong>, so each clear does only what sits next to it. Rule 2 in <code>docs/SEARCH-AND-FILTERING.md</code> holds both.</p>
+        <p>The clear is an anchor:</p>
+        <ul class="mb-3">
+          <li><code>btn btn-ghost bt-search-clear</code>, placed before the submit button</li>
+          <li><code>aria-label="Clear search"</code> and an <code>if-close</code> icon</li>
+          <li>an <code>href</code> pointing at the current URL minus <code>q</code>, so the filter params ride along</li>
+        </ul>
         <p class="mb-0"><strong>Rule:</strong> scope varies, structure does not. When adding a fifth listing surface, copy this skeleton verbatim and change only the copy, the <code>action</code>, and the one behaviour hook. Do not rename the IDs — <code>suggest-panel.js</code> binds <code>#q</code> / <code>#suggest-panel</code> / <code>#suggest-wrapper</code>; <code>directory-search.js</code> binds structurally via <code>[data-directory-search]</code>.</p>
       </div>
     </div>
@@ -237,7 +252,7 @@
               <form role="search" class="input-group input-group--hero input-group-lg mb-4"
                 aria-label="Search research output" action="/search">
                 <label class="visually-hidden" for="search-hero">Search research output</label>
-                <input class="form-control" type="search" id="search-hero" name="q"
+                <input class="form-control" type="text" inputmode="search" id="search-hero" name="q"
                   placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
                 <button class="btn btn-primary" type="submit">Search</button>
               </form>
@@ -276,7 +291,8 @@
     <div class="ds-demo">
       <div class="ds-demo-body">
         <p>Bootstrap's <code>.input-group</code> provides: flex layout, border joining between input and button, and the <code>.input-group-lg</code> / <code>.input-group-sm</code> sizing scale.</p>
-        <p class="mb-0"><code>.input-group--hero</code> adds only three things on top: the pill border-radius on the outer wrapper and the input's leading edge; a <code>:focus-within</code> ring on the whole bar as one unit (individual element focus shadows are suppressed); and the native browser search-cancel button is hidden.</p>
+        <p><code>.input-group--hero</code> makes the bar the field: the bar carries the border, the radius and — on <code>:focus-within</code> — the focus ring as one unit, and the input inside it goes transparent and ringless. Every control sits in the bar in flow, so a second control never lands on the first and typed text never runs under either.</p>
+        <p class="mb-0">Both shapes take <code>bt-search-clear</code>. In the hero the flow already keeps the × clear of the text; in the listing box the field reaches under the × and reserves the space as padding, because there the border is the input's own and Search sits outside it.</p>
       </div>
     </div>
   </section>
