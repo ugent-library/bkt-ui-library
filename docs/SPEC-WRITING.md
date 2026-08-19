@@ -69,6 +69,11 @@ A document says what is true and what to do now. How the team got there — opti
 discarded, meetings — goes to the planning notes or nowhere. The reader inherits the conclusion,
 not the corridor.
 
+The same holds for the reply that hands a document over. Show the result. A reply listing every
+sentence that changed, each with the rule it now satisfies, is a changelog, and git already holds
+one. Name a change only where the reader has to decide something: a call they may want to veto, a
+number that moved, a question their answer would settle.
+
 ### Enumerations become lists; reasoning stays prose
 
 A sentence listing three or more things becomes a list, and so does a paragraph stacking three or
@@ -86,6 +91,13 @@ options.
 
 A table earns its place only where the cells are fragments. Full-sentence cells are prose in a
 table, harder to read than the paragraph they came from.
+
+### A section with nothing in it goes
+
+A heading with no content under it, or with a line saying there is nothing to report, costs the
+reader a stop and gives back nothing. Delete the heading. Where a template supplies the heading and
+the answer is genuinely "none", say what that means for the reader instead — "None. This sets the
+baseline, so it lands before the release" answers a Dependencies heading; "no dependencies" does not.
 
 ### Point, don't paste
 
@@ -159,14 +171,20 @@ human drafts grow them too, so delete on sight, then fix against the named rule.
 | The journey in body text — "we then explored", "after discussion it emerged" | The result, not the journey |
 | A document describing itself — "this section covers…" | The result, not the journey |
 | A second pass at a point already made — a closing re-list, or a second explanation | The result, not the journey |
+| A changelog of the edits just made, annotated with the rule each one satisfies | The result, not the journey |
 | Three list items where the facts count two or four — rhythm padding the truth | Enumerations become lists |
 | A paragraph walking through the list that follows it | Enumerations become lists |
+| A claim about how another team's system or a third-party tool works today | The what, never the how (specs) |
+| A cost or capacity estimate we would be answerable for | The what, never the how (specs) |
 | A route sentence growing a second clause that summarises its target | Point, don't paste |
 | A fact stated in full in two documents | Point, don't paste |
 
 ## Specs only
 
-These rules govern bets, issues and design docs.
+These rules govern bets, issues and design docs. Our lane is design, product design and product
+management: the problem, whose problem it is, what the user sees, what the product promises, and
+what it deliberately leaves out. The domain model and the mechanism belong to someone else, and
+`AGENTS.md` holds the full split. Every rule below follows from that one.
 
 ### Cite the demand
 
@@ -212,6 +230,15 @@ calls belonging to another team, things the implementer settles while building.
 
 A question that could have been answered in the room is a defect.
 
+### Number every issue title
+
+An issue title carries its number in the area tag: `[public][03] Advanced search: the value input per
+field type`. The epic is `[00]`. A reader scanning a list then sees the order the issues land in and
+which ones another depends on, without opening any of them, and a dependency can name a number rather
+than restate a title. Number them while drafting, and give the draft file the same number —
+`QUERY-BUILDER-ISSUE-03-value-inputs.md` carries `[03]` — so the drafts, the titles and the tracker
+all agree.
+
 ### Every claim names its surface
 
 In a contract shared by public and backoffice, an unlabelled list of backoffice fields reads as a
@@ -224,5 +251,17 @@ Describe the effect, not the mechanism, applied to a spec: state the outcome and
 and leave out framework idioms, library calls, data hooks, field names, index state, query
 mechanics, endpoints and event shapes. The prototype and the repo agent docs carry the mechanism,
 which the implementer owns. Express a backend gap as a gap, never as an asserted capability.
+
+**Specify the behaviour as tightly as you like; do not warrant how it is achieved.** "The count is
+approximate, it moves as conditions change, and the builder stays usable when it is unavailable" is
+ours to say, and the implementer owes us that behaviour. The claims underneath it are not ours:
+which query produces the number, what it costs, what a service or a library does today, what an
+index can be told to cap. Those come from someone else's expertise, and writing them down makes us
+answerable for them.
+
+The test is whether the person who owns that system could correct the sentence. If they could, it
+is theirs. A sentence like that usually means the behaviour above it is under-specified: name the
+constraint in our own words — "counting may not cost more than the search it sits on" — and leave
+the means to the implementer.
 
 This inverts for repo docs. A README or a working guide exists to carry the how.

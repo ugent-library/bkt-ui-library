@@ -1,12 +1,14 @@
 ---
 name: Implement design
 about: Port a booktower-ui-library prototype into raven
-title: "[area] "
+title: "[area][nn] "
 ---
 
 <!--
-Title: [area] verb + deliverable + scope, e.g.
-"[public] Align work detail page with Booktower prototype: Journal Article"
+Title: [area][nn] verb + deliverable + scope, e.g.
+"[public][03] Align work detail page with Booktower prototype: Journal Article"
+The number is the issue's place in its set, matching the draft's filename;
+the epic takes [00].
 
 House rules: docs/SPEC-WRITING.md — do not invent, personas, open
 questions, what-not-how, point don't paste. Template-specific:

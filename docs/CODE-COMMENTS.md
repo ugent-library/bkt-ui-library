@@ -13,6 +13,9 @@ itself.** Each of the two failures under [Never](#never) is one half: the code
 already says it, or a doc already says it. A comment that clears this bar still has
 to pass the test below.
 
+Write the ones you keep plainly, from the caller's side: short concrete sentences, no layered
+jargon. A comment that already reads as word soup gets rewritten, not deleted.
+
 ## The test for keeping one
 
 Add a comment only when a later change would break something **silently or
@@ -44,6 +47,10 @@ under `prefers-reduced-motion`, or a value another file reads, is the case.
 it. If a reader can only understand it by knowing the diff — what was tried, what
 broke, what a value used to be — it belongs in the commit message.
 
+**Status and roadmap.** A comment says what the code is and does now. Design status, open
+questions and "when X lands" belong in the docs or the issue. The one exception is the marker with
+a named owner and a removal trigger, below.
+
 **Disabled code — in `assets/` and `shell/`.** Do not put `//` in front of rules you
 might want back. Nobody after you can tell whether it is waiting for something or simply
 forgotten, so it stays forever. Delete it; the commit you delete it in is the record.
@@ -73,11 +80,13 @@ Two things are not copies in this sense:
 
 ## Length
 
-Drift risk scales with detail, so what stays in the file is decided by how detailed the
-statement is, not by what it covers. One line saying what a file *is* costs nothing and
-changes only when the module's job changes — keep it, so opening the file orients you.
-A paragraph mirroring a doc's description is what rots. Shortest true statement in the
-file, detail in the doc.
+The default is none: zero words. Code that needs prose to be read needs better names or smaller
+rules. A comment that earns its place is one sentence. Go past one sentence only where cutting
+back to one loses the meaning.
+
+Drift risk scales with detail, so the ladder runs this way round. One line saying what a file *is*
+changes only when the module's job changes, and a paragraph mirroring a doc's description is what
+rots. Shortest true statement in the file, detail in the doc.
 
 ## Categories that are not explanations
 
