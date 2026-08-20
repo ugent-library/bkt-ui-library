@@ -109,7 +109,7 @@ separate neutral badge with an icon **and a visible label**: `if-eye Public` or
 `if-eye-off Private` — the icon never stands alone. Public cards never show deposit
 status or record visibility: a deliberate absence, the public card must not leak
 workflow. File access renders as a plain `bt-work-card__meta-item` ("Open",
-"Restricted", "Embargo <start date> – <end date> · Private [if-arrow-right] Open"),
+"Restricted", "Embargo <start date> – <end date> | Private [if-arrow-right] Open"),
 never as a badge on the backoffice.
 
 In the researcher view, a submitted work is awaiting review; its status reads
@@ -492,7 +492,7 @@ Work access (raven's `Work.Access()`): on **public** cards a badge, and only ope
 `if-lock`, embargo → `badge text-bg-secondary` + `if-time`, naming the date ("Embargo
 until 1 May 2027"), closed → `badge text-bg-secondary`, text only. On **backoffice**
 cards never a badge — a plain `bt-work-card__meta-item` ("Open", "Restricted",
-"Embargo <start date> – <end date> · Private [if-arrow-right] Open" when both
+"Embargo <start date> – <end date> | Private [if-arrow-right] Open" when both
 dates and both access levels are available). The backoffice drops the noun so a
 curator scans a column;
 the public card keeps "Restricted access", which is what a reader outside academia
