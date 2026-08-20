@@ -269,7 +269,7 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">The full form, with the hidden fields, the external-author fallback and the submit actions, is the <code>add-author-form.html</code> partial.</p>
+    <p class="mb-0 col-8 text-muted small">The full form, with the hidden fields, the external-author fallback and the submit actions, is the <code>add-author-form.html</code> partial. ⚠️ The four roles it offers — author, editor, supervisor, translator — are drawn as placeholders; the contributor roles Biblio recognises live in raven's contributor catalog.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -427,6 +427,7 @@
     <ul class="small">
       <li>Search fires after 2 characters with a 300ms debounce.</li>
       <li>In production: <code>hx-get="/people/search?q="</code> returning the <code>people-search-results.html</code> partial. While the request is in flight, an <code>htmx-indicator</code> span with <code>aria-live="polite"</code> shows "Searching&hellip;".</li>
+      <li><code>/people/search</code> returns UGent people <em>and</em> the external people the index already holds — one search, both kinds, wherever a person is picked. A person in no index is not searchable, which is what the deposit form's external fallback is for.</li>
       <li>In the prototype: the <code>PEOPLE</code> array in <code>assets/js/people-search-stub.js</code> stands in for the server.</li>
       <li>Clicking a row updates the input value, collapses the list to the selected state, and stores the person's <code>data-id</code> and <code>data-name</code> for the filter chip or form submission.</li>
       <li>An unlinked (external) author is valid. The no-results state should lead to the "Add as external author" fallback if present in the host context (deposit form), not block submission.</li>
