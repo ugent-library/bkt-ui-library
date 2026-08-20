@@ -21,7 +21,11 @@
       <li>User clicks a chip → editor reopens pre-populated for editing</li>
       <li>User clicks × on a chip → filter removed</li>
     </ol>
-    <p>Wired by <code>filter-bar.js</code> — one engine with a config per bar (works, researchers, projects), self-discovered by the bar's id prefix. Chips are client-side only in the prototype.</p>
+    <p>Wired by <code>filter-bar.js</code> — one engine, and no filter set inside it. A bar announces itself with <code>data-filter-bar="&lt;prefix&gt;"</code>; each picker button carries its own definition (<code>data-filter-label</code>, <code>data-filter-type</code>, and then <code>data-filter-options</code>, <code>data-filter-placeholder</code>, or <code>data-filter-yes</code>/<code>data-filter-no</code>), so the picker list <em>is</em> the filter set. Chips are client-side only in the prototype.</p>
+
+    <p class="mb-3">The examples below are written out. The running bar clones the same shapes from <code>templates/partials/filter-editor-templates.html</code> and reads its option lists from <code>templates/partials/filter-option-lists.html</code>; both are included once per page carrying a bar.</p>
+
+    <p class="mb-0">Every editor carries the same three actions: <strong>Apply</strong>, <strong>Cancel</strong>, and <strong>Remove filter</strong> pushed right with <code>ms-auto</code>. Remove is drawn whether or not the filter is applied yet — one footer, one shape, so the panel does not change under you between a first open and a re-open. Removing something that was never applied does nothing, which is what Cancel does anyway.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -29,15 +33,18 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker</h2>
-    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization and membership; the project directory swaps in Organization, status, and a period range; public works uses the search-it set — Author, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor (checklist), not the picker.</p>
+    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization; the project directory offers status and a year range, and no Organization, because project participation is deferred in raven's data contract; public works uses the search-it set — Author, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor (checklist), not the picker.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher directory picker</h3>
+      <h3 class="ds-demo-label">Project directory picker</h3>
       <div class="ds-demo-body">
         <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
           <div class="bt-dropdown-scroll">
-            <button class="dropdown-item" type="button" data-filter="organization">Organization</button>
-            <button class="dropdown-item" type="button" data-filter="status">Current or alumni</button>
+            <button class="dropdown-item" type="button" data-filter="status"
+              data-filter-label="Status" data-filter-type="boolean"
+              data-filter-yes="Active" data-filter-no="Completed">Status (active / completed)</button>
+            <button class="dropdown-item" type="button" data-filter="year"
+              data-filter-label="Year" data-filter-type="year-range">Year</button>
           </div>
         </div>
       </div>
@@ -60,7 +67,7 @@
               Organization
               <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
             </button>
-            <button class="dropdown-item" type="button">Current or alumni</button>
+            <button class="dropdown-item" type="button">Year</button>
           </div>
         </div>
       </div>
@@ -116,26 +123,27 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — boolean</h2>
-    <p class="mb-4">Used for yes/no filters (Current or alumni, Has public research output). Plain <code>.form-check</code> radios in a <code>.bt-panel__body--boolean</code>; the two labels come from the filter definition.</p>
+    <p class="mb-4">Used for yes/no filters — the project directory's Status is the one that is live; current-or-alumni and has-public-research-output are the same shape. Plain <code>.form-check</code> radios in a <code>.bt-panel__body--boolean</code>; the two labels come from the picker button's <code>data-filter-yes</code> and <code>data-filter-no</code>.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Boolean</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-bool-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-bool-title">Current or alumni</p>
-          <div class="bt-panel__body bt-panel__body--boolean" role="group" aria-label="Current or alumni">
+          <p class="bt-panel__title" id="fe-bool-title">Status</p>
+          <div class="bt-panel__body bt-panel__body--boolean" role="group" aria-label="Status">
             <div class="form-check">
               <input class="form-check-input" type="radio" name="fe-bool-demo" id="fe-bool-demo-true" checked>
-              <label class="form-check-label" for="fe-bool-demo-true">Current members</label>
+              <label class="form-check-label" for="fe-bool-demo-true">Active</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="fe-bool-demo" id="fe-bool-demo-false">
-              <label class="form-check-label" for="fe-bool-demo-false">Alumni</label>
+              <label class="form-check-label" for="fe-bool-demo-false">Completed</label>
             </div>
           </div>
           <div class="bt-panel__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
             <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
+            <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto">Remove filter</button>
           </div>
         </div>
       </div>
@@ -166,6 +174,7 @@
           <div class="bt-panel__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
             <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
+            <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto">Remove filter</button>
           </div>
         </div>
       </div>
@@ -193,6 +202,7 @@
           <div class="bt-panel__actions">
             <button type="button" class="btn btn-primary btn-sm">Apply</button>
             <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
+            <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto">Remove filter</button>
           </div>
         </div>
       </div>

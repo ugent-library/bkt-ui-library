@@ -6,6 +6,49 @@ system, or do I reach for something new?"
 
 ---
 
+## The filter bar stops writing its own markup and vocabulary (v2.25, 2026-08-20)
+
+`filter-bar.js` built the chip and all four editor bodies as template literals, and carried the
+filter set and every option list in a `CONFIGS` object. Both move into the markup:
+
+- `templates/partials/filter-editor-templates.html` holds every node the engine clones — the panel
+  shell, the checklist / boolean / year-range / text bodies, a checklist row, the chip, the picker
+  tick. Values are written with `textContent`, so a typed filter value can no longer become markup.
+- `templates/partials/filter-option-lists.html` holds the stub option lists, keyed by the name a
+  picker button gives in `data-filter-options`. The organization list is shared by all three bars.
+- A picker button now carries its own definition (`data-filter-label`, `data-filter-type`, plus
+  `data-filter-options` / `-placeholder` / `-yes` / `-no`), so the picker list *is* the filter set.
+- A bar announces itself with `data-filter-bar="<prefix>"`, so the engine no longer holds a list of
+  which bars exist.
+
+Three things the split turned up and fixed. `CONFIGS` defined a Current-or-alumni filter for the
+researcher bar and an Organization filter for the project bar that neither picker list offers —
+dead entries, now gone. The year inputs rendered without `form-control-sm`, which the kit page has
+documented since the pattern was written; they now match. And `aria-labelledby` on all three editor
+containers pointed at an id that only existed inside a template literal — it resolves to the title
+in the partial now, and the prefix comes off (`filter-editor-title`), because a page carries one bar.
+
+The organization stub also loses its one internal contradiction: Arts and Philosophy was `fac-la`
+while its department was `dept-lw06`. It is `fac-lw` now. These identifiers are invented for the
+prototype and are not raven's.
+
+`filter-sheet.js` follows the editor's buttons by `[data-editor-*]` rather than by generated id.
+
+**Remove filter is always drawn.** It used to render only when the filter was already applied, so
+the same panel had two footer shapes depending on state the reader cannot see — and on the two
+directory pages, where nothing starts applied, a first open never showed it at all. It is now part
+of the shell template like Apply and Cancel. Clicking it on a filter that was never applied removes
+nothing and closes the panel, which is what Cancel does. The kit's boolean, year-range and text
+demos drew only Apply and Cancel and now match; `patterns/filter-picker.html` states the rule.
+
+**The card/table toggle stops persisting to `localStorage`.** `curate.html` carried a
+`data-view-store` key, so a reader could open the template and meet a rendering the file does not
+show. Same answer as the sidebar: the server never sees `localStorage`, a consuming app persists the
+choice in a cookie it can read at first paint, and the prototype has no server-side state to read
+one in. It resets per load.
+
+---
+
 ## Advanced search is one dialog, and the page is retired (v2.24, 2026-08-19)
 
 `public-search-advanced.html` goes. The builder renders once, as a dialog over

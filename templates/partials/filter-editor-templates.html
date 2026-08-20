@@ -1,0 +1,90 @@
+<!--
+  Partial: filter-editor-templates.html
+  Every node filter-bar.js puts on the page. The engine clones these; it builds no
+  markup of its own, so this file is where the chip and the four editor bodies are
+  read and reviewed. Canonical rendered examples: patterns/filter-picker.html.
+
+  Include once per page that carries a filter bar, alongside
+  filter-option-lists.html. The ids below are written out rather than generated
+  because a page carries one bar, so aria-labelledby="filter-editor-title" on the
+  editor container resolves to the title this file defines.
+
+  Hooks the engine writes into: [data-editor-*], [data-chip-*], [data-year-*],
+  [data-checklist-search]. Placeholder text and aria-labels are overwritten per
+  filter; they are written out so the templates validate on their own.
+-->
+
+<template id="filter-editor-shell">
+  <p class="bt-panel__title" id="filter-editor-title" data-editor-title></p>
+  <div class="bt-panel__actions">
+    <button type="button" class="btn btn-primary btn-sm" data-editor-apply>Apply</button>
+    <button type="button" class="btn btn-ghost btn-sm" data-editor-cancel>Cancel</button>
+    <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" data-editor-remove>Remove filter</button>
+  </div>
+</template>
+
+<template id="filter-editor-checklist">
+  <div class="bt-panel__body" data-editor-search>
+    <label class="visually-hidden" for="fv-search" data-editor-search-label>Search options</label>
+    <input type="search" class="form-control form-control-sm" id="fv-search"
+      data-checklist-search placeholder="Search&hellip;" autocomplete="off">
+  </div>
+  <div class="bt-panel__body bt-panel__body--checklist" role="group"
+    aria-label="Select options" data-editor-options></div>
+</template>
+
+<template id="filter-checklist-row">
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="fv-option" name="fv">
+    <label class="form-check-label" for="fv-option">Option</label>
+  </div>
+</template>
+
+<template id="filter-editor-boolean">
+  <div class="bt-panel__body bt-panel__body--boolean" role="group"
+    aria-label="Choose one" data-editor-boolean>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="bool" id="bool-true" value="true" data-editor-bool>
+      <label class="form-check-label" for="bool-true" data-editor-bool-yes>Yes</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="bool" id="bool-false" value="false" data-editor-bool>
+      <label class="form-check-label" for="bool-false" data-editor-bool-no>No</label>
+    </div>
+  </div>
+</template>
+
+<template id="filter-editor-year">
+  <div class="bt-panel__body bt-panel__body--year">
+    <label for="year-from" class="visually-hidden">From year</label>
+    <input type="number" id="year-from" class="form-control form-control-sm bt-panel__year-input"
+      placeholder="From" min="1900" max="2100" data-year-from>
+    <span class="text-muted small">to</span>
+    <label for="year-to" class="visually-hidden">To year</label>
+    <input type="number" id="year-to" class="form-control form-control-sm bt-panel__year-input"
+      placeholder="To" min="1900" max="2100" data-year-to>
+  </div>
+</template>
+
+<template id="filter-editor-text">
+  <div class="bt-panel__body">
+    <label for="text-val" class="visually-hidden" data-editor-text-label>Value</label>
+    <input type="text" id="text-val" class="form-control form-control-sm"
+      placeholder="Type a value&hellip;" autocomplete="off" data-editor-text>
+  </div>
+</template>
+
+<template id="filter-chip">
+  <div class="filter-chip-group">
+    <button type="button" class="badge badge--outline" data-filter-id aria-label="Edit filter">
+      <span class="fw-light" data-chip-label></span>
+    </button>
+    <button type="button" class="badge badge--outline" data-remove-id aria-label="Remove filter">
+      <i class="if if-close if--xs" aria-hidden="true"></i>
+    </button>
+  </div>
+</template>
+
+<template id="filter-picker-check">
+  <i class="if if-check if--xs ms-auto" data-picker-check aria-hidden="true"></i>
+</template>

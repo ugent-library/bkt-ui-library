@@ -128,7 +128,7 @@ Remove the `-stub.js` files when wiring real endpoints.
 
 ### `view-toggle.js`
 
-**Purpose:** Card/table results toggle. Shows the `[data-view-panel]` matching the checked `[data-view-toggle]` radio and hides the rest; persists the choice to `localStorage` when a `[data-view-store]` key is present. Markup-driven, so one file serves every results page.
+**Purpose:** Card/table results toggle. Shows the `[data-view-panel]` matching the checked `[data-view-toggle]` radio and hides the rest. Markup-driven, so one file serves every results page.
 
 **Loaded by:** `curate.html`, `search-researcher.html`
 
@@ -137,6 +137,14 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Dispatches:** nothing
 
 **Prototype-only:** no
+
+**Persisting the chosen view — decided; the prototype stays session-only.** `curate.html` used
+to carry a `data-view-store` key and the toggle wrote the choice to `localStorage`, which meant a
+reader could open the template and meet a rendering the file does not show. Same problem, same
+answer as the sidebar (see `sidebar-toggle.js` below): the server never sees `localStorage`, so it
+cannot carry a view choice into the first paint, and a consuming app persists it in a cookie the
+server reads. The prototype has no server-side state to read a cookie in, so it resets per load
+and every template renders what it says it renders.
 
 ---
 
@@ -179,11 +187,13 @@ Remove the `-stub.js` files when wiring real endpoints.
 **Listens for:**
 - `matchMedia('(max-width: 991.98px)')` change
 - `#wf-filter-editor` `hidden` attribute (drill in on open, return + refresh row values on close)
-- click on `#wf-detail-back` (closes the editor) and `#wf-clear-all` (refreshes row values)
+- click on `#wf-head-back` and `#wf-foot-apply` / `#wf-foot-remove`, which forward to the editor's own `[data-editor-cancel]` / `[data-editor-apply]` / `[data-editor-remove]` buttons, and `#wf-clear-all` (refreshes row values)
 
 **Dispatches:** nothing
 
 **Prototype-only:** yes (rides on `filter-bar.js`'s prototype chips; production would render the sheet vs. toolbar placement server-side).
+
+**Fails the template test:** partly. `decorateRows()` builds the drill-in row's value + chevron with `innerHTML` — two elements, decorating a row that already exists rather than creating the thing under review. Left as is; if it grows past those two nodes, move it to a `<template>` alongside the filter editor's.
 
 ---
 
@@ -240,16 +250,27 @@ no script)
 
 **Prototype-only:** no (typeahead behaviour is real; the inline JSON dataset is the stub). Replace the inline data + client-side filter with `GET /{directory}/suggest?q=&hellip;` when the endpoint exists.
 
+**Fails the template test:** yes. `update()` builds the suggestion row and the no-matches line as strings, so the row a reader is asked to judge is not in any partial. Replaced by a `<template>` per row kind in the directory-search partial, cloned and filled with `textContent` — the shape `filter-bar.js` now uses — with `<mark>` on the matched span the one node still built by hand. Rewrite it when someone is in the file; the escaping helpers (`esc`, `highlight`) go away with the strings.
+
 ---
 
 ### `filter-bar.js`
 
-**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, no config of its own. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
+
+**Nothing it renders and nothing it offers lives in the file:**
+
+- **A bar announces itself** with `data-filter-bar="<prefix>"` on its `position-relative` wrapper. The engine wires one instance per marked bar; adding a fourth needs no edit here. Ids stay the handle after that, because `filter-sheet.js` moves the picker, the editor and clear-all out of the bar and into the mobile offcanvas.
+- **A picker button carries its own definition** — `data-filter-label`, `data-filter-type`, and then `data-filter-options` (checklist), `data-filter-placeholder` (text) or `data-filter-yes`/`data-filter-no` (boolean). The picker list is therefore the whole filter set: a filter the markup does not offer cannot be opened.
+- **The option lists** are `templates/partials/filter-option-lists.html`, one JSON block keyed by the name a picker button gives in `data-filter-options`. Stub vocabularies; real values come from raven.
+- **Every node** is cloned from `templates/partials/filter-editor-templates.html` — the shell, the four editor bodies, a checklist row, the chip, the picker tick. Values are written with `textContent`, so a typed filter value cannot become markup. The shell's three actions are fixed: Apply, Cancel, Remove filter. Remove is drawn whether or not the filter is applied, so the footer keeps one shape; removing an unapplied filter is a no-op that closes the panel.
+
+Both partials are included once per page carrying a bar, before the `filter-bar.js` script tag.
 
 **Bars & filter sets:**
 - `wf-` — public works (`public-works.html`): Author, Organization, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
-- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization, Current or alumni.
-- `pdir-` — project directory (`public-projects.html`, bar inline): Organization, Status, Year (range).
+- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization.
+- `pdir-` — project directory (`public-projects.html`, bar inline): Status, Year (range). No Organization: project participation is deferred in raven's data contract, so the control would be inert.
 
 **Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
 
@@ -263,6 +284,8 @@ no script)
 **Dispatches:** nothing
 
 **Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organization tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
+
+**Fails the template test:** no (since v2.25). It built its markup as strings and carried its own filter and option vocabulary in a `CONFIGS` object; both now live in the markup, per the two partials above.
 
 ---
 
@@ -342,6 +365,8 @@ region. Each state carries its own count, written by hand; nothing here derives 
 - `people-search:select` — `{ id, name, affiliation }` when a person is chosen
 
 **Prototype-only:** no (widget logic is real; stub data is in `people-search-stub.js`)
+
+**Fails the template test:** yes, in one function. `renderSelected()` builds the collapsed selected-person row as a string. It is reachable — it is the branch for a host with no `[data-ps-selected]` slot, which is every instance on `patterns/people-search.html` and the query builder's person field — so it is not dead code to delete. The same row is hand-written a third time at `patterns/people-search.html` §Selected. Replaced by one `<template>` holding that row, cloned by the widget and shown statically by the pattern page. `people-search-stub.js`'s `renderRow()` is not in scope: it stands in for the `.people-result` rows the server will return, which is what a `-stub.js` file is for.
 
 ---
 

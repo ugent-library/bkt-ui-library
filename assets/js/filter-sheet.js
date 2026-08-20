@@ -92,7 +92,6 @@
     headTitle.textContent = title ? title.textContent : 'Filter';
     title?.classList.add('d-none');
     editor.querySelector('.bt-panel__actions')?.classList.add('d-none');
-    footRemove.hidden = !editor.querySelector('#wf-editor-remove');
     headList.hidden = true;  headBack.hidden = false;
     hideFlex(footList);      showFlex(footDetail);
     mainView.hidden = true;  detailView.hidden = false;
@@ -115,9 +114,9 @@
     else showDetail();
   }).observe(editor, { attributes: true, attributeFilter: ['hidden'] });
 
-  headBack.addEventListener('click', () => document.getElementById('wf-editor-cancel')?.click());
-  footApply.addEventListener('click', () => document.getElementById('wf-editor-apply')?.click());
-  footRemove.addEventListener('click', () => document.getElementById('wf-editor-remove')?.click());
+  headBack.addEventListener('click', () => editor.querySelector('[data-editor-cancel]')?.click());
+  footApply.addEventListener('click', () => editor.querySelector('[data-editor-apply]')?.click());
+  footRemove.addEventListener('click', () => editor.querySelector('[data-editor-remove]')?.click());
   clearAll.addEventListener('click', () => { if (mq.matches) setTimeout(decorateRows, 0); });
 
   const apply = e => (e.matches ? toSheet() : toToolbar());

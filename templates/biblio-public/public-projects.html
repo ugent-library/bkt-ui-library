@@ -91,7 +91,7 @@
                so a host-organization control would be inert. Same interaction
                as the researcher directory; engine in
                filter-bar.js (pdir- config). -->
-          <div class="position-relative">
+          <div class="position-relative" data-filter-bar="pdir-">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
 
@@ -109,8 +109,11 @@
                     </button>
                     <div class="dropdown-menu p-0">
                       <div id="pdir-filter-picker-list" class="bt-dropdown-scroll">
-                        <button class="dropdown-item" type="button" data-filter="status">Status (active / completed)</button>
-                        <button class="dropdown-item" type="button" data-filter="year">Year</button>
+                        <button class="dropdown-item" type="button" data-filter="status"
+                          data-filter-label="Status" data-filter-type="boolean"
+                          data-filter-yes="Active" data-filter-no="Completed">Status (active / completed)</button>
+                        <button class="dropdown-item" type="button" data-filter="year"
+                          data-filter-label="Year" data-filter-type="year-range">Year</button>
                       </div>
                     </div>
                   </div>
@@ -124,7 +127,7 @@
             </div>
             <div id="pdir-filter-editor" hidden
               class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
-              role="dialog" aria-modal="false" aria-labelledby="pdir-filter-editor-title"></div>
+              role="dialog" aria-modal="false" aria-labelledby="filter-editor-title"></div>
           </div>
 
         </form>
@@ -297,6 +300,9 @@
 
   </main>
 </div>
+
+<!-- @include: templates/partials/filter-editor-templates.html -->
+<!-- @include: templates/partials/filter-option-lists.html -->
 
 <script src="/assets/js/directory-search.js"></script>
 <script src="/assets/js/search-clear.js"></script>

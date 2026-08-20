@@ -201,7 +201,7 @@
           </div><!-- /#suggest-wrapper -->
 
           <!-- position-relative anchors the editor overlay so it floats over the results. -->
-          <div class="position-relative">
+          <div class="position-relative" data-filter-bar="wf-">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
@@ -238,17 +238,27 @@
                       <div id="wf-filter-picker-list" class="bt-dropdown-scroll">
                         <div role="group" aria-label="People &amp; organizations">
                           <div class="dropdown-header" aria-hidden="true">People &amp; organizations</div>
-                          <button class="dropdown-item" type="button" data-filter="author">Author</button>
-                          <button class="dropdown-item" type="button" data-filter="organization">Organization</button>
+                          <button class="dropdown-item" type="button" data-filter="author"
+                            data-filter-label="Author" data-filter-type="checklist"
+                            data-filter-options="author">Author</button>
+                          <button class="dropdown-item" type="button" data-filter="organization"
+                            data-filter-label="Organization" data-filter-type="checklist"
+                            data-filter-options="organization">Organization</button>
                         </div>
                         <div role="group" aria-label="Context">
                           <div class="dropdown-header" aria-hidden="true">Context</div>
-                          <button class="dropdown-item" type="button" data-filter="project">Project</button>
+                          <button class="dropdown-item" type="button" data-filter="project"
+                            data-filter-label="Project" data-filter-type="checklist"
+                            data-filter-options="project">Project</button>
                         </div>
                         <div role="group" aria-label="Topic &amp; identifiers">
                           <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
-                          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
-                          <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI, ISSN, ISBN…)</button>
+                          <button class="dropdown-item" type="button" data-filter="keywords"
+                            data-filter-label="Keywords" data-filter-type="checklist"
+                            data-filter-options="keywords">Keywords</button>
+                          <button class="dropdown-item" type="button" data-filter="identifier"
+                            data-filter-label="Identifier" data-filter-type="text"
+                            data-filter-placeholder="DOI, ISSN, ISBN, arXiv, or handle&hellip;">Identifier (DOI, ISSN, ISBN…)</button>
                         </div>
                       </div>
                     </div>
@@ -281,7 +291,7 @@
             <!-- Filter editor panel — must exist at load; filter-bar.js renders into it. -->
             <div id="wf-filter-editor" hidden
               class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
-              role="dialog" aria-modal="false" aria-labelledby="wf-filter-editor-title"></div>
+              role="dialog" aria-modal="false" aria-labelledby="filter-editor-title"></div>
           </div>
         </form>
 
@@ -602,7 +612,7 @@
             </button>
           </div>
           <div class="align-items-center gap-2 d-none" id="wf-foot-detail">
-            <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove" hidden>Remove filter</button>
+            <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove">Remove filter</button>
             <button type="button" class="btn btn-primary flex-grow-1 justify-content-center" id="wf-foot-apply">Apply</button>
           </div>
         </div>
@@ -1929,6 +1939,9 @@
 <!-- @state: builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
 <div hidden data-qb-open></div>
 <!-- @state -->
+
+<!-- @include: templates/partials/filter-editor-templates.html -->
+<!-- @include: templates/partials/filter-option-lists.html -->
 
 <script src="/assets/js/suggest-panel.js"></script>
 <script src="/assets/js/search-clear.js"></script>

@@ -454,6 +454,8 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `people-search-widget.html` | Single-select person lookup shell (currently included nowhere — `add-author-form.html` carries its own copy) |
 | `add-author-form.html` | Deposit author add form |
 | `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
+| `filter-editor-templates.html` | Every node `filter-bar.js` clones — chip, four editor bodies, checklist row, picker tick |
+| `filter-option-lists.html` | Stub option lists the filter bars offer (organization, author, project, keywords) |
 
 **Vocabulary note.** **Work** is the model — raven's entity, its `/works` routes and API. **Research output** is the UI copy, in both languages: *research output* / *onderzoeksoutput*, the word UGent's library already uses with researchers. A template saying "research outputs" over a `/works` route is correct, not drift.
 
