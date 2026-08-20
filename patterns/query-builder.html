@@ -26,8 +26,8 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The dialog is a URL state</h2>
-    <p class="mb-3">Opening it adds <code>&amp;advanced=1</code> to the address, and closing it removes that again. Reload then returns to the builder on the same query instead of a blank list, which matters most after an accidental navigation. Back closes the dialog rather than leaving the page, which is what a full-screen overlay trains people to expect. And the address can be sent to someone: pasting it opens the builder with the query loaded, which is the answer to "how did you get this list?".</p>
-    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In the prototype <code>query-builder.js</code> pushes and pops that parameter and the kit renders the open dialog as five <code>?state=</code> variants of the works page; in production it is <code>hx-push-url</code> and a server-rendered open dialog, so the address works with JavaScript switched off.</p>
+    <p class="mb-3">Opening it adds <code>&amp;advanced=1</code> to the address, and closing it removes that again. Reload then returns to the builder on the same query instead of a blank list, which matters most after an accidental navigation. Back goes to the previous URL state, whatever that address held. And the address can be sent to someone: pasting it opens the builder with the query loaded, which is the answer to "how did you get this list?".</p>
+    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In production the address renders the open dialog: <code>hx-push-url</code> pushes it and the server sends the dialog open, so arriving needs no script. The kit needs one. Its dialog is a single shut element that <code>query-builder.js</code> opens when the address or a <code>?state=</code> builder variant says to. Pushing the address as the dialog opens and closes is production's, so what the kit shows is the position, not the history.</p>
   </section>
 
   <section class="ds-section">
@@ -121,7 +121,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The states</h2>
-    <p class="mb-4">Five, and they live on the works page as template states rather than being copied in here — the builder is too large to duplicate without the copy drifting from the original. Each renders the open dialog over the list the query would have produced, so the page behind it is never blank.</p>
+    <p class="mb-4">Five, and they live on the works page as template states rather than being copied in here — the builder is too large to duplicate without the copy drifting from the original. Each shows the dialog open over the list the query would have produced, so the page behind it is never blank.</p>
 
     <ul class="mb-4">
       <li><a href="/templates/biblio-public/public-works.html?state=builder-full-query">builder-full-query</a> — a query already assembled: free text, two person rows (a co-author query, not a list), a year range, an <em>is not</em>, and a pasted batch of identifiers.</li>

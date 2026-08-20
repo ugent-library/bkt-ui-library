@@ -1,32 +1,14 @@
 // Advanced search — rows, OR groups, the chooser, and the approximate count.
 // See docs/JAVASCRIPT.md. Row grammar and states: patterns/query-builder.html.
 
-// The dialog is a URL state, so reload keeps it open, Back closes it instead of leaving the
-// page, and a pasted link resolves to the page rendering. Production pushes the URL
-// server-side with hx-push-url; the kit is static, so this stands in for that.
+// The dialog is shut in the markup, because a @state block cannot wrap the include that builds it
+// (docs/SERVER.md). Production renders it open at its address; here the address and the builder
+// states each say to open it.
 document.addEventListener('DOMContentLoaded', function () {
   const dialog = document.getElementById('advanced-search-modal');
-  if (!dialog) return;
-
-  const modal = bootstrap.Modal.getOrCreateInstance(dialog);
-  const isOpen = () => new URLSearchParams(location.search).has('advanced');
-  const withOpen = open => {
-    const url = new URL(location.href);
-    if (open) url.searchParams.set('advanced', '1');
-    else url.searchParams.delete('advanced');
-    return url;
-  };
-
-  if (isOpen()) modal.show();
-
-  dialog.addEventListener('show.bs.modal', () => {
-    if (!isOpen()) history.pushState({ advanced: true }, '', withOpen(true));
-  });
-  // Guarded, so closing in response to Back doesn't push a third entry
-  dialog.addEventListener('hide.bs.modal', () => {
-    if (isOpen()) history.pushState({}, '', withOpen(false));
-  });
-  window.addEventListener('popstate', () => (isOpen() ? modal.show() : modal.hide()));
+  const open = new URLSearchParams(location.search).has('advanced') ||
+    document.querySelector('[data-qb-open]');
+  if (dialog && open) bootstrap.Modal.getOrCreateInstance(dialog).show();
 });
 
 (function () {

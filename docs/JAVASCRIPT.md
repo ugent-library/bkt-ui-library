@@ -297,7 +297,7 @@ OR groups and the approximate count.
   `data-qb-label`/`data-qb-template`), `[data-qb-choice-search]`, `[data-qb-choice-group]`,
   `[data-qb-person-slot]`, `[data-qb-person-search]`, `[data-qb-person-add]`,
   `[data-qb-person-cancel]`, `[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`,
-  `[data-qb-actions]`, `[data-qb-blank]`.
+  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`.
 - **The row is read through its data attributes, never its classes.** `[data-qb-value]`,
   `[data-qb-op]`, `[data-qb-actions]` and `[data-qb-blank]` are the value cell, the operator
   select, the actions cell and the blank state's root, so a layout change can rename or drop a
@@ -309,7 +309,10 @@ OR groups and the approximate count.
 includes two partials, `search-advanced-conditions.html` and `search-advanced-actions.html`, and
 supplies the heading, the box and the bar surface around them. The conditions partial holds the row templates, the chooser
 (which includes `search-field-list.html`) and `#qb-blank`. It also opens the dialog when the URL
-carries `?advanced=1`, standing in for the server-side render.
+carries `?advanced=1` or the page renders a `[data-qb-open]` marker, standing in for the
+server-side render. The works page renders one dialog, shut; its five `builder-*` states carry the
+marker (`docs/SERVER.md` → Template states), and the Advanced search link's href is the address.
+Pushing that address on open and close is production's job, not the prototype's.
 Pattern page: `patterns/query-builder.html`.
 
 **Listens for:** click / input / change inside `#qb-conditions`, input in

@@ -29,9 +29,8 @@ needs an address she can bookmark and hand on.
 - [ ] An empty query is a legal state: the dialog opens over the unfiltered list
 - [ ] The address holds the whole query, so reload reopens the builder on it and a copied link gives
       it back editable rather than approximated
-- [ ] Back goes to the previous address, so someone who opened the builder returns to the list they
-      opened it from
-- [ ] The builder stays usable when JavaScript does not run
+- [ ] Back goes to the previous URL state, whatever that address held
+- [ ] The address renders the open dialog server-side, so it arrives open without a script
 - [ ] Arriving from a filtered list, each active filter is an editable condition row
 - [ ] A filter a condition holds reports that in the sidebar, with a way to edit the condition
 - `out of scope` The result list, its filters and its sorting
