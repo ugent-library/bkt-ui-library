@@ -33,7 +33,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker</h2>
-    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization; the project directory offers status and a year range, and no Organization, because project participation is deferred in raven's data contract; public works uses the search-it set — Author, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor (checklist), not the picker.</p>
+    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization; the project directory offers status and a year range, and no Organization, because project participation is deferred in raven's data contract; public works uses the search-it set — Author, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor, not the picker.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Project directory picker</h3>
@@ -83,7 +83,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for pick-from-a-set values — the works record filters (Author, Organization, Project, Keywords) and the directory Organization. Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
+    <p class="mb-4">Used for pick-from-a-set values — the works record filters (Organization, Project, Keywords) and the directory Organization. Author is a people search instead — <a href="#editor-people">below</a>. Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Checklist</h3>
@@ -116,6 +116,16 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       2b. EDITOR — PEOPLE
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section" id="editor-people">
+    <h2 class="h4 mb-3">Editor — people</h2>
+    <p class="mb-3">The works <strong>Author</strong> filter picks a person, so it opens the people picker instead of a list of names: two people share a name, and the row is what tells them apart. That panel is canonical at <a href="/patterns/people-search.html#checkable-rich-rows">people search &mdash; checkable rich rows</a>, and the query builder&rsquo;s Person condition opens the same one.</p>
+    <p class="mb-3">Apply replaces the set. An applied author is held by identifier, never by the name on screen.</p>
+    <p class="mb-0">Search-within matches the whole row, so an ORCID or a department code finds a person as a name does. That is intended: someone holding the identifier should not need the spelling.</p>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -187,7 +197,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — text</h2>
-    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — author, organization, project, keywords — are searchable checklists instead; see above.)</p>
+    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — organization, project, keywords — are searchable checklists. Author is a people search.)</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Text</h3>
@@ -303,7 +313,7 @@
         <tr>
           <td><code>data-filter="&lt;key&gt;"</code></td>
           <td>Each <code>button.dropdown-item</code></td>
-          <td>Key must match an entry in <code>CONFIGS</code> inside <code>filter-bar.js</code></td>
+          <td>The filter&rsquo;s key. Its label, type and options ride on the same button</td>
         </tr>
         <tr>
           <td><code>id="rdir-filter-editor"</code></td>

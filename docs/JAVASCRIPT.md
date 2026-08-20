@@ -256,19 +256,21 @@ no script)
 
 ### `filter-bar.js`
 
-**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, no config of its own. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, no config of its own. Editor types: checklist (multi-select; a search-within box appears for lists > 8), people, boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
 
 **Nothing it renders and nothing it offers lives in the file:**
 
 - **A bar announces itself** with `data-filter-bar="<prefix>"` on its `position-relative` wrapper. The engine wires one instance per marked bar; adding a fourth needs no edit here. Ids stay the handle after that, because `filter-sheet.js` moves the picker, the editor and clear-all out of the bar and into the mobile offcanvas.
-- **A picker button carries its own definition** — `data-filter-label`, `data-filter-type`, and then `data-filter-options` (checklist), `data-filter-placeholder` (text) or `data-filter-yes`/`data-filter-no` (boolean). The picker list is therefore the whole filter set: a filter the markup does not offer cannot be opened.
+- **A picker button carries its own definition** — `data-filter-label`, `data-filter-type`, and then `data-filter-options` (checklist), `data-filter-placeholder` (text) or `data-filter-yes`/`data-filter-no` (boolean). A `people` filter needs no list: its rows are the shared picker. The picker list is therefore the whole filter set: a filter the markup does not offer cannot be opened.
 - **The option lists** are `templates/partials/filter-option-lists.html`, one JSON block keyed by the name a picker button gives in `data-filter-options`. Stub vocabularies; real values come from raven.
-- **Every node** is cloned from `templates/partials/filter-editor-templates.html` — the shell, the four editor bodies, a checklist row, the chip, the picker tick. Values are written with `textContent`, so a typed filter value cannot become markup. The shell's three actions are fixed: Apply, Cancel, Remove filter. Remove is drawn whether or not the filter is applied, so the footer keeps one shape; removing an unapplied filter is a no-op that closes the panel.
+- **Every node** is cloned from a partial. `templates/partials/filter-editor-templates.html` holds the shell, the editor bodies, a checklist row, the chip and the picker tick; a `people` editor clones `#person-picker` from `templates/partials/people-picker-panel.html` and drops its title and footer, because the shell supplies both. A person is kept as `{id, label}` and matched by id, so two people of one name stay apart; the label is display only. Values are written with `textContent`, so a typed filter value cannot become markup. The shell's three actions are fixed: Apply, Cancel, Remove filter. Remove is drawn whether or not the filter is applied, so the footer keeps one shape; removing an unapplied filter is a no-op that closes the panel.
 
-Both partials are included once per page carrying a bar, before the `filter-bar.js` script tag.
+Those partials are included once per page carrying a bar, before the `filter-bar.js` script tag.
+
+**Search-within matches the whole row**, not just its label, so a people editor finds an ORCID or a department code. For a plain checklist the row is its label, so nothing changes there. Why that is wanted: `patterns/filter-picker.html` → Editor — people.
 
 **Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author, Organization, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
+- `wf-` — public works (`public-works.html`): Author (people), Organization, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
 - `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization.
 - `pdir-` — project directory (`public-projects.html`, bar inline): Status, Year (range). No Organization: project participation is deferred in raven's data contract, so the control would be inert.
 
@@ -283,7 +285,7 @@ Both partials are included once per page carrying a bar, before the `filter-bar.
 
 **Dispatches:** nothing
 
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organization tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organization tree, project and keyword option lists and the picker's people are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
 
 **Fails the template test:** no (since v2.25). It built its markup as strings and carried its own filter and option vocabulary in a `CONFIGS` object; both now live in the markup, per the two partials above.
 
@@ -299,8 +301,9 @@ OR groups.
   filters the field choices. A pick clones the row template the choice names and writes the
   field label into it.
 - **The person picker** rides on the same slot mechanism, cloned from `#person-picker` — the
-  shared people picker in `templates/partials/people-picker-panel.html`, which the works Author
-  filter clones too, so the panel is defined once and neither engine owns it. Add clones
+  shared people picker in `templates/partials/people-picker-panel.html`. The works Author filter
+  clones the same template and keeps only its two bodies, so the panel is defined once and
+  neither engine owns it. Add clones
   `#qb-person-token` per ticked name the row does not already carry and clears the boxes; a
   token's × removes it. It opens on its search box and hands focus back to the control that
   opened it (`docs/ACCESSIBILITY.md` E4).

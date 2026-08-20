@@ -104,6 +104,7 @@
 
     function editorBody(def, existing) {
       if (def.type === 'checklist')  return checklistBody(def, existing?.rawValue || []);
+      if (def.type === 'people')     return peopleBody(def, existing?.rawValue || []);
       if (def.type === 'boolean')    return booleanBody(def, existing?.rawValue);
       if (def.type === 'year-range') return yearBody(existing?.rawValue || {});
       if (def.type === 'text')       return textBody(def, existing?.rawValue || '');
@@ -135,6 +136,32 @@
         label.htmlFor = input.id;
         label.textContent = v.label;
         options.append(row);
+      });
+      return frag;
+    }
+
+    // The people picker, minus the title and footer this editor supplies itself.
+    function peopleBody(def, selected) {
+      const frag = clone('person-picker');
+      frag.querySelector('[data-person-title]').remove();
+      frag.querySelector('[data-person-actions]').remove();
+
+      const search = frag.querySelector('[data-person-search]');
+      const searchLabel = frag.querySelector(`label[for="${search.id}"]`);
+      search.id = prefix + 'person-search';
+      searchLabel.htmlFor = search.id;
+      search.placeholder = 'Search ' + def.label.toLowerCase() + '…';
+
+      const rows = frag.querySelector('[data-person-rows]');
+      rows.setAttribute('aria-label', 'Select ' + def.label);
+      const picked = selected.map(p => p.id);
+      rows.querySelectorAll('.form-check').forEach(row => {
+        const input = row.querySelector('input');
+        const label = row.querySelector('label');
+        input.id = prefix + 'person-' + input.dataset.id;
+        input.name = prefix + 'person';
+        input.checked = picked.includes(input.dataset.id);
+        label.htmlFor = input.id;
       });
       return frag;
     }
@@ -175,11 +202,13 @@
       filterEditor.querySelector('[data-editor-remove]')
         ?.addEventListener('click', () => { removeFilter(filterId); closeEditor(); });
 
-      const searchInput = filterEditor.querySelector('[data-checklist-search]');
+      // Matching the whole row, not just its name, is what lets a people search find an ORCID
+      // or a department.
+      const searchInput = filterEditor.querySelector('[data-checklist-search], [data-person-search]');
       searchInput?.addEventListener('input', () => {
         const q = searchInput.value.trim().toLowerCase();
-        filterEditor.querySelectorAll('[data-editor-options] .form-check').forEach(row => {
-          row.hidden = q !== '' && !row.querySelector('label').textContent.toLowerCase().includes(q);
+        filterEditor.querySelectorAll('.bt-panel__body .form-check').forEach(row => {
+          row.hidden = q !== '' && !row.textContent.toLowerCase().includes(q);
         });
       });
     }
@@ -193,6 +222,16 @@
         if (!checked.length) { closeEditor(); return; }
         rawValue = checked.map(c => c.value);
         displayValue = checked.length === 1 ? checked[0].label : `${checked[0].label} +${checked.length - 1}`;
+      } else if (def.type === 'people') {
+        // A person is kept by id: two of them share a name, so the label is display only.
+        const picked = [...filterEditor.querySelectorAll('[data-person-rows] input:checked')]
+          .map(cb => ({
+            id: cb.dataset.id,
+            label: cb.closest('.form-check').querySelector('[data-person-name]').textContent.trim(),
+          }));
+        if (!picked.length) { closeEditor(); return; }
+        rawValue = picked;
+        displayValue = picked.length === 1 ? picked[0].label : `${picked[0].label} +${picked.length - 1}`;
       } else if (def.type === 'boolean') {
         const sel = filterEditor.querySelector('[data-editor-bool]:checked');
         if (!sel) { closeEditor(); return; }

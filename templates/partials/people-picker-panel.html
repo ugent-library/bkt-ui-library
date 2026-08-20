@@ -16,14 +16,14 @@
 -->
 
 <template id="person-picker">
-  <p class="bt-panel__title">Person</p>
+  <p class="bt-panel__title" data-person-title>Person</p>
   <div class="bt-panel__body">
     <label class="visually-hidden" for="person-search">Search people</label>
     <input type="search" class="form-control form-control-sm" id="person-search"
       data-person-search placeholder="Search person&hellip;" autocomplete="off">
   </div>
   <div class="bt-panel__body bt-panel__body--checklist" role="group"
-    aria-label="People matching your search">
+    aria-label="People matching your search" data-person-rows>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="person-1" data-id="p1">
       <label class="form-check-label" for="person-1">
@@ -219,7 +219,7 @@
       </label>
     </div>
   </div>
-  <div class="bt-panel__actions">
+  <div class="bt-panel__actions" data-person-actions>
     <button type="button" class="btn btn-primary btn-sm" data-person-add>Add</button>
     <button type="button" class="btn btn-ghost btn-sm" data-person-cancel>Cancel</button>
   </div>
