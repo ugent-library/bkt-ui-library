@@ -364,20 +364,20 @@ region. Each state carries its own count, written by hand; nothing here derives 
 
 ### `people-search.js`
 
-**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. The `[data-ps-hint]` element is the widget's live region: it announces the result count and the no-results message — nothing but `.people-result` rows goes inside the `[data-ps-results]` listbox. Pattern page: `patterns/people-search.html`. (The works Author filter is a text stub today; production would resolve it through this widget.)
+**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. The `[data-ps-hint]` element is the widget's live region: it announces the result count and the no-results message — nothing but `bt-result` rows goes inside the `[data-ps-results]` listbox. Each row carries `data-ps-row`, which is what the script selects on, so the row's classes stay presentational. Pattern page: `patterns/people-search.html`. (The works Author filter is a text stub today; production would resolve it through this widget.)
 
 **Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`)
 
 **Listens for:**
 - `keyup` on `[data-ps-input]` inputs
-- Click / keyboard on `[role="option"]` rows in `[data-ps-results]`
+- Click / keyboard on `[data-ps-row]` rows in `[data-ps-results]`
 
 **Dispatches:**
 - `people-search:select` — `{ id, name, affiliation }` when a person is chosen
 
 **Prototype-only:** no (widget logic is real; stub data is in `people-search-stub.js`)
 
-**Fails the template test:** yes, in one function. `renderSelected()` builds the collapsed selected-person row as a string. It is reachable — it is the branch for a host with no `[data-ps-selected]` slot, which is every instance on `patterns/people-search.html` and the query builder's person field — so it is not dead code to delete. The same row is hand-written a third time at `patterns/people-search.html` §Selected. Replaced by one `<template>` holding that row, cloned by the widget and shown statically by the pattern page. `people-search-stub.js`'s `renderRow()` is not in scope: it stands in for the `.people-result` rows the server will return, which is what a `-stub.js` file is for.
+**Fails the template test:** yes, in one function. `renderSelected()` builds the collapsed selected-person row as a string. It is reachable — it is the branch for a host with no `[data-ps-selected]` slot, which is every instance on `patterns/people-search.html` and the query builder's person field — so it is not dead code to delete. The same row is hand-written a third time at `patterns/people-search.html` §Selected. Replaced by one `<template>` holding that row, cloned by the widget and shown statically by the pattern page. `people-search-stub.js`'s `renderRow()` is not in scope: it stands in for the `[data-ps-row]` rows the server will return, which is what a `-stub.js` file is for.
 
 ---
 

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower ab2b0fe/2026-08-20 */
+/*! Booktower fbc74f4/2026-08-20 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -2353,15 +2353,14 @@ img.bt-navbar__logo {
   outline-offset: 2px;
 }
 
-/* -- People search (single-select widget) -- */
-/* TODO: simplify, has too many specifics */
+/* -- Search result rows -- */
 [data-people-search] {
   position: relative;
 }
 
 /* The list is an overlay: results appearing or clearing must never reflow the form
    below the input. No top offset — out of flow it stays at its in-flow spot. */
-.people-results {
+.bt-results {
   position: absolute;
   left: 0;
   right: 0;
@@ -2376,7 +2375,7 @@ img.bt-navbar__logo {
   overflow-y: auto;
 }
 
-.people-result {
+.bt-result {
   display: flex;
   align-items: flex-start;
   gap: var(--bt-sp-3);
@@ -2385,22 +2384,22 @@ img.bt-navbar__logo {
   transition: background var(--bt-dur-fast);
 }
 
-.people-result:hover,
-.people-result:focus {
+.bt-result:hover,
+.bt-result:focus {
   background: var(--bt-blue-50);
   outline: none;
 }
 
-.people-result.is-selected {
+.bt-result.is-selected {
   background: var(--bt-blue-100);
 }
 
-.people-result__icon {
+.bt-result__icon {
   display: inline-flex;
   color: var(--bt-icon-muted);
 }
 
-.people-result__name {
+.bt-result__name {
   font-weight: 500;
 }
 

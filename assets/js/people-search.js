@@ -9,6 +9,8 @@
  *   Required:
  *     [data-ps-input]    <input type="search"> — the search field
  *     [data-ps-results]  <div role="listbox">  — results / selected state
+ *     [data-ps-row]      on every result row inside the listbox — what this
+ *                        script selects on, so the row's classes stay styling
  *
  *   Optional:
  *     [data-ps-hint]               <p>          — status / hint text
@@ -32,7 +34,7 @@
  *
  * In production:
  *   Add hx-get="/people/search" to the input so it returns a partial of
- *   .people-result rows. This script's delegation works after every HTMX
+ *   [data-ps-row] rows. This script's delegation works after every HTMX
  *   swap, so nothing here changes; remove people-search-stub.js.
  */
 
@@ -52,16 +54,16 @@
 
     // ── Selection — event delegation works after every HTMX swap ───────────
     results.addEventListener('click', e => {
-      const row = e.target.closest('.people-result');
+      const row = e.target.closest('[data-ps-row]');
       if (row) selectPerson(row.dataset);
     });
 
     results.addEventListener('keydown', e => {
-      const rows = [...results.querySelectorAll('.people-result')];
+      const rows = [...results.querySelectorAll('[data-ps-row]')];
       const idx  = rows.indexOf(document.activeElement);
 
       if (e.key === 'Enter' || e.key === ' ') {
-        const row = e.target.closest('.people-result');
+        const row = e.target.closest('[data-ps-row]');
         if (row) { e.preventDefault(); selectPerson(row.dataset); }
       }
       if (e.key === 'ArrowDown') {
@@ -81,13 +83,13 @@
     input.addEventListener('keydown', e => {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        results.querySelector('.people-result')?.focus();
+        results.querySelector('[data-ps-row]')?.focus();
       }
     });
 
     // ── Show / hide results after HTMX swap ─────────────────────────────────
     results.addEventListener('htmx:afterSwap', () => {
-      const count = results.querySelectorAll('.people-result').length;
+      const count = results.querySelectorAll('[data-ps-row]').length;
       results.hidden = count === 0;
       // No-results lives in the hint (the live region), never inside the listbox.
       if (hint) hint.textContent = count
@@ -149,17 +151,17 @@
              <span class="bt-meta-list__item">${person.affiliation}</span>
            </div>`
         : '';
-      return `<div class="people-result is-selected" role="option" tabindex="0"
+      return `<div class="bt-result is-selected" role="option" tabindex="0" data-ps-row
           data-id="${person.id}"
           data-name="${person.name}"
           data-affiliation="${person.affiliation}"
           aria-label="${person.name}${person.affiliation ? ', ' + person.affiliation : ''}"
           aria-selected="true">
-          <span class="people-result__icon" aria-hidden="true">
+          <span class="bt-result__icon" aria-hidden="true">
             <i class="if if-user if--sm"></i>
           </span>
           <div>
-            <div class="people-result__name">${person.name}</div>
+            <div class="bt-result__name">${person.name}</div>
             ${affMeta}
           </div>
           <i class="if if-check ms-auto text-success" aria-hidden="true"></i>

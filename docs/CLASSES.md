@@ -145,6 +145,12 @@ bt-query-builder__row-value
 bt-query-builder__value-select
 bt-query-builder__year
 
+bt-result
+bt-result__icon
+bt-result__name
+
+bt-results
+
 bt-search-clear
 
 bt-section-detail
@@ -508,12 +514,6 @@ min-w-0
 modal-dialog--wide
 
 nav-title
-
-people-result
-people-result__icon
-people-result__name
-
-people-results
 
 popover--dark
 popover--sm

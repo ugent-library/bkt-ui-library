@@ -6,6 +6,34 @@ system, or do I reach for something new?"
 
 ---
 
+## A search result row, not a person row (v2.27, 2026-08-20)
+
+The picker row was named for people, and nothing in it is about people: it holds an icon, a name
+and metadata lines, which is what an organisation or a project row holds too. It was also the last
+standalone component with no `bt-` prefix. Four classes take the name of what they are.
+
+| Removed | Use instead |
+|---------|-------------|
+| `people-results` | `bt-results` |
+| `people-result` | `bt-result` |
+| `people-result__icon` | `bt-result__icon` |
+| `people-result__name` | `bt-result__name` |
+
+`is-selected` is unchanged, and `bt-result__name` stays a class rather than a font-weight utility:
+it names the row's display name, which is where the `<mark>` for a query highlight lands.
+`assets/scss/patterns/_booktower-people-results.scss` is `_booktower-results.scss`, and it drops
+its "simplify, too many specifics" marker — the specific it carried was the people name.
+
+**The row is read through `data-ps-row`.** `people-search.js` selected rows by `.people-result` in
+six places, so a restyle could have cost the widget its click handling, its arrow keys and its
+result count. Every row inside a `[data-ps-results]` listbox now carries `data-ps-row` and the
+script reads that, which is the rule the query builder's rows already follow.
+
+The people search itself keeps its name: `people-search.js`, the `data-ps-*` contract and
+`patterns/people-search.html` are about people, and the row is not.
+
+---
+
 ## One metadata line, and identifiers first (v2.26, 2026-08-20)
 
 A person row carried its own metadata classes, duplicating the line `bt-meta-list` already draws
@@ -748,6 +776,7 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `sr-only` | Bootstrap's `visually-hidden` |
 | `bt-navbar__mark` | `bt-navbar__brand` |
 | `people-result__meta`, `people-result__meta-item` | `bt-meta-list bt-meta-list--xs`, `bt-meta-list__item` |
+| `people-results`, `people-result`, `people-result__icon`, `people-result__name` | `bt-results`, `bt-result`, `bt-result__icon`, `bt-result__name` |
 | `bt-meta-list__item-bordered` | `bt-work-card__meta-item` draws the separator now |
 | `bt-meta-text` | Bootstrap `small text-muted` |
 | `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` | `bt-sidebar` and its elements |

@@ -24,7 +24,7 @@
           <input type="search" id="ps-empty" data-ps-input class="form-control form-control-sm"
             placeholder="e.g. De Pauw or 0000-0002-1234-5678"
             autocomplete="off">
-          <div data-ps-results class="people-results" role="listbox"
+          <div data-ps-results class="bt-results" role="listbox"
             aria-label="People matching your search" hidden>
           </div>
           <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0">
@@ -53,18 +53,18 @@
             value="doe"
             autocomplete="off">
 
-          <div data-ps-results class="people-results" role="listbox"
+          <div data-ps-results class="bt-results" role="listbox"
             aria-label="People matching your search">
 
             <!-- UGent person — linked identity, full metadata -->
-            <div class="people-result" role="option" tabindex="0"
+            <div class="bt-result" role="option" tabindex="0" data-ps-row
               data-id="p-jd1" data-name="John Doe" data-affiliation="Faculty of Performing Arts"
               aria-label="John Doe, Faculty of Performing Arts">
-              <span class="people-result__icon" aria-hidden="true">
+              <span class="bt-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
               </span>
               <div>
-                <div class="people-result__name">John <mark>Doe</mark></div>
+                <div class="bt-result__name">John <mark>Doe</mark></div>
                 <div class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
@@ -87,14 +87,14 @@
             </div>
 
             <!-- UGent person — no UGent ID on the identity -->
-            <div class="people-result" role="option" tabindex="0"
+            <div class="bt-result" role="option" tabindex="0" data-ps-row
               data-id="p-jd2" data-name="Jane Doe" data-affiliation="Faculty of Performing Arts"
               aria-label="Jane Doe, Faculty of Performing Arts">
-              <span class="people-result__icon" aria-hidden="true">
+              <span class="bt-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
               </span>
               <div>
-                <div class="people-result__name">Jane <mark>Doe</mark></div>
+                <div class="bt-result__name">Jane <mark>Doe</mark></div>
                 <div class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
@@ -116,14 +116,14 @@
             </div>
 
             <!-- External person — no UGent affiliation -->
-            <div class="people-result" role="option" tabindex="0"
+            <div class="bt-result" role="option" tabindex="0" data-ps-row
               data-id="p-jb1" data-name="Josephine Baker" data-affiliation="External"
               aria-label="Josephine Baker, External">
-              <span class="people-result__icon" aria-hidden="true">
+              <span class="bt-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
               </span>
               <div>
-                <div class="people-result__name">Josephine Baker</div>
+                <div class="bt-result__name">Josephine Baker</div>
                 <div class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
@@ -163,16 +163,16 @@
             value="Jane Doe"
             autocomplete="off">
 
-          <div data-ps-results class="people-results" role="listbox"
+          <div data-ps-results class="bt-results" role="listbox"
             aria-label="People matching your search">
-            <div class="people-result is-selected" role="option" tabindex="0"
+            <div class="bt-result is-selected" role="option" tabindex="0" data-ps-row
               data-id="p-jd2" data-name="Jane Doe" data-affiliation="Faculty of Performing Arts"
               aria-label="Jane Doe, Faculty of Performing Arts" aria-selected="true">
-              <span class="people-result__icon" aria-hidden="true">
+              <span class="bt-result__icon" aria-hidden="true">
                 <i class="if if-user if--sm"></i>
               </span>
               <div>
-                <div class="people-result__name">Jane Doe</div>
+                <div class="bt-result__name">Jane Doe</div>
                 <div class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">Faculty of Performing Arts</span>
                 </div>
@@ -204,7 +204,7 @@
           <input type="search" id="ps-empty-results" data-ps-input class="form-control form-control-sm"
             value="xyzzy"
             autocomplete="off">
-          <div data-ps-results class="people-results" role="listbox"
+          <div data-ps-results class="bt-results" role="listbox"
             aria-label="People matching your search" hidden>
           </div>
           <p data-ps-hint aria-live="polite" class="text-muted small mt-2 mb-0">
@@ -236,17 +236,17 @@
               <input type="search" id="ps-form-search" data-ps-input class="form-control form-control-sm"
                 value="Jane Doe" autocomplete="off">
 
-              <div data-ps-results class="people-results" role="listbox"
+              <div data-ps-results class="bt-results" role="listbox"
                 aria-label="People matching your search" hidden>
               </div>
 
               <div data-ps-selected class="p-2 mt-2 bg-light border rounded">
                 <div class="d-flex align-items-start gap-3">
-                  <span class="people-result__icon" aria-hidden="true">
+                  <span class="bt-result__icon" aria-hidden="true">
                     <i class="if if-user if--sm"></i>
                   </span>
                   <div class="flex-grow-1">
-                    <div class="people-result__name" data-ps-selected-name>Jane Doe</div>
+                    <div class="bt-result__name" data-ps-selected-name>Jane Doe</div>
                     <div class="bt-meta-list bt-meta-list--xs" data-ps-selected-affiliation>Faculty of Performing Arts</div>
                   </div>
                   <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
@@ -283,7 +283,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section" id="checkable-rich-rows">
     <h2 class="h4 mb-3">Checkable rich rows — multi-select in a panel</h2>
-    <p class="mb-4">Two hosts pick several people at once: the works-page author filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>people-result__name</code> with <code>&lt;mark&gt;</code>, the <code>bt-meta-list bt-meta-list--xs</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens.</p>
+    <p class="mb-4">Two hosts pick several people at once: the works-page author filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>bt-result__name</code> with <code>&lt;mark&gt;</code>, the <code>bt-meta-list bt-meta-list--xs</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Author filter editor — search-first, multi-select</h3>
@@ -301,7 +301,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="ps-check-jd1">
               <label class="form-check-label" for="ps-check-jd1">
-                <span class="people-result__name">John <mark>Doe</mark></span>
+                <span class="bt-result__name">John <mark>Doe</mark></span>
                 <span class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
@@ -325,7 +325,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="ps-check-jd2" checked>
               <label class="form-check-label" for="ps-check-jd2">
-                <span class="people-result__name">Jane <mark>Doe</mark></span>
+                <span class="bt-result__name">Jane <mark>Doe</mark></span>
                 <span class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
@@ -349,7 +349,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="ps-check-jb">
               <label class="form-check-label" for="ps-check-jb">
-                <span class="people-result__name">Josephine Baker</span>
+                <span class="bt-result__name">Josephine Baker</span>
                 <span class="bt-meta-list bt-meta-list--xs">
                   <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
@@ -381,7 +381,8 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Classes</h2>
-    <p>The row and its parts are defined in <code>assets/scss/patterns/_booktower-people-results.scss</code>; the metadata lines come from the shared <code>bt-meta-list</code>.</p>
+    <p>The row and its parts are defined in <code>assets/scss/patterns/_booktower-results.scss</code>; the metadata lines come from the shared <code>bt-meta-list</code>.</p>
+    <p><code>people-search.js</code> reads a row through <code>data-ps-row</code>, never through its class, so restyling the row cannot cost it its behaviour. Every row inside a <code>[data-ps-results]</code> listbox carries the attribute.</p>
 
     <table class="table table-sm align-middle mt-3" aria-label="People search CSS classes">
       <thead class="text-uppercase text-muted small">
@@ -393,29 +394,29 @@
       </thead>
       <tbody class="small">
         <tr>
-          <td><code>.people-results</code></td>
+          <td><code>.bt-results</code></td>
           <td><code>div[role="listbox"]</code></td>
           <td>Scroll container for result rows. Bordered, rounded, max-height with overflow-y auto.</td>
         </tr>
         <tr>
-          <td><code>.people-result</code></td>
+          <td><code>.bt-result</code></td>
           <td><code>div[role="option"]</code></td>
-          <td>A single person row. Flex, cursor pointer, border-bottom between rows.</td>
+          <td>A single result row. Flex, cursor pointer, hover and selected backgrounds. Not people-specific: an organisation or project picker uses the same row.</td>
         </tr>
         <tr>
-          <td><code>.people-result.is-selected</code></td>
+          <td><code>.bt-result.is-selected</code></td>
           <td>—</td>
           <td>Blue background. Add <code>aria-selected="true"</code> at the same time.</td>
         </tr>
         <tr>
-          <td><code>.people-result__icon</code></td>
+          <td><code>.bt-result__icon</code></td>
           <td><code>span</code></td>
           <td>Icon column, flex-shrink-0, muted colour.</td>
         </tr>
         <tr>
-          <td><code>.people-result__name</code></td>
+          <td><code>.bt-result__name</code></td>
           <td><code>div</code></td>
-          <td>Person's display name. Contains <code>&lt;mark&gt;</code> for query highlights.</td>
+          <td>The row's display name. Contains <code>&lt;mark&gt;</code> for query highlights.</td>
         </tr>
         <tr>
           <td><code>.bt-meta-list bt-meta-list--xs</code></td>

@@ -53,16 +53,16 @@
       p.years       && `<span class="bt-meta-list__item">${p.years}</span>`,
     ].filter(Boolean).join('');
 
-    return `<div class="people-result" role="option" tabindex="0"
+    return `<div class="bt-result" role="option" tabindex="0" data-ps-row
       data-id="${p.id}"
       data-name="${p.name}"
       data-affiliation="${p.affiliation || ''}"
       aria-label="${p.name}${p.affiliation ? ', ' + p.affiliation : ''}">
-      <span class="people-result__icon" aria-hidden="true">
+      <span class="bt-result__icon" aria-hidden="true">
         <i class="if if-user if--sm"></i>
       </span>
       <div>
-        <div class="people-result__name">${highlight(p.name, q)}</div>
+        <div class="bt-result__name">${highlight(p.name, q)}</div>
         ${ids ? `<div class="bt-meta-list bt-meta-list--xs">${ids}</div>` : ''}
         ${meta ? `<div class="bt-meta-list bt-meta-list--xs">${meta}</div>` : ''}
       </div>

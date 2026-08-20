@@ -1,11 +1,10 @@
-/* -- People search (single-select widget) -- */
-/* TODO: simplify, has too many specifics */
+/* -- Search result rows -- */
 [data-people-search] {
   position: relative;
 }
 /* The list is an overlay: results appearing or clearing must never reflow the form
    below the input. No top offset — out of flow it stays at its in-flow spot. */
-.people-results {
+.bt-results {
   position: absolute;
   left: 0;
   right: 0;
@@ -19,7 +18,7 @@
   max-height: 240px;
   overflow-y: auto;
 }
-.people-result {
+.bt-result {
   display: flex;
   align-items: flex-start;
   gap: var(--bt-sp-3);
@@ -27,13 +26,13 @@
   cursor: pointer;
   transition: background var(--bt-dur-fast);
 }
-.people-result:hover,
-.people-result:focus { background: var(--bt-blue-50); outline: none; }
-.people-result.is-selected { background: var(--bt-blue-100); }
-.people-result__icon {
+.bt-result:hover,
+.bt-result:focus { background: var(--bt-blue-50); outline: none; }
+.bt-result.is-selected { background: var(--bt-blue-100); }
+.bt-result__icon {
   display: inline-flex;
   color: var(--bt-icon-muted);
 }
-.people-result__name {
+.bt-result__name {
   font-weight: 500;
 }
