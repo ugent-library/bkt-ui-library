@@ -303,9 +303,11 @@ OR groups.
 - **The person picker** rides on the same slot mechanism, cloned from `#person-picker` — the
   shared people picker in `templates/partials/people-picker-panel.html`. The works Author filter
   clones the same template and keeps only its two bodies, so the panel is defined once and
-  neither engine owns it. Add clones
-  `#qb-person-token` per ticked name the row does not already carry and clears the boxes; a
-  token's × removes it. It opens on its search box and hands focus back to the control that
+  neither engine owns it. Add clones a
+  token per ticked person the row does not already carry, matched on `data-id` so two people of
+  one name both land, and clears the boxes; a token's × removes it. There is a token per kind:
+  `#qb-person-token` carries the crest, `#qb-person-token-external` carries none, and the row's
+  `data-person-external` picks between them. It opens on its search box and hands focus back to the control that
   opened it (`docs/ACCESSIBILITY.md` E4).
 - **OR groups (phase 2)** turn a condition row into an "any of these" `<fieldset>` in place and
   collapse it back to a plain row when one alternative is left. The `or` separators inside a
@@ -323,7 +325,7 @@ OR groups.
   `[data-qb-remove-group]`, `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`,
   `[data-qb-count]`, `[data-qb-chooser-slot]`, `[data-qb-choice]` (+
   `data-qb-label`/`data-qb-template`), `[data-qb-choice-search]`, `[data-qb-choice-group]`,
-  `[data-qb-person-slot]`, `[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`,
+  `[data-qb-person-slot]`, `[data-qb-token-name]` (+ `data-id` on the token), `[data-qb-value]`, `[data-qb-op]`,
   `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The picker's own hooks carry no
   `qb-` prefix, because neither engine owns the panel: `[data-person-search]`,
   `[data-person-name]`, `[data-person-add]`, `[data-person-cancel]`, and `data-id` on each row's

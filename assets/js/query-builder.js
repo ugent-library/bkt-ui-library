@@ -303,21 +303,25 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── The person picker ───────────────────────────────────────────────────────
 
   // The panel is the input, the tokens in the row are the value: what is ticked joins the row
-  // and the boxes clear, so the two never disagree. A name already in the row is not repeated.
+  // and the boxes clear, so the two never disagree. A person already in the row is not repeated.
   function addPeople(row, panel) {
     const cell = row.querySelector('[data-qb-value]');
     const present = Array.from(row.querySelectorAll('[data-qb-token]'))
-      .map(el => el.textContent.trim());
+      .map(el => el.dataset.id);
     panel.querySelectorAll('input[type="checkbox"]:checked').forEach(box => {
-      const name = box.closest('.form-check').querySelector('[data-person-name]').textContent.trim();
-      if (!present.includes(name)) cell.insertBefore(token(name), panel.parentElement);
+      if (!present.includes(box.dataset.id)) cell.insertBefore(token(box), panel.parentElement);
       box.checked = false;
     });
   }
 
-  function token(name) {
-    const node = document.getElementById('qb-person-token')
+  function token(box) {
+    const shape = box.hasAttribute('data-person-external')
+      ? 'qb-person-token-external'
+      : 'qb-person-token';
+    const node = document.getElementById(shape)
       .content.firstElementChild.cloneNode(true);
+    const name = box.closest('.form-check').querySelector('[data-person-name]').textContent.trim();
+    node.dataset.id = box.dataset.id;
     node.querySelector('[data-qb-token-name]').textContent = name;
     node.querySelector('button').setAttribute('aria-label', 'Remove ' + name);
     return node;
