@@ -17,7 +17,7 @@ function card({ id, badges, title, authors, line }) {
         </button>
         <div class="dropdown">
           <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
             aria-label="Add to list: ${title}"
             hx-get="/lists/panel?work=${id}" hx-trigger="click once"
             hx-target="#atl-${id}-panel" hx-swap="innerHTML" hx-indicator="#atl-${id}-loading">

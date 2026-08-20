@@ -227,15 +227,21 @@ document.addEventListener('DOMContentLoaded', function () {
     else pending = { mode: 'append' };
   });
 
+  document.addEventListener('shown.bs.dropdown', event => {
+    event.target.parentElement
+      ?.querySelector('[data-qb-person-slot] [data-person-search]')?.focus();
+  });
+
   list.addEventListener('click', event => {
     const button = event.target.closest('button');
     if (!button || !list.contains(button)) return;
 
+    // Bootstrap returns focus to the opener on Escape only (ACCESSIBILITY.md E4).
     if (button.hasAttribute('data-person-add')) {
       addPeople(button.closest('[data-qb-row]'), button.closest('[data-qb-person-slot]'));
-      closeDropdown(button);
+      closeDropdown(button)?.focus();
     } else if (button.hasAttribute('data-person-cancel')) {
-      closeDropdown(button);
+      closeDropdown(button)?.focus();
     } else if (button.closest('[data-qb-token]')) {
       button.closest('[data-qb-token]').remove();
     } else if (button.hasAttribute('data-qb-or')) {
@@ -274,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function closeDropdown(inside) {
     const toggle = inside.closest('.dropdown')?.querySelector('[data-bs-toggle="dropdown"]');
     if (toggle && window.bootstrap) bootstrap.Dropdown.getOrCreateInstance(toggle).hide();
+    return toggle;
   }
 
   function wireSearch(scope) {

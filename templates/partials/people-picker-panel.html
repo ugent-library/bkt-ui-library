@@ -7,27 +7,23 @@
 
   Include once per page carrying either host, alongside filter-editor-templates.html.
 
-  A host replaces the title and the footer. The query builder keeps the ones below; the filter
-  editor clones the two bodies alone and wears its own from filter-editor-templates.html.
-
   A row is identified by its data-id, never by the name in its label: two people share a name,
-  which is what the rich row exists to tell apart. data-person-external marks a person the
-  index knows without a UGent person record behind them.
+  which is what the rich row exists to tell apart. data-person-external marks a person the index
+  knows without a UGent person record behind them.
 
-  Placeholder people, mirroring the PEOPLE array in people-search-stub.js. In production every
-  row comes from /people/search, which returns UGent people and the external people already in
-  the index.
+  Placeholder people, mirroring the PEOPLE array in people-search-stub.js. In production a row
+  comes from /people/search, which returns UGent people and index-known external people alike.
 -->
 
 <template id="person-picker">
-  <p class="bt-panel__title" data-person-title>Person</p>
+  <p class="bt-panel__title">Person</p>
   <div class="bt-panel__body">
     <label class="visually-hidden" for="person-search">Search people</label>
     <input type="search" class="form-control form-control-sm" id="person-search"
       data-person-search placeholder="Search person&hellip;" autocomplete="off">
   </div>
   <div class="bt-panel__body bt-panel__body--checklist" role="group"
-    aria-label="People matching your search" data-person-rows>
+    aria-label="People matching your search">
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="person-1" data-id="p1">
       <label class="form-check-label" for="person-1">

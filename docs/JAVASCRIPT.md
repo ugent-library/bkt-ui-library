@@ -302,7 +302,8 @@ OR groups.
   shared people picker in `templates/partials/people-picker-panel.html`, which the works Author
   filter clones too, so the panel is defined once and neither engine owns it. Add clones
   `#qb-person-token` per ticked name the row does not already carry and clears the boxes; a
-  token's × removes it.
+  token's × removes it. It opens on its search box and hands focus back to the control that
+  opened it (`docs/ACCESSIBILITY.md` E4).
 - **OR groups (phase 2)** turn a condition row into an "any of these" `<fieldset>` in place and
   collapse it back to a plain row when one alternative is left. The `or` separators inside a
   group are rebuilt after every change; the top level is AND-joined, which the heading states,
@@ -321,9 +322,10 @@ OR groups.
   `data-qb-label`/`data-qb-template`), `[data-qb-choice-search]`, `[data-qb-choice-group]`,
   `[data-qb-person-slot]`, `[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`,
   `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The picker's own hooks carry no
-  `qb-` prefix, because both engines read them: `[data-person-search]`, `[data-person-rows]`,
-  `[data-person-name]`, `[data-person-add]`, `[data-person-cancel]`, and `data-id` +
-  `data-person-external` on each row's checkbox.
+  `qb-` prefix, because neither engine owns the panel: `[data-person-search]`,
+  `[data-person-name]`, `[data-person-add]`, `[data-person-cancel]`, and `data-id` on each row's
+  checkbox. A row also carries `data-person-external` where the person has no UGent record; the
+  crest that reads it is not drawn yet.
 - **The row is read through its data attributes, never its classes.** `[data-qb-value]`,
   `[data-qb-op]`, `[data-qb-actions]` and `[data-qb-blank]` are the value cell, the operator
   select, the actions cell and the blank state's root, so a layout change can rename or drop a

@@ -52,6 +52,19 @@
     grid-column: 1 / -1;
     grid-row: 2;
   }
+
+  /* Keep !important: Popper writes position, inset and transform inline, and this is what drops
+     the people picker into the row. Without it the panel floats out of a dialog this narrow. */
+  .bt-query-builder__row-value .dropdown-menu {
+    position: static !important;
+    inset: auto !important;
+    transform: none !important;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    margin-top: var(--bt-sp-2);
+    box-shadow: none;
+  }
 }
 
 /* ── Rows ─────────────────────────────────────────────────────────────────── */
