@@ -1,0 +1,159 @@
+<!-- @example: /patterns/filter-picker.html -->
+<!--
+  Partial: organization-picker-panel.html
+  The organization picker: a search box over checkable rows. Two hosts pick organizations,
+  the works Organization filter and the query builder's Affiliation condition, so both clone
+  this one panel.
+
+  Include once per page carrying either host, alongside filter-editor-templates.html.
+
+  A row is identified by its data-id, never by its label. Placeholder organizations: the ids
+  (fac-, dept-, rg-) are invented for the prototype and are not raven's. Real units come
+  from raven's organization catalog.
+
+  ⚠️ These rows are a stand-in: a flat list where the real picker shows a hierarchy. Drawing
+  it is a scheduled design task, with these open questions:
+  - How the hierarchy is drawn: a flat searchable list (this stand-in), an indented tree
+    with expand/collapse, or a drill-down per level.
+  - What ticking a parent means inside the panel. The query already returns a unit and
+    everything under it (docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, Affiliation), so children
+    of a ticked parent could grey out, tick along, or stay independent.
+  - Per-faculty scoping for FRIS and VABB reporting: which units a reporting scope needs.
+    The FRIS and VABB reporting owners answer this, outside the team.
+-->
+
+<template id="organization-picker">
+  <p class="bt-panel__title" data-picker-title>Organization</p>
+  <div class="bt-panel__body">
+    <label class="visually-hidden" for="organization-search">Search organizations</label>
+    <input type="search" class="form-control form-control-sm" id="organization-search"
+      data-picker-search placeholder="Search organization&hellip;" autocomplete="off">
+  </div>
+  <div class="bt-panel__body bt-panel__body--checklist" role="group"
+    aria-label="Organizations matching your search" data-picker-rows>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-1" data-id="ugent">
+      <label class="form-check-label" for="organization-1">
+        <span data-picker-name>Ghent University</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-2" data-id="fac-ea">
+      <label class="form-check-label" for="organization-2">
+        <span data-picker-name>Faculty of Engineering and Architecture</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-3" data-id="fac-bw">
+      <label class="form-check-label" for="organization-3">
+        <span data-picker-name>Faculty of Bioscience Engineering</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-4" data-id="fac-we">
+      <label class="form-check-label" for="organization-4">
+        <span data-picker-name>Faculty of Sciences</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-5" data-id="fac-lw">
+      <label class="form-check-label" for="organization-5">
+        <span data-picker-name>Faculty of Arts and Philosophy</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-6" data-id="fac-re">
+      <label class="form-check-label" for="organization-6">
+        <span data-picker-name>Faculty of Law and Criminology</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-7" data-id="fac-ge">
+      <label class="form-check-label" for="organization-7">
+        <span data-picker-name>Faculty of Medicine and Health Sciences</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-8" data-id="fac-pp">
+      <label class="form-check-label" for="organization-8">
+        <span data-picker-name>Faculty of Psychology and Educational Sciences</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-9" data-id="fac-eb">
+      <label class="form-check-label" for="organization-9">
+        <span data-picker-name>Faculty of Economics and Business Administration</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-10" data-id="fac-di">
+      <label class="form-check-label" for="organization-10">
+        <span data-picker-name>Faculty of Veterinary Medicine</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-11" data-id="fac-fw">
+      <label class="form-check-label" for="organization-11">
+        <span data-picker-name>Faculty of Pharmaceutical Sciences</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-12" data-id="fac-ps">
+      <label class="form-check-label" for="organization-12">
+        <span data-picker-name>Faculty of Political and Social Sciences</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-13" data-id="dept-we02">
+      <label class="form-check-label" for="organization-13">
+        <span data-picker-name>Dept of Physics and Astronomy &mdash; WE</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-14" data-id="dept-we10">
+      <label class="form-check-label" for="organization-14">
+        <span data-picker-name>Dept of Applied Maths, CS &amp; Statistics &mdash; WE</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-15" data-id="dept-ea18">
+      <label class="form-check-label" for="organization-15">
+        <span data-picker-name>Dept of Electronics and Information Systems &mdash; EA</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-16" data-id="dept-ge33">
+      <label class="form-check-label" for="organization-16">
+        <span data-picker-name>Dept of Human Structure and Repair &mdash; GE</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-17" data-id="dept-lw06">
+      <label class="form-check-label" for="organization-17">
+        <span data-picker-name>Dept of Linguistics &mdash; LW</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-18" data-id="rg-idlab">
+      <label class="form-check-label" for="organization-18">
+        <span data-picker-name>IDLab (research group) &mdash; EA</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-19" data-id="rg-cmgg">
+      <label class="form-check-label" for="organization-19">
+        <span data-picker-name>Center for Medical Genetics &mdash; GE</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="organization-20" data-id="rg-synbioc">
+      <label class="form-check-label" for="organization-20">
+        <span data-picker-name>SynBioC (research group) &mdash; BW</span>
+      </label>
+    </div>
+  </div>
+  <div class="bt-panel__actions" data-picker-actions>
+    <button type="button" class="btn btn-primary btn-sm" data-picker-add>Add</button>
+    <button type="button" class="btn btn-ghost btn-sm" data-picker-cancel>Cancel</button>
+  </div>
+</template>
