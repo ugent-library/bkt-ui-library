@@ -233,6 +233,14 @@ In the UI: surfaces as a change history view on a Work detail page (who changed 
   who last changed it and when; and, where the record was also touched by the
   system (an import, a background job), the last system change and when.
 
+### Numbers in the UI
+
+- **Both surfaces** — European notation: a thin space groups every three digits, and a comma marks
+  the decimal. "312&thinsp;000 results", "3&thinsp;300,3".
+- Write the thin space as `&thinsp;`, which is what the kit uses today. It is a breaking space, so a
+  long number can wrap between its groups. Holding the number together needs `&#8239;`, the narrow
+  no-break space, instead. Which one we want is an open question.
+
 ### Names in the UI
 
 - **One form on both surfaces** — first name, middle name initials then surname:

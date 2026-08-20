@@ -268,8 +268,8 @@ no script)
 
 ### `query-builder.js`
 
-**Purpose:** Advanced search — the condition rows, the field chooser, the person picker, the
-OR groups and the approximate count.
+**Purpose:** Advanced search — the condition rows, the field chooser, the person picker and the
+OR groups.
 
 - **The chooser** is cloned from `#qb-chooser` into the slot beside whichever control opened it
   and re-identified (`identify()` re-points `label[for]` and `aria-labelledby`); its search
@@ -323,8 +323,8 @@ Pattern page: `patterns/query-builder.html`.
 
 **Prototype-only:** yes — it exists so the group interaction can be judged before it is built.
 Production renders the condition list server-side and computes the count (field contract, open
-question 9). The prototype simulates the count with invented numbers, debounced, into the
-submit's `[data-qb-count]` span — the builder's one `aria-live` region.
+question 9), writing it into the submit's `[data-qb-count]` span — the builder's one `aria-live`
+region. Each state carries its own count, written by hand; nothing here derives one.
 
 ---
 

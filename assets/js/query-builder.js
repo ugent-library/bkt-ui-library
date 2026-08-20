@@ -1,4 +1,4 @@
-// Advanced search — rows, OR groups, the chooser, and the approximate count.
+// Advanced search — rows, OR groups and the chooser.
 // See docs/JAVASCRIPT.md. Row grammar and states: patterns/query-builder.html.
 
 // The dialog is shut in the markup, because a @state block cannot wrap the include that builds it
@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function () {
       .filter(Boolean)
       .join(' and ');
   }
-  const filled = row => Boolean(valueOf(row));
 
   function conditionName(row) {
     const field = row.querySelector('[data-qb-change-field]');
@@ -97,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const blank = list.querySelector('[data-qb-blank]');
     if (blank) blank.remove();
     sync();
-    count();
     const first = row.querySelector('input, textarea, select');
     if (first) {
       first.focus();
@@ -253,14 +251,12 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
     sync();
-    count();
   });
 
   const clear = document.querySelector('[data-qb-clear]');
   if (clear) clear.addEventListener('click', () => {
     items().forEach(item => item.remove());
     sync();
-    count();
   });
 
   // ── The chooser: one click adds the row ─────────────────────────────────────
@@ -330,33 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // ── The approximate count ───────────────────────────────────────────────────
-
-  // Invented numbers: the prototype has no index behind it. What is being shown is the shape
-  // — "Show ± N results" on the submit, debounced, the builder's one live region. Where the
-  // real number comes from is open question 9 in QUERY-BUILDER-FIELD-CONTRACT.md.
-  const TOTAL = 312000;
-  let debounce = null;
-
-  function write(n) {
-    const el = document.querySelector('[data-qb-count]');
-    if (el) el.textContent = 'Show ± ' + n.toLocaleString('en').replaceAll(',', ' ') + ' results';
-  }
-
-  function count() {
-    const conditions = items().reduce((n, item) => n + (item.hasAttribute('data-qb-group')
-      ? (alts(item).some(filled) ? 1 : 0)
-      : (filled(item) ? 1 : 0)), 0);
-
-    write(conditions
-      ? Math.max(10, Math.round(TOTAL / Math.pow(4, conditions) / 10) * 10)
-      : TOTAL);
-  }
-
-  list.addEventListener('input', () => {
-    clearTimeout(debounce);
-    debounce = setTimeout(count, 400);
-  });
   list.addEventListener('change', sync);
 
   // ── Pasted identifier lists ─────────────────────────────────────────────────
