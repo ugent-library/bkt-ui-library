@@ -306,8 +306,6 @@ function stripHtmlComments(html) {
   return html.replace(/<!--(?!\s*\[if\b)([\s\S]*?)-->/g, '');
 }
 
-// A partial that only feeds another page paints nothing of its own, so its page would arrive
-// blank. See docs/SERVER.md → Partials that paint nothing.
 function cloneSourceNote(body, example) {
   const paints = body
     .replace(/<template\b[\s\S]*?<\/template>/gi, '')
@@ -363,11 +361,12 @@ ${headCss}
 ${headScripts}
 </head>
 <body${surface}>
-${cloneSourceNote(body, meta.example)}${body}
+${body}
 ${footerScripts}
 </body>
 </html>`,
     body,
+    note: cloneSourceNote(body, meta.example),
   };
 }
 
@@ -402,7 +401,7 @@ function renderNavLink(f, currentPath, activeState) {
 }
 
 // ─── Shell injection ──────────────────────────────────────────────────────────
-function injectShell(filePath, html, currentPath, activeState) {
+function injectShell(filePath, html, currentPath, activeState, note = '') {
   if (html.includes('data-bare')) return html;
 
   const nav     = buildNav();
@@ -464,7 +463,7 @@ function injectShell(filePath, html, currentPath, activeState) {
       <kbd title="Toggle sidebar">⌘M</kbd> sidebar &nbsp;·&nbsp; <kbd title="Focus search">⌘K</kbd> search &nbsp;·&nbsp; <kbd title="Cycle states">⌘E</kbd> state
     </div>
   </nav>
-  <main id="bt-content" class="bt-content" tabindex="-1">`;
+  <main id="bt-content" class="bt-content" tabindex="-1">${note}`;
 
   const shellClose = `
   </main>
@@ -605,7 +604,7 @@ const handler = async (req, res) => {
     html = parsedTemplate.html;
   }
 
-  html = injectShell(filePath, html, urlPath, activeState);
+  html = injectShell(filePath, html, urlPath, activeState, parsedTemplate?.note);
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(html);
 };
