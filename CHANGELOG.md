@@ -6,6 +6,41 @@ system, or do I reach for something new?"
 
 ---
 
+## One metadata line, and identifiers first (v2.26, 2026-08-20)
+
+A person row carried its own metadata classes, duplicating the line `bt-meta-list` already draws
+and colouring it with a raw palette step, so it was the one metadata line that ignored the surface.
+The rows now use the shared line, and two classes retire with them.
+
+| Removed | Use instead |
+|---------|-------------|
+| `people-result__meta` | `bt-meta-list bt-meta-list--xs` |
+| `people-result__meta-item` | `bt-meta-list__item` |
+| `bt-meta-list__item-bordered` | `bt-work-card__meta-item`, which now draws the separator |
+| `bt-meta-text` | Bootstrap `small text-muted` |
+
+`bt-meta-list--xs` is the dense variant: xs type, a tighter wrap gap, and a top margin so two of
+them stack under one name. `bt-meta-list__item` pairs an icon with its text and is not
+people-specific — an organisation or project picker uses the same one.
+
+**Identifiers come first.** An ORCID used to land wherever the affiliation stopped wrapping, so it
+sat in a different place on every row and a UGent ID could end up alone on a line. Identifiers now
+take the first line under the name, the affiliation and years follow on the second, and a person
+with no identifier has no first line. This changed the shared picker, both people-search demos and
+`renderRow()` in `people-search-stub.js`.
+
+**Card metadata values are divided by a rule.** `CLASS-USAGE.md` had said `bt-work-card__meta-item`
+was the opt-in for a separator since the class was written, and no rule drew one. Consecutive text
+values now are; a badge breaks the adjacency, so no divider follows a badge and none trails the last
+value. Every other metadata line separates by spacing instead — that difference is deliberate and
+the usage notes say so, because a card row interleaves badges with text where the others do not.
+
+`bt-work-card__pub` also stops using a raw grey: the reference line reads the surface-aware muted
+token like every other metadata line. The floating results list drops from 280px to 240px, matching
+the panel checklist — one number for one idea.
+
+---
+
 ## The filter bar stops writing its own markup and vocabulary (v2.25, 2026-08-20)
 
 `filter-bar.js` built the chip and all four editor bodies as template literals, and carried the
@@ -712,6 +747,9 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `btn-outline-white` | Nothing — design a dark-surface button when one is needed |
 | `sr-only` | Bootstrap's `visually-hidden` |
 | `bt-navbar__mark` | `bt-navbar__brand` |
+| `people-result__meta`, `people-result__meta-item` | `bt-meta-list bt-meta-list--xs`, `bt-meta-list__item` |
+| `bt-meta-list__item-bordered` | `bt-work-card__meta-item` draws the separator now |
+| `bt-meta-text` | Bootstrap `small text-muted` |
 | `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` | `bt-sidebar` and its elements |
 | `bt-blank-slate-muted/-primary` (single dash) | `bt-blank-slate--muted/--primary` |
 | `bt-table` | Bootstrap `.table .table-hover .align-middle` |
