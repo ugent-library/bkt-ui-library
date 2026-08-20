@@ -109,6 +109,25 @@ The server automatically generates navigation from the folder structure:
 - `templates/` → Prototypes, grouped by subdirectory (e.g., `biblio-public/`, `biblio-researcher/`, `biblio-team/`)
 - Other folders as needed
 
+### Partials that paint nothing
+
+Some partials only feed another page: a set of `<template>` nodes to clone, or a block of JSON to
+read. Opening one on its own would show an empty screen, so the server draws a blank slate there
+instead. It carries three things:
+
+- what the file is
+- a link to `?view=html`
+- a link to the kit page that shows the thing rendered
+
+That last link comes from `@example`, one address in the leading meta-comment block (with
+`@title`, `@surface`, `@states`). A file that declares none gets the note without the link.
+
+```html
+<!-- @example: /patterns/people-search.html#checkable-rich-rows -->
+```
+
+The note appears only where the page would otherwise be blank.
+
 ## File Serving
 
 Supports common MIME types: HTML, CSS, JS, JSON, images (SVG, PNG, JPG), fonts (WOFF, WOFF2, TTF).

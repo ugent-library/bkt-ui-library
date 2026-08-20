@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const people = event.target.parentElement?.querySelector('[data-qb-person-slot]');
     if (people) {
       if (!people.children.length) {
-        const picker = document.getElementById('qb-person-picker').content.cloneNode(true);
+        const picker = document.getElementById('person-picker').content.cloneNode(true);
         identify(picker);
         people.append(picker);
       }
@@ -231,10 +231,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = event.target.closest('button');
     if (!button || !list.contains(button)) return;
 
-    if (button.hasAttribute('data-qb-person-add')) {
+    if (button.hasAttribute('data-person-add')) {
       addPeople(button.closest('[data-qb-row]'), button.closest('[data-qb-person-slot]'));
       closeDropdown(button);
-    } else if (button.hasAttribute('data-qb-person-cancel')) {
+    } else if (button.hasAttribute('data-person-cancel')) {
       closeDropdown(button);
     } else if (button.closest('[data-qb-token]')) {
       button.closest('[data-qb-token]').remove();
@@ -302,7 +302,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const present = Array.from(row.querySelectorAll('[data-qb-token]'))
       .map(el => el.textContent.trim());
     panel.querySelectorAll('input[type="checkbox"]:checked').forEach(box => {
-      if (!present.includes(box.value)) cell.insertBefore(token(box.value), panel.parentElement);
+      const name = box.closest('.form-check').querySelector('[data-person-name]').textContent.trim();
+      if (!present.includes(name)) cell.insertBefore(token(name), panel.parentElement);
       box.checked = false;
     });
   }
@@ -317,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Search-within, as the same panel does in the works filter bar
   list.addEventListener('input', event => {
-    const search = event.target.closest('[data-qb-person-search]');
+    const search = event.target.closest('[data-person-search]');
     if (!search) return;
     const needle = search.value.trim().toLowerCase();
     search.closest('[data-qb-person-slot]').querySelectorAll('.form-check').forEach(option => {

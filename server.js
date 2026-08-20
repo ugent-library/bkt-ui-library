@@ -306,6 +306,36 @@ function stripHtmlComments(html) {
   return html.replace(/<!--(?!\s*\[if\b)([\s\S]*?)-->/g, '');
 }
 
+// A partial that only feeds another page paints nothing of its own, so its page would arrive
+// blank. See docs/SERVER.md → Partials that paint nothing.
+function cloneSourceNote(body, example) {
+  const paints = body
+    .replace(/<template\b[\s\S]*?<\/template>/gi, '')
+    .replace(/<script\b[\s\S]*?<\/script>/gi, '')
+    .trim();
+  if (paints) return '';
+
+  const clone = /<template\b/i.test(body)
+    ? ' It is a clone source: everything in it sits inside <code>&lt;template&gt;</code>, which a host page copies into place at runtime.'
+    : '';
+  const rendered = example
+    ? `\n      <a href="${example}" class="btn btn-primary btn-sm">See it rendered</a>`
+    : '';
+
+  return `<div class="ds-page">
+  <div class="bt-blank-slate bt-blank-slate--muted col-lg-8">
+    <div class="bt-avatar text-bg-primary">
+      <i class="if if-copy" aria-hidden="true"></i>
+    </div>
+    <p>This partial paints nothing on its own.${clone}</p>
+    <div class="d-flex gap-2 justify-content-center">
+      <a href="?view=html" class="btn btn-secondary btn-sm">Read the markup</a>${rendered}
+    </div>
+  </div>
+</div>
+`;
+}
+
 function renderBodyTemplate(raw, filePath, activeState) {
   const { meta, body: rawBody } = parseMetaAndBody(raw, filePath);
   // No explicit state → first declared @states value is the default.
@@ -333,7 +363,7 @@ ${headCss}
 ${headScripts}
 </head>
 <body${surface}>
-${body}
+${cloneSourceNote(body, meta.example)}${body}
 ${footerScripts}
 </body>
 </html>`,

@@ -298,8 +298,9 @@ OR groups.
   and re-identified (`identify()` re-points `label[for]` and `aria-labelledby`); its search
   filters the field choices. A pick clones the row template the choice names and writes the
   field label into it.
-- **The person picker** rides on the same slot mechanism, cloned from `#qb-person-picker` — the
-  searchable checklist the works filter bar opens for its person filter. Add clones
+- **The person picker** rides on the same slot mechanism, cloned from `#person-picker` — the
+  shared people picker in `templates/partials/people-picker-panel.html`, which the works Author
+  filter clones too, so the panel is defined once and neither engine owns it. Add clones
   `#qb-person-token` per ticked name the row does not already carry and clears the boxes; a
   token's × removes it.
 - **OR groups (phase 2)** turn a condition row into an "any of these" `<fieldset>` in place and
@@ -318,9 +319,11 @@ OR groups.
   `[data-qb-remove-group]`, `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`,
   `[data-qb-count]`, `[data-qb-chooser-slot]`, `[data-qb-choice]` (+
   `data-qb-label`/`data-qb-template`), `[data-qb-choice-search]`, `[data-qb-choice-group]`,
-  `[data-qb-person-slot]`, `[data-qb-person-search]`, `[data-qb-person-add]`,
-  `[data-qb-person-cancel]`, `[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`,
-  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`.
+  `[data-qb-person-slot]`, `[data-qb-token-name]`, `[data-qb-value]`, `[data-qb-op]`,
+  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The picker's own hooks carry no
+  `qb-` prefix, because both engines read them: `[data-person-search]`, `[data-person-rows]`,
+  `[data-person-name]`, `[data-person-add]`, `[data-person-cancel]`, and `data-id` +
+  `data-person-external` on each row's checkbox.
 - **The row is read through its data attributes, never its classes.** `[data-qb-value]`,
   `[data-qb-op]`, `[data-qb-actions]` and `[data-qb-blank]` are the value cell, the operator
   select, the actions cell and the blank state's root, so a layout change can rename or drop a
@@ -329,9 +332,10 @@ OR groups.
   those are styling, which is the one direction that belongs in `classList`.
 
 **Loaded by:** `public-works.html`, which renders the builder as a dialog over the result list. It
-includes two partials, `search-advanced-conditions.html` and `search-advanced-actions.html`, and
+includes `search-advanced-conditions.html` and `search-advanced-actions.html`, and
 supplies the heading, the box and the bar surface around them. The conditions partial holds the row templates, the chooser
-(which includes `search-field-list.html`) and `#qb-blank`. It also opens the dialog when the URL
+(which includes `search-field-list.html`) and `#qb-blank`; the person picker is not in it —
+`people-picker-panel.html` is included separately, because the filter bar clones it too. It also opens the dialog when the URL
 carries `?advanced=1` or the page renders a `[data-qb-open]` marker, standing in for the
 server-side render. The works page renders one dialog, shut; its five `builder-*` states carry the
 marker (`docs/SERVER.md` → Template states), and the Advanced search link's href is the address.
