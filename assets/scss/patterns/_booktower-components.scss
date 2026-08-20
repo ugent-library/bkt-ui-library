@@ -307,8 +307,14 @@
   text-decoration: underline;
 }
 
-/* separator only between text items — never after the last */
-.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
-  border-left: var(--bt-border);
-  padding-left: var(--bt-sp-2);
+.bt-meta-list--xs {
+  font-size: var(--bt-text-xs);
+  gap: var(--bt-sp-1) var(--bt-sp-2);
+  margin: 2px 0 0;
+}
+
+.bt-meta-list__item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }

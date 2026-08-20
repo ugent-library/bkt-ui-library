@@ -105,9 +105,8 @@ bt-hero
 bt-hero__content
 
 bt-meta-list
-bt-meta-list__item-bordered
-
-bt-meta-text
+bt-meta-list--xs
+bt-meta-list__item
 
 bt-navbar
 bt-navbar__brand
@@ -512,8 +511,6 @@ nav-title
 
 people-result
 people-result__icon
-people-result__meta
-people-result__meta-item
 people-result__name
 
 people-results

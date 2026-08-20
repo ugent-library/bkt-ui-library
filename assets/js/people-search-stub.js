@@ -35,18 +35,22 @@
   }
 
   function renderRow(p, q) {
-    const meta = [
-      p.affiliation && `<span class="people-result__meta-item">
-                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.affiliation}
-                        </span>`,
-      p.dept        && `<span class="people-result__meta-item">
-                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.dept}
-                        </span>`,
-      p.years       && `<span class="people-result__meta-item">${p.years}</span>`,
-      p.orcid       && `<span class="people-result__meta-item">
+    // Identifiers take the first line, so they sit in the same place on every row.
+    const ids = [
+      p.orcid       && `<span class="bt-meta-list__item">
                           <i class="if if-orcid if--xs" aria-hidden="true"></i>${p.orcid}
                         </span>`,
-      p.ugentId     && `<span class="people-result__meta-item">${p.ugentId}</span>`,
+      p.ugentId     && `<span class="bt-meta-list__item">${p.ugentId}</span>`,
+    ].filter(Boolean).join('');
+
+    const meta = [
+      p.affiliation && `<span class="bt-meta-list__item">
+                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.affiliation}
+                        </span>`,
+      p.dept        && `<span class="bt-meta-list__item">
+                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.dept}
+                        </span>`,
+      p.years       && `<span class="bt-meta-list__item">${p.years}</span>`,
     ].filter(Boolean).join('');
 
     return `<div class="people-result" role="option" tabindex="0"
@@ -59,7 +63,8 @@
       </span>
       <div>
         <div class="people-result__name">${highlight(p.name, q)}</div>
-        ${meta ? `<div class="people-result__meta">${meta}</div>` : ''}
+        ${ids ? `<div class="bt-meta-list bt-meta-list--xs">${ids}</div>` : ''}
+        ${meta ? `<div class="bt-meta-list bt-meta-list--xs">${meta}</div>` : ''}
       </div>
     </div>`;
   }

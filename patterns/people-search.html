@@ -41,7 +41,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Results — query "doe"</h2>
-    <p class="mb-4">Results appear in a bordered list below the input. The list is an overlay: it floats over the form beneath, so results appearing or clearing never push the form around. The query term is highlighted in the name with <code>&lt;mark&gt;</code>. Each row shows the affiliation, department, active years, ORCID and UGent ID the identity carries. External people show "External" as affiliation. Keyboard: ArrowDown moves from the input into the list and between rows, Enter or Space selects, Escape returns to the input. The hint announces the result count.</p>
+    <p class="mb-4">Results appear in a bordered list below the input. The list is an overlay: it floats over the form beneath, so results appearing or clearing never push the form around. The query term is highlighted in the name with <code>&lt;mark&gt;</code>. A row leads with the identifiers the identity carries — ORCID, UGent ID — on a line of their own, so they sit in the same place whichever row you look at; the affiliation, department and active years follow on the next. External people show "External" as affiliation, and a person with no identifier has no first line. Keyboard: ArrowDown moves from the input into the list and between rows, Enter or Space selects, Escape returns to the input. The hint announces the result count.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Results</h3>
@@ -65,22 +65,24 @@
               </span>
               <div>
                 <div class="people-result__name">John <mark>Doe</mark></div>
-                <div class="people-result__meta">
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Faculty of Performing Arts
-                  </span>
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Burlesque &amp; Variety Studies
-                  </span>
-                  <span class="people-result__meta-item">2019–current</span>
-                  <span class="people-result__meta-item">
+                <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
                     0000-0002-1234-5678
                   </span>
-                  <span class="people-result__meta-item">000198274651</span>
-                </div>
+                  <span class="bt-meta-list__item">000198274651</span>
+                 </div>
+                 <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Faculty of Performing Arts
+                  </span>
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Burlesque &amp; Variety Studies
+                  </span>
+                  <span class="bt-meta-list__item">2019–current</span>
+                 </div>
               </div>
             </div>
 
@@ -93,21 +95,23 @@
               </span>
               <div>
                 <div class="people-result__name">Jane <mark>Doe</mark></div>
-                <div class="people-result__meta">
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Faculty of Performing Arts
-                  </span>
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Stagecraft &amp; Neo-Burlesque
-                  </span>
-                  <span class="people-result__meta-item">2021–current</span>
-                  <span class="people-result__meta-item">
+                <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
                     0000-0003-8765-4321
                   </span>
-                </div>
+                 </div>
+                 <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Faculty of Performing Arts
+                  </span>
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Stagecraft &amp; Neo-Burlesque
+                  </span>
+                  <span class="bt-meta-list__item">2021–current</span>
+                 </div>
               </div>
             </div>
 
@@ -120,14 +124,16 @@
               </span>
               <div>
                 <div class="people-result__name">Josephine Baker</div>
-                <div class="people-result__meta">
-                  <span class="people-result__meta-item">External</span>
-                  <span class="people-result__meta-item">Folies Bergère, 1925–1956</span>
-                  <span class="people-result__meta-item">
+                <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
                     0000-0001-9876-0001
                   </span>
-                </div>
+                 </div>
+                 <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">External</span>
+                  <span class="bt-meta-list__item">Folies Bergère, 1925–1956</span>
+                 </div>
               </div>
             </div>
 
@@ -167,8 +173,8 @@
               </span>
               <div>
                 <div class="people-result__name">Jane Doe</div>
-                <div class="people-result__meta">
-                  <span class="people-result__meta-item">Faculty of Performing Arts</span>
+                <div class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">Faculty of Performing Arts</span>
                 </div>
               </div>
               <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
@@ -241,7 +247,7 @@
                   </span>
                   <div class="flex-grow-1">
                     <div class="people-result__name" data-ps-selected-name>Jane Doe</div>
-                    <div class="people-result__meta" data-ps-selected-affiliation>Faculty of Performing Arts</div>
+                    <div class="bt-meta-list bt-meta-list--xs" data-ps-selected-affiliation>Faculty of Performing Arts</div>
                   </div>
                   <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
                     aria-label="Clear selection">
@@ -277,7 +283,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section" id="checkable-rich-rows">
     <h2 class="h4 mb-3">Checkable rich rows — multi-select in a panel</h2>
-    <p class="mb-4">Two hosts pick several people at once: the works-page author filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>people-result__name</code> with <code>&lt;mark&gt;</code>, the <code>people-result__meta</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens.</p>
+    <p class="mb-4">Two hosts pick several people at once: the works-page author filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>people-result__name</code> with <code>&lt;mark&gt;</code>, the <code>bt-meta-list bt-meta-list--xs</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Author filter editor — search-first, multi-select</h3>
@@ -296,20 +302,22 @@
               <input class="form-check-input" type="checkbox" id="ps-check-jd1">
               <label class="form-check-label" for="ps-check-jd1">
                 <span class="people-result__name">John <mark>Doe</mark></span>
-                <span class="people-result__meta">
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Faculty of Performing Arts
-                  </span>
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Burlesque &amp; Variety Studies
-                  </span>
-                  <span class="people-result__meta-item">2019–current</span>
-                  <span class="people-result__meta-item">
+                <span class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
                     0000-0002-1234-5678
                   </span>
+                </span>
+                <span class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Faculty of Performing Arts
+                  </span>
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Burlesque &amp; Variety Studies
+                  </span>
+                  <span class="bt-meta-list__item">2019–current</span>
                 </span>
               </label>
             </div>
@@ -318,20 +326,22 @@
               <input class="form-check-input" type="checkbox" id="ps-check-jd2" checked>
               <label class="form-check-label" for="ps-check-jd2">
                 <span class="people-result__name">Jane <mark>Doe</mark></span>
-                <span class="people-result__meta">
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Faculty of Performing Arts
-                  </span>
-                  <span class="people-result__meta-item">
-                    <i class="if if-building if--xs" aria-hidden="true"></i>
-                    Stagecraft &amp; Neo-Burlesque
-                  </span>
-                  <span class="people-result__meta-item">2021–current</span>
-                  <span class="people-result__meta-item">
+                <span class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
                     0000-0003-8765-4321
                   </span>
+                </span>
+                <span class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Faculty of Performing Arts
+                  </span>
+                  <span class="bt-meta-list__item">
+                    <i class="if if-building if--xs" aria-hidden="true"></i>
+                    Stagecraft &amp; Neo-Burlesque
+                  </span>
+                  <span class="bt-meta-list__item">2021–current</span>
                 </span>
               </label>
             </div>
@@ -340,13 +350,15 @@
               <input class="form-check-input" type="checkbox" id="ps-check-jb">
               <label class="form-check-label" for="ps-check-jb">
                 <span class="people-result__name">Josephine Baker</span>
-                <span class="people-result__meta">
-                  <span class="people-result__meta-item">External</span>
-                  <span class="people-result__meta-item">Folies Bergère, 1925–1956</span>
-                  <span class="people-result__meta-item">
+                <span class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">
                     <i class="if if-orcid if--xs" aria-hidden="true"></i>
                     0000-0001-9876-0001
                   </span>
+                </span>
+                <span class="bt-meta-list bt-meta-list--xs">
+                  <span class="bt-meta-list__item">External</span>
+                  <span class="bt-meta-list__item">Folies Bergère, 1925–1956</span>
                 </span>
               </label>
             </div>
@@ -369,7 +381,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Classes</h2>
-    <p>Defined in <code>assets/scss/patterns/_booktower-people-results.scss</code>.</p>
+    <p>The row and its parts are defined in <code>assets/scss/patterns/_booktower-people-results.scss</code>; the metadata lines come from the shared <code>bt-meta-list</code>.</p>
 
     <table class="table table-sm align-middle mt-3" aria-label="People search CSS classes">
       <thead class="text-uppercase text-muted small">
@@ -406,14 +418,14 @@
           <td>Person's display name. Contains <code>&lt;mark&gt;</code> for query highlights.</td>
         </tr>
         <tr>
-          <td><code>.people-result__meta</code></td>
-          <td><code>div</code></td>
-          <td>Flex row of metadata items, xs text, muted colour.</td>
+          <td><code>.bt-meta-list bt-meta-list--xs</code></td>
+          <td><code>div</code> / <code>span</code></td>
+          <td>A metadata line. Not people-specific: the dense variant of the shared meta list, so an organisation or project row uses the same one. Defined in <code>patterns/_booktower-components.scss</code>.</td>
         </tr>
         <tr>
-          <td><code>.people-result__meta-item</code></td>
+          <td><code>.bt-meta-list__item</code></td>
           <td><code>span</code></td>
-          <td>One metadata token (affiliation, dept, years, ORCID). Inline-flex with icon.</td>
+          <td>One token, pairing an icon with its text.</td>
         </tr>
       </tbody>
     </table>

@@ -145,8 +145,8 @@
 
     function renderSelected(person) {
       const affMeta = person.affiliation
-        ? `<div class="people-result__meta">
-             <span class="people-result__meta-item">${person.affiliation}</span>
+        ? `<div class="bt-meta-list bt-meta-list--xs">
+             <span class="bt-meta-list__item">${person.affiliation}</span>
            </div>`
         : '';
       return `<div class="people-result is-selected" role="option" tabindex="0"

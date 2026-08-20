@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower da7175b/2026-08-20 */
+/*! Booktower 3c4373e/2026-08-20 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -643,11 +643,6 @@ a:hover {
 
 mark {
   padding: 0;
-}
-
-.bt-meta-text {
-  font-size: var(--bt-text-sm);
-  color: var(--s-text-muted, var(--bt-text-muted));
 }
 
 p.small {
@@ -1815,10 +1810,16 @@ a.badge:focus-visible {
   text-decoration: underline;
 }
 
-/* separator only between text items — never after the last */
-.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
-  border-left: var(--bt-border);
-  padding-left: var(--bt-sp-2);
+.bt-meta-list--xs {
+  font-size: var(--bt-text-xs);
+  gap: var(--bt-sp-1) var(--bt-sp-2);
+  margin: 2px 0 0;
+}
+
+.bt-meta-list__item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
 /* -- bt-avatar -- */
@@ -2408,21 +2409,6 @@ img.bt-navbar__logo {
   font-weight: 500;
 }
 
-.people-result__meta {
-  font-size: var(--bt-text-xs);
-  color: var(--bt-gray-500);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--bt-sp-2);
-  margin-top: 2px;
-}
-
-.people-result__meta-item {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-
 /* -- bt-work-card -- */
 /*
   Research output card. Surface (public/backoffice) drives typography via tokens.
@@ -2544,6 +2530,12 @@ img.bt-navbar__logo {
 
 .bt-work-card__meta-item {
   min-width: 0;
+}
+
+/* A badge breaks the adjacency, which is what keeps a separator off the badges. */
+.bt-work-card__meta-item + .bt-work-card__meta-item {
+  border-left: var(--bt-border);
+  padding-left: var(--bt-sp-2);
 }
 
 .bt-work-card__meta-transition-icon {
