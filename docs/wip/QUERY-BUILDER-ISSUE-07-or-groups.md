@@ -25,8 +25,9 @@ identically. The interaction in full: `docs/wip/QUERY-BUILDER-OR-GROUPS.md` in b
 - [ ] A group and a plain row are told apart when read aloud, not only when seen
 - [ ] The control that ends a group reads "Split into 'and' rows", because the click turns "either
       of these" into "both of these" and usually empties the set
-- [ ] The reverse is offered where it is needed: a query matching nothing, with two rows on one
-      field, offers to make those rows a group. Nothing is prevented and nothing is auto-dropped
+- [ ] `TBD` The reverse is suggested where it is needed: a query matching nothing, with two rows on one
+      field, suggests making those rows a group. Whether the zero-result state diagnoses causes
+      at all is 04's open question. Nothing is prevented and nothing is auto-dropped
 - [ ] Back undoes it, because the address carries the query
 
 > **Screenshot:** a group of two alternatives, `?state=builder-or-group`
@@ -51,3 +52,11 @@ View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-work
 
 Blocked by 02, and by the address decision in the epic, which has to carry a choice between
 alternatives.
+
+## Open questions
+
+- **Whether the zero-result state names its causes.** The prototype draws two recoveries in
+  place: a misspelled value marked on its row, and a same-field pair carrying "Remove a
+  condition, or turn one into an 'or' group". The pair reads from the query's own
+  structure; the spelling mark needs an answer the search has to produce. Options: a generic
+  zero-result state, the pair suggestion only, or both. (Team, with a developer's view.)

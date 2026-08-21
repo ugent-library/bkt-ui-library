@@ -57,9 +57,9 @@ public anyway".
 | `project` | Project | `project`, `project.id` | is, is not, is any of | project picker |
 | `funding_programme` | Funding programme | `project.euframeworkprogramme` | contains, is, is not, is any of | text |
 | `work_type` | Publication type | `type`; subtype aliases | is, is not, is any of | select |
-| `year` | Publication year | `year`, ranges | is, is not, is any of, is between, is at least, is at most | year input; a pair for between |
+| `year` | Publication year | `year`, ranges | is, is not, is any of, is between, is at least, is at most | year input; a pair for between; a comma-separated list for any of |
 | `publication_status` | Publication status | `publication_status`, `publicationstatus` | is, is not, is any of | select: Unpublished, In press, Published |
-| `container` | Published in | `parent`, `publication` | contains, does not contain, is, is not · where: any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series | text |
+| `container` | Published in | `parent`, `publication` | contains, does not contain, is, is not · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series | text |
 | `conference` | Conference | `conference` | contains, does not contain, is, is not | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
 | `language` | Language | `language` | is, is not, is any of | select |

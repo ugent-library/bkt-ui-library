@@ -54,4 +54,9 @@ Blocked by 02 and 03: a count needs conditions to count.
 
 - **How exact the number is allowed to be.** A capped total is cheaper and needs a stated ceiling
   the wording has to carry ("more than 10 000"); an uncapped total is exact and costs more per
-  keystroke. The wording follows the answer.
+  keystroke.
+- **Whether the zero-result state names its causes.** The prototype draws two recoveries in
+  place: a misspelled value marked on its row, and a same-field pair carrying "Remove a
+  condition, or turn one into an 'or' group". The pair reads from the query's own
+  structure; the spelling mark needs an answer the search has to produce. Options: a generic
+  zero-result state, the pair suggestion only, or both. (Team, with a developer's view.)

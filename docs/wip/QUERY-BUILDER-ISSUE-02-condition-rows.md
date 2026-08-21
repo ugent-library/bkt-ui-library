@@ -24,9 +24,9 @@ field by its name, in a list she can read.
 - [ ] The twenty-one public fields, each showing the operators and the qualifier of the field
 - [ ] Picking a field in the chooser replaces that row's field in place, and the chooser is
       searchable
-- [ ] Two rows on one field are allowed and nothing warns: a second Person row means both people,
-      which is a real question. When such a query matches nothing, the offer to turn the rows into a
-      group is where the reader recovers — 07
+- [ ] Two rows on one field are allowed. For instance: a second Person row means both people,
+      which is not possible. `TBD` When such a query matches nothing, a suggestion to turn
+      the rows into a group could help the reader recover (described in 07, open question).
 - `out of scope` The value inputs behind each operator — 03
 - `out of scope` The count on the submit — 04
 
