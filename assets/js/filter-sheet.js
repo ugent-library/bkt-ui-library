@@ -111,7 +111,13 @@
   new MutationObserver(() => {
     if (!mq.matches) return;
     if (editor.hidden) { showMain(); decorateRows(); }
-    else showDetail();
+    else {
+      showDetail();
+      // A chip tap opens the editor from the readout outside the sheet; without this the
+      // editor opens inside a shut offcanvas and the tap appears to do nothing.
+      const sheet = document.getElementById('filters-offcanvas');
+      if (sheet) bootstrap.Offcanvas.getOrCreateInstance(sheet).show();
+    }
   }).observe(editor, { attributes: true, attributeFilter: ['hidden'] });
 
   headBack.addEventListener('click', () => editor.querySelector('[data-editor-cancel]')?.click());

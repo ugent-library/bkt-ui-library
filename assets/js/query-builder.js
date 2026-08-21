@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.addEventListener('shown.bs.dropdown', event => {
     event.target.parentElement
-      ?.querySelector('[data-qb-person-slot] [data-person-search]')?.focus();
+      ?.querySelector('[data-qb-person-slot] [data-picker-search]')?.focus();
   });
 
   list.addEventListener('click', event => {
@@ -237,10 +237,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!button || !list.contains(button)) return;
 
     // Bootstrap returns focus to the opener on Escape only (ACCESSIBILITY.md E4).
-    if (button.hasAttribute('data-person-add')) {
+    if (button.hasAttribute('data-picker-add')) {
       addPeople(button.closest('[data-qb-row]'), button.closest('[data-qb-person-slot]'));
       closeDropdown(button)?.focus();
-    } else if (button.hasAttribute('data-person-cancel')) {
+    } else if (button.hasAttribute('data-picker-cancel')) {
       closeDropdown(button)?.focus();
     } else if (button.closest('[data-qb-token]')) {
       button.closest('[data-qb-token]').remove();
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
       : 'qb-person-token';
     const node = document.getElementById(shape)
       .content.firstElementChild.cloneNode(true);
-    const name = box.closest('.form-check').querySelector('[data-person-name]').textContent.trim();
+    const name = box.closest('.form-check').querySelector('[data-picker-name]').textContent.trim();
     node.dataset.id = box.dataset.id;
     node.querySelector('[data-qb-token-name]').textContent = name;
     node.querySelector('button').setAttribute('aria-label', 'Remove ' + name);
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Search-within, as the same panel does in the works filter bar
   list.addEventListener('input', event => {
-    const search = event.target.closest('[data-person-search]');
+    const search = event.target.closest('[data-picker-search]');
     if (!search) return;
     const needle = search.value.trim().toLowerCase();
     search.closest('[data-qb-person-slot]').querySelectorAll('.form-check').forEach(option => {

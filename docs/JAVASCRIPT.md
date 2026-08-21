@@ -186,7 +186,7 @@ and every template renders what it says it renders.
 
 **Listens for:**
 - `matchMedia('(max-width: 991.98px)')` change
-- `#wf-filter-editor` `hidden` attribute (drill in on open, return + refresh row values on close)
+- `#wf-filter-editor` `hidden` attribute (drill in on open — opening the sheet too when a chip tap opens the editor from the readout outside it; return + refresh row values on close)
 - click on `#wf-head-back` and `#wf-foot-apply` / `#wf-foot-remove`, which forward to the editor's own `[data-editor-cancel]` / `[data-editor-apply]` / `[data-editor-remove]` buttons, and `#wf-clear-all` (refreshes row values)
 
 **Dispatches:** nothing

@@ -9,9 +9,10 @@
  *
  * No filter vocabulary and no markup live here. A bar announces itself with
  * data-filter-bar carrying its id prefix; each picker button carries its own
- * definition (data-filter-label / -type / -options / -placeholder / -yes / -no);
- * the option lists come from templates/partials/filter-option-lists.html; and every
- * node is cloned from templates/partials/filter-editor-templates.html.
+ * definition (data-filter-label / -type / -options / -placeholder / -yes / -no /
+ * -panel); the option lists come from templates/partials/filter-option-lists.html;
+ * and every node is cloned from templates/partials/filter-editor-templates.html or,
+ * for a picker filter, from the panel template its button names.
  */
 
 (function () {
@@ -45,6 +46,7 @@
         label: d.filterLabel,
         type: d.filterType,
         values: OPTIONS[d.filterOptions] || [],
+        panel: d.filterPanel,
         placeholder: d.filterPlaceholder,
         yesLabel: d.filterYes,
         noLabel: d.filterNo,
@@ -85,13 +87,17 @@
       renderChips();
     }
 
-    // Drop the panel under whatever opened it (Add-filter button or the chip).
+    // Drop the panel under whatever opened it (Add-filter button or the chip). Clamped to the
+    // viewport, not the bar: a squeezed layout can leave the bar less room than the panel needs,
+    // and a bar-width clamp then pushes the panel off-screen. 16px matches the panel's own
+    // 100vw - 2rem cap.
     function positionEditor(anchorEl) {
       const parent = filterEditor.offsetParent;
       if (!anchorEl || !parent) return;
-      const left = anchorEl.getBoundingClientRect().left - parent.getBoundingClientRect().left;
-      const maxLeft = Math.max(0, parent.clientWidth - filterEditor.offsetWidth);
-      filterEditor.style.left = Math.min(Math.max(0, left), maxLeft) + 'px';
+      const parentLeft = parent.getBoundingClientRect().left;
+      const maxLeft = document.documentElement.clientWidth - 16 - filterEditor.offsetWidth;
+      const left = Math.min(anchorEl.getBoundingClientRect().left, Math.max(16, maxLeft));
+      filterEditor.style.left = (left - parentLeft) + 'px';
     }
 
     function renderEditor(def, existing) {
@@ -104,7 +110,7 @@
 
     function editorBody(def, existing) {
       if (def.type === 'checklist')  return checklistBody(def, existing?.rawValue || []);
-      if (def.type === 'people')     return peopleBody(def, existing?.rawValue || []);
+      if (def.type === 'picker')     return pickerBody(def, existing?.rawValue || []);
       if (def.type === 'boolean')    return booleanBody(def, existing?.rawValue);
       if (def.type === 'year-range') return yearBody(existing?.rawValue || {});
       if (def.type === 'text')       return textBody(def, existing?.rawValue || '');
@@ -140,26 +146,26 @@
       return frag;
     }
 
-    // The people picker, minus the title and footer this editor supplies itself.
-    function peopleBody(def, selected) {
-      const frag = clone('person-picker');
-      frag.querySelector('[data-person-title]').remove();
-      frag.querySelector('[data-person-actions]').remove();
+    // The picker panel the button names, minus the title and footer this editor supplies itself.
+    function pickerBody(def, selected) {
+      const frag = clone(def.panel);
+      frag.querySelector('[data-picker-title]').remove();
+      frag.querySelector('[data-picker-actions]').remove();
 
-      const search = frag.querySelector('[data-person-search]');
+      const search = frag.querySelector('[data-picker-search]');
       const searchLabel = frag.querySelector(`label[for="${search.id}"]`);
-      search.id = prefix + 'person-search';
+      search.id = prefix + search.id;
       searchLabel.htmlFor = search.id;
       search.placeholder = 'Search ' + def.label.toLowerCase() + '…';
 
-      const rows = frag.querySelector('[data-person-rows]');
+      const rows = frag.querySelector('[data-picker-rows]');
       rows.setAttribute('aria-label', 'Select ' + def.label);
       const picked = selected.map(p => p.id);
       rows.querySelectorAll('.form-check').forEach(row => {
         const input = row.querySelector('input');
         const label = row.querySelector('label');
-        input.id = prefix + 'person-' + input.dataset.id;
-        input.name = prefix + 'person';
+        input.id = prefix + input.id;
+        input.name = prefix + 'picker';
         input.checked = picked.includes(input.dataset.id);
         label.htmlFor = input.id;
       });
@@ -204,7 +210,7 @@
 
       // Matching the whole row, not just its name, is what lets a people search find an ORCID
       // or a department.
-      const searchInput = filterEditor.querySelector('[data-checklist-search], [data-person-search]');
+      const searchInput = filterEditor.querySelector('[data-checklist-search], [data-picker-search]');
       searchInput?.addEventListener('input', () => {
         const q = searchInput.value.trim().toLowerCase();
         filterEditor.querySelectorAll('.bt-panel__body .form-check').forEach(row => {
@@ -222,12 +228,12 @@
         if (!checked.length) { closeEditor(); return; }
         rawValue = checked.map(c => c.value);
         displayValue = checked.length === 1 ? checked[0].label : `${checked[0].label} +${checked.length - 1}`;
-      } else if (def.type === 'people') {
-        // A person is kept by id: two of them share a name, so the label is display only.
-        const picked = [...filterEditor.querySelectorAll('[data-person-rows] input:checked')]
+      } else if (def.type === 'picker') {
+        // A row is kept by id: two rows can share a label, so the label is display only.
+        const picked = [...filterEditor.querySelectorAll('[data-picker-rows] input:checked')]
           .map(cb => ({
             id: cb.dataset.id,
-            label: cb.closest('.form-check').querySelector('[data-person-name]').textContent.trim(),
+            label: cb.closest('.form-check').querySelector('[data-picker-name]').textContent.trim(),
           }));
         if (!picked.length) { closeEditor(); return; }
         rawValue = picked;
