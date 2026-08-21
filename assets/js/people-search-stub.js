@@ -1,14 +1,4 @@
-/**
- * people-search-stub.js
- * Prototype-only substitute for the /people/search HTMX endpoint.
- *
- * Include this AFTER people-search.js in prototype pages only.
- * It intercepts the search input event on any [data-people-search] widget
- * and populates the results from a local PEOPLE array, bypassing HTMX.
- *
- * Remove this file (or its <script> tag) when wiring up the real endpoint.
- * Nothing in people-search.js or the templates needs to change.
- */
+/** Prototype people-search endpoint. Remove its script tag when the endpoint exists. */
 
 (function () {
   'use strict';

@@ -1,19 +1,4 @@
-/**
- * filter-bar.js — chip + editor filter bar (patterns/filter-picker.html).
- * See docs/JAVASCRIPT.md.
- *
- * Bars: works (wf-), researchers (rdir-), projects (pdir-).
- * Prototype-only: chips are client-side and do not refilter the list yet.
- * Organization (tree search), project, and keyword filters are backend-dependent;
- * the journal is reached through the Identifier filter (ISSN), not a venue search.
- *
- * No filter vocabulary and no markup live here. A bar announces itself with
- * data-filter-bar carrying its id prefix; each picker button carries its own
- * definition (data-filter-label / -type / -options / -placeholder / -yes / -no /
- * -panel); the option lists come from templates/partials/filter-option-lists.html;
- * and every node is cloned from templates/partials/filter-editor-templates.html or,
- * for a picker filter, from the panel template its button names.
- */
+/** Filter-bar prototype. Contract and host markup: docs/JAVASCRIPT.md. */
 
 (function () {
   'use strict';
@@ -32,7 +17,7 @@
     const activeChips  = document.getElementById(prefix + 'active-chips');
     const filterEditor = document.getElementById(prefix + 'filter-editor');
     const clearAllBtn  = document.getElementById(prefix + 'clear-all');
-    if (!activeChips || !filterEditor || !clearAllBtn) return;   // bar not on this page
+    if (!activeChips || !filterEditor || !clearAllBtn) return;
 
     const pickerSel = `#${prefix}filter-picker-list button[data-filter]`;
     const addFilterDropdown = document.getElementById(prefix + 'add-filter-dropdown');
@@ -73,7 +58,7 @@
       }
     });
 
-    renderChips();   // paint any pre-applied (initial) filters
+    renderChips();
 
     function openEditor(filterId, existing, anchorEl) {
       const def = FILTERS[filterId];
@@ -87,10 +72,7 @@
       renderChips();
     }
 
-    // Drop the panel under whatever opened it (Add-filter button or the chip). Clamped to the
-    // viewport, not the bar: a squeezed layout can leave the bar less room than the panel needs,
-    // and a bar-width clamp then pushes the panel off-screen. 16px matches the panel's own
-    // 100vw - 2rem cap.
+    // The bar may be narrower than the panel, so clamp to the viewport.
     function positionEditor(anchorEl) {
       const parent = filterEditor.offsetParent;
       if (!anchorEl || !parent) return;

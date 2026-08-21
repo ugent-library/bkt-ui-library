@@ -1,42 +1,4 @@
-/**
- * people-search.js
- * Shared behaviour for all people-search widget instances.
- *
- * Usage:
- *   Add data-people-search to any container that holds the following
- *   data-ps-* elements. The widget wires them up automatically.
- *
- *   Required:
- *     [data-ps-input]    <input type="search"> — the search field
- *     [data-ps-results]  <div role="listbox">  — results / selected state
- *     [data-ps-row]      on every result row inside the listbox — what this
- *                        script selects on, so the row's classes stay styling
- *
- *   Optional:
- *     [data-ps-hint]               <p>          — status / hint text
- *     [data-ps-id]                 <input hidden> — selected person's ID
- *     [data-ps-name]               <input hidden> — selected person's display name
- *     [data-ps-selected]           <div hidden>   — confirmation slot (host template)
- *     [data-ps-selected-name]      inside above   — filled with person name
- *     [data-ps-selected-affiliation] inside above — filled with affiliation
- *     [data-ps-clear]              <button>       — clears the current selection
- *
- * Events:
- *   The container dispatches "people-search:select" (bubbles) when a person
- *   is chosen. event.detail = { id, name, affiliation }.
- *   Host contexts listen for this to store state or advance the form.
- *
- * In prototypes:
- *   Include people-search-stub.js after this file. It intercepts the input
- *   event and populates the results from a local PEOPLE array — the single
- *   data source. This script handles click/keyboard selection on those rows
- *   via event delegation.
- *
- * In production:
- *   Add hx-get="/people/search" to the input so it returns a partial of
- *   [data-ps-row] rows. This script's delegation works after every HTMX
- *   swap, so nothing here changes; remove people-search-stub.js.
- */
+/** Shared people-picker behavior. Host contract and event: docs/JAVASCRIPT.md. */
 
 (function () {
   'use strict';
@@ -79,7 +41,6 @@
       }
     });
 
-    // ArrowDown from input moves focus into the list
     input.addEventListener('keydown', e => {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -113,7 +74,6 @@
       input.value = name;
 
       if (selectedSlot) {
-        // Host template has its own confirmation slot — use it
         const nameEl = selectedSlot.querySelector('[data-ps-selected-name]');
         const affEl  = selectedSlot.querySelector('[data-ps-selected-affiliation]');
         if (nameEl) nameEl.textContent = name;
@@ -122,7 +82,6 @@
         results.innerHTML   = '';
         results.hidden      = true;
       } else {
-        // No slot — collapse list to the selected row
         results.innerHTML = renderSelected({ id, name, affiliation });
         results.hidden    = false;
       }

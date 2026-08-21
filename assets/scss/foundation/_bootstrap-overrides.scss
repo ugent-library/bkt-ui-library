@@ -1,18 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════════════════
-   BOOTSTRAP VARIABLE OVERRIDES
-   ═══════════════════════════════════════════════════════════════════════════════
-
-   Only global :root tokens here — things Bootstrap exposes at :root and that
-   are safe to override there.
-
-   Component-scoped overrides (pagination, card, etc.) are at the bottom of
-   this file, scoped to their component class. Bootstrap 5.3 scopes many
-   component variables to their own class, not :root — :root overrides for
-   those have no effect.
-
-   Surface-aware overrides (--bs-secondary-color per surface) live in
-   _surfaces.scss alongside the other surface tokens.
-   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Global Bootstrap tokens only; component and surface overrides stay with their selectors. */
 
 :root {
   /* Typography */
@@ -52,12 +38,7 @@
 }
 
 /* ── Component-scoped overrides ─────────────────────────────────────────────── */
-/*
-  Bootstrap 5.3 scopes component variables to their own class selector, not
-  :root. Any override must match that specificity. Rule of thumb: if the
-  variable name contains a component hint (--bs-pagination-*, --bs-card-*),
-  scope the override to that component's class.
-*/
+/* Bootstrap component variables must be overridden on the component selector. */
 
 .card {
   --bs-card-box-shadow:    var(--bt-shadow-sm);

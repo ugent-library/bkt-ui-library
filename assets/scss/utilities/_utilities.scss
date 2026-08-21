@@ -1,18 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════════════════
-   UTILITY CLASSES
-   ═══════════════════════════════════════════════════════════════════════════════
-
-   Bootstrap is the primary utility system for layout, spacing, sizing,
-   alignment, and most color application.
-
-   Booktower utilities are intentionally limited to a very small semantic set
-   that the templates use repeatedly and that Bootstrap does not express with
-   the same design-token meaning.
-
-   For palette steps and one-off token demos, reference the token directly:
-     style="background-color: var(--bt-blue-100)"
-     style="color: var(--bt-text-muted)"
-   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Booktower utilities cover repeated token behavior that Bootstrap cannot express. */
 
 
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
@@ -24,12 +10,7 @@
 
 /* ── Forms ───────────────────────────────────────────────────────────────────── */
 
-/* A textarea that is as tall as what is in it: one line when empty, growing per line typed or
-   pasted, shrinking again when lines go. field-sizing does all of it — the rows attribute
-   becomes the fallback height for a browser without it, where query-builder.js sets the height
-   instead. The cap stays, because Chromium reports support and then stops growing part-way
-   through a long list; past it the box scrolls. Height only: a textarea that must fill its
-   column still carries its own width. */
+/* Chromium stops growing long field-sized textareas; scroll after this cap. */
 .bt-textarea-auto {
   max-height: 14rem;
   overflow-y: auto;

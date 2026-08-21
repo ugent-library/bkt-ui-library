@@ -15,9 +15,7 @@
       input.addEventListener('input', sync);
       sync();
 
-      // A field whose box filters a list in place clears with a button: there is
-      // no address to navigate to, so the click does the clearing, and the list
-      // it filters re-reads the box from the same event a keystroke would send.
+      // Dispatch input so an in-place result list refreshes too.
       if (clear.tagName === 'BUTTON') {
         clear.addEventListener('click', function () {
           input.value = '';

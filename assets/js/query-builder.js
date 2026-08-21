@@ -1,9 +1,7 @@
 // Advanced search — rows, OR groups and the chooser.
 // See docs/JAVASCRIPT.md. Row grammar and states: patterns/query-builder.html.
 
-// The dialog is shut in the markup, because a @state block cannot wrap the include that builds it
-// (docs/SERVER.md). Production renders it open at its address; here the address and the builder
-// states each say to open it.
+// Prototype states open the dialog here because @state cannot wrap its include.
 document.addEventListener('DOMContentLoaded', function () {
   const dialog = document.getElementById('advanced-search-modal');
   const open = new URLSearchParams(location.search).has('advanced') ||
@@ -15,11 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const list = document.getElementById('qb-conditions');
   if (!list) return;
 
-  // The dialog's body scrolls (modal-dialog-scrollable), and a scroll container clips an
-  // absolutely-positioned panel at its edge, whatever Popper does inside it. Fixed positioning
-  // escapes to the viewport, which then bounds the panel. The config attribute has to be on the
-  // toggle before Bootstrap's own click handler creates the instance, so this runs in the
-  // capture phase; it covers cloned rows too, which get their instance on first open.
+  // Fixed Popper positioning escapes the scrolling modal's clipping edge. Capture runs before
+  // Bootstrap creates each dropdown, including dropdowns in cloned rows.
   const host = list.closest('.modal');
   if (host) {
     const escapeToViewport = event => {
@@ -231,13 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
     restoreBlank();
   }
 
-  // Bootstrap positions the panel against the control that opened it, so a panel shared by many
-  // controls lives in a template and is cloned into that control's own slot the first time it
-  // opens: the field chooser, and the picker panels the works filter bar clones too. A picker
-  // slot names its panel template, so one mechanism serves person, organization and project.
-  // The checklist panel arrives empty: its rows are one #filter-checklist-row clone per option
-  // of the row's own select, so the vocabulary stays in the markup. Search only earns its place
-  // past eight rows.
+  // Clone the shared panel into its opener so Bootstrap anchors it to the right control.
   function fillChecklist(panel, row) {
     const rows = panel.querySelector('[data-picker-rows]');
     const select = row.querySelector('.bt-query-builder__value-select');

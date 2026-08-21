@@ -21,7 +21,6 @@
   padding-top: .4375rem;
   padding-bottom: .4375rem;
   padding-left: .75rem;
-  /* clip long option labels with … instead of a hard cut against the caret */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -233,8 +232,6 @@
 
 
 /* ── btn-check-group ───────────────────────────────────────────────────────────── */
-/* Used in deposit-flow work type picker */
-
 .bt-btn-check__group {
   display: flex;
   flex-wrap: wrap;
@@ -264,15 +261,12 @@
 
 /* ── Modals ────────────────────────────────────────────────────────────────── */
 
-/* Wider than modal-xl, for a dialog holding form rows rather than prose: an advanced
-   search condition carries a field, an operator, a value and sometimes a role. */
+/* Wider than modal-xl for form rows with several controls. */
 .modal-dialog--wide {
   --bs-modal-width: min(1400px, 94vw);
 }
 
-/* One shape whatever the dialog holds: header pinned, footer pinned, the body scrolling
-   between. Bootstrap's modal-dialog-scrollable sizes the dialog but only caps the content
-   (max-height), so a short query would shrink the box and move the exit. */
+/* Keep the exit fixed when short content would otherwise shrink the dialog. */
 .modal-dialog--wide.modal-dialog-scrollable .modal-content {
   height: 100%;
 }
