@@ -51,9 +51,9 @@ public anyway".
 | `q` | Words or topic | `basic`, bare text on a power form | contains, does not contain | text |
 | `title` | Title | `title` | contains, does not contain, is, is not | text |
 | `abstract` | Abstract | `abstract` | contains, does not contain, is, is not | text |
-| `keyword` | Keyword | `keyword`; alias `subject` | contains, does not contain, is, is not | text |
+| `keyword` | Keywords | `keyword`; alias `subject` | contains, does not contain, is, is not | text |
 | `contributor` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is, is not, is any of · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker, one token per person |
-| `organization` | Affiliation | `affiliation`, `external` | is, is not, is any of | organization typeahead |
+| `organization` | Organization | `affiliation`, `external` | is, is not, is any of | organization picker |
 | `project` | Project | `project`, `project.id` | is, is not, is any of | project typeahead |
 | `funding_programme` | Funding programme | `project.euframeworkprogramme` | contains, is, is not, is any of | text |
 | `work_type` | Publication type | `type`; subtype aliases | is, is not, is any of | select |
@@ -66,7 +66,7 @@ public anyway".
 | `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text | is, is not, is any of | select: Open access, Restricted, Under embargo, No full text |
 | `files` | Files | `file` | is, is not, is any of | select: A file here, Somewhere else, Nothing deposited |
 | `license` | Licence | — | is, is not, is any of | select: CC0 1.0, CC BY 4.0, CC BY-SA 4.0, CC BY-NC 4.0, CC BY-ND 4.0, CC BY-NC-SA 4.0, CC BY-NC-ND 4.0, In copyright, Rights unknown, Other licence |
-| `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
+| `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 | `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | select: Author version, Accepted version, Published version, Updated version |
 | `identifier` | Identifier | `doi`, `issn`, `identifier`, `id`, `vabbid` | is any of, is, is not | paste box |
 
@@ -79,12 +79,14 @@ own slot on parity alone.
 author role, so they read as roles in the list. A reader picking "as first author" gets the author
 whose name leads the credit.
 
-**Affiliation is the organization credited on the work.** The credit is recorded on the work, from
-where each contributor belonged when the work was made. It stays put when a person moves, and it
-stays readable when a person holds two posts at once. So one row is enough, and it answers "only
-UGent" too: an organization filter returns the unit and everything under it, so Affiliation *is*
-Ghent University covers every UGent-credited work. Legacy `external` needs no row; the blank state
-promotes the shortcut. This is different from the current Biblio.
+**Organization is the organization credited on the work, not where a person is now.** The credit
+is recorded on the work, from where each contributor belonged when the work was made. It stays put
+when a person moves, and it stays readable when a person holds two posts at once. So one row is
+enough, and it answers "only UGent" too: an organization filter returns the unit and everything
+under it, so Organization *is* Ghent University covers every UGent-credited work. Legacy `external`
+needs no row; the blank state promotes the shortcut. This is different from the current Biblio,
+whose row is named Affiliation; the works filter bar says Organization, and one question carries
+one name.
 
 **A year takes inclusive bounds only.** *is after 2015* and *is at least 2016* are the same query on
 a year. This is different from the current Biblio.
@@ -115,6 +117,10 @@ The public list carries every type a publicly visible file can carry, because th
 only about files the public can see. That is a narrower list per surface. A reader may also combine
 conditions that return nothing, and gets the zero-results state.
 
+**The main-content value reads *Full text or dataset*.** The underlying file role is the work's main
+content whatever the work type, so the filter — which spans articles and datasets alike — names both
+readings. A record page still labels the one file it shows for what it is.
+
 **Licence says what a reader may do with the content.** It comes from a closed list the record
 already shows. Two of its values mislead
 if read loosely. *Rights unknown* means the metadata editor could not establish the rights, and a
@@ -128,7 +134,7 @@ the value.
 |---|---|
 | `promoter` | contributor role "as supervisor" |
 | `soleauthor`, `firstauthor`, `lastauthor` | contributor roles "as sole author", "as first author", "as last author" |
-| `external` | affiliation *is* / *is not* Ghent University |
+| `external` | organization *is* / *is not* Ghent University |
 | `embargo` | access value "Under embargo" |
 | has-full-text | access value "No full text" |
 | metadata-only | files value "Nothing deposited" |
@@ -202,7 +208,7 @@ Legacy names a translated query may carry, which no builder row offers:
 | legacy name | treatment |
 |---|---|
 | `field`, `for`, `of` | parse artifacts from logged queries — fail closed |
-| `author.affiliation` | the work's credited organization answers it; see Affiliation above `TBD` this is different from the old Biblio |
+| `author.affiliation` | the work's credited organization answers it; see Organization above `TBD` this is different from the old Biblio |
 | `publicationstatus` | alias spelling of `publication_status` |
 
 ## Open questions
@@ -220,6 +226,19 @@ Legacy names a translated query may carry, which no builder row offers:
    elsewhere either as a link or as an identifier that resolves to it. *Somewhere else* covers both,
    on both surfaces. Split the value if curators turn out to act on the difference, or flag if this
    an ambigue interpretation.
+4. **Does raven's file vocabulary follow the *Full text or dataset* reading?** The prototype names
+   the main-content role *Full text or dataset*; raven's closed set holds `full_text`, named for
+   text works. Three options: keep `full_text` and let surfaces carry the compound public label,
+   give the role a type-neutral public name in raven's vocabulary, or add a distinct data role to
+   the closed set — which raven's per-work-type gating would scope to datasets. (Team, with a
+   developer's view; raven owns the vocabulary.)
+5. **Does Published in stay one row?** The table above gives the row a kind qualifier — any
+   container, journal, book, proceedings, magazine, newspaper, series, show or lecture series —
+   and the drawn row is a plain string matching all of them. Three options: keep the plain
+   string, draw the qualifier, or split the field into an entry per container kind — the legacy
+   form offered "book, series or journal title" as one combined entry. The qualifier rule in
+   Contract rules is the test: the value stays a container name whichever kind is set and *any*
+   is a real answer, so a split has to name a reader question the one row cannot ask.
 
 The count's behaviour, and how exact it may be, is asked where it is decided:
 [`ISSUE-04`](QUERY-BUILDER-ISSUE-04-count.md).

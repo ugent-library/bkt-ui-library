@@ -253,7 +253,7 @@ A dimension's shape decides its home. This is the taxonomy in full:
 |---|---|---|
 | Closed, low-cardinality, broad, legible, discovery | **Sidebar checklist** | Access, Type, Language |
 | Ordinal / continuous | **Sidebar range** | Year |
-| High-cardinality *records* | **Add-filter picker + typeahead** | Author, Organization, Project |
+| High-cardinality *records* | **Add-filter picker + typeahead** | Person, Organization, Project |
 | Open concept / free vocabulary | **Query box** | topic |
 | Curation / workflow / expert | **Not public** — backoffice, including its extended builder | status, subtype, tags, created/updated dates |
 
@@ -267,7 +267,7 @@ to the same test (see below).
 
 **The search box holds the open concepts; the picker holds the record dimensions.** The box
 still navigates (Rule 2); the picker is a separate, explicit input for high-cardinality
-dimensions the sidebar cannot hold (author, journal, project, organization — resolved by
+dimensions the sidebar cannot hold (person, journal, project, organization — resolved by
 typeahead).
 
 ### What is not public
@@ -380,7 +380,7 @@ Which dimensions can be filtered depends on `raven` (work index, traits, facet c
 split:
 
 **Index-backed** (a real filter needs only a facet-config entry): Type (`work_type`), Year,
-Access (`open_access` trait + `visibility`), Author (`contributor_person_ids` via person
+Access (`open_access` trait + `visibility`), Person (`contributor_person_ids` via person
 typeahead), Identifier / DOI / ISSN (`identifiers`, scheme-scoped), and the free-text query
 box (`primary`/`secondary`).
 
@@ -447,7 +447,7 @@ The audiences these serve, in one line each (full profiles in `docs/RESEARCH-PER
 
 On small screens **every filter input collapses into a single Bootstrap Offcanvas "Filters"
 tray**: the sidebar facets (Access / Type / Year / Language) and the record-dimension picker
-(Author, Organization, Project, Keywords, Identifier — as drill-ins) live together in the one
+(Person, Organization, Project, Keywords, Identifier — as drill-ins) live together in the one
 sheet. The chip bar stays the readout *above* the results (Rule 4). The only filter-adjacent
 controls kept out of the tray are **Sort** and **results-per-page**, surfaced as pills in the
 results header. This was evaluated against a Vinted-style horizontal filter-pill bar and
@@ -464,7 +464,7 @@ Why the tray, not a pill bar and not two separate entry points:
 - **Horizontal filter-pill rows have poor discoverability (Baymard).** Users routinely
   overlook anything past the right edge of a horizontally-scrolled row, so a pill scroller is
   a shortcut for one or two top filters *at most*, never the whole mechanism. Our
-  high-cardinality record dimensions (Author, Organization, Project, Keyword, Identifier)
+  high-cardinality record dimensions (Person, Organization, Project, Keywords, Identifier)
   would scroll off-screen and be missed — so they belong in the tray, not a pill bar.
   *(Baymard mobile-filtering research; attributed from prior study — live search was
   unavailable when this was noted.)*

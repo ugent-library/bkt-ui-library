@@ -7,6 +7,11 @@
   chooser holds the same list. Ids repeat because each row clones that template; identify()
   re-ids every clone.
 
+  An entry names the row template that carries its shape. Where the contract narrows the
+  template's operators the entry lists what its field keeps (data-qb-ops), and where the
+  contract supplies a select's values the entry carries them (data-qb-values); a select whose
+  values live in a raven catalog names none and keeps its placeholder.
+
   Plain dropdown-header + dropdown-item, as the works Add-filter menu uses: inside the chooser
   panel they are padded rows with a hover band, because the slot is a dropdown-menu and Bootstrap's
   item variables are in scope there. Outside one, the same markup falls back to a plain list of links.
@@ -15,13 +20,17 @@
   <p class="dropdown-header" id="qb-g-subject">Subject</p>
   <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Words or topic" data-qb-template="qb-row-text">Words or topic</button></li>
+      data-qb-label="Words or topic" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain">Words or topic</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Title" data-qb-template="qb-row-text">Title</button></li>
+      data-qb-label="Title" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Title</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Abstract" data-qb-template="qb-row-text">Abstract</button></li>
+      data-qb-label="Abstract" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Abstract</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Keyword" data-qb-template="qb-row-text">Keyword</button></li>
+      data-qb-label="Keywords" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Keywords</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-authors">
@@ -30,11 +39,14 @@
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Person" data-qb-template="qb-row-contributor">Person</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Affiliation" data-qb-template="qb-row-entity"
-      data-qb-panel="organization-picker" data-qb-add="Add an organization">Affiliation</button></li>
+      data-qb-label="Organization" data-qb-template="qb-row-entity"
+      data-qb-panel="organization-picker" data-qb-add="Add an organization">Organization</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Project" data-qb-template="qb-row-entity"
       data-qb-panel="project-picker" data-qb-add="Add a project">Project</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Funding programme" data-qb-template="qb-row-text"
+      data-qb-ops="contains,is,is not,is any of">Funding programme</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-publication">
@@ -45,13 +57,28 @@
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Host publication" data-qb-template="qb-row-text">Host publication</button></li>
+      data-qb-label="Publication status" data-qb-template="qb-row-choice"
+      data-qb-values="Unpublished,In press,Published">Publication status</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Publisher" data-qb-template="qb-row-text">Publisher</button></li>
+      data-qb-label="Published in" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Published in</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Publisher" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Publisher</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Access level" data-qb-template="qb-row-choice">Access level</button></li>
+      data-qb-label="Access level" data-qb-template="qb-row-choice"
+      data-qb-values="Open access,Restricted,Under embargo,No full text">Access level</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Files" data-qb-template="qb-row-choice"
+      data-qb-values="A file here,Somewhere else,Nothing deposited">Files</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Attached content" data-qb-template="qb-row-choice"
+      data-qb-values="Full text or dataset,Supplementary material,Table of contents,Peer review report,Colophon,Data fact sheet,Agreement">Attached content</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Full-text version" data-qb-template="qb-row-choice"
+      data-qb-values="Author version,Accepted version,Published version,Updated version">Full-text version</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
   </ul>

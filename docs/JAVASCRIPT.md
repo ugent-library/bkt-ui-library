@@ -270,7 +270,7 @@ Those partials are included once per page carrying a bar, before the `filter-bar
 **Search-within matches the whole row**, not just its label, so a people editor finds an ORCID or a department code. For a plain checklist the row is its label, so nothing changes there. Why that is wanted: `patterns/filter-picker.html` → Editor — people.
 
 **Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author, Organization, Project (pickers), Keywords (searchable checklist), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
+- `wf-` — public works (`public-works.html`): Person, Organization, Project (pickers), Keywords (searchable checklist), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
 - `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization (picker).
 - `pdir-` — project directory (`public-projects.html`, bar inline): Status, Year (range). No Organization: project participation is deferred in raven's data contract, so the control would be inert.
 
@@ -323,7 +323,9 @@ OR groups.
   `[data-qb-sep]`, `[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`,
   `[data-qb-remove-group]`, `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`,
   `[data-qb-count]`, `[data-qb-chooser-slot]`, `[data-qb-choice]` (+
-  `data-qb-label`/`data-qb-template`, and `data-qb-panel`/`data-qb-add` on an entity choice),
+  `data-qb-label`/`data-qb-template`, `data-qb-ops` where a field keeps a subset of its
+  template's operators, `data-qb-values` where the contract fixes a select's values, and
+  `data-qb-panel`/`data-qb-add` on an entity choice),
   `[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-picker-slot]` (naming the panel
   template it clones), `[data-qb-add-label]`, `[data-qb-token-name]` (+ `data-id` on the token),
   `[data-qb-value]`, `[data-qb-op]`,
@@ -365,7 +367,7 @@ region. Each state carries its own count, written by hand; nothing here derives 
 
 ### `people-search.js`
 
-**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. The `[data-ps-hint]` element is the widget's live region: it announces the result count and the no-results message — nothing but `bt-result` rows goes inside the `[data-ps-results]` listbox. Each row carries `data-ps-row`, which is what the script selects on, so the row's classes stay presentational. Pattern page: `patterns/people-search.html`. (The works Author filter is a text stub today; production would resolve it through this widget.)
+**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. The `[data-ps-hint]` element is the widget's live region: it announces the result count and the no-results message — nothing but `bt-result` rows goes inside the `[data-ps-results]` listbox. Each row carries `data-ps-row`, which is what the script selects on, so the row's classes stay presentational. Pattern page: `patterns/people-search.html`. (The works Person filter clones the shared people picker instead; in production both draw their rows from `/people/search`.)
 
 **Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`)
 
@@ -427,25 +429,6 @@ It also owns the sidebar's link tooltips: created on first use, enabled in slim 
 ---
 
 ## Custom events
-
-### `biblio:filter-add`
-
-Fired when a filter should be added without opening the editor panel (e.g. selecting a suggestion from the autocomplete panel).
-
-```javascript
-document.dispatchEvent(new CustomEvent('biblio:filter-add', {
-  detail: {
-    filterId: 'affiliation',           // key matching FILTERS in the directory filter engine
-    displayValue: 'Faculty of Sciences',
-    rawValue: { id: 'fw', name: 'Faculty of Sciences' }
-  }
-}));
-```
-
-Fired by: nothing currently — the public suggest panel navigates instead of dispatching.
-Handled by: nothing currently — the directory filter engines manage their own chips directly. Kept as a reserved contract for a future filter builder.
-
----
 
 ### `people-search:select`
 

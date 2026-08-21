@@ -86,6 +86,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const row = template.content.firstElementChild.cloneNode(true);
     const label = row.querySelector('[data-qb-change-field]');
     if (label) label.textContent = choice.dataset.qbLabel;
+    // A template carries the union of its fields' operators; a choice that names a subset
+    // (data-qb-ops) keeps only those, so the operator vocabulary stays in the markup and the
+    // field contract.
+    if (choice.dataset.qbOps) {
+      const keep = choice.dataset.qbOps.split(',');
+      row.querySelectorAll('[data-qb-op] option').forEach(option => {
+        if (!keep.includes(option.textContent)) option.remove();
+      });
+    }
+    // A choice carries its select's values where the contract fixes them (data-qb-values); a
+    // field whose values live in a raven catalog names none and keeps the placeholder.
+    if (choice.dataset.qbValues) {
+      const select = row.querySelector('[data-qb-value] select');
+      choice.dataset.qbValues.split(',').forEach(v => select.add(new Option(v)));
+    }
     // An entity choice also names the panel its slot clones and the Add-button copy.
     if (choice.dataset.qbPanel) {
       const slot = row.querySelector('[data-qb-picker-slot]');
