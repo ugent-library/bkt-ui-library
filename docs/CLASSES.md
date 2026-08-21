@@ -131,9 +131,6 @@ bt-query-builder__alts
 bt-query-builder__conditions
 bt-query-builder__group
 bt-query-builder__group-foot
-bt-query-builder__people-field
-bt-query-builder__people-input
-bt-query-builder__people-search
 bt-query-builder__phrase
 bt-query-builder__row
 bt-query-builder__row--alt

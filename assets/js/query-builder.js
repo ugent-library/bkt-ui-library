@@ -86,6 +86,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const row = template.content.firstElementChild.cloneNode(true);
     const label = row.querySelector('[data-qb-change-field]');
     if (label) label.textContent = choice.dataset.qbLabel;
+    // An entity choice also names the panel its slot clones and the Add-button copy.
+    if (choice.dataset.qbPanel) {
+      const slot = row.querySelector('[data-qb-picker-slot]');
+      slot.dataset.qbPickerSlot = choice.dataset.qbPanel;
+      slot.setAttribute('aria-label', choice.dataset.qbAdd);
+      row.querySelector('[data-qb-add-label]').textContent = choice.dataset.qbAdd;
+    }
     identify(row);
 
     if (pending.mode === 'replace') pending.row.replaceWith(row);
@@ -133,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const copy = row.cloneNode(true);
     // The copy starts with its panels unopened — a filled slot cloned along would repeat every
     // id inside it. Each control fills its own slot on first open anyway.
-    copy.querySelectorAll('[data-qb-chooser-slot], [data-qb-person-slot]')
+    copy.querySelectorAll('[data-qb-chooser-slot], [data-qb-picker-slot]')
       .forEach(slot => slot.replaceChildren());
     seq += 1;
     copy.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
@@ -200,14 +207,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Bootstrap positions the panel against the control that opened it, so a panel shared by many
   // controls lives in a template and is cloned into that control's own slot the first time it
-  // opens: the field chooser, and the person picker the works filter bar opens too.
+  // opens: the field chooser, and the picker panels the works filter bar clones too. A picker
+  // slot names its panel template, so one mechanism serves person, organization and project.
   document.addEventListener('show.bs.dropdown', event => {
-    const people = event.target.parentElement?.querySelector('[data-qb-person-slot]');
-    if (people) {
-      if (!people.children.length) {
-        const picker = document.getElementById('person-picker').content.cloneNode(true);
+    const pickerSlot = event.target.parentElement?.querySelector('[data-qb-picker-slot]');
+    if (pickerSlot) {
+      if (!pickerSlot.children.length) {
+        const picker = document.getElementById(pickerSlot.dataset.qbPickerSlot)
+          .content.cloneNode(true);
         identify(picker);
-        people.append(picker);
+        pickerSlot.append(picker);
       }
       return;
     }
@@ -229,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.addEventListener('shown.bs.dropdown', event => {
     event.target.parentElement
-      ?.querySelector('[data-qb-person-slot] [data-picker-search]')?.focus();
+      ?.querySelector('[data-qb-picker-slot] [data-picker-search]')?.focus();
   });
 
   list.addEventListener('click', event => {
@@ -238,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Bootstrap returns focus to the opener on Escape only (ACCESSIBILITY.md E4).
     if (button.hasAttribute('data-picker-add')) {
-      addPeople(button.closest('[data-qb-row]'), button.closest('[data-qb-person-slot]'));
+      addPicked(button.closest('[data-qb-row]'), button.closest('[data-qb-picker-slot]'));
       closeDropdown(button)?.focus();
     } else if (button.hasAttribute('data-picker-cancel')) {
       closeDropdown(button)?.focus();
@@ -300,11 +309,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('[data-qb-blank]').forEach(wireSearch);
 
-  // ── The person picker ───────────────────────────────────────────────────────
+  // ── The picker panels ───────────────────────────────────────────────────────
 
   // The panel is the input, the tokens in the row are the value: what is ticked joins the row
-  // and the boxes clear, so the two never disagree. A person already in the row is not repeated.
-  function addPeople(row, panel) {
+  // and the boxes clear, so the two never disagree. A row the condition already carries is not
+  // repeated, matched on data-id.
+  function addPicked(row, panel) {
     const cell = row.querySelector('[data-qb-value]');
     const present = Array.from(row.querySelectorAll('[data-qb-token]'))
       .map(el => el.dataset.id);
@@ -314,10 +324,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Crestless is the default token; the crest marks a UGent person record.
   function token(box) {
-    const shape = box.hasAttribute('data-person-external')
-      ? 'qb-person-token-external'
-      : 'qb-person-token';
+    const shape = box.hasAttribute('data-person-ugent') ? 'qb-person-token' : 'qb-token';
     const node = document.getElementById(shape)
       .content.firstElementChild.cloneNode(true);
     const name = box.closest('.form-check').querySelector('[data-picker-name]').textContent.trim();
@@ -327,12 +336,12 @@ document.addEventListener('DOMContentLoaded', function () {
     return node;
   }
 
-  // Search-within, as the same panel does in the works filter bar
+  // Search-within, as the same panels do in the works filter bar
   list.addEventListener('input', event => {
     const search = event.target.closest('[data-picker-search]');
     if (!search) return;
     const needle = search.value.trim().toLowerCase();
-    search.closest('[data-qb-person-slot]').querySelectorAll('.form-check').forEach(option => {
+    search.closest('[data-qb-picker-slot]').querySelectorAll('.form-check').forEach(option => {
       option.hidden = Boolean(needle) &&
         !option.querySelector('label').textContent.toLowerCase().includes(needle);
     });

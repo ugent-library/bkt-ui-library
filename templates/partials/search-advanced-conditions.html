@@ -7,10 +7,11 @@
   Top-level items are this element's direct [data-qb-row] and [data-qb-group] children, so a row
   carries no extra marker attribute.
 
-  The person picker is not in here. Picking a person is the same act as on the results page, so
-  it is the same panel: people-picker-panel.html, which the host includes alongside this file and
-  the works Author filter clones too. A Person row holds the "Add a person" button and the empty
-  [data-qb-person-slot] the panel is cloned into.
+  The picker panels are not in here. Picking a person, an organization or a project is the same
+  act as on the results page, so each is the same panel the works filter bar clones:
+  people-picker-panel.html, organization-picker-panel.html and project-picker-panel.html, which
+  the host includes alongside this file. A row's value cell holds the "Add a&hellip;" button and
+  an empty [data-qb-picker-slot] naming the panel that is cloned into it.
 
   The built blocks also name public-works.html's own states (results, best-bet, no-results,
   no-query, facet-set-in-builder). A block renders only when the active state names it, and the
@@ -76,7 +77,7 @@
               Add a person
             </button>
             <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-              aria-label="Add a person" data-qb-person-slot></div>
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
           </div>
         </div>
       </div>
@@ -188,7 +189,7 @@
               Add a person
             </button>
             <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-              aria-label="Add a person" data-qb-person-slot></div>
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
           </div>
         </div>
       </div>
@@ -261,7 +262,7 @@
               Add a person
             </button>
             <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-              aria-label="Add a person" data-qb-person-slot></div>
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
           </div>
         </div>
       </div>
@@ -483,6 +484,120 @@
         </button>
       </div>
     </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Affiliation</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-7">Operator, condition 7</label>
+        <select class="form-select form-select-sm" id="qb-op-7" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="fac-we">
+            Faculty of Sciences
+            <button type="button" aria-label="Remove Faculty of Sciences from condition 7">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add an organization
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add an organization" data-qb-picker-slot="organization-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 7: affiliation is Faculty of Sciences">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 7: affiliation is Faculty of Sciences">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Project</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-8">Operator, condition 8</label>
+        <select class="form-select form-select-sm" id="qb-op-8" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="horizon-openair">
+            Horizon Europe &mdash; OpenAIR
+            <button type="button" aria-label="Remove Horizon Europe — OpenAIR from condition 8">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a project
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a project" data-qb-picker-slot="project-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 8: project is Horizon Europe — OpenAIR">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 8: project is Horizon Europe — OpenAIR">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
     <!-- @state -->
 
     <!-- @state: builder-no-results -->
@@ -665,7 +780,7 @@
                   Add a person
                 </button>
                 <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-                  aria-label="Add a person" data-qb-person-slot></div>
+                  aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
               </div>
             </div>
           </div>
@@ -718,7 +833,7 @@
                   Add a person
                 </button>
                 <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-                  aria-label="Add a person" data-qb-person-slot></div>
+                  aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
               </div>
             </div>
           </div>
@@ -828,9 +943,10 @@
     <!-- @include: templates/partials/search-advanced-blank.html -->
   </template>
 
-  <template id="qb-person-token">
+<!-- The value tokens. Crestless is the default; the crest is the exception, marking a person
+     with a UGent person record (data-person-ugent on the picker row). -->
+  <template id="qb-token">
     <span class="badge text-bg-primary-light" data-qb-token>
-      <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
       <span data-qb-token-name></span>
       <button type="button" aria-label="Remove">
         <i class="if if-close if--xs" aria-hidden="true"></i>
@@ -838,8 +954,9 @@
     </span>
   </template>
 
-  <template id="qb-person-token-external">
+  <template id="qb-person-token">
     <span class="badge text-bg-primary-light" data-qb-token>
+      <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
       <span data-qb-token-name></span>
       <button type="button" aria-label="Remove">
         <i class="if if-close if--xs" aria-hidden="true"></i>
@@ -892,9 +1009,10 @@
       </div>
     </div>
   </template>
-  <!-- ⚠️ Affiliation and Project borrow this people widget, so they search names rather than
-       organisations or projects. Retires when their own entity pickers are drawn. -->
-  <template id="qb-row-person">
+  <!-- The entity condition (Affiliation, Project): the contributor row minus the role, one
+       token per picked entity. The chooser entry names the panel the slot clones and the
+       Add-button copy (data-qb-panel, data-qb-add). -->
+  <template id="qb-row-entity">
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -905,21 +1023,21 @@
         </div>
       </div>
       <div class="bt-query-builder__phrase">
-        <label class="visually-hidden" for="qb-t-person-op">Operator</label>
-        <select class="form-select form-select-sm" id="qb-t-person-op" data-qb-op>
+        <label class="visually-hidden" for="qb-t-entity-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-entity-op" data-qb-op>
           <option>is</option>
           <option>is not</option>
           <option>is any of</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <div class="bt-query-builder__people-field" data-people-search>
-            <div class="form-control form-control-sm bt-query-builder__people-input">
-              <label class="visually-hidden" for="qb-t-person-val">Add a name</label>
-              <input type="search" class="bt-query-builder__people-search" id="qb-t-person-val"
-                data-ps-input placeholder="Search a name..." autocomplete="off">
-            </div>
-            <div data-ps-results class="bt-results" role="listbox"
-              aria-label="Matching records" hidden></div>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              <span data-qb-add-label>Add</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              data-qb-picker-slot></div>
           </div>
         </div>
       </div>
@@ -975,7 +1093,7 @@
               Add a person
             </button>
             <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-              aria-label="Add a person" data-qb-person-slot></div>
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
           </div>
         </div>
       </div>

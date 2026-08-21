@@ -8,8 +8,9 @@
   Include once per page carrying either host, alongside filter-editor-templates.html.
 
   A row is identified by its data-id, never by the name in its label: two people share a name,
-  which is what the rich row exists to tell apart. data-person-external marks a person the index
-  knows without a UGent person record behind them.
+  which is what the rich row exists to tell apart. data-person-ugent marks a person with a UGent
+  person record behind them, and the query builder crests exactly those tokens. A row without it
+  is a person the index knows externally.
 
   Placeholder people, mirroring the PEOPLE array in people-search-stub.js. In production a row
   comes from /people/search, which returns UGent people and index-known external people alike.
@@ -25,7 +26,7 @@
   <div class="bt-panel__body bt-panel__body--checklist" role="group"
     aria-label="People matching your search" data-picker-rows>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-1" data-id="p1">
+      <input class="form-check-input" type="checkbox" id="person-1" data-id="p1" data-person-ugent>
       <label class="form-check-label" for="person-1">
         <span class="bt-result__name" data-picker-name>Marianne Testarosso</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -49,7 +50,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-2" data-id="p2">
+      <input class="form-check-input" type="checkbox" id="person-2" data-id="p2" data-person-ugent>
       <label class="form-check-label" for="person-2">
         <span class="bt-result__name" data-picker-name>Pietro Testa</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -62,7 +63,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-3" data-id="p3">
+      <input class="form-check-input" type="checkbox" id="person-3" data-id="p3" data-person-ugent>
       <label class="form-check-label" for="person-3">
         <span class="bt-result__name" data-picker-name>Lea Testut</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -81,7 +82,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-4" data-id="p5">
+      <input class="form-check-input" type="checkbox" id="person-4" data-id="p5" data-person-ugent>
       <label class="form-check-label" for="person-4">
         <span class="bt-result__name" data-picker-name>Jan Kiewiet</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -105,7 +106,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-5" data-id="p6">
+      <input class="form-check-input" type="checkbox" id="person-5" data-id="p6" data-person-ugent>
       <label class="form-check-label" for="person-5">
         <span class="bt-result__name" data-picker-name>Sarah De Wolf</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -125,7 +126,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-6" data-id="p7">
+      <input class="form-check-input" type="checkbox" id="person-6" data-id="p7" data-person-ugent>
       <label class="form-check-label" for="person-6">
         <span class="bt-result__name" data-picker-name>Thomas Van Damme</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -148,7 +149,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-7" data-id="p-jd1">
+      <input class="form-check-input" type="checkbox" id="person-7" data-id="p-jd1" data-person-ugent>
       <label class="form-check-label" for="person-7">
         <span class="bt-result__name" data-picker-name>John Doe</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -172,7 +173,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-8" data-id="p-jd2">
+      <input class="form-check-input" type="checkbox" id="person-8" data-id="p-jd2" data-person-ugent>
       <label class="form-check-label" for="person-8">
         <span class="bt-result__name" data-picker-name>Jane Doe</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -195,7 +196,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-9" data-id="p-jb1" data-person-external>
+      <input class="form-check-input" type="checkbox" id="person-9" data-id="p-jb1">
       <label class="form-check-label" for="person-9">
         <span class="bt-result__name" data-picker-name>Josephine Baker</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -211,7 +212,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-10" data-id="p-gr1" data-person-external>
+      <input class="form-check-input" type="checkbox" id="person-10" data-id="p-gr1">
       <label class="form-check-label" for="person-10">
         <span class="bt-result__name" data-picker-name>Gypsy Rose Lee</span>
         <span class="bt-meta-list bt-meta-list--xs">
@@ -221,7 +222,7 @@
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="person-11" data-id="p-dv1" data-person-external>
+      <input class="form-check-input" type="checkbox" id="person-11" data-id="p-dv1">
       <label class="form-check-label" for="person-11">
         <span class="bt-result__name" data-picker-name>Dita Von Teese</span>
         <span class="bt-meta-list bt-meta-list--xs">

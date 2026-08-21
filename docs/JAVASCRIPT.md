@@ -256,22 +256,22 @@ no script)
 
 ### `filter-bar.js`
 
-**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, no config of its own. Editor types: checklist (multi-select; a search-within box appears for lists > 8), people, boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
+**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, no config of its own. Editor types: checklist (multi-select; a search-within box appears for lists > 8), picker, boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
 
 **Nothing it renders and nothing it offers lives in the file:**
 
 - **A bar announces itself** with `data-filter-bar="<prefix>"` on its `position-relative` wrapper. The engine wires one instance per marked bar; adding a fourth needs no edit here. Ids stay the handle after that, because `filter-sheet.js` moves the picker, the editor and clear-all out of the bar and into the mobile offcanvas.
-- **A picker button carries its own definition** — `data-filter-label`, `data-filter-type`, and then `data-filter-options` (checklist), `data-filter-placeholder` (text) or `data-filter-yes`/`data-filter-no` (boolean). A `people` filter needs no list: its rows are the shared picker. The picker list is therefore the whole filter set: a filter the markup does not offer cannot be opened.
+- **A picker button carries its own definition** — `data-filter-label`, `data-filter-type`, and then `data-filter-options` (checklist), `data-filter-panel` (picker), `data-filter-placeholder` (text) or `data-filter-yes`/`data-filter-no` (boolean). A `picker` filter needs no list: its button names the panel whose rows it offers. The picker list is therefore the whole filter set: a filter the markup does not offer cannot be opened.
 - **The option lists** are `templates/partials/filter-option-lists.html`, one JSON block keyed by the name a picker button gives in `data-filter-options`. Stub vocabularies; real values come from raven.
-- **Every node** is cloned from a partial. `templates/partials/filter-editor-templates.html` holds the shell, the editor bodies, a checklist row, the chip and the picker tick; a `people` editor clones `#person-picker` from `templates/partials/people-picker-panel.html` and drops its title and footer, because the shell supplies both. A person is kept as `{id, label}` and matched by id, so two people of one name stay apart; the label is display only. Values are written with `textContent`, so a typed filter value cannot become markup. The shell's three actions are fixed: Apply, Cancel, Remove filter. Remove is drawn whether or not the filter is applied, so the footer keeps one shape; removing an unapplied filter is a no-op that closes the panel.
+- **Every node** is cloned from a partial. `templates/partials/filter-editor-templates.html` holds the shell, the editor bodies, a checklist row, the chip and the picker tick; a `picker` editor clones the panel its button names — `people-picker-panel.html`, `organization-picker-panel.html` or `project-picker-panel.html` — and drops its title and footer, because the shell supplies both. A picked row is kept as `{id, label}` and matched by id, so two rows of one label stay apart; the label is display only. Values are written with `textContent`, so a typed filter value cannot become markup. The shell's three actions are fixed: Apply, Cancel, Remove filter. Remove is drawn whether or not the filter is applied, so the footer keeps one shape; removing an unapplied filter is a no-op that closes the panel.
 
 Those partials are included once per page carrying a bar, before the `filter-bar.js` script tag.
 
 **Search-within matches the whole row**, not just its label, so a people editor finds an ORCID or a department code. For a plain checklist the row is its label, so nothing changes there. Why that is wanted: `patterns/filter-picker.html` → Editor — people.
 
 **Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author (people), Organization, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
-- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization.
+- `wf-` — public works (`public-works.html`): Author, Organization, Project (pickers), Keywords (searchable checklist), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
+- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization (picker).
 - `pdir-` — project directory (`public-projects.html`, bar inline): Status, Year (range). No Organization: project participation is deferred in raven's data contract, so the control would be inert.
 
 **Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
@@ -293,22 +293,21 @@ Those partials are included once per page carrying a bar, before the `filter-bar
 
 ### `query-builder.js`
 
-**Purpose:** Advanced search — the condition rows, the field chooser, the person picker and the
+**Purpose:** Advanced search — the condition rows, the field chooser, the picker panels and the
 OR groups.
 
 - **The chooser** is cloned from `#qb-chooser` into the slot beside whichever control opened it
   and re-identified (`identify()` re-points `label[for]` and `aria-labelledby`); its search
   filters the field choices. A pick clones the row template the choice names and writes the
   field label into it.
-- **The person picker** rides on the same slot mechanism, cloned from `#person-picker` — the
-  shared people picker in `templates/partials/people-picker-panel.html`. The works Author filter
-  clones the same template and keeps only its two bodies, so the panel is defined once and
-  neither engine owns it. Add clones a
-  token per ticked person the row does not already carry, matched on `data-id` so two people of
-  one name both land, and clears the boxes; a token's × removes it. There is a token per kind:
-  `#qb-person-token` carries the crest, `#qb-person-token-external` carries none, and the row's
-  `data-person-external` picks between them. It opens on its search box and hands focus back to the control that
-  opened it (`docs/ACCESSIBILITY.md` E4).
+- **The picker panels** ride on the same slot mechanism. A slot names its panel template in
+  `data-qb-picker-slot` — `person-picker`, `organization-picker` or `project-picker` — the same
+  panels the works filter bar clones, so each is defined once and neither engine owns it. Add
+  clones a token per ticked row the condition does not already carry, matched on `data-id` so
+  two rows of one label both land, and clears the boxes; a token's × removes it. `#qb-token` is
+  the token, crestless; the crest is the exception — `#qb-person-token` is cloned for rows
+  marked `data-person-ugent`, a person with a UGent person record. The panel opens on its search
+  box and hands focus back to the control that opened it (`docs/ACCESSIBILITY.md` E4).
 - **OR groups (phase 2)** turn a condition row into an "any of these" `<fieldset>` in place and
   collapse it back to a plain row when one alternative is left. The `or` separators inside a
   group are rebuilt after every change; the top level is AND-joined, which the heading states,
@@ -324,13 +323,15 @@ OR groups.
   `[data-qb-sep]`, `[data-qb-change-field]`, `[data-qb-or]`, `[data-qb-remove]`,
   `[data-qb-remove-group]`, `[data-qb-add-alt]`, `[data-qb-clear]`, `[data-qb-token]`,
   `[data-qb-count]`, `[data-qb-chooser-slot]`, `[data-qb-choice]` (+
-  `data-qb-label`/`data-qb-template`), `[data-qb-choice-search]`, `[data-qb-choice-group]`,
-  `[data-qb-person-slot]`, `[data-qb-token-name]` (+ `data-id` on the token), `[data-qb-value]`, `[data-qb-op]`,
-  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The picker's own hooks carry no
-  `qb-` prefix, because neither engine owns the panel: `[data-person-search]`,
-  `[data-person-name]`, `[data-person-add]`, `[data-person-cancel]`, and `data-id` on each row's
-  checkbox. A row also carries `data-person-external` where the person has no UGent record; the
-  crest that reads it is not drawn yet.
+  `data-qb-label`/`data-qb-template`, and `data-qb-panel`/`data-qb-add` on an entity choice),
+  `[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-picker-slot]` (naming the panel
+  template it clones), `[data-qb-add-label]`, `[data-qb-token-name]` (+ `data-id` on the token),
+  `[data-qb-value]`, `[data-qb-op]`,
+  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The panels' own hooks carry no
+  `qb-` prefix, because neither engine owns them: `[data-picker-search]`,
+  `[data-picker-name]`, `[data-picker-add]`, `[data-picker-cancel]`, and `data-id` on each row's
+  checkbox. A person row carries `data-person-ugent` where a UGent person record stands behind
+  the person, and its token carries the crest.
 - **The row is read through its data attributes, never its classes.** `[data-qb-value]`,
   `[data-qb-op]`, `[data-qb-actions]` and `[data-qb-blank]` are the value cell, the operator
   select, the actions cell and the blank state's root, so a layout change can rename or drop a
