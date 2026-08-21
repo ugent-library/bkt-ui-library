@@ -1,77 +1,45 @@
-# Product bet — <one-line name>
+# Product bet — <name>
 
-*Draft for the <team> · Evidence: [`REPORT-….md`](…) · Design detail: [`DESIGN-….md`](…)*
+*Draft for <team> · Evidence: [report](…) · Design: [note](…)*
 
-<!-- House rules: docs/SPEC-WRITING.md — do not invent, personas, open questions,
-     what-not-how. Calibration and anti-patterns: the product-bet-writer skill.
-     One to two pages. Save as notes/BET-<topic>.md.
-     Delete these comments as you fill them in. -->
+<!-- Follow docs/SPEC-WRITING.md and the product-bet-writer skill. Maximum 800 words. -->
 
 ## Problem
 
-<!-- Who is hurting, at what, how we know. Name personas with their type —
-     "Marie Curator (reviewer)" — one line each on what this bet gives them. Say why not doing this is not an option, if that is true.
-     Verified numbers only; link the evidence document rather than reciting it.
-     Then, only when something existing may not break: the constraints that hold
-     throughout — an existing contract, permalinks, a usage level that may not drop.
-     A greenfield bet has none. -->
+<!-- Named personas, their need, evidence links, and the cost of leaving it unsolved. -->
 
 ## Appetite
 
-<!-- How much this is worth, in time, not scope. If the team sets it, say so and mark
-     it a proposal. Phase 1 is the bet; later phases are future bets. -->
+<!-- Time worth spending. Mark a proposed appetite as proposed. -->
 
 ## Solution
 
-<!-- The shape, in prose, a few sentences: what the user sees and does. Concrete enough
-     to weigh against the appetite; not so detailed it becomes a spec. Link the sketch. -->
+<!-- The shape in a few sentences: what people see and do. Link the prototype. -->
 
-**Phase 1 — definition of done for the first live release.**
-
-<!-- The smallest release genuinely useful on its own, plus parity with whatever the old
-     system already did. Overflow moves to phase 2. -->
+**Phase 1 — first useful release**
 
 - <capability>
-- <capability>
 
-**Phase 2 — <what it adds>:** …
-
-**Phase 3 — <what it adds>:** …
+**Later:** <capability that is not part of this bet>
 
 ## Rabbit holes
 
-<!-- Irreversible decisions, things easy to get wrong, things already investigated so
-     nobody repeats the work. Not a task list for the developers. -->
-
-1. …
+<!-- Irreversible choices or traps already investigated. Delete if empty. -->
 
 ## No-gos
 
-- <explicitly out of scope, and why in half a sentence>
+- <explicit exclusion and brief reason>
 
 ## How we know it works
 
-<!-- Two or three measures, no more. Each: what it is, the baseline (how is it today),
-     the threshold (what counts as success), and how it stays comparable over time.
-     Where a baseline or threshold is not knowable without guessing, say so.
-     Phrase them the way notes/PLAN-measurement.md does. What we measure is ours to
-     state; how it is measured is engineering's — do not prescribe it here. -->
+<!-- Two or three measures. Give the baseline, success threshold and comparison rule. -->
 
-1. …
-
-<!-- Then one sentence: what is instrumented but deliberately not scored, and why. -->
+1. <measure>
 
 ## The ask
 
-**Go / no-go on phase 1.** Then: where is this wrong or impossible, and can the phase 1
-list stand as the definition of done? Timing and approach belong to the implementers.
+**Go or no-go on phase 1.** Where is it wrong or impossible?
 
 ## Open questions
 
-**Blockers for phase 1** — must be answered before work starts:
-
-1. <question, who answers it, how>
-
-**Later** — does not hold up phase 1:
-
-1. <question, and the evidence route>
+<!-- Concrete options. Separate blockers from later questions. Delete if empty. -->
