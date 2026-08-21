@@ -153,8 +153,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function emptyCopy(row) {
     const copy = row.cloneNode(true);
-    // The copy starts with its panels unopened — a filled slot cloned along would repeat every
-    // id inside it. Each control fills its own slot on first open anyway.
     copy.querySelectorAll('[data-qb-chooser-slot], [data-qb-picker-slot]')
       .forEach(slot => slot.replaceChildren());
     seq += 1;
@@ -173,8 +171,6 @@ document.addEventListener('DOMContentLoaded', function () {
     return copy;
   }
 
-  // A row becomes a group in place: it keeps its slot in the AND list and becomes the first
-  // alternative, so a group and a row are interchangeable at the top level.
   function toGroup(row) {
     const group = document.getElementById('qb-group').content.firstElementChild.cloneNode(true);
     row.replaceWith(group);
@@ -189,8 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ── Keeping the whole thing consistent ──────────────────────────────────────
 
   function sync() {
-    // Remove all separators and rebuild them from the current document structure: OR only runs
-    // between alternatives within a group; AND only runs between top-level rows outside groups.
+
     list.querySelectorAll('[data-qb-sep]').forEach(el => el.remove());
 
     items().forEach(item => {
@@ -198,8 +193,6 @@ document.addEventListener('DOMContentLoaded', function () {
         alts(item).forEach((row, j) => {
           row.classList.add('bt-query-builder__row--alt');
           if (j && !isSeparator(row.previousElementSibling)) row.before(separator('or'));
-          // With remove promoted out of the menu, "Add an 'or'" is all it holds — and a row
-          // already inside a group has no use for it, so the whole menu hides.
           const or = row.querySelector('[data-qb-or]');
           if (or) or.closest('.dropdown').hidden = true;
           nameRow(row);
@@ -233,6 +226,13 @@ document.addEventListener('DOMContentLoaded', function () {
         identify(picker);
         pickerSlot.append(picker);
       }
+      // A tick means selected in both hosts, so the panel opens mirroring the row's tokens.
+      const row = event.target.closest('[data-qb-row]');
+      const present = Array.from(row.querySelectorAll('[data-qb-token]'))
+        .map(el => el.dataset.id);
+      pickerSlot.querySelectorAll('[data-picker-rows] input').forEach(box => {
+        box.checked = present.includes(box.dataset.id);
+      });
       return;
     }
 
@@ -260,12 +260,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const button = event.target.closest('button');
     if (!button || !list.contains(button)) return;
 
-    // Bootstrap returns focus to the opener on Escape only (ACCESSIBILITY.md E4).
-    if (button.hasAttribute('data-picker-add')) {
-      addPicked(button.closest('[data-qb-row]'), button.closest('[data-qb-picker-slot]'));
+    if (button.hasAttribute('data-picker-apply')) {
+      applyPicked(button.closest('[data-qb-row]'), button.closest('[data-qb-picker-slot]'));
       closeDropdown(button)?.focus();
     } else if (button.hasAttribute('data-picker-cancel')) {
       closeDropdown(button)?.focus();
+    } else if (button.hasAttribute('data-picker-clear')) {
+      button.closest('[data-qb-picker-slot]')
+        .querySelectorAll('[data-picker-rows] input:checked').forEach(box => {
+          box.checked = false;
+        });
     } else if (button.closest('[data-qb-token]')) {
       button.closest('[data-qb-token]').remove();
     } else if (button.hasAttribute('data-qb-or')) {
@@ -275,7 +279,6 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (button.hasAttribute('data-qb-remove')) {
       const group = button.closest('[data-qb-group]');
       button.closest('[data-qb-row]').remove();
-      // one alternative left is not a group any more: it collapses back to a plain row
       if (group && alts(group).length < 2) unwrap(group);
     } else {
       return;
@@ -326,20 +329,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── The picker panels ───────────────────────────────────────────────────────
 
-  // The panel is the input, the tokens in the row are the value: what is ticked joins the row
-  // and the boxes clear, so the two never disagree. A row the condition already carries is not
-  // repeated, matched on data-id.
-  function addPicked(row, panel) {
+  // The ticks mirror tokens
+  function applyPicked(row, panel) {
     const cell = row.querySelector('[data-qb-value]');
-    const present = Array.from(row.querySelectorAll('[data-qb-token]'))
-      .map(el => el.dataset.id);
-    panel.querySelectorAll('input[type="checkbox"]:checked').forEach(box => {
-      if (!present.includes(box.dataset.id)) cell.insertBefore(token(box), panel.parentElement);
-      box.checked = false;
+    panel.querySelectorAll('[data-picker-rows] input[type="checkbox"]').forEach(box => {
+      const existing = row.querySelector(`[data-qb-token][data-id="${box.dataset.id}"]`);
+      if (box.checked && !existing) cell.insertBefore(token(box), panel.parentElement);
+      if (!box.checked && existing) existing.remove();
     });
   }
 
-  // Crestless is the default token; the crest marks a UGent person record.
+  // Crestless is the default token
   function token(box) {
     const shape = box.hasAttribute('data-person-ugent') ? 'qb-person-token' : 'qb-token';
     const node = document.getElementById(shape)
@@ -356,18 +356,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const search = event.target.closest('[data-picker-search]');
     if (!search) return;
     const needle = search.value.trim().toLowerCase();
-    search.closest('[data-qb-picker-slot]').querySelectorAll('.form-check').forEach(option => {
-      option.hidden = Boolean(needle) &&
-        !option.querySelector('label').textContent.toLowerCase().includes(needle);
-    });
+    search.closest('[data-qb-picker-slot]')
+      .querySelectorAll('[data-picker-rows] .form-check').forEach(option => {
+        option.hidden = Boolean(needle) &&
+          !option.querySelector('label').textContent.toLowerCase().includes(needle);
+      });
   });
 
   list.addEventListener('change', sync);
 
   // ── Pasted identifier lists ─────────────────────────────────────────────────
 
-  // field-sizing does the growing and the shrinking where it exists (.bt-textarea-auto); this is
-  // the fallback everywhere else
+  // field-sizing fallback
   const autogrow = CSS.supports('field-sizing', 'content') ? null : box => {
     box.style.height = 'auto';
     box.style.height = box.scrollHeight + 'px';

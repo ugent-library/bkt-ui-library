@@ -213,9 +213,10 @@
       const searchInput = filterEditor.querySelector('[data-checklist-search], [data-picker-search]');
       searchInput?.addEventListener('input', () => {
         const q = searchInput.value.trim().toLowerCase();
-        filterEditor.querySelectorAll('.bt-panel__body .form-check').forEach(row => {
-          row.hidden = q !== '' && !row.textContent.toLowerCase().includes(q);
-        });
+        filterEditor.querySelectorAll('[data-editor-options] .form-check, [data-picker-rows] .form-check')
+          .forEach(row => {
+            row.hidden = q !== '' && !row.textContent.toLowerCase().includes(q);
+          });
       });
     }
 
