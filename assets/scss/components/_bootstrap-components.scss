@@ -269,3 +269,10 @@
 .modal-dialog--wide {
   --bs-modal-width: min(1400px, 94vw);
 }
+
+/* One shape whatever the dialog holds: header pinned, footer pinned, the body scrolling
+   between. Bootstrap's modal-dialog-scrollable sizes the dialog but only caps the content
+   (max-height), so a short query would shrink the box and move the exit. */
+.modal-dialog--wide.modal-dialog-scrollable .modal-content {
+  height: 100%;
+}

@@ -309,6 +309,18 @@ OR groups.
   the token, crestless; the crest is the exception — `#qb-person-token` is cloned for rows
   marked `data-person-ugent`, a person with a UGent person record. The panel opens on its search
   box and hands focus back to the control that opened it (`docs/ACCESSIBILITY.md` E4).
+- **The multi-value checklist** (`#qb-checklist-panel`) is the fourth caller of that slot
+  mechanism. Its rows are `#filter-checklist-row` clones, one per option of the row's own
+  select, so no value list lives twice; the search body shows only past eight rows. The
+  operator decides the value cell's shape: an option marked `data-qb-multi-op` swaps the single
+  select for the token list and its Add-values button (`[data-qb-multi]`), and the chosen value
+  survives the switch — it becomes the first token going in, and the first token becomes the
+  select's value coming back.
+- **Panels escape the dialog's scrolling body.** `modal-dialog-scrollable` clips an
+  absolutely-positioned panel at the body's edge, so every dropdown toggle inside the dialog
+  gets Popper's fixed strategy (`data-bs-popper-config`), written in the capture phase so it is
+  on the toggle before Bootstrap's own handler creates the instance. The viewport then bounds
+  the panel.
 - **OR groups (phase 2)** turn a condition row into an "any of these" `<fieldset>` in place and
   collapse it back to a plain row when one alternative is left. The `or` separators inside a
   group are rebuilt after every change; the top level is AND-joined, which the heading states,
@@ -329,7 +341,8 @@ OR groups.
   `data-qb-panel`/`data-qb-add` on an entity choice),
   `[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-picker-slot]` (naming the panel
   template it clones), `[data-qb-add-label]`, `[data-qb-token-name]` (+ `data-id` on the token),
-  `[data-qb-value]`, `[data-qb-op]`,
+  `[data-qb-value]`, `[data-qb-op]`, `[data-qb-multi]` (+ `data-qb-multi-op` on the operator
+  option that shows it, `data-qb-placeholder` on a select's placeholder option),
   `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The panels' own hooks carry no
   `qb-` prefix, because neither engine owns them: `[data-picker-search]`, `[data-picker-name]`,
   `[data-picker-apply]`, `[data-picker-clear]`, `[data-picker-cancel]`,
@@ -354,8 +367,9 @@ Pushing that address on open and close is production's job, not the prototype's.
 Pattern page: `patterns/query-builder.html`.
 
 **Listens for:** click / input / change inside `#qb-conditions`, input in
-`[data-qb-choice-search]`, and click on `[data-qb-choice]`, `[data-qb-add-condition]`,
-`[data-qb-choice-close]`, and `[data-qb-clear]`
+`[data-qb-choice-search]`, click on `[data-qb-choice]`, `[data-qb-add-condition]`,
+`[data-qb-choice-close]`, and `[data-qb-clear]`, and capture-phase click / keydown on the
+dialog's dropdown toggles (the fixed-strategy escape above)
 
 **Dispatches:** nothing
 

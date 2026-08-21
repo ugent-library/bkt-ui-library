@@ -465,7 +465,7 @@
         <select class="form-select form-select-sm" id="qb-op-7" data-qb-op>
           <option>is</option>
           <option selected>is not</option>
-          <option>is any of</option>
+          <option data-qb-multi-op>is any of</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-val-7">Access, condition 7</label>
@@ -475,6 +475,15 @@
             <option>Under embargo</option>
             <option>No full text</option>
           </select>
+          <div class="dropdown" data-qb-multi hidden>
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add values
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose values" data-qb-picker-slot="qb-checklist-panel"></div>
+          </div>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -514,7 +523,7 @@
         <select class="form-select form-select-sm" id="qb-op-8" data-qb-op>
           <option selected>is</option>
           <option>is not</option>
-          <option>is any of</option>
+          <option data-qb-multi-op>is any of</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-val-8">Licence, condition 8</label>
@@ -530,6 +539,15 @@
             <option>Rights unknown</option>
             <option>Other licence</option>
           </select>
+          <div class="dropdown" data-qb-multi hidden>
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add values
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose values" data-qb-picker-slot="qb-checklist-panel"></div>
+          </div>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1162,6 +1180,26 @@
     </span>
   </template>
 
+<!-- The multi-value checklist, the fourth caller of the picker-slot mechanism: an "is any of"
+     value opens it beside the row's Add-values button. Its rows are cloned from
+     #filter-checklist-row, one per option of the row's own select, so no value list is written
+     twice; the search body is shown only past eight rows. -->
+  <template id="qb-checklist-panel">
+    <p class="bt-panel__title" data-picker-title>Values</p>
+    <div class="bt-panel__body">
+      <label class="visually-hidden" for="qb-checklist-search">Search values</label>
+      <input type="search" class="form-control form-control-sm" id="qb-checklist-search"
+        data-picker-search placeholder="Search values&hellip;" autocomplete="off">
+    </div>
+    <div class="bt-panel__body bt-panel__body--checklist" role="group"
+      aria-label="Values" data-picker-rows></div>
+    <div class="bt-panel__actions" data-picker-actions>
+      <button type="button" class="btn btn-primary btn-sm" data-picker-apply>Apply</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-picker-cancel>Cancel</button>
+      <button type="button" class="btn btn-ghost btn-sm ms-auto" data-picker-clear>Clear</button>
+    </div>
+  </template>
+
 <!-- The markup a chooser pick clones. One template per value shape; the field name is written
      into the label on clone, and identify() re-pairs each control with its label. Which
      operators a field really offers: docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. -->
@@ -1433,13 +1471,22 @@
         <select class="form-select form-select-sm" id="qb-t-choice-op" data-qb-op>
           <option>is</option>
           <option>is not</option>
-          <option>is any of</option>
+          <option data-qb-multi-op>is any of</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-t-choice-val">Value</label>
           <select class="form-select form-select-sm bt-query-builder__value-select" id="qb-t-choice-val">
-            <option selected>Choose&hellip;</option>
+            <option selected data-qb-placeholder>Choose&hellip;</option>
           </select>
+          <div class="dropdown" data-qb-multi hidden>
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add values
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose values" data-qb-picker-slot="qb-checklist-panel"></div>
+          </div>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>

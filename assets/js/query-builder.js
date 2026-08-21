@@ -15,6 +15,23 @@ document.addEventListener('DOMContentLoaded', function () {
   const list = document.getElementById('qb-conditions');
   if (!list) return;
 
+  // The dialog's body scrolls (modal-dialog-scrollable), and a scroll container clips an
+  // absolutely-positioned panel at its edge, whatever Popper does inside it. Fixed positioning
+  // escapes to the viewport, which then bounds the panel. The config attribute has to be on the
+  // toggle before Bootstrap's own click handler creates the instance, so this runs in the
+  // capture phase; it covers cloned rows too, which get their instance on first open.
+  const host = list.closest('.modal');
+  if (host) {
+    const escapeToViewport = event => {
+      const toggle = event.target.closest('[data-bs-toggle="dropdown"]');
+      if (toggle && host.contains(toggle) && !toggle.hasAttribute('data-bs-popper-config')) {
+        toggle.setAttribute('data-bs-popper-config', '{"strategy":"fixed"}');
+      }
+    };
+    document.addEventListener('click', escapeToViewport, true);
+    document.addEventListener('keydown', escapeToViewport, true);
+  }
+
   let seq = 0;
   // What the next chooser pick does: add a condition, replace this row's field, or add an
   // alternative to this group.
@@ -217,17 +234,42 @@ document.addEventListener('DOMContentLoaded', function () {
   // controls lives in a template and is cloned into that control's own slot the first time it
   // opens: the field chooser, and the picker panels the works filter bar clones too. A picker
   // slot names its panel template, so one mechanism serves person, organization and project.
+  // The checklist panel arrives empty: its rows are one #filter-checklist-row clone per option
+  // of the row's own select, so the vocabulary stays in the markup. Search only earns its place
+  // past eight rows.
+  function fillChecklist(panel, row) {
+    const rows = panel.querySelector('[data-picker-rows]');
+    const select = row.querySelector('.bt-query-builder__value-select');
+    const title = panel.querySelector('[data-picker-title]');
+    if (title) title.textContent =
+      row.querySelector('[data-qb-change-field]')?.textContent.trim() || title.textContent;
+    Array.from(select.options)
+      .filter(option => !option.hasAttribute('data-qb-placeholder'))
+      .forEach(option => {
+        const check = document.getElementById('filter-checklist-row')
+          .content.firstElementChild.cloneNode(true);
+        check.querySelector('input').dataset.id = option.text;
+        check.querySelector('label').textContent = option.text;
+        rows.append(check);
+      });
+    panel.querySelector('[data-picker-search]')
+      .closest('.bt-panel__body').hidden = rows.children.length <= 8;
+  }
+
   document.addEventListener('show.bs.dropdown', event => {
     const pickerSlot = event.target.parentElement?.querySelector('[data-qb-picker-slot]');
     if (pickerSlot) {
+      const row = event.target.closest('[data-qb-row]');
       if (!pickerSlot.children.length) {
         const picker = document.getElementById(pickerSlot.dataset.qbPickerSlot)
           .content.cloneNode(true);
-        identify(picker);
         pickerSlot.append(picker);
+        if (pickerSlot.dataset.qbPickerSlot === 'qb-checklist-panel') {
+          fillChecklist(pickerSlot, row);
+        }
+        identify(pickerSlot);
       }
       // A tick means selected in both hosts, so the panel opens mirroring the row's tokens.
-      const row = event.target.closest('[data-qb-row]');
       const present = Array.from(row.querySelectorAll('[data-qb-token]'))
         .map(el => el.dataset.id);
       pickerSlot.querySelectorAll('[data-picker-rows] input').forEach(box => {
@@ -339,13 +381,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Crestless is the default token
+  // Crestless is the default token; a checklist row's name is its label, a rich row names
+  // itself with [data-picker-name].
   function token(box) {
-    const shape = box.hasAttribute('data-person-ugent') ? 'qb-person-token' : 'qb-token';
-    const node = document.getElementById(shape)
+    const check = box.closest('.form-check');
+    const name = (check.querySelector('[data-picker-name]') || check.querySelector('label'))
+      .textContent.trim();
+    return makeToken(box.dataset.id, name, box.hasAttribute('data-person-ugent'));
+  }
+
+  function makeToken(id, name, crested) {
+    const node = document.getElementById(crested ? 'qb-person-token' : 'qb-token')
       .content.firstElementChild.cloneNode(true);
-    const name = box.closest('.form-check').querySelector('[data-picker-name]').textContent.trim();
-    node.dataset.id = box.dataset.id;
+    node.dataset.id = id;
     node.querySelector('[data-qb-token-name]').textContent = name;
     node.querySelector('button').setAttribute('aria-label', 'Remove ' + name);
     return node;
@@ -363,7 +411,38 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 
-  list.addEventListener('change', sync);
+  // A select answers "is"; a list answers "is any of". The operator decides which of the two
+  // the value cell shows, and the chosen value survives the switch: it becomes the first token
+  // going in, and the first token becomes the select's value coming back.
+  function syncValueShape(row) {
+    const multi = row.querySelector('[data-qb-multi]');
+    if (!multi) return;
+    const op = row.querySelector('[data-qb-op]');
+    const select = row.querySelector('.bt-query-builder__value-select');
+    const wantsList = op.selectedIndex >= 0 &&
+      op.options[op.selectedIndex].hasAttribute('data-qb-multi-op');
+    if (wantsList === !multi.hidden) return;
+    multi.hidden = !wantsList;
+    select.hidden = wantsList;
+    const tokens = Array.from(row.querySelectorAll('[data-qb-value] [data-qb-token]'));
+    if (wantsList) {
+      const chosen = select.options[select.selectedIndex];
+      if (chosen && !chosen.hasAttribute('data-qb-placeholder') && !tokens.length) {
+        multi.before(makeToken(chosen.text, chosen.text, false));
+      }
+    } else {
+      const first = tokens[0]?.querySelector('[data-qb-token-name]')?.textContent.trim();
+      const option = first && Array.from(select.options).find(o => o.text === first);
+      if (option) option.selected = true;
+      tokens.forEach(el => el.remove());
+    }
+  }
+
+  list.addEventListener('change', event => {
+    const row = event.target.closest('[data-qb-row]');
+    if (row && event.target.hasAttribute('data-qb-op')) syncValueShape(row);
+    sync();
+  });
 
   // ── Pasted identifier lists ─────────────────────────────────────────────────
 

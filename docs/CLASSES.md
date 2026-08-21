@@ -620,6 +620,8 @@ is-invalid
 is-valid
 lead
 list-group
+modal-content
+modal-dialog-scrollable
 nav
 nav-link
 nav-tabs
