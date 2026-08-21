@@ -186,7 +186,7 @@ and every template renders what it says it renders.
 
 **Listens for:**
 - `matchMedia('(max-width: 991.98px)')` change
-- `#wf-filter-editor` `hidden` attribute (drill in on open — opening the sheet too when a chip tap opens the editor from the readout outside it; return + refresh row values on close)
+- `#wf-filter-editor` `hidden` attribute (drill in on open, opening the sheet when the editor opens from outside it; return + refresh row values on close)
 - click on `#wf-head-back` and `#wf-foot-apply` / `#wf-foot-remove`, which forward to the editor's own `[data-editor-cancel]` / `[data-editor-apply]` / `[data-editor-remove]` buttons, and `#wf-clear-all` (refreshes row values)
 
 **Dispatches:** nothing
@@ -285,7 +285,7 @@ Those partials are included once per page carrying a bar, before the `filter-bar
 
 **Dispatches:** nothing
 
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organization tree, project and keyword option lists and the picker's people are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
+**Prototype-only:** yes (chips are client-side only and do not refilter the list; the panels' rows and the keyword option list are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
 
 **Fails the template test:** no (since v2.25). It built its markup as strings and carried its own filter and option vocabulary in a `CONFIGS` object; both now live in the markup, per the two partials above.
 
@@ -301,8 +301,8 @@ OR groups.
   filters the field choices. A pick clones the row template the choice names and writes the
   field label into it.
 - **The picker panels** ride on the same slot mechanism. A slot names its panel template in
-  `data-qb-picker-slot` — `person-picker`, `organization-picker` or `project-picker` — the same
-  panels the works filter bar clones, so each is defined once and neither engine owns it. Add
+  `data-qb-picker-slot` — the same panels the works filter bar clones, so each is defined once
+  and neither engine owns it. Add
   clones a token per ticked row the condition does not already carry, matched on `data-id` so
   two rows of one label both land, and clears the boxes; a token's × removes it. `#qb-token` is
   the token, crestless; the crest is the exception — `#qb-person-token` is cloned for rows
@@ -359,9 +359,9 @@ Pattern page: `patterns/query-builder.html`.
 **Dispatches:** nothing
 
 **Prototype-only:** yes — it exists so the group interaction can be judged before it is built.
-Production renders the condition list server-side and computes the count (field contract, open
-question 9), writing it into the submit's `[data-qb-count]` span — the builder's one `aria-live`
-region. Each state carries its own count, written by hand; nothing here derives one.
+Production renders the condition list server-side and computes the count
+(`docs/wip/QUERY-BUILDER-ISSUE-04-count.md`), writing it into the submit's `[data-qb-count]`
+span — the builder's one `aria-live` region. Each state carries its own count, written by hand; nothing here derives one.
 
 ---
 

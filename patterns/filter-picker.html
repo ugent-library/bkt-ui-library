@@ -21,9 +21,9 @@
       <li>User clicks a chip → editor reopens pre-populated for editing</li>
       <li>User clicks × on a chip → filter removed</li>
     </ol>
-    <p>Wired by <code>filter-bar.js</code> — one engine, and no filter set inside it. A bar announces itself with <code>data-filter-bar="&lt;prefix&gt;"</code>; each picker button carries its own definition (<code>data-filter-label</code>, <code>data-filter-type</code>, and then <code>data-filter-options</code>, <code>data-filter-placeholder</code>, or <code>data-filter-yes</code>/<code>data-filter-no</code>), so the picker list <em>is</em> the filter set. Chips are client-side only in the prototype.</p>
+    <p>Wired by <code>filter-bar.js</code> — one engine, and no filter set inside it. A bar announces itself with <code>data-filter-bar="&lt;prefix&gt;"</code>; each picker button carries its own definition (<code>data-filter-label</code>, <code>data-filter-type</code>, and then <code>data-filter-options</code>, <code>data-filter-panel</code>, <code>data-filter-placeholder</code>, or <code>data-filter-yes</code>/<code>data-filter-no</code>), so the picker list <em>is</em> the filter set. Chips are client-side only in the prototype.</p>
 
-    <p class="mb-3">The examples below are written out. The running bar clones the same shapes from <code>templates/partials/filter-editor-templates.html</code> and reads its option lists from <code>templates/partials/filter-option-lists.html</code>; both are included once per page carrying a bar.</p>
+    <p class="mb-3">The examples below are written out. The running bar clones the same shapes from <code>templates/partials/filter-editor-templates.html</code>, reads its option lists from <code>templates/partials/filter-option-lists.html</code>, and clones a picker filter's body from the panel partial its button names. Each partial is included once per page carrying a bar that uses it.</p>
 
     <p class="mb-0">Every editor carries the same three actions: <strong>Apply</strong>, <strong>Cancel</strong>, and <strong>Remove filter</strong> pushed right with <code>ms-auto</code>. Remove is drawn whether or not the filter is applied yet — one footer, one shape, so the panel does not change under you between a first open and a re-open. Removing something that was never applied does nothing, which is what Cancel does anyway.</p>
   </section>
@@ -33,7 +33,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker</h2>
-    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization; the project directory offers status and a year range, and no Organization, because project participation is deferred in raven's data contract; public works uses the search-it set — Author, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor, not the picker.</p>
+    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization; the project directory offers status and a year range, and no Organization, because project participation is deferred in raven's data contract; public works uses the search-it set — Person, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor, not the picker.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Project directory picker</h3>
@@ -83,29 +83,29 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for pick-from-a-set values — the works record filters (Organization, Project, Keywords) and the directory Organization. Author is a people search instead — <a href="#editor-people">below</a>. Multiple selections produce a chip like "Sciences +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
+    <p class="mb-4">Used for pick-from-a-set values — the works Keywords filter. Person, Organization and Project pick records instead — <a href="#editor-picker">below</a>. Multiple selections produce a chip like "Climate change +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Checklist</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-checklist-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-checklist-title">Organization</p>
-          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select Organization">
+          <p class="bt-panel__title" id="fe-checklist-title">Keywords</p>
+          <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select Keywords">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fv-we" checked>
-              <label class="form-check-label" for="fv-we">Sciences</label>
+              <input class="form-check-input" type="checkbox" id="fv-cc" checked>
+              <label class="form-check-label" for="fv-cc">Climate change</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fv-ea">
-              <label class="form-check-label" for="fv-ea">Engineering and Architecture</label>
+              <input class="form-check-input" type="checkbox" id="fv-ml">
+              <label class="form-check-label" for="fv-ml">Machine learning</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fv-ge" checked>
-              <label class="form-check-label" for="fv-ge">Medicine and Health Sciences</label>
+              <input class="form-check-input" type="checkbox" id="fv-oa" checked>
+              <label class="form-check-label" for="fv-oa">Open access</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="fv-la">
-              <label class="form-check-label" for="fv-la">Arts and Philosophy</label>
+              <input class="form-check-input" type="checkbox" id="fv-bd">
+              <label class="form-check-label" for="fv-bd">Biodiversity</label>
             </div>
           </div>
           <div class="bt-panel__actions">
@@ -121,10 +121,10 @@
   <!-- ══════════════════════════════════════════════════════════════════════
        2b. EDITOR — PEOPLE
   ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section" id="editor-people">
-    <h2 class="h4 mb-3">Editor — people</h2>
-    <p class="mb-3">The works <strong>Author</strong> filter picks a person, so it opens the people picker instead of a list of names: two people share a name, and the row is what tells them apart. That panel is canonical at <a href="/patterns/people-search.html#checkable-rich-rows">people search &mdash; checkable rich rows</a>, and the query builder&rsquo;s Person condition opens the same one.</p>
-    <p class="mb-3">Apply replaces the set. An applied author is held by identifier, never by the name on screen.</p>
+  <section class="ds-section" id="editor-picker">
+    <h2 class="h4 mb-3">Editor — picker</h2>
+    <p class="mb-3">The works <strong>Person</strong>, <strong>Organization</strong> and <strong>Project</strong> filters pick records, so each opens its entity&rsquo;s picker panel: two records share a label, and the row is what tells them apart. The query builder&rsquo;s conditions clone the same panels. The person panel is canonical at <a href="/patterns/people-search.html#checkable-rich-rows">people search &mdash; checkable rich rows</a>; the organization and project rows are stand-ins, their design task logged in the panel partials.</p>
+    <p class="mb-3">Apply replaces the set. An applied row is held by identifier, never by the label on screen.</p>
     <p class="mb-0">Search-within matches the whole row, so an ORCID or a department code finds a person as a name does. That is intended: someone holding the identifier should not need the spelling.</p>
   </section>
 
@@ -197,7 +197,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor — text</h2>
-    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific. (The record filters — organization, project, keywords — are searchable checklists. Author is a people search.)</p>
+    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Text</h3>
@@ -224,7 +224,7 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Editor as overlay</h2>
-    <p class="mb-3">The editor panel floats <strong>over</strong> the result list instead of pushing it down. The filter bar and panel are wrapped in a <code>position-relative</code> container; the panel (<code>#wf-filter-editor</code> / <code>#rdir-filter-editor</code> / <code>#pdir-filter-editor</code>) gets <code>position-absolute top-100 mt-2</code>, and <code>filter-bar.js</code> sets its left offset so it drops under whatever opened it (the Add-filter button or the chip), clamped to the bar's width.</p>
+    <p class="mb-3">The editor panel floats <strong>over</strong> the result list instead of pushing it down. The filter bar and panel are wrapped in a <code>position-relative</code> container; the panel (<code>#wf-filter-editor</code> / <code>#rdir-filter-editor</code> / <code>#pdir-filter-editor</code>) gets <code>position-absolute top-100 mt-2</code>, and <code>filter-bar.js</code> sets its left offset so it drops under whatever opened it (the Add-filter button or the chip), clamped to the viewport so a squeezed layout never pushes it off-screen.</p>
     <p class="mb-0">The popover <code>z-index</code> (and a <code>min-width</code> floor for narrow anchors) lives on <code>.bt-panel</code> itself — Bootstrap's <code>z-3</code> utility maxes at 3, which ties with the active <code>.page-link</code> in pagination.</p>
   </section>
 
@@ -250,8 +250,8 @@
           <div class="bt-toolbar__left">
             <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
               <div class="filter-chip-group">
-                <button type="button" class="badge badge--outline" aria-label="Edit filter: Author is Jane Doe"><span class="fw-light">Author:</span> Jane Doe</button>
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Author is Jane Doe"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                <button type="button" class="badge badge--outline" aria-label="Edit filter: Person is Jane Doe"><span class="fw-light">Person:</span> Jane Doe</button>
+                <button type="button" class="badge badge--outline" aria-label="Remove filter: Person is Jane Doe"><i class="if if-close if--xs" aria-hidden="true"></i></button>
               </div>
               <div class="filter-chip-group">
                 <button type="button" class="badge badge--outline" aria-label="Edit filter: Keywords is Climate change"><span class="fw-light">Keywords:</span> Climate change</button>
@@ -264,7 +264,7 @@
               </button>
               <div class="dropdown-menu p-0">
                 <div class="bt-dropdown-scroll">
-                  <button class="dropdown-item" type="button">Author</button>
+                  <button class="dropdown-item" type="button">Person</button>
                   <button class="dropdown-item" type="button">Organization</button>
                   <button class="dropdown-item" type="button">Project</button>
                 </div>

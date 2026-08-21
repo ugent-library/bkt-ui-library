@@ -6,6 +6,24 @@ system, or do I reach for something new?"
 
 ---
 
+## One picker panel per entity (v2.28, 2026-08-21)
+
+Organization and Project pick records now, like Person: each entity has one panel partial
+(`people-picker-panel.html`, `organization-picker-panel.html`, `project-picker-panel.html`) that
+the works filter bar and the query builder both clone, so a panel fix lands on both surfaces at
+once. The panel hooks generalized from `data-person-*` to `data-picker-*`; the filter editor's
+`people` type became one `picker` type whose button names its panel (`data-filter-panel`); the
+query builder's borrowed people widget (`qb-row-person`) died with its CSS. The crestless token is
+the default and the crest the exception, marking a UGent person record (`data-person-ugent`).
+Search vocabulary aligned with the field contract: Person, Organization, Keywords and Published in
+carry one name each across the filter bar, the builder and the contract.
+
+| Removed | Use instead |
+|---------|-------------|
+| `bt-query-builder__people-field` | the entity row's picker slot (`qb-row-entity`) |
+| `bt-query-builder__people-input` | — |
+| `bt-query-builder__people-search` | — |
+
 ## A search result row, not a person row (v2.27, 2026-08-20)
 
 The picker row was named for people, and nothing in it is about people: it holds an icon, a name

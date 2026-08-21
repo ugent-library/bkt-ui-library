@@ -5,7 +5,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">People search</h1>
-    <p class="lead">An inline search that resolves a person from the PersonIdentity index. One search, one rich result row, two selection shapes: click-to-select in a form (deposit add-author, curate detail) and checkable rows in a panel (author filter editor, query builder). Not a modal — the results list floats directly below the input, over whatever follows it.</p>
+    <p class="lead">An inline search that resolves a person from the PersonIdentity index. One search, one rich result row, two selection shapes: click-to-select in a form (deposit add-author, curate detail) and checkable rows in a panel (Person filter editor, query builder). Not a modal — the results list floats directly below the input, over whatever follows it.</p>
   </header>
 
   <!-- ══════════════════════════════════════════════════════════════════════
@@ -283,14 +283,14 @@
   ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section" id="checkable-rich-rows">
     <h2 class="h4 mb-3">Checkable rich rows — multi-select in a panel</h2>
-    <p class="mb-4">Two hosts pick several people at once: the works-page author filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>bt-result__name</code> with <code>&lt;mark&gt;</code>, the <code>bt-meta-list bt-meta-list--xs</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens.</p>
+    <p class="mb-4">Two hosts pick several people at once: the works-page Person filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>bt-result__name</code> with <code>&lt;mark&gt;</code>, the <code>bt-meta-list bt-meta-list--xs</code> items — because two people with the same name must be tellable apart before you tick one. The footer button names the outcome: Apply replaces the filter's set, Add appends query builder tokens. This pattern covers people only: the organization and project panels share the shape and the hooks, not the rich person row.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Author filter editor — search-first, multi-select</h3>
+      <h3 class="ds-demo-label">Person filter editor — search-first, multi-select</h3>
       <div class="ds-demo-body">
 
-        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Author">
-          <p class="bt-panel__title">Author</p>
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Person">
+          <p class="bt-panel__title">Person</p>
           <div class="bt-panel__body">
             <label for="ps-check-search" class="visually-hidden">Search for a person</label>
             <input type="search" id="ps-check-search" class="form-control form-control-sm"
@@ -442,7 +442,7 @@
       <li>In production: <code>hx-get="/people/search?q="</code> returning the <code>people-search-results.html</code> partial. While the request is in flight, an <code>htmx-indicator</code> span with <code>aria-live="polite"</code> shows "Searching&hellip;".</li>
       <li><code>/people/search</code> returns UGent people <em>and</em> the external people the index already holds — one search, both kinds, wherever a person is picked. A person in no index is not searchable, which is what the deposit form's external fallback is for.</li>
       <li>In the prototype: the <code>PEOPLE</code> array in <code>assets/js/people-search-stub.js</code> stands in for the server.</li>
-      <li>Clicking a row updates the input value, collapses the list to the selected state, and stores the person's <code>data-id</code> and <code>data-name</code> for the filter chip or form submission.</li>
+      <li>Clicking a row updates the input value, collapses the list to the selected state, and stores the person's <code>data-id</code> and <code>data-name</code> for the form submission.</li>
       <li>An unlinked (external) author is valid. The no-results state should lead to the "Add as external author" fallback if present in the host context (deposit form), not block submission.</li>
     </ul>
   </section>
