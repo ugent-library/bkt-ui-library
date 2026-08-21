@@ -144,6 +144,31 @@
   margin: var(--bt-sp-3) 0 var(--bt-sp-2) 0;
 }
 
+/* Blank state:*/
+.modal-body:has(.bt-query-builder__conditions) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bt-sp-2);
+  text-align: center;
+}
+
+.modal-body:has(.bt-query-builder__conditions) .bt-query-builder__add {
+  justify-content: center;
+  margin: 0;
+}
+
+.modal-body:has(.bt-query-builder__conditions > :not([data-qb-blank])) {
+  display: block;
+  text-align: start;
+}
+
+.modal-body:has(.bt-query-builder__conditions > :not([data-qb-blank])) .bt-query-builder__add {
+  justify-content: flex-start;
+  margin: var(--bt-sp-3) 0 var(--bt-sp-2) 0;
+}
+
 .bt-query-builder__add .dropdown {
   position: static;
 }
