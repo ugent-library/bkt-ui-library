@@ -70,21 +70,19 @@
   --bs-dropdown-link-active-color: var(--bt-gray-1000);
   --bs-dropdown-link-hover-bg:     var(--bt-gray-50);
   --bs-dropdown-item-padding-y:    0.5rem;
+  --bs-dropdown-header-color:      var(--bt-text-muted);
 }
-// See .bt-dropdown-scroll to extend scrolling behaviour
 
 .dropdown-header {
-  padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+  padding: var(--bs-dropdown-item-padding-y, var(--bt-sp-2)) var(--bs-dropdown-item-padding-x, var(--bt-sp-4)) 0;
   font-style: normal;
   font-weight: 600;
-  font-size: 0.875em;
-  text-transform: uppercase;
-  color: var(--bt-gray-500);
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
+  padding: var(--bs-dropdown-item-padding-y, var(--bt-sp-2)) var(--bs-dropdown-item-padding-x, var(--bt-sp-4));
 }
 
 .pagination {

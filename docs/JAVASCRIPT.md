@@ -302,9 +302,10 @@ OR groups.
   field label into it.
 - **The picker panels** ride on the same slot mechanism. A slot names its panel template in
   `data-qb-picker-slot` — the same panels the works filter bar clones, so each is defined once
-  and neither engine owns it. Add
-  clones a token per ticked row the condition does not already carry, matched on `data-id` so
-  two rows of one label both land, and clears the boxes; a token's × removes it. `#qb-token` is
+  and neither engine owns it. A tick means selected: the panel opens mirroring the row's tokens,
+  and Apply syncs the tokens to the ticks, matched on `data-id` so two rows of one label stay
+  apart. Clear empties the ticks; Apply commits, and a
+  token's × also removes it. `#qb-token` is
   the token, crestless; the crest is the exception — `#qb-person-token` is cloned for rows
   marked `data-person-ugent`, a person with a UGent person record. The panel opens on its search
   box and hands focus back to the control that opened it (`docs/ACCESSIBILITY.md` E4).
@@ -330,10 +331,10 @@ OR groups.
   template it clones), `[data-qb-add-label]`, `[data-qb-token-name]` (+ `data-id` on the token),
   `[data-qb-value]`, `[data-qb-op]`,
   `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The panels' own hooks carry no
-  `qb-` prefix, because neither engine owns them: `[data-picker-search]`,
-  `[data-picker-name]`, `[data-picker-add]`, `[data-picker-cancel]`, and `data-id` on each row's
-  checkbox. A person row carries `data-person-ugent` where a UGent person record stands behind
-  the person, and its token carries the crest.
+  `qb-` prefix, because neither engine owns them: `[data-picker-search]`, `[data-picker-name]`,
+  `[data-picker-apply]`, `[data-picker-clear]`, `[data-picker-cancel]`,
+  and `data-id` on each row's checkbox. A person row carries `data-person-ugent` where a UGent person record stands
+  behind the person, and its token carries the crest.
 - **The row is read through its data attributes, never its classes.** `[data-qb-value]`,
   `[data-qb-op]`, `[data-qb-actions]` and `[data-qb-blank]` are the value cell, the operator
   select, the actions cell and the blank state's root, so a layout change can rename or drop a

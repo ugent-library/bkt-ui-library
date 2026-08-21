@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower c6a83a3/2026-08-21 */
+/*! Booktower 6c09e8c/2026-08-21 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -424,20 +424,19 @@ body,
   --bs-dropdown-link-active-color: var(--bt-gray-1000);
   --bs-dropdown-link-hover-bg: var(--bt-gray-50);
   --bs-dropdown-item-padding-y: 0.5rem;
+  --bs-dropdown-header-color: var(--bt-text-muted);
 }
 
 .dropdown-header {
-  padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+  padding: var(--bs-dropdown-item-padding-y, var(--bt-sp-2)) var(--bs-dropdown-item-padding-x, var(--bt-sp-4)) 0;
   font-style: normal;
   font-weight: 600;
-  font-size: 0.875em;
-  text-transform: uppercase;
-  color: var(--bt-gray-500);
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
+  padding: var(--bs-dropdown-item-padding-y, var(--bt-sp-2)) var(--bs-dropdown-item-padding-x, var(--bt-sp-4));
 }
 
 .pagination {
@@ -2082,10 +2081,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-panel__body .form-check:hover {
   background-color: var(--bt-gray-50);
-}
-
-.bt-panel__body .dropdown-item {
-  padding: var(--bt-sp-2) var(--bt-sp-4);
 }
 
 .bt-panel__body .form-check-label {
