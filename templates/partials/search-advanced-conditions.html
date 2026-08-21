@@ -312,19 +312,22 @@
         <select class="form-select form-select-sm" id="qb-op-4" data-qb-op>
           <option>is</option>
           <option>is not</option>
-          <option>is any of</option>
-          <option selected>is between</option>
+          <option data-qb-list-op>is any of</option>
+          <option selected data-qb-pair-op>is between</option>
           <option>is at least</option>
           <option>is at most</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <label class="visually-hidden" for="qb-val-4-from">First year, condition 4</label>
+          <label class="visually-hidden" for="qb-val-4-from" data-qb-single>First year, condition 4</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-val-4-from"
-            value="2015" min="1800" max="2100">
-          <span class="small text-muted">and</span>
-          <label class="visually-hidden" for="qb-val-4-to">Last year, condition 4</label>
+            value="2015" min="1800" max="2100" data-qb-single>
+          <span class="small text-muted" data-qb-pair>and</span>
+          <label class="visually-hidden" for="qb-val-4-to" data-qb-pair>Last year, condition 4</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-val-4-to"
-            value="2020" min="1800" max="2100">
+            value="2020" min="1800" max="2100" data-qb-pair>
+          <label class="visually-hidden" for="qb-val-4-list" data-qb-list hidden>Years, condition 4</label>
+          <input type="text" class="form-control form-control-sm" id="qb-val-4-list"
+            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1088,15 +1091,22 @@
         <select class="form-select form-select-sm" id="qbg-op-2" data-qb-op>
           <option selected>is</option>
           <option>is not</option>
-          <option>is any of</option>
-          <option>is between</option>
+          <option data-qb-list-op>is any of</option>
+          <option data-qb-pair-op>is between</option>
           <option>is at least</option>
           <option>is at most</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <label class="visually-hidden" for="qbg-val-2">Year, condition 2</label>
+          <label class="visually-hidden" for="qbg-val-2" data-qb-single>Year, condition 2</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qbg-val-2"
-            value="2020" min="1800" max="2100">
+            value="2020" min="1800" max="2100" data-qb-single>
+          <span class="small text-muted" data-qb-pair hidden>and</span>
+          <label class="visually-hidden" for="qbg-val-2-to" data-qb-pair hidden>Last year, condition 2</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qbg-val-2-to"
+            min="1800" max="2100" data-qb-pair hidden>
+          <label class="visually-hidden" for="qbg-val-2-list" data-qb-list hidden>Years, condition 2</label>
+          <input type="text" class="form-control form-control-sm" id="qbg-val-2-list"
+            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1426,15 +1436,22 @@
         <select class="form-select form-select-sm" id="qb-t-year-op" data-qb-op>
           <option>is</option>
           <option>is not</option>
-          <option>is any of</option>
-          <option>is between</option>
+          <option data-qb-list-op>is any of</option>
+          <option data-qb-pair-op>is between</option>
           <option>is at least</option>
           <option>is at most</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <label class="visually-hidden" for="qb-t-year-val">Year</label>
+          <label class="visually-hidden" for="qb-t-year-val" data-qb-single>Year</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-t-year-val"
-            min="1800" max="2100">
+            min="1800" max="2100" data-qb-single>
+          <span class="small text-muted" data-qb-pair hidden>and</span>
+          <label class="visually-hidden" for="qb-t-year-val-to" data-qb-pair hidden>Last year</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-t-year-val-to"
+            min="1800" max="2100" data-qb-pair hidden>
+          <label class="visually-hidden" for="qb-t-year-val-list" data-qb-list hidden>Years</label>
+          <input type="text" class="form-control form-control-sm" id="qb-t-year-val-list"
+            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>

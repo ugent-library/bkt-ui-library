@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .map(token => token.textContent.trim());
     if (tokens.length) return tokens.join(', ');
     return Array.from(cell.querySelectorAll('input:not([type="search"]), select, textarea'))
+      .filter(el => !el.hidden)
       .map(el => el.tagName === 'SELECT'
         ? el.options[el.selectedIndex].text
         : (el.value || '').trim())
@@ -411,16 +412,27 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 
-  // A select answers "is"; a list answers "is any of". The operator decides which of the two
-  // the value cell shows, and the chosen value survives the switch: it becomes the first token
-  // going in, and the first token becomes the select's value coming back.
+  // The operator decides the value's shape; docs/JAVASCRIPT.md names the shapes and hooks.
   function syncValueShape(row) {
+    const op = row.querySelector('[data-qb-op]');
+    const chosen = op.selectedIndex >= 0 && op.options[op.selectedIndex];
+
+    const listEls = row.querySelectorAll('[data-qb-list]');
+    const wantsListBox = listEls.length > 0 &&
+      Boolean(chosen && chosen.hasAttribute('data-qb-list-op'));
+    listEls.forEach(el => { el.hidden = !wantsListBox; });
+    row.querySelectorAll('[data-qb-single]').forEach(el => { el.hidden = wantsListBox; });
+
+    const pair = row.querySelectorAll('[data-qb-pair]');
+    if (pair.length) {
+      const wantsPair = !wantsListBox && Boolean(chosen && chosen.hasAttribute('data-qb-pair-op'));
+      pair.forEach(el => { el.hidden = !wantsPair; });
+    }
+
     const multi = row.querySelector('[data-qb-multi]');
     if (!multi) return;
-    const op = row.querySelector('[data-qb-op]');
     const select = row.querySelector('.bt-query-builder__value-select');
-    const wantsList = op.selectedIndex >= 0 &&
-      op.options[op.selectedIndex].hasAttribute('data-qb-multi-op');
+    const wantsList = chosen && chosen.hasAttribute('data-qb-multi-op');
     if (wantsList === !multi.hidden) return;
     multi.hidden = !wantsList;
     select.hidden = wantsList;

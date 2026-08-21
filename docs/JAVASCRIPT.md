@@ -315,7 +315,9 @@ OR groups.
   operator decides the value cell's shape: an option marked `data-qb-multi-op` swaps the single
   select for the token list and its Add-values button (`[data-qb-multi]`), and the chosen value
   survives the switch — it becomes the first token going in, and the first token becomes the
-  select's value coming back.
+  select's value coming back. A year swaps inputs instead: the `data-qb-pair` elements show on
+  *is between*, the `data-qb-list` box replaces the `data-qb-single` inputs on *is any of*, and
+  values survive the switch.
 - **Panels escape the dialog's scrolling body.** `modal-dialog-scrollable` clips an
   absolutely-positioned panel at the body's edge, so every dropdown toggle inside the dialog
   gets Popper's fixed strategy (`data-bs-popper-config`), written in the capture phase so it is
@@ -342,7 +344,8 @@ OR groups.
   `[data-qb-choice-search]`, `[data-qb-choice-group]`, `[data-qb-picker-slot]` (naming the panel
   template it clones), `[data-qb-add-label]`, `[data-qb-token-name]` (+ `data-id` on the token),
   `[data-qb-value]`, `[data-qb-op]`, `[data-qb-multi]` (+ `data-qb-multi-op` on the operator
-  option that shows it, `data-qb-placeholder` on a select's placeholder option),
+  option that shows it, `data-qb-placeholder` on a select's placeholder option), `[data-qb-pair]`
+  (+ `data-qb-pair-op`), `[data-qb-single]` / `[data-qb-list]` (+ `data-qb-list-op`),
   `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The panels' own hooks carry no
   `qb-` prefix, because neither engine owns them: `[data-picker-search]`, `[data-picker-name]`,
   `[data-picker-apply]`, `[data-picker-clear]`, `[data-picker-cancel]`,
