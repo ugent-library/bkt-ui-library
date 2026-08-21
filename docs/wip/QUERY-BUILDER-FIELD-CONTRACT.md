@@ -231,13 +231,13 @@ Legacy names a translated query may carry, which no builder row offers:
    the compound public label, give the role a type-neutral public name in raven's vocabulary, or
    add a distinct data role to the closed set, which raven's per-work-type gating would scope to
    datasets. (Team, with a developer's view.)
-5. **Does Published in stay one row?** The table above gives the row a kind qualifier — any
-   container, journal, book, proceedings, magazine, newspaper, series, show or lecture series —
-   and the drawn row is a plain string matching all of them. Three options: keep the plain
-   string, draw the qualifier, or split the field into an entry per container kind — the legacy
-   form offered "book, series or journal title" as one combined entry. The qualifier rule in
-   Contract rules is the test: the value stays a container name whichever kind is set and *any*
-   is a real answer, so a split has to name a reader question the one row cannot ask.
+5. **Does *in any container* on Published in reach every legacy record?** Biblio stored the container as one
+   umbrella `Publication` value. raven routes that value into a per-kind title field by work
+   type, and its mapping sends some types' value to `publisher`
+   (raven's `metadata-work-fields.md`). A record older than the current catalog may hold its
+   container where no kind in the qualifier looks. The row is drawn with the qualifier either
+   way; the answer decides what *in any container* must sweep. (raven answers, from the
+   migration mapping.)
 
 The count's behaviour, and how exact it may be, is asked where it is decided:
 [`ISSUE-04`](QUERY-BUILDER-ISSUE-04-count.md).
