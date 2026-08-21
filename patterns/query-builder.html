@@ -4,39 +4,37 @@
   <header class="ds-page-header col-8">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Query builder</h1>
-    <p class="lead">Advanced search: a dense sentence builder for a shareable research set. It keeps condition rows honest — field, operator and value stay visible — and hands the set to the results toolbar, where Share (Link, Embed, API, Feed) and Save search live. One builder for the power tier, replacing both legacy tiers: the advanced form and the expert query language.</p>
+    <p class="lead">Advanced search: a dense sentence builder for a shareable research set. It keeps condition rows honest — field, operator and value stay visible — and hands the set to the results toolbar. One builder for the power tier, replacing both legacy tiers: the advanced form and the expert query language.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Why this layout</h2>
-    <p class="mb-4">Four decisions and what each one answers for.</p>
 
     <h3 class="h5 mb-2">The builder takes the screen, as a dialog</h3>
-    <p class="mb-3">A real query runs to six or more rows, one of which can hold hundreds of pasted identifiers, so the builder needs concentration and room. An extra-large dialog gives it both: the result list stays visible at the edges, which tells someone this is a mode they can leave, and the backdrop marks it as one. A page carrying a facet rail, a chip bar, a toolbar and twenty-seven cards is the least focused place on the site, so the builder does not sit inline above the results. <code>modal-dialog--wide</code> holds a condition row without a scrolling keyhole.</p>
-
-    <h3 class="h5 mb-2">The count answers the question being asked</h3>
-    <p class="mb-3">While building, the live question is "does my query work", and a count answers it in full. The list itself is a different question, answered by leaving. Rendering results inside the builder would mean a second implementation of a page that already owns sorting, paging, faceting and exporting — so the builder authors a query and hands it over, and a session that only ever watches the count is a successful session.</p>
-
-    <h3 class="h5 mb-2">One exit, because nothing is pending</h3>
-    <p class="mb-3">Every complete condition has already updated the URL, so there is nothing to apply and nothing to discard. That removes an apply and cancel pair, a dirty state, and the confirmation that follows it. <em>Show results</em>, Escape and the &times; all do the same thing.</p>
+    <p class="mb-3">A real query runs to six or more rows, one of which can hold hundreds of pasted identifiers, so the builder needs concentration and room. An extra-large dialog gives it both: the result list stays visible at the edges and the backdrop marks the builder as a mode someone can leave. A page carrying a facet rail, a chip bar, a toolbar and twenty-seven cards is the least focused place on the site, so the builder does not sit inline above the results. <code>modal-dialog--wide</code> holds a condition row without a scrolling keyhole. The dialog keeps one shape whatever the query holds &mdash; header and footer pinned, the body scrolling between them &mdash; so the count and the exit sit in the same place with one condition as with twelve.</p>
 
     <h3 class="h5 mb-2">The handoff lives on the results toolbar</h3>
-    <p class="mb-0">The builder authors the durable research set someone will bookmark, embed, feed into a tool or send to a colleague — but taking it away is a set-level act, so Share (Link, Embed, API, Feed), Save search and Export sit on the results toolbar as one grammar, mirroring the record-level row (Cite, Share, Add to list). The builder holds the conditions and the count, nothing else: the exit bar answers the immediate question — does this set match anything, and can I inspect it now? Save search is also the honest answer to long pasted lists that outgrow a durable URL.</p>
+    <p class="mb-0">The builder authors the durable research set someone will bookmark, embed, feed into a tool or send to a colleague — but taking it away is a set-level act, so Share (Link, Embed, API, Feed), Save search and Export sit on the results toolbar as one grammar, mirroring the record-level row (Cite, Share, Add to list). Save search is also the honest answer to long pasted lists that outgrow a durable URL.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The dialog is a URL state</h2>
     <p class="mb-3">Opening it adds <code>&amp;advanced=1</code> to the address, and closing it removes that again. Reload then returns to the builder on the same query instead of a blank list, which matters most after an accidental navigation. Back goes to the previous URL state, whatever that address held. And the address can be sent to someone: pasting it opens the builder with the query loaded, which is the answer to "how did you get this list?".</p>
-    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. In production the address renders the open dialog: <code>hx-push-url</code> pushes it and the server sends the dialog open, so arriving needs no script. The kit needs one. Its dialog is a single shut element that <code>query-builder.js</code> opens when the address or a <code>?state=</code> builder variant says to. Pushing the address as the dialog opens and closes is production's, so what the kit shows is the position, not the history.</p>
+    <p class="mb-0">The Link tab hands out a clean results address without <code>advanced=1</code>, because what someone shares is the search, not the fact that the builder was open while they made it. Production renders the address with the dialog open; the kit opens it with a script instead, so it shows the position, not the history.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The condition row</h2>
-    <p class="mb-4">A condition row reads left to right: the field it asks about, a role where the field takes one, the operator, the value, and the row's actions. The role is a select like any other &mdash; <em>Person</em>, <em>in any role</em>, <em>is any of</em>, the names &mdash; because narrowing to editors is the same kind of choice as picking the operator, not an aside on the field name. The lanes belong to the list, not to the rows: the condition list is a three-track grid and every row borrows those tracks, so the field lane and the actions line up down the list without a single row stating a width. The lane is as wide as the longest field name in that list &mdash; no measurement to keep in sync &mdash; capped so one long name cannot reshape the editor. The operator sits at the width of its longest option and the value takes what is left. When the row runs out of room the field keeps the first line with the actions pinned to its right, and the role, operator and value drop to the next line as one phrase; a value moves whole rather than breaking apart, because it will not shrink below its own content. That threshold reads the width of the editor rather than of the screen, because a phone renders the dialog full-bleed and a desktop does not. The value is what the reader is saying, so the mechanics stay quiet beside it &mdash; no row numbers, no boxes. A person value is its people, as badges, with a badge-style <em>Add a person</em> after them: picking a person is the same act as on the results page, so it opens the shared searchable people checklist &mdash; the checkable rich rows settled on the <a href="/patterns/people-search.html">people-search pattern page</a>, which the works Person filter adopts too &mdash; and the badges sit in the row rather than inside a text field, because the row's value is a set of records and not something typed. An organization or project value works the same way with its own panel; the crest is the person token's alone, marking a UGent person record. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Every control in the row is the small size &mdash; <code>form-select-sm</code> and <code>form-control-sm</code> throughout &mdash; so the whole row sits at one 32px height and a query of six rows stays readable in one screen. Mixing the two sizes on one line is what puts a 38px control beside a 32px one.</p>
+    <p class="mb-3">A condition row reads left to right: the field, a qualifier where the field has one, the operator, the value, and the row's actions. On Person the qualifier is the role, on Published in the kind of container, and it is a select like any other: narrowing to editors, or to journals, is the same kind of choice as picking the operator. The operator in turn decides the value's shape: <em>is between</em> turns one year into a pair, and <em>is any of</em> turns a select into a token list and a year into a comma-separated box.</p>
+
+    <p class="mb-3">The lanes belong to the list, not to the rows: the condition list is a three-track grid and every row borrows its tracks, so the field lane and the actions line up down the list without a single row stating a width. The field lane is as wide as the longest field name, capped so one long name cannot reshape the editor; the operator sits at the width of its longest option; the value takes what is left. When the row runs out of room, the field keeps the first line with the actions pinned to its right, and the qualifier, operator and value drop to the next line as one phrase. The value moves whole, because it will not shrink below its own content. That threshold reads the width of the editor, not of the screen, because a phone renders the dialog full-bleed and a desktop does not.</p>
+
+    <p class="mb-4">The value is what the reader is saying, so the mechanics stay quiet beside it: no row numbers, no boxes. A person, organization or project value is a set of records, not typed text &mdash; picking one is the same act as on the results page, so the Add button opens the shared panel settled on the <a href="/patterns/people-search.html">people-search pattern page</a>, and the crest marks a UGent person record. Every control carries a label naming its row, because identical selects without row-specific labels are unnavigable by ear. Every control is the small size, <code>form-select-sm</code> and <code>form-control-sm</code>, so six rows stay readable in one screen.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows</h3></div>
       <div class="ds-demo-body">
+        <div class="bt-query-builder__conditions">
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
             <p class="mb-0 fw-semibold">Words or topic</p>
@@ -113,10 +111,168 @@
             </button>
           </div>
         </div>
+        </div>
       </div>
     </div>
 
-    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, and nothing between them says so: the top level is always AND-joined, the heading above states it once — <em>Show research output where all of these are true</em> — and a word repeated between every pair only restates that heading. The hairline is the join. An <em>or</em> is the case that does need saying, and it belongs to a row, not to the top level. Open the row&rsquo;s <em>more</em> menu and pick <em>or&hellip;</em>, and the row becomes a group reading <em>&hellip;where any of these conditions is true</em>. The word <em>conditions</em> does work there. A row&rsquo;s own <em>is any of</em> lists values for one field; a group lists conditions. Drop the word and the two offers read the same.</p>
+    <p class="mt-4 mb-4">The states stay realistic queries, so the specimen for each kind of value control sits here instead &mdash; one row per shape, not per field. The Add buttons open their panels in the builder; here they show the shape.</p>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">One row per value control</h3></div>
+      <div class="ds-demo-body">
+        <div class="bt-query-builder__conditions">
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Title</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="kit-qbv-text-op">Operator, Title</label>
+            <select class="form-select form-select-sm" id="kit-qbv-text-op" data-qb-op>
+              <option selected>contains</option>
+              <option>does not contain</option>
+              <option>is</option>
+              <option>is not</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <label class="visually-hidden" for="kit-qbv-text-val">Value, Title</label>
+              <input type="text" class="form-control form-control-sm" id="kit-qbv-text-val" value="machine learning">
+            </div>
+          </div>
+        </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Publication status</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="kit-qbv-choice-op">Operator, Publication status</label>
+            <select class="form-select form-select-sm" id="kit-qbv-choice-op" data-qb-op>
+              <option selected>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <label class="visually-hidden" for="kit-qbv-choice-val">Value, Publication status</label>
+              <select class="form-select form-select-sm bt-query-builder__value-select" id="kit-qbv-choice-val">
+                <option>Unpublished</option>
+                <option selected>In press</option>
+                <option>Published</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Licence</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="kit-qbv-multi-op">Operator, Licence</label>
+            <select class="form-select form-select-sm" id="kit-qbv-multi-op" data-qb-op>
+              <option>is</option>
+              <option>is not</option>
+              <option selected>is any of</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <span class="badge text-bg-primary-light" data-qb-token data-id="CC BY 4.0">
+                CC BY 4.0
+                <button type="button" aria-label="Remove CC BY 4.0 from the Licence condition">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </span>
+              <span class="badge text-bg-primary-light" data-qb-token data-id="CC0 1.0">
+                CC0 1.0
+                <button type="button" aria-label="Remove CC0 1.0 from the Licence condition">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </span>
+              <button type="button" class="badge badge--outline">
+                <i class="if if-add if--xs" aria-hidden="true"></i>
+                Add values
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Person</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="kit-qbv-person-role">Role, Person</label>
+            <select class="form-select form-select-sm" id="kit-qbv-person-role">
+              <option>in any role</option>
+              <option selected>as author</option>
+              <option>as first author</option>
+              <option>as last author</option>
+              <option>as sole author</option>
+              <option>as editor</option>
+              <option>as supervisor</option>
+            </select>
+            <label class="visually-hidden" for="kit-qbv-person-op">Operator, Person</label>
+            <select class="form-select form-select-sm" id="kit-qbv-person-op" data-qb-op>
+              <option selected>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
+                <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+                Jan Kiewiet
+                <button type="button" aria-label="Remove Jan Kiewiet from the Person condition">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </span>
+              <button type="button" class="badge badge--outline">
+                <i class="if if-add if--xs" aria-hidden="true"></i>
+                Add a person
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="bt-query-builder__row">
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Publication year</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="kit-qbv-year-op">Operator, Publication year</label>
+            <select class="form-select form-select-sm" id="kit-qbv-year-op" data-qb-op>
+              <option>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+              <option selected>is between</option>
+              <option>is at least</option>
+              <option>is at most</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <label class="visually-hidden" for="kit-qbv-year-from">First year, Publication year</label>
+              <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qbv-year-from" value="1998" min="1800" max="2100">
+              <span class="small text-muted">and</span>
+              <label class="visually-hidden" for="kit-qbv-year-to">Last year, Publication year</label>
+              <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qbv-year-to" value="2004" min="1800" max="2100">
+            </div>
+          </div>
+        </div>
+        <div class="bt-query-builder__row bt-query-builder__row--batch">
+          <div class="bt-query-builder__row-kind">
+            <p class="mb-0 fw-semibold">Identifier</p>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="kit-qbv-batch-op">Operator, Identifier</label>
+            <select class="form-select form-select-sm" id="kit-qbv-batch-op" data-qb-op>
+              <option selected>is any of</option>
+              <option>is</option>
+              <option>is not</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <label class="visually-hidden" for="kit-qbv-batch-val">Identifiers</label>
+              <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="kit-qbv-batch-val" rows="2">10.1038/s41586-024-07123-4 01KMXJ30SYZC 01K167MXJ30S</textarea>
+              <p class="form-text mb-0">Separate by spaces, commas, or line breaks.</p>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 mb-0">Rows join with <strong>and</strong>, and nothing between them says so: the top level is always AND-joined, the heading above states it once — <em>Show research output where all of these are true</em> — and a word repeated between every pair only restates that heading. The hairline is the join. An <em>or</em> is the case that does need saying, and it belongs to a row, not to the top level. Open the row&rsquo;s <em>more</em> menu and pick <em>or&hellip;</em>, and the row becomes a group reading <em>&hellip;where any of these conditions is true</em>. A row&rsquo;s own <em>is any of</em> lists values for one field; a group lists conditions — the word keeps the two offers apart.</p>
   </section>
 
   <section class="ds-section">
@@ -124,19 +280,19 @@
     <p class="mb-4">Five, and they live on the works page as template states rather than being copied in here — the builder is too large to duplicate without the copy drifting from the original. Each shows the dialog open over the list the query would have produced, so the page behind it is never blank.</p>
 
     <ul class="mb-4">
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-full-query">builder-full-query</a> — a query already assembled: free text, two person rows (a co-author query, not a list), a year range, an <em>is not</em>, a pasted batch of identifiers, and an organization and a project row picked from their panels.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-full-query">builder-full-query</a> — a query already assembled, at the size a real one reaches. Its two Person rows are a co-author query, not a list of alternatives: the <em>or</em> is the group.</li>
       <li><a href="/templates/biblio-public/public-works.html?state=builder-empty">builder-empty</a> — a first visit. Add a condition and nothing else: the field chooser is what produces the operator list and the value widget, so the empty builder offers the one control that opens it.</li>
       <li><a href="/templates/biblio-public/public-works.html?state=builder-one-condition">builder-one-condition</a> — arrival from an entity page or a filtered list: the scope is already a row, editable and removable like any other. The usual case, not an extra.</li>
       <li><a href="/templates/biblio-public/public-works.html?state=builder-or-group">builder-or-group</a> — the <em>any of these</em> group, one level deep. A group is a state of a row, so it occupies the row's slot and collapses back to a plain row when one alternative is left.</li>
       <li><a href="/templates/biblio-public/public-works.html?state=builder-no-results">builder-no-results</a> — a query matching nothing: the failing condition is marked in place, the submit reads <em>No results</em>, and nothing is auto-dropped.</li>
     </ul>
 
-    <p class="mb-0">The same states render inside the dialog, since both renderings include the same partials. The dialog's host page adds one of its own, <code>facet-set-in-builder</code>, for the sidebar case below.</p>
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">The count, and what belongs beside it</h2>
-    <p class="mb-4">The count is the answer the builder produces, and it lives on the one exit: the submit reads <em>Show &plusmn; 1&thinsp;280 results</em> and carries the builder's only <code>aria-live</code>, so an updated count is announced without reading someone's own typing back to them. The rows are the readback. There is no apply and no cancel: every complete condition has already updated the URL, so the submit is the one exit, next to <em>Clear all</em> — clearing and showing results are both ways of leaving the query you have.</p>
+    <h2 class="h4 mb-3">The count, and the one exit</h2>
+    <p class="mb-3">While building, the live question is "does my query work", and the count answers it: the submit reads <em>Show &plusmn; 1&thinsp;280 results</em> and carries the builder's only <code>aria-live</code>, so an updated count is announced without reading someone's own typing back to them. The rows are the readback. Rendering results inside the builder would mean a second implementation of a page that already owns sorting, paging, faceting and exporting &mdash; a session that only ever watches the count is a successful session.</p>
+    <p class="mb-4">There is no apply and no cancel: every complete condition has already updated the URL, so nothing is pending and nothing gets discarded. <em>Show results</em>, Escape and the &times; all do the same thing, and <em>Clear all</em> sits beside the submit because clearing and showing results are both ways of leaving the query you have.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Exit bar</h3></div>
@@ -156,7 +312,7 @@
       </div>
     </div>
 
-    <p class="mt-4 mb-0">Nothing else is in this bar. The results toolbar owns the shareable artifacts; the exit bar owns the count and the one way to the result list. The count is an approximation — its behaviour, and how exact it may be, is <code>docs/wip/QUERY-BUILDER-ISSUE-04-count.md</code>'s question.</p>
+    <p class="mt-4 mb-0">The results toolbar owns the shareable artifacts; the exit bar owns the count and the one way to the result list. The count is an approximation — its behaviour, and how exact it may be, is <code>docs/wip/QUERY-BUILDER-ISSUE-04-count.md</code>'s question.</p>
   </section>
 
   <section class="ds-section">
@@ -191,7 +347,7 @@
       </table>
     </div>
 
-    <p class="mb-0">Two consequences follow. <strong>Cite became a panel</strong> on 2026-08-10: it hands over one string and sits in the same action row as Add to list, which was already a panel, and two adjacent buttons where one anchors to itself while the other takes over the screen is a difference people feel without being able to name it. <strong>A dialog never opens a dialog</strong>: if something reachable from inside the builder outgrows a panel, the answer is a step inside the same dialog — a back arrow swapping the body, as the mobile filters tray already does.</p>
+    <p class="mb-0"><strong>A dialog never opens a dialog</strong>: if something reachable from inside the builder outgrows a panel, the answer is a step inside the same dialog — a back arrow swapping the body, as the mobile filters tray already does.</p>
   </section>
 
   <section class="ds-section">
@@ -226,7 +382,7 @@
       <li>The simple box, the facet rail and the chip bar: <a href="/patterns/search-and-filtering.html">search &amp; filtering</a> and <a href="/patterns/facets.html">facets</a>.</li>
       <li>The field list is public fields only; the ledger — statuses, operators, widgets — is <code>docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md</code>. The fields this builder omits go to a backoffice builder.</li>
       <li>⚠️ <strong>The organization and project panels are stand-ins</strong>: flat searchable rows while the real pickers are a scheduled design task, its open questions logged in the panel partials.</li>
-      <li>Row and group behaviour and the approximate count are wired by <code>assets/js/query-builder.js</code>, documented in <code>docs/JAVASCRIPT.md</code>.</li>
+      <li>Row, group and panel behaviour is <code>assets/js/query-builder.js</code>, documented in <code>docs/JAVASCRIPT.md</code>.</li>
       <li>Every URL in the prototype is a placeholder: the public URL grammar is a permanent permalink contract, and it is raven's to design.</li>
     </ul>
   </section>
