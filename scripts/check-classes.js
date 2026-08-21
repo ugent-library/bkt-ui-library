@@ -1,8 +1,4 @@
-// Reports drift between CSS and HTML in both directions:
-//  1. classes used in HTML that no stylesheet defines (renders as nothing)
-//  2. booktower.css classes used in no HTML/JS (candidates for removal)
-// Bootstrap's classes come from scripts/bootstrap-classes.txt, generated from
-// the pinned bootstrap dist (see package.json).
+// Reports classes missing from CSS and Booktower classes unused by HTML or JavaScript.
 const fs = require('fs');
 const path = require('path');
 

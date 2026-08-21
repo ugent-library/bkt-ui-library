@@ -1,9 +1,4 @@
-// Handover coverage: every custom class block in the old UI kit
-// (docs/analysis/old-ui-kit-css/main.css, prefixes bc-/c-/u-) must be mentioned in
-// CHANGELOG.md's OLD→v2 tables, so old apps can look up every class they use
-// and raven can trust the migration map.
-// Reports gaps; exits 1 when any exist. Not yet part of `npm test` — wire it
-// in once the table is complete.
+// Reports old UI class blocks missing from CHANGELOG's migration map; not yet in npm test.
 const fs = require('fs');
 const path = require('path');
 
