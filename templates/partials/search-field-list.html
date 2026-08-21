@@ -1,7 +1,6 @@
 <!--
-  The advanced-search field list: the three groups every chooser shows, one entry per public
-  field. The drawn list trails the field ledger in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md,
-  which is the source until the drawing catches up.
+  The advanced-search field list: the four groups every chooser shows, one entry per public
+  field in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
 
   Included by search-advanced-conditions.html, inside the #qb-chooser template, so every row's
   chooser holds the same list. Ids repeat because each row clones that template; identify()
@@ -33,8 +32,8 @@
       data-qb-ops="contains,does not contain,is,is not">Keywords</button></li>
   </ul>
 </div>
-<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-authors">
-  <p class="dropdown-header" id="qb-g-authors">Authors</p>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-people">
+  <p class="dropdown-header" id="qb-g-people">People and projects</p>
   <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Person" data-qb-template="qb-row-contributor">Person</button></li>
@@ -60,13 +59,22 @@
       data-qb-label="Publication status" data-qb-template="qb-row-choice"
       data-qb-values="Unpublished,In press,Published">Publication status</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Published in" data-qb-template="qb-row-text"
-      data-qb-ops="contains,does not contain,is,is not">Published in</button></li>
+      data-qb-label="Published in" data-qb-template="qb-row-container">Published in</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Conference" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Conference</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Publisher" data-qb-template="qb-row-text"
       data-qb-ops="contains,does not contain,is,is not">Publisher</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-access">
+  <p class="dropdown-header" id="qb-g-access">Access and files</p>
+  <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Access level" data-qb-template="qb-row-choice"
       data-qb-values="Open access,Restricted,Under embargo,No full text">Access level</button></li>
@@ -74,12 +82,13 @@
       data-qb-label="Files" data-qb-template="qb-row-choice"
       data-qb-values="A file here,Somewhere else,Nothing deposited">Files</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-label="Licence" data-qb-template="qb-row-choice"
+      data-qb-values="CC0 1.0,CC BY 4.0,CC BY-SA 4.0,CC BY-NC 4.0,CC BY-ND 4.0,CC BY-NC-SA 4.0,CC BY-NC-ND 4.0,In copyright,Rights unknown,Other licence">Licence</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Attached content" data-qb-template="qb-row-choice"
       data-qb-values="Full text or dataset,Supplementary material,Table of contents,Peer review report,Colophon,Data fact sheet,Agreement">Attached content</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-label="Full-text version" data-qb-template="qb-row-choice"
       data-qb-values="Author version,Accepted version,Published version,Updated version">Full-text version</button></li>
-    <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
   </ul>
 </div>
