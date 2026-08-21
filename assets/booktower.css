@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*! Booktower f5136f6/2026-08-21 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /*
  * booktower.css — v2
@@ -1226,7 +1227,9 @@ a.btn-danger,
   background: transparent;
   border: 0;
   border-bottom: 1px dotted var(--bt-blue-800);
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .bt-btn-inline-edit:hover,
@@ -1769,6 +1772,7 @@ a.badge:focus-visible {
 
 .bt-table-sticky-col th:first-child,
 .bt-table-sticky-col td:first-child {
+  position: -webkit-sticky;
   position: sticky;
   left: 0;
   z-index: 1;
@@ -1873,7 +1877,8 @@ a.bt-avatar:hover:not(:disabled) {
    Sized to a share of the chip so varied SVG aspect ratios sit inset,
    not edge-to-edge; object-fit keeps them undistorted. */
 .bt-avatar__img {
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   width: 50%;
   height: 50%;
 }
@@ -2000,6 +2005,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-radius: var(--bt-radius-lg);
   box-shadow: var(--bt-shadow-md);
   z-index: var(--bt-z-panel);
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
@@ -2111,8 +2118,10 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__conditions,
 .bt-query-builder__alts {
   display: grid;
+  grid-template-columns: fit-content(12rem) minmax(0, 1fr) -webkit-max-content;
   grid-template-columns: fit-content(12rem) minmax(0, 1fr) max-content;
-  column-gap: var(--bt-sp-4);
+  -moz-column-gap: var(--bt-sp-4);
+       column-gap: var(--bt-sp-4);
   container-type: inline-size;
   container-name: qb-conditions;
 }
@@ -2174,6 +2183,19 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-query-builder__row--error {
   background-color: var(--bt-red-50);
+}
+
+.bt-query-builder__row--warning {
+  background-color: var(--bt-orange-50);
+}
+
+.bt-query-builder__row--warning:has(+ :not(.bt-query-builder__row--warning, [data-qb-sep])),
+.bt-query-builder__row--warning:has(+ [data-qb-sep] + :not(.bt-query-builder__row--warning)) {
+  margin-bottom: var(--bt-sp-4);
+}
+
+.bt-query-builder__row-note {
+  grid-column: 1/-1;
 }
 
 .bt-query-builder__row-kind {
@@ -2276,6 +2298,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: center;
   padding: 0 var(--bt-sp-6);
   gap: var(--bt-sp-4);
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   min-height: var(--s-topbar-height);
@@ -2326,7 +2349,8 @@ img.bt-navbar__logo {
   text-decoration: underline;
   text-underline-offset: var(--bt-sp-2);
   text-decoration-thickness: 2px;
-  text-decoration-color: var(--bt-blue-900);
+  -webkit-text-decoration-color: var(--bt-blue-900);
+          text-decoration-color: var(--bt-blue-900);
   font-weight: 500;
 }
 
@@ -2907,7 +2931,8 @@ img.bt-navbar__logo {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip-path: inset(50%);
+  -webkit-clip-path: inset(50%);
+          clip-path: inset(50%);
   white-space: nowrap;
 }
 .bt-sidebar--slim .badge--total {

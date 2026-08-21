@@ -81,6 +81,19 @@
   background-color: var(--bt-red-50);
 }
 
+.bt-query-builder__row--warning {
+  background-color: var(--bt-orange-50);
+}
+
+.bt-query-builder__row--warning:has(+ :not(.bt-query-builder__row--warning, [data-qb-sep])),
+.bt-query-builder__row--warning:has(+ [data-qb-sep] + :not(.bt-query-builder__row--warning)) {
+  margin-bottom: var(--bt-sp-4);
+}
+
+.bt-query-builder__row-note {
+  grid-column: 1 / -1;
+}
+
 .bt-query-builder__row-kind {
   min-width: 0;
   margin-right: var(--bt-sp-3);

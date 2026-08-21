@@ -317,6 +317,18 @@ document.addEventListener('DOMContentLoaded', function () {
       button.closest('[data-qb-token]').remove();
     } else if (button.hasAttribute('data-qb-or')) {
       toGroup(button.closest('[data-qb-row]'));
+    } else if (button.hasAttribute('data-qb-combine')) {
+      // The note's offer: this row and the same-field row above it become one group's
+      // alternatives. "Split into 'and' rows" is the way back.
+      const row = button.closest('[data-qb-row]');
+      let prev = row.previousElementSibling;
+      while (prev && !prev.hasAttribute('data-qb-row')) prev = prev.previousElementSibling;
+      if (!prev) return;
+      button.closest('[data-qb-note]').remove();
+      const group = document.getElementById('qb-group').content.firstElementChild.cloneNode(true);
+      prev.before(group);
+      group.querySelector('[data-qb-alts]').append(prev, row);
+      [prev, row].forEach(el => el.classList.remove('bt-query-builder__row--warning'));
     } else if (button.hasAttribute('data-qb-remove-group')) {
       unwrap(button.closest('[data-qb-group]'));
     } else if (button.hasAttribute('data-qb-remove')) {

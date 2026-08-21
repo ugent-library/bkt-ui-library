@@ -346,7 +346,9 @@ OR groups.
   `[data-qb-value]`, `[data-qb-op]`, `[data-qb-multi]` (+ `data-qb-multi-op` on the operator
   option that shows it, `data-qb-placeholder` on a select's placeholder option), `[data-qb-pair]`
   (+ `data-qb-pair-op`), `[data-qb-single]` / `[data-qb-list]` (+ `data-qb-list-op`),
-  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`. The panels' own hooks carry no
+  `[data-qb-actions]`, `[data-qb-blank]`, `[data-qb-open]`, `[data-qb-note]` (+
+  `data-qb-combine` on its control, which moves the row and the row above it into one group's
+  alternatives). The panels' own hooks carry no
   `qb-` prefix, because neither engine owns them: `[data-picker-search]`, `[data-picker-name]`,
   `[data-picker-apply]`, `[data-picker-clear]`, `[data-picker-cancel]`,
   and `data-id` on each row's checkbox. A person row carries `data-person-ugent` where a UGent person record stands

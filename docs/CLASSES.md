@@ -136,8 +136,10 @@ bt-query-builder__row
 bt-query-builder__row--alt
 bt-query-builder__row--batch
 bt-query-builder__row--error
+bt-query-builder__row--warning
 bt-query-builder__row-actions
 bt-query-builder__row-kind
+bt-query-builder__row-note
 bt-query-builder__row-value
 bt-query-builder__value-select
 bt-query-builder__year
