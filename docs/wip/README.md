@@ -15,7 +15,10 @@ One visual builder replacing Advanced and Expert search. **Reading order for a f
 4. `QUERY-BUILDER-ISSUE-*` — the implementation issues. Drafted, none filed. Start at
    [`ISSUE-00-EPIC`](QUERY-BUILDER-ISSUE-00-EPIC.md), which names the children and the order
    they land in. [`ISSUE-01`](QUERY-BUILDER-ISSUE-01-measurement.md) goes to the lead developer
-   as a conversation first.
+   as a conversation first. Every **Screenshot** callout names its capture in
+   [`screenshots/`](screenshots/), numbered by the issue that calls for it
+   (`02-field-chooser.png`); attach them when filing. The epic's overview shot
+   (`00-builder-over-results.png`) serves issues 02 and 05 as well.
 
 Supporting material, read as needed:
 

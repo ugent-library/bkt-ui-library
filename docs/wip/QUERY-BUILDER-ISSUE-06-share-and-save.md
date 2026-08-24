@@ -26,8 +26,8 @@ officer) needs the faculty page it feeds to stay current.
 
 **Prototype:** [results toolbar](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html)
 
-> **Screenshot:** the Share panel, Embed tab (`public-works.html`)
-> **Screenshot:** Save search open
+> **Screenshot:** the Share panel, Embed tab (`screenshots/06-share-embed.png`)
+> **Screenshot:** Save search open (`screenshots/06-save-search.png`)
 
 Raven's `docs/public-site-semantics.md` governs machine-facing output. Prototype URLs
 are placeholders. UI copy uses Raven's translation files.

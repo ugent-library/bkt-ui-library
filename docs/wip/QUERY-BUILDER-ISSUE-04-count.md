@@ -23,8 +23,8 @@ officer) narrows a set. The results page remains the exact count.
 **Prototype:** [count](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [zero results](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-no-results)
 
-> **Screenshot:** the submit carrying a count (`templates/biblio-public/public-works.html?state=builder-full-query`)
-> **Screenshot:** the zero-result state, `?state=builder-no-results`
+> **Screenshot:** the submit carrying a count (`screenshots/04-submit-count.png`)
+> **Screenshot:** the zero-result state (`screenshots/04-no-results.png`)
 
 Prototype URLs are placeholders. UI copy uses Raven's translation files.
 

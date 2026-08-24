@@ -28,8 +28,8 @@ owns that recovery decision.
 **Prototype:** [full query](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [empty builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-empty)
 
-> **Screenshot:** the builder with several condition rows (`templates/biblio-public/public-works.html?state=builder-full-query`)
-> **Screenshot:** the field chooser open over a row
+> **Screenshot:** the builder with several condition rows (`screenshots/00-builder-over-results.png`)
+> **Screenshot:** the field chooser open over a row (`screenshots/02-field-chooser.png`)
 
 Prototype URLs are placeholders. UI copy uses Raven's translation files.
 

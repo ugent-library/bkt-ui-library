@@ -29,7 +29,7 @@ Issue 04 decides whether zero results suggest turning same-field rows into an OR
 
 **Prototype:** [OR group](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-or-group)
 
-> **Screenshot:** a group of two alternatives, `?state=builder-or-group`
+> **Screenshot:** a group of two alternatives (`screenshots/07-or-group.png`)
 
 Prototype URLs are placeholders. UI copy uses Raven's translation files.
 

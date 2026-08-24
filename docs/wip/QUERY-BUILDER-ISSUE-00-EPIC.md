@@ -35,7 +35,7 @@ expressible or receives an explicit exception.
 **Prototype:** [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [pattern](https://bkt-ui.vercel.app/patterns/query-builder.html)
 
-> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?state=builder-full-query`)
+> **Screenshot:** the builder open over the results (`screenshots/00-builder-over-results.png`)
 
 Raven's `docs/public-site-semantics.md` governs machine-facing output. Prototype URLs
 are placeholders. UI copy uses Raven's translation files.

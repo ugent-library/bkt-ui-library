@@ -26,8 +26,8 @@ batches reach 763 values.
 **Prototype:** [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [pattern](https://bkt-ui.vercel.app/patterns/query-builder.html)
 
-> **Screenshot:** a person row with two people and the picker open
-> **Screenshot:** the identifier row with a pasted batch
+> **Screenshot:** a person row with two people and the picker open (`screenshots/03-person-picker.png`)
+> **Screenshot:** the identifier row with a pasted batch (`screenshots/03-identifier-batch.png`)
 
 Prototype URLs are placeholders. UI copy uses Raven's translation files.
 

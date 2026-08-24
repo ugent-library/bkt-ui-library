@@ -29,9 +29,9 @@ Ans Rapport (faculty communications officer) can refine an existing list. Quinn 
 **Prototype:** [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [condition-held facet](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=facet-set-in-builder)
 
-> **Screenshot:** the builder open over the results (`templates/biblio-public/public-works.html?state=builder-full-query`)
+> **Screenshot:** the builder open over the results (`screenshots/00-builder-over-results.png`)
 > **Screenshot:** the sidebar reporting a filter held by a condition
-> (`templates/biblio-public/public-works.html?state=facet-set-in-builder`)
+> (`screenshots/05-facet-held-by-condition.png`)
 
 Prototype URLs are placeholders. UI copy uses Raven's translation files.
 
