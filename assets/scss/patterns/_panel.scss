@@ -7,27 +7,35 @@
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
+  /* Beats .dropdown-menu's own padding on load order. */
+  padding: 0;
 }
 
 .bt-panel--wide {
-  max-width: 480px;
+  max-width: min(480px, 100vw - 2rem);
   min-width: min(480px, 100vw - 2rem);
 }
 
 .bt-panel__title {
-  padding: var(--bt-sp-4) var(--bt-sp-4) var(--bt-sp-2);
+  padding: var(--bt-sp-3) var(--bt-sp-4) var(--bt-sp-2);
   margin-bottom: 0;
   font-weight: var(--s-display-weight);
-  border-bottom: 1px solid var(--bt-border);
 }
 
 .bt-panel__body {
   border-top: var(--bt-border);
-  padding: var(--bt-sp-6) var(--bt-sp-4);
+  padding: var(--bt-sp-4);
   gap: var(--bt-sp-4);
   display: flex;
   max-height: 240px;
   overflow-y: auto;
+}
+
+/* The title and the body under it are one header block — the divider belongs to
+   the boundary where the next body starts, never under the title. */
+.bt-panel__title + .bt-panel__body {
+  border-top: 0;
+  padding-top: 0;
 }
 
 :not(.bt-panel) > .bt-panel__body {
@@ -39,7 +47,7 @@
 .bt-panel__actions {
   display: flex;
   gap: var(--bt-sp-2);
-  padding: var(--bt-sp-4);
+  padding: var(--bt-sp-3) var(--bt-sp-4);
   border-top: var(--bt-border);
 }
 
@@ -47,7 +55,10 @@
   padding: var(--bt-sp-4);
 }
 
-/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio. */
+/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio.
+   --list is the same shape for rows that act instead of tick: one scrolling column, the group
+   headings inside it. */
+.bt-panel__body--list,
 .bt-panel__body--checklist,
 .bt-panel__body--boolean {
   padding: 0;
@@ -56,7 +67,8 @@
 }
 .bt-panel__body .form-check {
   display: flex;
-  align-items: center;
+  /* flex-start + the input's top offset keep the box on line 1 of multi-line rich labels. */
+  align-items: flex-start;
   gap: var(--bt-sp-2);
   margin: 0;
   padding: var(--bt-sp-2) var(--bt-sp-4);
@@ -64,14 +76,10 @@
 }
 .bt-panel__body .form-check-input {
   float: none;
-  margin: 0;
+  margin: 0.25em 0 0;
   flex: 0 0 auto;
 }
 .bt-panel__body .form-check:hover { background-color: var(--bt-gray-50); }
-
-.bt-panel__body .dropdown-item {
-  padding: var(--bt-sp-2) var(--bt-sp-4);
-}
 
 .bt-panel__body .form-check-label {
   font-size: var(--bt-text-base);
@@ -80,8 +88,9 @@
   flex: 1;
 }
 
-/* Year range layout */
+/* Year range layout; wraps where a viewport under ~350px leaves too little room for the pair */
 .bt-panel__body--year {
   align-items: center;
+  flex-wrap: wrap;
 }
 .bt-panel__year-input { width: 120px; }

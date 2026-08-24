@@ -1,332 +1,211 @@
-# JavaScript architecture
+# JavaScript
 
-> Comment conventions for this area: `docs/CODE-COMMENTS.md`.
-
-
-The Booktower UI Library uses vanilla JavaScript with custom events for component communication. No framework dependencies.
-
----
+Booktower uses small vanilla JavaScript files around server-rendered HTML. Bootstrap and HTMX are
+runtime dependencies; there is no client application framework. Comment rules:
+[`CODE-COMMENTS.md`](CODE-COMMENTS.md).
 
 ## Rules
 
-**All JavaScript that runs on real pages belongs in a named file in `assets/js/`.** Each file handles one concern. Inline `<script>` blocks are never acceptable in templates or partials.
+- Real pages keep behavior in `assets/js/`. They contain no inline behavioral scripts.
+- A kit page may use inline JavaScript only for a self-contained demonstration. Shared behavior
+  belongs in a named file.
+- Each file handles one concern, exits when its host markup is absent and appears in the registry
+  below.
+- Components communicate through DOM state or custom events. One component does not call another's
+  private functions.
+- HTMX-swapped content must work after the swap. Use delegated listeners or initialize from
+  `htmx:afterSwap`.
+- JavaScript may toggle existing classes. CSS values and layout rules stay in SCSS.
 
-> **Current state:** ~19 templates still carry inline behavioral `<script>`. Each must be extracted into a named `assets/js/` file and registered below.
+## Prototype test
 
-In UI kit documentation pages (`foundations/`, `elements/`, `patterns/`), inline scripts are permitted only to demonstrate a JS interaction pattern — never to provide actual working behaviour.
+Use separate `@state` blocks when both the before and after can be opened as static examples.
+JavaScript belongs in a prototype only when the interaction itself must be tested, such as keyboard
+navigation, live grouping or copying to the clipboard.
 
-Every file in `assets/js/` must be listed in this document with:
-- its purpose
-- which templates load it
-- which events it listens to
-- which events it dispatches
-- whether it is prototype-only (to be removed when the real endpoint exists)
+- Clone new UI from a `<template>` in the owning partial. Do not build reviewable markup from strings.
+- Keep fields, operators, statuses and labels in markup or their owning catalog.
+- Mark invented values as fixtures. Do not compute plausible-looking data.
+- Put fake responses in a `-stub.js` file so production can remove the stub without replacing the
+  component behavior.
+- Record existing violations below and fix them when that script is changed.
 
----
+Template states are defined in [`SERVER.md`](SERVER.md). Kit-page HTML owns the examples a reader
+reviews; this document owns JavaScript behavior and dependencies.
 
-## Core principles
+## Loading
 
-- **Progressive enhancement** — all interactions work without JavaScript
-- **Event-driven** — components communicate via custom events, not direct coupling
-- **Modular** — each script handles one concern
-- **Prototype-ready** — stub data allows testing before real APIs exist
+The development server loads HTMX in the document head, then Bootstrap, `clipboard.js` and
+`popovers.js` at the end of every page. Page-specific scripts follow their host markup.
 
----
+Only two local orders matter:
 
-## Script loading order
+1. `people-search.js` before `people-search-stub.js`.
+2. `filter-bar.js` before `filter-sheet.js`.
 
-Load order matters. Scripts must be declared in this sequence in any template that uses them:
+Remove a `-stub.js` include when its endpoint replaces the fixture response.
 
-```html
-<script src="/assets/js/people-search.js"></script>
-<script src="/assets/js/people-search-stub.js"></script>  <!-- prototype only -->
-<script src="/assets/js/suggest-panel.js"></script>
-<script src="/assets/js/filter-bar.js"></script>
-```
-
-Remove the `-stub.js` files when wiring real endpoints.
-
----
-
-## Files
-
-### `clipboard.js`
-
-**Purpose:** Copy button — copies the `<code>` next to a `[data-clipboard]` button (Biblio ID, persistent link); shows "Copied!" for 2s. Reads the visible `<code>`, so display and copied value can't drift; or copies `data-clipboard-target` (a CSS selector resolved at click time) for dynamic sources like the active citation tab. Handles both labelled buttons (`.btn-text` swaps to "Copied!") and icon-only buttons (temporary `aria-label`, original restored after). Pattern: `patterns/copy-to-clipboard.html`.
-
-**Loaded by:** all pages (global footer script, injected by the dev server).
-
-**Listens for:** click on `[data-clipboard]`
-
-**Dispatches:** nothing
-
-**Prototype-only:** no
-
----
-
-### `view-toggle.js`
-
-**Purpose:** Card/table results toggle. Shows the `[data-view-panel]` matching the checked `[data-view-toggle]` radio and hides the rest; persists the choice to `localStorage` when a `[data-view-store]` key is present. Markup-driven, so one file serves every results page.
-
-**Loaded by:** `curate.html`, `search-researcher.html`
-
-**Listens for:** `change` on `[data-view-toggle]`
-
-**Dispatches:** nothing
-
-**Prototype-only:** no
-
----
+## Registry
 
 ### `bulk-select.js`
 
-**Purpose:** Row selection + bulk-action bar for backoffice result tables. Shows `[data-bulk-bar]` while any `[data-bulk-row]` checkbox is checked; a `[data-bulk-all]` master checkbox selects/clears all rows and tracks the indeterminate state with a matching `aria-label`.
+- **Purpose:** Shows the backoffice bulk-action bar, controls select-all and maintains its checked,
+  unchecked and indeterminate names.
+- **Hosts:** `curate.html`.
+- **Input/output:** Listens for checkbox `change`; dispatches no custom event.
+- **Status:** Production-shaped behavior; the current curate page is still a prototype.
 
-**Loaded by:** `curate.html`
+### `clipboard.js`
 
-**Listens for:** `change` on `[data-bulk-row]` and `[data-bulk-all]`
-
-**Dispatches:** nothing
-
-**Prototype-only:** no
-
-**Note:** Dormant for now — the backoffice list page (`curate`) is WIP (backoffice not settled), so the bulk bar isn't in active use yet.
-
----
-
-### `popovers.js`
-
-**Purpose:** Initialises Bootstrap popovers (`[data-bs-toggle="popover"]`), e.g. the identifier IDs shown on hover over ORCID/UGent icons in author lists. Triggers inside links need `data-bs-container="body"`.
-
-**Loaded by:** all pages (global footer script, injected by the dev server).
-
-**Listens for:** `htmx:afterSwap` on `body` — re-initialises popovers inside swapped fragments.
-
-**Dispatches:** nothing
-
-**Prototype-only:** no
-
----
-
-### `filter-sheet.js`
-
-**Purpose:** Mobile only — relocates the works filter-bar's picker list, editor, and clear-all button into the `#filters-offcanvas` sheet below `lg`, and back to the toolbar above `lg`, so every filter input lives in one place on a phone. Moving the nodes keeps the single `filter-bar.js` instance and its state (the handlers were attached at init). In the sheet it: turns each record row into a drill-in (label · applied value read from the chips · chevron, replacing filter-bar's floating tick); makes tapping a row swap `#wf-sheet-main` for `#wf-sheet-detail` (the editor + a back button), returning on Apply/back; and strips the editor's `position-absolute`/`top-100`/`bt-panel`/`bt-panel--wide` so it flows inline full-width instead of as a floating panel.
-
-**Loaded by:** `public-works.html` (after `filter-bar.js`).
-
-**Listens for:**
-- `matchMedia('(max-width: 991.98px)')` change
-- `#wf-filter-editor` `hidden` attribute (drill in on open, return + refresh row values on close)
-- click on `#wf-detail-back` (closes the editor) and `#wf-clear-all` (refreshes row values)
-
-**Dispatches:** nothing
-
-**Prototype-only:** yes (rides on `filter-bar.js`'s prototype chips; production would render the sheet vs. toolbar placement server-side).
-
----
-
-### `suggest-panel.js`
-
-**Purpose:** Controls the autocomplete panel on public search. Shows/hides the panel on input focus and keyup, handles keyboard navigation within the panel, and wires the type-filter tabs over the freshly server-rendered grouped result list. Selecting a type hides the other groups without issuing another request; All restores them. Tab Arrow/Home/End keys change selection with roving focus. Escape closes the panel and restores input focus without reopening it. Suggestion rows navigate via their own `href` ("type decides"); the panel never mutates result-page filter state.
-
-**Loaded by:** `public-works.html`
-
-**Listens for:**
-- `focus` and `keyup` on `#q`
-- `keydown` for Arrow/Enter/Escape navigation
-- click and keyboard events on `[data-suggest-filter]`
-- `htmx:afterSwap` on `#suggest-panel` (rebinds swapped navigation and updates panel visibility)
-
-**Dispatches:** nothing
-
-**Prototype-only:** no (panel show/hide and keyboard nav are real behaviour; stub suggestions are server-rendered into the panel)
-
----
+- **Purpose:** Copies the adjacent `<code>` or `data-clipboard-target`, then briefly changes the
+  button's label, icon and state.
+- **Hosts:** All kit pages through `server.js`; explicitly included by `work-detail.html` for the
+  consumer-facing template.
+- **Input/output:** Delegated click on `[data-clipboard]`; dispatches no custom event.
+- **Status:** Production-shaped behavior. Pattern: `patterns/copy-to-clipboard.html`.
 
 ### `directory-search.js`
 
-**Purpose:** Scoped typeahead for a single directory page (Researchers, Organizations). Filters an inline JSON dataset client-side and renders suggestion rows; does not filter the page's result list.
-
-**Loaded by:** `public-researchers.html`, `public-organisations.html`, `public-projects.html`
-
-**Listens for:**
-- `input` and `focus` on the directory `input[role="combobox"]`
-- `keydown` for Arrow/Enter/Escape navigation (input and panel)
-- Click on `document` (outside-click close)
-- `submit` on the enclosing form
-
-**Dispatches:** nothing
-
-**Prototype-only:** no (typeahead behaviour is real; the inline JSON dataset is the stub). Replace the inline data + client-side filter with `GET /{directory}/suggest?q=&hellip;` when the endpoint exists.
-
----
+- **Purpose:** Filters one directory's inline fixture data and provides combobox show, hide and
+  keyboard behavior.
+- **Hosts:** public researchers, organizations and projects.
+- **Markup contract:** One `[data-directory-search]` wrapper contains the input and
+  `.bt-suggest-panel`; `script[data-suggest-source]` supplies the fixture rows. The script binds
+  structurally, so directory-local ids may vary.
+- **Input/output:** Listens for input, focus, keyboard, outside click and form submit; dispatches no
+  custom event.
+- **Status:** The behavior is reusable; production replaces `script[data-suggest-source]` with a
+  server suggestion endpoint.
+- **Template debt:** `update()` builds result and no-match markup as strings. Replace both with
+  templates in the directory-search partial.
 
 ### `filter-bar.js`
 
-**Purpose:** Generic chip + editor filter bar — the filter picker pattern (`patterns/filter-picker.html`). One engine, one config per bar; it self-discovers which bars are on the page by their id prefix and wires each independently. Editor types: checklist (multi-select; a search-within box appears for lists > 8), boolean, year-range, text. A bar may pre-apply filters via a `data-initial-filters` JSON attribute on its chips container, so template states can start with different chips.
+- **Purpose:** Runs each `[data-filter-bar]`: picker, editor, editable chips and clear-all.
+- **Hosts:** public works, researchers and projects.
+- **Markup contract:** The value of `data-filter-bar` is the id prefix. Each host provides
+  `<prefix>filter-picker-list`, `<prefix>add-filter-dropdown`, `<prefix>add-filter-btn`,
+  `<prefix>filter-editor`, `<prefix>active-chips` and `<prefix>clear-all`. Picker buttons declare
+  their label, editor type and source through `data-*`. Options live in
+  `filter-option-lists.html`; editor and chip templates live in `filter-editor-templates.html`;
+  entity pickers name their panel partial. Values are stored by ID, not display label.
+- **Input/output:** Listens for clicks, editor input and Escape; dispatches no custom event.
+- **Status:** Prototype-only. Chips do not refilter results. Template test: passes.
 
-**Bars & filter sets:**
-- `wf-` — public works (`public-works.html`): Author, Organization, Project, Keywords (searchable checklists), and Identifier (text; any of the work's ids — DOI, ISSN, ISBN, arXiv — a journal via its ISSN). Two chips pre-applied in the results and no-results states.
-- `rdir-` — researcher directory (`public-researchers.html`, bar inline): Organization, Current or alumni.
-- `pdir-` — project directory (`public-projects.html`, bar inline): Organization, Status, Year (range).
+### `filter-sheet.js`
 
-**Loaded by:** `public-works.html`, `public-researchers.html`, `public-projects.html`
-
-**Listens for (per bar, `<prefix>` = `wf-` / `rdir-` / `pdir-`):**
-- Click on `[data-filter]` items in `#<prefix>filter-picker-list`
-- Click on `[data-filter-id]` chip badges (reopens editor)
-- Click on `[data-remove-id]` remove buttons
-- Click on `#<prefix>clear-all`
-- `keydown` Escape inside the editor; outside-click close
-
-**Dispatches:** nothing
-
-**Prototype-only:** yes (chips are client-side only and do not refilter the list; the Organization tree, author, project, and keyword option lists are stubs, and those facets are backend-dependent). Wire to real query params when the endpoints exist.
-
----
-
-### `query-builder.js`
-
-**Purpose:** Advanced search, phase 2 — turns a condition row into an "any of these" OR group
-in place and back again, and keeps the readable sentence under "Your query" in sync. The add-condition chooser filters field choices, updates the selected-field detail rail, and closes on Continue or Cancel. "Add condition" appends an AND row at the top level; "Clear all conditions" leaves one empty row — the empty state. Rebuilds the
-`and` / `or` separators, the per-row action set, and the action labels (each names the condition
-it removes) after every change. A sole empty row carries no actions (nothing to remove, no
-alternative to offer) and the sentence reads "No conditions yet." until a value exists. Markup
-hooks: `#qb-conditions`, `[data-qb-item]`,
-`[data-qb-row]`, `[data-qb-group]`, `[data-qb-alts]`, `[data-qb-field|op|value]`,
-`[data-qb-actions]`, `[data-qb-preview]`, `[data-qb-add-condition]`, `[data-qb-clear]`,
-`[data-qb-choice-panel]`, `[data-qb-choice-search]`, `[data-qb-choice]`,
-`[data-qb-choice-title|detail|example|control|next]`, `[data-qb-choice-close]`.
-
-**Loaded by:** `public-works.html`, which renders the builder as a dialog, and
-`public-search-advanced.html`, which renders it as a page. Both include the same two
-partials, `search-advanced-conditions.html` and `search-advanced-actions.html`. The
-OR-group code runs where the page renders a `[data-qb-preview]`, which is the
-`advanced-group` state; `built` and `advanced-empty` leave it inert. It also opens the
-dialog when the URL carries `?advanced=1`, standing in for the server-side render.
-Pattern page: `patterns/query-builder.html`.
-
-**Listens for:** click / input / change inside `#qb-conditions`, input in
-`[data-qb-choice-search]`, and click on `[data-qb-choice]`, `[data-qb-add-condition]`,
-`[data-qb-choice-close]`, and `[data-qb-clear]`
-
-**Dispatches:** nothing
-
-**Prototype-only:** yes — it exists so the group interaction can be judged before it is built.
-Production renders the condition list server-side. The result count is not simulated: it stays
-as rendered while the sentence updates.
-
----
-
-### `people-search.js`
-
-**Purpose:** People selection widget. Renders a federated search interface and dispatches `people-search:select` when a person is chosen. Used in the deposit flow add-author form. (The works Author filter is a text stub today; production would resolve it through this widget.)
-
-**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`)
-
-**Listens for:**
-- `keyup` on `[data-ps-input]` inputs
-- Click / keyboard on `[role="option"]` rows in `[data-ps-results]`
-
-**Dispatches:**
-- `people-search:select` — `{ id, name, affiliation }` when a person is chosen
-
-**Prototype-only:** no (widget logic is real; stub data is in `people-search-stub.js`)
-
----
+- **Purpose:** Moves the works filter picker, editor and clear-all control into the mobile Offcanvas
+  below `lg`, then restores them to the toolbar above it.
+- **Hosts:** public works, after `filter-bar.js`.
+- **Input/output:** Listens for viewport changes, editor visibility and sheet actions; dispatches no
+  custom event.
+- **Status:** Prototype-only because it rides on the client-only filter bar.
+- **Template debt:** `decorateRows()` builds a small value-and-chevron suffix with `innerHTML`.
+  Move it to a template if that suffix grows.
 
 ### `org-tree.js`
 
-**Purpose:** Expand/collapse-all toggle for the public organization tree. Toggles every `.collapse` inside the `[aria-label="Organization tree"]` region via Bootstrap's Collapse API and keeps the button's `aria-expanded` and label text in sync.
+- **Purpose:** Expands or collapses every department in the public organization tree and updates the
+  controlling button.
+- **Hosts:** public organizations.
+- **Input/output:** Listens for the expand-all click; dispatches no custom event.
+- **Status:** Prototype-only until the tree uses real organization data.
 
-**Loaded by:** `templates/biblio-public/public-organisations.html`
+### `people-search.js`
 
-**Listens for:** click on `#org-tree-toggle-all`
+- **Purpose:** Runs the single-person picker, including result visibility, keyboard selection,
+  selected state, hidden form values and clearing.
+- **Hosts:** deposit find steps and the public works query builder.
+- **Input/output:** Listens for row click/keyboard, input keyboard and `htmx:afterSwap`; dispatches
+  `people-search:select` from the widget with `{ id, name, affiliation }`.
+- **Status:** Production-shaped behavior; fixture responses live in `people-search-stub.js`.
+- **Template debt:** `renderSelected()` builds the fallback selected row as a string. Hosts should
+  provide `[data-ps-selected]`, or the widget should clone one selected-row template.
 
-**Dispatches:** nothing
+### `people-search-stub.js`
 
-**Prototype-only:** yes (the tree is stub markup; wire to real org data when available)
+- **Purpose:** Supplies fixture people and emits the swap event that a real search response would
+  cause.
+- **Hosts:** immediately after `people-search.js` in prototype pages.
+- **Input/output:** Listens for input on `[data-ps-input]`; dispatches `htmx:afterSwap` from the result
+  container.
+- **Status:** Prototype-only. Remove the include when `/people/search` exists.
 
----
+### `popovers.js`
+
+- **Purpose:** Initializes Bootstrap popovers on first paint and inside swapped fragments.
+- **Hosts:** All kit pages through `server.js`.
+- **Input/output:** Listens for `htmx:afterSwap`; dispatches no custom event.
+- **Status:** Production-shaped behavior. A trigger inside a link needs
+  `data-bs-container="body"`.
+
+### `query-builder.js`
+
+- **Purpose:** Runs advanced-search rows, field changes, value shapes, shared picker panels, OR
+  groups, blank-state restoration and accessible action names.
+- **Hosts:** public works. Pattern and openable states: `patterns/query-builder.html`.
+- **Markup contract:** Row, group, chooser, token and picker markup lives in
+  `search-advanced-conditions.html` and its included partials. Choices name the row template,
+  allowed operators, fixed values and picker panel through `data-qb-*`; the script carries no field
+  catalog.
+- **Input/output:** Listens for click, input and change in `#qb-conditions`, Bootstrap dropdown events
+  and dialog toggles; dispatches no custom event.
+- **Status:** Prototype-only. Production renders query state and count server-side; static states
+  carry fixture counts.
+
+### `result-actions.js`
+
+- **Purpose:** Returns focus to the results bar's Actions button after a dialog opened from its
+  dropdown closes.
+- **Hosts:** public works.
+- **Input/output:** Listens for Bootstrap modal close events; dispatches no custom event.
+- **Status:** Production-shaped behavior.
+
+### `search-clear.js`
+
+- **Purpose:** Shows an inline clear control only while its preceding input has text. A button clear
+  empties the input, emits `input` and restores focus; a link clear needs no click handler.
+- **Hosts:** public search and directory pages.
+- **Input/output:** Listens for input and button click; dispatches a native `input` event.
+- **Status:** Production-shaped behavior.
 
 ### `sidebar-toggle.js`
 
-**Purpose:** Handles the backoffice sidebar collapse/expand toggle. Adds or removes `bt-sidebar--slim` on the controlled nav and keeps the toggle button's `aria-expanded` and `aria-label` state in sync. Below `xl`, the main sidebar defaults to slim mode so narrow desktop panes keep the work area primary; crossing the `xl` breakpoint after load syncs the sidebar to the new viewport.
+- **Purpose:** Collapses and expands the backoffice sidebar, updates its accessible state and enables
+  link tooltips only in slim mode. Below `xl`, slim is the default.
+- **Hosts:** backoffice pages through `main-sidebar.html`.
+- **Input/output:** Listens for toggle clicks and viewport changes; dispatches no custom event.
+- **Status:** Production-shaped behavior. A consuming server may persist the preference in a cookie;
+  the prototype resets on reload.
 
-**Loaded by:** backoffice pages via `templates/partials/main-sidebar.html`
+### `suggest-panel.js`
 
-**Listens for:**
-- Click on `.bt-sidebar__toggle`
-- Viewport query changes: `(max-width: 1199.98px)`
+- **Purpose:** Opens and closes public autocomplete, filters rendered result groups by type and
+  provides keyboard movement for tabs and suggestion rows.
+- **Hosts:** public index and works pages.
+- **Markup contract:** These hosts use the fixed `#q`, `#suggest-wrapper` and `#suggest-panel` ids;
+  HTMX swaps the server-owned suggestion rows into the existing panel. Directory pages use
+  `directory-search.js` instead and bind through `[data-directory-search]`.
+- **Input/output:** Listens for input focus/keyboard, panel keyboard, outside click, submit and
+  `htmx:afterSwap`; dispatches no custom event.
+- **Status:** Production-shaped behavior. The server owns suggestion rows.
 
-**Dispatches:** nothing
+### `view-toggle.js`
 
-**Prototype-only:** no
+- **Purpose:** Shows the result panel selected by `[data-view-toggle]` and hides the other
+  `[data-view-panel]` values.
+- **Hosts:** curate and researcher search.
+- **Input/output:** Listens for radio `change`; dispatches no custom event.
+- **Status:** Production-shaped behavior. The prototype resets on reload; a consuming server may
+  persist the initial view.
 
-**TBD — persist collapsed state.** The toggle currently resets on every page load. In a server-rendered multi-page app that means the sidebar re-expands on every navigation, which is wrong for the users who prefer it folded in most of the time. The collapsed state must be remembered across page loads — and ideally read server-side (e.g. a cookie) so the first paint already renders collapsed, with no expand-then-collapse flash. Decide the mechanism (localStorage vs server-read cookie) before wiring this into a real deployment. Not yet implemented.
+## HTMX
 
----
+| Target | Listener | Result |
+|---|---|---|
+| `#suggest-panel` | `suggest-panel.js` | Rebind type tabs and synchronize visibility |
+| `[data-people-search]` | `people-search.js` | Initialize a swapped widget |
+| `[data-ps-results]` | `people-search.js` | Update result visibility and live-region text |
+| Popover trigger in any swapped fragment | `popovers.js` | Initialize Bootstrap popover |
 
-### `people-search-stub.js` (prototype only)
-
-**Purpose:** Provides mock person data for `people-search.js` when the real `/people/search` endpoint does not exist.
-
-**Loaded by:** deposit flow templates (`deposit-1-0-find.html`, `deposit-1-1-find.html`) (prototype builds only)
-
-**Remove when:** the real `/people/search` endpoint is wired up.
-
----
-
-## Custom events
-
-### `biblio:filter-add`
-
-Fired when a filter should be added without opening the editor panel (e.g. selecting a suggestion from the autocomplete panel).
-
-```javascript
-document.dispatchEvent(new CustomEvent('biblio:filter-add', {
-  detail: {
-    filterId: 'affiliation',           // key matching FILTERS in the directory filter engine
-    displayValue: 'Faculty of Sciences',
-    rawValue: { id: 'fw', name: 'Faculty of Sciences' }
-  }
-}));
-```
-
-Fired by: nothing currently — the public suggest panel navigates instead of dispatching.
-Handled by: nothing currently — the directory filter engines manage their own chips directly. Kept as a reserved contract for a future filter builder.
-
----
-
-### `people-search:select`
-
-Fired when a person row is selected in the people-search widget.
-
-```javascript
-document.dispatchEvent(new CustomEvent('people-search:select', {
-  detail: { id: 'p-jd2', name: 'Jane Doe', affiliation: 'Faculty of Performing Arts' }
-}));
-```
-
-Fired by: `people-search.js`
-Handled by: the deposit flow author form
-
----
-
-## HTMX integration
-
-Scripts listen for `htmx:afterSwap` to update UI state after content changes. Key targets:
-
-| Target | Listener | Action |
-|--------|----------|--------|
-| `#suggest-panel` | `suggest-panel.js` | Show panel if content is non-empty |
-| `#file-list` | — | No JS needed; HTMX swap is sufficient |
-| `#author-list` | — | No JS needed; HTMX swap is sufficient |
-
----
-
-## View toggle and bulk actions
-
-The view toggle (card/table) and bulk select/checkbox logic in `curate.html` and `search-researcher.html` currently live as inline `<script>` blocks in those templates. These should be extracted to `assets/js/search.js` when the backoffice search is implemented in Go templ.
-
-Until then: do not copy or duplicate the inline script. The template is the single source.
+`#file-list` and `#author-list` need no JavaScript after their HTMX swaps.

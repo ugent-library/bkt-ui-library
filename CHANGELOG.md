@@ -6,6 +6,163 @@ system, or do I reach for something new?"
 
 ---
 
+## Breaking change — advanced search is one builder, and search shares its contracts (v2.29, 2026-08-21)
+
+Consumers sync from v2.21 — `584b9dd/2026-08-11`, the stamp raven carries: 40 classes
+removed, template states renamed, one page retired, the filter bar's vocabulary moved out of
+its JavaScript. Syncing means re-adapting, not re-copying. This entry replaces v2.22–v2.28,
+none of which shipped, and supersedes the two-renderings design of v2.16 and v2.20 below.
+
+**Advanced search is one dialog, and its page is retired.** `public-search-advanced.html`
+goes; the builder renders once, as a wide scrollable dialog over `public-works.html`, and
+`?advanced=1` stays the address the browser pushes and production reads. An empty query is a
+legal state — the dialog opens over the unfiltered list. Decided by use: 990 of the 1,601
+sessions that used the power tier already had a result list on screen
+(`docs/wip/QUERY-BUILDER-EVIDENCE.md`).
+
+**The builder is a row grammar, and the host wraps it.** The condition list owns the lanes,
+a row is field | phrase | actions, and `query-builder.js` reads rows only through
+`data-qb-*` hooks, so a cell class is styling and nothing more. Rows carry validation states
+(`__row--error`, and `__row--warning` with a note that merges same-field rows into an OR
+group). The count is production's to compute, into the `[data-qb-count]` live region. The
+contract lives in `docs/CLASS-USAGE.md` → Query builder and `docs/JAVASCRIPT.md` →
+query-builder.js; the field list follows `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`.
+
+**One picker panel per entity, shared by the builder and the filter bar.** Person,
+Organization and Project each have one panel partial that both surfaces clone, hooked
+through `data-picker-*`; rows match by `data-id`, and `data-person-ugent` marks a UGent
+person record — its token carries the crest. The result row is `bt-result`, read by
+`people-search.js` through `data-ps-row`, never through a class. Contract:
+`docs/CLASS-USAGE.md` → Search result row and Panel.
+
+**The filter bar carries no vocabulary and no markup.** A bar announces itself with
+`data-filter-bar`, each picker button carries its own definition, and every node clones from
+`filter-editor-templates.html` and `filter-option-lists.html`. The works bar's Author became
+a Person picker; the researcher directory offers Organization only; the project directory
+drops Organization — participation is deferred in raven's data contract. Contract:
+`docs/JAVASCRIPT.md` → filter-bar.js.
+
+### Class migration
+
+| Removed | Use instead |
+|---------|-------------|
+| `people-results` | `bt-results` |
+| `people-result` | `bt-result` |
+| `people-result__icon` | `bt-result__icon` |
+| `people-result__name` | `bt-result__name` |
+| `people-result__meta` | `bt-meta-list bt-meta-list--xs` |
+| `people-result__meta-item` | `bt-meta-list__item` |
+| `bt-meta-list__item-bordered` | `bt-work-card__meta-item`, which now draws the separator |
+| `bt-meta-text` | Bootstrap `small text-muted` |
+| `bt-query-builder__editor` | nothing — the host supplies the box; in the dialog that is `modal-body` |
+| `bt-query-builder__heading` | nothing — the host supplies the heading |
+| `bt-query-builder__exit` | the dialog's own `modal-footer` |
+| `bt-query-builder__row-op` | `bt-query-builder__phrase` wraps role, operator and value as one unit |
+| `bt-query-builder__row--last-changed` | `bt-query-builder__row--error` / `--warning` |
+| `bt-query-builder__field` | `bt-btn-inline-edit` |
+| `bt-query-builder__role` | a permanently visible `form-select` in the phrase |
+| `bt-query-builder__more` | nothing — the ⋯ button is a plain `btn btn-ghost` |
+| `bt-query-builder__and` | separators are `visually-hidden`, built by the JS; the hook stays `data-qb-sep` |
+| `bt-query-builder__or` | same |
+| `bt-query-builder__group-label` | `form-label h6 mb-2` on the group's legend |
+| `bt-query-builder__batch` | `bt-textarea-auto` on the textarea, `bt-query-builder__row--batch` on the row |
+| `bt-query-builder__people-field` | the entity row's picker slot (`data-qb-picker-slot`) |
+| `bt-query-builder__people-input` | — |
+| `bt-query-builder__people-search` | — |
+| `bt-query-builder__person-token` | `badge text-bg-primary-light` + `data-qb-token` |
+| `bt-query-builder__chooser` | `bt-panel bt-panel--wide` on the `dropdown-menu` |
+| `bt-query-builder__chooser-body` | `bt-panel__body--list` |
+| `bt-query-builder__chooser-search` | the panel's search-first body (`bt-panel__body` + `form-control`) |
+| `bt-query-builder__choice` | `dropdown-item`; the hook stays `data-qb-choice` |
+| `bt-query-builder__choice-group` | `min-w-0` + `data-qb-choice-group` |
+| `bt-query-builder__choice-heading` | `dropdown-header` |
+| `bt-query-builder__pick` | — (died with the full-page chooser) |
+| `bt-query-builder__field-links` | — |
+| `bt-query-builder__blank` | `data-qb-blank`; Add a condition is the blank state |
+| `bt-query-builder__blank-columns` | — |
+| `bt-query-builder__starts` | — (the starting cards are retired) |
+| `bt-query-builder__start` | — |
+| `bt-query-builder__start-head` | — |
+| `bt-query-builder__start-body` | — |
+| `bt-query-builder__start-shape` | — |
+| `bt-query-builder__start-slot` | — |
+
+`modal-footer` also leaves the generated list: its one Booktower rule hosted
+`bt-query-builder__exit` and is gone. Bootstrap still provides the class.
+
+### Other contract changes
+
+| Contract | Was | Is |
+|----------|-----|-----|
+| Advanced search page | `public-search-advanced.html` | a dialog over `public-works.html`; `search-advanced-dialog.html` holds the chrome |
+| Works template states | `query-empty`, `advanced-condition`; the retired page's `built` / `advanced-*` / `phase-*` | `no-query`, `facet-set-in-builder`; `builder-full-query`, `builder-empty`, `builder-one-condition`, `builder-or-group`, `builder-no-results` |
+| Filter bar wiring | `CONFIGS` object in `filter-bar.js`, bars found by id prefix | markup: `data-filter-bar`, per-button `data-filter-*`, two template partials |
+| Filter editor buttons | `#wf-editor-apply` / `-cancel` / `-remove` ids | `[data-editor-apply]` / `[data-editor-cancel]` / `[data-editor-remove]` |
+| Entity filter type | `people`, hard-wired to the people widget | `picker`; the button names its panel in `data-filter-panel` |
+| Picker panel hooks | `data-person-*` | `data-picker-*`; `data-person-ugent` stays, marking the UGent record |
+| People-search rows | selected by `.people-result` | selected by `[data-ps-row]` |
+| Card/table view toggle | persisted to `localStorage` via `data-view-store` | session-only; a consuming app persists the choice in a cookie it reads at first paint |
+| `biblio:filter-add` event | reserved contract, never fired | removed |
+
+**Smaller changes that reach a consumer.** `[hidden] { display: none !important; }` keeps
+the hidden attribute trustworthy — never a `d-*` utility on an element JS toggles with
+`hidden`. New: `bt-search-clear` with `search-clear.js` (the search box's inline ×) and
+`bt-btn-inline-edit` (the dotted in-place-edit affordance); the hero search bar holds its
+controls in flow. Consecutive `bt-work-card__meta-item` text values are divided by a rule.
+Panel chrome is compact, and `bt-panel` zeroes the `dropdown-menu` padding — drop any `p-0`
+at call sites. `dropdown-header` is bold sentence case; `.form-text` moves from xs to sm.
+
+**Kit only.** `npm test` gains `check:states`; the server resolves nested `@include`s, notes
+partials that paint nothing, and serves assets `no-store` (`docs/SERVER.md`).
+
+**Consumers:** raven syncs from v2.21 in one step. Re-copy `assets/booktower.css` and, from
+`assets/js/`: `filter-bar.js`, `filter-sheet.js`, `people-search.js`, `people-search-stub.js`
+(prototype only), `query-builder.js`, `search-clear.js`, `view-toggle.js`. Adopt the new
+partials — `filter-editor-templates.html`, `filter-option-lists.html`, the three picker
+panels, `search-advanced-conditions.html`, `search-advanced-actions.html`,
+`search-advanced-dialog.html`, `search-advanced-blank.html`, `search-field-list.html` — and
+re-sync `add-author-form.html` and `people-search-widget.html`. Raven's own filter engines
+(`filter_bar_core.js`, `works_filter_bar.js`, `directory_filter_bar.js`,
+`checklist_search.js`) and its three search templates implement the v2.21 contract: the
+vocabulary they carry in JS moves into the templ markup, per
+`docs/RENDERED-HTML-CONTRACT.md`.
+
+---
+
+## Slim sidebar keeps its labels, and its tooltips wait for slim (v2.21, 2026-08-14)
+
+An icon-only sidebar link now carries its own name. In `bt-sidebar--slim` the link
+and button text is hidden from view and stays in the accessibility tree, so a screen
+reader reads the same label a sighted user reads in the expanded rail. Tooltips
+follow the same state: `sidebar-toggle.js` enables them in slim mode and disables
+them while the sidebar is expanded, where they repeated a label already on screen.
+
+- `.bt-sidebar__label` and `.btn-text` are visually hidden inside
+  `.bt-sidebar--slim` rather than `display: none`. That span names the link in both
+  states.
+- A sidebar link takes no `aria-label`. Bootstrap moves `title` to
+  `data-bs-original-title` when it initialises a tooltip, so `title` never becomes
+  the accessible name, and an `aria-label` would replace the visible text with a
+  second string to keep in sync.
+- Each sidebar `title` repeats its visible label word for word.
+- Slim mode styles count badges only: every badge on a sidebar link is a count
+  badge, so `.badge:not(.badge--total)` left the stylesheet.
+- The CSS build runs autoprefixer from a repo script against `.browserslistrc`, so
+  the compiled file carries vendor prefixes the previous build omitted.
+  `shell/shell.css` now carries the same build stamp as `assets/booktower.css`.
+
+| Removed | Replaced by |
+|---------|-------------|
+| `bt-navbar__nav` | nothing — the class was unused |
+| `aria-label` on a sidebar nav link | `.bt-sidebar__label`, which slim mode keeps in the accessibility tree |
+
+**Consumers:** re-copy `assets/booktower.css`; the icon fonts are unchanged since
+v2.20. Delete any `aria-label` you added to a sidebar link, and read each link's
+`title` against its visible label. Where you mirror `sidebar-toggle.js`, enable the
+tooltips with the slim state instead of at page load.
+
+---
+
 ## Experimental Advanced search builder shared rendering (v2.20, 2026-08-12)
 
 The public advanced-search flow now has a shared builder implementation that can
@@ -535,6 +692,10 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `btn-outline-white` | Nothing — design a dark-surface button when one is needed |
 | `sr-only` | Bootstrap's `visually-hidden` |
 | `bt-navbar__mark` | `bt-navbar__brand` |
+| `people-result__meta`, `people-result__meta-item` | `bt-meta-list bt-meta-list--xs`, `bt-meta-list__item` |
+| `people-results`, `people-result`, `people-result__icon`, `people-result__name` | `bt-results`, `bt-result`, `bt-result__icon`, `bt-result__name` |
+| `bt-meta-list__item-bordered` | `bt-work-card__meta-item` draws the separator now |
+| `bt-meta-text` | Bootstrap `small text-muted` |
 | `app-sidebar`, `app-sidebar-link`, `app-sidebar-label` | `bt-sidebar` and its elements |
 | `bt-blank-slate-muted/-primary` (single dash) | `bt-blank-slate--muted/--primary` |
 | `bt-table` | Bootstrap `.table .table-hover .align-middle` |

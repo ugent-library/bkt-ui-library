@@ -80,6 +80,7 @@ npm run check:a11y-browser   # terminal 2 — page list lives in .pa11yci
 | `patterns/` | UI kit docs: components |
 | `templates/` | Full-page prototype templates |
 | `templates/partials/` | Reusable HTML fragments for common layouts |
+| `docs/decisions/` | Accepted design decisions and their rationale |
 | `shell/` | UI kit navigation chrome (not part of the design system) |
 
 ---
@@ -124,6 +125,7 @@ The kit deploys on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**,
 
 - [Working guide](AGENTS.md) — **read before your first change**; for humans and AI agents, any tool.
 - [Contributing](CONTRIBUTING.md) — how work flows, what gates a change, who decides what.
+- [Design decisions](docs/decisions/README.md) — why lasting design choices were made and when to revisit them
 - [Server](docs/SERVER.md) — kit server behaviour: template states, mock endpoints
 - [Domain](docs/DOMAIN-VOCABULARY.md) — the research repository domain vocabulary
 - [UI Layer](docs/UI-LAYER.md) — UI architecture and patterns
@@ -131,7 +133,6 @@ The kit deploys on Vercel at **[bkt-ui.vercel.app](https://bkt-ui.vercel.app)**,
 - [JavaScript architecture](docs/JAVASCRIPT.md) — JS file registry and event contract
 - [CI](docs/CI.md) — what CI runs, what it costs, the human's share
 - [Deployment](docs/DEPLOYMENT.md) — Vercel setup, the traps, access control
-- [Bootstrap gap audit](docs/analysis/AUDIT-BOOTSTRAP-GAPS.md) — 2026-07 audit findings, open design notes, next-audit scope
 
 ---
 

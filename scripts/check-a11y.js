@@ -1,11 +1,4 @@
-// Booktower-specific accessibility checks from the docs/ACCESSIBILITY.md pre-flight list —
-// the mechanically checkable subset. Generic HTML/ARIA validity is
-// html-validate's job (npm run check:html); this covers the house rules:
-//   A1  exactly one <h1> per page template
-//   A2  <main id="main-content"> on every page template
-//   A5  every <nav> has an aria-label, distinct within the file
-//   B2  icon-only buttons/links carry aria-label
-//   P1-P5  the pagination bar, per patterns/pagination.html
+// Checks the machine-testable rules in docs/ACCESSIBILITY.md; html-validate handles generic HTML and ARIA.
 const fs = require('fs');
 const path = require('path');
 
@@ -59,10 +52,7 @@ for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', '
 }
 
 // ── P1-P5 — the pagination bar ───────────────────────────────────────────────
-// No class changed with the v2.11 markup, so check:classes can't see this drift.
-// Files below are known to be on the pre-v2.11 markup: their findings are
-// reported but don't fail. Remove a file from the set when you align it — an
-// entry that no longer drifts fails, so the list can't go stale.
+// Known old markup reports without failing. Aligned entries fail until removed from this set.
 const PAGINATION_DRIFT = new Set([
   'templates/biblio-public/public-works.html',
   'templates/biblio-public/public-researchers.html',

@@ -1,26 +1,46 @@
 <!--
-  The Advanced search count and submit. Used with search-advanced-conditions.html;
-  the submit reaches that form by form="qb-form".
+  The Advanced search exit bar: one submit, carrying the approximate count. Used with
+  search-advanced-conditions.html; the submit reaches that form by form="qb-form".
 
-  Why the count stays in the pinned exit bar while Link/Embed/API/Feed live in
-  the builder's handoff rail: patterns/query-builder.html.
+  The bar carries no chrome — the host decides what it sits on: the page puts it under the
+  builder's box, the dialog puts it in .modal-footer.
+  The count is an approximation; the exact set is the results page's job. The button is the
+  builder's one aria-live region: query-builder.js rewrites [data-qb-count] as conditions
+  change, so the new count is announced without re-reading the page.
 -->
 <div class="bt-toolbar">
-  <div class="bt-toolbar__left">
-    <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-    <p class="h5 mb-0" aria-live="polite">1,284 research outputs match</p>
-    <!-- @state -->
-    <!-- @state: advanced-group -->
-    <p class="h5 mb-0" aria-live="polite">438 research outputs match</p>
-    <!-- @state -->
-    <!-- @state: advanced-empty -->
-    <p class="h5 mb-0" aria-live="polite">All 312,456 research outputs</p>
-    <!-- @state -->
-  </div>
   <div class="bt-toolbar__right">
-    <button type="submit" form="qb-form" class="btn btn-primary">
-      <i class="if if-search" aria-hidden="true"></i>
-      Show results
+    <!-- Beside the exit, not beside Add a condition: clearing and showing results are both ways
+         of leaving the query you have. Absent while there is nothing to clear. -->
+    <!-- @state: builder-full-query builder-or-group builder-one-condition builder-no-results results best-bet no-results no-query facet-set-in-builder -->
+    <button type="button" class="btn btn-ghost" data-qb-clear>
+      <i class="if if-close" aria-hidden="true"></i>
+      Clear all
     </button>
+    <!-- @state -->
+    <!-- @state: builder-one-condition -->
+    <button type="submit" form="qb-form" class="btn btn-primary" aria-live="polite">
+      <i class="if if-search" aria-hidden="true"></i>
+      <span data-qb-count>Show ± 240 results</span>
+    </button>
+    <!-- @state -->
+    <!-- @state: builder-empty -->
+    <button type="submit" form="qb-form" class="btn btn-primary" aria-live="polite">
+      <i class="if if-search" aria-hidden="true"></i>
+      <span data-qb-count>Show ± 312&thinsp;000 results</span>
+    </button>
+    <!-- @state -->
+    <!-- @state: builder-full-query builder-or-group results best-bet no-results no-query facet-set-in-builder -->
+    <button type="submit" form="qb-form" class="btn btn-primary" aria-live="polite">
+      <i class="if if-search" aria-hidden="true"></i>
+      <span data-qb-count>Show ± 1&thinsp;280 results</span>
+    </button>
+    <!-- @state -->
+    <!-- @state: builder-no-results -->
+    <button type="submit" form="qb-form" class="btn btn-primary" aria-live="polite" disabled>
+      <i class="if if-search" aria-hidden="true"></i>
+      <span data-qb-count>No results</span>
+    </button>
+    <!-- @state -->
   </div>
 </div>

@@ -3,37 +3,33 @@
 <div class="ds-page">
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
-    <h1 class="display-1">Layout Shells</h1>
-    <p class="lead">Two layout shells handle every page in the system. Each shell owns its topbar and main content area. The backoffice shell can host the navigation sidebar and optional internal panes around the same main structure.</p>
+    <h1 class="display-1">Layout shells</h1>
+    <p class="lead">Two shells cover public pages and backoffice applications.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The two shells</h2>
-    <p class="mb-4">All shells use <code>--s-topbar-height</code> (52px, defined in <code>_surfaces.scss</code>) for sticky sidebar offsets. Public pages use normal document flow with Bootstrap containers inside <code>main</code>. App pages use a fixed shell with independent scrolling regions and can optionally host a shell-level <code>u-main__panel</code>.</p>
+    <p class="mb-4">Public pages use normal document flow. App pages use fixed regions with independent scrolling and may add navigation or task panes.</p>
 
     <div class="row g-3">
       <div class="col-lg-6">
         <div class="border rounded bg-white p-3 h-100">
           <p class="small text-uppercase text-muted fw-semibold mb-2">u-layout--public</p>
-          <p class="mb-2">Use this for public search, detail and landing pages.</p>
-          <p class="mb-2">The shell is intentionally light: topbar plus normal flowing <code>main</code>.</p>
-          <p class="mb-0">Width and spacing come from Bootstrap <code>.container</code>, <code>.row</code>, and utility classes inside the layout regions.</p>
+          <p class="mb-0">Use for public search, detail, and landing pages. Content flows normally inside Bootstrap containers.</p>
         </div>
       </div>
       <div class="col-lg-6">
         <div class="border rounded bg-white p-3 h-100">
           <p class="small text-uppercase text-muted fw-semibold mb-2">u-layout--app</p>
-          <p class="mb-2">Use this for backoffice list, detail and workflow pages.</p>
-          <p class="mb-2">The shell owns sticky regions and scroll behavior.</p>
-          <p class="mb-0">Keep <code>u-main__body</code> plain by default. Add <code>u-main__body--split</code> only when the body contains a left <code>u-main__sidebar</code>.</p>
+          <p class="mb-0">Use for backoffice lists, details, and workflows. Add a split body only when the page has a left internal pane.</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Public Layout</h2>
-    <p class="mb-3">Public pages reuse the same region names, but the page scrolls normally and content width comes from Bootstrap containers inside those regions.</p>
+    <h2 class="h4 mb-3">Public layout</h2>
+    <p class="mb-3">Public pages use shared region names inside normal page flow.</p>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--public" data-surface="public"&gt;
@@ -89,16 +85,11 @@
         </div>
       </div>
     </div>
-    <div class="border rounded bg-white p-3">
-      <p class="small text-uppercase text-muted fw-semibold mb-2">Public Rules</p>
-      <p class="mb-2">Do not use <code>u-main__body--split</code> unless the page truly has an internal pane layout.</p>
-      <p class="mb-0">Prefer Bootstrap layout primitives inside <code>u-main__header</code>, <code>u-main__body</code>, and <code>u-main__footer</code>.</p>
-    </div>
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">App Layout</h2>
-    <p class="mb-3">This is the canonical app-shell markup for split backoffice pages. Remove optional blocks rather than inventing parallel variants.</p>
+    <h2 class="h4 mb-3">App layout</h2>
+    <p class="mb-3">Canonical split-shell markup for backoffice pages. Omit regions the page does not need.</p>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
@@ -147,8 +138,8 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">App Anatomy</h2>
-    <p class="mb-4">Inside <code>u-layout--app &gt; main</code>, backoffice pages follow a consistent vertical stacking order. Use this to reason about what scrolls and what stays fixed.</p>
+    <h2 class="h4 mb-3">App anatomy</h2>
+    <p class="mb-4">The main region has a consistent stacking order for fixed and scrolling content.</p>
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Stacking order</h3></div>
       <div class="ds-demo-body">
@@ -304,8 +295,8 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Filter Drawer Split</h2>
-    <p class="mb-3">Backoffice result-list pages can keep the split shell on wide screens and turn the facet pane into an explicit drawer below <code>xl</code>. Use this only for work queues and result lists where filters refine the list; settings, detail pages and section navigation keep the ordinary split body.</p>
+    <h2 class="h4 mb-3">Filter drawer split</h2>
+    <p class="mb-3">On backoffice result lists, the facet pane becomes a drawer below <code>xl</code>. Other split pages keep the ordinary pane.</p>
     <div class="ds-code">
       <div class="ds-code-bar"><span class="ds-code-lang">html — backoffice result list</span><button type="button" class="ds-code-copy">Copy</button></div>
 <pre>&lt;div class="u-main__body u-main__body--split u-main__body--filter-drawer"&gt;
@@ -335,12 +326,7 @@
   &lt;/section&gt;
 &lt;/div&gt;</pre>
     </div>
-    <div class="border rounded bg-white p-3 mt-3">
-      <p class="small text-uppercase text-muted fw-semibold mb-2">Rules</p>
-      <p class="mb-2">The modifier is page-scoped: <code>u-main__body--filter-drawer</code> belongs beside <code>u-main__body--split</code> only on backoffice result-list pages.</p>
-      <p class="mb-2">The trigger lives in the result-pane header, close to search, active filters, counts and list actions. The list remains the main subject when the pane is narrow.</p>
-      <p class="mb-0">Use Bootstrap's responsive Offcanvas classes for the drawer mechanics; the Booktower modifier only changes the split grid so the result pane takes the full width below <code>xl</code>.</p>
-    </div>
+    <p class="mt-3 mb-0">Keep the trigger in the result-pane header. Bootstrap owns the Offcanvas interaction; Booktower only changes the split grid. See <code>docs/UI-LAYER.md</code>.</p>
   </section>
 
 </div>

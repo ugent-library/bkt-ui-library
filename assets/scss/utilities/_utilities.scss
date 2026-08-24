@@ -1,18 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════════════════
-   UTILITY CLASSES
-   ═══════════════════════════════════════════════════════════════════════════════
-
-   Bootstrap is the primary utility system for layout, spacing, sizing,
-   alignment, and most color application.
-
-   Booktower utilities are intentionally limited to a very small semantic set
-   that the templates use repeatedly and that Bootstrap does not express with
-   the same design-token meaning.
-
-   For palette steps and one-off token demos, reference the token directly:
-     style="background-color: var(--bt-blue-100)"
-     style="color: var(--bt-text-muted)"
-   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Booktower utilities cover repeated token behavior that Bootstrap cannot express. */
 
 
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
@@ -20,6 +6,16 @@
 /* Bootstrap has no min-width utility; flex children need min-width:0 to allow
    text truncation. Named in Bootstrap's utility style, not bt-*. */
 .min-w-0 { min-width: 0; }
+
+
+/* ── Forms ───────────────────────────────────────────────────────────────────── */
+
+/* Chromium stops growing long field-sized textareas; scroll after this cap. */
+.bt-textarea-auto {
+  max-height: 14rem;
+  overflow-y: auto;
+  field-sizing: content;
+}
 
 
 /* ── Borders ─────────────────────────────────────────────────────────────────── */

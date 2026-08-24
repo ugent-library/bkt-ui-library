@@ -215,6 +215,33 @@ a.btn-danger,
   --bs-btn-active-bg:    var(--bt-gray-50);
 }
 
+/* ── In-place edit ─────────────────────────────────────────────────────────── */
+
+/* The convention for a value edited in place: a dotted rule, no caret.
+   .btn-link checked — it carries button padding and a link's solid underline. */
+.bt-btn-inline-edit {
+  max-width: 100%;
+  padding: 0;
+  color: var(--bt-blue-800);
+  font-weight: 600;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px dotted var(--bt-blue-800);
+  appearance: none;
+}
+
+.bt-btn-inline-edit:hover,
+.bt-btn-inline-edit:focus-visible {
+  color: var(--bt-blue-900);
+  border-bottom-color: var(--bt-blue-900);
+  border-bottom-style: solid;
+}
+
+
 /* ── Loading state ─────────────────────────────────────────────────────────── */
 
 .btn.htmx-request > i,

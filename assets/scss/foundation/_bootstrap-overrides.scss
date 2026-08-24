@@ -1,18 +1,4 @@
-/* ═══════════════════════════════════════════════════════════════════════════════
-   BOOTSTRAP VARIABLE OVERRIDES
-   ═══════════════════════════════════════════════════════════════════════════════
-
-   Only global :root tokens here — things Bootstrap exposes at :root and that
-   are safe to override there.
-
-   Component-scoped overrides (pagination, card, etc.) are at the bottom of
-   this file, scoped to their component class. Bootstrap 5.3 scopes many
-   component variables to their own class, not :root — :root overrides for
-   those have no effect.
-
-   Surface-aware overrides (--bs-secondary-color per surface) live in
-   _surfaces.scss alongside the other surface tokens.
-   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Global Bootstrap tokens only; component and surface overrides stay with their selectors. */
 
 :root {
   /* Typography */
@@ -52,12 +38,7 @@
 }
 
 /* ── Component-scoped overrides ─────────────────────────────────────────────── */
-/*
-  Bootstrap 5.3 scopes component variables to their own class selector, not
-  :root. Any override must match that specificity. Rule of thumb: if the
-  variable name contains a component hint (--bs-pagination-*, --bs-card-*),
-  scope the override to that component's class.
-*/
+/* Bootstrap component variables must be overridden on the component selector. */
 
 .card {
   --bs-card-box-shadow:    var(--bt-shadow-sm);
@@ -70,21 +51,18 @@
   --bs-dropdown-link-active-color: var(--bt-gray-1000);
   --bs-dropdown-link-hover-bg:     var(--bt-gray-50);
   --bs-dropdown-item-padding-y:    0.5rem;
+  --bs-dropdown-header-color:      var(--bt-blue-800);
 }
-// See .bt-dropdown-scroll to extend scrolling behaviour
 
 .dropdown-header {
-  padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
-  font-style: normal;
+  padding: var(--bs-dropdown-item-padding-y, var(--bt-sp-2)) var(--bs-dropdown-item-padding-x, var(--bt-sp-4)) 0;
   font-weight: 600;
-  font-size: 0.875em;
-  text-transform: uppercase;
-  color: var(--bt-gray-500);
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
+  padding: var(--bs-dropdown-item-padding-y, var(--bt-sp-2)) var(--bs-dropdown-item-padding-x, var(--bt-sp-4));
 }
 
 .pagination {

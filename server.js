@@ -1,24 +1,4 @@
-/**
- * Booktower UI Library — dev server. Pure Node.js, zero external dependencies.
- * See docs/SERVER.md.
- *
- * Exports the bare request handler; `node server.js` additionally listens and
- * watches files; the Vercel function (api/index.js) imports the handler alone.
- * See the Deployment section of README.md.
- *
- * HTMX endpoint map + mock content live in server/ :
- *   server/htmx-routes.js   URL → fragment routing for the prototype
- *   server/content.js       the injected research output, researchers, etc.
- *
- * Ports are configurable via env vars (defaults preserve the original
- * behaviour when unset):
- *   PORT       HTTP port            (default 3111)
- *   WS_PORT    live-reload socket   (default 3001; when PORT is set it
- *                                    defaults to PORT+1 so a second instance
- *                                    can run alongside the first without a
- *                                    socket clash). This lets tooling launch
- *                                    a parallel instance on a free port.
- */
+/** Prototype server. Contract: docs/SERVER.md. HTMX routes and fixtures: server/. */
 
 const http    = require('http');
 const fs      = require('fs');
@@ -35,24 +15,8 @@ const ROOT    = __dirname;
 // On Vercel the exported handler is all that runs.
 const IS_DEV  = !process.env.VERCEL;
 
-// ─── Bootstrap delivery: jsDelivr CDN, pinned to 5.3.3 ───────────────────────
-//
-// IMPORTANT, read before "harmonising" with Raven:
-//   booktower-ui-library is a static prototype environment with no bundler.
-//   Bootstrap is loaded from jsDelivr, pinned to a specific version in the URL.
-//   Pinning gives us reproducibility; CDN gives us zero-machinery delivery.
-//
-//   Raven uses a pinned npm package (bootstrap@5.3.3, --save-exact) resolved
-//   by esbuild from node_modules. That is the correct choice there because
-//   Raven already has a bundler and ships production app code.
-//
-//   The two repos solve the same problem (pinned Bootstrap, no drift) with
-//   different mechanisms because they have different runtime shapes. Do not
-//   try to unify them by adding npm-Bootstrap here without first agreeing on
-//   how it would be served (static-mount of node_modules? postinstall copy
-//   into assets/vendor/?) and why the added machinery is worth it.
-//
-// To update Bootstrap: bump the version in BOTH URLs below (CSS + JS bundle).
+// ─── CDN dependencies ─────────────────────────────────────────────────────────
+// This prototype has no bundler. Update both Bootstrap URLs together.
 const DEFAULT_CSS = [
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
   '/assets/booktower.css',
@@ -231,7 +195,6 @@ function parseMetaAndBody(raw, filePath) {
       .replace(/-/g, ' ')
       .replace(/\b\w/g, c => c.toUpperCase());
   }
-  // Parse comma-separated @states into an array
   if (meta.states) {
     meta.stateList = meta.states.split(',').map(s => s.trim()).filter(Boolean);
   }
@@ -239,9 +202,6 @@ function parseMetaAndBody(raw, filePath) {
 }
 
 // ─── State filtering ──────────────────────────────────────────────────────────
-// Strips <!-- @state: name --> ... <!-- @/state --> blocks that don't match
-// the active state. Blocks for the active state have the wrapper comments
-// removed and their content kept. If no activeState, all blocks are shown.
 function filterStateContent(html, activeState) {
   if (!activeState) return html;
   return html.replace(
@@ -249,7 +209,6 @@ function filterStateContent(html, activeState) {
     (match, stateNames) => {
       const states = stateNames.trim().split(/\s+/);
       if (states.includes(activeState)) {
-        // Strip the wrapper comments, keep content
         return match
           .replace(/^<!--\s*@state:\s*[\w][\w\s-]*?\s*-->\s*/, '')
           .replace(/\s*<!--\s*@\/?state\s*-->$/, '');
@@ -284,24 +243,58 @@ function applySidebarActive(fragment, activeKey) {
 }
 
 function resolveIncludes(body, filePath) {
-  return body.replace(/<!--\s*@include:\s*([^\s]+)\s*-->[ \t]*(?:\r?\n[ \t]*<!--\s*@active:\s*([\w-]+)\s*-->)?/g, (match, includePath, activeKey) => {
-    const abs = path.join(ROOT, includePath.trim());
-    if (!fs.existsSync(abs)) {
-      return `<!-- @include not found: ${includePath} -->`;
-    }
-    const raw = fs.readFileSync(abs, 'utf8');
-    const { body: fragment } = parseMetaAndBody(raw, abs);
-    return applySidebarActive(fragment, activeKey);
-  });
+  // The cap stops recursive partials from looping forever.
+  let out = body;
+  for (let depth = 0; depth < 10; depth += 1) {
+    const next = out.replace(/<!--\s*@include:\s*([^\s]+)\s*-->[ \t]*(?:\r?\n[ \t]*<!--\s*@active:\s*([\w-]+)\s*-->)?/g, (match, includePath, activeKey) => {
+      const abs = path.join(ROOT, includePath.trim());
+      if (!fs.existsSync(abs)) {
+        return `<!-- @include not found: ${includePath} -->`;
+      }
+      const raw = fs.readFileSync(abs, 'utf8');
+      const { body: fragment } = parseMetaAndBody(raw, abs);
+      return applySidebarActive(fragment, activeKey);
+    });
+    if (next === out) break;
+    out = next;
+  }
+  return out;
 }
 
 function stripHtmlComments(html) {
   return html.replace(/<!--(?!\s*\[if\b)([\s\S]*?)-->/g, '');
 }
 
+function cloneSourceNote(body, example) {
+  const paints = body
+    .replace(/<template\b[\s\S]*?<\/template>/gi, '')
+    .replace(/<script\b[\s\S]*?<\/script>/gi, '')
+    .trim();
+  if (paints) return '';
+
+  const clone = /<template\b/i.test(body)
+    ? ' It is a clone source: everything in it sits inside <code>&lt;template&gt;</code>, which a host page copies into place at runtime.'
+    : '';
+  const rendered = example
+    ? `\n      <a href="${example}" class="btn btn-primary btn-sm">See it rendered</a>`
+    : '';
+
+  return `<div class="ds-page">
+  <div class="bt-blank-slate bt-blank-slate--muted col-lg-8">
+    <div class="bt-avatar text-bg-primary">
+      <i class="if if-copy" aria-hidden="true"></i>
+    </div>
+    <p>This partial paints nothing on its own.${clone}</p>
+    <div class="d-flex gap-2 justify-content-center">
+      <a href="?view=html" class="btn btn-secondary btn-sm">Read the markup</a>${rendered}
+    </div>
+  </div>
+</div>
+`;
+}
+
 function renderBodyTemplate(raw, filePath, activeState) {
   const { meta, body: rawBody } = parseMetaAndBody(raw, filePath);
-  // No explicit state → first declared @states value is the default.
   const state = activeState || meta.stateList?.[0] || null;
   const resolved = resolveIncludes(rawBody, filePath);
   const stateFiltered = filterStateContent(resolved, state);
@@ -331,6 +324,7 @@ ${footerScripts}
 </body>
 </html>`,
     body,
+    note: cloneSourceNote(body, meta.example),
   };
 }
 
@@ -365,7 +359,7 @@ function renderNavLink(f, currentPath, activeState) {
 }
 
 // ─── Shell injection ──────────────────────────────────────────────────────────
-function injectShell(filePath, html, currentPath, activeState) {
+function injectShell(filePath, html, currentPath, activeState, note = '') {
   if (html.includes('data-bare')) return html;
 
   const nav     = buildNav();
@@ -427,7 +421,7 @@ function injectShell(filePath, html, currentPath, activeState) {
       <kbd title="Toggle sidebar">⌘M</kbd> sidebar &nbsp;·&nbsp; <kbd title="Focus search">⌘K</kbd> search &nbsp;·&nbsp; <kbd title="Cycle states">⌘E</kbd> state
     </div>
   </nav>
-  <main id="bt-content" class="bt-content" tabindex="-1">`;
+  <main id="bt-content" class="bt-content" tabindex="-1">${note}`;
 
   const shellClose = `
   </main>
@@ -484,8 +478,7 @@ const handler = async (req, res) => {
   const [urlPath, queryString = ''] = req.url.split('?');
   const params = Object.fromEntries(new URLSearchParams(queryString));
 
-  // Demo delay — HTMX partial requests to /elements/partials/ get a 1 s artificial delay
-  // so the spinner is visible in the design system demos.
+  // Keep the demo spinner visible for one second.
   if (req.headers['hx-request'] && urlPath.startsWith('/elements/partials/')) {
     const partialPath = path.join(ROOT, urlPath);
     if (!fs.existsSync(partialPath)) {
@@ -501,14 +494,12 @@ const handler = async (req, res) => {
     return;
   }
 
-  // Nav JSON — consumed by shell search
   if (urlPath === '/__nav') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(buildNav()));
     return;
   }
 
-  // Root redirect
   if (urlPath === '/') {
     const nav  = buildNav();
     const dest = nav[0]?.files[0]?.path || '/foundations/tokens.html';
@@ -536,7 +527,9 @@ const handler = async (req, res) => {
   const mime = MIME[ext] || 'application/octet-stream';
 
   if (ext !== '.html') {
-    res.writeHead(200, { 'Content-Type': mime });
+    // Without this, browsers heuristically cache assets and a rebuilt
+    // booktower.css doesn't show until a hard refresh.
+    res.writeHead(200, { 'Content-Type': mime, 'Cache-Control': 'no-store' });
     res.end(fs.readFileSync(filePath));
     return;
   }
@@ -547,7 +540,6 @@ const handler = async (req, res) => {
   const isFullDocument = /<\s*html\b/i.test(html);
   const parsedTemplate = isFullDocument ? null : renderBodyTemplate(html, filePath, activeState);
 
-  // ?view=html — show source with includes resolved
   if (params.view === 'html') {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     const resolvedHtml = parsedTemplate ? parsedTemplate.html : html;
@@ -555,7 +547,6 @@ const handler = async (req, res) => {
     return;
   }
 
-  // ?partial=true — HTMX partial, no shell
   if (params.partial === 'true' || req.headers['hx-request']) {
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
     res.end(parsedTemplate ? parsedTemplate.body : html);
@@ -566,7 +557,7 @@ const handler = async (req, res) => {
     html = parsedTemplate.html;
   }
 
-  html = injectShell(filePath, html, urlPath, activeState);
+  html = injectShell(filePath, html, urlPath, activeState, parsedTemplate?.note);
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end(html);
 };
@@ -574,8 +565,6 @@ const handler = async (req, res) => {
 module.exports = handler;
 
 // ─── Dev server ───────────────────────────────────────────────────────────────
-// Listening sockets and the file watcher are local-only; the Vercel function
-// imports the handler above and nothing else.
 if (IS_DEV) {
   http.createServer(handler).listen(PORT, () => {
     console.log('\n  ◎ Booktower UI Library');

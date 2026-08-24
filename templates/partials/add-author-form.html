@@ -1,23 +1,19 @@
 <!--
-  HTMX partial: add-author form
-  Endpoint: GET /partials/add-author-form
-  Target: #author-form-area in backoffice-deposit-flow.html
+  HTMX partial: the form that adds one person to a work's contributors.
+  GET /deposit/add-author-form into #author-form-area, from deposit-1-0-find.html and
+  deposit-1-1-find.html. Cancel calls DELETE /partials/add-author-form — the same partial
+  under a second name, which is drift for someone to settle.
 
-  People search is handled by people-search.js (data-people-search widget).
-  The form listens for the "people-search:select" event to know when a person
-  is chosen; the widget fills data-ps-id and data-ps-name automatically.
+  Canonical pattern: patterns/people-search.html — click-to-select, single select.
 
-  Prototype:
-    people-search-stub.js intercepts the input event and serves results
-    from a local PEOPLE array. It is the single data source here.
+  "Add author" is copy, not structure. The role select decides what the person is, so a host
+  adding an editor or a supervisor varies the card's label, the heading and the submit. Which
+  roles exist is raven's contributor catalog, not this file.
 
-  Production:
-    Add hx-get="/people/search" (+ hx-trigger/hx-target/hx-indicator) to the
-    input so it calls the real endpoint, and remove people-search-stub.js.
-    POST to /deposit/authors returns updated #author-list content.
+  Prototype: people-search-stub.js is the single data source. In production the input carries
+  hx-get="/people/search", the stub goes, and POST /deposit/authors returns #author-list.
 -->
 
-<!-- real impl: form POST /deposit/authors -->
 <section class="card mt-3" id="add-author-form"
   aria-label="Add author">
   <div class="card-body">
@@ -39,7 +35,7 @@
 
       <div
         data-ps-results
-        class="people-results"
+        class="bt-results"
         role="listbox"
         aria-label="People matching your search"
         hidden>
@@ -49,20 +45,22 @@
         Type a name to search across UGent people and external authors.
       </p>
 
-      <!-- Selected person confirmation slot -->
-      <div data-ps-selected hidden
-        class="d-flex align-items-start gap-3 p-2 mt-2 bg-light border rounded">
-        <span class="people-result__icon" aria-hidden="true">
-          <i class="if if-user if--sm"></i>
-        </span>
-        <div class="flex-grow-1">
-          <div class="people-result__name" data-ps-selected-name></div>
-          <div class="people-result__meta" data-ps-selected-affiliation></div>
+      <!-- Selected person confirmation slot. d-flex would defeat the hidden toggle
+           (display utilities beat [hidden]), so the flex row is the inner div. -->
+      <div data-ps-selected hidden class="p-2 mt-2 bg-light border rounded">
+        <div class="d-flex align-items-start gap-3">
+          <span class="bt-result__icon" aria-hidden="true">
+            <i class="if if-user if--sm"></i>
+          </span>
+          <div class="flex-grow-1">
+            <div class="bt-result__name" data-ps-selected-name></div>
+            <div class="bt-meta-list bt-meta-list--xs" data-ps-selected-affiliation></div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
+            aria-label="Clear selection">
+            <i class="if if-close if--xs" aria-hidden="true"></i>
+          </button>
         </div>
-        <button type="button" class="btn btn-ghost btn-sm" data-ps-clear
-          aria-label="Clear selection">
-          <i class="if if-close if--xs" aria-hidden="true"></i>
-        </button>
       </div>
 
       <!-- Hidden fields filled by people-search.js on selection -->
@@ -136,9 +134,4 @@
   </div>
 </section>
 
-<!--
-  Note: people-search.js and people-search-stub.js must be loaded by the
-  deposit template that hosts this partial, not here.
-  Scripts injected via HTMX innerHTML swap do not execute.
-  See docs/JAVASCRIPT.md.
--->
+<!-- The host loads people-search.js, not this file: a script swapped in by HTMX never runs. -->

@@ -29,6 +29,13 @@
   outline: none;
 }
 
+/* An authored display (e.g. bt-toolbar's flex) silently defeats the hidden attribute;
+   this keeps hidden trustworthy. Display utilities (d-flex) still win — never put one
+   on an element JS toggles with hidden. */
+[hidden] {
+  display: none !important;
+}
+
 .visually-hidden {
   position: absolute !important;
   width: 1px !important;

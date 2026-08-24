@@ -4,19 +4,23 @@
   <header class="ds-page-header col-6">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Search bar</h1>
-    <p class="lead">A pill-shaped search field with an inset submit button. Built as a modifier on Bootstrap's <code>.input-group</code> — Bootstrap handles the flex layout, border joining, and sizing scale; the modifier adds the pill shape, the whole-bar focus ring, and search-cancel suppression.</p>
+    <p class="lead">Search fields for public discovery and compact backoffice filtering.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Default</h2>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Default — <code>.input-group.input-group--hero</code></h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Default, query present — <code>.input-group.input-group--hero</code></h3></div>
       <div class="ds-demo-body">
         <form role="search" class="input-group input-group--hero" aria-label="Search research output" action="/search">
           <label class="visually-hidden" for="search-default">Search research output</label>
-          <input class="form-control" type="search" id="search-default" name="q"
+          <input class="form-control" type="text" inputmode="search" id="search-default" name="q"
+            value="Quantum computing"
             placeholder="Search by title, author, or DOI&hellip;" autocomplete="off">
+          <a class="btn btn-ghost bt-search-clear" href="?" aria-label="Clear search">
+            <i class="if if-close" aria-hidden="true"></i>
+          </a>
           <button class="btn btn-primary" type="submit">Search</button>
         </form>
       </div>
@@ -25,14 +29,14 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Large — hero placement</h2>
-    <p class="mb-4">Add Bootstrap's own <code>.input-group-lg</code> and <code>input-group--hero</code> for the hero variant. Bootstrap scales the input and button; the modifier adjusts only the button inset margin.</p>
+    <p class="mb-4">Use the large hero variant when search is the page’s primary action.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Large — <code>.input-group.input-group--hero.input-group-lg</code></h3></div>
       <div class="ds-demo-body">
         <form role="search" class="input-group input-group--hero input-group-lg" aria-label="Search research output" action="/search">
           <label class="visually-hidden" for="search-lg">Search research output</label>
-          <input class="form-control" type="search" id="search-lg" name="q"
+          <input class="form-control" type="text" inputmode="search" id="search-lg" name="q"
             placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
           <button class="btn btn-primary" type="submit">Search</button>
         </form>
@@ -42,19 +46,23 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Listing / results-header search</h2>
-    <p class="mb-4">The canonical search form in every public listing header — research output, researchers, organizations, projects. Square <code>.input-group-lg</code> (not the hero pill), an autocomplete <code>.bt-suggest-panel</code> overlay, and the full combobox ARIA wiring. The structure is identical on all four pages; only the <em>scope</em> varies — the placeholder and <code>aria-label</code> copy, the <code>action</code>, and the behaviour hook (works carries <code>hx-*</code> for omni-suggest; the directories carry <code>data-directory-search</code> for client-side typeahead). IDs are the generic <code>q</code> / <code>suggest-wrapper</code> / <code>suggest-panel</code> on every page.</p>
+    <p class="mb-4">Public listing headers use the square large variant with a suggestions overlay. The scope changes by page; the structure does not. Works and landing pages keep the fixed <code>q</code>, <code>suggest-wrapper</code>, and <code>suggest-panel</code> ids; directory pages bind structurally through <code>data-directory-search</code>. See <code>docs/JAVASCRIPT.md</code>.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Listing header — <code>.input-group.input-group-lg</code> + <code>.bt-suggest-panel</code></h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Listing header, query present — <code>.input-group.input-group-lg</code> + <code>.bt-suggest-panel</code></h3></div>
       <div class="ds-demo-body">
         <form role="search" aria-label="Search research output" action="/search">
           <div class="position-relative" id="suggest-wrapper">
             <label for="q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
             <div class="input-group input-group-lg">
               <input type="text" inputmode="search" id="q" name="q" class="form-control"
+                value="Quantum computing"
                 placeholder="Search by title, author, DOI, or keyword&hellip;"
                 autocomplete="off" role="combobox" aria-autocomplete="list"
                 aria-controls="suggest-panel" aria-expanded="false">
+              <a class="btn btn-ghost bt-search-clear" href="?access=open" aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <div id="suggest-panel" class="bt-suggest-panel" role="listbox"
@@ -66,14 +74,14 @@
 
     <div class="ds-demo">
       <div class="ds-demo-body">
-        <p class="mb-0"><strong>Rule:</strong> scope varies, structure does not. When adding a fifth listing surface, copy this skeleton verbatim and change only the copy, the <code>action</code>, and the one behaviour hook. Do not rename the IDs — <code>suggest-panel.js</code> binds <code>#q</code> / <code>#suggest-panel</code> / <code>#suggest-wrapper</code>; <code>directory-search.js</code> binds structurally via <code>[data-directory-search]</code>.</p>
+        <p class="mb-0">Clear search removes only the query and preserves filters. Clear all filters belongs with the filter chips. See <code>docs/SEARCH-AND-FILTERING.md</code> for the URL and clear-action contract.</p>
       </div>
     </div>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Suggestions — overlay</h2>
-    <p class="mb-4">What the overlay renders as you type (<code>search-suggest-panel.html</code>, swapped into <code>#suggest-panel</code>): type-filter badges with live counts (<code>badge--lg badge--tab</code>), a submit row, and results grouped by entity type. Every row is a link — a record goes to its detail page, a keyword to a filtered search.</p>
+    <p class="mb-4">Suggestions are grouped by entity type and can be filtered with count tabs. A record opens its detail page; a keyword opens filtered results.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Populated — <code>.bt-suggest-panel</code></h3></div>
@@ -132,7 +140,10 @@
                     <i class="if if-user if--sm text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
                     <div class="min-w-0">
                       <div>Lea <mark>Test</mark>ut <span class="text-muted small">(53)</span></div>
-                      <div class="small text-muted">UGent Alumni · 2020–2024</div>
+                      <div class="bt-meta-list">
+                        <span class="bt-meta-list__item">UGent Alumni</span>
+                        <span class="bt-meta-list__item">2020–2024</span>
+                      </div>
                     </div>
                   </a>
                 </li>
@@ -149,7 +160,11 @@
                     <div class="min-w-0">
                       <div class="badge text-bg-primary mb-1">Journal article</div>
                       <div>Validated <mark>test</mark>s for language research&hellip;</div>
-                      <div class="small text-muted">(2024) Scribes and language use · Vermeiren, Hanke, et al</div>
+                      <div class="bt-meta-list">
+                        <span class="bt-meta-list__item">(2024)</span>
+                        <span class="bt-meta-list__item">Scribes and language use</span>
+                        <span class="bt-meta-list__item">Vermeiren, Hanke, et al</span>
+                      </div>
                     </div>
                   </a>
                 </li>
@@ -164,7 +179,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Suggestions — no match</h2>
-    <p class="mb-4">When the query matches nothing, the overlay renders a no-match variant instead of the suggestion list — no type tabs, the submit row kept so <kbd>&crarr;</kbd> still runs the full search, the query named, a spelling nudge, and Recent (query-independent). Populated-overlay wiring is in <strong>Listing / results-header search</strong> above.</p>
+    <p class="mb-4">With no matches, keep the full-search action, name the query, offer a spelling hint, and show recent searches.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">No match — <code>.bt-suggest-panel</code> empty variant</h3></div>
@@ -237,7 +252,7 @@
               <form role="search" class="input-group input-group--hero input-group-lg mb-4"
                 aria-label="Search research output" action="/search">
                 <label class="visually-hidden" for="search-hero">Search research output</label>
-                <input class="form-control" type="search" id="search-hero" name="q"
+                <input class="form-control" type="text" inputmode="search" id="search-hero" name="q"
                   placeholder='Try "climate change" or "quantum computing"' autocomplete="off">
                 <button class="btn btn-primary" type="submit">Search</button>
               </form>
@@ -256,27 +271,20 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Compact / toolbar search — backoffice</h2>
-    <p class="mb-4">The compact variant for inline filtering inside a <code>.bt-toolbar</code> — filtering a list, searching within a deposit, live-filtering. Plain Bootstrap <code>.input-group</code> (no size modifier, no pill) with <code>.form-control-search</code>. Used in the backoffice overview; not a public-discovery bar.</p>
+    <p class="mb-4">Use the compact variant inside a backoffice toolbar to filter the current list or form.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Compact — <code>.form-control-search</code></h3></div>
       <div class="ds-demo-body">
         <label for="search-compact" class="visually-hidden">Search research output</label>
-        <div class="input-group">
+        <div class="input-group input-group-sm">
           <input type="search" class="form-control form-control-search" id="search-compact"
-            placeholder="Search by title, author, DOI&hellip;">
+            value="quantum" placeholder="Search by title, author, DOI&hellip;">
+          <button type="button" class="btn btn-ghost bt-search-clear" aria-label="Clear search">
+            <i class="if if-close" aria-hidden="true"></i>
+          </button>
           <button class="btn btn-primary" type="button">Search</button>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">What the modifier does — and what it leaves alone</h2>
-    <div class="ds-demo">
-      <div class="ds-demo-body">
-        <p>Bootstrap's <code>.input-group</code> provides: flex layout, border joining between input and button, and the <code>.input-group-lg</code> / <code>.input-group-sm</code> sizing scale.</p>
-        <p class="mb-0"><code>.input-group--hero</code> adds only three things on top: the pill border-radius on the outer wrapper and the input's leading edge; a <code>:focus-within</code> ring on the whole bar as one unit (individual element focus shadows are suppressed); and the native browser search-cancel button is hidden.</p>
       </div>
     </div>
   </section>
@@ -289,20 +297,9 @@
           <li>Wrap in <code>&lt;form role="search"&gt;</code> with a distinct <code>aria-label</code> so screen reader users can jump to the search landmark directly.</li>
           <li>The <code>&lt;label&gt;</code> must exist in the DOM even if visually hidden. <code>placeholder</code> alone is not a label.</li>
           <li>Use <code>type="search"</code> for a standalone search field. When the field is an ARIA combobox, use <code>type="text"</code> with <code>inputmode="search"</code> so the combobox contract remains valid while mobile browsers still show a search-optimized keyboard.</li>
-          <li>The <code>:focus-within</code> ring surrounds the entire pill — individual element outlines are suppressed to avoid a double ring. The ring meets WCAG 2.2 AA contrast requirements.</li>
+          <li>The focus ring surrounds the complete search group.</li>
           <li>The button must be <code>type="submit"</code> so the form submits without JavaScript. <code>action</code> on the <code>&lt;form&gt;</code> is the no-JS fallback.</li>
-          <li>When wiring to HTMX live search, add <code>hx-get</code> on the input and a paired <code>hx-indicator</code> with <code>aria-live="polite"</code>.</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">When to use this vs the toolbar search</h2>
-    <div class="ds-demo">
-      <div class="ds-demo-body">
-        <p>Use <code>.input-group--hero</code> when search is the primary action on the page and deserves visual prominence — homepage hero, a dedicated search landing page, or above a full-width result list.</p>
-        <p class="mb-0">Use the compact <code>.form-control-search</code> inside a <code>.bt-toolbar</code> for inline filtering in the backoffice — filtering a list, searching within a deposit, live-filtering a dropdown. See the <strong>Compact / toolbar search</strong> demo above.</p>
       </div>
     </div>
   </section>

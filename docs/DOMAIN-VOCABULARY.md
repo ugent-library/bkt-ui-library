@@ -109,7 +109,7 @@ separate neutral badge with an icon **and a visible label**: `if-eye Public` or
 `if-eye-off Private` — the icon never stands alone. Public cards never show deposit
 status or record visibility: a deliberate absence, the public card must not leak
 workflow. File access renders as a plain `bt-work-card__meta-item` ("Open",
-"Restricted", "Embargo <start date> – <end date> · Private [if-arrow-right] Open"),
+"Restricted", "Embargo <start date> – <end date> | Private [if-arrow-right] Open"),
 never as a badge on the backoffice.
 
 In the researcher view, a submitted work is awaiting review; its status reads
@@ -150,7 +150,7 @@ pending requests rather than whole-record locks where possible.
 
 "Complete metadata" opens the record's edit form. The researcher fast lane — an edit
 view scoped to the missing fields — is a separate design, out of scope for the
-work-card issues and tracked in `notes/TOPLAN.md`, Backoffice.
+work-card issues and not yet designed.
 
 Missing metadata that affects card scanning can also appear where the value would
 normally sit, as a compact metadata item: `Missing access`, `Missing year`, `Missing
@@ -175,7 +175,7 @@ deletion: a retracted article stays public with a retraction notice (an editoria
 state). **Retraction will be built in raven; the timing is open** —
 the prototype designs ahead: a retracted work carries `badge text-bg-danger`
 "Retracted" on public and backoffice cards (the work stays public; the detail page
-carries the notice). See `notes/TOPLAN.md`, Backoffice.
+carries the notice).
 
 ### Person
 A real-world individual who contributed to research output. May be known only by name (external, unlinked) or linked to a canonical authority record.
@@ -232,6 +232,14 @@ In the UI: surfaces as a change history view on a Work detail page (who changed 
 - **The backoffice card logs three moments**: who created the metadata and when;
   who last changed it and when; and, where the record was also touched by the
   system (an import, a background job), the last system change and when.
+
+### Numbers in the UI
+
+- **Both surfaces** — European notation: a thin space groups every three digits, and a comma marks
+  the decimal. "312&thinsp;000 results", "3&thinsp;300,3".
+- Write the thin space as `&thinsp;`, which is what the kit uses today. It is a breaking space, so a
+  long number can wrap between its groups. Holding the number together needs `&#8239;`, the narrow
+  no-break space, instead. Which one we want is an open question.
 
 ### Names in the UI
 
@@ -318,12 +326,13 @@ In the UI: the deposit flow (`templates/biblio-researcher/deposit-1-0-find.html`
 
 ## Surfaces
 
-Two distinct user contexts. Must never be conflated. Determined by `data-surface` on the outermost layout element.
+Two product layers, declared with `data-surface` on the outermost layout element.
+The layer, not the user's role, determines the surface.
 
-| Surface | `data-surface` value | Users | Primary task |
-|---------|---------------------|-------|-------------|
-| Public | `public` | Researchers, readers, the open web | Discovery, reading, citing |
-| Backoffice | `backoffice` | Curators, librarians, depot workers | Data entry, curation, review |
+| Surface | `data-surface` value | Product layer |
+|---------|----------------------|---------------|
+| Public | `public` | Presents research-output metadata to the wider public |
+| Backoffice | `backoffice` | Enters and manages research-output metadata and its workflow |
 
 ---
 
@@ -397,7 +406,6 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 |----------|------------------|
 | `public-index.html` | Public homepage |
 | `public-works.html` | Work search + results |
-| `public-search-advanced.html` | Advanced search — the query builder as a page |
 | `public-work-detail.html` | Work detail page |
 | `public-researchers.html` | Researcher directory (A–Z browse) |
 | `public-researcher-detail.html` | Researcher profile (PersonIdentity) |
@@ -444,9 +452,12 @@ Directory exists; no templates yet. Proxy dashboard and deposit-on-behalf flow a
 | `search-suggest-panel.html` | Search autocomplete panel |
 | `public-header.html` | Public templates |
 | `public-footer.html` | Public templates |
-| `people-search-widget.html` | Deposit author search |
+| `people-search-widget.html` | Single-select person lookup shell (currently included nowhere — `add-author-form.html` carries its own copy) |
 | `add-author-form.html` | Deposit author add form |
 | `settings-sidebar.html` | All settings pages (section nav inside `u-main__sidebar`) |
+| `filter-editor-templates.html` | Every node `filter-bar.js` clones — chip, four editor bodies, checklist row, picker tick |
+| `filter-option-lists.html` | Stub option lists the filter bars offer (organization, project, keywords) |
+| `people-picker-panel.html` | The shared people picker — checkable rich rows, cloned by the works Author filter and the query builder's Person condition |
 
 **Vocabulary note.** **Work** is the model — raven's entity, its `/works` routes and API. **Research output** is the UI copy, in both languages: *research output* / *onderzoeksoutput*, the word UGent's library already uses with researchers. A template saying "research outputs" over a `/works` route is correct, not drift.
 
@@ -482,7 +493,7 @@ Work access (raven's `Work.Access()`): on **public** cards a badge, and only ope
 `if-lock`, embargo → `badge text-bg-secondary` + `if-time`, naming the date ("Embargo
 until 1 May 2027"), closed → `badge text-bg-secondary`, text only. On **backoffice**
 cards never a badge — a plain `bt-work-card__meta-item` ("Open", "Restricted",
-"Embargo <start date> – <end date> · Private [if-arrow-right] Open" when both
+"Embargo <start date> – <end date> | Private [if-arrow-right] Open" when both
 dates and both access levels are available). The backoffice drops the noun so a
 curator scans a column;
 the public card keeps "Restricted access", which is what a reader outside academia
