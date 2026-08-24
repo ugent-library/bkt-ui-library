@@ -4,51 +4,46 @@ about: Port a booktower-ui-library prototype into raven
 title: "[public][03] Advanced search: the value input per field type"
 ---
 
-<!-- Draft. Query-builder track: docs/wip/README.md. Child of 00. -->
+<!-- Draft. Query-builder track: docs/wip/README.md. Child of epic 00. -->
 
 ## Why
 
-In both old tiers a person is a text box, so you have to know how the name is written, and a search
-for one surname finds everyone who shares it. Here a person row holds the researcher you picked, so it
-shows who it means.
+The old power tiers treat people and organizations as text. A surname can match several
+people, and similar organization names are hard to distinguish. The builder stores the
+record Ans Rapport (faculty communications officer) picked.
 
-Quinn Query (analyst outside the application) pastes rather than types: real batches run to 763
-identifiers. Ans Rapport (faculty communications officer) has to pick the right organization out of
-several similar names, which a text box cannot do for her.
+Quinn Query (external analyst) also needs to paste large identifier batches; observed
+batches reach 763 values.
 
 ## What
 
-- [ ] One control per kind of value, and changing the operator changes the control
-- [ ] `is any of` on the eight select fields takes several values in one row — 22% of authored
-      queries on a closed-vocabulary field carry more than one
-- [ ] Person, organization and project resolve against records, so a row holds who was picked rather
-      than what was typed
-- [ ] A pasted batch reports what it recognised, lists the lines it could not read, and drops nothing
-      silently
-- [ ] A list too long for a durable link says so, and points at Save this search
+- [ ] Each value type has one control, selected by its operator
+- [ ] `is any of` accepts several values for the eight closed-vocabulary fields
+- [ ] Person, organization and project controls store the selected record
+- [ ] Paste reports recognized and unread lines without dropping any silently
+- [ ] A batch too long for a durable link points to Save search
+
+**Prototype:** [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
+and [pattern](https://bkt-ui.vercel.app/patterns/query-builder.html)
 
 > **Screenshot:** a person row with two people and the picker open
 > **Screenshot:** the identifier row with a pasted batch
 
-_The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
-endpoints. UI copy goes through the translation files._
-
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
-Run it locally with `npm start` and the same paths on `localhost:3111`.
-
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query) and
-the [pattern page](https://bkt-ui.vercel.app/patterns/query-builder.html).
+Prototype URLs are placeholders. UI copy uses Raven's translation files.
 
 ## Acceptance criteria
 
-- [ ] Matches the prototype at the source-of-truth path
-- [ ] Passes the pre-flight checklist in `docs/ACCESSIBILITY.md`, plus: each picked value can be
-      removed from the keyboard and is named when it is removed
-- [ ] A pasted batch of several hundred values stays usable in the row
-- [ ] Every value list is read from raven's configured vocabulary, never copied from the lists
-      printed in the field contract
+- [ ] Matches the prototype
+- [ ] Each selected value is keyboard-removable and named when removed
+- [ ] A batch of several hundred values remains usable
+- [ ] Value lists come from Raven's configured vocabularies
+- [ ] Passes `docs/ACCESSIBILITY.md` pre-flight
 - [ ] `make build` passes
 
 ## Dependencies
 
-Blocked by 02, the row it sits in.
+Blocked by issue 02.
+
+## Open questions
+
+Do we need a way to add strings for person, project or organization?

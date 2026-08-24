@@ -4,59 +4,43 @@ about: Port a booktower-ui-library prototype into raven
 title: "[public][07] Advanced search: OR rule groups"
 ---
 
-<!-- Draft. Query-builder track: docs/wip/README.md. Child of 00. -->
+<!-- Draft. Query-builder track: docs/wip/README.md. Child of epic 00. -->
 
 ## Why
 
-A row holds several values of its own field, and rows join with and. What that misses is an
-alternative across two different fields — "in this journal or from this publisher, and published
-since 2015". Expert search expresses it today, so shipping without it takes something from the people
-who wrote those four shapes.
+Rows join with AND. A row can hold several values for one field, but only an OR group
+can express alternatives across fields, such as “in this journal or from this
+publisher.” Expert search supports four observed shapes that need this grouping.
 
-A row becomes a group where it stands, under a legend reading "…where any of these conditions is
-true". The word conditions is load-bearing: without it, a group and a row's own "is any of" read
-identically. The interaction in full: `docs/wip/QUERY-BUILDER-OR-GROUPS.md` in bkt-ui-library.
+The group legend says “any of these conditions” so it does not read like one row's
+`is any of` value list.
 
 ## What
 
-- [ ] A group sits anywhere a row can, so nothing moves when one becomes the other
-- [ ] One level deep: an alternative is always a single condition
-- [ ] Removing alternatives down to one turns the group back into a plain row
-- [ ] A group and a plain row are told apart when read aloud, not only when seen
-- [ ] The control that ends a group reads "Split into 'and' rows", because the click turns "either
-      of these" into "both of these" and usually empties the set
-- [ ] `TBD` The reverse is suggested where it is needed: a query matching nothing, with two rows on one
-      field, suggests making those rows a group. Whether the zero-result state diagnoses causes
-      at all is 04's open question. Nothing is prevented and nothing is auto-dropped
-- [ ] Back undoes it, because the address carries the query
+- [ ] A row becomes a group without moving
+- [ ] Groups are one level deep; each alternative is one condition
+- [ ] Removing alternatives down to one restores a plain row
+- [ ] Spoken output distinguishes a group from a row
+- [ ] “Split into AND rows” replaces the group with conditions that must all match
+- [ ] Back restores the previous query because the address holds the group
+- [ ] No condition is blocked or removed automatically
+
+Issue 04 decides whether zero results suggest turning same-field rows into an OR group.
+
+**Prototype:** [OR group](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-or-group)
 
 > **Screenshot:** a group of two alternatives, `?state=builder-or-group`
 
-_The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
-endpoints. UI copy goes through the translation files._
-
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
-Run it locally with `npm start` and the same paths on `localhost:3111`.
-
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-or-group) at
-`?state=builder-or-group`.
+Prototype URLs are placeholders. UI copy uses Raven's translation files.
 
 ## Acceptance criteria
 
-- [ ] Matches the prototype at the source-of-truth path
-- [ ] Passes the pre-flight checklist in `docs/ACCESSIBILITY.md`, plus: the grouping is announced,
-      not only drawn, and each control names which alternative it belongs to
+- [ ] Matches the prototype
+- [ ] The group is announced, not only drawn
+- [ ] Each control names its alternative
+- [ ] Passes `docs/ACCESSIBILITY.md` pre-flight
 - [ ] `make build` passes
 
 ## Dependencies
 
-Blocked by 02, and by the address decision in the epic, which has to carry a choice between
-alternatives.
-
-## Open questions
-
-- **Whether the zero-result state names its causes.** The prototype draws two recoveries in
-  place: a misspelled value marked on its row, and a same-field pair carrying "Remove a
-  condition, or turn one into an 'or' group". The pair reads from the query's own
-  structure; the spelling mark needs an answer the search has to produce. Options: a generic
-  zero-result state, the pair suggestion only, or both. (Team, with a developer's view.)
+Blocked by issue 02 and the epic's address decision.

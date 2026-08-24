@@ -4,52 +4,44 @@ about: Port a booktower-ui-library prototype into raven
 title: "[public][02] Advanced search: condition rows and the field chooser"
 ---
 
-<!-- Draft. Query-builder track: docs/wip/README.md. Child of 00. -->
+<!-- Draft. Query-builder track: docs/wip/README.md. Child of epic 00. -->
 
 ## Why
 
-The old advanced form gives you a fixed ladder of five rows, one field each, in the order it prints
-them. Anything else means expert search and its query language.
-
-Here a query is a list of rows under one heading that says how they join. The field name is the
-control that starts each row, so changing what a condition asks never means deleting the row and
-building it again.
-
-Ans Rapport (faculty communications officer) has no repository vocabulary. She has to recognise her
-field by its name, in a list she can read.
+Current Advanced search fixes five fields in one order. Other combinations require
+Expert search and its query language. The builder lets Ans Rapport (faculty
+communications officer) choose fields by recognizable public labels and change a row
+without rebuilding it.
 
 ## What
 
-- [ ] The condition row, in the anatomy depending on the selected field
-- [ ] The twenty-one public fields, each showing the operators and the qualifier of the field
-- [ ] Picking a field in the chooser replaces that row's field in place, and the chooser is
-      searchable
-- [ ] Two rows on one field are allowed. For instance: a second Person row means both people,
-      which is not possible. `TBD` When such a query matches nothing, a suggestion to turn
-      the rows into a group could help the reader recover (described in 07, open question).
-- `out of scope` The value inputs behind each operator — 03
-- `out of scope` The count on the submit — 04
+- [ ] Each row follows the selected field's anatomy
+- [ ] The chooser offers the 21 public fields from the field contract and is searchable
+- [ ] Changing the field replaces that row in place
+- [ ] Two rows may use one field; two Person rows require both people to match
+- `out of scope` Value controls — issue 03
+- `out of scope` Approximate count — issue 04
+
+If two same-field rows find nothing, the interface may suggest an OR group. Issue 04
+owns that recovery decision.
+
+**Prototype:** [full query](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
+and [empty builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-empty)
 
 > **Screenshot:** the builder with several condition rows (`templates/biblio-public/public-works.html?state=builder-full-query`)
 > **Screenshot:** the field chooser open over a row
 
-_The prototype governs the visible page and markup. Prototype URLs are placeholders, not real
-endpoints. UI copy goes through the translation files._
-
-**Source of truth:** [bkt-ui-library](https://github.com/ugent-library/bkt-ui-library), deployed at [bkt-ui.vercel.app](https://bkt-ui.vercel.app).
-Run it locally with `npm start` and the same paths on `localhost:3111`.
-
-View the [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query) and
-its blank state, `?state=builder-empty`.
+Prototype URLs are placeholders. UI copy uses Raven's translation files.
 
 ## Acceptance criteria
 
-- [ ] Matches the prototype at the source-of-truth path
-- [ ] Passes the pre-flight checklist in `docs/ACCESSIBILITY.md`, plus: every row control carries
-      a name that identifies its own row, and the list announces a row arriving or leaving
+- [ ] Matches the prototype
+- [ ] Every row control names its row
+- [ ] Adding and removing a row is announced
+- [ ] Passes `docs/ACCESSIBILITY.md` pre-flight
 - [ ] `make build` passes
 
 ## Dependencies
 
-Blocked by the address decision in the epic. The Licence row additionally waits on raven indexing a
-field it already carries, which a developer should scope first.
+Blocked by the epic's address decision. Licence also requires Raven to expose the
+field to public search.

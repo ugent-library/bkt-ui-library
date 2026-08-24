@@ -5,7 +5,8 @@ title: "[public][01] Make power-search usage measurable: request method, and whi
 labels: backend
 ---
 
-<!-- Draft, not filed: to discuss with the lead developer first. Query-builder track
+<!-- Draft. Query-builder track: docs/wip/README.md. Child of epic 00.
+     To discuss with the lead developer first. Query-builder track
      (docs/wip/QUERY-BUILDER-BET.md). Backend and measurement, no UI. -->
 
 ## Why
