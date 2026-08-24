@@ -16,7 +16,16 @@ for (const d of dirs) {
       if (e.isDirectory()) walk(f);
       else if (/\.(scss|js)$/.test(e.name) && !skip.test(f)) files.push(f);
     }
-  })(dir);
+})(dir);
+}
+
+const kitDirs = ['foundations', 'elements', 'patterns', 'getting-started'];
+const kitFiles = [];
+for (const name of kitDirs) {
+  const dir = path.join(root, name);
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith('.html')) kitFiles.push(path.join(dir, entry.name));
+  }
 }
 
 const DEAD = /^\s*(\/\/|\/\*)\s*-{0,2}[a-z][-a-z]*\s*:\s*[^;]+;/i;
@@ -29,6 +38,19 @@ for (const file of files) {
   });
 }
 
+const DIRECTIVE = /^\s*@(title|surface|state|states|include|active|example)\b/;
+const WARNING = /^\s*warning:\s+[\s\S]*\bdocs\/\S+/i;
+
+for (const file of kitFiles) {
+  const src = fs.readFileSync(file, 'utf8');
+  for (const match of src.matchAll(/<!--([\s\S]*?)-->/g)) {
+    const body = match[1].trim();
+    if (DIRECTIVE.test(body) || WARNING.test(body)) continue;
+    const line = src.slice(0, match.index).split('\n').length;
+    hits.push(`${path.relative(root, file)}:${line}  hidden kit-page prose`);
+  }
+}
+
 if (hits.length) {
   console.error(
     'Code commented out rather than deleted (docs/CODE-COMMENTS.md):\n  ' +
@@ -37,4 +59,4 @@ if (hits.length) {
   );
   process.exit(1);
 }
-console.log(`check-comments: ${files.length} files clean.`);
+console.log(`check-comments: ${files.length} code files and ${kitFiles.length} kit pages clean.`);

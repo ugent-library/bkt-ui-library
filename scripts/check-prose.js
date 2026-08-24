@@ -5,6 +5,8 @@ const instructionLimits = {
   'CLAUDE.md': { lines: 20, words: 100 },
   'docs/SPEC-WRITING.md': { lines: 150, words: 1300 },
   'docs/CODE-COMMENTS.md': { lines: 90, words: 650 },
+  'docs/JAVASCRIPT.md': { lines: 230, words: 1600 },
+  'docs/KIT-PAGES.md': { lines: 90, words: 650 },
   'docs/ISSUE-TEMPLATE.md': { lines: 80, words: 450 },
   'docs/PRODUCT-BET-TEMPLATE.md': { lines: 70, words: 350 },
   '.claude/rules/prose.md': { lines: 30, words: 180 },
