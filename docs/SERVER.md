@@ -53,6 +53,21 @@ This makes it possible to run a **second instance alongside a server you already
 - **HTMX Support**: `?partial=true` strips shell for HTMX partial responses.
 - **HTML Source View**: `?view=html` shows page source with copy button.
 
+## Add-to-list prototype routes
+
+The list routes model the interaction shown in `patterns/panel.html`; Raven owns the production
+endpoints.
+
+- `GET /lists/panel?work=<id>` returns the lazy-loaded panel body. The work id becomes the prefix
+  for every panel id, so several result cards can open panels without collisions.
+- `GET /lists?q=<text>` replaces the checklist. The search input triggers on `input` and `search`,
+  not `keyup`, so the native clear control also refreshes the list.
+- `POST /lists` creates a list and returns it selected. `PUT /lists/<slug>` and
+  `DELETE /lists/<slug>` update membership without replacing the checklist, so the typed query and
+  open panel stay in place.
+
+The fixture does not persist membership after a later checklist render.
+
 ## URL Parameters
 
 - `?partial=true`: Returns HTML without shell chrome (for HTMX swaps).

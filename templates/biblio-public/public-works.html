@@ -755,146 +755,36 @@
             <!-- Actions, set level — the counterpart of a work card's Add to list / Cite row.
                  Which action sits here and which is a panel: patterns/query-builder.html. -->
             <div class="bt-toolbar__item">
-              <div class="dropdown">
+              <div class="dropdown" data-result-actions>
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
-                  <i class="if if-bookmark-line" aria-hidden="true"></i>
-                  Save search
+                  data-bs-toggle="dropdown" aria-expanded="false" data-result-actions-toggle>
+                  <i class="if if-more" aria-hidden="true"></i>
+                  Actions
                 </button>
-                <!-- real impl: form POST /saved-searches, login required -->
-                <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
-                  <label class="form-label" for="save-search-name">Name this search</label>
-                  <input type="text" class="form-control mb-2" id="save-search-name"
-                    value="Quantum computing &mdash; open access, 2015&ndash;2020">
-                  <p class="form-text mt-0">
-                    A saved search keeps running: open it later and it returns what matches then.
-                    It is also how a search too long for a link travels. Saving asks you to log in.
-                  </p>
-                  <button type="button" class="btn btn-secondary btn-sm">Save</button>
-                </div>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#save-search-modal">
+                      <i class="if if-bookmark-line if--sm me-2" aria-hidden="true"></i>
+                      Save search
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#share-search-modal">
+                      <i class="if if-share if--sm me-2" aria-hidden="true"></i>
+                      Share search
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#export-modal">
+                      <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                      Export research outputs
+                    </button>
+                  </li>
+                </ul>
               </div>
-            </div>
-
-            <div class="bt-toolbar__item">
-              <div class="dropdown">
-                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
-                  <i class="if if-share" aria-hidden="true"></i>
-                  Share
-                </button>
-                <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
-                  <ul class="nav nav-tabs mb-3" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="share-tab-link" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-link"
-                        aria-controls="share-panel-link" aria-selected="true">Link</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="share-tab-embed" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-embed"
-                        aria-controls="share-panel-embed" aria-selected="false">Embed</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="share-tab-api" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-api"
-                        aria-controls="share-panel-api" aria-selected="false">API</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="share-tab-feed" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-feed"
-                        aria-controls="share-panel-feed" aria-selected="false">Feed</button>
-                    </li>
-                  </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane fade show active" id="share-panel-link" role="tabpanel"
-                      aria-labelledby="share-tab-link">
-                      <p>Bookmark or send this search. The link re-runs it, so it always shows what matches today.</p>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-url">https://biblio.ugent.be/works?{query}</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-url">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy link</span>
-                      </button>
-                      <p class="form-text mb-0">
-                        The link carries the query, never whether the builder was open. Placeholder:
-                        the public URL grammar is raven's to design.
-                      </p>
-                    </div>
-
-                    <div class="tab-pane fade" id="share-panel-embed" role="tabpanel"
-                      aria-labelledby="share-tab-embed">
-                      <p>Show a live list of these results on a department page or personal site.</p>
-                      <!-- Sort is new; citation style is the legacy ;style=apa and the info block the
-                           legacy ;hide_info=1 — the only two embed parameters in the wild. -->
-                      <div class="row g-3 mb-3">
-                        <div class="col-12 col-md-6">
-                          <label class="form-label" for="share-embed-sort">Sort</label>
-                          <select class="form-select form-select-sm" id="share-embed-sort">
-                            <option selected>Newest first</option>
-                            <option>Oldest first</option>
-                            <option>Most relevant</option>
-                          </select>
-                        </div>
-                        <div class="col-12 col-md-6">
-                          <label class="form-label" for="share-embed-style">Citation style</label>
-                          <select class="form-select form-select-sm" id="share-embed-style">
-                            <option selected>APA</option>
-                            <option>MLA</option>
-                            <option>Chicago</option>
-                            <option>Vancouver</option>
-                          </select>
-                        </div>
-                        <div class="col-12">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="share-embed-info" checked>
-                            <label class="form-check-label" for="share-embed-info">Show the Biblio info block</label>
-                          </div>
-                        </div>
-                      </div>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-embed">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" width="100%" height="600" title="Research output — Biblio, Ghent University"&gt;&lt;/iframe&gt;</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-embed">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy embed code</span>
-                      </button>
-                    </div>
-
-                    <div class="tab-pane fade" id="share-panel-api" role="tabpanel"
-                      aria-labelledby="share-tab-api">
-                      <p>Read these results from your own application, or refresh them into Excel or Power BI.</p>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-api">GET https://biblio.ugent.be/api/works?{query}&amp;format=json</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-api">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy request</span>
-                      </button>
-                      <p class="form-text mb-0">
-                        Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
-                        is raven's to define.
-                      </p>
-                    </div>
-
-                    <div class="tab-pane fade" id="share-panel-feed" role="tabpanel"
-                      aria-labelledby="share-tab-feed">
-                      <p>Follow this search in a feed reader. New matching research output arrives as it is published.</p>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-feed">https://biblio.ugent.be/feed/search?{query}</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-feed">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy feed address</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bt-toolbar__item">
-              <button type="button" class="btn btn-ghost btn-sm"
-                data-bs-toggle="modal" data-bs-target="#export-modal">
-                <i class="if if-download" aria-hidden="true"></i>
-                Export
-              </button>
             </div>
           </div>
         </div>
@@ -1900,9 +1790,153 @@
   </main>
 </div>
 
+<!-- Save search requires a name and a login in the real implementation. -->
+<div class="modal fade" id="save-search-modal" tabindex="-1" data-result-actions-modal
+  aria-labelledby="save-search-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="save-search-modal-title">Save search</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- real impl: form POST /saved-searches, login required -->
+        <label class="form-label" for="save-search-name">Name this search</label>
+        <input type="text" class="form-control mb-2" id="save-search-name"
+          value="Quantum computing &mdash; open access, 2015&ndash;2020">
+        <p class="form-text mb-0">
+          A saved search keeps running: open it later and it returns what matches then.
+          It is also how a search too long for a link travels. Saving asks you to log in.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share search modal — each address reruns the search instead of freezing its results. -->
+<div class="modal fade" id="share-search-modal" tabindex="-1" data-result-actions-modal
+  aria-labelledby="share-search-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="share-search-modal-title">Share search</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs mb-3" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="share-tab-link" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-link"
+              aria-controls="share-panel-link" aria-selected="true">Link</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="share-tab-embed" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-embed"
+              aria-controls="share-panel-embed" aria-selected="false">Embed</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="share-tab-api" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-api"
+              aria-controls="share-panel-api" aria-selected="false">API</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="share-tab-feed" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-feed"
+              aria-controls="share-panel-feed" aria-selected="false">Feed</button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="share-panel-link" role="tabpanel"
+            aria-labelledby="share-tab-link">
+            <p>Bookmark or send this search. The link re-runs it, so it always shows what matches today.</p>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-url">https://biblio.ugent.be/works?{query}</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-url">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy link</span>
+            </button>
+            <p class="form-text mb-0">
+              The link carries the query, never whether the builder was open. Placeholder:
+              the public URL grammar is raven's to design.
+            </p>
+          </div>
+
+          <div class="tab-pane fade" id="share-panel-embed" role="tabpanel"
+            aria-labelledby="share-tab-embed">
+            <p>Show a live list of these results on a department page or personal site.</p>
+            <!-- Sort is new; citation style is the legacy ;style=apa and the info block the
+                 legacy ;hide_info=1 — the only two embed parameters in the wild. -->
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="share-embed-sort">Sort</label>
+                <select class="form-select form-select-sm" id="share-embed-sort">
+                  <option selected>Newest first</option>
+                  <option>Oldest first</option>
+                  <option>Most relevant</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="share-embed-style">Citation style</label>
+                <select class="form-select form-select-sm" id="share-embed-style">
+                  <option selected>APA</option>
+                  <option>MLA</option>
+                  <option>Chicago</option>
+                  <option>Vancouver</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="share-embed-info" checked>
+                  <label class="form-check-label" for="share-embed-info">Show the Biblio info block</label>
+                </div>
+              </div>
+            </div>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-embed">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" width="100%" height="600" title="Research output — Biblio, Ghent University"&gt;&lt;/iframe&gt;</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-embed">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy embed code</span>
+            </button>
+          </div>
+
+          <div class="tab-pane fade" id="share-panel-api" role="tabpanel"
+            aria-labelledby="share-tab-api">
+            <p>Read these results from your own application, or refresh them into Excel or Power BI.</p>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-api">GET https://biblio.ugent.be/api/works?{query}&amp;format=json</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-api">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy request</span>
+            </button>
+            <p class="form-text mb-0">
+              Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
+              is raven's to define.
+            </p>
+          </div>
+
+          <div class="tab-pane fade" id="share-panel-feed" role="tabpanel"
+            aria-labelledby="share-tab-feed">
+            <p>Follow this search in a feed reader. New matching research output arrives as it is published.</p>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-feed">https://biblio.ugent.be/feed/search?{query}</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-feed">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy feed address</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Export research outputs modal — formats + citation style. JCR/impact toggle
      deliberately omitted (not exposed publicly). Endpoints are stubs. -->
-<div class="modal fade" id="export-modal" tabindex="-1"
+<div class="modal fade" id="export-modal" tabindex="-1" data-result-actions-modal
   aria-labelledby="export-modal-title">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1971,5 +2005,6 @@
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>
 <script src="/assets/js/query-builder.js"></script>
+<script src="/assets/js/result-actions.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->
