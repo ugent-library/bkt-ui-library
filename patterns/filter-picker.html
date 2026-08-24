@@ -5,88 +5,168 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Filter picker &amp; editor</h1>
-    <p class="lead">One connected interaction: a grouped filter menu (the picker) and an inline editor panel that opens when a filter is chosen, with applied filters shown as chips. Live on the public <strong>works</strong> page and the <strong>researcher</strong> / <strong>project</strong> directories, all driven by one engine — <code>filter-bar.js</code>.</p>
+    <p class="lead">Add high-cardinality filters without crowding the sidebar. The picker chooses a dimension, the editor sets its value, and chips show the applied state.</p>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       HOW IT WORKS
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">How it works</h2>
-    <p>The full flow, end to end:</p>
-    <ol class="small">
-      <li>User clicks <strong>Add filter</strong> → Bootstrap dropdown opens showing the picker</li>
-      <li>User clicks a filter item (e.g. <em>Organization</em>) → dropdown closes, editor panel appears over the result list</li>
-      <li>User sets a value → clicks <strong>Apply</strong> → editor closes, a chip appears in the active filter bar</li>
-      <li>User clicks a chip → editor reopens pre-populated for editing</li>
-      <li>User clicks × on a chip → filter removed</li>
-    </ol>
-    <p>Wired by <code>filter-bar.js</code> — one engine, and no filter set inside it. A bar announces itself with <code>data-filter-bar="&lt;prefix&gt;"</code>; each picker button carries its own definition (<code>data-filter-label</code>, <code>data-filter-type</code>, and then <code>data-filter-options</code>, <code>data-filter-panel</code>, <code>data-filter-placeholder</code>, or <code>data-filter-yes</code>/<code>data-filter-no</code>), so the picker list <em>is</em> the filter set. Chips are client-side only in the prototype.</p>
+    <h2 class="h4 mb-3">The complete pattern</h2>
+    <p class="mb-4">A <a href="/patterns/toolbar.html"><code>bt-toolbar</code></a> holds the active chips, Add filter picker, and Clear all filters action.</p>
 
-    <p class="mb-3">The examples below are written out. The running bar clones the same shapes from <code>templates/partials/filter-editor-templates.html</code>, reads its option lists from <code>templates/partials/filter-option-lists.html</code>, and clones a picker filter's body from the panel partial its button names. Each partial is included once per page carrying a bar that uses it.</p>
-
-    <p class="mb-0">Every editor carries the same three actions: <strong>Apply</strong>, <strong>Cancel</strong>, and <strong>Remove filter</strong> pushed right with <code>ms-auto</code>. Remove is drawn whether or not the filter is applied yet — one footer, one shape, so the panel does not change under you between a first open and a re-open. Removing something that was never applied does nothing, which is what Cancel does anyway.</p>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Filter bar with two applied filters</h3>
+      <div class="ds-demo-body">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Person is Jane Doe"><span class="fw-light">Person:</span> Jane Doe</button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Person is Jane Doe"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                </div>
+                <div class="filter-chip-group">
+                  <button type="button" class="badge badge--outline" aria-label="Edit filter: Keywords is Climate change"><span class="fw-light">Keywords:</span> Climate change</button>
+                  <button type="button" class="badge badge--outline" aria-label="Remove filter: Keywords is Climate change"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="bt-toolbar__item">
+              <div class="dropdown">
+                <button class="btn btn-ghost btn-sm" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
+                </button>
+                <div class="dropdown-menu p-0">
+                  <div class="bt-dropdown-scroll">
+                    <button class="dropdown-item" type="button">Person</button>
+                    <button class="dropdown-item" type="button">Organization</button>
+                    <button class="dropdown-item" type="button">Project</button>
+                    <button class="dropdown-item" type="button">Keywords</button>
+                    <button class="dropdown-item" type="button">Identifier</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bt-toolbar__item">
+              <button type="button" class="btn btn-ghost btn-sm">
+                <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       1. PICKER
-  ══════════════════════════════════════════════════════════════════════════ -->
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Interaction</h2>
+    <ol class="mb-3">
+      <li>Open <strong>Add filter</strong> and choose a dimension.</li>
+      <li>Set one or more values in the editor, then apply them.</li>
+      <li>Use the chip label to reopen and edit the filter.</li>
+      <li>Use the chip's &times; to remove one filter, or Clear all filters to remove every filter.</li>
+    </ol>
+    <p class="mb-0">The editor opens below its trigger and overlays the result list. On small screens, it flows inside the single Filters tray.</p>
+  </section>
+
   <section class="ds-section">
     <h2 class="h4 mb-3">Picker</h2>
-    <p class="mb-4">A short, flat list of <code>[data-filter]</code> items in a <code>bt-dropdown-scroll</code> — no search input on the <em>picker</em> itself, because each filter set is small enough to scan. The researcher directory offers Organization; the project directory offers status and a year range, and no Organization, because project participation is deferred in raven's data contract; public works uses the search-it set — Person, Organization, Project, Keywords, Identifier (grouped with <code>dropdown-header</code> labels). Searching happens inside the editor, not the picker.</p>
+    <p class="mb-4">Keep the list short and scannable. Group larger sets by meaning; leave small directory-specific sets flat. Searching happens inside the editor.</p>
 
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Project directory picker</h3>
-      <div class="ds-demo-body">
-        <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
-          <div class="bt-dropdown-scroll">
-            <button class="dropdown-item" type="button" data-filter="status"
-              data-filter-label="Status" data-filter-type="boolean"
-              data-filter-yes="Active" data-filter-no="Completed">Status (active / completed)</button>
-            <button class="dropdown-item" type="button" data-filter="year"
-              data-filter-label="Year" data-filter-type="year-range">Year</button>
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <div class="ds-demo h-100">
+          <h3 class="ds-demo-label">Grouped public works picker</h3>
+          <div class="ds-demo-body">
+            <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
+              <div class="bt-dropdown-scroll">
+                <div role="group" aria-label="People and organizations">
+                  <div class="dropdown-header" aria-hidden="true">People &amp; organizations</div>
+                  <button class="dropdown-item" type="button">Person</button>
+                  <button class="dropdown-item active" type="button" aria-current="true">
+                    Organization
+                    <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <div role="group" aria-label="Context">
+                  <div class="dropdown-header" aria-hidden="true">Context</div>
+                  <button class="dropdown-item" type="button">Project</button>
+                </div>
+                <div role="group" aria-label="Topic and identifiers">
+                  <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
+                  <button class="dropdown-item" type="button">Keywords</button>
+                  <button class="dropdown-item" type="button">Identifier</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="ds-demo h-100">
+          <h3 class="ds-demo-label">Flat project directory picker</h3>
+          <div class="ds-demo-body">
+            <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
+              <div class="bt-dropdown-scroll">
+                <button class="dropdown-item" type="button" data-filter="status"
+                  data-filter-label="Status" data-filter-type="boolean"
+                  data-filter-yes="Active" data-filter-no="Completed">Status (active / completed)</button>
+                <button class="dropdown-item" type="button" data-filter="year"
+                  data-filter-label="Year" data-filter-type="year-range">Year</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+    <p class="mt-4 mb-0">Applied and currently edited items use the active state, a check icon, and <code>aria-current="true"</code>, as Organization does above.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       1b. PICKER — SELECTED / APPLIED ITEMS
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">Picker — selected / applied items</h2>
-    <p class="mb-3">When a filter is already applied (or is the one currently being edited), its picker item is marked with Bootstrap's <code>.active</code> state plus a trailing check icon. Reopening the picker then shows at a glance which dimensions are in play — without this, an applied filter looks identical to an unused one. Driven by <code>aria-current="true"</code> for assistive tech.</p>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Selected / applied items</h3>
-      <div class="ds-demo-body">
-        <div class="dropdown-menu p-0 show position-static shadow-none border d-inline-block">
-          <div class="bt-dropdown-scroll">
-            <button class="dropdown-item active" type="button" aria-current="true">
-              Organization
-              <i class="if if-check if--xs ms-auto" aria-hidden="true"></i>
-            </button>
-            <button class="dropdown-item" type="button">Year</button>
-          </div>
-        </div>
-      </div>
+    <h2 class="h4 mb-3">Choose an editor</h2>
+    <div class="table-responsive mb-5">
+      <table class="table align-middle" aria-label="Filter editor types">
+        <thead>
+          <tr>
+            <th scope="col">Editor</th>
+            <th scope="col">Use for</th>
+            <th scope="col">Examples</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Record picker</th>
+            <td>High-cardinality records resolved by search</td>
+            <td>Person, Organization, Project</td>
+          </tr>
+          <tr>
+            <th scope="row">Checklist</th>
+            <td>One or more values from a controlled set</td>
+            <td>Keywords</td>
+          </tr>
+          <tr>
+            <th scope="row">Text</th>
+            <td>One value whose scheme is detected</td>
+            <td>DOI, ISSN, ISBN, arXiv ID, handle</td>
+          </tr>
+          <tr>
+            <th scope="row">Boolean</th>
+            <td>Two mutually exclusive values</td>
+            <td>Active or completed</td>
+          </tr>
+          <tr>
+            <th scope="row">Year range</th>
+            <td>An optional lower bound, upper bound, or both</td>
+            <td>Project year</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <p class="small mt-4 mb-0">The <code>.active</code> fill is recoloured via <code>--bs-dropdown-link-active-bg: var(--bt-blue-200)</code> and <code>--bs-dropdown-link-active-color: rgba(var(--bs-dark-rgb), 1)</code> (text-dark) — a global <code>--bs-dropdown-*</code> override in <code>foundation/_bootstrap-overrides.scss</code>.</p>
+    <p class="mb-5"><strong>Record picker.</strong> Search matches the whole result row, including identifiers. Apply replaces the selected set without reordering it. See <a href="/patterns/people-search.html#checkable-rich-rows">people search</a> for the canonical rich checklist row.</p>
 
-    <p class="small text-muted mt-3 mb-0"><code>filter-bar.js</code> toggles this from the active-filter state on every apply / remove / clear, and while a filter is being edited. Picking an item closes the picker and opens the editor, so the highlight is what you see when you reopen <strong>Add filter</strong>.</p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       2. EDITOR — CHECKLIST
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Editor — checklist</h2>
-    <p class="mb-4">Used for pick-from-a-set values — the works Keywords filter. Person, Organization and Project pick records instead — <a href="#editor-picker">below</a>. Multiple selections produce a chip like "Climate change +2". The <code>.bt-panel__body--checklist</code> container scrolls when long, and lists over 8 items get a <strong>search-within</strong> box above the list to filter the options as you type.</p>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Checklist</h3>
+    <div class="ds-demo mb-5">
+      <h3 class="ds-demo-label">Checklist editor</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-checklist-title" aria-modal="false">
           <p class="bt-panel__title" id="fe-checklist-title">Keywords</p>
@@ -116,28 +196,28 @@
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       2b. EDITOR — PEOPLE
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section" id="editor-picker">
-    <h2 class="h4 mb-3">Editor — picker</h2>
-    <p class="mb-3">The works <strong>Person</strong>, <strong>Organization</strong> and <strong>Project</strong> filters pick records, so each opens its entity&rsquo;s picker panel: two records share a label, and the row is what tells them apart. The query builder&rsquo;s conditions clone the same panels. The person panel is canonical at <a href="/patterns/people-search.html#checkable-rich-rows">people search &mdash; checkable rich rows</a>; the organization and project rows are stand-ins, their design task logged in the panel partials.</p>
-    <p class="mb-3">Apply replaces the set. An applied row is held by identifier, never by the label on screen.</p>
-    <p class="mb-3">A ticked value stays where the reader found it — the list order never changes on selection. Baymard's testing found users lose a value that moves out of its spot (<a href="https://baymard.com/blog/how-to-design-applied-filters">How to Design "Applied Filters"</a>); the applied overview is the chip bar here, and the row's tokens in the query builder.</p>
-    <p class="mb-0">Search-within matches the whole row, so an ORCID or a department code finds a person as a name does. That is intended: someone holding the identifier should not need the spelling.</p>
-  </section>
+    <div class="ds-demo mb-5">
+      <h3 class="ds-demo-label">Text editor</h3>
+      <div class="ds-demo-body">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-text-title" aria-modal="false">
+          <p class="bt-panel__title" id="fe-text-title">Identifier</p>
+          <div class="bt-panel__body">
+            <label for="demo-text-val" class="visually-hidden">Identifier</label>
+            <input type="text" id="demo-text-val" class="form-control form-control-sm"
+              placeholder="DOI, ISSN, ISBN, arXiv, or handle&hellip;" value="1476-4687" autocomplete="off">
+          </div>
+          <div class="bt-panel__actions">
+            <button type="button" class="btn btn-primary btn-sm">Apply</button>
+            <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
+            <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto">Remove filter</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       3. EDITOR — BOOLEAN
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Editor — boolean</h2>
-    <p class="mb-4">Used for yes/no filters — the project directory's Status is the one that is live; current-or-alumni and has-public-research-output are the same shape. Plain <code>.form-check</code> radios in a <code>.bt-panel__body--boolean</code>; the two labels come from the picker button's <code>data-filter-yes</code> and <code>data-filter-no</code>.</p>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Boolean</h3>
+    <div class="ds-demo mb-5">
+      <h3 class="ds-demo-label">Boolean editor</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-bool-title" aria-modal="false">
           <p class="bt-panel__title" id="fe-bool-title">Status</p>
@@ -159,17 +239,9 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       4. EDITOR — YEAR RANGE
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Editor — year range</h2>
-    <p class="mb-4">Used for the project directory's Year filter — a <strong>year</strong> range, not exact dates. Either bound is optional — "from 2020" and "to 2024" are both valid alone. Chip reads "2020–2024", "from 2020", or "to 2024" accordingly.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Year range</h3>
+      <h3 class="ds-demo-label">Year-range editor</h3>
       <div class="ds-demo-body">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-year-title" aria-modal="false">
           <p class="bt-panel__title" id="fe-year-title">Year</p>
@@ -190,149 +262,17 @@
         </div>
       </div>
     </div>
-    <p class="small text-muted mt-3 mb-0">The generic panel body layouts (<code>--checklist</code>, <code>--boolean</code>, <code>--year</code>, <code>--form</code>) belong to <a href="/patterns/panel.html"><code>bt-panel</code></a>; this page shows the ones the filter bars use.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       4b. EDITOR — TEXT
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">Editor — text</h2>
-    <p class="mb-4">Used for the Identifier filter — you type a value matched against the work's identifiers (DOI, ISSN, ISBN, arXiv, handle), scheme auto-detected. Filtering by a journal works through its ISSN, so there's no separate venue filter. (The search box additionally shortcuts a full DOI straight to the work.) A single free-text input in a plain <code>.bt-panel__body</code>; the placeholder is filter-specific.</p>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Text</h3>
-      <div class="ds-demo-body">
-        <div class="bt-panel bt-panel--wide" role="dialog" aria-labelledby="fe-text-title" aria-modal="false">
-          <p class="bt-panel__title" id="fe-text-title">Identifier</p>
-          <div class="bt-panel__body">
-            <label for="demo-text-val" class="visually-hidden">Identifier</label>
-            <input type="text" id="demo-text-val" class="form-control form-control-sm"
-              placeholder="DOI, ISSN, ISBN, arXiv, or handle&hellip;" value="1476-4687" autocomplete="off">
-          </div>
-          <div class="bt-panel__actions">
-            <button type="button" class="btn btn-primary btn-sm">Apply</button>
-            <button type="button" class="btn btn-ghost btn-sm">Cancel</button>
-            <button type="button" class="btn btn-ghost btn-sm text-danger ms-auto">Remove filter</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       5. EDITOR AS OVERLAY
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Editor as overlay</h2>
-    <p class="mb-3">The editor panel floats <strong>over</strong> the result list instead of pushing it down. The filter bar and panel are wrapped in a <code>position-relative</code> container; the panel (<code>#wf-filter-editor</code> / <code>#rdir-filter-editor</code> / <code>#pdir-filter-editor</code>) gets <code>position-absolute top-100 mt-2</code>, and <code>filter-bar.js</code> sets its left offset so it drops under whatever opened it (the Add-filter button or the chip), clamped to the viewport so a squeezed layout never pushes it off-screen.</p>
-    <p class="mb-0">The popover <code>z-index</code> (and a <code>min-width</code> floor for narrow anchors) lives on <code>.bt-panel</code> itself — Bootstrap's <code>z-3</code> utility maxes at 3, which ties with the active <code>.page-link</code> in pagination.</p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       6. ACTIVE CHIPS
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Active chips</h2>
-    <p class="mb-0">Applied filters surface as chips — the visible output of the picker/editor flow. The standard is the <strong>editable split chip</strong>: the label reopens the editor, the × removes it — two clickable <a href="/elements/badges.html">badges</a> (outline, squared) joined with <code>.filter-chip-group</code>. While a chip's editor is open both halves add <code>.active</code> (blue fill) and the label carries <code>aria-current="true"</code>. Display-only summaries use a soft <code>badge text-bg-primary-light</code>.</p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       THE ASSEMBLED BAR
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">The assembled bar</h2>
-    <p class="mb-4">The whole bar in one <a href="/patterns/toolbar.html"><code>bt-toolbar</code></a>: the active-filter chips (the readout), the <strong>Add filter</strong> picker, and <strong>Clear all</strong>, together. Inlined per page (works, researchers, projects) — identical but for the picker items and id prefix — and wired by <code>filter-bar.js</code>. Use <strong>Show HTML</strong> for the markup; the required ids are in the wiring reference below, and the editor panel (see the editor sections above) sits in the same <code>position-relative</code> wrapper so it can overlay the results.</p>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Chips, Add filter, and Clear together</h3></div>
-      <div class="ds-demo-body">
-        <div class="bt-toolbar">
-          <div class="bt-toolbar__left">
-            <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
-              <div class="filter-chip-group">
-                <button type="button" class="badge badge--outline" aria-label="Edit filter: Person is Jane Doe"><span class="fw-light">Person:</span> Jane Doe</button>
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Person is Jane Doe"><i class="if if-close if--xs" aria-hidden="true"></i></button>
-              </div>
-              <div class="filter-chip-group">
-                <button type="button" class="badge badge--outline" aria-label="Edit filter: Keywords is Climate change"><span class="fw-light">Keywords:</span> Climate change</button>
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Keywords is Climate change"><i class="if if-close if--xs" aria-hidden="true"></i></button>
-              </div>
-            </div>
-            <div class="dropdown">
-              <button class="btn btn-ghost btn-sm" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
-              </button>
-              <div class="dropdown-menu p-0">
-                <div class="bt-dropdown-scroll">
-                  <button class="dropdown-item" type="button">Person</button>
-                  <button class="dropdown-item" type="button">Organization</button>
-                  <button class="dropdown-item" type="button">Project</button>
-                </div>
-              </div>
-            </div>
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-close if--xs" aria-hidden="true"></i> Clear all
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       7. REQUIRED IDS — WIRING REFERENCE
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Wiring reference</h2>
-    <p class="mb-3">Each bar prefixes its IDs — <code>wf-</code> for works, <code>rdir-</code> for researchers, <code>pdir-</code> for projects — all driven by <code>filter-bar.js</code>. The set below is shown with the <code>rdir-</code> prefix; the engine exits silently for a bar if any are missing.</p>
-
-    <table class="table table-sm align-middle" aria-label="Required IDs and attributes">
-      <thead class="text-uppercase text-muted small">
-        <tr>
-          <th scope="col">ID / attribute</th>
-          <th scope="col">Element</th>
-          <th scope="col">Purpose</th>
-        </tr>
-      </thead>
-      <tbody class="small">
-        <tr>
-          <td><code>id="rdir-add-filter-dropdown"</code></td>
-          <td>Dropdown wrapper <code>div</code></td>
-          <td>Outside-click close handler</td>
-        </tr>
-        <tr>
-          <td><code>id="rdir-add-filter-btn"</code></td>
-          <td>Bootstrap dropdown trigger <code>button</code></td>
-          <td>Closed programmatically when an item is selected</td>
-        </tr>
-        <tr>
-          <td><code>id="rdir-filter-picker-list"</code></td>
-          <td><code>.bt-dropdown-scroll</code></td>
-          <td>Contains the <code>[data-filter]</code> items</td>
-        </tr>
-        <tr>
-          <td><code>data-filter="&lt;key&gt;"</code></td>
-          <td>Each <code>button.dropdown-item</code></td>
-          <td>The filter&rsquo;s key. Its label, type and options ride on the same button</td>
-        </tr>
-        <tr>
-          <td><code>id="rdir-filter-editor"</code></td>
-          <td><code>div.bt-panel.bt-panel--wide</code> (hidden by default)</td>
-          <td>Editor panel — the engine renders into this and shows/hides it</td>
-        </tr>
-        <tr>
-          <td><code>id="rdir-active-chips"</code></td>
-          <td><code>div[role="group"]</code></td>
-          <td>Chip output — the engine renders and manages chips here</td>
-        </tr>
-        <tr>
-          <td><code>id="rdir-clear-all"</code></td>
-          <td><code>button</code> (hidden by default)</td>
-          <td>Shown when chips are active; resets all filters on click</td>
-        </tr>
-      </tbody>
-    </table>
+    <h2 class="h4 mb-3">Consistent state and actions</h2>
+    <ul class="mb-0">
+      <li>Every editor keeps Apply, Cancel, and Remove filter in the same positions.</li>
+      <li>Multiple selections use the first value plus a count, such as “Climate change +2”.</li>
+      <li>The chip label edits the filter; its &times; removes it.</li>
+      <li>While an editor is open, its picker item and both chip halves use the active state.</li>
+    </ul>
+    <p class="mt-3 mb-0">The value of <code>data-filter-bar</code> prefixes every required host id. The complete markup contract lives under <code>filter-bar.js</code> in <code>docs/JAVASCRIPT.md</code>; editor and chip markup lives in <code>templates/partials/filter-editor-templates.html</code>.</p>
   </section>
 
 </div>

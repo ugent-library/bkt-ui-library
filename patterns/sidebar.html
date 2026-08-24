@@ -3,23 +3,19 @@
 <div class="ds-page">
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
-    <h1 class="display-1">Sidebar Navigation</h1>
-    <p class="lead"><code>bt-sidebar</code> is the persistent left-column navigator inside <code>u-layout--app</code>. Use it for real page navigation only — not as a filter panel or decorative element. The filter rail on results pages is a plain <code>&lt;aside&gt;</code> — see <a href="/patterns/facets.html">Facets</a> and <a href="/patterns/search-and-filtering.html">Search &amp; filtering</a>, not this component.</p>
+    <h1 class="display-1">Sidebar navigation</h1>
+    <p class="lead">Persistent page navigation for app layouts. Do not use it for result filters; use <a href="/patterns/facets.html">facets</a> instead.</p>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 1 — Basic structure
-  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Basic structure</h2>
-    <p class="mb-4">Links use Bootstrap <code>.nav-link</code> directly on <code>&lt;a&gt;</code> elements inside the sidebar. The SCSS provides flex layout, gap, and padding — no Bootstrap utility classes needed on the link. Group labels use <code>.bt-sidebar__group-label</code>. Wrap link text in <code>.bt-sidebar__label</code> so it hides cleanly in slim mode.</p>
+    <p class="mb-4">Use <code>.nav-link</code> on links, <code>.bt-sidebar__group-label</code> for group labels, and <code>.bt-sidebar__label</code> around link text.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Standard — with group label and active item</h3></div>
       <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
         <nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation">
           <p class="bt-sidebar__group-label">My research output</p>
-          <!-- title repeats the label: in slim mode the tooltip is what a sighted reader gets -->
           <a href="/research" class="nav-link active" aria-current="page"
             data-bs-toggle="tooltip" data-bs-placement="right" title="Research output">
             <i class="if if-article" aria-hidden="true"></i>
@@ -35,13 +31,9 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 2 — Badges
-  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Badges</h2>
-    <p class="mb-3">Drop a Bootstrap badge directly inside the link. The SCSS positions the badge on the right automatically — no helper wrapper classes are needed. Use <code>badge--total</code> on count badges, include a hidden label for screen-reader context, and keep the visible label on the link. In slim mode a count badge shrinks to a dot; a sidebar link carries no other kind of badge.</p>
-    <p class="mb-4">Badge colour signals urgency: <code>bg-danger</code> for overdue/errors, <code>bg-warning</code> for items needing attention, <code>bg-primary</code> for neutral counts.</p>
+    <p class="mb-4">Place one <code>badge--total</code> count inside the link and give the count hidden context. In slim mode it becomes a dot. Use danger for overdue items, warning for attention, and primary for neutral counts.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Links with badges</h3></div>
@@ -76,12 +68,9 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 3 — Collapsible (slim mode)
-  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Collapsible — slim mode</h2>
-    <p class="mb-4">Adding <code>.bt-sidebar--slim</code> collapses the sidebar to icon-only width (<code>3rem</code>). Group labels and secondary badges are hidden via CSS; link text and button text are hidden from view but stay in the accessibility tree, so an icon-only link keeps its name. The toggle button updates <code>aria-expanded</code> and <code>aria-label</code> — handled by <code>sidebar-toggle.js</code>, which also enables the link tooltips in this state and disables them again when the sidebar expands. Below <code>xl</code>, the main sidebar starts in slim mode so narrow desktop panes keep the work area primary.</p>
+    <p class="mb-4"><code>.bt-sidebar--slim</code> shows icons and count dots while keeping labels available to assistive technology. The toggle keeps <code>aria-expanded</code> and its accessible name in sync.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Main sidebar — same partial as backoffice templates</h3></div>
@@ -92,179 +81,21 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 4 — Responsive work-pane behaviour
-  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">Responsive Work Panes</h2>
-    <p class="mb-3">Backoffice users often work in a narrow desktop pane with another system open beside Biblio. In that range, the main app navigation must stop taking full-sidebar space by default. The list, record, or form in <code>main</code> remains the primary work area.</p>
-    <div class="row g-3">
-      <div class="col-lg-6">
-        <div class="border rounded bg-white p-3 h-100">
-          <p class="small text-uppercase text-muted fw-semibold mb-2">Behaviour</p>
-          <p class="mb-2">At <code>xl</code> and above, the sidebar starts expanded.</p>
-          <p class="mb-2">Below <code>xl</code>, the sidebar starts in <code>bt-sidebar--slim</code> mode.</p>
-          <p class="mb-2">When the viewport crosses the <code>xl</code> breakpoint after load, <code>sidebar-toggle.js</code> syncs the sidebar to the new range: narrow collapses, wide expands.</p>
-          <p class="mb-0">The toggle remains available in both ranges. This is a responsive default, not a disabled state.</p>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="border rounded bg-white p-3 h-100">
-          <p class="small text-uppercase text-muted fw-semibold mb-2">Why</p>
-          <p class="mb-2">Curators and reviewers use split-screen setups for queue work, record details, source material, email, and external systems.</p>
-          <p class="mb-2">At narrow desktop widths, a full navigation rail plus a filter rail leaves the result list feeling like a secondary column.</p>
-          <p class="mb-0">Pair this with the filter drawer split on result-list pages: app navigation becomes slim, filters move behind an explicit control, and the work list keeps the horizontal space.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="ds-code mt-3">
-      <div class="ds-code-bar"><span class="ds-code-lang">js contract</span><button type="button" class="ds-code-copy">Copy</button></div>
-<pre>const narrowSidebarQuery = window.matchMedia('(max-width: 1199.98px)');
-
-// initial load
-sidebar.classList.toggle('bt-sidebar--slim', narrowSidebarQuery.matches);
-
-// after resizing across the breakpoint
-narrowSidebarQuery.addEventListener('change', () =&gt; {
-  sidebar.classList.toggle('bt-sidebar--slim', narrowSidebarQuery.matches);
-});</pre>
-    </div>
-
-    <div class="border rounded bg-white p-3 mt-3">
-      <p class="small text-uppercase text-muted fw-semibold mb-2">Issue acceptance criteria</p>
-      <ul class="mb-0">
-        <li>The main backoffice sidebar is expanded by default at <code>xl</code> and wider.</li>
-        <li>The main backoffice sidebar is slim by default below <code>xl</code>.</li>
-        <li>Resizing an already-loaded page across the <code>xl</code> breakpoint updates the sidebar state.</li>
-        <li>The toggle button still expands and collapses the sidebar and keeps <code>aria-expanded</code> plus <code>aria-label</code> accurate.</li>
-        <li>Nav links keep their accessible name in slim mode, and tooltips give sighted users the label on hover.</li>
-        <li>Result-list filter drawers do not leave an empty grid column when the facet sidebar is offcanvas.</li>
-      </ul>
-    </div>
-
-    <div class="border rounded bg-white p-3 mt-3">
-      <p class="small text-uppercase text-muted fw-semibold mb-2">Implementation notes</p>
-      <p class="mb-2">Use the existing <code>bt-sidebar--slim</code> modifier; do not add a second mobile/sidebar class.</p>
-      <p class="mb-2">Keep the breakpoint aligned with Bootstrap <code>xl</code>: <code>1199.98px</code> max-width for the narrow query.</p>
-      <p class="mb-2">The prototype handles state client-side. In Raven, consider a server-readable persisted preference so the first paint can match the user's preferred state without a visual jump.</p>
-      <p class="mb-0">Do not use this pattern for facet filters. Result-list facets use <code>u-main__body--filter-drawer</code> plus Bootstrap Offcanvas.</p>
-    </div>
+    <h2 class="h4 mb-3">Responsive state</h2>
+    <p class="mb-2">The app sidebar starts expanded at <code>xl</code> and wider, and slim below <code>xl</code>. Crossing that breakpoint updates the state; the toggle remains available in both states.</p>
+    <p class="mb-0">This default keeps the work area primary in the narrow split-screen setup used by reviewers. The decision is recorded in <code>docs/decisions/DD-002-narrow-backoffice-work-pane.md</code>.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 6 — Layout integration
-  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Layout integration</h2>
-    <p class="mb-3"><code>bt-sidebar</code> is a direct child of <code>u-layout--app</code> placed in the <code>sidebar</code> grid area. The shell handles sticky positioning and scroll — do not add <code>position: sticky</code> or overflow rules to the sidebar element.</p>
-    <p class="mb-3">The canonical app sidebar lives in <code>templates/partials/main-sidebar.html</code>. <code>templates/biblio-team/curate.html</code> and <code>templates/biblio-researcher/search-researcher.html</code> both use that partial, then set the active item with an <code>@active</code> comment.</p>
-    <p class="mb-4">Sidebar width is controlled by two CSS custom properties on <code>u-layout--app</code>: <code>--u-nav-sidebar-width</code> (default <code>13rem</code>) and <code>--u-nav-sidebar-width-slim</code> (default <code>3rem</code>). Override them on the shell element if a page needs different widths. The narrow default is an initial state, not a lock: users can expand the sidebar with the toggle.</p>
-
-    <div class="ds-code">
-      <div class="ds-code-bar"><span class="ds-code-lang">html — u-layout--app skeleton</span><button type="button" class="ds-code-copy">Copy</button></div>
-<pre>&lt;div class="u-layout--app" data-surface="backoffice"&gt;
-
-  &lt;!-- Grid area: navbar --&gt;
-  &lt;header class="bt-navbar"&gt;&hellip;&lt;/header&gt;
-
-  &lt;!-- Grid area: sidebar --&gt;
-  &lt;!-- @include: templates/partials/main-sidebar.html --&gt;
-  &lt;!-- @active: my-research --&gt;
-
-  &lt;!-- Grid area: main --&gt;
-  &lt;main id="main-content"&gt;
-    &lt;div class="u-main__header"&gt;&hellip;&lt;/div&gt;
-    &lt;div class="u-main__body u-main__body--split"&gt;
-      &lt;aside class="u-main__sidebar" aria-label="Filter by"&gt;&hellip;&lt;/aside&gt;
-      &lt;section class="u-main__content"&gt;
-        &lt;div class="u-main__content-header"&gt;&hellip;&lt;/div&gt;
-        &lt;div class="u-main__content-body"&gt;&hellip;&lt;/div&gt;
-        &lt;div class="u-main__content-footer"&gt;&hellip;&lt;/div&gt;
-      &lt;/section&gt;
-    &lt;/div&gt;
-    &lt;div class="u-main__footer"&gt;&hellip;&lt;/div&gt;
-  &lt;/main&gt;
-
-  &lt;!-- Grid area: panel (optional) --&gt;
-  &lt;aside class="u-main__panel" aria-label="Record detail"&gt;&hellip;&lt;/aside&gt;
-
-&lt;/div&gt;</pre>
-    </div>
+    <p class="mb-0">Place the canonical <code>templates/partials/main-sidebar.html</code> directly in the app shell. The shell owns its grid area, width, sticky position, and scrolling. See <code>docs/UI-LAYER.md</code> for the shell contract and <code>docs/JAVASCRIPT.md</code> for the toggle behavior.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 7 — Available classes
-  ═══════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
-    <h2 class="h4 mb-3">Available classes</h2>
-
-    <table class="table table-hover align-middle" aria-label="bt-sidebar class reference">
-      <thead>
-        <tr>
-          <th scope="col" class="text-uppercase text-muted small">Class</th>
-          <th scope="col" class="text-uppercase text-muted small">Element</th>
-          <th scope="col" class="text-uppercase text-muted small">Purpose</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><code>bt-sidebar</code></td>
-          <td><code>&lt;nav&gt;</code></td>
-          <td>Base sidebar container. Sets width, padding, and scroll behaviour.</td>
-        </tr>
-        <tr>
-          <td><code>bt-sidebar--bordered</code></td>
-          <td>Modifier on <code>bt-sidebar</code></td>
-          <td>Adds a right-edge border. Use for detail-page section navs, not the global app sidebar.</td>
-        </tr>
-        <tr>
-          <td><code>bt-sidebar--slim</code></td>
-          <td>Modifier on <code>bt-sidebar</code></td>
-          <td>Collapses to icon-only width (<code>3rem</code>). Hides group labels, link text, and badges.</td>
-        </tr>
-        <tr>
-          <td><code>bt-sidebar--flush</code></td>
-          <td>Modifier on <code>bt-sidebar</code></td>
-          <td>Removes horizontal padding. Use when links provide their own internal spacing.</td>
-        </tr>
-        <tr>
-          <td><code>bt-sidebar__toggle</code></td>
-          <td><code>&lt;button&gt;</code></td>
-          <td>Collapse/expand trigger. Toggles <code>bt-sidebar--slim</code> on the parent nav.</td>
-        </tr>
-        <tr>
-          <td><code>bt-sidebar__group-label</code></td>
-          <td><code>&lt;p&gt;</code></td>
-          <td>Section heading inside the sidebar. Hidden automatically in slim mode.</td>
-        </tr>
-        <tr>
-          <td><code>bt-sidebar__label</code></td>
-          <td><code>&lt;span&gt;</code> inside <code>.nav-link</code></td>
-          <td>Link text. Must be wrapped in this span so slim mode can hide it while keeping the icon visible.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       SECTION 8 — Bootstrap recommendations
-  ═══════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Bootstrap recommendations</h2>
-
-    <p class="mb-3">The sidebar uses Bootstrap's <a href="https://getbootstrap.com/docs/5.3/components/navs-tabs/" class="link-primary">.nav-link</a> on <code>&lt;a&gt;</code> elements directly. The SCSS scopes all flex layout, spacing, and badge alignment inside <code>.bt-sidebar</code> — no Bootstrap utility classes needed on the links themselves.</p>
-
-    <p class="fw-semibold mb-1">Active state</p>
-    <p class="mb-3">Set both <code>aria-current="page"</code> and <code>class="nav-link active"</code> on the active link. <code>aria-current</code> is what screen readers use; <code>.active</code> handles the visual background. In server-rendered templates, set both explicitly.</p>
-
-    <p class="fw-semibold mb-1">Tooltips</p>
-    <p class="mb-3">Add <code>data-bs-toggle="tooltip" data-bs-placement="right" title="&hellip;"</code> to every link, repeating the visible label word for word. <code>sidebar-toggle.js</code> creates the tooltips at page load and enables them only in slim mode, so an expanded sidebar does not repeat a label the reader already has.</p>
-
-    <p class="mb-3">The accessible name comes from <code>.bt-sidebar__label</code>, which slim mode hides visually and keeps in the accessibility tree. Bootstrap moves <code>title</code> to <code>data-bs-original-title</code> the moment it initialises, and writes an <code>aria-label</code> only for an element that carries no text of its own — which these links do carry. Do not add <code>aria-label</code> to a sidebar link: it would replace the visible text with a second string to keep in sync.</p>
-
-    <p class="fw-semibold mb-1">Mobile — consider Offcanvas</p>
-    <p class="mb-0">Bootstrap's <a href="https://getbootstrap.com/docs/5.3/components/offcanvas/" class="link-primary">Offcanvas</a> handles mobile drawers that slide over content. If the sidebar needs to become a drawer on small screens, wrap it in an Offcanvas body rather than building a custom mobile variant. <code>bt-sidebar</code> styles remain usable inside the Offcanvas body with no changes.</p>
+    <h2 class="h4 mb-3">Accessibility</h2>
+    <p class="mb-3">Set <code>aria-current="page"</code> and <code>.active</code> on the current link. Keep the visible label inside <code>.bt-sidebar__label</code>; do not replace it with an <code>aria-label</code>.</p>
+    <p class="mb-0">Repeat each label in its tooltip. Tooltips are enabled only in slim mode, when the visible labels are hidden.</p>
   </section>
 
 </div>

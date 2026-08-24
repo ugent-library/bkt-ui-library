@@ -83,6 +83,17 @@ Backoffice pages use this main-area contract inside `u-layout--app`:
 
 Use `u-main__header`, `u-main__sidebar`, `u-main__content-header`, `u-main__content-footer`, `u-main__footer`, and `u-main__panel` only when needed. `u-main__body` is the required middle row. Add `u-main__body--split` only when that row contains a left `u-main__sidebar`; `u-main__content-body` is then the right-pane scroll container.
 
+### Backoffice result-list filter drawer
+
+Work queues and result lists add `u-main__body--filter-drawer` beside
+`u-main__body--split`. Below `xl`, Bootstrap Offcanvas owns the facet pane's opening, closing,
+backdrop and focus behavior. The Booktower modifier only removes the pane's grid column so the
+result region takes the full width.
+
+Place the Filter trigger in `u-main__content-header`, beside the search, active filters, count and
+list actions it affects. Settings, detail pages and section navigation keep the ordinary split
+body. The canonical markup is in `patterns/layout-shells.html`.
+
 ---
 
 ## The icon system

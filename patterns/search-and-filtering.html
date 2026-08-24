@@ -3,15 +3,12 @@
   <header class="ds-page-header col-8" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Search &amp; filtering</h1>
-    <p class="lead">How the search box, suggest panel, sidebar facets, Add-filter picker, chip bar, and results toolbar compose into one system. This page shows the assembly; the interaction rules — URL-is-truth, what the box exposes, where each dimension goes — live in <code>docs/SEARCH-AND-FILTERING.md</code>. Each part has its own kit page for markup and states.</p>
+    <p class="lead">The complete public search and filtering assembly. Interaction rules live in <code>docs/SEARCH-AND-FILTERING.md</code>.</p>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       THE PARTS AND THEIR JOBS
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">The parts and their jobs</h2>
-    <p class="mb-4">Six components, two jobs. The <strong>box enters</strong> a result space or navigates to a record; the <strong>sidebar and picker narrow</strong> within it; the <strong>chip bar reads out</strong> what is applied. The URL holds the one canonical state — every part is a view onto it.</p>
+    <p class="mb-4">The box enters a result space or opens a record. Facets and filters narrow it; chips show the applied state.</p>
 
     <table class="table table-hover align-middle" aria-label="Search and filtering components and their jobs">
       <thead>
@@ -58,12 +55,9 @@
     <p class="small text-muted mb-0">Not part of this system: <code>bt-sidebar</code> (<a href="/patterns/sidebar.html">Sidebar navigation</a>) is the persistent nav column in <code>u-layout--app</code> — a navigator, not a filter rail. The filter rail is a plain <code>&lt;aside&gt;</code>.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       WHERE THE FLOW STARTS
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Where the flow starts</h2>
-    <p class="mb-4">The system has several entry points, but they all obey the same rules: submitting text enters that box's result space, and a suggestion navigates to the record it names. The results page (below) is where you land — it is rarely the first thing seen.</p>
+    <p class="mb-4">Submitting text enters the box’s result space. Selecting a suggestion opens the record it names.</p>
 
     <table class="table table-hover align-middle" aria-label="Search entry points and where they lead">
       <thead>
@@ -96,22 +90,16 @@
         </tr>
       </tbody>
     </table>
-    <p class="small text-muted mb-0">Full routing (which suggestion goes where) and the per-box grammar are in <code>docs/SEARCH-AND-FILTERING.md</code> (Rule 3).</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ASSEMBLED — PUBLIC RESULTS PAGE
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Assembled — a public results page</h2>
-    <p class="mb-4">The parts in place on <a href="/templates/biblio-public/public-works.html">public-works</a>: search box on top, the chip bar (readout) and Add-filter picker (input) below it, the facet rail on the left, and the results toolbar above the list. The live page carries the <code>hx-*</code> wiring and the suggest-panel content; here they are static. The bar is one <code>bt-toolbar</code>, inlined identically on works and the directory pages — shown on its own in <a href="/patterns/filter-picker.html">Filter picker → The assembled bar</a>.</p>
-    <p class="mb-4">Both clears sit here, and each does only what sits next to it. The × inside the field drops <code>q</code> and leaves the chips standing. <strong>Clear all filters</strong> drops the chips and leaves the query. A full reset is the two together, so there is no third button. <a href="/elements/search-bar.html">Search bar</a> documents the ×.</p>
+    <p class="mb-4">Search sits above the chip and filter bar; facets sit beside the results. Clear search preserves filters, and Clear all filters preserves the query.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Public assembly</h3></div>
       <div class="ds-demo-body" data-surface="public">
 
-        <!-- Search box + suggest shell (canonical form; real IDs are q / suggest-panel on the live page) -->
         <form role="search" aria-label="Search research output" action="/search">
           <div class="position-relative" id="saf-suggest-wrapper">
             <label for="saf-q" class="visually-hidden">Search by title, author, keyword, or DOI</label>
@@ -130,7 +118,6 @@
               aria-label="Search suggestions" hidden></div>
           </div>
 
-          <!-- Chip bar + Add-filter picker (input) + Clear all filters -->
           <div class="bt-toolbar">
             <div class="bt-toolbar__left">
               <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
@@ -195,7 +182,6 @@
           </div>
         </form>
 
-        <!-- Facet rail + results -->
         <div class="row g-5 align-items-start mt-1">
 
           <aside class="col-lg-4" aria-label="Filter by">
@@ -291,7 +277,7 @@
               </div>
             </div>
 
-            <p class="alert alert-info">Result cards render here — see <a href="/patterns/work-card.html">Work card</a>. This page documents the search and filter chrome around them; the bar that pages and counts them is <a href="/patterns/pagination.html">Pagination</a>.</p>
+            <p class="alert alert-info">See <a href="/patterns/work-card.html">Work card</a> for results and <a href="/patterns/pagination.html">Pagination</a> for the results bar.</p>
           </div>
 
         </div>

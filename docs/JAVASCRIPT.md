@@ -69,6 +69,9 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 - **Purpose:** Filters one directory's inline fixture data and provides combobox show, hide and
   keyboard behavior.
 - **Hosts:** public researchers, organizations and projects.
+- **Markup contract:** One `[data-directory-search]` wrapper contains the input and
+  `.bt-suggest-panel`; `script[data-suggest-source]` supplies the fixture rows. The script binds
+  structurally, so directory-local ids may vary.
 - **Input/output:** Listens for input, focus, keyboard, outside click and form submit; dispatches no
   custom event.
 - **Status:** The behavior is reusable; production replaces `script[data-suggest-source]` with a
@@ -80,10 +83,12 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 
 - **Purpose:** Runs each `[data-filter-bar]`: picker, editor, editable chips and clear-all.
 - **Hosts:** public works, researchers and projects.
-- **Markup contract:** Picker buttons declare their label, editor type and source through `data-*`.
-  Options live in `filter-option-lists.html`; editor and chip templates live in
-  `filter-editor-templates.html`; entity pickers name their panel partial. Values are stored by ID,
-  not display label.
+- **Markup contract:** The value of `data-filter-bar` is the id prefix. Each host provides
+  `<prefix>filter-picker-list`, `<prefix>add-filter-dropdown`, `<prefix>add-filter-btn`,
+  `<prefix>filter-editor`, `<prefix>active-chips` and `<prefix>clear-all`. Picker buttons declare
+  their label, editor type and source through `data-*`. Options live in
+  `filter-option-lists.html`; editor and chip templates live in `filter-editor-templates.html`;
+  entity pickers name their panel partial. Values are stored by ID, not display label.
 - **Input/output:** Listens for clicks, editor input and Escape; dispatches no custom event.
 - **Status:** Prototype-only. Chips do not refilter results. Template test: passes.
 
@@ -148,6 +153,14 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 - **Status:** Prototype-only. Production renders query state and count server-side; static states
   carry fixture counts.
 
+### `result-actions.js`
+
+- **Purpose:** Returns focus to the results bar's Actions button after a dialog opened from its
+  dropdown closes.
+- **Hosts:** public works.
+- **Input/output:** Listens for Bootstrap modal close events; dispatches no custom event.
+- **Status:** Production-shaped behavior.
+
 ### `search-clear.js`
 
 - **Purpose:** Shows an inline clear control only while its preceding input has text. A button clear
@@ -170,6 +183,9 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 - **Purpose:** Opens and closes public autocomplete, filters rendered result groups by type and
   provides keyboard movement for tabs and suggestion rows.
 - **Hosts:** public index and works pages.
+- **Markup contract:** These hosts use the fixed `#q`, `#suggest-wrapper` and `#suggest-panel` ids;
+  HTMX swaps the server-owned suggestion rows into the existing panel. Directory pages use
+  `directory-search.js` instead and bind through `[data-directory-search]`.
 - **Input/output:** Listens for input focus/keyboard, panel keyboard, outside click, submit and
   `htmx:afterSwap`; dispatches no custom event.
 - **Status:** Production-shaped behavior. The server owns suggestion rows.

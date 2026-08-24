@@ -3,12 +3,12 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Panel</h1>
-    <p class="lead">A generic popover panel — a titled header, one or more bodies, an optional actions footer — shown inside a dropdown or overlay. Two bodies stack into the <strong>search-first</strong> shape: a search field pinned at the top, a scrollable checklist below. The <a href="/patterns/filter-picker.html">filter editor</a> is the same chrome with an Apply/Cancel footer.</p>
+    <p class="lead">A titled popover with content and optional actions, used inside a dropdown or overlay.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Anatomy</h2>
-    <p class="mb-4"><code>bt-panel</code> wraps a <code>bt-panel__title</code>, one or more <code>bt-panel__body</code> blocks, and an optional <code>bt-panel__actions</code> footer. Each body draws its own top border, so stacking two gives the search-first divider for free — except directly under the title, where the first body fuses with it into one header block: a plain body holds the search field, the <code>bt-panel__body--checklist</code> below it takes the option rows and scrolls past ~240px. Rows are plain Bootstrap <code>form-check</code>. <code>bt-panel--wide</code> fixes the width at 480px — the list body is swapped as you type, and a content-sized panel would resize with it.</p>
+    <p class="mb-4"><code>bt-panel</code> contains a title, one or more body blocks, and an optional actions footer. For search-first panels, place the search body above a scrollable checklist body.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Add-to-list picker — search-first</h3>
@@ -41,12 +41,12 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; ticking a box adds or removes the work and leaves the panel open. One field searches and names — there is no separate "new list" field.</p>
+    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; selecting a list leaves the panel open. The same field searches and names a new list.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Create from the search field</h2>
-    <p class="mb-4">The create row sits under whatever matched, so naming a new list is the same keystrokes as looking for an existing one. It appears whenever the typed text is not exactly one of your lists — including when something partly matched, so a name like &ldquo;Reading&rdquo; is still available next to &ldquo;Reading list&rdquo;. At an exact name it disappears: that list is already in the checklist, and that is what refuses duplicates. The row is a real form, server-rendered, because the server is what knows whether anything matched.</p>
+    <p class="mb-4">Offer Create when the typed name is not an exact match. Keep it alongside partial matches; remove it when the list already exists.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Nothing matches — create the typed name</h3>
@@ -120,15 +120,12 @@
       </div>
     </div>
 
-    <p class="mb-4 col-8 text-muted small">With no lists there is nothing to search, so the create form is the whole body (<code>bt-panel__body--form</code>). Creating the first list returns the picker with that list ticked.</p>
-
-    <p class="mb-0 col-8 text-muted small">The panel has no duplicate-name error, because it cannot reach one: the create row is gone before a name can collide. Renaming can still collide, so the refusal lives on <a href="/templates/biblio-researcher/list-edit.html?state=name-taken">the list edit form</a>.</p>
+    <p class="mb-0 col-8 text-muted small">With no lists, show the create form as the complete body. After creation, return to the picker with the new list selected.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">In a dropdown</h2>
-    <p class="mb-4">On result cards the panel is the menu of a Bootstrap dropdown: <code>bt-panel bt-panel--wide</code> on the <code>.dropdown-menu</code> &mdash; which zeroes the menu's own padding, since the bodies carry it &mdash; and <code>data-bs-auto-close="outside"</code> on the toggle so ticking a box doesn't close it. HTMX drives the three jobs — <code>hx-get</code> re-renders the checklist, <code>hx-put</code> / <code>hx-delete</code> write membership with <code>hx-swap="none"</code> so the typed query survives, <code>hx-post</code> creates. Mirrors raven's <code>AddToListComponent</code>.</p>
-    <p class="mb-4">The search field triggers on <code>input</code>, never <code>keyup</code>: the field's own ✕ fires <code>input</code> and <code>search</code> only, so on <code>keyup</code> the list stays filtered after a clear.</p>
+    <p class="mb-4">On result cards, the panel is a Bootstrap dropdown menu with <code>data-bs-auto-close="outside"</code>. Load its body on first open and keep it open while someone selects lists. Search re-renders on <code>input</code>, not <code>keyup</code>, so the native clear control also refreshes the checklist.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Recipe — the toggle a template writes</h3>
@@ -148,12 +145,12 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">A template writes only the toggle and an empty menu; everything inside is the fragment the server returns on first open. <code>hx-*</code> URLs are stubs. The mock keeps no membership, so a tick is forgotten when the list re-renders.</p>
+    <p class="mb-0 col-8 text-muted small">Prefix panel ids per record. Membership updates leave the checklist in place so the query survives; creating a list returns it selected. The prototype route contract is in <code>docs/SERVER.md</code>.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Logged out</h2>
-    <p class="mb-4">Anonymous visitors and crawlers get the button, and it goes straight to login carrying the record in the return URL. After login they land back on the record with the panel open. No panel, no second click.</p>
+    <p class="mb-4">For anonymous visitors, link directly to login and return to the record with the panel open.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">No session — the button is a login link</h3>
@@ -168,34 +165,7 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Where the panel is used</h2>
-
-    <table class="table table-sm align-middle" aria-label="Places bt-panel is used">
-      <thead class="text-uppercase text-muted small">
-        <tr>
-          <th scope="col">Place</th>
-          <th scope="col">Composition</th>
-          <th scope="col">Wired by</th>
-        </tr>
-      </thead>
-      <tbody class="small">
-        <tr>
-          <td>Add-to-list picker — <code>public-works.html</code>, both work-detail pages, the researcher, project and organization detail pages, and the 23 generated cards in <code>server/content/search-result-cards.js</code></td>
-          <td><code>bt-panel bt-panel--wide</code> as a <code>.dropdown-menu</code>, loaded on first open; ids prefixed <code>atl-&lt;record&gt;-</code></td>
-          <td><code>/lists/panel</code>, <code>/lists</code> — kit server, <code>server/content/list-panel.js</code> and <code>list-picker.js</code></td>
-        </tr>
-        <tr>
-          <td>Filter editor — <a href="/patterns/filter-picker.html">public works, researcher and project directories</a></td>
-          <td><code>bt-panel bt-panel--wide</code> as a floating overlay; checklist / boolean / year / text body + Apply–Cancel footer</td>
-          <td><code>assets/js/filter-bar.js</code></td>
-        </tr>
-        <tr>
-          <td>Filters tray on small screens</td>
-          <td>The same editor with <code>bt-panel</code> and <code>bt-panel--wide</code> stripped, so it flows inline in the offcanvas</td>
-          <td><code>assets/js/filter-sheet.js</code></td>
-        </tr>
-      </tbody>
-    </table>
-
+    <h2 class="h4 mb-3">Uses</h2>
+    <p class="mb-0">Use panels for add-to-list pickers and <a href="/patterns/filter-picker.html">filter editors</a>. On small screens, filter editors flow inside the filters tray.</p>
   </section>
 </div>

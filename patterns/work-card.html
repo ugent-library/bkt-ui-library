@@ -1,6 +1,5 @@
 <!-- @title: Work card — Booktower Design System -->
 <!-- @surface: public -->
-<!-- Note: prototype query URLs document intent; Raven owns the final parameter names. -->
 <div class="ds-page">
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
@@ -11,17 +10,16 @@
   <nav aria-label="On this page" class="mb-4">
     <ul class="list-inline mb-0">
       <li class="list-inline-item"><a href="#grammar">Grammar</a></li>
-      <li class="list-inline-item"><a href="#roles">Roles</a></li>
+      <li class="list-inline-item"><a href="#variants">Variants</a></li>
       <li class="list-inline-item"><a href="#states">States</a></li>
       <li class="list-inline-item"><a href="#public">Public</a></li>
       <li class="list-inline-item"><a href="#backoffice">Backoffice</a></li>
-      <li class="list-inline-item"><a href="#parity">Parity checklist</a></li>
     </ul>
   </nav>
 
   <section class="ds-section" id="grammar">
     <h2 class="h4 mb-3">Shared card grammar</h2>
-    <p class="mb-3 col-8">Backoffice cards are extensions of the public card, not a separate component. Every card uses <code>bt-work-card</code> with the same structural regions: <code>bt-work-card__header</code>, <code>bt-work-card__body</code>, and optional <code>bt-work-card__footer</code>.</p>
+    <p class="mb-3 col-8">Public and backoffice cards use the same header, body, and optional footer regions.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Result-list wrapper</h3>
@@ -55,48 +53,77 @@
       </div>
     </div>
 
-    <p class="mb-2 col-8">Cards rendered as search or queue results belong in an ordered list: <code>&lt;ol class="list-unstyled mb-0"&gt;</code>, with each card inside a list item. The card itself is an <code>&lt;article&gt;</code> named by its title via <code>aria-labelledby</code>.</p>
-    <p class="mb-0 col-8 text-muted small">If a backoffice need does not fit these regions, review the shared grammar before adding a backoffice-only structure.</p>
+    <p class="mb-0 col-8">Put result cards in an ordered list. Use <code>&lt;article&gt;</code> for the card and name it from its title with <code>aria-labelledby</code>. If a backoffice need does not fit the shared header, body, or footer, review this grammar before adding another structure.</p>
   </section>
 
-  <section class="ds-section" id="roles">
-    <h2 class="h4 mb-3">Role visibility</h2>
-    <p class="mb-3 col-8">Public, researcher, proxy, curator, and reviewer cards share the same regions. What changes is the payload. Proxy behavior is still TBD, so this page names it as unresolved instead of inventing a proxy-specific card.</p>
+  <section class="ds-section" id="variants">
+    <h2 class="h4 mb-3">Variants by surface and audience</h2>
+    <p class="mb-3 col-8">The regions stay the same; the information payload changes with the surface and the person doing the work.</p>
 
     <div class="table-responsive">
-      <table class="table table-hover align-middle">
+      <table class="table table-hover align-middle" aria-label="Work card variants by surface and audience">
         <thead class="text-uppercase text-muted small">
           <tr>
-            <th scope="col">Information block</th>
+            <th scope="col">Information</th>
             <th scope="col">Public</th>
-            <th scope="col">Researcher</th>
-            <th scope="col">Proxy</th>
-            <th scope="col">Curator / reviewer</th>
+            <th scope="col">Researcher backoffice</th>
+            <th scope="col">Curator and reviewer backoffice</th>
           </tr>
         </thead>
         <tbody>
-          <tr><th scope="row">Access and type</th><td>Yes</td><td>Yes</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Deposit status and record visibility</th><td>No</td><td>Yes</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Title</th><td>Link</td><td>Link</td><td>TBD</td><td>Plain text</td></tr>
-          <tr><th scope="row">Copy title</th><td>No</td><td>No</td><td>TBD</td><td>Existing pattern, when needed</td></tr>
-          <tr><th scope="row">Contributors</th><td>Public behavior</td><td>3 + count</td><td>TBD</td><td>3 + count</td></tr>
-          <tr><th scope="row">Reference line</th><td>Citation-like line</td><td>Backoffice scan line</td><td>TBD</td><td>Backoffice scan line</td></tr>
-          <tr><th scope="row">Researcher responsibility block</th><td>No</td><td>Yes</td><td>TBD</td><td>Yes, when relevant</td></tr>
-          <tr><th scope="row">Curator responsibility block</th><td>No</td><td>No</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Departments and projects</th><td>No</td><td>Yes</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Related-record count</th><td>No</td><td>Yes</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Retraction indicator</th><td>Yes</td><td>Yes</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">VABB and legacy</th><td>No</td><td>No</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Biblio ID and audit</th><td>No</td><td>Yes</td><td>TBD</td><td>Yes</td></tr>
-          <tr><th scope="row">Bottom quick links</th><td>No</td><td>Optional</td><td>TBD</td><td>Yes</td></tr>
+          <tr>
+            <th scope="row">State header</th>
+            <td>Access, type, and public conditions</td>
+            <td>Deposit status, record visibility, access, type, and condition</td>
+            <td>Deposit status, record visibility, access, type, and condition</td>
+          </tr>
+          <tr>
+            <th scope="row">Title</th>
+            <td>Link</td>
+            <td>Link to the researcher read view</td>
+            <td>Plain text; the primary action opens the record or review</td>
+          </tr>
+          <tr>
+            <th scope="row">Contributors</th>
+            <td>Up to 10, then <em>et al.</em> and the remaining count</td>
+            <td>Up to 3 and the remaining count</td>
+            <td>Up to 3 and the remaining count</td>
+          </tr>
+          <tr>
+            <th scope="row">Reference line</th>
+            <td>Citation-like</td>
+            <td>Metadata scan line</td>
+            <td>Metadata scan line</td>
+          </tr>
+          <tr>
+            <th scope="row">Responsibility</th>
+            <td>None</td>
+            <td>Researcher-owned gaps and messages</td>
+            <td>Researcher and curator responsibility when relevant</td>
+          </tr>
+          <tr>
+            <th scope="row">Administrative context</th>
+            <td>None</td>
+            <td>Departments, projects, related-record count, Biblio ID, and audit trail</td>
+            <td>The same, plus VABB and legacy context when relevant</td>
+          </tr>
+          <tr>
+            <th scope="row">Footer utilities</th>
+            <td>None</td>
+            <td>Optional</td>
+            <td>Files, public page, and external services</td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <p class="mb-2 col-8">A retraction remains visible on every surface: the record stays public and citable, but its condition is unmistakable.</p>
+    <p class="mb-0 col-8">See <a href="/patterns/work-actions.html">work actions</a> for action placement by role and state. Reference-line composition is documented in <code>docs/wip/WORK-CARD-REFERENCE-STYLES.md</code>.</p>
   </section>
 
   <section class="ds-section" id="states">
     <h2 class="h4 mb-3">States, access, and actions</h2>
-    <p class="mb-3 col-8">Backoffice cards use Raven status and visibility vocabulary. The old labels <em>Biblio public</em>, <em>Biblio withdrawn</em>, <em>Biblio draft</em>, and <em>Locked</em> are not part of the new card model.</p>
+    <p class="mb-3 col-8">Backoffice cards keep four facts distinct: deposit status says where the work is in the workflow; record visibility says whether the record appears publicly; file access says whether the work can be read; record condition, such as retraction, changes how it is trusted. Render each separately.</p>
 
     <div class="row g-4">
       <div class="col-lg-6">
@@ -116,13 +143,13 @@
             </div>
           </div>
         </div>
-        <p class="text-muted small mb-0">Status, record visibility, and record condition sit next to each other because they answer different questions: where the work is in the workflow, whether the record is publicly visible, and whether the record carries a trust-changing condition such as retraction. Visibility is always visible text, never an icon alone.</p>
+        <p class="text-muted small mb-0">The badges sit together because they answer different questions. Visibility always has visible text; an icon alone is not enough.</p>
       </div>
 
       <div class="col-lg-6">
         <h3 class="h5 mb-3">Access wording</h3>
         <div class="table-responsive">
-          <table class="table table-hover align-middle">
+          <table class="table table-hover align-middle" aria-label="Work card access wording by surface">
             <thead class="text-uppercase text-muted small">
               <tr><th scope="col">File state</th><th scope="col">Public</th><th scope="col">Backoffice</th></tr>
             </thead>
@@ -138,26 +165,7 @@
       </div>
     </div>
 
-    <h3 class="h5 mt-4 mb-3">Action placement</h3>
-    <p class="mb-3 col-8">The top-right action row holds the immediate action for this user and state, plus a compact more-actions control where needed. Curator and reviewer cards also use the bottom quick-links row for utilities: view record, full texts and files, public record, DOI, WoS, PubMed, and Altmetric.</p>
-
-    <div class="table-responsive">
-      <table class="table table-hover align-middle">
-        <thead class="text-uppercase text-muted small">
-          <tr><th scope="col">Audience</th><th scope="col">State</th><th scope="col">Top-right action</th><th scope="col">Secondary / bottom links</th></tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row">Researcher</th><td>Draft</td><td>Continue</td><td>Delete own draft in the more menu; no public page</td></tr>
-          <tr><th scope="row">Researcher</th><td>Returned</td><td>Edit &amp; resubmit</td><td>Return reason / message context</td></tr>
-          <tr><th scope="row">Researcher</th><td>Submitted</td><td>Edit</td><td>Awaiting review, but still editable</td></tr>
-          <tr><th scope="row">Researcher</th><td>Reviewed</td><td>Request changes</td><td>Public page when public; Altmetric when available</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Draft</td><td>View</td><td>Intervene inside work view</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Submitted</td><td>Review</td><td>Intervene inside review mode; files, public record, external links</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Returned</td><td>View</td><td>Intervene inside work view; files, public record, external links</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Reviewed</td><td>View, not primary</td><td>Intervene inside work view; files, public record, external links</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="mt-4 mb-0 col-8">See <a href="/patterns/work-actions.html">work actions</a> for action placement by audience and state.</p>
   </section>
 
   <section class="ds-section" id="public">
@@ -755,43 +763,6 @@
             </div>
           </div>
         </article>
-      </div>
-    </div>
-    <p class="mt-2 mb-0 col-8 text-muted small">Software is a candidate type example, not proven old-backoffice parity. Raven's current work-field catalog defers software-specific fields such as version, so the card does not require or display a software version in v1.</p>
-  </section>
-
-  <section class="ds-section" id="parity">
-    <h2 class="h4 mb-3">Parity checklist</h2>
-    <p class="mb-3 col-8">Use this checklist when writing Raven issues from the prototype. Old backoffice is parity evidence; Raven vocabulary and model win.</p>
-
-    <div class="row g-4">
-      <div class="col-lg-6">
-        <h3 class="h5 mb-3">Must keep</h3>
-        <ul>
-          <li>Same card component and regions as the public card</li>
-          <li>Raven deposit status plus visible record visibility</li>
-          <li>Backoffice access wording</li>
-          <li>Three contributors plus remaining count</li>
-          <li>Projects on backoffice cards</li>
-          <li>Related datasets/publications as backoffice counts</li>
-          <li>Responsibility blocks for researcher and curator work</li>
-          <li>Biblio ID copy, audit trail, and system update where present</li>
-          <li>DOI, WoS, PubMed, Altmetric, files, and public-record links</li>
-          <li>Dataset parity: access, licence, identifier, format, related publications</li>
-          <li>Software candidate display: repository/archive, identifier, licence, platform or language, and related-record counts; software version is a later modelling question</li>
-          <li>Retraction indicator on public, researcher, proxy, curator, and reviewer cards</li>
-        </ul>
-      </div>
-      <div class="col-lg-6">
-        <h3 class="h5 mb-3">Still open</h3>
-        <ul>
-          <li>Proxy workflow</li>
-          <li>Reviewer next-record flow</li>
-          <li>Request-changes flow for reviewed records</li>
-          <li>Final responsibilities map for focused completion</li>
-          <li>Non-draft delete, public tombstones, restore, and undelete</li>
-          <li>Type-specific scan lines for every Raven work type</li>
-        </ul>
       </div>
     </div>
   </section>

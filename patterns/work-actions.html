@@ -11,7 +11,7 @@
     <ul class="list-inline mb-0">
       <li class="list-inline-item"><a href="#principles">Principles</a></li>
       <li class="list-inline-item"><a href="#public">Public</a></li>
-      <li class="list-inline-item"><a href="#public-v2">Public v2</a></li>
+      <li class="list-inline-item"><a href="#public-v2">Public access states</a></li>
       <li class="list-inline-item"><a href="#backoffice">Backoffice</a></li>
       <li class="list-inline-item"><a href="#matrix">Role/state matrix</a></li>
       <li class="list-inline-item"><a href="#detail">Detail header</a></li>
@@ -19,7 +19,7 @@
   </nav>
 
   <section class="ds-section" id="principles">
-    <h2 class="h4 mb-3">Action Principles</h2>
+    <h2 class="h4 mb-3">Action principles</h2>
     <p class="mb-3 col-8">The card action answers one question: what can this person do with this record now? One card has at most one primary action. Unavailable actions are absent, not disabled.</p>
 
     <div class="table-responsive">
@@ -34,7 +34,7 @@
         <tbody>
           <tr>
             <th scope="row">Primary action</th>
-            <td>Access CTA on detail headers; card access CTA only in the future v2 pattern.</td>
+            <td>Access CTA on detail headers and on cards when one clear route exists.</td>
             <td>Review, Continue, Edit, Edit &amp; resubmit, Request changes, or View, depending on role and state.</td>
           </tr>
           <tr>
@@ -57,8 +57,8 @@
   </section>
 
   <section class="ds-section" id="public">
-    <h2 class="h4 mb-3">Public Card Actions</h2>
-    <p class="mb-4 col-8 text-muted small">Keep the current public card stable: Cite and Add to list sit in the top-right action row. The title navigates, and the access badge communicates access. Add to list is owned by <a href="https://github.com/ugent-library/raven/issues/166">#166</a>; access CTAs are <a href="https://github.com/ugent-library/raven/issues/153">#153</a>.</p>
+    <h2 class="h4 mb-3">Public card actions</h2>
+    <p class="mb-4 col-8 text-muted small">Cite and Add to list sit in the top-right action row. The title navigates and the badge communicates access.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Public card</h3>
@@ -93,8 +93,8 @@
   </section>
 
   <section class="ds-section" id="public-v2">
-    <h2 class="h4 mb-3">Public Card Actions — V2</h2>
-    <p class="mb-4 col-8 text-muted small">These examples stay for the later public access-CTA pass. The card gains one access action after Cite and Add to list when there is a clear route. States without a clear action keep the v1 row.</p>
+    <h2 class="h4 mb-3">Public card access states</h2>
+    <p class="mb-4 col-8 text-muted small">When there is one clear route to the work, place that access action after Cite and Add to list. Otherwise, omit it.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Open file in Biblio</h3>
@@ -273,7 +273,7 @@
   </section>
 
   <section class="ds-section" id="backoffice">
-    <h2 class="h4 mb-3">Backoffice Card Actions</h2>
+    <h2 class="h4 mb-3">Backoffice card actions</h2>
     <p class="mb-4 col-8 text-muted small">Backoffice cards extend the public card grammar. The action row stays in the header, but the payload is workflow-specific. The full Raven issue is <a href="https://github.com/ugent-library/raven/issues/194">#194</a>.</p>
 
     <div class="ds-demo">
@@ -464,8 +464,8 @@
   </section>
 
   <section class="ds-section" id="matrix">
-    <h2 class="h4 mb-3">Role/State Matrix</h2>
-    <p class="mb-3 col-8 text-muted small">This table is the source for backoffice card actions. Proxy is not listed because the proxy workflow is still TBD.</p>
+    <h2 class="h4 mb-3">Role and state matrix</h2>
+    <p class="mb-3 col-8 text-muted small">Backoffice actions depend on both the audience and the record state.</p>
 
     <div class="table-responsive">
       <table class="table table-hover align-middle">
@@ -492,7 +492,7 @@
   </section>
 
   <section class="ds-section" id="detail">
-    <h2 class="h4 mb-3">Public Detail Header</h2>
+    <h2 class="h4 mb-3">Public detail header</h2>
     <p class="mb-4 col-8 text-muted small">The public detail header keeps one primary access CTA when there is a clear route, then Add to list and Cite. Records without a visible file have no access CTA.</p>
 
     <div class="ds-demo">

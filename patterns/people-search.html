@@ -5,19 +5,16 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">People search</h1>
-    <p class="lead">An inline search that resolves a person from the PersonIdentity index. One search, one rich result row, two selection shapes: click-to-select in a form (deposit add-author, curate detail) and checkable rows in a panel (Person filter editor, query builder). Not a modal — the results list floats directly below the input, over whatever follows it.</p>
+    <p class="lead">Inline person search with rich result rows. Forms select one person; filter and query panels can select several.</p>
   </header>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       1. EMPTY STATE
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Empty — before typing</h2>
-    <p class="mb-4">The input is focused. No results list yet. The hint below the input explains what the field searches across. The hint is the widget's live region: it exists in the DOM from the start, and it announces the result count, the searching state and the no-results message.</p>
+    <p class="mb-4">Before typing, show the search hint and no result list. The hint is also the live region for search status and result counts.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Empty</h3>
-      <div class="ds-demo-body" style="max-width: 420px;">
+      <div class="ds-demo-body col-11 col-sm-8 col-md-6 col-lg-5">
 
         <div data-people-search>
           <label for="ps-empty" class="form-label">Search by name or ORCID</label>
@@ -36,16 +33,13 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       2. RESULTS — UGent and external people mixed
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Results — query "doe"</h2>
-    <p class="mb-4">Results appear in a bordered list below the input. The list is an overlay: it floats over the form beneath, so results appearing or clearing never push the form around. The query term is highlighted in the name with <code>&lt;mark&gt;</code>. A row leads with the identifiers the identity carries — ORCID, UGent ID — on a line of their own, so they sit in the same place whichever row you look at; the affiliation, department and active years follow on the next. External people show "External" as affiliation, and a person with no identifier has no first line. Keyboard: ArrowDown moves from the input into the list and between rows, Enter or Space selects, Escape returns to the input. The hint announces the result count.</p>
+    <p class="mb-4">Results overlay the content below. Rows show enough identity and affiliation data to distinguish people with the same name. Arrow keys move through results, Enter or Space selects, and Escape returns to the input.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Results</h3>
-      <div class="ds-demo-body" style="max-width: 420px;">
+      <div class="ds-demo-body col-11 col-sm-8 col-md-6 col-lg-5">
 
         <div data-people-search>
           <label for="ps-results" class="form-label">Search by name or ORCID</label>
@@ -56,7 +50,6 @@
           <div data-ps-results class="bt-results" role="listbox"
             aria-label="People matching your search">
 
-            <!-- UGent person — linked identity, full metadata -->
             <div class="bt-result" role="option" tabindex="0" data-ps-row
               data-id="p-jd1" data-name="John Doe" data-affiliation="Faculty of Performing Arts"
               aria-label="John Doe, Faculty of Performing Arts">
@@ -86,7 +79,6 @@
               </div>
             </div>
 
-            <!-- UGent person — no UGent ID on the identity -->
             <div class="bt-result" role="option" tabindex="0" data-ps-row
               data-id="p-jd2" data-name="Jane Doe" data-affiliation="Faculty of Performing Arts"
               aria-label="Jane Doe, Faculty of Performing Arts">
@@ -115,7 +107,6 @@
               </div>
             </div>
 
-            <!-- External person — no UGent affiliation -->
             <div class="bt-result" role="option" tabindex="0" data-ps-row
               data-id="p-jb1" data-name="Josephine Baker" data-affiliation="External"
               aria-label="Josephine Baker, External">
@@ -146,16 +137,13 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       3. SELECTED STATE
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Selected</h2>
-    <p class="mb-4">After the user clicks a row, the list collapses to show only the selected person — name and affiliation, the rest of the metadata drops. The row gets <code>.is-selected</code> and <code>aria-selected="true"</code> — blue background, checkmark on the right. The input value updates to the person's name and the hint clears. The user can clear the selection to search again.</p>
+    <p class="mb-4">After selection, collapse the list to the selected name and affiliation. Mark the row with <code>aria-selected="true"</code>; clearing returns to search.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Selected</h3>
-      <div class="ds-demo-body" style="max-width: 420px;">
+      <div class="ds-demo-body col-11 col-sm-8 col-md-6 col-lg-5">
 
         <div data-people-search>
           <label for="ps-selected" class="form-label">Search by name or ORCID</label>
@@ -188,16 +176,13 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       4. NO RESULTS
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">No results</h2>
-    <p class="mb-4">When the query returns nothing, the results list hides and the hint announces the no-results message — the message lives in the widget's live region, never inside the empty listbox. No illustration, no secondary action: the user refines the query, or in a deposit context falls back to "Add as external author".</p>
+    <p class="mb-4">Hide the empty list and announce the no-results message in the live region. Deposit forms may offer Add as external author.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">No results</h3>
-      <div class="ds-demo-body" style="max-width: 420px;">
+      <div class="ds-demo-body col-11 col-sm-8 col-md-6 col-lg-5">
 
         <div data-people-search>
           <label for="ps-empty-results" class="form-label">Search by name or ORCID</label>
@@ -216,12 +201,9 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       5. CLICK-TO-SELECT RICH ROWS — single select in a form
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Click-to-select rich rows — single select in a form</h2>
-    <p class="mb-4">Two hosts pick one person at a time: the deposit flow's add-author form and the backoffice curate detail. The widget (<code>data-people-search</code>, driven by <code>people-search.js</code>) sits in the form without panel chrome or checkboxes. Clicking a rich row is terminal: the floating list closes, the person lands in the confirmation slot, and the row's <code>data-id</code> and <code>data-name</code> fill the form's hidden fields. The role select stays beside the widget, because a role belongs to one person. The clear button restarts the search. The "Not in the system? Add as external author" fallback exists only in these hosts, where you are creating an unlinked contributor on a work.</p>
+    <p class="mb-4">Deposit and curate forms select one person. Selection closes the list, fills the confirmation slot, and keeps the role attached to that person. Clear restarts the search.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Add author — deposit flow, person selected</h3>
@@ -275,15 +257,12 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">The full form, with the hidden fields, the external-author fallback and the submit actions, is the <code>add-author-form.html</code> partial. ⚠️ The four roles it offers — author, editor, supervisor, translator — are drawn as placeholders; the contributor roles Biblio recognises live in raven's contributor catalog.</p>
+    <p class="mb-0 col-8 text-muted small">The complete deposit form lives in <code>add-author-form.html</code>. Its role options are placeholder data.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       6. CHECKABLE RICH ROWS — multi-select in a panel
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section" id="checkable-rich-rows">
     <h2 class="h4 mb-3">Checkable rich rows — multi-select in a panel</h2>
-    <p class="mb-4">Two hosts pick several people at once: the works-page Person filter editor and the query builder's Person condition. There each row is a plain Bootstrap <code>form-check</code> inside a <code>bt-panel__body--checklist</code>, in the search-first shape. The checkbox replaces the user icon. The label carries the same rich row content — <code>bt-result__name</code> with <code>&lt;mark&gt;</code>, the <code>bt-meta-list bt-meta-list--xs</code> items — because two people with the same name must be tellable apart before you tick one. Apply commits the ticked set in both hosts: the filter's values, or the row's tokens. This pattern covers people only: the organization and project panels share the shape and the hooks, not the rich person row.</p>
+    <p class="mb-4">Filter and query panels use checkboxes for multi-select. Keep the same identifying metadata in each label so namesakes remain distinguishable before selection.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Person filter editor — search-first, multi-select</h3>
@@ -373,78 +352,17 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">External people already in the index appear as results here, as everywhere. The "Add as external author" fallback belongs to the deposit contexts only: a person in no index is not filterable.</p>
+    <p class="mb-0 col-8 text-muted small">External people already in the index are searchable. Add as external author belongs only to deposit forms.</p>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       7. CLASSES
-  ══════════════════════════════════════════════════════════════════════════ -->
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Classes</h2>
-    <p>The row and its parts are defined in <code>assets/scss/patterns/_booktower-results.scss</code>; the metadata lines come from the shared <code>bt-meta-list</code>.</p>
-    <p><code>people-search.js</code> reads a row through <code>data-ps-row</code>, never through its class, so restyling the row cannot cost it its behaviour. Every row inside a <code>[data-ps-results]</code> listbox carries the attribute.</p>
-
-    <table class="table table-sm align-middle mt-3" aria-label="People search CSS classes">
-      <thead class="text-uppercase text-muted small">
-        <tr>
-          <th scope="col">Class</th>
-          <th scope="col">Element</th>
-          <th scope="col">Purpose</th>
-        </tr>
-      </thead>
-      <tbody class="small">
-        <tr>
-          <td><code>.bt-results</code></td>
-          <td><code>div[role="listbox"]</code></td>
-          <td>Scroll container for result rows. Bordered, rounded, max-height with overflow-y auto.</td>
-        </tr>
-        <tr>
-          <td><code>.bt-result</code></td>
-          <td><code>div[role="option"]</code></td>
-          <td>A single result row. Flex, cursor pointer, hover and selected backgrounds. Not people-specific: an organisation or project picker uses the same row.</td>
-        </tr>
-        <tr>
-          <td><code>.bt-result.is-selected</code></td>
-          <td>—</td>
-          <td>Blue background. Add <code>aria-selected="true"</code> at the same time.</td>
-        </tr>
-        <tr>
-          <td><code>.bt-result__icon</code></td>
-          <td><code>span</code></td>
-          <td>Icon column, flex-shrink-0, muted colour.</td>
-        </tr>
-        <tr>
-          <td><code>.bt-result__name</code></td>
-          <td><code>div</code></td>
-          <td>The row's display name. Contains <code>&lt;mark&gt;</code> for query highlights.</td>
-        </tr>
-        <tr>
-          <td><code>.bt-meta-list bt-meta-list--xs</code></td>
-          <td><code>div</code> / <code>span</code></td>
-          <td>A metadata line. Not people-specific: the dense variant of the shared meta list, so an organisation or project row uses the same one. Defined in <code>patterns/_booktower-components.scss</code>.</td>
-        </tr>
-        <tr>
-          <td><code>.bt-meta-list__item</code></td>
-          <td><code>span</code></td>
-          <td>One token, pairing an icon with its text.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       8. BEHAVIOUR NOTES
-  ══════════════════════════════════════════════════════════════════════════ -->
   <section class="ds-section">
     <h2 class="h4 mb-3">Behaviour</h2>
     <ul class="small">
       <li>Search fires after 2 characters with a 300ms debounce.</li>
-      <li>In production: <code>hx-get="/people/search?q="</code> returning the <code>people-search-results.html</code> partial. While the request is in flight, an <code>htmx-indicator</code> span with <code>aria-live="polite"</code> shows "Searching&hellip;".</li>
-      <li><code>/people/search</code> returns UGent people <em>and</em> the external people the index already holds — one search, both kinds, wherever a person is picked. A person in no index is not searchable, which is what the deposit form's external fallback is for.</li>
-      <li>In the prototype: the <code>PEOPLE</code> array in <code>assets/js/people-search-stub.js</code> stands in for the server.</li>
-      <li>Clicking a row updates the input value, collapses the list to the selected state, and stores the person's <code>data-id</code> and <code>data-name</code> for the form submission.</li>
-      <li>An unlinked (external) author is valid. The no-results state should lead to the "Add as external author" fallback if present in the host context (deposit form), not block submission.</li>
+      <li>The live region announces searching, counts, and no results.</li>
+      <li>Selection stores the person identifier, not the visible label.</li>
     </ul>
+    <p class="mb-0">See <code>docs/JAVASCRIPT.md</code> for endpoints, events, and prototype fixtures.</p>
   </section>
 
 </div>
