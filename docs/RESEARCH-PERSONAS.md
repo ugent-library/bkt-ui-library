@@ -114,7 +114,8 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 - **Arrives:** Google on a life question (a condition, a place, an event) → one record, the only Biblio page she'll see.
 - **Does:** reads title + abstract; the record page *is* the product — she rarely downloads. Trust comes from the institution's brand and plain signals, not venue reputation.
 - **Pain:** jargon at every level, title and abstract included; "restricted" reads as broken; paywall vs open is opaque.
-- **Needs:** the strictest legibility bar on the public surface — she anchors the vocabulary test in `docs/SURFACES.md`. The demand for a lay summary originates with her.
+- **Needs:** the strictest legibility bar on the public surface; Design Principle 02
+  holds that language rule. The demand for a lay summary originates with her.
 - *Judges the page in seconds with no vocabulary — if she can't tell what it says or whether she can read it, the page failed.*
 
 > **Personas motivate demand, not schema.** Feature demands these profiles generate (e.g. a lay summary field) route via ProductBoard → raven modelling, per AGENTS.md "What lives where". The prototype shows such features only as flagged open questions until the concept has an owner — a lay summary in particular carries a policy question (who writes it?) that belongs to OSP, given Biblio's core problem is administrative overhead.
@@ -127,7 +128,9 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 - **Does:** builds one query for his own output, copies an embed or an API address into his site, and does not come back. Judges the query by the count, not by reading the list.
 - **Wants:** a list that updates itself when he publishes; the citation style his field uses; a link he can hand to a colleague who then edits one criterion.
 - **Pain:** hand-kept lists rot and he knows it; he cannot tell whether the set is everything; the current embed's parameters are folklore, written down nowhere.
-- **Needs:** public fields only (anything unpublished sends him to the backoffice builder — `docs/SURFACES.md` test 1); an embed that survives a redesign; a readable link rather than an opaque one.
+- **Needs:** public fields only; a query that requires non-public metadata belongs in
+  the backoffice builder. See the product-layer boundary in `docs/SURFACES.md`. The
+  embed must survive a redesign and use a readable link rather than an opaque one.
 - *Builds a set once, publishes it elsewhere, and never sees Biblio again.*
 
 ## Ans Rapport — "the faculty page has to be right"

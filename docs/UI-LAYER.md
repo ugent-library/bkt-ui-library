@@ -25,11 +25,14 @@ npm run dev   # builds and serves on http://localhost:3111
 
 ## The surface system
 
-Every rendered page must declare which of the two user contexts it belongs to. This is done via `data-surface` on `<body>` or the outermost layout element.
+Every rendered product page declares which Biblio layer renders it. The public layer
+presents research-output metadata to the wider public; the backoffice layer is where that
+metadata is entered and managed. User role does not decide the layer. Set
+`data-surface` on `<body>` or the outermost layout element.
 
 ```html
-<body data-surface="backoffice">   <!-- curators, librarians -->
-<body data-surface="public">       <!-- researchers, readers, the open web -->
+<body data-surface="backoffice">   <!-- metadata entry and management -->
+<body data-surface="public">       <!-- metadata presented to the wider public -->
 ```
 
 This is not optional decoration. It activates CSS tokens that change typography, density, and visual weight throughout the component tree:

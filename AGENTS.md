@@ -4,8 +4,9 @@ Booktower is the design system and prototype environment for Ghent University Li
 applications. Its main consumer is Raven, which powers `biblio.ugent.be`. The kit is
 HTMX-first, Bootstrap-based, server-rendered, progressively enhanced and accessible.
 
-Public pages are about knowledge. Backoffice pages are about work. Never mix their
-vocabulary or layout priorities.
+Public pages present research-output metadata to the wider public.
+Backoffice pages are where that metadata is entered and managed. The product layer
+decides the surface; user role, subject matter and interface density do not.
 
 ## Ownership
 
@@ -30,6 +31,8 @@ When sources disagree, trust them in this order:
 6. Historical audits and `CHANGELOG.md`
 
 `docs/wip/` contains drafts, not contracts.
+`docs/decisions/` records why accepted design choices were made. Current behavior still
+lives in code, contracts and guides.
 
 ## Consumers
 
@@ -52,7 +55,8 @@ Fix reusable styling here, then copy the compiled assets again. Never patch a co
 
 | Task | Read first |
 |---|---|
-| Design or wording decision | `foundations/design-principles.html` |
+| Make a design or wording decision | `foundations/design-principles.html` |
+| Defend, record or revisit a design decision | `docs/decisions/README.md` |
 | New page or feature | `docs/SURFACES.md` |
 | Audience or legibility | `docs/RESEARCH-PERSONAS.md` |
 | Domain meaning or workflow | `docs/DOMAIN-VOCABULARY.md`, `docs/DOMAIN-CONTEXT.md` |

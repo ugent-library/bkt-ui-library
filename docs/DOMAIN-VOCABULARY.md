@@ -326,12 +326,13 @@ In the UI: the deposit flow (`templates/biblio-researcher/deposit-1-0-find.html`
 
 ## Surfaces
 
-Two distinct user contexts. Must never be conflated. Determined by `data-surface` on the outermost layout element.
+Two product layers, declared with `data-surface` on the outermost layout element.
+The layer, not the user's role, determines the surface.
 
-| Surface | `data-surface` value | Users | Primary task |
-|---------|---------------------|-------|-------------|
-| Public | `public` | Researchers, readers, the open web | Discovery, reading, citing |
-| Backoffice | `backoffice` | Curators, librarians, depot workers | Data entry, curation, review |
+| Surface | `data-surface` value | Product layer |
+|---------|----------------------|---------------|
+| Public | `public` | Presents research-output metadata to the wider public |
+| Backoffice | `backoffice` | Enters and manages research-output metadata and its workflow |
 
 ---
 

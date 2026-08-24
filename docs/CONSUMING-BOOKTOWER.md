@@ -114,7 +114,8 @@ How you obtain Bootstrap is your project's choice (npm dependency, vendored copy
 
 If you are new to this library, answer these in plain language first. Do this before choosing classes.
 
-1. Is this page part of the public website, or part of the staff/admin interface?
+1. Does this page present metadata to the wider public, or enter and manage
+   metadata in the backoffice?
 2. Should the whole page scroll like a normal website page, or should the app frame stay fixed while only certain areas scroll?
 3. Does the main content area have one column, or does it have a left filter/details column next to a main content column?
 4. Is the left sidebar the main app navigation, or is it page-specific content such as filters?
@@ -126,10 +127,10 @@ If you are new to this library, answer these in plain language first. Do this be
 
 After answering those questions, map them to the library contract:
 
-- public website page → `u-layout--public`
-- staff/admin page → `u-layout--app`
-- normal page scroll → public layout
-- fixed app frame with internal scrolling areas → app layout
+- metadata presented to the wider public → `u-layout--public`
+- metadata entry or management → `u-layout--app`
+- the established public shell uses normal page scroll
+- the established backoffice shell uses a fixed app frame with internal scrolling areas
 - page-specific left pane inside the main area → `u-main__body u-main__body--split` with `u-main__sidebar`
 - main app navigation sidebar → `bt-sidebar`
 - fixed top area inside the right pane → `u-main__content-header`
