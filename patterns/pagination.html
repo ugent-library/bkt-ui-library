@@ -5,12 +5,12 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Pagination</h1>
-    <p class="lead">Pagination itself is plain Bootstrap (<code>ul.pagination</code>). What this page pins is the bar around it: a <code>bt-toolbar</code> carrying the page links and the result count on the left, and the reading controls — page size, sort, more actions — on the right.</p>
+    <p class="lead">Bootstrap pagination composed with a result count, page size, sort, and list actions.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Results bar</h2>
-    <p class="mb-4">The canonical composition, at the head of a result list (<a href="/templates/biblio-public/public-works.html">public-works</a>). Left says where you are, right says how you read. The count sits beside the pagination but <strong>outside</strong> the <code>&lt;nav&gt;</code> — it is a status, not a link — and carries <code>aria-live="polite"</code> so a page or filter change is announced. Everyone reads the same string, at every width. Sort options are a stub: the sort set is still open.</p>
+    <p class="mb-4">Page links and the live result count sit on the left; reading controls sit on the right. Keep the count outside the pagination <code>&lt;nav&gt;</code>.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Public search — pagination + count left, controls right</h3>
@@ -82,7 +82,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Page range and states</h2>
-    <p class="mb-4">The range is compact: first, current &plusmn;1, last, with <code>&hellip;</code> for the gaps. An inert item is a <code>&lt;span class="page-link"&gt;</code> inside <code>li.page-item.disabled</code> — never a disabled <code>&lt;a href&gt;</code>, which stays clickable and focusable (<a href="https://getbootstrap.com/docs/5.3/components/pagination/#disabled-and-active-states">Bootstrap: disabled and active states</a>). The arrows are <code>if-chevron-left</code> / <code>if-chevron-right</code>, inheriting the link&rsquo;s size. The <code>&lt;nav&gt;</code> labels in the demos below carry a suffix only so several bars can sit on this one kit page &mdash; for a real page, take the label from the <a href="#aria">ARIA table</a>.</p>
+    <p class="mb-4">Show first, current &plusmn;1, and last, with inert gaps. Use a <code>&lt;span class="page-link"&gt;</code> for disabled items and keep the current page link copyable.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">First page — previous is inert</h3>
@@ -160,7 +160,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Repeated bar — long list</h2>
-    <p class="mb-4">A long list repeats the bar under the results so you can page on without scrolling back. The top bar owns the live region; the bottom one repeats the same text as plain status. Each <code>&lt;nav&gt;</code> gets a distinguishing label &mdash; <em>Results pagination (top)</em> / <em>(bottom)</em> (rule A5). Live on the <a href="/templates/biblio-public/public-researcher-detail.html">researcher</a> and <a href="/templates/biblio-public/public-project-detail.html">project</a> detail pages, where the top bar carries the controls and the bottom bar only pages.</p>
+    <p class="mb-4">Long lists may repeat pagination below the results. Only the top count is live; label the two navigation regions by position.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">One list, two bars &mdash; distinct nav labels, one live count</h3>
@@ -221,7 +221,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Backoffice — list footer</h2>
-    <p class="mb-4">In the backoffice list shell the bar is the pinned footer of the scrolling result column: the same <code>bt-toolbar</code> inside <code>u-main__content-footer</code> (see <a href="/patterns/layout-shells.html">Layout shells</a>). Same composition, denser surface. Live on <a href="/templates/biblio-team/curate.html">curate</a> and <a href="/templates/biblio-researcher/search-researcher.html">search-researcher</a>.</p>
+    <p class="mb-4">Backoffice lists place the same toolbar in the pinned <code>u-main__content-footer</code>.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Footer bar — backoffice surface</h3>
@@ -261,7 +261,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">A&ndash;Z browse bar</h2>
-    <p class="mb-4">Browsing an alphabetical index reuses <code>ul.pagination</code> for the letter row: same affordance, same keyboard behaviour, no second component. It is a browse control, not pagination, so it gets its own label and stays full size &mdash; the letter row and the pagination under it match each other. A letter with no entries is <code>disabled</code>. Live on <a href="/templates/biblio-public/public-researchers.html">public-researchers</a>.</p>
+    <p class="mb-4">Alphabetical indexes reuse the pagination component at full size. Give the browse control its own label and disable letters with no entries.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Letter index, then pages within the letter</h3>
@@ -335,96 +335,32 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3" id="aria">ARIA &mdash; what each part is named</h2>
-    <p class="mb-3">The <code>&lt;nav&gt;</code> label answers &ldquo;which pagination is this?&rdquo;. House rule A5 wants every <code>&lt;nav&gt;</code> on the page distinctly labelled, so the label depends on how many there are:</p>
-
-    <table class="table table-sm align-middle" aria-label="Pagination nav labels by situation">
-      <thead>
-        <tr><th scope="col">Situation</th><th scope="col">Label</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>One list, one bar</td>
-          <td>name the entity the list holds: <code>aria-label="Research output pagination"</code>, <code>"Projects pagination"</code>, <code>"Researchers pagination"</code></td>
-        </tr>
-        <tr>
-          <td>One list, a bar above and below it</td>
-          <td><code>"Research output pagination (top)"</code> and <code>"Research output pagination (bottom)"</code> &mdash; position is what distinguishes them, and it tells a screen-reader user where they landed</td>
-        </tr>
-        <tr>
-          <td>Two different lists on one page (detail-page tabs, a letter index and its pages)</td>
-          <td>the entity name already separates them: <code>"Research output pagination"</code> beside <code>"Projects pagination"</code>; a nav that pages something else again says what that is: <code>"Pages within letter D"</code></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p class="mb-3">The rest is fixed, whatever the situation:</p>
-    <table class="table table-sm align-middle" aria-label="ARIA per part of the bar">
-      <thead>
-        <tr><th scope="col">Part</th><th scope="col">Carries</th><th scope="col">Why</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>The count, on the bar at the head of the list</td>
-          <td><code>aria-live="polite"</code></td>
-          <td>Paging, sorting and filtering all rewrite it; polite announces the new range without interrupting. Not <code>role="status"</code> &mdash; the house rules keep that for confirmations.</td>
-        </tr>
-        <tr>
-          <td>The count, on a repeated bar below the results</td>
-          <td>nothing</td>
-          <td>Same string, already announced by the bar above. Two live regions announce the same change twice.</td>
-        </tr>
-        <tr>
-          <td>Numbered page links and browse letters</td>
-          <td>nothing beyond their text</td>
-          <td>&ldquo;2&rdquo; is a name, and the labelled <code>&lt;nav&gt;</code> plus the list around it are the context WCAG 2.4.4 asks for at AA. Naming them <code>"Page 2"</code> so they stand alone in a links list is 2.4.9 &mdash; AAA, above our target. Do not add it.</td>
-        </tr>
-        <tr>
-          <td>Current page link</td>
-          <td><code>aria-current="page"</code></td>
-          <td><code>li.page-item.active</code> is the visual half; <code>aria-current</code> is the spoken half.</td>
-        </tr>
-        <tr>
-          <td>Arrow links</td>
-          <td><code>aria-label="Previous page"</code> / <code>"Next page"</code>, and <code>aria-hidden="true"</code> on the icon</td>
-          <td>An icon has no accessible name. The label sits on the link, never on the <code>&lt;i&gt;</code>.</td>
-        </tr>
-        <tr>
-          <td>Inert arrows and empty letters (<code>span.page-link</code>)</td>
-          <td>nothing</td>
-          <td>Not focusable, no text, so nothing is announced. <code>aria-disabled</code> would describe a control that is not there.</td>
-        </tr>
-        <tr>
-          <td>The <code>&hellip;</code> gaps</td>
-          <td><code>aria-hidden="true"</code> on the <code>&lt;li&gt;</code></td>
-          <td>A visual shorthand for skipped pages, not a destination.</td>
-        </tr>
-        <tr>
-          <td>Page size and sort <code>&lt;select&gt;</code></td>
-          <td><code>&lt;label class="visually-hidden"&gt;</code></td>
-          <td>The chosen option (&ldquo;50 per page&rdquo;) reads as the value; the label says what the value is for.</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Rules</h2>
-    <div class="ds-demo">
-      <div class="ds-demo-body">
-        <ul class="mb-0">
-          <li><strong>The <code>&lt;nav&gt;</code> wraps the <code>&lt;ul&gt;</code> only.</strong> The count is a sibling in <code>bt-toolbar__left</code>. Inside the nav it would be read as part of the navigation.</li>
-          <li><strong>The count is one string, visible at every width</strong> &mdash; <em>Showing 1&ndash;50 of 879 research outputs</em>. No hidden copy: <code>visually-hidden</code> would hide &ldquo;Showing&rdquo; from sighted readers too, and pairing it with <code>d-none d-md-inline-block</code> removes it from the accessibility tree below <code>md</code> instead of revealing it. The bar wraps before the sentence does.</li>
-          <li><strong>Inert items are <code>&lt;span class="page-link"&gt;</code> in <code>li.page-item.disabled</code></strong> &mdash; arrows at the ends of the range, letters with no entries, the <code>&hellip;</code> gaps. The gaps also take <code>aria-hidden="true"</code>: they are a visual shorthand, not a destination.</li>
-          <li><strong>Arrows are icons</strong> &mdash; <code>if-chevron-left</code> / <code>if-chevron-right</code>, <code>aria-hidden</code>, sized by the link they sit in. The link carries <code>aria-label="Previous page"</code> / <code>"Next page"</code>: an icon has no accessible name of its own.</li>
-          <li><strong>The current page is <code>li.page-item.active</code> + <code>aria-current="page"</code> on the link.</strong> It keeps its <code>href</code> &mdash; a copyable URL for where you are.</li>
-          <li><strong>Size follows the bar.</strong> A results bar uses <code>pagination-sm</code>; a browse index and its letter pages stay full size. One size per bar, and the two bars of one list match.</li>
-          <li><strong>No <code>mb-0</code> on <code>ul.pagination</code>.</strong> The base reset already zeroes list margins.</li>
-          <li><strong>Every child of <code>__left</code> / <code>__right</code> is a <code>bt-toolbar__item</code>.</strong> For a <code>form-select</code> it is load-bearing: as a direct flex child its <code>width: 100%</code> collapses every select to one shared width and the longest label truncates.</li>
-          <li><strong>Narrow screens stack, they do not scroll.</strong> The bar wraps in reading order &mdash; pagination, count, then the controls, which wrap among themselves below roughly 600px.</li>
-          <li><strong>Changing sort or page size returns to page&nbsp;1</strong> &mdash; a page number only means something against a fixed order (see <a href="/patterns/search-and-filtering.html">Search and filtering</a>).</li>
-        </ul>
-      </div>
+    <h2 class="h4 mb-3" id="aria">Accessibility</h2>
+    <div class="table-responsive mb-4">
+      <table class="table table-sm align-middle" aria-label="Pagination accessibility contract">
+        <thead>
+          <tr><th scope="col">Part</th><th scope="col">Contract</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Navigation</th><td>Name the entity in the list. Add “top” and “bottom” when one list repeats its pagination.</td></tr>
+          <tr><th scope="row">Top result count</th><td>Keep it beside, not inside, the <code>&lt;nav&gt;</code> and add <code>aria-live="polite"</code>.</td></tr>
+          <tr><th scope="row">Repeated lower count</th><td>Repeat the visible text without another live region.</td></tr>
+          <tr><th scope="row">Current page</th><td>Keep its <code>href</code> and add <code>aria-current="page"</code>. The visible number is its name.</td></tr>
+          <tr><th scope="row">Previous and next</th><td>Name the links “Previous page” and “Next page”; hide their icons. Use <code>&lt;span class="page-link"&gt;</code> when inert.</td></tr>
+          <tr><th scope="row">Gaps</th><td>Use an inert page item and hide it from assistive technology.</td></tr>
+          <tr><th scope="row">Page size and sort</th><td>Give each select a label, even when it is visually hidden.</td></tr>
+        </tbody>
+      </table>
     </div>
+
+    <h3 class="h5 mb-3">Composition rules</h3>
+    <ul class="mb-0">
+      <li>Show first, current &plusmn;1, and last, with inert gaps between ranges.</li>
+      <li>Use <code>pagination-sm</code> in result bars and full size for alphabetical browse controls.</li>
+      <li>Wrap each direct child of <code>bt-toolbar__left</code> and <code>bt-toolbar__right</code> in <code>bt-toolbar__item</code>.</li>
+      <li>Let the bar wrap in reading order on narrow screens; do not turn it into a horizontal scroller.</li>
+      <li>Changing sort or page size returns to page 1.</li>
+      <li>Do not add <code>mb-0</code> to <code>ul.pagination</code>; the base reset already removes its margin.</li>
+    </ul>
   </section>
 </div>

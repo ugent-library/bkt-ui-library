@@ -1,0 +1,95 @@
+<!--
+  The advanced-search field list: the four groups every chooser shows, one entry per public
+  field in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
+
+  Included by search-advanced-conditions.html, inside the #qb-chooser template, so every row's
+  chooser holds the same list. Ids repeat because each row clones that template; identify()
+  re-ids every clone.
+
+  An entry carries its contract id (data-qb-field) and names the row template that carries its
+  shape. The id matches the contract; the label may not. Where the contract narrows the
+  template's operators the entry lists what its field keeps (data-qb-ops), and where the
+  contract supplies a select's values the entry carries them (data-qb-values); a select whose
+  values live in a raven catalog names none and keeps its placeholder.
+
+  Plain dropdown-header + dropdown-item, as the works Add-filter menu uses: inside the chooser
+  panel they are padded rows with a hover band, because the slot is a dropdown-menu and Bootstrap's
+  item variables are in scope there. Outside one, the same markup falls back to a plain list of links.
+-->
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-subject">
+  <p class="dropdown-header" id="qb-g-subject">Subject</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="q" data-qb-label="Words or topic" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain">Words or topic</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="title" data-qb-label="Title" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Title</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="abstract" data-qb-label="Abstract" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Abstract</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="keyword" data-qb-label="Keywords" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Keywords</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-people">
+  <p class="dropdown-header" id="qb-g-people">People and projects</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="contributor" data-qb-label="Person" data-qb-template="qb-row-contributor">Person</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="organization" data-qb-label="Organization" data-qb-template="qb-row-entity"
+      data-qb-panel="organization-picker" data-qb-add="Add an organization">Organization</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="project" data-qb-label="Project" data-qb-template="qb-row-entity"
+      data-qb-panel="project-picker" data-qb-add="Add a project">Project</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="funding_program" data-qb-label="Funding programme" data-qb-template="qb-row-text"
+      data-qb-ops="contains,is,is not,is any of">Funding programme</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-publication">
+  <p class="dropdown-header" id="qb-g-publication">Publication</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="work_type" data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="year" data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="publication_status" data-qb-label="Publication status" data-qb-template="qb-row-choice"
+      data-qb-values="Unpublished,In press,Published">Publication status</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="container" data-qb-label="Published in" data-qb-template="qb-row-container">Published in</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="conference" data-qb-label="Conference" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Conference</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="publisher" data-qb-label="Publisher" data-qb-template="qb-row-text"
+      data-qb-ops="contains,does not contain,is,is not">Publisher</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="language" data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="identifier" data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-access">
+  <p class="dropdown-header" id="qb-g-access">Access and files</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="access" data-qb-label="Access level" data-qb-template="qb-row-choice"
+      data-qb-values="Open access,Restricted,Under embargo,No full text">Access level</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="files" data-qb-label="Files" data-qb-template="qb-row-choice"
+      data-qb-values="A file here,Somewhere else,Nothing deposited">Files</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="license" data-qb-label="Licence" data-qb-template="qb-row-choice"
+      data-qb-values="CC0 1.0,CC BY 4.0,CC BY-SA 4.0,CC BY-NC 4.0,CC BY-ND 4.0,CC BY-NC-SA 4.0,CC BY-NC-ND 4.0,In copyright,Rights unknown,Other licence">Licence</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="file_type" data-qb-label="Attached content" data-qb-template="qb-row-choice"
+      data-qb-values="Full text or dataset,Supplementary material,Table of contents,Peer review report,Colophon,Data fact sheet,Agreement">Attached content</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="publication_version" data-qb-label="Full-text version" data-qb-template="qb-row-choice"
+      data-qb-values="Author version,Accepted version,Published version,Updated version">Full-text version</button></li>
+  </ul>
+</div>

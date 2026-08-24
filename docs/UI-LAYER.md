@@ -25,11 +25,14 @@ npm run dev   # builds and serves on http://localhost:3111
 
 ## The surface system
 
-Every rendered page must declare which of the two user contexts it belongs to. This is done via `data-surface` on `<body>` or the outermost layout element.
+Every rendered product page declares which Biblio layer renders it. The public layer
+presents research-output metadata to the wider public; the backoffice layer is where that
+metadata is entered and managed. User role does not decide the layer. Set
+`data-surface` on `<body>` or the outermost layout element.
 
 ```html
-<body data-surface="backoffice">   <!-- curators, librarians -->
-<body data-surface="public">       <!-- researchers, readers, the open web -->
+<body data-surface="backoffice">   <!-- metadata entry and management -->
+<body data-surface="public">       <!-- metadata presented to the wider public -->
 ```
 
 This is not optional decoration. It activates CSS tokens that change typography, density, and visual weight throughout the component tree:
@@ -79,6 +82,17 @@ Backoffice pages use this main-area contract inside `u-layout--app`:
 ```
 
 Use `u-main__header`, `u-main__sidebar`, `u-main__content-header`, `u-main__content-footer`, `u-main__footer`, and `u-main__panel` only when needed. `u-main__body` is the required middle row. Add `u-main__body--split` only when that row contains a left `u-main__sidebar`; `u-main__content-body` is then the right-pane scroll container.
+
+### Backoffice result-list filter drawer
+
+Work queues and result lists add `u-main__body--filter-drawer` beside
+`u-main__body--split`. Below `xl`, Bootstrap Offcanvas owns the facet pane's opening, closing,
+backdrop and focus behavior. The Booktower modifier only removes the pane's grid column so the
+result region takes the full width.
+
+Place the Filter trigger in `u-main__content-header`, beside the search, active filters, count and
+list actions it affects. Settings, detail pages and section navigation keep the ordinary split
+body. The canonical markup is in `patterns/layout-shells.html`.
 
 ---
 
@@ -232,4 +246,4 @@ A future npm package will replace the manual copy step.
 
 - Decide whether blank-slate is a component we should keep, or if it is just a card with text-center
 - Decide whether research-card is a component we should keep, or if it is just a card with text-center
-- Fix people-search
+- Finish the Add person unification: the works author filter still renders the bare name checklist, and the query builder submits person tokens by display name rather than id (the settled pattern: `patterns/people-search.html`)

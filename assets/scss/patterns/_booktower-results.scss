@@ -1,0 +1,38 @@
+/* -- Search result rows -- */
+[data-people-search] {
+  position: relative;
+}
+/* The list is an overlay: results appearing or clearing must never reflow the form
+   below the input. No top offset — out of flow it stays at its in-flow spot. */
+.bt-results {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: var(--bt-z-panel);
+  background: var(--bt-white);
+  box-shadow: var(--bt-shadow-md);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius-md);
+  overflow: hidden;
+  margin-top: var(--bt-sp-2);
+  max-height: 240px;
+  overflow-y: auto;
+}
+.bt-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--bt-sp-3);
+  padding: var(--bt-sp-2) var(--bt-sp-3);
+  cursor: pointer;
+  transition: background var(--bt-dur-fast);
+}
+.bt-result:hover,
+.bt-result:focus { background: var(--bt-blue-50); outline: none; }
+.bt-result.is-selected { background: var(--bt-blue-100); }
+.bt-result__icon {
+  display: inline-flex;
+  color: var(--bt-icon-muted);
+}
+.bt-result__name {
+  font-weight: 500;
+}

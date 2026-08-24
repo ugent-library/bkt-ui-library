@@ -92,6 +92,8 @@ bt-border
 
 bt-btn-check__group
 
+bt-btn-inline-edit
+
 bt-dropdown-scroll
 
 bt-file-drop
@@ -103,9 +105,8 @@ bt-hero
 bt-hero__content
 
 bt-meta-list
-bt-meta-list__item-bordered
-
-bt-meta-text
+bt-meta-list--xs
+bt-meta-list__item
 
 bt-navbar
 bt-navbar__brand
@@ -120,50 +121,36 @@ bt-panel__body
 bt-panel__body--boolean
 bt-panel__body--checklist
 bt-panel__body--form
+bt-panel__body--list
 bt-panel__body--year
 bt-panel__title
 bt-panel__year-input
 
-bt-query-builder
 bt-query-builder__add
-bt-query-builder__and
-bt-query-builder__batch
-bt-query-builder__choice
-bt-query-builder__choice-detail
-bt-query-builder__choice-group
-bt-query-builder__choice-heading
-bt-query-builder__chooser
-bt-query-builder__chooser-body
-bt-query-builder__chooser-foot
-bt-query-builder__chooser-grid
-bt-query-builder__chooser-search
-bt-query-builder__code
+bt-query-builder__alts
 bt-query-builder__conditions
-bt-query-builder__editor
-bt-query-builder__empty
 bt-query-builder__group
-bt-query-builder__handoff
-bt-query-builder__handoff-body
-bt-query-builder__handoff-header
-bt-query-builder__heading
-bt-query-builder__main
-bt-query-builder__name-parts
-bt-query-builder__or
-bt-query-builder__people-field
-bt-query-builder__people-input
-bt-query-builder__people-search
-bt-query-builder__person-token
+bt-query-builder__group-foot
 bt-query-builder__phrase
-bt-query-builder__readback
-bt-query-builder__recent
-bt-query-builder__recent-label
 bt-query-builder__row
+bt-query-builder__row--alt
 bt-query-builder__row--batch
+bt-query-builder__row--error
+bt-query-builder__row--warning
 bt-query-builder__row-actions
 bt-query-builder__row-kind
-bt-query-builder__row-number
-bt-query-builder__select
+bt-query-builder__row-note
+bt-query-builder__row-value
+bt-query-builder__value-select
 bt-query-builder__year
+
+bt-result
+bt-result__icon
+bt-result__name
+
+bt-results
+
+bt-search-clear
 
 bt-section-detail
 
@@ -185,6 +172,8 @@ bt-suggest-panel__body
 bt-table-sticky-col
 
 bt-text-xsmall
+
+bt-textarea-auto
 
 bt-title-toolbar
 
@@ -525,14 +514,6 @@ modal-dialog--wide
 
 nav-title
 
-people-result
-people-result__icon
-people-result__meta
-people-result__meta-item
-people-result__name
-
-people-results
-
 popover--dark
 popover--sm
 
@@ -615,7 +596,6 @@ btn-sm
 btn-success
 btn-warning
 card
-collapsing
 display-1
 display-2
 display-3
@@ -635,20 +615,22 @@ form-label
 form-select
 form-select-sm
 form-text
+input-group
+input-group-sm
 invalid-feedback
 is-invalid
 is-valid
 lead
 list-group
-modal
-ms-auto
+modal-body
+modal-content
+modal-dialog-scrollable
 nav
 nav-link
 nav-tabs
 offcanvas-xl
 pagination
 progress
-show
 small
 spinner-border
 spinner-grow

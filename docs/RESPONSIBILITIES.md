@@ -223,10 +223,18 @@ or another configured state? The fallback must avoid legal exposure and preserve
 fact that the depositor did not know. Owner: Biblio team, informed by Open Science
 Policy.
 
-**Classification (A1/A2, VABB/GPRC).** Classification is accountable to the Biblio
-team today. Whether that is permanent, or whether classification derives from source
-data with Biblio-team handling exceptions, decides whether it is Biblio-team work or
-an Administration rule. Owner: Biblio team with Administration.
+**Classification (A1/A2).** The code derives from the work itself — its type, its venue
+and whether the venue is peer reviewed — so nobody assigns it and nobody corrects it in
+place. A wrong code means a wrong work type, and correcting the work type recomputes the
+code. That makes classification a consequence of curation rather than a task of its own.
+Owner: Biblio team, for the work types the codes derive from.
+
+**VABB and GPRC.** Neither is UGent's judgement, and neither arrives as one. Administration
+sends the annual delivery, the evaluation comes back as a proposal per record, and corrections
+travel in both directions until the round closes. So the work is a cycle to run, not a value to
+assign. What is unsettled is who applies a correction to a record: Administration, who owns the
+delivery, or the Biblio team, who own the records. Owner: Administration for the delivery; the
+correction step is open.
 
 **Administration's own tooling.** P6 gives every stakeholder a route to its own
 answers. Which questions that route has to answer is Administration's to state.

@@ -1,0 +1,91 @@
+<!-- @example: /patterns/filter-picker.html -->
+<!--
+  Partial: project-picker-panel.html
+  The project picker: a search box over checkable rows. Two hosts pick projects, the works
+  Project filter and the query builder's Project condition, so both clone this one panel.
+
+  Include once per page carrying either host, alongside filter-editor-templates.html.
+
+  A row is identified by its data-id, never by its label. Placeholder projects: the ids are
+  invented for the prototype and are not raven's. Real projects come from raven's project
+  catalog.
+
+  ⚠️ These rows are a stand-in. The real project picker is a scheduled design task, with
+  these open questions:
+  - Which metadata tells two projects of one name apart: the funder, the programme, a grant
+    number, the running years.
+  - Whether the action reads "Add project" or "Link project". The panel copy follows the
+    answer, and so does the deposit flow's dead Add-project button
+    (templates/biblio-researcher/deposit-1-1-find.html).
+-->
+
+<template id="project-picker">
+  <p class="bt-panel__title" data-picker-title>Project</p>
+  <div class="bt-panel__body">
+    <label class="visually-hidden" for="project-search">Search projects</label>
+    <input type="search" class="form-control form-control-sm" id="project-search"
+      data-picker-search placeholder="Search project&hellip;" autocomplete="off">
+  </div>
+  <div class="bt-panel__body bt-panel__body--checklist" role="group"
+    aria-label="Projects matching your search" data-picker-rows>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-1" data-id="fwo-g012">
+      <label class="form-check-label" for="project-1">
+        <span data-picker-name>FWO G0.12N</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-2" data-id="horizon-openair">
+      <label class="form-check-label" for="project-2">
+        <span data-picker-name>Horizon Europe &mdash; OpenAIR</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-3" data-id="bof-starting">
+      <label class="form-check-label" for="project-3">
+        <span data-picker-name>BOF Starting Grant</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-4" data-id="era-net">
+      <label class="form-check-label" for="project-4">
+        <span data-picker-name>ERA-NET Cofund</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-5" data-id="vlaio-tetra">
+      <label class="form-check-label" for="project-5">
+        <span data-picker-name>VLAIO TETRA</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-6" data-id="iof-valorisation">
+      <label class="form-check-label" for="project-6">
+        <span data-picker-name>IOF Valorisation</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-7" data-id="fwo-sb">
+      <label class="form-check-label" for="project-7">
+        <span data-picker-name>FWO SB PhD</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-8" data-id="ugent-goa">
+      <label class="form-check-label" for="project-8">
+        <span data-picker-name>UGent GOA</span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-9" data-id="marie-curie">
+      <label class="form-check-label" for="project-9">
+        <span data-picker-name>Marie Sk&#322;odowska-Curie</span>
+      </label>
+    </div>
+  </div>
+  <div class="bt-panel__actions" data-picker-actions>
+    <button type="button" class="btn btn-primary btn-sm" data-picker-apply>Apply</button>
+    <button type="button" class="btn btn-ghost btn-sm" data-picker-cancel>Cancel</button>
+    <button type="button" class="btn btn-ghost btn-sm ms-auto" data-picker-clear>Clear</button>
+  </div>
+</template>

@@ -58,6 +58,11 @@
                 aria-autocomplete="list"
                 aria-controls="suggest-panel"
                 aria-expanded="false">
+              <!-- The × clears the query only: its href drops q and keeps every other
+                   param (Rule 2). Stub URL — production re-renders the current URL without q. -->
+              <a class="btn btn-ghost bt-search-clear" href="public-researchers.html" aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
 
@@ -85,7 +90,7 @@
                People-scoped "Add filter" chip bar (Faculty/department,
                Membership). Same interaction as
                the works filter bar; engine in filter-bar.js (rdir- config). -->
-          <div class="position-relative">
+          <div class="position-relative" data-filter-bar="rdir-">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
@@ -102,7 +107,9 @@
                     </button>
                     <div class="dropdown-menu p-0">
                       <div id="rdir-filter-picker-list" class="bt-dropdown-scroll">
-                        <button class="dropdown-item" type="button" data-filter="organization">Organization</button>
+                        <button class="dropdown-item" type="button" data-filter="organization"
+                          data-filter-label="Organization" data-filter-type="picker"
+                          data-filter-panel="organization-picker">Organization</button>
                       </div>
                     </div>
                   </div>
@@ -116,7 +123,7 @@
             </div>
             <div id="rdir-filter-editor" hidden
               class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
-              role="dialog" aria-modal="false" aria-labelledby="rdir-filter-editor-title"></div>
+              role="dialog" aria-modal="false" aria-labelledby="filter-editor-title"></div>
           </div>
 
         </form>
@@ -521,7 +528,11 @@
   </main>
 </div>
 
+<!-- @include: templates/partials/filter-editor-templates.html -->
+<!-- @include: templates/partials/organization-picker-panel.html -->
+
 <script src="/assets/js/directory-search.js"></script>
+<script src="/assets/js/search-clear.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

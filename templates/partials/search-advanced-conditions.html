@@ -1,756 +1,1737 @@
 <!--
-  The Advanced search condition editor and query handoff rail. Used with
-  search-advanced-actions.html by both renderings of the builder: the page
-  public-search-advanced.html and the dialog in public-works.html.
+  The Advanced search condition editor: the builder itself and nothing around it. The host supplies
+  the heading this form is named by (id="conditions-heading"), the box it sits in and the bar under
+  it — search-advanced-dialog.html, on public-works.html. The layout is argued at
+  patterns/query-builder.html.
 
-  Layout, container and field-list reasoning: patterns/query-builder.html.
-  Public field list: docs/SEARCH-AND-FILTERING.md rule 5.
+  Top-level items are this element's direct [data-qb-row] and [data-qb-group] children, so a row
+  carries no extra marker attribute.
 
-  Values and URLs are placeholders; raven owns the public URL grammar.
-  States are the host page's: built, advanced-empty, advanced-group.
+  The picker panels are not in here. Picking a person, an organization or a project is the same
+  act as on the results page, so each is the same panel the works filter bar clones:
+  people-picker-panel.html, organization-picker-panel.html and project-picker-panel.html, which
+  the host includes alongside this file. A row's value cell holds the "Add a&hellip;" button and
+  an empty [data-qb-picker-slot] naming the panel that is cloned into it.
+
+  The built blocks also name public-works.html's own states (results, best-bet, no-results,
+  no-query, facet-set-in-builder). A block renders only when the active state names it, and the
+  works page always has one of those active. Drop them and the dialog renders empty; no check
+  catches it.
+
+  Public fields only. The field list and its per-field operators are in
+  docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, and docs/SEARCH-AND-FILTERING.md rule 5 keeps curation
+  fields off the public surface. Values and URLs are placeholders; raven owns the public URL
+  grammar.
+  States: builder-empty, builder-one-condition, builder-full-query, builder-or-group, builder-no-results.
 -->
-<!-- The submit button is "Show results" in search-advanced-actions.html, bound to this form
-     by form="qb-form". It cannot sit inside the form: that would break the dialog's
-     header/body/footer chain and push the footer off the screen. -->
 <!-- [html-validate-disable-next wcag/h32 -- submit button bound externally by form="qb-form"] -->
-<form id="qb-form" class="bt-query-builder" action="public-works.html" method="get"
+<form id="qb-form" action="public-works.html" method="get"
   aria-labelledby="conditions-heading">
-  <div class="bt-query-builder__main">
-    <div class="bt-query-builder__editor">
-      <div class="bt-query-builder__heading">
-        <p class="form-label mb-1">Build the set</p>
-        <h3 id="conditions-heading" class="h5 mb-0">
-          Show research output where all of these are true
-        </h3>
-      </div>
 
-      <div id="qb-conditions" class="bt-query-builder__conditions">
-        <!-- @state: built results best-bet no-results query-empty advanced-condition -->
+  <div id="qb-conditions" class="bt-query-builder__conditions">
+    <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
 
-        <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">1</div>
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Words or topic</p>
-            <p class="mb-0 small text-muted">Any searchable text</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p1-op-1">Operator, condition 1</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-1">
-              <option selected>contains</option>
-              <option>contains all of</option>
-              <option>contains any of</option>
-              <option>does not contain</option>
-            </select>
-            <label class="visually-hidden" for="p1-val-1">Words, condition 1</label>
-            <input type="text" class="form-control form-control-sm" id="p1-val-1"
-              value="quantum computing">
-          </div>
-          <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 1: any field contains quantum computing">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
+    <!-- @state: builder-empty -->
+    <!-- @include: templates/partials/search-advanced-blank.html -->
+    <!-- @state -->
 
-        <p class="bt-query-builder__and">and</p>
-
-        <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">2</div>
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Contributor</p>
-            <p class="mb-0 small text-muted">Person, any role by default</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p1-op-2">Operator, condition 2</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-2">
-              <option selected>is</option>
-              <option>is not</option>
-              <option>is any of</option>
-            </select>
-            <label class="visually-hidden" for="p1-val-2">Person, condition 2</label>
-            <input type="text" class="form-control form-control-sm" id="p1-val-2"
-              value="Coppens, Jan (UGent)">
-            <label class="visually-hidden" for="p1-role-2">Role, condition 2</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-role-2">
-              <option selected>in any role</option>
-              <option>as author</option>
-              <option>as editor</option>
-              <option>as supervisor</option>
-              <option>as translator</option>
-            </select>
-            <button type="button" class="btn btn-ghost btn-sm" data-bs-toggle="collapse"
-              data-bs-target="#p1-name-parts-2" aria-expanded="false"
-              aria-controls="p1-name-parts-2">
-              Name parts
-              <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
-            </button>
-            <div class="collapse bt-query-builder__name-parts" id="p1-name-parts-2">
-              <label class="visually-hidden" for="p1-first-name-2">First name, condition 2</label>
-              <input type="text" class="form-control form-control-sm" id="p1-first-name-2"
-                placeholder="First name">
-              <label class="visually-hidden" for="p1-middle-name-2">Middle name or initials, condition 2</label>
-              <input type="text" class="form-control form-control-sm" id="p1-middle-name-2"
-                placeholder="Initials">
-              <label class="visually-hidden" for="p1-last-name-2">Last name, condition 2</label>
-              <input type="text" class="form-control form-control-sm" id="p1-last-name-2"
-                placeholder="Last name">
-            </div>
-          </div>
-          <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 2: contributor is Coppens, Jan">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-        <p class="bt-query-builder__and">and</p>
-
-        <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">3</div>
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Contributor</p>
-            <p class="mb-0 small text-muted">Any of several people</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p1-op-3">Operator, condition 3</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-3">
-              <option>is</option>
-              <option>is not</option>
-              <option selected>is any of</option>
-            </select>
-            <div class="bt-query-builder__people-field" data-people-search>
-              <div class="bt-query-builder__people-input">
-                <span class="bt-query-builder__person-token">
-                  Coppens, Jan
-                  <button type="button" aria-label="Remove Coppens, Jan from condition 3">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </span>
-                <span class="bt-query-builder__person-token">
-                  Verhoeven, Karen
-                  <button type="button" aria-label="Remove Verhoeven, Karen from condition 3">
-                    <i class="if if-close if--xs" aria-hidden="true"></i>
-                  </button>
-                </span>
-                <label class="visually-hidden" for="p1-val-3">Add person, condition 3</label>
-                <input type="search" class="bt-query-builder__people-search" id="p1-val-3"
-                  data-ps-input placeholder="Add another person..." autocomplete="off">
-              </div>
-              <div data-ps-results class="people-results" role="listbox"
-                aria-label="People matching condition 3" hidden></div>
-              <p data-ps-hint class="form-text mb-0">
-                Search by name or ORCID. Selected people stay as pills in this condition.
-              </p>
-            </div>
-            <label class="visually-hidden" for="p1-role-3">Role, condition 3</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-role-3">
-              <option selected>in any role</option>
-              <option>as author</option>
-              <option>as editor</option>
-              <option>as supervisor</option>
-              <option>as translator</option>
-            </select>
-          </div>
-          <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 3: contributor is Verhoeven, Karen">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-        <p class="form-text mt-1 mb-0">
-          Separate contributor rows find works these people wrote together. Person pills inside
-          one contributor row find works by any selected person.
-        </p>
-
-        <p class="bt-query-builder__and">and</p>
-
-        <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">4</div>
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Publication year</p>
-            <p class="mb-0 small text-muted">Range or exact year</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p1-op-4">Operator, condition 4</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-4">
-              <option>is</option>
-              <option>is not</option>
-              <option>is any of</option>
-              <option selected>is between</option>
-              <option>is at least</option>
-              <option>is at most</option>
-              <option>is after</option>
-              <option>is before</option>
-            </select>
-            <label class="visually-hidden" for="p1-val-4-from">First year, condition 4</label>
-            <input type="number" class="form-control form-control-sm bt-query-builder__year"
-              id="p1-val-4-from" value="2015" min="1800" max="2100">
-            <span class="small text-muted">and</span>
-            <label class="visually-hidden" for="p1-val-4-to">Last year, condition 4</label>
-            <input type="number" class="form-control form-control-sm bt-query-builder__year"
-              id="p1-val-4-to" value="2020" min="1800" max="2100">
-          </div>
-          <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 4: publication year is between 2015 and 2020">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-        <p class="bt-query-builder__and">and</p>
-
-        <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-number" aria-hidden="true">5</div>
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Full text access</p>
-            <p class="mb-0 small text-muted">Access condition</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p1-op-5">Operator, condition 5</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-5">
-              <option>is</option>
-              <option selected>is not</option>
-              <option>is any of</option>
-            </select>
-            <label class="visually-hidden" for="p1-val-5">Access, condition 5</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-val-5">
-              <option selected>Open access</option>
-              <option>Restricted</option>
-              <option>Under embargo</option>
-              <option>No full text</option>
-            </select>
-          </div>
-          <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 5: full text access is not open access">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-        <p class="bt-query-builder__and">and</p>
-
-        <div class="bt-query-builder__row bt-query-builder__row--batch">
-          <div class="bt-query-builder__row-number" aria-hidden="true">6</div>
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Biblio ID</p>
-            <p class="mb-0 small text-muted">Pasted list</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p1-op-6">Operator, condition 6</label>
-            <select class="form-select form-select-sm bt-query-builder__select" id="p1-op-6">
-              <option>is</option>
-              <option selected>is any of</option>
-            </select>
-            <label class="visually-hidden" for="p1-val-6">Biblio IDs, condition 6</label>
-            <textarea class="form-control form-control-sm font-monospace bt-query-builder__batch"
-              id="p1-val-6" rows="3" aria-describedby="p1-val-6-help">01K000000000 01K002F3EYDH 01K004Y6XWV2 01K007DACV8K 01K009WDVSP4 01K00CBHAR3N 01K00ETMSPH6 01K00H9R8MYQ 01K00KRVQKC8 01K00P7Z6HSS 01K00RQ2NG7A 01K00V664EMV</textarea>
-            <p class="form-text mb-0" id="p1-val-6-help">
-              763 IDs recognised. Paste a list separated by spaces, commas, or line breaks.
-            </p>
-          </div>
-          <div class="bt-query-builder__row-actions">
-            <button type="button" class="btn btn-ghost btn-sm">
-              <i class="if if-edit if--xs" aria-hidden="true"></i>
-              Field
-            </button>
-            <button type="button" class="btn btn-ghost btn-sm"
-              aria-label="Remove condition 6: Biblio ID is any of 763 IDs">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-        <!-- @state -->
-
-        <!-- @state: advanced-empty -->
-        <div class="bt-query-builder__empty">
-          <p class="mb-2 fw-semibold">Start with one condition.</p>
-          <p class="mb-0">
-            Pick the kind of condition first. The builder then shows the operators and
-            value input that belong to that field.
-          </p>
-        </div>
-        <!-- @state -->
-
-        <!-- @state: advanced-group -->
-        <div class="bt-query-builder__group" role="group"
-          aria-labelledby="p2-group-1-label" data-qb-item data-qb-group>
-          <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
-            <p class="h6 mb-0" id="p2-group-1-label">Any of these</p>
-            <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-              Remove group
-            </button>
-          </div>
-
-          <div data-qb-alts>
-            <div class="bt-query-builder__row" data-qb-row>
-              <div class="bt-query-builder__row-number" aria-hidden="true">1a</div>
-              <div class="bt-query-builder__row-kind">
-                <label class="form-label mb-1" for="p2-field-1a">Field</label>
-                <select class="form-select form-select-sm" id="p2-field-1a" data-qb-field>
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option selected>Host publication (journal, book, series)</option>
-                    <option>Publisher</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                </select>
-              </div>
-              <div class="bt-query-builder__phrase">
-                <label class="visually-hidden" for="p2-op-1a">Operator, alternative 1</label>
-                <select class="form-select form-select-sm bt-query-builder__select"
-                  id="p2-op-1a" data-qb-op>
-                  <option selected>is</option>
-                  <option>is not</option>
-                  <option>is any of</option>
-                  <option>contains</option>
-                </select>
-                <label class="visually-hidden" for="p2-val-1a">Value, alternative 1</label>
-                <input type="text" class="form-control form-control-sm" id="p2-val-1a"
-                  data-qb-value value="Nature Photonics">
-              </div>
-              <div class="bt-query-builder__row-actions" data-qb-actions></div>
-            </div>
-
-            <p class="bt-query-builder__or" data-qb-sep>or</p>
-
-            <div class="bt-query-builder__row" data-qb-row>
-              <div class="bt-query-builder__row-number" aria-hidden="true">1b</div>
-              <div class="bt-query-builder__row-kind">
-                <label class="form-label mb-1" for="p2-field-1b">Field</label>
-                <select class="form-select form-select-sm" id="p2-field-1b" data-qb-field>
-                  <optgroup label="Text and topic">
-                    <option>Any field</option>
-                    <option>Title</option>
-                    <option>Abstract</option>
-                    <option>Keyword</option>
-                  </optgroup>
-                  <optgroup label="Publication">
-                    <option>Host publication (journal, book, series)</option>
-                    <option selected>Publisher</option>
-                    <option>Publication year</option>
-                  </optgroup>
-                </select>
-              </div>
-              <div class="bt-query-builder__phrase">
-                <label class="visually-hidden" for="p2-op-1b">Operator, alternative 2</label>
-                <select class="form-select form-select-sm bt-query-builder__select"
-                  id="p2-op-1b" data-qb-op>
-                  <option selected>is</option>
-                  <option>is not</option>
-                  <option>is any of</option>
-                  <option>contains</option>
-                </select>
-                <label class="visually-hidden" for="p2-val-1b">Value, alternative 2</label>
-                <input type="text" class="form-control form-control-sm" id="p2-val-1b"
-                  data-qb-value value="Springer">
-              </div>
-              <div class="bt-query-builder__row-actions" data-qb-actions></div>
-            </div>
-          </div>
-
-          <div class="mt-3">
-            <button type="button" class="btn btn-ghost btn-sm" data-qb-add-alt>
-              <i class="if if-add if--xs" aria-hidden="true"></i>
-              Add an alternative
-            </button>
-          </div>
-        </div>
-
-        <p class="bt-query-builder__and" data-qb-sep>and</p>
-
-        <div class="bt-query-builder__row" data-qb-row data-qb-item>
-          <div class="bt-query-builder__row-number" aria-hidden="true">2</div>
-          <div class="bt-query-builder__row-kind">
-            <label class="form-label mb-1" for="p2-field-2">Field</label>
-            <select class="form-select form-select-sm" id="p2-field-2" data-qb-field>
-              <optgroup label="Publication">
-                <option selected>Publication year</option>
-                <option>Type</option>
-                <option>Publisher</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="p2-op-2">Operator, condition 2</label>
-            <select class="form-select form-select-sm bt-query-builder__select"
-              id="p2-op-2" data-qb-op>
-              <option selected>is</option>
-              <option>is not</option>
-              <option>is any of</option>
-              <option>is between</option>
-            </select>
-            <label class="visually-hidden" for="p2-val-2">Value, condition 2</label>
-            <input type="text" class="form-control form-control-sm" id="p2-val-2"
-              data-qb-value value="2020">
-          </div>
-          <div class="bt-query-builder__row-actions" data-qb-actions></div>
-        </div>
-        <!-- @state -->
-      </div>
-
-      <div class="bt-query-builder__add d-flex flex-wrap gap-2 align-items-center pt-3 mt-3">
+    <!-- @state: builder-one-condition -->
+    <!-- Arrival from an entity page or a filtered list: the scope is already a row,
+          editable and removable like any other. The usual case, not an extra. -->
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
         <div class="dropdown">
-          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"
-            data-bs-auto-close="outside" aria-expanded="false">
-            <i class="if if-add if--xs" aria-hidden="true"></i>
-            Add condition
-          </button>
-          <div class="dropdown-menu p-0 bt-query-builder__chooser" data-qb-choice-panel>
-            <div class="d-flex gap-3 align-items-start p-3">
-              <div>
-                <p class="h6 mb-1">What do you want to filter?</p>
-                <p class="mb-0 small text-muted">Pick a field. The right controls come next.</p>
-              </div>
-              <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-choice-close
-                aria-label="Close condition chooser">
-                <i class="if if-close if--xs" aria-hidden="true"></i>
-              </button>
-            </div>
-            <div class="bt-query-builder__chooser-search">
-              <label class="visually-hidden" for="qb-condition-search">Search condition fields</label>
-              <i class="if if-search" aria-hidden="true"></i>
-              <input type="search" class="form-control form-control-sm" id="qb-condition-search"
-                placeholder="Search fields" autocomplete="off" data-qb-choice-search>
-            </div>
-            <div class="bt-query-builder__recent d-flex flex-wrap gap-2 align-items-center py-2 px-3"
-              role="group" aria-labelledby="qb-recent-fields">
-              <span class="bt-query-builder__recent-label" id="qb-recent-fields">Recent</span>
-              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
-                data-qb-label="Contributor" data-qb-next="define which contributor to match"
-                data-qb-detail="Search a resolved person, ORCID, or separate first name, initials, and last name."
-                data-qb-example="Coppens, Jan" data-qb-control="person selector with pills">
-                <i class="if if-user-search-line if--xs" aria-hidden="true"></i>
-                Contributor
-              </button>
-              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
-                data-qb-label="Host publication" data-qb-next="choose exact title or text match"
-                data-qb-detail="Journal, book, proceedings, magazine, newspaper, or venue title."
-                data-qb-example="Nature Photonics" data-qb-control="container title selector">
-                <i class="if if-book if--xs" aria-hidden="true"></i>
-                Host publication
-              </button>
-              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
-                data-qb-label="Publication year" data-qb-next="choose exact year, range, before, or after"
-                data-qb-detail="Use one year, a range, or a relative bound."
-                data-qb-example="2015-2020" data-qb-control="year range fields">
-                <i class="if if-calendar if--xs" aria-hidden="true"></i>
-                Publication year
-              </button>
-              <button class="btn btn-outline-primary btn-sm" type="button" data-qb-choice
-                data-qb-label="Identifier" data-qb-next="paste or search identifiers"
-                data-qb-detail="DOI, ISBN, ISSN, handle, ORCID, project key, or Biblio ID."
-                data-qb-example="10.1234/..." data-qb-control="identifier parser">
-                <i class="if if-list-unordered if--xs" aria-hidden="true"></i>
-                Identifier
-              </button>
-            </div>
-            <div class="bt-query-builder__chooser-body">
-              <div class="bt-query-builder__chooser-grid">
-                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-text">
-                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-text">Search text</h4>
-                  <button class="bt-query-builder__choice active" type="button" aria-current="true"
-                    data-qb-choice data-qb-label="Any field"
-                    data-qb-next="define which words should match"
-                    data-qb-detail="Search title, abstract, keywords, identifiers, and other public text."
-                    data-qb-example="quantum computing" data-qb-control="plain search field">
-                    <i class="if if-search" aria-hidden="true"></i>
-                    <span>Any field</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Title" data-qb-next="define how the title should match"
-                    data-qb-detail="Use when the title wording matters more than general topic."
-                    data-qb-example="machine learning" data-qb-control="text field">
-                    <i class="if if-file-text" aria-hidden="true"></i>
-                    <span>Title</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Abstract" data-qb-next="define how the abstract should match"
-                    data-qb-detail="Useful for concepts that may not appear in the title."
-                    data-qb-example="climate adaptation" data-qb-control="text field">
-                    <i class="if if-file-search-line" aria-hidden="true"></i>
-                    <span>Abstract</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Keyword" data-qb-next="define how keywords should match"
-                    data-qb-detail="Search author keywords. Keyword links are one of the measured refinement paths."
-                    data-qb-example="digital humanities" data-qb-control="keyword selector with pills">
-                    <i class="if if-bookmark-line" aria-hidden="true"></i>
-                    <span>Keyword</span>
-                  </button>
-                </section>
-
-                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-people">
-                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-people">People &amp; context</h4>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Contributor" data-qb-next="define which contributor to match"
-                    data-qb-detail="Search a resolved person, ORCID, or separate first name, initials, and last name."
-                    data-qb-example="Coppens, Jan" data-qb-control="person selector with pills">
-                    <i class="if if-user-search-line" aria-hidden="true"></i>
-                    <span>Contributor</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Affiliation" data-qb-next="define how affiliation should match"
-                    data-qb-detail="Choose credited organizations and current person affiliations with clear labels."
-                    data-qb-example="Faculty of Sciences" data-qb-control="organization selector">
-                    <i class="if if-building" aria-hidden="true"></i>
-                    <span>Affiliation</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Project" data-qb-next="choose the project or identifier"
-                    data-qb-detail="Search project title, acronym, GISMO key, IWETO key, or linked output."
-                    data-qb-example="BOF project" data-qb-control="project selector">
-                    <i class="if if-database" aria-hidden="true"></i>
-                    <span>Project</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Supervisor" data-qb-next="define which supervisor to match"
-                    data-qb-detail="A contributor-role shortcut for thesis and dissertation searches."
-                    data-qb-example="Van den Bossche" data-qb-control="person selector with role preset">
-                    <i class="if if-user" aria-hidden="true"></i>
-                    <span>Supervisor</span>
-                  </button>
-                </section>
-
-                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-publication">
-                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-publication">Publication details</h4>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Publication type" data-qb-next="choose one or more types"
-                    data-qb-detail="Journal article, book, dataset, dissertation, and other public types."
-                    data-qb-example="Dataset" data-qb-control="closed value checklist">
-                    <i class="if if-book" aria-hidden="true"></i>
-                    <span>Publication type</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Publication year" data-qb-next="choose exact year, range, before, or after"
-                    data-qb-detail="Use one year, a range, or a relative bound."
-                    data-qb-example="2015-2020" data-qb-control="year range fields">
-                    <i class="if if-calendar" aria-hidden="true"></i>
-                    <span>Publication year</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Host publication" data-qb-next="choose exact title or text match"
-                    data-qb-detail="Journal, book, proceedings, magazine, newspaper, or venue title."
-                    data-qb-example="Nature Photonics" data-qb-control="container title selector">
-                    <i class="if if-file-word" aria-hidden="true"></i>
-                    <span>Host publication</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Publisher" data-qb-next="define the publisher text"
-                    data-qb-detail="Publishing house, issuing institution, platform, or online publication."
-                    data-qb-example="Springer" data-qb-control="text field">
-                    <i class="if if-check-circle" aria-hidden="true"></i>
-                    <span>Publisher</span>
-                  </button>
-                </section>
-
-                <section class="bt-query-builder__choice-group" aria-labelledby="qb-group-access">
-                  <h4 class="bt-query-builder__choice-heading mb-2" id="qb-group-access">Access &amp; identifiers</h4>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Full text access" data-qb-next="choose the access state"
-                    data-qb-detail="Filter by open, restricted, embargoed, or missing full text."
-                    data-qb-example="Open access" data-qb-control="closed value checklist">
-                    <i class="if if-lock" aria-hidden="true"></i>
-                    <span>Full text access</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Identifier" data-qb-next="paste or search identifiers"
-                    data-qb-detail="DOI, ISBN, ISSN, handle, ORCID, project key, or Biblio ID."
-                    data-qb-example="10.1234/..." data-qb-control="identifier parser">
-                    <i class="if if-list-unordered" aria-hidden="true"></i>
-                    <span>Identifier</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Classification" data-qb-next="choose a classification scheme"
-                    data-qb-detail="A1/A2/B1 and other public classification schemes."
-                    data-qb-example="A1" data-qb-control="scheme and value selector">
-                    <i class="if if-grid" aria-hidden="true"></i>
-                    <span>Classification</span>
-                  </button>
-                  <button class="bt-query-builder__choice" type="button" data-qb-choice
-                    data-qb-label="Research discipline" data-qb-next="choose a discipline term"
-                    data-qb-detail="Use configured discipline vocabularies; free concepts belong in keywords."
-                    data-qb-example="Social sciences" data-qb-control="taxonomy selector">
-                    <i class="if if-filter-3-line" aria-hidden="true"></i>
-                    <span>Research discipline</span>
-                  </button>
-                </section>
-              </div>
-
-              <div class="bt-query-builder__choice-detail" aria-live="polite">
-                <p class="form-label mb-1" data-qb-choice-title>Any field</p>
-                <p class="mb-2" data-qb-choice-detail>
-                  Search title, abstract, keywords, identifiers, and other public text.
-                </p>
-                <p class="mb-0 small text-muted">
-                  Example: <code data-qb-choice-example>quantum computing</code>
-                </p>
-                <p class="mb-0 small text-muted">
-                  Control: <span data-qb-choice-control>plain search field</span>
-                </p>
-              </div>
-            </div>
-            <div class="bt-query-builder__chooser-foot d-flex flex-wrap gap-2 align-items-center p-3">
-              <p class="mb-0 me-auto">
-                Next: <strong data-qb-choice-next>define which words should match</strong>
-              </p>
-              <button type="button" class="btn btn-primary btn-sm" data-qb-add-condition>
-                Continue
-              </button>
-              <button type="button" class="btn btn-ghost btn-sm" data-qb-choice-close>
-                Cancel
-              </button>
-            </div>
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-role-1">Role, condition 1</label>
+        <select class="form-select form-select-sm" id="qb-role-1">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as first author</option>
+          <option>as last author</option>
+          <option>as sole author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qb-op-1">Operator, condition 1</label>
+        <select class="form-select form-select-sm" id="qb-op-1" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Jan Kiewiet
+            <button type="button" aria-label="Remove Jan Kiewiet from condition 1">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+              aria-label="Add a person to condition 1">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
           </div>
         </div>
-        <button type="button" class="btn btn-ghost btn-sm">
-          Paste a list
-        </button>
-        <button type="button" class="btn btn-ghost btn-sm">
-          More fields
-        </button>
-        <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-clear>
-          Clear all
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 1: person is Jan Kiewiet">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 1: person is Jan Kiewiet">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
         </button>
       </div>
+    </div>
+    <!-- @state -->
 
-      <div class="bt-query-builder__readback">
-        <p class="form-label mb-1">Your query</p>
-        <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-        <p class="mb-0">
-          Research output where any field contains <strong>quantum computing</strong>,
-          contributor is <strong>Coppens, Jan</strong>, contributor is
-          <strong>Verhoeven, Karen</strong>, publication year is <strong>2015-2020</strong>,
-          full text access is not <strong>Open access</strong>, and Biblio ID is any of
-          <strong>763 IDs</strong>.
-        </p>
-        <!-- @state -->
-        <!-- @state: advanced-empty -->
-        <p class="mb-0">No conditions yet.</p>
-        <!-- @state -->
-        <!-- @state: advanced-group -->
-        <p class="mb-0" data-qb-preview>
-          Either host publication is <strong>Nature Photonics</strong> or publisher is
-          <strong>Springer</strong>, and publication year is <strong>2020</strong>.
-        </p>
-        <!-- @state -->
+    <!-- @state: builder-full-query builder-no-results results best-bet no-results no-query facet-set-in-builder -->
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Words or topic</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-1">Operator, condition 1</label>
+        <select class="form-select form-select-sm" id="qb-op-1" data-qb-op>
+          <option selected>contains</option>
+          <option>does not contain</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-1">Words, condition 1</label>
+          <input type="text" class="form-control form-control-sm" id="qb-val-1" value="quantum computing">
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 1: words or topic contains quantum computing">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 1: words or topic contains quantum computing">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <!-- @state -->
+
+    <!-- @state: builder-full-query results best-bet no-results no-query facet-set-in-builder -->
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-role-2">Role, condition 2</label>
+        <select class="form-select form-select-sm" id="qb-role-2">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as first author</option>
+          <option>as last author</option>
+          <option>as sole author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qb-op-2">Operator, condition 2</label>
+        <select class="form-select form-select-sm" id="qb-op-2" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Jan Kiewiet
+            <button type="button" aria-label="Remove Jan Kiewiet from condition 2">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+              aria-label="Add a person to condition 2">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 2: person is Jan Kiewiet">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 2: person is Jan Kiewiet">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
 
-    <aside class="bt-query-builder__handoff" aria-labelledby="qb-handoff-heading">
-      <div class="bt-query-builder__handoff-header">
-        <p class="form-label mb-1" id="qb-handoff-heading">Share this set</p>
-        <p class="mb-0 small text-muted">Same query, different handoff.</p>
-      </div>
 
-      <ul class="nav nav-tabs nav-fill" id="qb-handoff-tabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="qb-link-tab" data-bs-toggle="tab"
-            data-bs-target="#qb-link-panel" type="button" role="tab"
-            aria-controls="qb-link-panel" aria-selected="true">Link</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="qb-embed-tab" data-bs-toggle="tab"
-            data-bs-target="#qb-embed-panel" type="button" role="tab"
-            aria-controls="qb-embed-panel" aria-selected="false">Embed</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="qb-api-tab" data-bs-toggle="tab"
-            data-bs-target="#qb-api-panel" type="button" role="tab"
-            aria-controls="qb-api-panel" aria-selected="false">API</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="qb-feed-tab" data-bs-toggle="tab"
-            data-bs-target="#qb-feed-panel" type="button" role="tab"
-            aria-controls="qb-feed-panel" aria-selected="false">Feed</button>
-        </li>
-      </ul>
-
-      <div class="tab-content bt-query-builder__handoff-body" id="qb-handoff-tabs-content">
-        <div class="tab-pane fade show active" id="qb-link-panel" role="tabpanel"
-          aria-labelledby="qb-link-tab" tabindex="0">
-          <code class="bt-query-builder__code" id="qb-link-value">https://biblio.ugent.be/search?advanced={query}&amp;sort=newest</code>
-          <button type="button" class="btn btn-primary btn-sm w-100" data-clipboard
-            data-clipboard-target="#qb-link-value">
-            <i class="if if-copy if--xs" aria-hidden="true"></i>
-            <span class="btn-text">Copy link</span>
-          </button>
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
-
-        <div class="tab-pane fade" id="qb-embed-panel" role="tabpanel"
-          aria-labelledby="qb-embed-tab" tabindex="0">
-          <code class="bt-query-builder__code" id="qb-embed-value">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" title="Research output — Biblio UGent"&gt;&lt;/iframe&gt;</code>
-          <div class="d-flex gap-2">
-            <select class="form-select form-select-sm" aria-label="Embed citation style">
-              <option selected>APA</option>
-              <option>MLA</option>
-              <option>Chicago</option>
-            </select>
-            <select class="form-select form-select-sm" aria-label="Embed sort order">
-              <option selected>Newest first</option>
-              <option>Oldest first</option>
-              <option>Title A-Z</option>
-            </select>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-role-3">Role, condition 3</label>
+        <select class="form-select form-select-sm" id="qb-role-3">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as first author</option>
+          <option>as last author</option>
+          <option>as sole author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qb-op-3">Operator, condition 3</label>
+        <select class="form-select form-select-sm" id="qb-op-3" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+          <option selected>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="p1">
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Marianne Testarosso
+            <button type="button" aria-label="Remove Marianne Testarosso from condition 3">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="p6">
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Sarah De Wolf
+            <button type="button" aria-label="Remove Sarah De Wolf from condition 3">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+              aria-label="Add a person to condition 3">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
           </div>
         </div>
-
-        <div class="tab-pane fade" id="qb-api-panel" role="tabpanel"
-          aria-labelledby="qb-api-tab" tabindex="0">
-          <code class="bt-query-builder__code" id="qb-api-value">https://biblio.ugent.be/api/works?{query}&amp;format=jsonl</code>
-          <button type="button" class="btn btn-ghost btn-sm w-100" data-clipboard
-            data-clipboard-target="#qb-api-value">
-            <i class="if if-copy if--xs" aria-hidden="true"></i>
-            <span class="btn-text">Copy API URL</span>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 3: person is any of Marianne Testarosso, Sarah De Wolf">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
           </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
         </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 3: person is any of Marianne Testarosso, Sarah De Wolf">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
 
-        <div class="tab-pane fade" id="qb-feed-panel" role="tabpanel"
-          aria-labelledby="qb-feed-tab" tabindex="0">
-          <code class="bt-query-builder__code" id="qb-feed-value">https://biblio.ugent.be/feed/search?{query}</code>
-          <button type="button" class="btn btn-ghost btn-sm w-100" data-clipboard
-            data-clipboard-target="#qb-feed-value">
-            <i class="if if-rss-fill if--xs" aria-hidden="true"></i>
-            <span class="btn-text">Copy feed URL</span>
-          </button>
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Publication year</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
         </div>
       </div>
-
-      <!-- @state: built results best-bet no-results query-empty advanced-condition -->
-      <div class="alert alert-warning alert--sm mb-0">
-        This pasted list is too long for a durable link. Save the search before sharing.
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-4">Operator, condition 4</label>
+        <select class="form-select form-select-sm" id="qb-op-4" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+          <option data-qb-list-op>is any of</option>
+          <option selected data-qb-pair-op>is between</option>
+          <option>is at least</option>
+          <option>is at most</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-4-from" data-qb-single>First year, condition 4</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-val-4-from"
+            value="2015" min="1800" max="2100" data-qb-single>
+          <span class="small text-muted" data-qb-pair>and</span>
+          <label class="visually-hidden" for="qb-val-4-to" data-qb-pair>Last year, condition 4</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-val-4-to"
+            value="2020" min="1800" max="2100" data-qb-pair>
+          <label class="visually-hidden" for="qb-val-4-list" data-qb-list hidden>Years, condition 4</label>
+          <input type="text" class="form-control form-control-sm" id="qb-val-4-list"
+            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
+        </div>
       </div>
-      <!-- @state -->
-    </aside>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 4: publication year is between 2015 and 2020">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 4: publication year is between 2015 and 2020">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Published in</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-qual-5">Kind of container, condition 5</label>
+        <select class="form-select form-select-sm" id="qb-qual-5">
+          <option>in any container</option>
+          <option selected>journal</option>
+          <option>book</option>
+          <option>proceedings</option>
+          <option>magazine</option>
+          <option>newspaper</option>
+          <option>series</option>
+          <option>show or lecture series</option>
+        </select>
+        <label class="visually-hidden" for="qb-op-5">Operator, condition 5</label>
+        <select class="form-select form-select-sm" id="qb-op-5" data-qb-op>
+          <option selected>contains</option>
+          <option>does not contain</option>
+          <option>is</option>
+          <option>is not</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-5">Value, condition 5</label>
+          <input type="text" class="form-control form-control-sm" id="qb-val-5" value="Physical Review">
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 5: published in a journal contains Physical Review">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 5: published in a journal contains Physical Review">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Conference</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-6">Operator, condition 6</label>
+        <select class="form-select form-select-sm" id="qb-op-6" data-qb-op>
+          <option selected>contains</option>
+          <option>does not contain</option>
+          <option>is</option>
+          <option>is not</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-6">Value, condition 6</label>
+          <input type="text" class="form-control form-control-sm" id="qb-val-6" value="Quantum Week">
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 6: conference contains Quantum Week">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 6: conference contains Quantum Week">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Access level</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-7">Operator, condition 7</label>
+        <select class="form-select form-select-sm" id="qb-op-7" data-qb-op>
+          <option>is</option>
+          <option selected>is not</option>
+          <option data-qb-multi-op>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-7">Access, condition 7</label>
+          <select class="form-select form-select-sm bt-query-builder__value-select" id="qb-val-7">
+            <option selected>Open access</option>
+            <option>Restricted</option>
+            <option>Under embargo</option>
+            <option>No full text</option>
+          </select>
+          <div class="dropdown" data-qb-multi hidden>
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add values
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose values" data-qb-picker-slot="qb-checklist-panel"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 7: access level is not Open access">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 7: access level is not Open access">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Licence</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-8">Operator, condition 8</label>
+        <select class="form-select form-select-sm" id="qb-op-8" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option data-qb-multi-op>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-8">Licence, condition 8</label>
+          <select class="form-select form-select-sm bt-query-builder__value-select" id="qb-val-8">
+            <option>CC0 1.0</option>
+            <option>CC BY 4.0</option>
+            <option>CC BY-SA 4.0</option>
+            <option>CC BY-NC 4.0</option>
+            <option>CC BY-ND 4.0</option>
+            <option>CC BY-NC-SA 4.0</option>
+            <option>CC BY-NC-ND 4.0</option>
+            <option selected>In copyright</option>
+            <option>Rights unknown</option>
+            <option>Other licence</option>
+          </select>
+          <div class="dropdown" data-qb-multi hidden>
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add values
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose values" data-qb-picker-slot="qb-checklist-panel"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 8: licence is In copyright">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 8: licence is In copyright">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Paste lives IN the row: a growing textarea, scheme recognised per value.
+          Unrecognised lines are reported, never silently dropped. -->
+    <div class="bt-query-builder__row bt-query-builder__row--batch" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Identifier</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-9">Operator, condition 9</label>
+        <select class="form-select form-select-sm" id="qb-op-9" data-qb-op>
+          <option selected>is any of</option>
+          <option>is</option>
+          <option>is not</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-val-9">Identifiers, condition 9</label>
+          <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="qb-val-9"
+            rows="3" aria-describedby="qb-val-9-help qb-val-9-recognised qb-val-9-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+  01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81 01KPQ4D2KG9E 01K30SYZCNAV
+  01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF 01K4D2KG9EFW 01KHPQ4D2KG9
+  01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX 01KJ30SYZCNA 01KZCNAVRHPQ
+  01KCNAVRHPQ4 01KSYZCNAVRH 01K67MXJ30SY 01KKG9EFW5TB 01K0SYZCNAVR 01KD2KG9EFW5
+  01KTB8167MXJ 01K7MXJ30SYZ 01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K
+  01K8167MXJ30 01KNAVRHPQ4D 01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81
+  01KPQ4D2KG9E 01K30SYZCNAV 01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF
+  01K4D2KG9EFW 01KHPQ4D2KG9 01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
+  01KJ30SYZCNA 01KZCNAVRHPQ 01KCNAVRHPQ4 01KSYZCNAVRH 01K67MXJ30SY 01KKG9EFW5TB
+  10.1038/s41586-024-07123-4 10.1103/PhysRevLett.132.010801 01K0SYZCNAVR 01KD2KG9EFW5 01KTB8167MXJ 01K7MXJ30SYZ
+  01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+  01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81 01KPQ4D2KG9E 01K30SYZCNAV
+  01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF 01K4D2KG9EFW 01KHPQ4D2KG9
+  01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX 01KJ30SYZCNA 01KZCNAVRHPQ
+  01KCNAVRHPQ4 01KSYZCNAVRH 01K67MXJ30SY 01KKG9EFW5TB 01K0SYZCNAVR 01KD2KG9EFW5
+  01KTB8167MXJ 01K7MXJ30SYZ 01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K
+  01K8167MXJ30 01KNAVRHPQ4D 01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81
+  01KPQ4D2KG9E 01K30SYZCNAV 01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF
+  01K4D2KG9EFW 01KHPQ4D2KG9 01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
+  01KJ30SYZCNA 01KZCNAVRHPQ 10.1093/mnras/stae501 10.1021/jacs.3c14012 01KCNAVRHPQ4 01KSYZCNAVRH
+  01K67MXJ30SY 01KKG9EFW5TB 01K0SYZCNAVR 01KD2KG9EFW5 01KTB8167MXJ 01K7MXJ30SYZ
+  01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+  01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81 01KPQ4D2KG9E 01K30SYZCNAV
+  01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF 01K4D2KG9EFW 01KHPQ4D2KG9
+  01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX 01KJ30SYZCNA 01KZCNAVRHPQ
+  01KCNAVRHPQ4 01KSYZCNAVRH 01K67MXJ30SY 01KKG9EFW5TB ISBN-onbekend zie-bijlage-3</textarea>
+          <!-- Written out, not computed: the prototype shows what recognition reports, it does
+                not recognise. The counts and the listed lines match the sample above. -->
+          <p class="form-text mb-0" id="qb-val-9-help">
+            Separate by spaces, commas, or line breaks.
+          </p>
+          <p class="form-text mb-0" id="qb-val-9-recognised">
+            <strong>160 identifiers recognised.</strong> 156 Biblio IDs, 4 DOIs.
+          </p>
+          <div class="alert alert-warning alert--sm m-0" id="qb-val-9-unrecognised">
+            <p class="mb-1">
+              <i class="if if-alert me-1" aria-hidden="true"></i>
+              <strong>2 lines were not recognised and are not being searched.</strong>
+            </p>
+            <ul class="font-monospace">
+              <li>ISBN-onbekend</li>
+              <li>zie-bijlage-3</li>
+            </ul>
+          </div>
+          <div class="alert alert-warning alert--sm mb-0">
+            A list this long outgrows a durable link. <a href="#">Save this search</a> to share it.
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 9: identifier is any of 160 IDs">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 9: identifier is any of 160 IDs">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Organization</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-10">Operator, condition 10</label>
+        <select class="form-select form-select-sm" id="qb-op-10" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="fac-we">
+            Faculty of Sciences
+            <button type="button" aria-label="Remove Faculty of Sciences from condition 10">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add an organization
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add an organization" data-qb-picker-slot="organization-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 10: organization is Faculty of Sciences">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 10: organization is Faculty of Sciences">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Project</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-11">Operator, condition 11</label>
+        <select class="form-select form-select-sm" id="qb-op-11" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="horizon-openair">
+            Horizon Europe &mdash; OpenAIR
+            <button type="button" aria-label="Remove Horizon Europe — OpenAIR from condition 11">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a project
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a project" data-qb-picker-slot="project-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 11: project is Horizon Europe — OpenAIR">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 11: project is Horizon Europe — OpenAIR">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <!-- @state -->
+
+    <!-- @state: builder-no-results -->
+    <!-- Two recoveries drawn in place, nothing auto-dropped: the and-pair carries the
+          suggestion under its second row, the misspelling its mark. Whether production can
+          diagnose either cause up front is TBD. -->
+    <div class="bt-query-builder__row bt-query-builder__row--warning" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qbz-role-2">Role, condition 2</label>
+        <select class="form-select form-select-sm" id="qbz-role-2">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as first author</option>
+          <option>as last author</option>
+          <option>as sole author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qbz-op-2">Operator, condition 2</label>
+        <select class="form-select form-select-sm" id="qbz-op-2" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="p1">
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Marianne Testarosso
+            <button type="button" aria-label="Remove Marianne Testarosso from condition 2">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+              aria-label="Add a person to condition 2">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 2: person is Marianne Testarosso">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 2: person is Marianne Testarosso">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row bt-query-builder__row--warning" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qbz-role-3">Role, condition 3</label>
+        <select class="form-select form-select-sm" id="qbz-role-3">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as first author</option>
+          <option>as last author</option>
+          <option>as sole author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qbz-op-3">Operator, condition 3</label>
+        <select class="form-select form-select-sm" id="qbz-op-3" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="p6">
+            <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+            Sarah De Wolf
+            <button type="button" aria-label="Remove Sarah De Wolf from condition 3">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+              aria-label="Add a person to condition 3">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 3: person is Sarah De Wolf">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 3: person is Sarah De Wolf">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+      <p class="small mb-0 bt-query-builder__row-note" data-qb-note>Both Person conditions must match.
+        Remove a condition, or
+        <button type="button" class="btn btn-link btn-sm p-0 align-baseline" data-qb-combine>turn
+          one into an &lsquo;or&rsquo; group</button>.</p>
+    </div>
+
+
+    <div class="bt-query-builder__row bt-query-builder__row--error" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Published in</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qbz-qual-4">Kind of container, condition 4</label>
+        <select class="form-select form-select-sm" id="qbz-qual-4">
+          <option selected>in any container</option>
+          <option>journal</option>
+          <option>book</option>
+          <option>proceedings</option>
+          <option>magazine</option>
+          <option>newspaper</option>
+          <option>series</option>
+          <option>show or lecture series</option>
+        </select>
+        <label class="visually-hidden" for="qbz-op-4">Operator, condition 4</label>
+        <select class="form-select form-select-sm" id="qbz-op-4" data-qb-op>
+          <option>contains</option>
+          <option>does not contain</option>
+          <option selected>is</option>
+          <option>is not</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qbz-val-4">Value, condition 4</label>
+          <input type="text" class="form-control form-control-sm" id="qbz-val-4" value="Nature Fotonics">
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 4: published in is Nature Fotonics">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 4: published in is Nature Fotonics">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+      <p class="small text-danger mb-0 bt-query-builder__row-note">nothing matches this spelling</p>
+    </div>
+    <!-- @state -->
+
+    <!-- @state: builder-or-group -->
+    <!-- An OR group is a state of a row, made by the row's "or…" action; it collapses
+          back to a plain row when one alternative is left. -->
+    <fieldset class="bt-query-builder__group" data-qb-group>
+      <legend class="form-label h6 mb-2">
+        &hellip;where <em>any</em> of these conditions is true:
+      </legend>
+      <div class="bt-query-builder__alts" data-qb-alts>
+        <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
+          <div class="bt-query-builder__row-kind">
+            <div class="dropdown">
+              <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Published in</button>
+              <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+            </div>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="qbg-qual-1a">Kind of container, alternative 1</label>
+            <select class="form-select form-select-sm" id="qbg-qual-1a">
+              <option selected>in any container</option>
+              <option>journal</option>
+              <option>book</option>
+              <option>proceedings</option>
+              <option>magazine</option>
+              <option>newspaper</option>
+              <option>series</option>
+              <option>show or lecture series</option>
+            </select>
+            <label class="visually-hidden" for="qbg-op-1a">Operator, alternative 1</label>
+            <select class="form-select form-select-sm" id="qbg-op-1a" data-qb-op>
+              <option>contains</option>
+              <option>does not contain</option>
+              <option selected>is</option>
+              <option>is not</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <label class="visually-hidden" for="qbg-val-1a">Value, alternative 1</label>
+              <input type="text" class="form-control form-control-sm" id="qbg-val-1a"
+                value="Nature Photonics">
+            </div>
+          </div>
+          <div class="bt-query-builder__row-actions" data-qb-actions>
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+              aria-label="Remove alternative 1: published in is Nature Photonics">
+              <i class="if if-delete if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <p class="visually-hidden" data-qb-sep>
+          <span>or</span>
+        </p>
+        <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
+          <div class="bt-query-builder__row-kind">
+            <div class="dropdown">
+              <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Publisher</button>
+              <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+            </div>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="qbg-op-1b">Operator, alternative 2</label>
+            <select class="form-select form-select-sm" id="qbg-op-1b" data-qb-op>
+              <option>contains</option>
+              <option>does not contain</option>
+              <option selected>is</option>
+              <option>is not</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <label class="visually-hidden" for="qbg-val-1b">Value, alternative 2</label>
+              <input type="text" class="form-control form-control-sm" id="qbg-val-1b" value="Springer">
+            </div>
+          </div>
+          <div class="bt-query-builder__row-actions" data-qb-actions>
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+              aria-label="Remove alternative 2: publisher is Springer">
+              <i class="if if-delete if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__group-foot">
+        <div class="dropdown">
+          <button type="button" class="btn btn-secondary btn-xs" data-qb-add-alt
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">
+            <i class="if if-add if--xs" aria-hidden="true"></i>
+            Add an alternative
+          </button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+          <i class="if if-close" aria-hidden="true"></i>
+          Split into &lsquo;and&rsquo; rows
+        </button>
+      </div>
+    </fieldset>
+
+    <!-- A narrowed role only reads correctly inside an OR: one person, two roles. -->
+    <fieldset class="bt-query-builder__group" data-qb-group>
+      <legend class="form-label h6 mb-2">
+        &hellip;where <em>any</em> of these conditions is true:
+      </legend>
+      <div class="bt-query-builder__alts" data-qb-alts>
+        <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
+          <div class="bt-query-builder__row-kind">
+            <div class="dropdown">
+              <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+              <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+            </div>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="qbr-role-1a">Role, alternative 1</label>
+            <select class="form-select form-select-sm" id="qbr-role-1a">
+              <option>in any role</option>
+              <option selected>as author</option>
+              <option>as first author</option>
+              <option>as last author</option>
+              <option>as sole author</option>
+              <option>as editor</option>
+              <option>as supervisor</option>
+            </select>
+            <label class="visually-hidden" for="qbr-op-1a">Operator, alternative 1</label>
+            <select class="form-select form-select-sm" id="qbr-op-1a" data-qb-op>
+              <option selected>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
+                <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+                Jan Kiewiet
+                <button type="button" aria-label="Remove Jan Kiewiet from alternative 1">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </span>
+              <div class="dropdown">
+                <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+                  aria-label="Add a person to alternative 1">
+                  <i class="if if-add if--xs" aria-hidden="true"></i>
+                  Add a person
+                </button>
+                <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+                  aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
+              </div>
+            </div>
+          </div>
+          <div class="bt-query-builder__row-actions" data-qb-actions>
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+              aria-label="Remove alternative 1: person as author is Jan Kiewiet">
+              <i class="if if-delete if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <p class="visually-hidden" data-qb-sep>
+          <span>or</span>
+        </p>
+        <div class="bt-query-builder__row bt-query-builder__row--alt" data-qb-row>
+          <div class="bt-query-builder__row-kind">
+            <div class="dropdown">
+              <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+                data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Person</button>
+              <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+            </div>
+          </div>
+          <div class="bt-query-builder__phrase">
+            <label class="visually-hidden" for="qbr-role-1b">Role, alternative 2</label>
+            <select class="form-select form-select-sm" id="qbr-role-1b">
+              <option>in any role</option>
+              <option>as author</option>
+              <option>as first author</option>
+              <option>as last author</option>
+              <option>as sole author</option>
+              <option>as editor</option>
+              <option selected>as supervisor</option>
+            </select>
+            <label class="visually-hidden" for="qbr-op-1b">Operator, alternative 2</label>
+            <select class="form-select form-select-sm" id="qbr-op-1b" data-qb-op>
+              <option selected>is</option>
+              <option>is not</option>
+              <option>is any of</option>
+            </select>
+            <div class="bt-query-builder__row-value" data-qb-value>
+              <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
+                <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+                Jan Kiewiet
+                <button type="button" aria-label="Remove Jan Kiewiet from alternative 2">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                </button>
+              </span>
+              <div class="dropdown">
+                <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+                  data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+                  aria-label="Add a person to alternative 2">
+                  <i class="if if-add if--xs" aria-hidden="true"></i>
+                  Add a person
+                </button>
+                <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+                  aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
+              </div>
+            </div>
+          </div>
+          <div class="bt-query-builder__row-actions" data-qb-actions>
+            <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+              aria-label="Remove alternative 2: person as supervisor is Jan Kiewiet">
+              <i class="if if-delete if--xs" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__group-foot">
+        <div class="dropdown">
+          <button type="button" class="btn btn-secondary btn-xs" data-qb-add-alt
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">
+            <i class="if if-add if--xs" aria-hidden="true"></i>
+            Add an alternative
+          </button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+          <i class="if if-close" aria-hidden="true"></i>
+          Split into &lsquo;and&rsquo; rows
+        </button>
+      </div>
+    </fieldset>
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Publication year</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qbg-op-2">Operator, condition 2</label>
+        <select class="form-select form-select-sm" id="qbg-op-2" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option data-qb-list-op>is any of</option>
+          <option data-qb-pair-op>is between</option>
+          <option>is at least</option>
+          <option>is at most</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qbg-val-2" data-qb-single>Year, condition 2</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qbg-val-2"
+            value="2020" min="1800" max="2100" data-qb-single>
+          <span class="small text-muted" data-qb-pair hidden>and</span>
+          <label class="visually-hidden" for="qbg-val-2-to" data-qb-pair hidden>Last year, condition 2</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qbg-val-2-to"
+            min="1800" max="2100" data-qb-pair hidden>
+          <label class="visually-hidden" for="qbg-val-2-list" data-qb-list hidden>Years, condition 2</label>
+          <input type="text" class="form-control form-control-sm" id="qbg-val-2-list"
+            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 2: publication year is 2020">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 2: publication year is 2020">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <!-- @state -->
+
   </div>
+
+  <!-- @state: builder-empty builder-full-query builder-one-condition builder-or-group builder-no-results results best-bet no-results no-query facet-set-in-builder -->
+  <div class="bt-query-builder__add">
+    <div class="dropdown">
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="dropdown"
+        data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+        <i class="if if-add if--xs" aria-hidden="true"></i>
+        Add a condition
+      </button>
+      <!-- Filled from #qb-chooser on first open: the search, then the grouped fields. -->
+      <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+    </div>
+  </div>
+  <!-- @state -->
 </form>
+
+<!-- The chooser, defined once. Every entry point carries an empty slot that the JS fills on
+     first open, so the panel appears at the control that asked for it. -->
+  <template id="qb-chooser">
+      <div class="bt-panel__body border-top-0 d-flex align-items-center gap-2">
+        <i class="if if-search text-muted" aria-hidden="true"></i>
+        <label class="visually-hidden" for="qb-condition-search">Search condition fields</label>
+        <input type="search" class="form-control form-control-sm" id="qb-condition-search"
+          placeholder="Search fields&hellip;" autocomplete="off" data-qb-choice-search>
+      </div>
+      <div class="bt-panel__body bt-panel__body--list">
+        <!-- @include: templates/partials/search-field-list.html -->
+      </div>
+  </template>
+
+<!-- The blank state again, for the JS to clone back in when the last condition goes. -->
+  <template id="qb-blank">
+    <!-- @include: templates/partials/search-advanced-blank.html -->
+  </template>
+
+<!-- The value tokens. Crestless is the default; the crest is the exception, marking a person
+     with a UGent person record (data-person-ugent on the picker row). -->
+  <template id="qb-token">
+    <span class="badge text-bg-primary-light" data-qb-token>
+      <span data-qb-token-name></span>
+      <button type="button" aria-label="Remove">
+        <i class="if if-close if--xs" aria-hidden="true"></i>
+      </button>
+    </span>
+  </template>
+
+  <template id="qb-person-token">
+    <span class="badge text-bg-primary-light" data-qb-token>
+      <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
+      <span data-qb-token-name></span>
+      <button type="button" aria-label="Remove">
+        <i class="if if-close if--xs" aria-hidden="true"></i>
+      </button>
+    </span>
+  </template>
+
+<!-- The multi-value checklist, the fourth caller of the picker-slot mechanism: an "is any of"
+     value opens it beside the row's Add-values button. Its rows are cloned from
+     #filter-checklist-row, one per option of the row's own select, so no value list is written
+     twice; the search body is shown only past eight rows. -->
+  <template id="qb-checklist-panel">
+    <p class="bt-panel__title" data-picker-title>Values</p>
+    <div class="bt-panel__body">
+      <label class="visually-hidden" for="qb-checklist-search">Search values</label>
+      <input type="search" class="form-control form-control-sm" id="qb-checklist-search"
+        data-picker-search placeholder="Search values&hellip;" autocomplete="off">
+    </div>
+    <div class="bt-panel__body bt-panel__body--checklist" role="group"
+      aria-label="Values" data-picker-rows></div>
+    <div class="bt-panel__actions" data-picker-actions>
+      <button type="button" class="btn btn-primary btn-sm" data-picker-apply>Apply</button>
+      <button type="button" class="btn btn-ghost btn-sm" data-picker-cancel>Cancel</button>
+      <button type="button" class="btn btn-ghost btn-sm ms-auto" data-picker-clear>Clear</button>
+    </div>
+  </template>
+
+<!-- The markup a chooser pick clones. One template per value shape; the field name is written
+     into the label on clone, and identify() re-pairs each control with its label. Which
+     operators a field really offers: docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. -->
+  <template id="qb-row-text">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-text-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-text-op" data-qb-op>
+          <option>contains</option>
+          <option>does not contain</option>
+          <option>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-text-val">Value</label>
+          <input type="text" class="form-control form-control-sm" id="qb-t-text-val">
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <!-- The container condition (Published in): the text row plus the kind-of-container
+       qualifier, defaulting to all kinds. -->
+  <template id="qb-row-container">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-container-qual">Kind of container</label>
+        <select class="form-select form-select-sm" id="qb-t-container-qual">
+          <option selected>in any container</option>
+          <option>journal</option>
+          <option>book</option>
+          <option>proceedings</option>
+          <option>magazine</option>
+          <option>newspaper</option>
+          <option>series</option>
+          <option>show or lecture series</option>
+        </select>
+        <label class="visually-hidden" for="qb-t-container-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-container-op" data-qb-op>
+          <option>contains</option>
+          <option>does not contain</option>
+          <option>is</option>
+          <option>is not</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-container-val">Value</label>
+          <input type="text" class="form-control form-control-sm" id="qb-t-container-val">
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <!-- The entity condition (Organization, Project): the contributor row minus the role, one
+       token per picked entity. The chooser entry names the panel the slot clones and the
+       Add-button copy (data-qb-panel, data-qb-add). -->
+  <template id="qb-row-entity">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-entity-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-entity-op" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              <span data-qb-add-label>Add</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              data-qb-picker-slot></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+
+  <template id="qb-row-contributor">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-contributor-role">Role</label>
+        <select class="form-select form-select-sm" id="qb-t-contributor-role">
+          <option selected>in any role</option>
+          <option>as author</option>
+          <option>as first author</option>
+          <option>as last author</option>
+          <option>as sole author</option>
+          <option>as editor</option>
+          <option>as supervisor</option>
+        </select>
+        <label class="visually-hidden" for="qb-t-contributor-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-contributor-op" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person" data-qb-picker-slot="person-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <template id="qb-row-year">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-year-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-year-op" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+          <option data-qb-list-op>is any of</option>
+          <option data-qb-pair-op>is between</option>
+          <option>is at least</option>
+          <option>is at most</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-year-val" data-qb-single>Year</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-t-year-val"
+            min="1800" max="2100" data-qb-single>
+          <span class="small text-muted" data-qb-pair hidden>and</span>
+          <label class="visually-hidden" for="qb-t-year-val-to" data-qb-pair hidden>Last year</label>
+          <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-t-year-val-to"
+            min="1800" max="2100" data-qb-pair hidden>
+          <label class="visually-hidden" for="qb-t-year-val-list" data-qb-list hidden>Years</label>
+          <input type="text" class="form-control form-control-sm" id="qb-t-year-val-list"
+            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <template id="qb-row-choice">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-choice-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-choice-op" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+          <option data-qb-multi-op>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-choice-val">Value</label>
+          <select class="form-select form-select-sm bt-query-builder__value-select" id="qb-t-choice-val">
+            <option selected data-qb-placeholder>Choose&hellip;</option>
+          </select>
+          <div class="dropdown" data-qb-multi hidden>
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add values
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose values" data-qb-picker-slot="qb-checklist-panel"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <template id="qb-row-batch">
+    <div class="bt-query-builder__row bt-query-builder__row--batch" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-batch-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-batch-op" data-qb-op>
+          <option>is any of</option>
+          <option>is</option>
+          <option>is not</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-batch-val">Identifiers</label>
+          <textarea class="form-control form-control-sm font-monospace bt-textarea-auto"
+            id="qb-t-batch-val" rows="3"></textarea>
+          <p class="form-text mb-0">Separate by spaces, commas, or line breaks.</p>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+
+<!-- The group a row becomes. -->
+  <template id="qb-group">
+    <fieldset class="bt-query-builder__group" data-qb-group>
+      <legend class="form-label h6 mb-2">
+        &hellip;where <em>any</em> of these conditions is true:
+      </legend>
+      <div class="bt-query-builder__alts" data-qb-alts></div>
+      <div class="bt-query-builder__group-foot">
+        <div class="dropdown">
+          <button type="button" class="btn btn-secondary btn-xs" data-qb-add-alt
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">
+            <i class="if if-add if--xs" aria-hidden="true"></i>
+            Add an alternative
+          </button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm ms-auto" data-qb-remove-group>
+          <i class="if if-close" aria-hidden="true"></i>
+          Split into &lsquo;and&rsquo; rows
+        </button>
+      </div>
+    </fieldset>
+  </template>

@@ -1,123 +1,52 @@
-/**
- * filter-bar.js — chip + editor filter bar (patterns/filter-picker.html).
- * See docs/JAVASCRIPT.md.
- *
- * Bars: works (wf-), researchers (rdir-), projects (pdir-).
- * Prototype-only: chips are client-side and do not refilter the list yet.
- * Organization (tree search), project, and keyword filters are backend-dependent;
- * the journal is reached through the Identifier filter (ISSN), not a venue search.
- */
+/** Filter-bar prototype. Contract and host markup: docs/JAVASCRIPT.md. */
 
 (function () {
   'use strict';
 
-  // Stub option lists — real values come from raven; these let the search +
-  // multi-select be prototyped.
-  const ORG = [
-    { value: 'ugent', label: 'Ghent University' },
-    { value: 'fac-ea', label: 'Faculty of Engineering and Architecture' },
-    { value: 'fac-bw', label: 'Faculty of Bioscience Engineering' },
-    { value: 'fac-we', label: 'Faculty of Sciences' },
-    { value: 'fac-la', label: 'Faculty of Arts and Philosophy' },
-    { value: 'fac-re', label: 'Faculty of Law and Criminology' },
-    { value: 'fac-ge', label: 'Faculty of Medicine and Health Sciences' },
-    { value: 'fac-pp', label: 'Faculty of Psychology and Educational Sciences' },
-    { value: 'fac-eb', label: 'Faculty of Economics and Business Administration' },
-    { value: 'fac-di', label: 'Faculty of Veterinary Medicine' },
-    { value: 'fac-fw', label: 'Faculty of Pharmaceutical Sciences' },
-    { value: 'fac-ps', label: 'Faculty of Political and Social Sciences' },
-    { value: 'dept-we02', label: 'Dept of Physics and Astronomy — WE' },
-    { value: 'dept-we10', label: 'Dept of Applied Maths, CS & Statistics — WE' },
-    { value: 'dept-ea18', label: 'Dept of Electronics and Information Systems — EA' },
-    { value: 'dept-ge33', label: 'Dept of Human Structure and Repair — GE' },
-    { value: 'dept-lw06', label: 'Dept of Linguistics — LW' },
-    { value: 'rg-idlab', label: 'IDLab (research group) — EA' },
-    { value: 'rg-cmgg', label: 'Center for Medical Genetics — GE' },
-    { value: 'rg-synbioc', label: 'SynBioC (research group) — BW' },
-  ];
-  const AUTHORS = [
-    { value: 'jane-doe', label: 'Jane Doe' },
-    { value: 'pieter-de-vries', label: 'Pieter De Vries' },
-    { value: 'sofia-rossi', label: 'Sofia Rossi' },
-    { value: 'kwame-mensah', label: 'Kwame Mensah' },
-    { value: 'yuki-tanaka', label: 'Yuki Tanaka' },
-    { value: 'anna-nowak', label: 'Anna Nowak' },
-    { value: 'lucas-martin', label: 'Lucas Martin' },
-    { value: 'fatima-el-amrani', label: 'Fatima El Amrani' },
-    { value: 'david-cohen', label: 'David Cohen' },
-    { value: 'mei-chen', label: 'Mei Chen' },
-    { value: 'omar-haddad', label: 'Omar Haddad' },
-    { value: 'elena-petrova', label: 'Elena Petrova' },
-  ];
-  const PROJECTS = [
-    { value: 'fwo-g012', label: 'FWO G0.12N' },
-    { value: 'horizon-openair', label: 'Horizon Europe — OpenAIR' },
-    { value: 'bof-starting', label: 'BOF Starting Grant' },
-    { value: 'era-net', label: 'ERA-NET Cofund' },
-    { value: 'vlaio-tetra', label: 'VLAIO TETRA' },
-    { value: 'iof-valorisation', label: 'IOF Valorisation' },
-    { value: 'fwo-sb', label: 'FWO SB PhD' },
-    { value: 'ugent-goa', label: 'UGent GOA' },
-    { value: 'marie-curie', label: 'Marie Skłodowska-Curie' },
-  ];
-  const KEYWORDS = [
-    { value: 'climate-change', label: 'Climate change' },
-    { value: 'machine-learning', label: 'Machine learning' },
-    { value: 'open-access', label: 'Open access' },
-    { value: 'crispr', label: 'CRISPR' },
-    { value: 'microbiome', label: 'Microbiome' },
-    { value: 'quantum-computing', label: 'Quantum computing' },
-    { value: 'sustainability', label: 'Sustainability' },
-    { value: 'neural-networks', label: 'Neural networks' },
-    { value: 'biodiversity', label: 'Biodiversity' },
-    { value: 'public-health', label: 'Public health' },
-    { value: 'materials-science', label: 'Materials science' },
-    { value: 'linguistics', label: 'Linguistics' },
-  ];
+  const optionsEl = document.querySelector('[data-filter-option-lists]');
+  const OPTIONS = optionsEl ? JSON.parse(optionsEl.textContent) : {};
 
-  // One config per bar, keyed by the id prefix used in its markup.
-  const CONFIGS = {
-    'wf-': {
-      author:       { label: 'Author', type: 'checklist', values: AUTHORS },
-      organization: { label: 'Organization', type: 'checklist', values: ORG },
-      project:      { label: 'Project', type: 'checklist', values: PROJECTS },
-      keywords:    { label: 'Keywords', type: 'checklist', values: KEYWORDS },
-      identifier:  { label: 'Identifier', type: 'text', placeholder: 'DOI, ISSN, ISBN, arXiv, or handle…' },
-    },
-    'rdir-': {
-      organization: { label: 'Organization', type: 'checklist', values: ORG },
-      status:       { label: 'Current or alumni', type: 'boolean', yesLabel: 'Current members', noLabel: 'Alumni' },
-    },
-    'pdir-': {
-      organization: { label: 'Organization', type: 'checklist', values: ORG },
-      status:       { label: 'Status', type: 'boolean', yesLabel: 'Active', noLabel: 'Completed' },
-      year:         { label: 'Year', type: 'year-range' },
-    },
-  };
+  const clone = id => document.getElementById(id).content.cloneNode(true);
 
-  Object.keys(CONFIGS).forEach(prefix => initBar(prefix, CONFIGS[prefix]));
+  document.querySelectorAll('[data-filter-bar]')
+    .forEach(bar => initBar(bar.dataset.filterBar));
 
-  function initBar(prefix, FILTERS) {
+  // Ids stay the handle rather than the bar element: filter-sheet.js moves the picker,
+  // the editor and clear-all into the mobile offcanvas, out of the bar they started in.
+  function initBar(prefix) {
     const activeChips  = document.getElementById(prefix + 'active-chips');
     const filterEditor = document.getElementById(prefix + 'filter-editor');
     const clearAllBtn  = document.getElementById(prefix + 'clear-all');
-    if (!activeChips || !filterEditor || !clearAllBtn) return;   // bar not on this page
+    if (!activeChips || !filterEditor || !clearAllBtn) return;
 
     const pickerSel = `#${prefix}filter-picker-list button[data-filter]`;
     const addFilterDropdown = document.getElementById(prefix + 'add-filter-dropdown');
     let activeFilters = JSON.parse(activeChips.dataset.initialFilters || '{}');
     let editingFilter = null;
 
+    const FILTERS = {};
     document.querySelectorAll(pickerSel).forEach(btn => {
+      const d = btn.dataset;
+      FILTERS[d.filter] = {
+        label: d.filterLabel,
+        type: d.filterType,
+        values: OPTIONS[d.filterOptions] || [],
+        panel: d.filterPanel,
+        placeholder: d.filterPlaceholder,
+        yesLabel: d.filterYes,
+        noLabel: d.filterNo,
+      };
       btn.addEventListener('click', () => {
         hideDropdown();
-        openEditor(btn.dataset.filter, activeFilters[btn.dataset.filter] || null, addFilterDropdown);
+        openEditor(d.filter, activeFilters[d.filter] || null, addFilterDropdown);
       });
     });
 
     clearAllBtn.addEventListener('click', () => { activeFilters = {}; renderChips(); closeEditor(); });
 
     document.getElementById(prefix + 'add-filter-btn')?.addEventListener('click', closeEditor);
+
+    filterEditor.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditor(); });
 
     document.addEventListener('click', e => {
       if (!filterEditor.hidden &&
@@ -129,101 +58,147 @@
       }
     });
 
-    renderChips();   // paint any pre-applied (initial) filters
+    renderChips();
 
     function openEditor(filterId, existing, anchorEl) {
       const def = FILTERS[filterId];
       if (!def) return;
       editingFilter = filterId;
       filterEditor.hidden = false;
-      filterEditor.innerHTML = renderEditor(def, existing);
+      filterEditor.replaceChildren(renderEditor(def, existing));
       positionEditor(anchorEl);
       filterEditor.querySelector('input')?.focus();
       attachEditorEvents(filterId, def);
       renderChips();
     }
 
-    // Drop the panel under whatever opened it (Add-filter button or the chip).
+    // The bar may be narrower than the panel, so clamp to the viewport.
     function positionEditor(anchorEl) {
       const parent = filterEditor.offsetParent;
       if (!anchorEl || !parent) return;
-      const left = anchorEl.getBoundingClientRect().left - parent.getBoundingClientRect().left;
-      const maxLeft = Math.max(0, parent.clientWidth - filterEditor.offsetWidth);
-      filterEditor.style.left = Math.min(Math.max(0, left), maxLeft) + 'px';
+      const parentLeft = parent.getBoundingClientRect().left;
+      const maxLeft = document.documentElement.clientWidth - 16 - filterEditor.offsetWidth;
+      const left = Math.min(anchorEl.getBoundingClientRect().left, Math.max(16, maxLeft));
+      filterEditor.style.left = (left - parentLeft) + 'px';
     }
 
     function renderEditor(def, existing) {
-      const title = `<p class="bt-panel__title" id="${prefix}filter-editor-title">${def.label}</p>`;
-      let body = '';
+      const shell = clone('filter-editor-shell');
+      shell.querySelector('[data-editor-title]').textContent = def.label;
+      const body = editorBody(def, existing);
+      if (body) shell.insertBefore(body, shell.querySelector('.bt-panel__actions'));
+      return shell;
+    }
 
-      if (def.type === 'checklist') {
-        const checked = existing?.rawValue || [];
-        const search = def.values.length > 8
-          ? `<div class="bt-panel__body">
-              <label class="visually-hidden" for="${prefix}fv-search">Search ${def.label}</label>
-              <input type="search" class="form-control form-control-sm" id="${prefix}fv-search"
-                data-checklist-search placeholder="Search ${def.label.toLowerCase()}…" autocomplete="off">
-            </div>`
-          : '';
-        body = search + `<div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Select ${def.label}">` +
-          def.values.map(v => `
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="${prefix}fv-${v.value}" name="${prefix}fv" value="${v.value}" ${checked.includes(v.value) ? 'checked' : ''}>
-              <label class="form-check-label" for="${prefix}fv-${v.value}">${v.label}</label>
-            </div>`).join('') + `</div>`;
-      } else if (def.type === 'boolean') {
-        const cur = existing?.rawValue;
-        body = `<div class="bt-panel__body bt-panel__body--boolean" role="group" aria-label="${def.label}">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="${prefix}bool" id="${prefix}bool-true" value="true" ${cur === 'true' ? 'checked' : ''}>
-            <label class="form-check-label" for="${prefix}bool-true">${def.yesLabel}</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="${prefix}bool" id="${prefix}bool-false" value="false" ${cur === 'false' ? 'checked' : ''}>
-            <label class="form-check-label" for="${prefix}bool-false">${def.noLabel}</label>
-          </div>
-        </div>`;
-      } else if (def.type === 'year-range') {
-        const from = existing?.rawValue?.from || '';
-        const to   = existing?.rawValue?.to   || '';
-        body = `<div class="bt-panel__body bt-panel__body--year">
-          <label for="${prefix}year-from" class="visually-hidden">From year</label>
-          <input type="number" id="${prefix}year-from" class="form-control bt-panel__year-input" placeholder="From" min="1900" max="2100" value="${from}">
-          <span class="text-muted small">to</span>
-          <label for="${prefix}year-to" class="visually-hidden">To year</label>
-          <input type="number" id="${prefix}year-to" class="form-control bt-panel__year-input" placeholder="To" min="1900" max="2100" value="${to}">
-        </div>`;
-      } else if (def.type === 'text') {
-        const val = existing?.rawValue || '';
-        body = `<div class="bt-panel__body">
-          <label for="${prefix}text-val" class="visually-hidden">${def.label}</label>
-          <input type="text" id="${prefix}text-val" class="form-control form-control-sm" placeholder="${def.placeholder || ''}" value="${val}" autocomplete="off">
-        </div>`;
+    function editorBody(def, existing) {
+      if (def.type === 'checklist')  return checklistBody(def, existing?.rawValue || []);
+      if (def.type === 'picker')     return pickerBody(def, existing?.rawValue || []);
+      if (def.type === 'boolean')    return booleanBody(def, existing?.rawValue);
+      if (def.type === 'year-range') return yearBody(existing?.rawValue || {});
+      if (def.type === 'text')       return textBody(def, existing?.rawValue || '');
+      return null;
+    }
+
+    function checklistBody(def, checked) {
+      const frag = clone('filter-editor-checklist');
+      const options = frag.querySelector('[data-editor-options]');
+      options.setAttribute('aria-label', 'Select ' + def.label);
+
+      // A short list is scannable; past eight, searching beats scrolling.
+      if (def.values.length > 8) {
+        frag.querySelector('[data-editor-search-label]').textContent = 'Search ' + def.label;
+        frag.querySelector('[data-checklist-search]').placeholder =
+          'Search ' + def.label.toLowerCase() + '…';
+      } else {
+        frag.querySelector('[data-editor-search]').remove();
       }
 
-      const removeBtn = activeFilters[editingFilter]
-        ? `<button type="button" class="btn btn-ghost btn-sm text-danger ms-auto" id="${prefix}editor-remove">Remove filter</button>`
-        : '';
+      def.values.forEach(v => {
+        const row = clone('filter-checklist-row');
+        const input = row.querySelector('input');
+        const label = row.querySelector('label');
+        input.id = prefix + 'fv-' + v.value;
+        input.name = prefix + 'fv';
+        input.value = v.value;
+        input.checked = checked.includes(v.value);
+        label.htmlFor = input.id;
+        label.textContent = v.label;
+        options.append(row);
+      });
+      return frag;
+    }
 
-      return title + body + `<div class="bt-panel__actions">
-        <button type="button" class="btn btn-primary btn-sm" id="${prefix}editor-apply">Apply</button>
-        <button type="button" class="btn btn-ghost btn-sm" id="${prefix}editor-cancel">Cancel</button>
-        ${removeBtn}
-      </div>`;
+    // The picker panel the button names, minus the title and footer this editor supplies itself.
+    function pickerBody(def, selected) {
+      const frag = clone(def.panel);
+      frag.querySelector('[data-picker-title]').remove();
+      frag.querySelector('[data-picker-actions]').remove();
+
+      const search = frag.querySelector('[data-picker-search]');
+      const searchLabel = frag.querySelector(`label[for="${search.id}"]`);
+      search.id = prefix + search.id;
+      searchLabel.htmlFor = search.id;
+      search.placeholder = 'Search ' + def.label.toLowerCase() + '…';
+
+      const rows = frag.querySelector('[data-picker-rows]');
+      rows.setAttribute('aria-label', 'Select ' + def.label);
+      const picked = selected.map(p => p.id);
+      rows.querySelectorAll('.form-check').forEach(row => {
+        const input = row.querySelector('input');
+        const label = row.querySelector('label');
+        input.id = prefix + input.id;
+        input.name = prefix + 'picker';
+        input.checked = picked.includes(input.dataset.id);
+        label.htmlFor = input.id;
+      });
+      return frag;
+    }
+
+    function booleanBody(def, current) {
+      const frag = clone('filter-editor-boolean');
+      frag.querySelector('[data-editor-boolean]').setAttribute('aria-label', def.label);
+      frag.querySelector('[data-editor-bool-yes]').textContent = def.yesLabel;
+      frag.querySelector('[data-editor-bool-no]').textContent = def.noLabel;
+      frag.querySelectorAll('[data-editor-bool]').forEach(radio => {
+        radio.name = prefix + 'bool';
+        radio.checked = radio.value === current;
+      });
+      return frag;
+    }
+
+    function yearBody(range) {
+      const frag = clone('filter-editor-year');
+      frag.querySelector('[data-year-from]').value = range.from || '';
+      frag.querySelector('[data-year-to]').value = range.to || '';
+      return frag;
+    }
+
+    function textBody(def, value) {
+      const frag = clone('filter-editor-text');
+      const input = frag.querySelector('[data-editor-text]');
+      frag.querySelector('[data-editor-text-label]').textContent = def.label;
+      if (def.placeholder) input.placeholder = def.placeholder;
+      input.value = value;
+      return frag;
     }
 
     function attachEditorEvents(filterId, def) {
-      document.getElementById(prefix + 'editor-apply')?.addEventListener('click', () => applyEditor(filterId, def));
-      document.getElementById(prefix + 'editor-cancel')?.addEventListener('click', closeEditor);
-      document.getElementById(prefix + 'editor-remove')?.addEventListener('click', () => { removeFilter(filterId); closeEditor(); });
-      filterEditor.addEventListener('keydown', e => { if (e.key === 'Escape') closeEditor(); });
+      filterEditor.querySelector('[data-editor-apply]')
+        ?.addEventListener('click', () => applyEditor(filterId, def));
+      filterEditor.querySelector('[data-editor-cancel]')
+        ?.addEventListener('click', closeEditor);
+      filterEditor.querySelector('[data-editor-remove]')
+        ?.addEventListener('click', () => { removeFilter(filterId); closeEditor(); });
 
-      const searchInput = filterEditor.querySelector('[data-checklist-search]');
+      // Matching the whole row, not just its name, is what lets a people search find an ORCID
+      // or a department.
+      const searchInput = filterEditor.querySelector('[data-checklist-search], [data-picker-search]');
       searchInput?.addEventListener('input', () => {
         const q = searchInput.value.trim().toLowerCase();
-        filterEditor.querySelectorAll('.bt-panel__body--checklist .form-check').forEach(row => {
-          row.hidden = q !== '' && !row.querySelector('label').textContent.toLowerCase().includes(q);
-        });
+        filterEditor.querySelectorAll('[data-editor-options] .form-check, [data-picker-rows] .form-check')
+          .forEach(row => {
+            row.hidden = q !== '' && !row.textContent.toLowerCase().includes(q);
+          });
       });
     }
 
@@ -231,24 +206,34 @@
       let displayValue, rawValue;
 
       if (def.type === 'checklist') {
-        const checked = [...filterEditor.querySelectorAll(`input[name="${prefix}fv"]:checked`)]
-          .map(cb => ({ value: cb.value, label: filterEditor.querySelector(`label[for="${prefix}fv-${cb.value}"]`).textContent.trim() }));
+        const checked = [...filterEditor.querySelectorAll('[data-editor-options] input:checked')]
+          .map(cb => ({ value: cb.value, label: cb.nextElementSibling.textContent.trim() }));
         if (!checked.length) { closeEditor(); return; }
         rawValue = checked.map(c => c.value);
         displayValue = checked.length === 1 ? checked[0].label : `${checked[0].label} +${checked.length - 1}`;
+      } else if (def.type === 'picker') {
+        // A row is kept by id: two rows can share a label, so the label is display only.
+        const picked = [...filterEditor.querySelectorAll('[data-picker-rows] input:checked')]
+          .map(cb => ({
+            id: cb.dataset.id,
+            label: cb.closest('.form-check').querySelector('[data-picker-name]').textContent.trim(),
+          }));
+        if (!picked.length) { closeEditor(); return; }
+        rawValue = picked;
+        displayValue = picked.length === 1 ? picked[0].label : `${picked[0].label} +${picked.length - 1}`;
       } else if (def.type === 'boolean') {
-        const sel = filterEditor.querySelector(`input[name="${prefix}bool"]:checked`);
+        const sel = filterEditor.querySelector('[data-editor-bool]:checked');
         if (!sel) { closeEditor(); return; }
         rawValue = sel.value;
         displayValue = sel.value === 'true' ? def.yesLabel : def.noLabel;
       } else if (def.type === 'year-range') {
-        const from = document.getElementById(prefix + 'year-from')?.value;
-        const to   = document.getElementById(prefix + 'year-to')?.value;
+        const from = filterEditor.querySelector('[data-year-from]')?.value;
+        const to   = filterEditor.querySelector('[data-year-to]')?.value;
         if (!from && !to) { closeEditor(); return; }
         rawValue = { from, to };
         displayValue = from && to ? `${from}–${to}` : from ? `from ${from}` : `to ${to}`;
       } else if (def.type === 'text') {
-        const val = (document.getElementById(prefix + 'text-val')?.value || '').trim();
+        const val = (filterEditor.querySelector('[data-editor-text]')?.value || '').trim();
         if (!val) { closeEditor(); return; }
         rawValue = val;
         displayValue = val;
@@ -262,28 +247,36 @@
     function removeFilter(filterId) { delete activeFilters[filterId]; renderChips(); }
 
     function renderChips() {
-      activeChips.innerHTML = Object.entries(activeFilters).map(([id, f]) => {
-        const editing = editingFilter === id;
-        const cls = editing ? 'badge badge--outline active' : 'badge badge--outline';
-        return `
-        <div class="filter-chip-group">
-          <button type="button" class="${cls}"${editing ? ' aria-current="true"' : ''}
-            aria-label="Edit filter: ${f.label} is ${f.displayValue}" data-filter-id="${id}">
-            <span class="fw-light">${f.label}:</span> ${f.displayValue}
-          </button>
-          <button type="button" class="${cls}"
-            aria-label="Remove filter: ${f.label} is ${f.displayValue}" data-remove-id="${id}">
-            <i class="if if-close if--xs" aria-hidden="true"></i>
-          </button>
-        </div>`;
-      }).join('');
+      activeChips.replaceChildren();
 
-      activeChips.querySelectorAll('[data-filter-id]').forEach(btn => {
-        btn.addEventListener('click', () => openEditor(btn.dataset.filterId, activeFilters[btn.dataset.filterId], btn.closest('.filter-chip-group')));
+      Object.entries(activeFilters).forEach(([id, f]) => {
+        const chip = clone('filter-chip');
+        const edit = chip.querySelector('[data-filter-id]');
+        const remove = chip.querySelector('[data-remove-id]');
+
+        edit.dataset.filterId = id;
+        remove.dataset.removeId = id;
+        edit.querySelector('[data-chip-label]').textContent = f.label + ':';
+        edit.append(' ' + f.displayValue);
+        edit.setAttribute('aria-label', `Edit filter: ${f.label} is ${f.displayValue}`);
+        remove.setAttribute('aria-label', `Remove filter: ${f.label} is ${f.displayValue}`);
+
+        if (editingFilter === id) {
+          edit.classList.add('active');
+          remove.classList.add('active');
+          edit.setAttribute('aria-current', 'true');
+        }
+
+        edit.addEventListener('click', () =>
+          openEditor(id, activeFilters[id], edit.closest('.filter-chip-group')));
+        remove.addEventListener('click', () => {
+          removeFilter(id);
+          if (editingFilter === id) closeEditor();
+        });
+
+        activeChips.append(chip);
       });
-      activeChips.querySelectorAll('[data-remove-id]').forEach(btn => {
-        btn.addEventListener('click', () => { removeFilter(btn.dataset.removeId); if (editingFilter === btn.dataset.removeId) closeEditor(); });
-      });
+
       clearAllBtn.hidden = Object.keys(activeFilters).length === 0;
       syncPickerState();
     }
@@ -294,22 +287,15 @@
         btn.classList.toggle('active', selected);
         if (selected) btn.setAttribute('aria-current', 'true');
         else btn.removeAttribute('aria-current');
-        let check = btn.querySelector('[data-picker-check]');
-        if (selected && !check) {
-          check = document.createElement('i');
-          check.className = 'if if-check if--xs ms-auto';
-          check.dataset.pickerCheck = '';
-          check.setAttribute('aria-hidden', 'true');
-          btn.appendChild(check);
-        } else if (!selected && check) {
-          check.remove();
-        }
+        const check = btn.querySelector('[data-picker-check]');
+        if (selected && !check) btn.append(clone('filter-picker-check'));
+        else if (!selected && check) check.remove();
       });
     }
 
     function closeEditor() {
       filterEditor.hidden = true;
-      filterEditor.innerHTML = '';
+      filterEditor.replaceChildren();
       editingFilter = null;
       renderChips();
     }

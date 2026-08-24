@@ -1,168 +1,134 @@
 # Writing rules
 
-House rules for writing. Every document — READMEs, guides, kit doc pages, plans —
-follows [All writing](#all-writing). Bets, issues, and design docs also follow
-[Specs only](#specs-only). Skills and templates reference this file rather than
-restating it.
+These rules apply to docs, READMEs, kit prose, plans, issues, PR text and handovers.
+Code comments use [`CODE-COMMENTS.md`](CODE-COMMENTS.md). Specs also follow
+[Spec content](#spec-content).
 
-## All writing
+## Output contract
 
-### Do not invent
+- Lead with the result or claim. Skip the preamble.
+- Use the same term for the same thing throughout.
+- Give each paragraph one job. Most sentences carry one claim.
+- Use a list only when readers will scan or compare its items.
+- Stop when the work is handed over. Do not add a closing recap.
+- Edit silently. Do not report that a prose pass ran or list every sentence changed.
 
-Never fabricate a number, an audience, a decision, a field name, a constraint, a
-capability, a threshold, or a rationale. Confidence is not evidence: check the
-source, or say you did not. Applies with double force to numbers (trace them; a
-sample statistic is not a population one), claims about what a system does or does
-not have (read the code), and other teams' decisions (name them as theirs).
+These are default ceilings for authored prose. Headings, front matter, tables, code
+and fixed template text do not count. A user may set a different ceiling.
 
-Before sourcing a claim, check it is ours to make. Precision that belongs to the
-implementer or another team is deleted, not evidenced — the cheapest way to not
-invent something is to not claim it. Evidence-gathering is for claims the document
-cannot drop.
+| Document | Words |
+|---|---:|
+| Backend issue | 175 |
+| User-facing issue | 275 |
+| Epic | 325 |
+| Evidence or method note | 300 |
+| Field ledger or contract | 400 |
+| Design note | 500 |
+| Product bet | 800 |
 
-Something with no answer gets one of two treatments, never a third:
+The ceiling is a limit, not a target. Shorter is better when no fact is lost.
 
-1. **Flagged** as an open question naming the concrete options and who decides.
-2. **Asked**, when the answer is the author's to give — appetite, scope, naming,
-   priorities.
+## Core rules
 
-An honest gap gets resolved; a plausible fabrication gets built.
+### Write only supported claims
 
-### Anything decided in a meeting and left unwritten does not exist
+Check numbers, audiences, decisions, fields, constraints, capabilities and rationales.
+Read the code before claiming what a system does. Attribute another team's decision
+to that team.
 
-### Say what a thing is, not what it isn't
+Delete detail that belongs to an implementer or another team. If an unanswered point
+changes the work, either ask the author or record concrete options and the external
+decision-maker. Never fill a gap with a plausible rule.
 
-Frame information active and positive. Lead with the affirmative statement.
-Reserve negation for genuine constraints where naming the rejected alternative is
-the point (e.g. "the query is not a chip").
+### Use plain language
 
-### The result, not the journey
+Put the subject before the verb. Prefer concrete verbs to abstract nouns. Write the
+effect a reader sees, not a tour of the mechanism. Keep necessary technical names;
+remove jargon made only to compress a sentence.
 
-A document states what is true and what to do now. How the team arrived there —
-options weighed, drafts discarded, meetings — goes to the planning notes or
-nowhere. The reader inherits the conclusion, not the corridor.
+Write “The selected field sets the row's operator and input,” not “The row anatomy
+derives its control surface from field selection.”
 
-### Clear instructions beat storytelling
+### Keep the conclusion, not the journey
 
-Where text lists what something does, write instructions: one statement per
-sentence, subject first. A sentence someone acts on reads once.
+State what is true and what happens next. Drafts tried, meetings held and edits made
+belong in planning notes or git history. A handover names only decisions the reader
+may veto, changed numbers and questions that need answers.
 
-### No riddles
+### Give each fact one home
 
-A rule names who or what acts, and what changes. Two tells that it does not:
+Link to values, catalogs, code and contracts instead of copying them. State behavior
+where the reader needs it; a link is not a substitute for the product promise.
 
-- a document does the acting — "01 gains it", "a region the backoffice needs and 01
-  lacks changes 01";
-- the reader resolves two references before the verb makes sense.
+Do not describe a prototype's visible layout in an issue. Link it and specify what a
+picture cannot show: announcements, reload behavior, persistence, failure states and
+contract boundaries.
 
-Rewrite until the sentence reads aloud as an instruction to a person. Compression
-sounds authoritative and costs the reader a second pass.
+Delete an introduction that repeats the list below it. Delete empty sections and
+sentences whose removal changes no decision or action.
 
-### Enumerations become lists; reasoning stays prose
+## Spec content
 
-A sentence listing three or more things becomes a list, and so does a paragraph
-stacking three or more independent rules. One item per line, the lead sentence
-carrying the claim they share. "Today's card carries a type badge, a classification
-code, an arrow or padlock, a title, ten authors and one reference line" makes the
-reader count instead of read.
+Specs cover the problem, the evidence, what the user sees, what the product promises
+and what is out of scope. Raven owns the domain model and implementation mechanism.
 
-Reasoning stays prose. A list of arguments reads as a checklist of settled facts,
-and a Why has to argue: the gain, the cost, and why the trade is worth taking belong
-in sentences that carry each other. A long open question splits into paragraphs — the
-example, the counts, the price and the options.
+### Evidence and people
 
-A table earns a place only where its cells are fragments. Full-sentence cells are
-prose in a table, harder to read than the paragraph they came from.
+Sync ProductBoard demand with `npm run sync:demand`. Record findings in
+`notes/demand/FINDINGS.md` and cite note IDs in the spec. A need without a note is an
+assumption and must read as one.
 
-### Point, don't paste
+Name a documented persona with its type, such as “Sue Kerr (academic reader).” State
+what they need and why. If no persona fits, name a concrete role and flag the research
+gap.
 
-Link prototype paths and docs. Pasted markup, tables, and code rot.
+### Requirements
 
-### Machine tells
+- Name the public or backoffice surface for every example.
+- Number issue titles and files together; the epic is `[00]`.
+- Describe outcomes and observable behavior. Leave out framework calls, field names,
+  index design, endpoints and event shapes.
+- Express a backend gap as a dependency or open question, not an asserted capability.
+- Keep only open questions that change the design or product promise. Give concrete
+  options. Do not assign team questions to “design” or “development.”
 
-Symptoms, not rules — each row points at a rule this file already states.
-Generated text produces these at volume; human drafts grow them too. Delete on
-sight, then fix against the named rule.
+## Examples
 
-| Tell | Rule it signals |
-|------|-----------------|
-| A route sentence growing a second clause that summarises its target | Point, don't paste |
-| A passive verb hiding the actor — "it was decided", "is expected to" | No riddles |
-| Certainty dressing — "clearly", "simply", "obviously", "robust", "comprehensive", "seamless" | Do not invent |
-| The journey in body text — "we then explored", "after discussion it emerged" | The result, not the journey |
-| A document describing itself — "this section covers…" | The result, not the journey |
-| Two or three clauses stitched with dashes or semicolons into one sentence | Clear instructions beat storytelling |
-| Three list items where the facts count two or four — rhythm padding the truth | Enumerations become lists |
-| One concept under three names for variety | Do not invent — vocabulary is a contract (`docs/DOMAIN-VOCABULARY.md`) |
-| A closing paragraph re-listing what the section just said | The result, not the journey |
-| Throat-clearing — "it's worth noting", "importantly", "note that" | The sentence starts at its subject |
+<example>
+Before: “The document then walks through the three options before arriving at the
+recommended path.”
 
-## Specs only
+After: “Use the existing picker.”
+</example>
 
-The rules below govern bets, issues, and design docs.
+<example>
+Before: “I ran the writing pass, removed repeated material, simplified seven
+sentences and brought the issue under its target.”
 
-### Cite the demand
+After: “The issue is ready. One policy question remains: can incomplete records be
+public, or must they wait for review?”
+</example>
 
-ProductBoard holds the notes: helpdesk mail, interview quotes, requests. Two files in
-`notes/demand/` carry them into a spec — generated `INDEX.md` and hand-written
-`FINDINGS.md`. `notes/` is local, so sync before drafting.
+<example>
+Before: “The prototype shows a modal with a title, rows, controls and a footer.”
 
-- `npm run sync:demand` regenerates `INDEX.md`. Each note takes one line: id, date, tags,
-  linked title. Months group the lines, and a tag tally closes the file.
-- `npm run sync:demand -- --bodies` also writes the note text to a temporary folder
-  outside the repo. Read it there, then delete it.
-- `INDEX.md` marks a note read once its id appears in `FINDINGS.md`. Write each conclusion
-  there in your own words, with the ids it rests on.
+After: “Reloading the builder restores every condition and returns focus to the
+control that opened it when closed.”
+</example>
 
-A bet or an issue cites those ids: "researchers cannot find their own record (n-001,
-n-014)". The reader opens the note and checks the reading. Keep the conclusion in the
-document and the note text in ProductBoard.
+## Final cut
 
-The index carries the need, not the person: id, date, tags and title, and the sync replaces
-any address in a note body with `[email]`. Who reported something stays in ProductBoard,
-behind the note link.
+Before delivery:
 
-Make corrections, tags and feature links in ProductBoard; the next sync picks them up. A
-need with no note behind it is an assumption and reads as one — record it in ProductBoard
-first.
+1. Check the word ceiling.
+2. Delete repeated facts, process narration and closing summaries.
+3. Replace vague nouns with the actor and action.
+4. Check every claim and open question.
+5. Read the result once aloud. Fix only what blocks a first reading.
 
-### Name the persona, not "users"
+## Maintaining this guide
 
-Where personas are documented (`docs/RESEARCH-PERSONAS.md`), name them: who, what
-they are trying to accomplish, why it matters to them. A persona name is a
-pseudonym; write it with the type it represents — Sue Kerr (academic reader),
-Marie Curator (reviewer) — so it reads without opening the personas doc.
-Personas are researched evidence; a list of job titles is not. Where a documented need maps onto a design
-element, say so. If no persona fits, name a concrete role and flag that the
-research is missing.
-
-### Open questions carry options
-
-Log the question with its concrete options. Name an owner only when the answer sits
-outside the team: Open Science Policy, the curation lead, another team's roadmap.
-Every other question needs a team decision. We are one team, so an issue never hands
-a question to "design" or to "the dev team". Never resolve a
-policy question by inventing a rule. Before delivering, collect every open question
-across every document, put each one with its options to the user, and ask. Answers
-become body text and the question is deleted — not left standing with the answer
-beside it. Only what genuinely needs someone else survives: curator or reviewer
-policy, calls belonging to another team, things the implementer settles while
-building.
-
-A question that could have been answered in the room is a defect.
-
-### Every claim names its surface
-
-In a contract shared by public and backoffice, an unlabelled list of backoffice
-fields reads as a public card that shows them all. Name the surface each example
-comes from: "on the public card the header row holds access and type; the backoffice
-fills the same construct more often".
-
-### The what, never the how
-
-State the outcome and the behaviour. No framework idioms, library calls, data
-hooks, field names, index state, query mechanics, endpoints, or event shapes. The
-prototype and the repo agent docs carry the mechanism; the implementer owns it.
-Express a backend gap as a gap, never as an asserted capability.
-
-This rule inverts for repo docs: a README or working guide exists to carry the how.
+Do not append a rule after one poor output. Keep a failing example. Add or change a
+rule only when the same failure appears across several tasks. A new rule replaces
+overlapping text and must keep this file below the ceiling enforced by
+`npm run check:prose`.

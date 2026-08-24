@@ -1,6 +1,6 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: results, best-bet, no-results, query-empty, advanced-condition -->
+<!-- @states: results, best-bet, no-results, no-query, facet-set-in-builder, builder-full-query, builder-empty, builder-one-condition, builder-or-group, builder-no-results -->
 <!--
   Public search page — search-first with multi-entity autocomplete.
 
@@ -11,15 +11,20 @@
   Scripts:
     suggest-panel.js    — panel show/hide, keyboard nav
     filter-bar.js       — Add-filter picker + editor + chips (works config, wf- ids)
-    query-builder.js    — the Advanced search dialog: row → OR group, readback in sync
+    query-builder.js    — the Advanced search dialog: row → OR group, approximate count
 
-  The Advanced search dialog is at the bottom: the chrome here, the contents in two shared
-  partials, so the dialog and the standalone builder page (public-search-advanced.html) are
-  one source. Every result state renders it holding a built six-condition query, which is
-  what opening it from a filtered list looks like; its empty and OR-group states live on the
-  standalone page and in patterns/query-builder.html.
+  The Advanced search dialog is at the bottom, once, shut: search-advanced-dialog.html holds its
+  chrome, the two builder partials hold its contents. This page has ten states on two axes.
+  Five say what the list holds — results, best-bet, no-results, no-query, facet-set-in-builder.
+  Five say what the builder holds — builder-full-query, builder-empty, builder-one-condition,
+  builder-or-group, builder-no-results — and each marks it open over the same list. A builder
+  state reuses the list regions of the state behind it: builder-empty sits over the unfiltered
+  list, the other four over the result list.
 
-  The advanced-condition state is this page's own: the Full text access facet reporting that
+  In production the address renders the open dialog; here ?state= does, per
+  patterns/query-builder.html.
+
+  The facet-set-in-builder state is this page's own: the Full text access facet reporting that
   an advanced condition holds it, instead of contradicting it with empty checkboxes.
 
   The Add-filter control (public discovery "search-it" dimensions) is wired by
@@ -58,8 +63,11 @@
             </label>
 
             <!-- Box value derives from ?q= (Rule 1), so it varies per state. -->
+            <!-- The × clears the query only: its href drops q and keeps every filter param
+                 (Rule 2). Production re-renders the current URL without q; here ?state= is the
+                 kit's own, so the click lands on the empty box. An empty box hides the ×. -->
             <!-- [html-validate-disable-block no-dup-id, form-dup-name -- @state blocks; one renders at a time] -->
-            <!-- @state: results -->
+            <!-- @state: results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
             <div class="input-group input-group-lg mb-3">
               <input
                 type="text"
@@ -79,6 +87,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open&amp;author=jane-doe&amp;keywords=climate-change"
+                aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -102,6 +114,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open"
+                aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -125,10 +141,14 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open&amp;author=jane-doe&amp;keywords=climate-change"
+                aria-label="Clear search">
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
-            <!-- @state: query-empty -->
+            <!-- @state: no-query builder-empty -->
             <div class="input-group input-group-lg mb-3">
               <input
                 type="text"
@@ -148,6 +168,10 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open"
+                aria-label="Clear search" hidden>
+                <i class="if if-close" aria-hidden="true"></i>
+              </a>
               <button type="submit" class="btn btn-primary">Search</button>
             </div>
             <!-- @state -->
@@ -177,7 +201,7 @@
           </div><!-- /#suggest-wrapper -->
 
           <!-- position-relative anchors the editor overlay so it floats over the results. -->
-          <div class="position-relative">
+          <div class="position-relative" data-filter-bar="wf-">
             <div class="bt-toolbar">
               <div class="bt-toolbar__left">
                 <div class="bt-toolbar__item">
@@ -185,16 +209,16 @@
                   <!-- Chips rendered by filter-bar.js from data-initial-filters —
                       per state: a name search and an empty query start clean. -->
                   <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
-                  <!-- @state: results no-results -->
+                  <!-- @state: results no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips"
                     data-initial-filters='{
-                      "author":   { "label": "Author", "displayValue": "Jane Doe", "rawValue": ["jane-doe"] },
+                      "person":   { "label": "Person", "displayValue": "Jane Doe", "rawValue": [{ "id": "p-jd2", "label": "Jane Doe" }] },
                       "keywords": { "label": "Keywords", "displayValue": "Climate change", "rawValue": ["climate-change"] }
                     }'>
                   </div>
                   <!-- @state -->
-                  <!-- @state: best-bet query-empty -->
+                  <!-- @state: best-bet no-query builder-empty -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips">
                   </div>
@@ -214,17 +238,27 @@
                       <div id="wf-filter-picker-list" class="bt-dropdown-scroll">
                         <div role="group" aria-label="People &amp; organizations">
                           <div class="dropdown-header" aria-hidden="true">People &amp; organizations</div>
-                          <button class="dropdown-item" type="button" data-filter="author">Author</button>
-                          <button class="dropdown-item" type="button" data-filter="organization">Organization</button>
+                          <button class="dropdown-item" type="button" data-filter="person"
+                            data-filter-label="Person" data-filter-type="picker"
+                            data-filter-panel="person-picker">Person</button>
+                          <button class="dropdown-item" type="button" data-filter="organization"
+                            data-filter-label="Organization" data-filter-type="picker"
+                            data-filter-panel="organization-picker">Organization</button>
                         </div>
                         <div role="group" aria-label="Context">
                           <div class="dropdown-header" aria-hidden="true">Context</div>
-                          <button class="dropdown-item" type="button" data-filter="project">Project</button>
+                          <button class="dropdown-item" type="button" data-filter="project"
+                            data-filter-label="Project" data-filter-type="picker"
+                            data-filter-panel="project-picker">Project</button>
                         </div>
                         <div role="group" aria-label="Topic &amp; identifiers">
                           <div class="dropdown-header" aria-hidden="true">Topic &amp; identifiers</div>
-                          <button class="dropdown-item" type="button" data-filter="keywords">Keywords</button>
-                          <button class="dropdown-item" type="button" data-filter="identifier">Identifier (DOI, ISSN, ISBN…)</button>
+                          <button class="dropdown-item" type="button" data-filter="keywords"
+                            data-filter-label="Keywords" data-filter-type="checklist"
+                            data-filter-options="keywords">Keywords</button>
+                          <button class="dropdown-item" type="button" data-filter="identifier"
+                            data-filter-label="Identifier" data-filter-type="text"
+                            data-filter-placeholder="DOI, ISSN, ISBN, arXiv, or handle&hellip;">Identifier (DOI, ISSN, ISBN…)</button>
                         </div>
                       </div>
                     </div>
@@ -257,7 +291,7 @@
             <!-- Filter editor panel — must exist at load; filter-bar.js renders into it. -->
             <div id="wf-filter-editor" hidden
               class="bt-panel bt-panel--wide position-absolute top-100 mt-2"
-              role="dialog" aria-modal="false" aria-labelledby="wf-filter-editor-title"></div>
+              role="dialog" aria-modal="false" aria-labelledby="filter-editor-title"></div>
           </div>
         </form>
 
@@ -294,7 +328,7 @@
             aria-label="Close filters"></button>
         </div>
 
-        <div class="offcanvas-body flex-column p-0">
+        <div class="offcanvas-body flex-column px-0">
 
         <div id="wf-sheet-main" class="p-3 p-lg-0">
 
@@ -302,7 +336,7 @@
 
         <!-- The facet reports the advanced condition holding it; the chip stays the readout.
              Reasoning and the rejected alternative: patterns/query-builder.html. -->
-        <!-- @state: advanced-condition -->
+        <!-- @state: facet-set-in-builder -->
         <fieldset>
           <legend class="form-label h6 mb-2">Full text access</legend>
           <div class="border rounded-3 p-3 bt-bg-alt">
@@ -319,7 +353,7 @@
         </fieldset>
         <!-- @state -->
 
-        <!-- @state: results best-bet no-results query-empty -->
+        <!-- @state: results best-bet no-results no-query builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
         <fieldset>
           <legend class="form-label h6 mb-2">Full text access</legend>
           <div class="d-flex form-check">
@@ -397,6 +431,24 @@
               <label class="form-check-label flex-grow-1" for="f-report">Report</label>
               <span class="text-muted small" aria-hidden="true">4</span>
             </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-conf-abstract"
+                aria-label="Conference abstract (3 results)">
+              <label class="form-check-label flex-grow-1" for="f-conf-abstract">Conference abstract</label>
+              <span class="text-muted small" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-conf-poster"
+                aria-label="Conference poster (2 results)">
+              <label class="form-check-label flex-grow-1" for="f-conf-poster">Conference poster</label>
+              <span class="text-muted small" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-conf-presentation"
+                aria-label="Conference presentation (2 results)">
+              <label class="form-check-label flex-grow-1" for="f-conf-presentation">Conference presentation</label>
+              <span class="text-muted small" aria-hidden="true">2</span>
+            </div>
           </div>
           <button type="button" class="btn btn-ghost btn-sm px-0 mt-1"
             data-bs-toggle="collapse" data-bs-target="#type-more"
@@ -461,8 +513,13 @@
           <legend class="form-label h6 mb-2">Language</legend>
           <!-- Search-within (long tail) — same checklist-search field as the Add-filter editor. Prototype affordance, not wired. -->
           <label for="lang-facet-search" class="visually-hidden">Search languages</label>
-          <input type="search" id="lang-facet-search" class="form-control form-control-sm mb-2"
-            placeholder="Search languages&hellip;" autocomplete="off" data-checklist-search>
+          <div class="input-group input-group-sm mb-2">
+            <input type="search" id="lang-facet-search" class="form-control"
+              placeholder="Search languages&hellip;" autocomplete="off" data-checklist-search>
+            <button type="button" class="btn btn-ghost bt-search-clear" aria-label="Clear search" hidden>
+              <i class="if if-close" aria-hidden="true"></i>
+            </button>
+          </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-en" checked
               aria-label="English (161 results)">
@@ -573,7 +630,7 @@
             </button>
           </div>
           <div class="align-items-center gap-2 d-none" id="wf-foot-detail">
-            <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove" hidden>Remove filter</button>
+            <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove">Remove filter</button>
             <button type="button" class="btn btn-primary flex-grow-1 justify-content-center" id="wf-foot-apply">Apply</button>
           </div>
         </div>
@@ -650,8 +707,8 @@
         </article>
         <!-- @state -->
 
-        <!-- @state: results best-bet query-empty -->
-        <!-- query-empty: an empty ?q= is the full result space, most-recent-first —
+        <!-- @state: results best-bet no-query facet-set-in-builder builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
+        <!-- no-query: an empty ?q= is the full result space, most-recent-first —
              never the blank slate. Its real count is the full corpus; 179 is shared
              placeholder data. -->
         <div class="bt-toolbar mb-4">
@@ -698,146 +755,36 @@
             <!-- Actions, set level — the counterpart of a work card's Add to list / Cite row.
                  Which action sits here and which is a panel: patterns/query-builder.html. -->
             <div class="bt-toolbar__item">
-              <div class="dropdown">
+              <div class="dropdown" data-result-actions>
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                  <i class="if if-pin" aria-hidden="true"></i>
-                  Save search
+                  data-bs-toggle="dropdown" aria-expanded="false" data-result-actions-toggle>
+                  <i class="if if-more" aria-hidden="true"></i>
+                  Actions
                 </button>
-                <!-- real impl: form POST /saved-searches, login required -->
-                <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
-                  <label class="form-label" for="save-search-name">Name this search</label>
-                  <input type="text" class="form-control mb-2" id="save-search-name"
-                    value="Quantum computing &mdash; open access, 2015&ndash;2020">
-                  <p class="form-text mt-0">
-                    A saved search keeps running: open it later and it returns what matches then.
-                    It is also how a search too long for a link travels. Saving asks you to log in.
-                  </p>
-                  <button type="button" class="btn btn-secondary btn-sm">Save</button>
-                </div>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#save-search-modal">
+                      <i class="if if-bookmark-line if--sm me-2" aria-hidden="true"></i>
+                      Save search
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#share-search-modal">
+                      <i class="if if-share if--sm me-2" aria-hidden="true"></i>
+                      Share search
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#export-modal">
+                      <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                      Export research outputs
+                    </button>
+                  </li>
+                </ul>
               </div>
-            </div>
-
-            <div class="bt-toolbar__item">
-              <div class="dropdown">
-                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                  <i class="if if-share" aria-hidden="true"></i>
-                  Share
-                </button>
-                <div class="dropdown-menu dropdown-menu-end p-3 bt-panel bt-panel--wide">
-                  <ul class="nav nav-tabs mb-3" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="share-tab-link" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-link"
-                        aria-controls="share-panel-link" aria-selected="true">Link</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="share-tab-embed" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-embed"
-                        aria-controls="share-panel-embed" aria-selected="false">Embed</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="share-tab-api" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-api"
-                        aria-controls="share-panel-api" aria-selected="false">API</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="share-tab-feed" type="button" role="tab"
-                        data-bs-toggle="tab" data-bs-target="#share-panel-feed"
-                        aria-controls="share-panel-feed" aria-selected="false">Feed</button>
-                    </li>
-                  </ul>
-                  <div class="tab-content">
-                    <div class="tab-pane fade show active" id="share-panel-link" role="tabpanel"
-                      aria-labelledby="share-tab-link">
-                      <p>Bookmark or send this search. The link re-runs it, so it always shows what matches today.</p>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-url">https://biblio.ugent.be/works?{query}</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-url">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy link</span>
-                      </button>
-                      <p class="form-text mb-0">
-                        The link carries the query, never whether the builder was open. Placeholder:
-                        the public URL grammar is raven's to design.
-                      </p>
-                    </div>
-
-                    <div class="tab-pane fade" id="share-panel-embed" role="tabpanel"
-                      aria-labelledby="share-tab-embed">
-                      <p>Show a live list of these results on a department page or personal site.</p>
-                      <!-- Sort is new; citation style is the legacy ;style=apa and the info block the
-                           legacy ;hide_info=1 — the only two embed parameters in the wild. -->
-                      <div class="row g-3 mb-3">
-                        <div class="col-12 col-md-6">
-                          <label class="form-label" for="share-embed-sort">Sort</label>
-                          <select class="form-select form-select-sm" id="share-embed-sort">
-                            <option selected>Newest first</option>
-                            <option>Oldest first</option>
-                            <option>Most relevant</option>
-                          </select>
-                        </div>
-                        <div class="col-12 col-md-6">
-                          <label class="form-label" for="share-embed-style">Citation style</label>
-                          <select class="form-select form-select-sm" id="share-embed-style">
-                            <option selected>APA</option>
-                            <option>MLA</option>
-                            <option>Chicago</option>
-                            <option>Vancouver</option>
-                          </select>
-                        </div>
-                        <div class="col-12">
-                          <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="share-embed-info" checked>
-                            <label class="form-check-label" for="share-embed-info">Show the Biblio info block</label>
-                          </div>
-                        </div>
-                      </div>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-embed">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" width="100%" height="600" title="Research output — Biblio, Ghent University"&gt;&lt;/iframe&gt;</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-embed">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy embed code</span>
-                      </button>
-                    </div>
-
-                    <div class="tab-pane fade" id="share-panel-api" role="tabpanel"
-                      aria-labelledby="share-tab-api">
-                      <p>Read these results from your own application, or refresh them into Excel or Power BI.</p>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-api">GET https://biblio.ugent.be/api/works?{query}&amp;format=json</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-api">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy request</span>
-                      </button>
-                      <p class="form-text mb-0">
-                        Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
-                        is raven's to define.
-                      </p>
-                    </div>
-
-                    <div class="tab-pane fade" id="share-panel-feed" role="tabpanel"
-                      aria-labelledby="share-tab-feed">
-                      <p>Follow this search in a feed reader. New matching research output arrives as it is published.</p>
-                      <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-feed">https://biblio.ugent.be/feed/search?{query}</code>
-                      <button type="button" class="btn btn-outline-secondary btn-sm"
-                        data-clipboard data-clipboard-target="#share-feed">
-                        <i class="if if-copy" aria-hidden="true"></i>
-                        <span class="btn-text">Copy feed address</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="bt-toolbar__item">
-              <button type="button" class="btn btn-ghost btn-sm"
-                data-bs-toggle="modal" data-bs-target="#export-modal">
-                <i class="if if-download" aria-hidden="true"></i>
-                Export
-              </button>
             </div>
           </div>
         </div>
@@ -866,14 +813,14 @@
               </button>
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                   aria-label="Add to list: The role of the parameter landscape in Hartree–Fock quantum computing benchmarks"
                   hx-get="/lists/panel?work=s01" hx-trigger="click once"
                   hx-target="#atl-s01-panel" hx-swap="innerHTML" hx-indicator="#atl-s01-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
                 <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s01-panel" role="dialog" aria-label="Add to list">
+                <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-s01-panel" role="dialog" aria-label="Add to list">
                   <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s01-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
@@ -916,13 +863,13 @@
               </button>
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                   aria-label="Add to list: Quantum error correction in near-term devices"
                   hx-get="/lists/panel?work=s02" hx-trigger="click once"
                   hx-target="#atl-s02-panel" hx-swap="innerHTML" hx-indicator="#atl-s02-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s02-panel" role="dialog" aria-label="Add to list">
+                <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-s02-panel" role="dialog" aria-label="Add to list">
                   <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s02-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
@@ -957,13 +904,13 @@
               </button>
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                   aria-label="Add to list: Benchmark results for variational quantum eigensolver"
                   hx-get="/lists/panel?work=s03" hx-trigger="click once"
                   hx-target="#atl-s03-panel" hx-swap="innerHTML" hx-indicator="#atl-s03-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s03-panel" role="dialog" aria-label="Add to list">
+                <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-s03-panel" role="dialog" aria-label="Add to list">
                   <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s03-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
@@ -996,13 +943,13 @@
               </button>
               <div class="dropdown">
                 <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                  data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                   aria-label="Add to list: Hybrid classical–quantum algorithms for combinatorial optimisation in logistics"
                   hx-get="/lists/panel?work=s04" hx-trigger="click once"
                   hx-target="#atl-s04-panel" hx-swap="innerHTML" hx-indicator="#atl-s04-loading">
                   <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
                 </button>
-                <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-s04-panel" role="dialog" aria-label="Add to list">
+                <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-s04-panel" role="dialog" aria-label="Add to list">
                   <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-s04-loading" aria-live="polite">Loading your lists&hellip;</p>
                 </div>
               </div>
@@ -1043,13 +990,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Urban forests as essential infrastructure for climate resilience and biodiversity"
                 hx-get="/lists/panel?work=card-feed-01" hx-trigger="click once"
                 hx-target="#atl-card-feed-01-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-01-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-01-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-01-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-01-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1084,13 +1031,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Urban forests: a field guide to the trees of Flemish cities"
                 hx-get="/lists/panel?work=card-feed-02" hx-trigger="click once"
                 hx-target="#atl-card-feed-02-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-02-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-02-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-02-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-02-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1116,13 +1063,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Handbook of urban ecology"
                 hx-get="/lists/panel?work=card-feed-03" hx-trigger="click once"
                 hx-target="#atl-card-feed-03-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-03-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-03-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-03-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-03-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1149,13 +1096,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Canopy cover in Flanders: patterns and policy"
                 hx-get="/lists/panel?work=card-feed-04" hx-trigger="click once"
                 hx-target="#atl-card-feed-04-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-04-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-04-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-04-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-04-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1181,13 +1128,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Review of: Urban forests: a field guide to the trees of Flemish cities"
                 hx-get="/lists/panel?work=card-feed-05" hx-trigger="click once"
                 hx-target="#atl-card-feed-05-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-05-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-05-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-05-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-05-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1213,13 +1160,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Photosynthesis"
                 hx-get="/lists/panel?work=card-feed-06" hx-trigger="click once"
                 hx-target="#atl-card-feed-06-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-06-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-06-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-06-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-06-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1245,13 +1192,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Special issue: match-fixing and integrity in European football"
                 hx-get="/lists/panel?work=card-feed-07" hx-trigger="click once"
                 hx-target="#atl-card-feed-07-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-07-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-07-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-07-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-07-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1278,13 +1225,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Frequency-domain parameter tracking of single-actuated multi-body mechanisms"
                 hx-get="/lists/panel?work=card-feed-08" hx-trigger="click once"
                 hx-target="#atl-card-feed-08-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-08-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-08-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-08-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-08-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1310,13 +1257,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Postural sway under dual-task conditions in older adults"
                 hx-get="/lists/panel?work=card-feed-09" hx-trigger="click once"
                 hx-target="#atl-card-feed-09-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-09-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-09-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-09-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-09-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1342,13 +1289,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: High-resolution soil moisture mapping with distributed sensors"
                 hx-get="/lists/panel?work=card-feed-10" hx-trigger="click once"
                 hx-target="#atl-card-feed-10-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-10-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-10-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-10-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-10-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1374,13 +1321,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Linked data for library collections: five years of lessons"
                 hx-get="/lists/panel?work=card-feed-11" hx-trigger="click once"
                 hx-target="#atl-card-feed-11-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-11-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-11-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-11-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-11-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1406,13 +1353,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Canopy microclimate buffering across European forests: a continental synthesis"
                 hx-get="/lists/panel?work=card-feed-12" hx-trigger="click once"
                 hx-target="#atl-card-feed-12-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-12-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-12-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-12-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-12-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1438,13 +1385,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: The cost structure of diamond open access publishing in Flanders"
                 hx-get="/lists/panel?work=card-feed-13" hx-trigger="click once"
                 hx-target="#atl-card-feed-13-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-13-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-13-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-13-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-13-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1470,13 +1417,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: State of the urban forest in Flanders 2025"
                 hx-get="/lists/panel?work=card-feed-14" hx-trigger="click once"
                 hx-target="#atl-card-feed-14-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-14-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-14-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-14-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-14-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1502,13 +1449,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Parameter tracking of single-actuated multi-body mechanisms using frequency-domain techniques"
                 hx-get="/lists/panel?work=card-feed-15" hx-trigger="click once"
                 hx-target="#atl-card-feed-15-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-15-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-15-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-15-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-15-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1534,13 +1481,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: De stad die zichzelf plant"
                 hx-get="/lists/panel?work=card-feed-16" hx-trigger="click once"
                 hx-target="#atl-card-feed-16-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-16-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-16-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-16-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-16-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1566,13 +1513,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Universiteit plant stadsbos aan rand van Gent"
                 hx-get="/lists/panel?work=card-feed-17" hx-trigger="click once"
                 hx-target="#atl-card-feed-17-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-17-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-17-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-17-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-17-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1598,13 +1545,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Why repositories should love preprints"
                 hx-get="/lists/panel?work=card-feed-18" hx-trigger="click once"
                 hx-target="#atl-card-feed-18-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-18-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-18-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-18-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-18-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1630,13 +1577,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Waarom de Boekentoren een schatkamer is"
                 hx-get="/lists/panel?work=card-feed-19" hx-trigger="click once"
                 hx-target="#atl-card-feed-19-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-19-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-19-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-19-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-19-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1662,13 +1609,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Open science at scale: infrastructure for a university"
                 hx-get="/lists/panel?work=card-feed-20" hx-trigger="click once"
                 hx-target="#atl-card-feed-20-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-20-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-20-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-20-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-20-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1694,13 +1641,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Urban tree canopy cover measurements Belgium 2020–2025"
                 hx-get="/lists/panel?work=card-feed-21" hx-trigger="click once"
                 hx-target="#atl-card-feed-21-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-21-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-21-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-21-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-21-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1726,13 +1673,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: canopyR: canopy cover estimation toolkit"
                 hx-get="/lists/panel?work=card-feed-22" hx-trigger="click once"
                 hx-target="#atl-card-feed-22-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-22-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-22-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-22-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-22-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1758,13 +1705,13 @@
             </button>
             <div class="dropdown">
               <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
-                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
                 aria-label="Add to list: Boekentoren restoration: photographic record 2012–2023"
                 hx-get="/lists/panel?work=card-feed-23" hx-trigger="click once"
                 hx-target="#atl-card-feed-23-panel" hx-swap="innerHTML" hx-indicator="#atl-card-feed-23-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <div class="dropdown-menu dropdown-menu-end p-0 bt-panel bt-panel--wide" id="atl-card-feed-23-panel" role="dialog" aria-label="Add to list">
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-card-feed-23-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-card-feed-23-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
@@ -1843,9 +1790,153 @@
   </main>
 </div>
 
+<!-- Save search requires a name and a login in the real implementation. -->
+<div class="modal fade" id="save-search-modal" tabindex="-1" data-result-actions-modal
+  aria-labelledby="save-search-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="save-search-modal-title">Save search</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- real impl: form POST /saved-searches, login required -->
+        <label class="form-label" for="save-search-name">Name this search</label>
+        <input type="text" class="form-control mb-2" id="save-search-name"
+          value="Quantum computing &mdash; open access, 2015&ndash;2020">
+        <p class="form-text mb-0">
+          A saved search keeps running: open it later and it returns what matches then.
+          It is also how a search too long for a link travels. Saving asks you to log in.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share search modal — each address reruns the search instead of freezing its results. -->
+<div class="modal fade" id="share-search-modal" tabindex="-1" data-result-actions-modal
+  aria-labelledby="share-search-modal-title">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="share-search-modal-title">Share search</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs mb-3" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="share-tab-link" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-link"
+              aria-controls="share-panel-link" aria-selected="true">Link</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="share-tab-embed" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-embed"
+              aria-controls="share-panel-embed" aria-selected="false">Embed</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="share-tab-api" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-api"
+              aria-controls="share-panel-api" aria-selected="false">API</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="share-tab-feed" type="button" role="tab"
+              data-bs-toggle="tab" data-bs-target="#share-panel-feed"
+              aria-controls="share-panel-feed" aria-selected="false">Feed</button>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="share-panel-link" role="tabpanel"
+            aria-labelledby="share-tab-link">
+            <p>Bookmark or send this search. The link re-runs it, so it always shows what matches today.</p>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-url">https://biblio.ugent.be/works?{query}</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-url">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy link</span>
+            </button>
+            <p class="form-text mb-0">
+              The link carries the query, never whether the builder was open. Placeholder:
+              the public URL grammar is raven's to design.
+            </p>
+          </div>
+
+          <div class="tab-pane fade" id="share-panel-embed" role="tabpanel"
+            aria-labelledby="share-tab-embed">
+            <p>Show a live list of these results on a department page or personal site.</p>
+            <!-- Sort is new; citation style is the legacy ;style=apa and the info block the
+                 legacy ;hide_info=1 — the only two embed parameters in the wild. -->
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="share-embed-sort">Sort</label>
+                <select class="form-select form-select-sm" id="share-embed-sort">
+                  <option selected>Newest first</option>
+                  <option>Oldest first</option>
+                  <option>Most relevant</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="share-embed-style">Citation style</label>
+                <select class="form-select form-select-sm" id="share-embed-style">
+                  <option selected>APA</option>
+                  <option>MLA</option>
+                  <option>Chicago</option>
+                  <option>Vancouver</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="share-embed-info" checked>
+                  <label class="form-check-label" for="share-embed-info">Show the Biblio info block</label>
+                </div>
+              </div>
+            </div>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-embed">&lt;iframe src="https://biblio.ugent.be/embed?{query}&amp;sort=newest&amp;style=apa" width="100%" height="600" title="Research output — Biblio, Ghent University"&gt;&lt;/iframe&gt;</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-embed">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy embed code</span>
+            </button>
+          </div>
+
+          <div class="tab-pane fade" id="share-panel-api" role="tabpanel"
+            aria-labelledby="share-tab-api">
+            <p>Read these results from your own application, or refresh them into Excel or Power BI.</p>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-api">GET https://biblio.ugent.be/api/works?{query}&amp;format=json</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-api">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy request</span>
+            </button>
+            <p class="form-text mb-0">
+              Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
+              is raven's to define.
+            </p>
+          </div>
+
+          <div class="tab-pane fade" id="share-panel-feed" role="tabpanel"
+            aria-labelledby="share-tab-feed">
+            <p>Follow this search in a feed reader. New matching research output arrives as it is published.</p>
+            <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-feed">https://biblio.ugent.be/feed/search?{query}</code>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+              data-clipboard data-clipboard-target="#share-feed">
+              <i class="if if-copy" aria-hidden="true"></i>
+              <span class="btn-text">Copy feed address</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Export research outputs modal — formats + citation style. JCR/impact toggle
      deliberately omitted (not exposed publicly). Endpoints are stubs. -->
-<div class="modal fade" id="export-modal" tabindex="-1"
+<div class="modal fade" id="export-modal" tabindex="-1" data-result-actions-modal
   aria-labelledby="export-modal-title">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -1891,34 +1982,29 @@
   </div>
 </div>
 
-<!-- The Advanced search dialog: chrome here, contents in two shared partials.
-     modal-dialog-scrollable pins the header and footer; the form must stay inside
-     the body or that breaks. Layout reasoning: patterns/query-builder.html. -->
+<!-- Ungated on purpose: a @state block cannot wrap this include — docs/SERVER.md. -->
 <div class="modal fade" id="advanced-search-modal" tabindex="-1"
   aria-labelledby="advanced-search-title">
-  <div class="modal-dialog modal-xl modal-dialog--wide modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title h4" id="advanced-search-title">Advanced search</h2>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"
-          aria-label="Close advanced search"></button>
-      </div>
-      <div class="modal-body">
-        <!-- @include: templates/partials/search-advanced-conditions.html -->
-      </div>
-      <!-- d-block so the actions bar spans the footer instead of being packed to one end -->
-      <div class="modal-footer d-block">
-        <!-- @include: templates/partials/search-advanced-actions.html -->
-      </div>
-    </div>
-  </div>
+  <!-- @include: templates/partials/search-advanced-dialog.html -->
 </div>
 
+<!-- @state: builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
+<div hidden data-qb-open></div>
+<!-- @state -->
+
+<!-- @include: templates/partials/filter-editor-templates.html -->
+<!-- @include: templates/partials/filter-option-lists.html -->
+<!-- @include: templates/partials/people-picker-panel.html -->
+<!-- @include: templates/partials/organization-picker-panel.html -->
+<!-- @include: templates/partials/project-picker-panel.html -->
+
 <script src="/assets/js/suggest-panel.js"></script>
+<script src="/assets/js/search-clear.js"></script>
 <script src="/assets/js/filter-bar.js"></script>
 <script src="/assets/js/filter-sheet.js"></script>
 <script src="/assets/js/people-search.js"></script>
 <script src="/assets/js/people-search-stub.js"></script>
 <script src="/assets/js/query-builder.js"></script>
+<script src="/assets/js/result-actions.js"></script>
 
 <!-- @include: templates/partials/public-footer.html -->

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 162a9b8/2026-08-14 */
+/*! Booktower 4efdf45/2026-08-21 */
 /*
  * Booktower Design System — Shell
  * The chrome that wraps every page in the design system.
@@ -373,13 +373,11 @@ body[data-surface=public] .bt-content {
   margin: 0 0 var(--bt-sp-2);
 }
 
-/* Section within a ds-page */
 .ds-section {
   margin-bottom: var(--bt-sp-16);
   scroll-margin-top: var(--bt-sp-8);
 }
 
-/* Demo blocks */
 .ds-demo {
   background: white;
   border: var(--bt-border);
@@ -454,6 +452,12 @@ body[data-surface=public] .bt-content {
   padding: var(--bt-sp-6) var(--bt-sp-5);
 }
 
+/* The people-search results list is a position:absolute overlay, so a demo showing it
+   open would collapse to the input's height and the list would cover the next section. */
+.ds-demo-body:has(.bt-results:not([hidden])) {
+  min-height: 26rem;
+}
+
 .ds-demo-notes {
   padding: var(--bt-sp-5);
   background: var(--bt-bg-alt);
@@ -499,7 +503,6 @@ body[data-surface=public] .bt-content {
   opacity: 1;
 }
 
-/* Code block */
 .ds-code {
   background: #1a1814;
   border-radius: var(--bt-radius-lg);

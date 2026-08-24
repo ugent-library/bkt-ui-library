@@ -1,14 +1,4 @@
 /* -- bt-hero -- */
-/*
-  Full-bleed hero section with an absolute SVG background layer.
-  Used on public-index and research-detail.
-
-  Structure:
-    <section class="bt-hero">
-      <div class="bt-hero__bg"> (SVG) </div>
-      <div class="bt-hero__content container"> (page content) </div>
-    </section>
-*/
 .bt-hero {
   position: relative;
   isolation: isolate;
@@ -35,28 +25,93 @@
   z-index: 1;
 }
 
+/* The bar owns the border and focus ring; its controls stay in normal flow. */
 .input-group--hero {
-  input.form-control {
-    border-radius: var(--bt-radius-lg) !important;
-    width: 100%;
-    position: relative;
-    font-size: var(--bt-text-md);
-    height: 3.3rem;
-  }
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.4rem;
+  background-color: var(--bt-white);
+  border: 1px solid var(--bt-gray-300);
+  border-radius: var(--bt-radius-lg);
+  transition: border-color var(--bt-dur-fast), box-shadow var(--bt-dur-fast);
+}
 
-  a.btn,
-  button.btn {
-    position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
-    border-radius: var(--bt-radius-md) !important;
-    font-size: var(--bt-text);
-  }
+.input-group--hero:focus-within {
+  border-color: var(--bt-blue-700);
+  box-shadow: 0 0 0 3px var(--bt-focus-ring-sm);
+}
 
-  input.form-control:focus + .btn,
-  input.form-control:focus {
-    z-index: 5;
-  }
+.input-group--hero > .form-control,
+.input-group--hero > .form-control:focus {
+  height: 2.5rem;
+  font-size: var(--bt-text-md);
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Bootstrap's five-:not selector otherwise squares these separate controls. */
+.input-group--hero > .btn {
+  border-radius: var(--bt-radius-md) !important;
+  font-size: var(--bt-text);
+}
+
+
+/* -- bt-search-clear -- */
+/* One size token keeps the field's text gutter aligned with the overlaid clear. */
+.input-group:has(> .bt-search-clear) {
+  --bt-search-clear-size:  2rem;
+  --bt-search-clear-inset: 0.375rem;
+}
+
+/* Compact fields take the same clear, one step smaller — the size follows
+   Bootstrap's own group size, so no separate modifier to remember. */
+.input-group-sm:has(> .bt-search-clear) {
+  --bt-search-clear-size:  1.5rem;
+  --bt-search-clear-inset: 0.25rem;
+}
+
+.input-group-sm > .bt-search-clear {
+  font-size: var(--bt-text-sm);
+}
+
+.input-group > .bt-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  flex: 0 0 auto;
+  width: var(--bt-search-clear-size);
+  height: var(--bt-search-clear-size);
+  padding: 0;
+  font-size: var(--bt-text);
+  border-radius: 50% !important;
+  --bs-btn-hover-bg: var(--bt-gray-100);
+  --bs-btn-hover-color: var(--bt-gray-1000);
+  --bs-btn-active-bg: var(--bt-gray-100);
+  /* The focused field uses z-index 5 and would cover the glyph. */
+  z-index: 6;
+  margin-right: var(--bt-search-clear-inset);
+}
+
+/* The field reaches under the clear and reserves the same width for text. */
+.input-group > .form-control:has(+ .bt-search-clear:not([hidden])) {
+  padding-right: calc(var(--bt-search-clear-size) + var(--bt-search-clear-inset) + 0.5rem);
+  margin-right: calc((var(--bt-search-clear-size) + var(--bt-search-clear-inset)) * -1);
+}
+
+/* WebKit and Blink add a second clear button unless it is suppressed. */
+.form-control:has(+ .bt-search-clear)::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* The hero bar holds every control in flow, so nothing overlaps to pad for. */
+.input-group--hero > .bt-search-clear {
+  margin-right: 0;
+}
+.input-group--hero > .form-control:has(+ .bt-search-clear:not([hidden])) {
+  padding-right: 0.75rem;
+  margin-right: 0;
 }
 
 
@@ -142,17 +197,7 @@
   min-width: 260px;
 }
 
-// Sticky first column for wide matrix tables. The table sits inside a
-// Bootstrap .table-responsive (horizontal scroll); this pins the outer-left
-// label column — the leading cell of thead, every tbody row, and tfoot — so
-// row labels stay visible while the remaining columns scroll sideways. The
-// opaque background is required so scrolled cells don't show through the
-// pinned column; first column is unstriped (odd) so white matches the base.
-//
-// border-right marks where the pinned column ends; the directional box-shadow
-// casts rightward onto the scrolling columns, reading as a soft drop-shadow on
-// the left of the second column — a scrolling affordance that content tucks
-// under the pinned column. Shadow colour matches the --bt-shadow-* token base.
+// Sticky cells need an opaque background; the adjacent shadow marks the scroll edge.
 .bt-table-sticky-col {
   th:first-child,
   td:first-child {
@@ -203,8 +248,14 @@
   text-decoration: underline;
 }
 
-/* separator only between text items — never after the last */
-.bt-meta-list__item-bordered + .bt-meta-list__item-bordered {
-  border-left: var(--bt-border);
-  padding-left: var(--bt-sp-2);
+.bt-meta-list--xs {
+  font-size: var(--bt-text-xs);
+  gap: var(--bt-sp-1) var(--bt-sp-2);
+  margin: 2px 0 0;
+}
+
+.bt-meta-list__item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }

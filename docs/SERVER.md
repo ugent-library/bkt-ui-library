@@ -53,6 +53,21 @@ This makes it possible to run a **second instance alongside a server you already
 - **HTMX Support**: `?partial=true` strips shell for HTMX partial responses.
 - **HTML Source View**: `?view=html` shows page source with copy button.
 
+## Add-to-list prototype routes
+
+The list routes model the interaction shown in `patterns/panel.html`; Raven owns the production
+endpoints.
+
+- `GET /lists/panel?work=<id>` returns the lazy-loaded panel body. The work id becomes the prefix
+  for every panel id, so several result cards can open panels without collisions.
+- `GET /lists?q=<text>` replaces the checklist. The search input triggers on `input` and `search`,
+  not `keyup`, so the native clear control also refreshes the list.
+- `POST /lists` creates a list and returns it selected. `PUT /lists/<slug>` and
+  `DELETE /lists/<slug>` update membership without replacing the checklist, so the typed query and
+  open panel stay in place.
+
+The fixture does not persist membership after a later checklist render.
+
 ## URL Parameters
 
 - `?partial=true`: Returns HTML without shell chrome (for HTMX swaps).
@@ -76,7 +91,14 @@ A template represents its data-dependent variants as **states in one file** — 
 - `?state=<name>` keeps matching `@state` blocks (wrapper comments stripped) and removes the rest.
 - Without `?state=`, the **first declared state** renders — declare the default state first.
 - The `@states` declaration must sit in the leading meta-comment block (with `@title`, `@surface`).
-- A block cannot span another `@state` block; the closing marker is `<!-- @state -->`.
+- **Every meta declaration sits on one line, however long it runs.** A wrapped `@states` is read as
+  no states at all, and every block renders at once.
+- A block cannot span another `@state` block; the closing marker is `<!-- @state -->`. Includes
+  resolve first, so a block cannot contain an `@include` of a partial that has `@state` blocks
+  either. Render the include ungated and mark the block instead: `public-works.html` renders one
+  Advanced search dialog, shut, and its `builder-*` states carry `<div hidden data-qb-open></div>`.
+- Every declared state needs a block of its own, and every block name needs a host that declares it.
+- `npm run check:states` fails the build on all four.
 - The sidebar automatically shows a state button per declared state under the active template.
 - Existing examples: `biblio-researcher/dashboard.html`, `biblio-public/public-work-detail.html`.
 - **Checks read the raw file, not one rendered state.** `npm run check:html` sees all
@@ -101,6 +123,25 @@ The server automatically generates navigation from the folder structure:
 - `partials` → virtual sidebar section that groups `elements/partials/*.html` and `templates/partials/*.html`
 - `templates/` → Prototypes, grouped by subdirectory (e.g., `biblio-public/`, `biblio-researcher/`, `biblio-team/`)
 - Other folders as needed
+
+### Partials that paint nothing
+
+Some partials only feed another page: a set of `<template>` nodes to clone, or a block of JSON to
+read. Opening one on its own would show an empty screen, so the server draws a blank slate there
+instead. It carries three things:
+
+- what the file is
+- a link to `?view=html`
+- a link to the kit page that shows the thing rendered
+
+That last link comes from `@example`, one address in the leading meta-comment block (with
+`@title`, `@surface`, `@states`). A file that declares none gets the note without the link.
+
+```html
+<!-- @example: /patterns/people-search.html#checkable-rich-rows -->
+```
+
+The note appears only where the page would otherwise be blank.
 
 ## File Serving
 

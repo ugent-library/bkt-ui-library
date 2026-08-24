@@ -1,12 +1,4 @@
-/**
- * suggest-panel.js — show/hide and keyboard behaviour for the autocomplete panel.
- * See docs/JAVASCRIPT.md.
- *
- * Requires in the host page:
- *   #q                — the search input
- *   #suggest-panel    — the panel wrapper (must exist in DOM at page load)
- *   #suggest-wrapper  — the container (used for outside-click detection)
- */
+/** Autocomplete panel behavior. Host contract: docs/JAVASCRIPT.md. */
 
 (function () {
   'use strict';

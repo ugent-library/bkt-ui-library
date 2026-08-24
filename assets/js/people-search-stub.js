@@ -1,14 +1,4 @@
-/**
- * people-search-stub.js
- * Prototype-only substitute for the /people/search HTMX endpoint.
- *
- * Include this AFTER people-search.js in prototype pages only.
- * It intercepts the search input event on any [data-people-search] widget
- * and populates the results from a local PEOPLE array, bypassing HTMX.
- *
- * Remove this file (or its <script> tag) when wiring up the real endpoint.
- * Nothing in people-search.js or the templates needs to change.
- */
+/** Prototype people-search endpoint. Remove its script tag when the endpoint exists. */
 
 (function () {
   'use strict';
@@ -35,31 +25,36 @@
   }
 
   function renderRow(p, q) {
-    const meta = [
-      p.affiliation && `<span class="people-result__meta-item">
-                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.affiliation}
-                        </span>`,
-      p.dept        && `<span class="people-result__meta-item">
-                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.dept}
-                        </span>`,
-      p.years       && `<span class="people-result__meta-item">${p.years}</span>`,
-      p.orcid       && `<span class="people-result__meta-item">
+    // Identifiers take the first line, so they sit in the same place on every row.
+    const ids = [
+      p.orcid       && `<span class="bt-meta-list__item">
                           <i class="if if-orcid if--xs" aria-hidden="true"></i>${p.orcid}
                         </span>`,
-      p.ugentId     && `<span class="people-result__meta-item">${p.ugentId}</span>`,
+      p.ugentId     && `<span class="bt-meta-list__item">${p.ugentId}</span>`,
     ].filter(Boolean).join('');
 
-    return `<div class="people-result" role="option" tabindex="0"
+    const meta = [
+      p.affiliation && `<span class="bt-meta-list__item">
+                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.affiliation}
+                        </span>`,
+      p.dept        && `<span class="bt-meta-list__item">
+                          <i class="if if-building if--xs" aria-hidden="true"></i>${p.dept}
+                        </span>`,
+      p.years       && `<span class="bt-meta-list__item">${p.years}</span>`,
+    ].filter(Boolean).join('');
+
+    return `<div class="bt-result" role="option" tabindex="0" data-ps-row
       data-id="${p.id}"
       data-name="${p.name}"
       data-affiliation="${p.affiliation || ''}"
       aria-label="${p.name}${p.affiliation ? ', ' + p.affiliation : ''}">
-      <span class="people-result__icon" aria-hidden="true">
+      <span class="bt-result__icon" aria-hidden="true">
         <i class="if if-user if--sm"></i>
       </span>
       <div>
-        <div class="people-result__name">${highlight(p.name, q)}</div>
-        ${meta ? `<div class="people-result__meta">${meta}</div>` : ''}
+        <div class="bt-result__name">${highlight(p.name, q)}</div>
+        ${ids ? `<div class="bt-meta-list bt-meta-list--xs">${ids}</div>` : ''}
+        ${meta ? `<div class="bt-meta-list bt-meta-list--xs">${meta}</div>` : ''}
       </div>
     </div>`;
   }
@@ -85,25 +80,21 @@
       return;
     }
 
-    if (hint) hint.textContent = 'Searching&hellip;';
+    if (hint) hint.textContent = 'Searching…';
 
     timer = setTimeout(() => {
       const matches = PEOPLE.filter(p =>
         p.name.toLowerCase().includes(q) || (p.orcid && p.orcid.includes(q))
       );
 
-      results.innerHTML = matches.length
-        ? matches.map(p => renderRow(p, q)).join('')
-        : `<div class="p-3 text-muted small">No people found for "${input.value}"</div>`;
+      results.innerHTML = matches.map(p => renderRow(p, q)).join('');
 
-      results.hidden = false;
-
-      if (hint) hint.textContent = matches.length
-        ? `${matches.length} result${matches.length !== 1 ? 's' : ''}`
-        : '';
-
-      // Fire the same event HTMX would fire so people-search.js can react
-      results.dispatchEvent(new Event('htmx:afterSwap', { bubbles: true }));
+      // Fire the event HTMX would fire (detail.target like real HTMX) —
+      // people-search.js's afterSwap handler owns visibility and the hint.
+      results.dispatchEvent(new CustomEvent('htmx:afterSwap', {
+        bubbles: true,
+        detail: { target: results }
+      }));
     }, 300);
   });
 

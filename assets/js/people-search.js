@@ -1,40 +1,4 @@
-/**
- * people-search.js
- * Shared behaviour for all people-search widget instances.
- *
- * Usage:
- *   Add data-people-search to any container that holds the following
- *   data-ps-* elements. The widget wires them up automatically.
- *
- *   Required:
- *     [data-ps-input]    <input type="search"> — the search field
- *     [data-ps-results]  <div role="listbox">  — results / selected state
- *
- *   Optional:
- *     [data-ps-hint]               <p>          — status / hint text
- *     [data-ps-id]                 <input hidden> — selected person's ID
- *     [data-ps-name]               <input hidden> — selected person's display name
- *     [data-ps-selected]           <div hidden>   — confirmation slot (host template)
- *     [data-ps-selected-name]      inside above   — filled with person name
- *     [data-ps-selected-affiliation] inside above — filled with affiliation
- *     [data-ps-clear]              <button>       — clears the current selection
- *
- * Events:
- *   The container dispatches "people-search:select" (bubbles) when a person
- *   is chosen. event.detail = { id, name, affiliation }.
- *   Host contexts listen for this to store state or advance the form.
- *
- * In prototypes:
- *   Include people-search-stub.js after this file. It intercepts the input
- *   event and populates the results from a local PEOPLE array — the single
- *   data source. This script handles click/keyboard selection on those rows
- *   via event delegation.
- *
- * In production:
- *   Add hx-get="/people/search" to the input so it returns a partial of
- *   .people-result rows. This script's delegation works after every HTMX
- *   swap, so nothing here changes; remove people-search-stub.js.
- */
+/** Shared people-picker behavior. Host contract and event: docs/JAVASCRIPT.md. */
 
 (function () {
   'use strict';
@@ -52,16 +16,16 @@
 
     // ── Selection — event delegation works after every HTMX swap ───────────
     results.addEventListener('click', e => {
-      const row = e.target.closest('.people-result');
+      const row = e.target.closest('[data-ps-row]');
       if (row) selectPerson(row.dataset);
     });
 
     results.addEventListener('keydown', e => {
-      const rows = [...results.querySelectorAll('.people-result')];
+      const rows = [...results.querySelectorAll('[data-ps-row]')];
       const idx  = rows.indexOf(document.activeElement);
 
       if (e.key === 'Enter' || e.key === ' ') {
-        const row = e.target.closest('.people-result');
+        const row = e.target.closest('[data-ps-row]');
         if (row) { e.preventDefault(); selectPerson(row.dataset); }
       }
       if (e.key === 'ArrowDown') {
@@ -77,19 +41,21 @@
       }
     });
 
-    // ArrowDown from input moves focus into the list
     input.addEventListener('keydown', e => {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        results.querySelector('.people-result')?.focus();
+        results.querySelector('[data-ps-row]')?.focus();
       }
     });
 
     // ── Show / hide results after HTMX swap ─────────────────────────────────
     results.addEventListener('htmx:afterSwap', () => {
-      const count = results.querySelectorAll('.people-result').length;
+      const count = results.querySelectorAll('[data-ps-row]').length;
       results.hidden = count === 0;
-      if (hint) hint.textContent = count ? `${count} result${count !== 1 ? 's' : ''}` : '';
+      // No-results lives in the hint (the live region), never inside the listbox.
+      if (hint) hint.textContent = count
+        ? `${count} result${count !== 1 ? 's' : ''}`
+        : `No people found for "${input.value}"`;
     });
 
     // ── Clear ────────────────────────────────────────────────────────────────
@@ -108,7 +74,6 @@
       input.value = name;
 
       if (selectedSlot) {
-        // Host template has its own confirmation slot — use it
         const nameEl = selectedSlot.querySelector('[data-ps-selected-name]');
         const affEl  = selectedSlot.querySelector('[data-ps-selected-affiliation]');
         if (nameEl) nameEl.textContent = name;
@@ -117,7 +82,6 @@
         results.innerHTML   = '';
         results.hidden      = true;
       } else {
-        // No slot — collapse list to the selected row
         results.innerHTML = renderSelected({ id, name, affiliation });
         results.hidden    = false;
       }
@@ -142,21 +106,21 @@
 
     function renderSelected(person) {
       const affMeta = person.affiliation
-        ? `<div class="people-result__meta">
-             <span class="people-result__meta-item">${person.affiliation}</span>
+        ? `<div class="bt-meta-list bt-meta-list--xs">
+             <span class="bt-meta-list__item">${person.affiliation}</span>
            </div>`
         : '';
-      return `<div class="people-result is-selected" role="option" tabindex="0"
+      return `<div class="bt-result is-selected" role="option" tabindex="0" data-ps-row
           data-id="${person.id}"
           data-name="${person.name}"
           data-affiliation="${person.affiliation}"
           aria-label="${person.name}${person.affiliation ? ', ' + person.affiliation : ''}"
           aria-selected="true">
-          <span class="people-result__icon" aria-hidden="true">
+          <span class="bt-result__icon" aria-hidden="true">
             <i class="if if-user if--sm"></i>
           </span>
           <div>
-            <div class="people-result__name">${person.name}</div>
+            <div class="bt-result__name">${person.name}</div>
             ${affMeta}
           </div>
           <i class="if if-check ms-auto text-success" aria-hidden="true"></i>
@@ -177,10 +141,12 @@
 
   // Re-init widgets that arrive via HTMX swap
   document.addEventListener('htmx:afterSwap', e => {
-    if (e.detail.target.matches?.('[data-people-search]')) {
-      initWidget(e.detail.target);
+    const target = e.detail?.target;
+    if (!target) return;
+    if (target.matches?.('[data-people-search]')) {
+      initWidget(target);
     }
-    e.detail.target.querySelectorAll?.('[data-people-search]').forEach(initWidget);
+    target.querySelectorAll?.('[data-people-search]').forEach(initWidget);
   });
 
   window.PeopleSearch = { init: initWidget, initAll };
