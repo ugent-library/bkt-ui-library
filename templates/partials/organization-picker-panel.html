@@ -1,26 +1,5 @@
 <!-- @example: /patterns/filter-picker.html -->
-<!--
-  Partial: organization-picker-panel.html
-  The organization picker: a search box over checkable rows. Two hosts pick organizations,
-  the works Organization filter and the query builder's Organization condition, so both clone
-  this one panel.
-
-  Include once per page carrying either host, alongside filter-editor-templates.html.
-
-  A row is identified by its data-id, never by its label. Placeholder organizations: the ids
-  (fac-, dept-, rg-) are invented for the prototype and are not raven's. Real units come
-  from raven's organization catalog.
-
-  ⚠️ These rows are a stand-in: a flat list where the real picker shows a hierarchy. Drawing
-  it is a scheduled design task, with these open questions:
-  - How the hierarchy is drawn: a flat searchable list (this stand-in), an indented tree
-    with expand/collapse, or a drill-down per level.
-  - What ticking a parent means inside the panel. The query already returns a unit and
-    everything under it (docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, Organization), so children
-    of a ticked parent could grey out, tick along, or stay independent.
-  - Per-faculty scoping for FRIS and VABB reporting: which units a reporting scope needs.
-    The FRIS and VABB reporting owners answer this, outside the team.
--->
+<!-- Shared markup: docs/JAVASCRIPT.md. Provisional rows: docs/wip/ENTITY-PICKERS.md. -->
 
 <template id="organization-picker">
   <p class="bt-panel__title" data-picker-title>Organization</p>

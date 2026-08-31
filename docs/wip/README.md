@@ -33,3 +33,8 @@ Supporting material, read as needed:
 Two documents these reference live in `notes/`, which is not in the repository:
 `PLAN-measurement.md` (the house measurement standard, product-owned) and
 `REPORT-search-log-analysis.md` (the base search-log analysis). Ask if you need them.
+
+## Other active design work
+
+- [`ENTITY-PICKERS.md`](ENTITY-PICKERS.md) — organization and project picker questions.
+- [`WORK-CARD-HANDOFF.md`](WORK-CARD-HANDOFF.md) — work-card decisions and remaining work.

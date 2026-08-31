@@ -53,7 +53,8 @@ the old wording** and are M's to update.
 - **#141 was retitled and rescoped** to "Access CTA v1 — no direct file access".
   It no longer owns the public action row; **#166 owns the Add to list panel**
   and already settles the anonymous case; **Cite has no issue yet**. Every doc that
-  said #141 owns Add to list is corrected.
+  said #141 owns Add to list is corrected. Public cards in v1 have no access CTA;
+  the card-access examples in `patterns/work-actions.html` are future v2 candidates.
 
 ## Decisions — the identifier icon says where a name goes
 
@@ -96,8 +97,7 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   "until the fast lane exists" hedge.
 - **The proxy role is out of scope for the epic.** Every action row in #194
   belongs to a researcher or a curator. Add a proxy variant once the role is designed;
-  `patterns/work-card.html` already names it as later, and `templates/biblio-proxy/`
-  is empty.
+  the open-design list below tracks it, and `templates/biblio-proxy/` is empty.
 - **Title behavior is role-specific.** Researcher titles open the new
   `templates/biblio-researcher/work-detail.html` — a read view with edit entry
   points, two states (returned, reviewed), card content per #189, the researcher
@@ -222,6 +222,16 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 
 - **#192** — the retraction notice's text and source: Open Science Policy with
   the curation lead.
+
+## Open design work outside the filed issues
+
+- Design the proxy card and actions after the proxy role is defined.
+- Define where **Next record** leads and how it preserves a reviewer's queue context.
+- Define the reviewed-record **Request changes** flow around the pending-request model
+  in `docs/DOMAIN-VOCABULARY.md`.
+- Design delete, tombstone, replacement, restore and undelete actions after Raven
+  confirms which transitions are supported. The current deletion semantics live in
+  `docs/DOMAIN-VOCABULARY.md`.
 
 #181 has none: raven keeps every field old Biblio carries, and the software
 version is dropped — raven defers the field past v1 and no records land in the type.

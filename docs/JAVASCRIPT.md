@@ -88,7 +88,8 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
   `<prefix>filter-editor`, `<prefix>active-chips` and `<prefix>clear-all`. Picker buttons declare
   their label, editor type and source through `data-*`. Options live in
   `filter-option-lists.html`; editor and chip templates live in `filter-editor-templates.html`;
-  entity pickers name their panel partial. Values are stored by ID, not display label.
+  entity pickers name their panel partial. Include each named panel once per host. Values are
+  stored by ID, not display label.
 - **Input/output:** Listens for clicks, editor input and Escape; dispatches no custom event.
 - **Status:** Prototype-only. Chips do not refilter results. Template test: passes.
 

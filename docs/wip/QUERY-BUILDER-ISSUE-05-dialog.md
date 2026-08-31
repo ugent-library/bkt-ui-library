@@ -26,6 +26,10 @@ Ans Rapport (faculty communications officer) can refine an existing list. Quinn 
 - [ ] A sidebar filter held by a condition points back to that condition
 - `out of scope` Results, facets and sorting
 
+Do not translate a negated condition into checked positive facet values. Removing one
+check would silently change `not X` into `A or B`; the facet points back to the condition
+instead.
+
 **Prototype:** [builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [condition-held facet](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=facet-set-in-builder)
 
