@@ -1,10 +1,3 @@
----
-paths:
-  - "*.md"
-  - "docs/**/*.md"
-  - "{foundations,elements,patterns,templates,getting-started}/**/*.html"
----
-
 # Prose
 
 Read `docs/SPEC-WRITING.md` before editing prose. Treat its word limits as ceilings.

@@ -38,7 +38,7 @@ for (const name of fs.readdirSync('docs/wip')) {
     draftLimits[`docs/wip/${name}`] = 350;
   }
   if (name.endsWith('-BET.md')) {
-    draftLimits[`docs/wip/${name}`] = 900;
+    draftLimits[`docs/wip/${name}`] = 800;
   }
 }
 

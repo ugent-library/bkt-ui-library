@@ -28,6 +28,8 @@ and fixed template text do not count. A user may set a different ceiling.
 
 The ceiling is a limit, not a target. Shorter is better when no fact is lost.
 
+Meet a word limit by removing secondary claims, not by compressing sentences. Do not invent compound terms, slogans or abstract shorthand. Use an actor, an action and ordinary repository vocabulary.
+
 ## Core rules
 
 ### Write only supported claims
