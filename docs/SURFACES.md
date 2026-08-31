@@ -39,6 +39,11 @@ These qualities guide design after the layer is known; they do not decide the su
 - Backoffice pages make metadata entry and management efficient and accountable.
   They may use denser layouts and domain vocabulary when the workflow requires it.
 
+The reasoning lives with its subject: public legibility and trust in
+`foundations/design-principles.html`, audiences and machine use in
+`docs/RESEARCH-PERSONAS.md`, and work allocation and bounded review in
+`docs/RESPONSIBILITIES.md`.
+
 Public-field and filter decisions live in `docs/SEARCH-AND-FILTERING.md` and Raven's
 public representations. A term being expert vocabulary does not by itself make a page
 backoffice.

@@ -66,9 +66,10 @@ does not decide which fields the public builder exposes.
 ### Public decisions
 
 - Publication status describes the work, not its deposit. It has no sidebar facet.
-- Person includes role and author position. Organization means the credit on the work; matching a
-  unit includes its descendants. The legacy `external` field becomes Ghent University *is* or *is
-  not*.
+- Person includes role and author position. Organization means the credit recorded on the work,
+  based on affiliation at the time rather than a person's current post. It therefore stays stable
+  when a person moves or holds several posts. Matching a unit includes its descendants. The legacy
+  `external` field becomes Ghent University *is* or *is not*.
 - The Person id is `TBD`: Raven's live person filter is named `author` and carries no role, so
   Raven must name the role-aware filter this row needs. `contributor` matches its field name.
 - Year bounds are inclusive.

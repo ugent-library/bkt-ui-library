@@ -12,12 +12,14 @@ One visual builder replacing Advanced and Expert search. **Reading order for a f
 2. [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) — the field ledger:
    which fields each surface offers, with their labels, operators and inputs.
 3. [`QUERY-BUILDER-MEASUREMENT.md`](QUERY-BUILDER-MEASUREMENT.md) — what we measure and why.
-4. `QUERY-BUILDER-ISSUE-*` — the implementation issues. Drafted, none filed. Start at
+4. `QUERY-BUILDER-ISSUE-*` — the implementation issues, filed as
+   [raven #223](https://github.com/ugent-library/raven/issues/223) (the epic) with children
+   #224–#230; the drafts stay until the work lands. Start at
    [`ISSUE-00-EPIC`](QUERY-BUILDER-ISSUE-00-EPIC.md), which names the children and the order
-   they land in. [`ISSUE-01`](QUERY-BUILDER-ISSUE-01-measurement.md) goes to the lead developer
-   as a conversation first. Every **Screenshot** callout names its capture in
+   they land in. [`ISSUE-01`](QUERY-BUILDER-ISSUE-01-measurement.md) (#224) goes to the lead
+   developer as a conversation first. Every **Screenshot** callout names its capture in
    [`screenshots/`](screenshots/), numbered by the issue that calls for it
-   (`02-field-chooser.png`); attach them when filing. The epic's overview shot
+   (`02-field-chooser.png`); each is embedded in its filed issue. The epic's overview shot
    (`00-builder-over-results.png`) serves issues 02 and 05 as well.
 
 Supporting material, read as needed:
