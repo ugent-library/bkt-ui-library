@@ -15,6 +15,12 @@ Keep a comment only when a later edit could break something silently or elsewher
 Write the shortest sentence that preserves the trap. Point to the owning doc for
 detail.
 
+Prototype HTML has one additional case. A concise `Prototype note:` may identify a
+provisional nearby fixture, state, inert control or open design choice when the nearby
+markup is its single source owner. Do not create a document that only repeats the
+note. Move it to `docs/wip/`, an issue or a design decision when it must be repeated,
+changes another contract, requires coordination or carries durable rationale.
+
 ```scss
 /* `background` removes Bootstrap's select caret; set only the colour. */
 background-color: var(--bt-white);
@@ -25,7 +31,8 @@ background-color: var(--bt-white);
 Delete comments that contain:
 
 - history, alternatives tried or old values;
-- status, roadmap notes or an unnamed TODO;
+- routine status or roadmaps, or an unnamed TODO instead of an owned issue or the
+  source-local `Prototype note:` exception;
 - disabled code in `assets/` or `shell/`;
 - a restatement of the selector or declaration;
 - a copy of a table, contract or explanation maintained elsewhere;

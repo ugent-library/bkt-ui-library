@@ -14,8 +14,10 @@ A kit page may show:
 - links to the owning partial, contract or implementation guide.
 
 Keep rationale only when it helps a reader choose between patterns. Move cross-page rules,
-architecture and implementation contracts to `docs/`. Put unsettled work in `docs/wip/` or an issue.
-Git owns history and rejected alternatives.
+architecture and implementation contracts to `docs/`. Put unsettled work that coordinates several
+pages, people or repositories in `docs/wip/` or an issue. Do not create a document only to repeat a
+source-local prototype note. Git owns routine iteration. If an alternative explains an accepted
+choice that may need defending later, record it in `docs/decisions/`.
 
 Do not show roadmap status, issue acceptance criteria, implementation plans, old behavior or a tour
 of JavaScript and SCSS. Do not copy a contract from `docs/`; link it.
@@ -26,12 +28,18 @@ run longer when its prose is the subject, as on Design Principles.
 
 ## HTML comments
 
-AI context belongs in `docs/`, not hidden in kit HTML. Comments are limited to:
+A fact has one home. Cross-page rules, contracts and durable rationale belong in their owning docs.
+Do not mirror them in kit HTML. Comments may contain:
 
 - server directives such as `@title`, `@surface`, `@state`, `@include` and `@active`;
-- a short source-local warning where an edit would otherwise break another file silently.
+- a concise `Prototype note:` about the nearby example, fixture, inert control or design choice
+  still in flux;
+- a short source-local `Warning:` where an edit would otherwise break another file silently.
 
-A warning links to its owning doc. It never duplicates the explanation.
+Keep a `Prototype note:` with its single markup owner and under 40 words. Move it to `docs/wip/`, an
+issue or a decision when it must be repeated, changes another contract, needs coordination or
+contains rationale worth retaining. A warning links to its owning doc and does not duplicate the
+explanation.
 
 ## Partials
 

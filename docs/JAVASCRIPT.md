@@ -15,7 +15,9 @@ runtime dependencies; there is no client application framework. Comment rules:
   private functions.
 - HTMX-swapped content must work after the swap. Use delegated listeners or initialize from
   `htmx:afterSwap`.
-- JavaScript may toggle existing classes. CSS values and layout rules stay in SCSS.
+- JavaScript uses classes for authored states. CSS rules stay in SCSS; scripts may write only
+  unavoidable runtime-derived values, such as measured position or height. See
+  [`CSS-ARCHITECTURE.md`](CSS-ARCHITECTURE.md).
 
 ## Prototype test
 

@@ -40,22 +40,27 @@ for (const file of files) {
 
 const DIRECTIVE = /^\s*@(title|surface|state|states|include|active|example)\b/;
 const WARNING = /^\s*warning:\s+[\s\S]*\bdocs\/\S+/i;
+const PROTOTYPE_NOTE = /^\s*prototype note:\s+\S[\s\S]*$/i;
 
 for (const file of kitFiles) {
   const src = fs.readFileSync(file, 'utf8');
   for (const match of src.matchAll(/<!--([\s\S]*?)-->/g)) {
     const body = match[1].trim();
     if (DIRECTIVE.test(body) || WARNING.test(body)) continue;
+    if (PROTOTYPE_NOTE.test(body) && (body.match(/\S+/g) || []).length <= 40) continue;
     const line = src.slice(0, match.index).split('\n').length;
-    hits.push(`${path.relative(root, file)}:${line}  hidden kit-page prose`);
+    hits.push(
+      `${path.relative(root, file)}:${line}  hidden kit-page prose; use a <=40-word ` +
+        '`Prototype note:` only for source-local design flux'
+    );
   }
 }
 
 if (hits.length) {
   console.error(
-    'Code commented out rather than deleted (docs/CODE-COMMENTS.md):\n  ' +
+    'Comment rules failed (docs/CODE-COMMENTS.md):\n  ' +
     hits.join('\n  ') +
-    '\nDelete it — the commit you delete it in is the record.'
+    '\nDelete parked code. Keep kit comments to directives, linked warnings or concise prototype notes.'
   );
   process.exit(1);
 }

@@ -51,7 +51,7 @@ Three rules, each earned by a real bug found in the 2026-07 Bootstrap audit:
 
 Never use `style=` attributes in HTML. If a value isn't in SCSS, add it there first, then reference it via a class.
 
-**The one exception:** genuinely dynamic values that cannot be known at build time — for example, a progress bar width (`style="width: 73%"`) driven by data. Static visual values like `font-size`, `color`, `padding`, `background` are never acceptable inline.
+**The one exception:** genuinely dynamic values that cannot be known at build time — for example, a progress bar width driven by data or a position measured from the viewport. Static visual values like `font-size`, `color`, `padding`, `background` are never acceptable inline.
 
 Before writing `style=`, ask: is this value static? If yes — check whether it's available in Bootstrap or an existing class covers it. If not, ask before writing the CSS class.
 
@@ -75,14 +75,14 @@ assets/scss/
 **CSS must never go in:**
 - `<style>` blocks inside HTML files
 - `style=` attributes on HTML elements
-- JavaScript files (no style mutation via `.style.*` except unavoidable dynamic values like drag coordinates)
+- JavaScript files (no style mutation via `.style.*` except unavoidable runtime-derived values such as measured position or size)
 - Any file outside `assets/scss/`
 
 **The one documented exception:** `shell/scss/` compiles to `shell/shell.css` for shell chrome only (`bt-shell`, `bt-nav`, `bt-content`, `ds-page`, `ds-demo`, `ds-code`). Kit-only — no template links it and `docs/CONSUMING-BOOKTOWER.md` doesn't ship it. Edit it when the kit itself is broken, and keep the repair minimal; new styling belongs in `assets/scss/`, so the file shrinks as the design system matures.
 
 **When producing HTML:** if a style is missing from the system, flag it and add it to the correct SCSS partial. No inline patches.
 
-**When producing JavaScript:** add or remove classes. Classes are defined in SCSS. No `.style.foo = 'bar'`.
+**When producing JavaScript:** use classes for authored states and rules. Set `.style` only for unavoidable runtime-derived values allowed above, such as measured position or size.
 
 ---
 

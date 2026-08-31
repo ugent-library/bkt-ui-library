@@ -36,9 +36,10 @@ Check numbers, audiences, decisions, fields, constraints, capabilities and ratio
 Read the code before claiming what a system does. Attribute another team's decision
 to that team.
 
-Delete detail that belongs to an implementer or another team. If an unanswered point
-changes the work, either ask the author or record concrete options and the external
-decision-maker. Never fill a gap with a plausible rule.
+Move detail that belongs to an implementer or another team to its owning artifact, or
+link to that owner. Do not erase the only record of a requirement or open question. If
+an unanswered point changes the work, either ask the author or record concrete options
+and the external decision-maker. Never fill a gap with a plausible rule.
 
 ### Use plain language
 
@@ -51,14 +52,23 @@ derives its control surface from field selection.”
 
 ### Keep the conclusion, not the journey
 
-State what is true and what happens next. Drafts tried, meetings held and edits made
-belong in planning notes or git history. A handover names only decisions the reader
-may veto, changed numbers and questions that need answers.
+State what is true and what happens next. Routine drafting history and superseded
+wording belong in git. An alternative that determined an accepted choice and may need
+defending belongs in the design decision. Keep unsettled alternatives in WIP material,
+or in a concise source-local prototype note when the nearby markup owns them.
+A handover names only decisions the reader may veto, changed numbers and questions
+that need answers.
 
 ### Give each fact one home
 
 Link to values, catalogs, code and contracts instead of copying them. State behavior
 where the reader needs it; a link is not a substitute for the product promise.
+
+Before deleting prose, classify it as a current contract, requirement, decision,
+rationale, warning, open question or history. Preserve the first six in their owner,
+relocating them before deletion when necessary. Delete duplicates, obsolete claims
+and routine history. Do not create a document merely to restate a source-local
+prototype comment.
 
 Do not describe a prototype's visible layout in an issue. Link it and specify what a
 picture cannot show: announcements, reload behavior, persistence, failure states and
@@ -120,11 +130,13 @@ control that opened it when closed.”
 
 Before delivery:
 
-1. Check the word ceiling.
-2. Delete repeated facts, process narration and closing summaries.
-3. Replace vague nouns with the actor and action.
-4. Check every claim and open question.
-5. Read the result once aloud. Fix only what blocks a first reading.
+1. Inventory requirements, decisions, rationale, warnings and open questions; none
+   disappears without an owner.
+2. Check the word ceiling.
+3. Delete repeated facts, process narration and closing summaries.
+4. Replace vague nouns with the actor and action.
+5. Check every claim and open question.
+6. Read the result once aloud. Fix only what blocks a first reading.
 
 ## Maintaining this guide
 

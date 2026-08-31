@@ -93,7 +93,8 @@ Before writing HTML:
 - Every layout container declares its surface.
 - Use only the UGent icon font. Check icon names; do not invent them.
 - Use only classes present in `docs/CLASSES.md`. Bootstrap comes before custom CSS.
-- Author CSS in `assets/scss/`; never use inline styles or JavaScript style mutation.
+- Author CSS rules in `assets/scss/`. Inline styles or JavaScript style mutation are
+  limited to values genuinely unknown until runtime; see `docs/CSS-ARCHITECTURE.md`.
 - Real pages have no inline scripts. Register every `assets/js/` file in
   `docs/JAVASCRIPT.md`.
 - Prefer separate prototype states to JavaScript when the transition itself is not
@@ -133,11 +134,14 @@ Use the smallest implementation that works. Do not add helpers, configuration,
 comments or abstractions for hypothetical use. Planning notes are local and record
 only decisions or open questions that a later session needs.
 
-Comments explain only silent or non-local traps. See `docs/CODE-COMMENTS.md`.
+Comments explain silent or non-local traps. Prototype HTML may also keep a concise,
+source-local `Prototype note:` for design in flux. See `docs/CODE-COMMENTS.md`.
 
 When a CSS, HTML or accessibility disagreement needs an external source, open it
 before citing it. Prefer MDN, then WHATWG or W3C for specifications. Label inference
 as inference.
+
+When an internal source changes, search its dependents and re-sync them.
 
 Run `npm test` after template, JavaScript or SCSS changes. Check the browser for visual
 changes. Report the outcome, remaining decisions and tests; omit the work diary.
