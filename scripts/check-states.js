@@ -1,5 +1,5 @@
 // Fails the build on @state declarations and blocks the server would silently mis-render.
-// The four rules, and what each one breaks: docs/SERVER.md → Template states.
+// The five rules, and what each one breaks: docs/SERVER.md → Template states.
 const fs = require('fs');
 const path = require('path');
 
@@ -39,6 +39,14 @@ for (const file of files) {
   const found = [];
   let open = null;
 
+  // mirror of server.js parseMetaAndBody — change both together
+  let metaEnd = 0;
+  for (const line of lines) {
+    if (!/^\s*<!--.*-->\s*$/.test(line)) break;
+    if (/<!--\s*@(include\b|\/?state\b)/.test(line)) break;
+    metaEnd += 1;
+  }
+
   lines.forEach((line, i) => {
     if (META.test(line) && !line.includes('-->')) {
       errors.push(`${rel(file)}:${i + 1}  meta declaration wrapped over two lines — put it on one, ` +
@@ -46,7 +54,13 @@ for (const file of files) {
     }
     const states = line.match(STATES);
     if (states) {
-      declared.set(file, states[1].split(',').map(s => s.trim()).filter(Boolean));
+      if (i < metaEnd) {
+        declared.set(file, states[1].split(',').map(s => s.trim()).filter(Boolean));
+      } else {
+        errors.push(`${rel(file)}:${i + 1}  @states sits below the meta head, which ends at ` +
+          `line ${metaEnd + 1} — the server never sees it. Keep @states in the leading run of ` +
+          'one-line comments, above any @include, @state block or markup');
+      }
     }
     const opener = line.match(OPEN);
     if (opener) {

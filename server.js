@@ -182,11 +182,14 @@ function parseMetaAndBody(raw, filePath) {
   const lines = raw.split('\n');
   const meta = {};
   let i = 0;
+  // mirrored in scripts/check-states.js — change both together. @state must
+  // end the head: an eaten opener breaks its block.
   while (i < lines.length) {
-    const m = lines[i].match(/^\s*<!--\s*@([\w-]+)\s*:\s*(.*?)\s*-->\s*$/);
-    if (!m) break;
-    if (m[1].toLowerCase() === 'include') break;
-    meta[m[1].toLowerCase()] = m[2];
+    const line = lines[i];
+    if (!/^\s*<!--.*-->\s*$/.test(line)) break;
+    if (/<!--\s*@(include\b|\/?state\b)/.test(line)) break;
+    const m = line.match(/^\s*<!--\s*@([\w-]+)\s*:\s*(.*?)\s*-->\s*$/);
+    if (m) meta[m[1].toLowerCase()] = m[2];
     i += 1;
   }
   const body = lines.slice(i).join('\n').trimStart();

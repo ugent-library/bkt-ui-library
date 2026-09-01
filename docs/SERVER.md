@@ -90,7 +90,10 @@ A template represents its data-dependent variants as **states in one file** — 
 
 - `?state=<name>` keeps matching `@state` blocks (wrapper comments stripped) and removes the rest.
 - Without `?state=`, the **first declared state** renders — declare the default state first.
-- The `@states` declaration must sit in the leading meta-comment block (with `@title`, `@surface`).
+- The `@states` declaration must sit in the leading meta-comment block (with `@title`,
+  `@surface`): the run of one-line comments at the top of the file, in any order, plain
+  comments allowed. The first `@include`, `@state` marker, multi-line comment or markup
+  line ends it.
 - **Every meta declaration sits on one line, however long it runs.** A wrapped `@states` is read as
   no states at all, and every block renders at once.
 - A block cannot span another `@state` block; the closing marker is `<!-- @state -->`. Includes
@@ -98,7 +101,7 @@ A template represents its data-dependent variants as **states in one file** — 
   either. Render the include ungated and mark the block instead: `public-works.html` renders one
   Advanced search dialog, shut, and its `builder-*` states carry `<div hidden data-qb-open></div>`.
 - Every declared state needs a block of its own, and every block name needs a host that declares it.
-- `npm run check:states` fails the build on all four.
+- `npm run check:states` fails the build on all five.
 - The sidebar automatically shows a state button per declared state under the active template.
 - Existing examples: `biblio-researcher/dashboard.html`, `biblio-public/public-work-detail.html`.
 - **Checks read the raw file, not one rendered state.** `npm run check:html` sees all
