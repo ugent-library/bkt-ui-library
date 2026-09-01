@@ -72,9 +72,10 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 
 ## Rhea View — "review coordinator / team lead"
 **Curator / reviewer profile**
-*Based on: the review coordinator (D4) + a work-dispatching lead + the goals map. Moderately evidenced.*
+*Based on: the review coordinator (D4) + a work-dispatching lead + the goals map + the team coordinator's search cases (2026-09, `docs/wip/QUERY-BUILDER-EVIDENCE.md`).*
 
 - **Does:** plans + divides work; owns money/compliance (WoS funding, A1 validation; VABB/GPRC for SSH); dispatches urgent projects.
+- **Does the compliance reporting herself (2026-09 search cases):** VABB appeal to VLIR (three backoffice exports joined and narrowed in Excel, 227 records checked one by one); copublication overviews for diplomatic visits (InCites + VABB data; biblio only via a pasted id set on public advanced search); WOS-id gap checks via public xlsx exports because the backoffice takes no id set. Excel is her join tool; deliverables are .doc/.xlsx; tags select, exclude — and mislead, since their coverage is incomplete.
 - **Goals:** overview per record-type per department to divide work; triage all records by key markers; motivate researchers to complete metadata (recognition: academic + financial + social); clean role-switch.
 - **Pain/needs:** dashboard showing **who picks up what** (e.g. "no department" column); messaging with templates + assignment but **no notification firehose** — surface in workflow, one message at a time; responsibility expressible per project/user (corresponding author, delegates); internal comms need own history; dream: pull from WoS like Aleph.
 - *"I motivate researchers to complete records, so research, researcher, dept and university get the recognition it deserves."*

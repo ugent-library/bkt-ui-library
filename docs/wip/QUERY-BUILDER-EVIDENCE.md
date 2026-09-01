@@ -140,6 +140,45 @@ rested on.
 | `copyrightstatement` | 2 | 2 | undecided — the backoffice renders this sentence from the licence and stores nothing (`frontoffice/record.go`), so a row would filter a rendered value; both queries are licence queries |
 | `field`, `for`, `of` | parse artifacts | — | the translator must not crash; not builder fields |
 
+## Search cases — team coordinator interview (2026-09-01)
+
+Three worked cases from the biblio team coordinator (administration; steers the review
+team without doing curator work — Rhea View). Not from the log: the first interview
+evidence against the bet's open question that logs show actions, not unmet needs.
+
+**Case 1 — VABB appeal.** Goal: make wrongly rejected publications count for VABB, and
+so for funding. She built the 2026 appeal from three backoffice exports — reviewer tag
+`at bezwaar 2026`, file type peer review report, and classification A2 for 2021–2024 —
+then narrowed the last two in Excel to the VABB faculties and departments and to
+records sent to VABB but not yet accepted. The combined list of 227 records, duplicates
+tolerated, is checked one by one; the deliverable is about 70 ISBN/ISSNs filed with
+VLIR. Records already tagged `at niet opgenomen in bezwaar` could have been excluded
+with one more export; she kept them in for the manual check.
+Signals: OR across heterogeneous conditions happens in Excel today; tags both select
+and exclude; VABB status is a live filter need; the export is the working medium;
+duplicates across combined sets are acceptable.
+
+**Case 2 — copublications with a country.** Asked for an overview of publications with
+Ukrainian partners ahead of an ambassador visit (2026-09-23). Partner country and
+institution are not in biblio, and she does not want them added — "no way to keep that
+up". She uses InCites for the WoS publications and VABB data; from the VABB set she
+takes the biblio ids, pastes the set into public advanced search (`id any "…"`) and
+exports xlsx to get the UGent people and their departments. The deliverable is a .doc
+and .xlsx; sometimes the biblio query URL itself is shared.
+Signals: the id-batch paste plus export is a live public workflow (C1.12, C2); the
+shared query URL matters; copublication analysis stays in external tools — confirmed by
+the person doing the work.
+
+**Case 3 — biblio records missing their WOS id.** Goal: find records without a WOS id
+that are meanwhile in WOS. A colleague runs this check by tag and DOI, but not all
+incomplete records carry the tag. The backoffice takes no set of biblio ids, so she
+works through the public site and compares xlsx exports. WOS exports come per 1,000;
+Power BI on the WOS API would be her ideal.
+Signals: the backoffice builder reusing the identifier paste box removes the forced
+detour to the public site; "has no identifier of this scheme" is a missing-value filter
+neither tier offers — Marie Curator's filter-on-missing, evidenced again; tag coverage
+cannot be trusted as workflow state.
+
 ## What this log cannot answer
 
 - **Intent and outcome.** The log records nothing about what a query returned, so a query that found nothing is invisible. Recording that one fact alongside the query is what buys it.
