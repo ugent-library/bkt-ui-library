@@ -8,10 +8,6 @@
 
 <!-- Named personas, their need, evidence links, and the cost of leaving it unsolved. -->
 
-## Appetite
-
-<!-- Time worth spending. Mark a proposed appetite as proposed. -->
-
 ## Solution
 
 <!-- The shape in a few sentences: what people see and do. Link the prototype. -->

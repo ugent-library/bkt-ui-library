@@ -23,16 +23,14 @@ The backoffice can reuse the pattern with its own field set for Marie Curator
 Humans author about 19 power queries a day. Power search represents 2.1% of human
 searches, while its URLs carry 63% of Biblio traffic in the 2026-H1 evidence.
 
-## Appetite
-
-The team must set the time appetite. Phase 1 replaces both tiers in one release;
-shipping without OR groups would support less than Expert search does today.
-
 ## Solution
 
 The builder opens over the results. Each condition is a plain-language field,
 operator and value. Rows join with AND; groups express OR across fields. The selected
 field sets the operators and input. An approximate count helps people refine the set.
+
+Phase 1 replaces both tiers in one release. Shipping without OR groups would support
+less than Expert search does today.
 
 **Phase 1 — first useful release**
 
