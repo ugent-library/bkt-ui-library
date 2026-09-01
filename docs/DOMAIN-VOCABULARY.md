@@ -9,9 +9,9 @@ This file defines the shared language between the backend (`raven`) and the UI l
 ### Work
 The central entity. A publication, dataset, software, or other research output produced by one or more people. Every card, row, or detail page in the UI represents a Work.
 
-- Stored as a raven record: a header envelope (id, type, `visibility`, `deposit_status`, timestamps) plus source-partitioned fields that reconcile into one projection (`raven/docs/architecture-overview.md`)
+- Stored as a raven record: a header envelope (id, type, `visibility`, `deposit_status`, timestamps) plus source-partitioned imported records. When sources identify the same Work, configured source precedence selects one complete source record for the projection; values are not mixed field by field (`raven/docs/architecture-overview.md`)
 - Has a `kind` (see Work kind), a `deposit_status`, and a `visibility` (see Work status — two axes)
-- The UI renders the reconciled projection with relations resolved (contributors, files, organizations, projects) — templates never join
+- The UI renders the selected projection with relations resolved (contributors, files, organizations, projects) — templates never join or reconcile sources
 - A Work that never went public can be hard-deleted; once public it is only ever soft-deleted into a tombstone (see Deletion, withdrawal, retraction)
 
 ### Work kind
@@ -23,7 +23,7 @@ All kinds are collectively referred to as **research output** — not "publicati
 
 In the UI: shown as a `badge text-bg-primary` badge and controls which form fields
 appear. The deposit flow asks for evidence first — an identifier, source, file or
-candidate record — and lets the system infer the work kind where it can. Asking the
+harvested Work — and lets the system infer the work kind where it can. Asking the
 depositor to choose the kind is the fallback, not the first task.
 
 ### Accepted value and pending request
@@ -212,9 +212,15 @@ A permission record. One row = one permission for one user over one scope. A use
 In the UI: not directly visible to end users, but determines which action buttons appear (edit, submit, review, delete). There is no publish action — visibility, not a publish verb, decides exposure.
 
 ### Candidate
-A possible Work collected by an automated harvester (Web of Science, ORCID, arXiv, etc.). Not a Work until explicitly accepted by a curator or the submitting researcher.
+A private, system-owned Work harvested from an external source and matched to a
+researcher through their linked PersonIdentity. A Candidate is already a Work before
+the researcher reviews it.
 
-In the UI: the "Suggestions" section in the backoffice sidebar. Shown as a review queue — accept or reject. The badge count on "Suggestions" reflects pending candidates matched to the current user's works or organization.
+In the UI: **Found for you** on the researcher dashboard. **Review and add** claims
+the existing Work as the researcher's draft and opens the prefilled deposit flow.
+**Reject** removes only that researcher's match; **Skip** defers it to the next review
+round. Neither action deletes the Work. The count reflects pending matches for the
+current researcher.
 
 ### Revision and events
 One transaction boundary in the audit trail. Every record-touching write runs through raven's `Revise`; one revision id stamps every event the write produced (`record_created`, `record_updated`, `deposit_submitted`, `deposit_returned`, `deposit_reviewed`, `visibility_changed`, `file_embargo_lifted`, …). Events carry the actor and an optional free-text comment — the workflow back-and-forth rides on them.
@@ -353,8 +359,10 @@ A named set of Works, editable by curators. Used for OAI-PMH sets, open access s
 ### Heritage / erfgoed object page (public) — not yet prototyped
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
 
-### Candidate review (backoffice) — not yet prototyped
-The inbox for harvested Work candidates. Filtering by source (WoS, ORCID), confidence, person, and organization. Accept/reject actions with a reason. Reducing manual registration burden for researchers is an explicit UB2030 goal — this interface is doing strategic work.
+### Candidate review (backoffice) — draft flow, HTML prototype not yet built
+The researcher reviews their matched Candidates one at a time through **Review and
+add**, **Reject** and **Skip**. It reuses each harvested Work and does not assume a
+curator candidate inbox. The draft lives in `docs/wip/CANDIDATES-FLOW.md`.
 
 ### ~~Curator review queue (backoffice)~~ ✓ `templates/biblio-team/`
 The curator-side view of the `submitted → public` workflow. Dashboard, queue overview (Wachtrij), single-record review with inline editing and AI suggestions, team health overview. Distinct from the researcher deposit flow.

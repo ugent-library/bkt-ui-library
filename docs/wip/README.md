@@ -11,6 +11,8 @@ Two source-trust routes for harvested research output. Read in this order:
    boundaries, measures and backend questions.
 2. [`CANDIDATES-FLOW.md`](CANDIDATES-FLOW.md) — review-round behavior and
    wireframes for Found for you and Added for you.
+3. [`CANDIDATES-WIREFRAME-BRIEF.md`](CANDIDATES-WIREFRAME-BRIEF.md) — HTML prototype
+   artifacts, state inventory, boundaries and review gate.
 
 The flow supersedes the candidate block in `templates/biblio-researcher/dashboard.html`.
 That fixture stays in place only until the candidate draft is accepted and rebuilt.

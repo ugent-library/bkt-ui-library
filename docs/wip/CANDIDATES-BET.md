@@ -7,17 +7,17 @@ Design: [flow and wireframes](CANDIDATES-FLOW.md)*
 ## Problem
 
 Plato automatically imports dissertations, sometimes before the final version (note
-`d32a8c8b`). The current WoS workflow is manual: researchers download exports and
-upload them to Biblio; one upload produced duplicate drafts (note `26ed1edf`). Biblio
-has no WoS, ORCID or Crossref candidate feed. Claire Searcher asks for reliable
-automatic inflow. The gap is safely surfacing each route and helping researchers
-finish imported records. UB2030 names reducing manual registration as a goal.
+`d32a8c8b`). WoS is manual: researchers export a file and upload it; one upload
+produced duplicate drafts (note `26ed1edf`). No WoS, ORCID or Crossref candidate feed
+exists. Claire Searcher asks for reliable automatic inflow. Safely surfacing imports
+and helping researchers finish them supports UB2030's goal to reduce manual registration.
 
 ## Solution
 
-Raven stores harvested research output as private, system-owned Work records. The
-researcher dashboard (backoffice surface) gains two routes based on the trust placed
-in each source.
+Raven stores harvested output as private, system-owned Work records. When several
+sources identify the same Work, Raven selects one complete source record through
+configured source precedence. It does not mix fields from several sources. The
+dashboard gains two routes.
 
 **Found for you** lists records matched through the researcher's linked person
 identity. During a review round, the remaining count only goes down. It includes the
@@ -56,7 +56,6 @@ whether weak or unlinked matches are retained or shown.
 
 - Found for you, review rounds, Review and add, Reject, Skip and history
 - Matches through the linked person identity only
-- Candidate vocabulary and affected docs resynchronised
 
 **Later:** proxy claim on behalf · bulk claim · researcher-facing duplicate flagging ·
 notification cadence
@@ -69,6 +68,8 @@ notification cadence
 ## No-gos
 
 - Connecting candidate feeds — a dependency owned by its own bet.
+- Source-precedence controls or comparison — Raven resolves at whole-record level;
+  any curator tooling is separate.
 - No curator candidate inbox is assumed or designed.
 - Proxy candidate review — phase 1 serves researchers only.
 - Duplicate detection inside researcher review — Raven's clusters and merge remain
@@ -76,8 +77,6 @@ notification cadence
 - Bulk claim — the profile may ask work-specific questions.
 
 ## How we know it works
-
-These questions extend `notes/PLAN-measurement.md`.
 
 1. **Is the record safe?** Launch gate: no candidate action deletes harvested data,
    every rejection is recoverable, and a claim creates zero duplicate Works.
@@ -102,9 +101,8 @@ the existing record, linked-identity matching and per-source routing.
 - Which candidate feed unlocks phase 1B. Owner: ProductBoard with Raven.
 - Whether weak or unlinked matches are discarded, retained privately or shown to
   curators. Owner: ProductBoard with the Biblio team and Raven.
-- How Raven exposes matched system-owned records and lets a researcher claim one.
-  Transfer or fork is Raven's choice; the visible result is one resumable researcher
-  draft, with no duplicate Work. Owner: Raven.
+- How Raven claims a matched system-owned record and handles later harvests after
+  researcher edits. The result is one resumable draft, not a duplicate. Owner: Raven.
 - How a co-author gains sight of the claimed draft in their research-output list.
   Owner: Raven.
 

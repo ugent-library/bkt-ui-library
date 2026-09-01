@@ -40,6 +40,11 @@ When the prototype and the Go template diverge, the prototype is the design auth
 
 The `raven` backend provides data to templates through the `doc jsonb` field on the works table. This is a pre-aggregated snapshot written on every save — contributors, files, organizations, projects — so templates do not need to make extra requests for this data.
 
+When several imported sources identify the same Work, Raven selects one complete
+source record according to configured source precedence. The projection does not mix
+fields from several sources. Templates receive the selected projection; they do not
+offer source selection or comparison.
+
 For the backoffice list and public search, data comes from OpenSearch (eventually consistent — there is a short lag after a save before search results update). Post-save redirects go to the detail page, which is served directly from PostgreSQL and is always consistent.
 
 **Practical implication for templates:** design for the data being present. Design empty states (`bt-blank-slate`) for when there is genuinely no data (no files, no keywords, no linked project), not for loading states caused by lag.
@@ -54,7 +59,7 @@ When prototyping a deposit form for a specific work kind:
 - The fields shown in the prototype are illustrative — they represent a plausible profile for that kind
 - Do not design form logic that assumes a fixed field set
 - The system asks for evidence before it asks for type: identifier, source, file or
-  candidate record. Work kind selection is the fallback when inference cannot decide
+  harvested Work. Work kind selection is the fallback when inference cannot decide
   enough.
 - A changed work kind reloads the form section with a different field set (HTMX swap)
 
@@ -82,16 +87,27 @@ Templates should not conflate these. All backoffice pages include one sidebar pa
 
 ---
 
-## Candidate review queue
+## Candidate review
 
-The "Suggestions" section in the backoffice sidebar shows Work candidates matched to the current user. A candidate is a possible work harvested from an external source (WoS, ORCID) that has not yet been accepted or rejected.
+**Found for you** shows private, system-owned Works harvested from an external source
+and matched to the current user's linked PersonIdentity. A Candidate is already a
+Work; review never creates a copy.
 
-Relevant UI states for a candidate:
-- **Pending** — awaiting review. Shows preview metadata from the source.
-- **Accepted** — a Work has been created from it. Link to the resulting Work.
-- **Rejected** — dismissed. Shows tombstone with reject reason if one was given.
+Relevant UI states:
+- **Pending** — the match is awaiting review. Opening it changes nothing.
+- **Claimed** — **Review and add** made the same Work the researcher's draft. Leaving
+  the deposit puts it under Incomplete work; submitting moves it to Submitted.
+- **Rejected** — only this researcher's match is dismissed; history offers Undo.
+- **Skipped** — held for the next review round.
 
-The candidate review UI is not yet prototyped.
+Once one researcher claims a shared Candidate, matched co-authors stop seeing it as a
+Candidate and see the resulting Work in their research output.
+
+**Added for you** is separate. It shows Works from sources where authorship was already
+confirmed. These Works are system-added and not rejectable; **Not yours?** uses the
+Biblio helpdesk route while leaving the Work unchanged.
+
+The draft behavior and wireframes live in `docs/wip/CANDIDATES-FLOW.md`.
 
 ---
 
