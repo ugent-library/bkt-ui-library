@@ -3,6 +3,18 @@
 Shared drafts — visible to the team, not yet contracts. Each file either graduates to `docs/`
 when it stabilises, or is deleted when the work lands.
 
+## Candidates — for review
+
+Two source-trust routes for harvested research output. Read in this order:
+
+1. [`CANDIDATES-BET.md`](CANDIDATES-BET.md) — the problem, phased release,
+   boundaries, measures and backend questions.
+2. [`CANDIDATES-FLOW.md`](CANDIDATES-FLOW.md) — review-round behavior and
+   wireframes for Found for you and Added for you.
+
+The flow supersedes the candidate block in `templates/biblio-researcher/dashboard.html`.
+That fixture stays in place only until the candidate draft is accepted and rebuilt.
+
 ## Query builder (Advanced search) — for review
 
 One visual builder replacing Advanced and Expert search. **Reading order for a first review:**

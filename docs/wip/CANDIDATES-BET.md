@@ -1,120 +1,114 @@
 # Product bet — Candidates
 
-*Draft for Booktower · Evidence: `docs/RESEARCH-PERSONAS.md`, `notes/demand/FINDINGS.md`, UB2030 §3.2.1*
-
-## The bet
-
-When Biblio shows a researcher the works it harvested for them and lets them claim
-each one in a short review, research output that already exists in other systems
-reaches Biblio sooner and costs the researcher less typing. The researcher still
-answers access level, file version and licence on every claimed work.
+*Draft for ProductBoard · Evidence: [personas](../RESEARCH-PERSONAS.md),
+[demand findings](../../notes/demand/FINDINGS.md), UB2030 §3.2.1 (internal plan) ·
+Design: [flow and wireframes](CANDIDATES-FLOW.md)*
 
 ## Problem
 
-Work by UGent researchers already exists in Web of Science, ORCID, Crossref and
-Plato, but a person must type it into Biblio before Biblio has it. Claire Searcher
-(researcher) asks for automatic inflow from WoS, ORCID and other reliable sources.
-Otto Thor (self-depositing author) bulk-imports from WoS today; one import flooded
-the team with duplicate drafts (note `26ed1edf`). UB2030 §3.2.1 names reducing the
-manual registration burden as a goal.
+Plato automatically imports dissertations, sometimes before the final version (note
+`d32a8c8b`). The current WoS workflow is manual: researchers download exports and
+upload them to Biblio; one upload produced duplicate drafts (note `26ed1edf`). Biblio
+has no WoS, ORCID or Crossref candidate feed. Claire Searcher asks for reliable
+automatic inflow. The gap is safely surfacing each route and helping researchers
+finish imported records. UB2030 names reducing manual registration as a goal.
 
 ## Solution
 
-Raven already stores a harvested candidate as a private work record that no
-researcher owns or sees. The researcher dashboard (backoffice surface) gains two
-sections.
+Raven stores harvested research output as private, system-owned Work records. The
+researcher dashboard (backoffice surface) gains two routes based on the trust placed
+in each source.
 
-**Found for you** lists candidates matched to the researcher through their linked
-person identity. One candidate at a time: the metadata with its source named,
-then **Claim**, **Reject** and **Skip**. Claim opens the deposit flow
-prefilled; the researcher checks the fields and answers the policy-risk questions
-in that session — the import never answers them. Reject removes the match and hides
-the candidate; the record survives for curators and co-authors. Stepping back
-in the pass re-opens a rejected or skipped card, and a review history (claimed
-and rejected) allows reclaiming later. Skip drops the work from this pass; it
-returns at the head of the next review batch.
+**Found for you** lists records matched through the researcher's linked person
+identity. During a review round, the remaining count only goes down. It includes the
+current card; new arrivals wait for the next round, and leaving resumes the same round.
 
-**Added for you** announces works from sources where the researcher already
-confirmed authorship (Plato), landing directly in My research output. Each is
-marked as system-added and carries **View** and **Complete**. Plato pushes records
-before the final version exists (note `540fd477`), so the researcher still has
-fields to fill. Disowning one sends a report to the Biblio team; the work stays
-live until the team acts.
+Opening review changes nothing. The dashboard has no separate **Preview**: **Review**
+opens the first card, and a title opens that record in the same review flow.
 
-The Biblio team decides per source which route it takes; the prototype treats that
-as given. Weak or unlinked matches wait for the curator candidate inbox, the next
-bet.
+Each card names its source and match. **Review and add** claims the existing record
+as the researcher's draft and opens the profile-driven deposit prefilled. The form
+asks only applicable researcher-owned and policy-risk questions; uncertainty remains
+a valid answer. The record leaves Found for you immediately. Leaving the form keeps
+it under Incomplete (draft) work with **Resume**; submitting moves it to Submitted.
+Other matched co-authors stop seeing the candidate and see the resulting work in
+their research output.
 
-**Phase 1 — first useful release**
+**Reject** removes only this researcher's match. The record survives for curators
+and co-authors, and history offers **Undo**. **Skip** holds the record for the next
+review round.
 
-- Both dashboard sections
-- Candidate review: one at a time; claim opens the prefilled deposit flow; Reject
-  hides the candidate, undone by stepping back; a review history for later;
-  Skip defers to the next batch
-- System-added marker in My research output, with disown-and-report
+**Added for you** lists records from a source where the researcher already confirmed
+authorship. Phase 1A uses the existing Plato import. Each record names the source, is
+marked system-added, and carries **Complete** and **View**. It is not rejectable.
+**Not yours?** opens a helpdesk email to biblio@ugent.be; the record remains unchanged
+until the Biblio team acts.
+
+The Biblio and development teams decide each source's route. This bet does not decide
+whether weak or unlinked matches are retained or shown.
+
+**Phase 1A — surface existing Plato direct additions**
+
+- Added for you on the dashboard and the system-added marker in My research output
+- Complete, View and the helpdesk report route
+
+**Phase 1B — candidate review, after the first candidate feed exists**
+
+- Found for you, review rounds, Review and add, Reject, Skip and history
 - Matches through the linked person identity only
-- `docs/DOMAIN-VOCABULARY.md` Candidate entry corrected: a candidate is a work
-  record; claim, not accept (the Biblio team's verb)
+- Candidate vocabulary and affected docs resynchronised
 
-**Later:** proxy claim on behalf (claim mechanics may not assume the claimant owns
-the result) · bulk claim · duplicate flagging and merge · notification cadence ·
-the curator candidate inbox
+**Later:** proxy claim on behalf · bulk claim · researcher-facing duplicate flagging ·
+notification cadence
 
 ## Rabbit holes
 
-- Fuzzy name matching: Raven decides how matching evolves beyond the linked person identity.
-- A lighter curator check for works Plato adds directly is not decided; nothing
-  here builds or promises one.
-- A claim that skips the policy-risk questions recreates the abandoned-draft
-  problem.
+- Claim reuses the harvested Work. It must not create a second Work.
+- A direct-added source proves authorship, not that every value is final or complete.
 
 ## No-gos
 
-- Curator candidate inbox — own bet.
-- Connecting the sources — own bet. Plato already flows in, so Added for you
-  can start; the other feeds (ORCID and the rest) do not exist yet.
-- Proxy view of candidates — phase 1 serves researchers only.
-- Duplicate detection inside the review — Raven's duplicate clusters and merge
-  serve curators; a researcher-facing flag is later.
-- Bulk claim — a bulk action cannot answer per-work policy-risk questions.
+- Connecting candidate feeds — a dependency owned by its own bet.
+- No curator candidate inbox is assumed or designed.
+- Proxy candidate review — phase 1 serves researchers only.
+- Duplicate detection inside researcher review — Raven's clusters and merge remain
+  the curator route.
+- Bulk claim — the profile may ask work-specific questions.
 
 ## How we know it works
 
-Rows extend `notes/PLAN-measurement.md`.
+These questions extend `notes/PLAN-measurement.md`.
 
-1. **Do claimed candidates arrive complete?** (non-negotiable) Success: a claimed
-   candidate reaches submitted with its policy-risk fields answered in the claim
-   session. Failure: claims pile up as abandoned drafts. Baseline: none.
-2. **Is Reject safe?** (non-negotiable, test gate before launch) Success: a
-   rejected candidate stays retrievable from the review history, and no researcher
-   action deletes a record. Failure: any researcher path that destroys harvested
-   data.
-3. **Does the claim path carry deposits?** (diagnostic) Share of new works entering
-   through claim rather than manual deposit. Failure: researchers ignore the
-   sections. Baseline: 0.
+1. **Is the record safe?** Launch gate: no candidate action deletes harvested data,
+   every rejection is recoverable, and a claim creates zero duplicate Works.
+2. **Does review reduce effort?** A phase 1B pilot compares completion rate and median
+   completion time with manual import. The pilot sets the baseline and release
+   threshold before broad release.
+3. **Are direct additions trustworthy?** A phase 1A pilot measures helpdesk reports
+   that a system-added work is not theirs, per source. The pilot sets the acceptable
+   rate before another source receives this route.
 
 ## The ask
 
-**Go or no-go on phase 1.** React especially to claim as an operation on an
-existing record, identity-linked matching only, and routing as a per-source
-setting.
+**Go or no-go on phase 1A and the phase 1B dependency.** React especially to claiming
+the existing record, linked-identity matching and per-source routing.
 
 ## Open questions
 
-**Blockers before implementation; the prototype builds stubs:**
+**Blockers before implementation; prototypes use stubs:**
 
-- How Raven computes and exposes "matched to me" (contributor link → person record
-  → user link), how a researcher gains sight of a work they do not own, and how
-  the queue is ordered (skipped work heads the next batch). Owner: Raven.
-- What claim does in Raven: transfer ownership, or copy and keep the system
-  record — and what Reject does, since RejectSource is not it. Owner: Raven.
-- A Plato-added work's arrival status: a draft cannot be public, so it lands as
-  submitted or as public outside the draft path. Owner: Raven with the Biblio team.
+- What deposit status and visibility a Plato-added work receives. A draft cannot be
+  public. Owner: Raven with the Biblio team.
+- Which candidate feed unlocks phase 1B. Owner: ProductBoard with Raven.
+- Whether weak or unlinked matches are discarded, retained privately or shown to
+  curators. Owner: ProductBoard with the Biblio team and Raven.
+- How Raven exposes matched system-owned records and lets a researcher claim one.
+  Transfer or fork is Raven's choice; the visible result is one resumable researcher
+  draft, with no duplicate Work. Owner: Raven.
+- How a co-author gains sight of the claimed draft in their research-output list.
+  Owner: Raven.
 
 **Later:**
 
-- The Biblio-team flow after a researcher disowns a system-added work. Owner:
-  Biblio team.
-- Whether curators see system-added works pass, and how they are flagged. Owner:
-  Biblio team.
-- Which sources take which route. Owner: Biblio team
+- Whether system-added works pass through curator review. Owner: Biblio team.
+- Which later sources take which route. Owner: Biblio team.
