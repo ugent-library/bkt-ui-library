@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 892a0f8/2026-09-01 */
+/*! Booktower efde974/2026-09-01 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -1185,9 +1185,7 @@ a.btn-danger,
   background: transparent;
   border: 0;
   border-bottom: 1px dotted var(--bt-blue-800);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
 }
 
 .bt-btn-inline-edit:hover,
@@ -1681,7 +1679,6 @@ a.badge:focus-visible {
 
 .bt-table-sticky-col th:first-child,
 .bt-table-sticky-col td:first-child {
-  position: -webkit-sticky;
   position: sticky;
   left: 0;
   z-index: 1;
@@ -1786,8 +1783,7 @@ a.bt-avatar:hover:not(:disabled) {
    Sized to a share of the chip so varied SVG aspect ratios sit inset,
    not edge-to-edge; object-fit keeps them undistorted. */
 .bt-avatar__img {
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   width: 50%;
   height: 50%;
 }
@@ -1914,8 +1910,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   border-radius: var(--bt-radius-lg);
   box-shadow: var(--bt-shadow-md);
   z-index: var(--bt-z-panel);
-  width: -webkit-max-content;
-  width: -moz-max-content;
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
@@ -2027,10 +2021,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__conditions,
 .bt-query-builder__alts {
   display: grid;
-  grid-template-columns: fit-content(12rem) minmax(0, 1fr) -webkit-max-content;
   grid-template-columns: fit-content(12rem) minmax(0, 1fr) max-content;
-  -moz-column-gap: var(--bt-sp-4);
-       column-gap: var(--bt-sp-4);
+  column-gap: var(--bt-sp-4);
   container-type: inline-size;
   container-name: qb-conditions;
 }
@@ -2207,7 +2199,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: center;
   padding: 0 var(--bt-sp-6);
   gap: var(--bt-sp-4);
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   min-height: var(--s-topbar-height);
@@ -2258,8 +2249,7 @@ img.bt-navbar__logo {
   text-decoration: underline;
   text-underline-offset: var(--bt-sp-2);
   text-decoration-thickness: 2px;
-  -webkit-text-decoration-color: var(--bt-blue-900);
-          text-decoration-color: var(--bt-blue-900);
+  text-decoration-color: var(--bt-blue-900);
   font-weight: 500;
 }
 
@@ -2324,6 +2314,10 @@ img.bt-navbar__logo {
   border-bottom: var(--bt-border);
   padding-bottom: var(--bt-sp-3);
   padding-top: var(--bt-sp-3);
+}
+
+li:last-child > .bt-work-card {
+  border-bottom: 0;
 }
 
 .bt-work-card__header {
@@ -2396,6 +2390,8 @@ img.bt-navbar__logo {
   font-size: var(--bt-text-sm);
   color: var(--s-text-muted, var(--bt-text-muted));
   margin: 0 0 var(--bt-sp-3);
+  display: flex;
+  gap: var(--bt-sp-3);
 }
 
 .bt-work-card__pub a {
@@ -2430,6 +2426,10 @@ img.bt-navbar__logo {
 .bt-work-card__meta-item + .bt-work-card__meta-item {
   border-left: var(--bt-border);
   padding-left: var(--bt-sp-2);
+}
+
+.bt-work-card__meta--borderless .bt-work-card__meta-item + .bt-work-card__meta-item {
+  border-left: 0;
 }
 
 .bt-work-card__meta-transition-icon {
@@ -2827,8 +2827,7 @@ img.bt-navbar__logo {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  -webkit-clip-path: inset(50%);
-          clip-path: inset(50%);
+  clip-path: inset(50%);
   white-space: nowrap;
 }
 .bt-sidebar--slim .badge--total {
