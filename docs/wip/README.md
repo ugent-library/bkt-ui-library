@@ -1,11 +1,19 @@
 # Work in progress
 
-Shared drafts — visible to the team, not yet contracts. Each file either graduates to `docs/`
-when it stabilises, or is deleted when the work lands.
+Shared drafts — visible to the team, not yet contracts. Active features record the
+stage, accepted direction, blockers and next deliverable defined by
+[`FEATURE-WORKFLOW.md`](../FEATURE-WORKFLOW.md). At issue handoff, live facts move to
+their owners and the feature's temporary drafts and WIP entry are deleted.
 
 ## Candidates — for review
 
 Two source-trust routes for harvested research output. Read in this order:
+
+**Stage:** Prototype and kit
+**Accepted:** Direction through the wireframe brief; **Added for you** contains Plato
+imports and curator-added Works.
+**Blocking:** None for wireframing; Raven questions remain labelled stubs.
+**Next:** Build Phase 1A, then Phase 1B, with canonical kit coverage.
 
 1. [`CANDIDATES-BET.md`](CANDIDATES-BET.md) — the problem, phased release,
    boundaries, measures and backend questions.
@@ -17,18 +25,24 @@ Two source-trust routes for harvested research output. Read in this order:
 The flow supersedes the candidate block in `templates/biblio-researcher/dashboard.html`.
 That fixture stays in place only until the candidate draft is accepted and rebuilt.
 
-## Query builder (Advanced search) — for review
+## Query builder (Advanced search) — handed off, cleanup pending
 
 One visual builder replacing Advanced and Expert search. **Reading order for a first review:**
+
+**Stage:** Issue handoff cleanup
+**Accepted:** Prototype and issue set filed as Raven #223–#230.
+**Blocking:** Ownership audit before deleting the legacy drafts.
+**Next:** Move any live facts to their owners, delete local drafts and remove this WIP
+entry. Raven issues own implementation.
 
 1. [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) — the proposal: problem, capability,
    definition of done, risks. Start here; it is one page.
 2. [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) — the field ledger:
    which fields each surface offers, with their labels, operators and inputs.
 3. [`QUERY-BUILDER-MEASUREMENT.md`](QUERY-BUILDER-MEASUREMENT.md) — what we measure and why.
-4. `QUERY-BUILDER-ISSUE-*` — the implementation issues, filed as
+4. `QUERY-BUILDER-ISSUE-*` — local copies of the implementation issues, filed as
    [raven #223](https://github.com/ugent-library/raven/issues/223) (the epic) with children
-   #224–#230; the drafts stay until the work lands. Start at
+   #224–#230. These copies are pending handoff cleanup. Start at
    [`ISSUE-00-EPIC`](QUERY-BUILDER-ISSUE-00-EPIC.md), which names the children and the order
    they land in. [`ISSUE-01`](QUERY-BUILDER-ISSUE-01-measurement.md) (#224) goes to the lead
    developer as a conversation first. Every **Screenshot** callout names its capture in

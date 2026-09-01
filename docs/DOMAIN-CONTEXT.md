@@ -103,9 +103,11 @@ Relevant UI states:
 Once one researcher claims a shared Candidate, matched co-authors stop seeing it as a
 Candidate and see the resulting Work in their research output.
 
-**Added for you** is separate. It shows Works from sources where authorship was already
-confirmed. These Works are system-added and not rejectable; **Not yours?** uses the
-Biblio helpdesk route while leaving the Work unchanged.
+**Added for you** is separate. It shows Works added without researcher action after
+authorship was established: current Plato imports and Works added by a curator. Each
+row names its source or actor; only automated imports carry the system-added marker.
+These Works are not rejectable. **Not yours?** uses the Biblio helpdesk route while
+leaving the Work unchanged.
 
 The draft behavior and wireframes live in `docs/wip/CANDIDATES-FLOW.md`.
 

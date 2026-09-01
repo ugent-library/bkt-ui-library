@@ -222,6 +222,16 @@ the existing Work as the researcher's draft and opens the prefilled deposit flow
 round. Neither action deletes the Work. The count reflects pending matches for the
 current researcher.
 
+### Direct-added Work
+A Work added to a researcher's output without their action after authorship was
+established. The current routes are an automated Plato import and addition by a
+curator.
+
+In the UI: **Added for you** on the researcher dashboard. The row names the source or
+actor; only automated imports carry the system-added marker. **Complete** and **View**
+open the Work. It is not rejectable. **Not yours?** reports it to the Biblio helpdesk
+without changing the Work.
+
 ### Revision and events
 One transaction boundary in the audit trail. Every record-touching write runs through raven's `Revise`; one revision id stamps every event the write produced (`record_created`, `record_updated`, `deposit_submitted`, `deposit_returned`, `deposit_reviewed`, `visibility_changed`, `file_embargo_lifted`, …). Events carry the actor and an optional free-text comment — the workflow back-and-forth rides on them.
 
