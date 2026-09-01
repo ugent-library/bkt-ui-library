@@ -38,20 +38,18 @@ their research output.
 and co-authors, and history offers **Undo**. **Skip** holds the record for the next
 review round.
 
-**Added for you** lists Works added without researcher action after authorship was
-established. Phase 1A keeps both existing routes: Plato imports and Works added by a
-curator. Each row names its source or actor and carries **Complete** and **View**.
-Automated imports are marked system-added. Neither route is rejectable. **Not yours?**
-opens a helpdesk email to biblio@ugent.be; the Work remains unchanged until the Biblio
-team acts.
-
-The Biblio and development teams decide each source's route. This bet does not decide
-whether weak or unlinked matches are retained or shown.
+**Added for you** keeps the lightweight **Added on your behalf** activity region for
+Plato imports and curator-added Works. Each entry names its source or actor. Work state
+decides the action: incomplete drafts offer **Complete**; submitted or reviewed Works
+only link to their detail. **View all** opens the direct-added My research output
+state. Automated imports are marked system-added. Neither route is rejectable. **Not
+yours?** opens a helpdesk email to biblio@ugent.be without changing the Work.
 
 **Phase 1A — surface existing direct additions**
 
 - Plato imports and curator-added Works together under Added for you
-- Source or actor, automated marker, Complete, View and the helpdesk report route
+- Lightweight entries name provenance, offer state-dependent completion and report
+  through the helpdesk
 
 **Phase 1B — candidate review, after the first candidate feed exists**
 

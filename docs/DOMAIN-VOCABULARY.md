@@ -218,19 +218,23 @@ the researcher reviews it.
 
 In the UI: **Found for you** on the researcher dashboard. **Review and add** claims
 the existing Work as the researcher's draft and opens the prefilled deposit flow.
-**Reject** removes only that researcher's match; **Skip** defers it to the next review
-round. Neither action deletes the Work. The count reflects pending matches for the
-current researcher.
+Before that action, dashboard **Review** or a candidate title opens the full candidate
+without changing it. **Reject** removes only that researcher's match; **Skip** defers
+it to the next review round. Neither action deletes the Work. The count reflects
+pending matches for the current researcher.
 
 ### Direct-added Work
 A Work added to a researcher's output without their action after authorship was
 established. The current routes are an automated Plato import and addition by a
 curator.
 
-In the UI: **Added for you** on the researcher dashboard. The row names the source or
-actor; only automated imports carry the system-added marker. **Complete** and **View**
-open the Work. It is not rejectable. **Not yours?** reports it to the Biblio helpdesk
-without changing the Work.
+In the UI: the lightweight **Added for you** activity region on the researcher
+dashboard. The entry names the source or actor; only automated imports carry the
+system-added marker. The Work's state decides its action. An incomplete draft offers
+**Complete** and remains under Incomplete work. A submitted or reviewed Work has no
+completion action and opens through its title. **View all** opens the direct-added
+state in My research output. The Work is not rejectable. **Not yours?** reports it to
+the Biblio helpdesk from its detail and completion views without changing it.
 
 ### Revision and events
 One transaction boundary in the audit trail. Every record-touching write runs through raven's `Revise`; one revision id stamps every event the write produced (`record_created`, `record_updated`, `deposit_submitted`, `deposit_returned`, `deposit_reviewed`, `visibility_changed`, `file_embargo_lifted`, …). Events carry the actor and an optional free-text comment — the workflow back-and-forth rides on them.
@@ -369,10 +373,11 @@ A named set of Works, editable by curators. Used for OAI-PMH sets, open access s
 ### Heritage / erfgoed object page (public) — not yet prototyped
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
 
-### Candidate review (backoffice) — draft flow, HTML prototype not yet built
+### ~~Candidate review (backoffice)~~ ✓ `templates/biblio-researcher/candidate-review.html`
 The researcher reviews their matched Candidates one at a time through **Review and
 add**, **Reject** and **Skip**. It reuses each harvested Work and does not assume a
-curator candidate inbox. The draft lives in `docs/wip/CANDIDATES-FLOW.md`.
+curator candidate inbox. Claimed and rejected history lives in
+`candidate-history.html`; the behavior draft is `docs/wip/CANDIDATES-FLOW.md`.
 
 ### ~~Curator review queue (backoffice)~~ ✓ `templates/biblio-team/`
 The curator-side view of the `submitted → public` workflow. Dashboard, queue overview (Wachtrij), single-record review with inline editing and AI suggestions, team health overview. Distinct from the researcher deposit flow.
@@ -437,6 +442,8 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | Template | Entity / concept |
 |----------|------------------|
 | `dashboard.html` | Researcher inbox + activity |
+| `candidate-review.html` | Candidate review — one-at-a-time review (Found for you) |
+| `candidate-history.html` | Review history — claimed and rejected candidates |
 | `search-researcher.html` | My research output list |
 | `settings-profile.html` | Settings — own profile (display name, contact, language) |
 | `settings-accounts.html` | Settings — connected accounts (ORCID, UGent login, WoS ResearcherID) |

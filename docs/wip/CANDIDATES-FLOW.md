@@ -70,35 +70,57 @@ records the rationale and revisit signal.
 ## Dashboard sections
 
 ```
-┌ Added for you (3) ────────────────────┐
-│ System-added · Plato                  │
-│ Self-healing polymer… (2026)         │
-│ 2 fields missing                     │
-│ [Complete]  View                     │
+┌ Added for you (recent activity) ─────┐
+│ 2h ago  Biblio assistant via Plato   │
+│ Self-healing polymer…                │
+│ Needs completion  Complete           │
 │                                      │
-│ Added by Biblio team                  │
-│ Coastal adaptation dataset… (2025)   │
-│ [Complete]  View                     │
-│                                      │
-│ Not yours? Email biblio@ugent.be     │
+│ 6d ago  Added by Marie Curator       │
+│ Coastal adaptation dataset…          │
+│                              View all│
 └──────────────────────────────────────┘
 
-┌ Found for you (12) ──────────────────┐
-│ Soft actuator design… (2026)         │
-│ Polymer network mode… (2025)         │
-│ …                                    │
-│                                      │
-│ [ Review 12 research outputs ]       │
-│                                      │
-│ Reviewed (5)                         │
-└──────────────────────────────────────┘
+Found for you (12)  [Review 12 research outputs]
+<ol>
+  <li><article class="bt-work-card">…</article></li>
+  <li><article class="bt-work-card">…</article></li>
+  <li><article class="bt-work-card">…</article></li>
+</ol>
+Review history (5)
+
+Incomplete work (4)  [View all]
+<ol>
+  <li><article class="bt-work-card">…</article></li>
+  <li><article class="bt-work-card">…</article></li>
+  <li><article class="bt-work-card">…</article></li>
+</ol>
 ```
 
-Added for you adapts the existing Added on your behalf region. It contains Plato
-imports and curator-added Works, names the source or actor, and leads with
-**Complete**; **View** is secondary. Only automated imports carry the system-added
-marker. The helpdesk mailto identifies the Work in its subject or body. Reporting does
-not change the record in Biblio. Reviewed opens claimed and rejected history.
+Added for you preserves the position, density and activity-feed character of the
+existing Added on your behalf region. It does not become a main-column action queue.
+An entry names the source or actor and links its title to the Work. Only automated
+imports carry the system-added marker. A Work that needs researcher input shows its
+state and a quiet **Complete** link; the strong completion action also lives under
+Incomplete work. A reviewed or submitted Work has no completion action. **Not yours?**
+lives on the Work's own view and on the completion form, not on the row; it identifies
+the Work in a helpdesk email and changes nothing in Biblio. **View all** opens the
+direct-added state in My research output.
+
+Found for you replaces the old Suggestions block. The dashboard **Review** action and
+candidate titles open the full, non-mutating review view; there is no dashboard
+**Review & confirm** or **View all** action. Review history opens claimed and
+rejected candidates. The section is a heading and an accessible list of canonical
+`bt-work-card` articles, not bespoke rows inside one Bootstrap card. Incomplete work
+uses the same grammar. On the dashboard both lists use the documented compact
+Work-card variant and render at most the first three Works in the server-provided
+order; the section count remains the total. Compactness reduces spacing and optional
+dashboard detail, not the card's semantic regions. The existing Work-card kit page
+demonstrates both Incomplete and candidate compact states. Incomplete **View all**
+opens the complete list when more exist; Found for you's **Review** covers its full
+round. Do not concatenate metadata with literal middle dots; use the card's existing
+metadata elements and separators. In compact cards, year and venue are sibling
+`bt-work-card__meta-item` values; do not use a compound `bt-work-card__pub` line or a
+decorative separator span. Full lists and review views keep the full card.
 
 ## Review view
 
@@ -107,9 +129,10 @@ not change the record in Biblio. Reviewed opens claimed and rejected history.
 │ ‹ Dashboard                  12 left  │
 ├──────────────────────────────────────┤
 │                                      │
-│ Candidate source · placeholder       │
+│ Candidate source (placeholder)       │
 │                                      │
-│ Journal article · 2026               │
+│ Journal article                      │
+│ 2026                                 │
 │ Self-healing polymer networks        │
 │ for soft robotics                    │
 │                                      │
@@ -123,9 +146,12 @@ not change the record in Biblio. Reviewed opens claimed and rejected history.
 └──────────────────────────────────────┘
 ```
 
-Review and add is the primary action. Reject is secondary; Skip is visually quiet.
-After submit, the interstitial offers the next candidate and the dashboard. Leaving
-the deposit returns through Incomplete work instead.
+The full candidate uses the established backoffice Work-card anatomy and visual
+hierarchy, extended only with source, match evidence and candidate actions. It does
+not introduce a second card grammar. **Review and add** is the primary action and
+opens the existing prefilled deposit flow. Reject is secondary; Skip is visually
+quiet. After submit, the interstitial offers the next candidate and the dashboard.
+Leaving the deposit returns through Incomplete work instead.
 
 Previous card, rejected:
 
@@ -135,23 +161,27 @@ Previous card, rejected:
 ├──────────────────────────────────────┤
 │ ‹ Previous                    Next ›  │
 │                                      │
-│ Rejected · [Undo]                    │
+│ Rejected  [Undo]                     │
 │                                      │
-│ Candidate source · placeholder       │
-│ Journal article · 2026               │
+│ Candidate source (placeholder)       │
+│ Journal article                      │
+│ 2026                                 │
 │ Soft actuator design for grip        │
 │ J. Ito, K. De Vos, M. Okafor         │
 │ DOI 10.1234/ps.2026.0117             │
 └──────────────────────────────────────┘
 ```
 
-A claimed card shows **Draft · Resume** until submission, then **Submitted · View**.
+A claimed card shows **Draft** with **Resume** until submission, then **Submitted**
+with **View**.
 
 ## Review complete
 
 ```
 ┌ Review complete ──────────────────────┐
-│ 9 claimed · 2 rejected · 1 skipped   │
+│ 9 claimed                            │
+│ 2 rejected                           │
+│ 1 skipped                            │
 │                                      │
 │ [Dashboard]                          │
 └──────────────────────────────────────┘
@@ -159,23 +189,34 @@ A claimed card shows **Draft · Resume** until submission, then **Submitted · V
 
 The skipped Work and any new arrivals form the next round.
 
-## Reviewed history
+## Review history
 
 ```
-┌ Reviewed ─────────────────────────────┐
+┌ Review history ───────────────────────┐
 │ ‹ Dashboard                           │
 ├──────────────────────────────────────┤
 │ Claimed (3)                           │
-│ • Self-healing polymer… · Draft       │
-│   Resume                              │
-│ • Polymer network mode… · Submitted  │
-│   View                                │
+│ Self-healing polymer…                │
+│ Draft  Resume                        │
+│ Polymer network mode…                │
+│ Submitted  View                      │
 │                                      │
 │ Rejected (2)                          │
-│ • Soft actuator design… (2026)        │
-│   [Undo]                              │
+│ Soft actuator design… (2026)         │
+│ [Undo]                               │
 └──────────────────────────────────────┘
 ```
 
-Undo returns the Work to Found for you. Empty dashboard sections are omitted; Reviewed
-remains available while history exists.
+Undo returns the Work to Found for you. Empty dashboard sections are omitted; Review
+history remains available while history exists.
+
+## Prototype navigation contract
+
+- Added for you title → Work detail; **Complete** → Work edit; **View all** → the
+  direct-added My research output state.
+- Found for you **Review** → first pending candidate; a title → that candidate.
+- Candidate **Review and add** → the existing prefilled deposit; **Reject**, **Skip**
+  and **Undo** → their documented prototype states.
+- Reviewed → candidate history; **Resume** and **View** → the resulting Work.
+- Every visible control reaches a reviewable HTML state. Remove a control when its
+  destination is outside the prototype; do not leave `href="#"` or an inert button.

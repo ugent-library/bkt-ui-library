@@ -106,8 +106,13 @@ Candidate and see the resulting Work in their research output.
 **Added for you** is separate. It shows Works added without researcher action after
 authorship was established: current Plato imports and Works added by a curator. Each
 row names its source or actor; only automated imports carry the system-added marker.
-These Works are not rejectable. **Not yours?** uses the Biblio helpdesk route while
-leaving the Work unchanged.
+It remains a lightweight activity region rather than a researcher task queue. The
+Work's state decides whether it needs an action: an incomplete draft offers
+**Complete** and also remains under Incomplete work; a submitted or reviewed Work is
+informational and opens through its title. These Works are not rejectable. The Work
+detail and completion views offer **Not yours?**, which uses the Biblio helpdesk route
+while leaving the Work unchanged. **View all** opens the direct-added state in My
+research output.
 
 The draft behavior and wireframes live in `docs/wip/CANDIDATES-FLOW.md`.
 
