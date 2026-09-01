@@ -29,7 +29,7 @@ scope.
 
 | Surface | State | Must make visible |
 |---|---|---|
-| Dashboard | Added only | Adapted existing region; source, state, Complete, View, Not yours? |
+| Dashboard | Added only | Adapted region; source/actor, state, Complete, View, Not yours? |
 | Dashboard | Found only | Titles, remaining count, Review, Reviewed history |
 | Dashboard | Both | Completion work clearly precedes candidate review |
 | Dashboard | Neither | Candidate sections omitted; existing empty state |
@@ -39,7 +39,7 @@ scope.
 | Review | Previous decision | Rejected/Undo; draft/Resume; submitted/View |
 | Review | Complete | Decision totals; Dashboard |
 | History | Mixed | Claimed/rejected groups; Resume, View, Undo |
-| Research output | Direct-added | Reviewed/public and incomplete/private-draft variants; system-added marker |
+| Research output | Direct-added | Public/reviewed and private/draft variants; source/actor, automated marker |
 | Research output | Claimed | Draft with Resume and submitted Work with View |
 
 ## Interaction and responsive rules
@@ -59,7 +59,8 @@ scope.
 
 Do not design source-precedence controls, source retrieval or comparison, weak or
 unlinked matches, a curator inbox, feed connection, proxy or bulk review, or duplicate
-resolution. Use Plato only for Added for you. Label candidate data as placeholder.
+resolution. Use Plato imports and curator-added Works for Added for you. Label data
+as placeholder.
 
 ## Ready for review when
 

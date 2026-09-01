@@ -24,9 +24,9 @@ identity. During a review round, the remaining count only goes down. It includes
 current card; new arrivals wait for the next round, and leaving resumes the same round.
 
 Opening review changes nothing. The dashboard has no separate **Preview**: **Review**
-opens the first card, and a title opens that record in the same review flow.
+opens the first card, and a title opens that record in the review flow.
 
-Each card names its source and match. **Review and add** claims the existing record
+Each card names its source and match. **Review and add** claims the record
 as the researcher's draft and opens the profile-driven deposit prefilled. The form
 asks only applicable researcher-owned and policy-risk questions; uncertainty remains
 a valid answer. The record leaves Found for you immediately. Leaving the form keeps
@@ -38,19 +38,20 @@ their research output.
 and co-authors, and history offers **Undo**. **Skip** holds the record for the next
 review round.
 
-**Added for you** lists records from a source where the researcher already confirmed
-authorship. Phase 1A uses the existing Plato import. Each record names the source, is
-marked system-added, and carries **Complete** and **View**. It is not rejectable.
-**Not yours?** opens a helpdesk email to biblio@ugent.be; the record remains unchanged
-until the Biblio team acts.
+**Added for you** lists Works added without researcher action after authorship was
+established. Phase 1A keeps both existing routes: Plato imports and Works added by a
+curator. Each row names its source or actor and carries **Complete** and **View**.
+Automated imports are marked system-added. Neither route is rejectable. **Not yours?**
+opens a helpdesk email to biblio@ugent.be; the Work remains unchanged until the Biblio
+team acts.
 
 The Biblio and development teams decide each source's route. This bet does not decide
 whether weak or unlinked matches are retained or shown.
 
-**Phase 1A — surface existing Plato direct additions**
+**Phase 1A — surface existing direct additions**
 
-- Added for you on the dashboard and the system-added marker in My research output
-- Complete, View and the helpdesk report route
+- Plato imports and curator-added Works together under Added for you
+- Source or actor, automated marker, Complete, View and the helpdesk report route
 
 **Phase 1B — candidate review, after the first candidate feed exists**
 
@@ -63,7 +64,7 @@ notification cadence
 ## Rabbit holes
 
 - Claim reuses the harvested Work. It must not create a second Work.
-- A direct-added source proves authorship, not that every value is final or complete.
+- Direct addition establishes authorship, not that every value is final or complete.
 
 ## No-gos
 
@@ -83,14 +84,14 @@ notification cadence
 2. **Does review reduce effort?** A phase 1B pilot compares completion rate and median
    completion time with manual import. The pilot sets the baseline and release
    threshold before broad release.
-3. **Are direct additions trustworthy?** A phase 1A pilot measures helpdesk reports
-   that a system-added work is not theirs, per source. The pilot sets the acceptable
-   rate before another source receives this route.
+3. **Are direct additions trustworthy?** Phase 1A measures how often researchers say
+   an added Work is not theirs, separately for Plato and curator additions. This rate
+   gates expansion.
 
 ## The ask
 
 **Go or no-go on phase 1A and the phase 1B dependency.** React especially to claiming
-the existing record, linked-identity matching and per-source routing.
+the existing record, linked-identity matching and per-origin routing.
 
 ## Open questions
 
@@ -108,5 +109,5 @@ the existing record, linked-identity matching and per-source routing.
 
 **Later:**
 
-- Whether system-added works pass through curator review. Owner: Biblio team.
+- Whether automated imports pass through curator review. Owner: Biblio team.
 - Which later sources take which route. Owner: Biblio team.

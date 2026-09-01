@@ -51,8 +51,8 @@ Interaction rules:
 - A failed action keeps the current card and count. The error names the failed action
   and offers retry. If another person claimed it first, the card links to that Work
   and the round continues.
-- Loading the next card moves focus to its heading. A status message announces the
-  decision and remaining count.
+- Loading the next card moves focus to the replacement review region's first
+  meaningful element. A status message announces the decision and remaining count.
 
 ### The review is the preview
 
@@ -76,6 +76,10 @@ records the rationale and revisit signal.
 │ 2 fields missing                     │
 │ [Complete]  View                     │
 │                                      │
+│ Added by Biblio team                  │
+│ Coastal adaptation dataset… (2025)   │
+│ [Complete]  View                     │
+│                                      │
 │ Not yours? Email biblio@ugent.be     │
 └──────────────────────────────────────┘
 
@@ -90,9 +94,11 @@ records the rationale and revisit signal.
 └──────────────────────────────────────┘
 ```
 
-Added for you leads with **Complete**; **View** is secondary. The helpdesk mailto
-identifies the Work in its subject or body. Reporting does not change the record in
-Biblio. Reviewed opens claimed and rejected history.
+Added for you adapts the existing Added on your behalf region. It contains Plato
+imports and curator-added Works, names the source or actor, and leads with
+**Complete**; **View** is secondary. Only automated imports carry the system-added
+marker. The helpdesk mailto identifies the Work in its subject or body. Reporting does
+not change the record in Biblio. Reviewed opens claimed and rejected history.
 
 ## Review view
 
