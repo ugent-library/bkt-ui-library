@@ -1,6 +1,6 @@
 ---
 name: biblio-feature-workflow
-description: Start, inspect, resume or advance Booktower product work from evidence through prototype, kit coverage, Raven issue handoff and WIP cleanup.
+description: Start, inspect, resume or advance Booktower product work from evidence through breadboarding, prototype, kit coverage, Raven issue handoff and WIP cleanup.
 ---
 
 # Biblio feature workflow
@@ -12,7 +12,8 @@ description: Start, inspect, resume or advance Booktower product work from evide
 3. Before editing, report the current stage, accepted decisions, blockers and next
    deliverable. Do not ask the user to repeat decisions already recorded.
 4. Work only on the current stage. Use the relevant template and the specialized bet
-   or issue skill named in `AGENTS.md` when that stage applies.
+   or issue skill named in `AGENTS.md` when that stage applies. At the Breadboard
+   stage, use only the ASCII language in `docs/BREADBOARD-TEMPLATE.md`.
 5. Stop at each gate in `docs/FEATURE-WORKFLOW.md`. Advance only after explicit user
    acceptance. A backend unknown may remain a labelled stub only when it does not
    change the visible product promise.

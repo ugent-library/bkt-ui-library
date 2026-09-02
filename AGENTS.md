@@ -59,7 +59,7 @@ Fix reusable styling here, then copy the compiled assets again. Never patch a co
 | Make a design or wording decision | `foundations/design-principles.html` |
 | Defend, record or revisit a design decision | `docs/decisions/README.md` |
 | Start or resume a product feature | `docs/FEATURE-WORKFLOW.md` and the `biblio-feature-workflow` skill |
-| Product flow | `docs/FLOW-TEMPLATE.md` |
+| Product breadboard | `docs/BREADBOARD-TEMPLATE.md` |
 | HTML wireframe brief | `docs/WIREFRAME-BRIEF-TEMPLATE.md`, `docs/KIT-PAGES.md` |
 | New page or feature | `docs/SURFACES.md` |
 | Audience or legibility | `docs/RESEARCH-PERSONAS.md` |

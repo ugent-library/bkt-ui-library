@@ -8,7 +8,7 @@ const instructionLimits = {
   'docs/JAVASCRIPT.md': { lines: 230, words: 1600 },
   'docs/KIT-PAGES.md': { lines: 90, words: 650 },
   'docs/FEATURE-WORKFLOW.md': { lines: 120, words: 900 },
-  'docs/FLOW-TEMPLATE.md': { lines: 80, words: 500 },
+  'docs/BREADBOARD-TEMPLATE.md': { lines: 80, words: 500 },
   'docs/WIREFRAME-BRIEF-TEMPLATE.md': { lines: 100, words: 550 },
   'docs/ISSUE-TEMPLATE.md': { lines: 80, words: 450 },
   'docs/PRODUCT-BET-TEMPLATE.md': { lines: 70, words: 350 },
