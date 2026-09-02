@@ -186,6 +186,7 @@ bt-toolbar__right
 bt-toolbar__title
 
 bt-work-card
+bt-work-card--compact
 bt-work-card__action-group
 bt-work-card__actions
 bt-work-card__author
@@ -195,6 +196,7 @@ bt-work-card__dropdown-icon
 bt-work-card__footer
 bt-work-card__header
 bt-work-card__meta
+bt-work-card__meta--borderless
 bt-work-card__meta-item
 bt-work-card__meta-transition-icon
 bt-work-card__more-action

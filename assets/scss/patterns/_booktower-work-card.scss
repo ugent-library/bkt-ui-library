@@ -156,6 +156,31 @@ li:last-child > .bt-work-card {
   width: 2rem;
 }
 
+/* Compact: dashboard summary sections. Spacing only — the server sends the
+   compact payload, so no rule here may hide card content. */
+.bt-work-card--compact {
+  padding-top: var(--bt-sp-2);
+  padding-bottom: var(--bt-sp-2);
+}
+
+.bt-work-card--compact .bt-work-card__header {
+  padding: var(--bt-sp-2) 0 var(--bt-sp-1);
+  gap: var(--bt-sp-2);
+}
+
+.bt-work-card--compact .bt-work-card__body {
+  padding-bottom: var(--bt-sp-1);
+}
+
+.bt-work-card--compact .bt-work-card__pub {
+  margin-bottom: var(--bt-sp-1);
+  flex-wrap: wrap;
+}
+
+.bt-work-card--compact .bt-work-card__title {
+  font-size: var(--bt-text-sm);
+}
+
 @media (max-width: 40rem) {
   .bt-work-card__header {
     gap: var(--bt-sp-2);
