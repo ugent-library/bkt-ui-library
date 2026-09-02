@@ -2,7 +2,7 @@
 
 *Draft for ProductBoard · Evidence: [personas](../RESEARCH-PERSONAS.md),
 [demand findings](../../notes/demand/FINDINGS.md), UB2030 §3.2.1 (internal plan) ·
-Design: [flow and wireframes](CANDIDATES-FLOW.md)*
+Design: [breadboard](CANDIDATES-BREADBOARD.md) and wireframes*
 
 ## Problem
 
@@ -16,34 +16,32 @@ and helping researchers finish them supports UB2030's goal to reduce manual regi
 
 Raven stores harvested output as private, system-owned Work records. When several
 sources identify the same Work, Raven selects one complete source record through
-configured source precedence. It does not mix fields from several sources. The
-dashboard gains two routes.
+configured source precedence. The dashboard gains two routes.
 
 **Found for you** lists records matched through the researcher's linked person
-identity. During a review round, the remaining count only goes down. It includes the
-current card; new arrivals wait for the next round, and leaving resumes the same round.
+identity. The dashboard shows at most three candidates and the total pending count.
+**View all** and the navigation item open a filtered, paginated overview whose status
+filter (New, Skipped, Added, Rejected) also holds the review history. **Review N
+research outputs** starts a round through the New and Skipped candidates, one at a
+time. New arrivals wait for the next round.
 
-Opening review changes nothing. The dashboard has no separate **Preview**: **Review**
-opens the first card, and a title opens that record in the review flow.
-
-Each card names its source and match. **Review and add** claims the record
-as the researcher's draft and opens the profile-driven deposit prefilled. The form
-asks only applicable researcher-owned and policy-risk questions; uncertainty remains
-a valid answer. The record leaves Found for you immediately. Leaving the form keeps
-it under Incomplete (draft) work with **Resume**; submitting moves it to Submitted.
-Other matched co-authors stop seeing the candidate and see the resulting work in
-their research output.
+Every candidate card offers **Review**, a focused page asking only the fields that are
+missing or that the researcher owns; imported values stay available read-only. **Add**
+claims the harvested Work and submits it. **Save for later** and **Edit the full
+record** claim it as an Incomplete draft with **Resume**. Opening, Skip and Reject
+never claim. Other matched co-authors stop seeing the candidate and reach the Work
+once it is submitted.
 
 **Reject** removes only this researcher's match. The record survives for curators
-and co-authors, and history offers **Undo**. **Skip** holds the record for the next
-review round.
+and co-authors, and the overview offers **Undo**. **Skip** holds the record for the
+next review round.
 
-**Added for you** keeps the lightweight **Added on your behalf** activity region for
-Plato imports and curator-added Works. Each entry names its source or actor. Work state
+**Added for you** keeps the lightweight activity region for Plato imports and
+curator-added Works. Each entry names its source or actor. Work state
 decides the action: incomplete drafts offer **Complete**; submitted or reviewed Works
 only link to their detail. **View all** opens the direct-added My research output
-state. Automated imports are marked system-added. Neither route is rejectable. **Not
-yours?** opens a helpdesk email to biblio@ugent.be without changing the Work.
+state. Neither route is rejectable. **Not yours?** opens a helpdesk email to
+biblio@ugent.be without changing the Work.
 
 **Phase 1A — surface existing direct additions**
 
@@ -53,7 +51,7 @@ yours?** opens a helpdesk email to biblio@ugent.be without changing the Work.
 
 **Phase 1B — candidate review, after the first candidate feed exists**
 
-- Found for you, review rounds, Review and add, Reject, Skip and history
+- Found for you overview, focused review rounds, Add, Reject, Skip and history
 - Matches through the linked person identity only
 
 **Later:** proxy claim on behalf · bulk claim · researcher-facing duplicate flagging ·
@@ -74,6 +72,7 @@ notification cadence
 - Duplicate detection inside researcher review — Raven's clusters and merge remain
   the curator route.
 - Bulk claim — the profile may ask work-specific questions.
+- Pending requests — a separate future workflow; Candidates works without it.
 
 ## How we know it works
 
@@ -100,10 +99,12 @@ the existing record, linked-identity matching and per-origin routing.
 - Which candidate feed unlocks phase 1B. Owner: ProductBoard with Raven.
 - Whether weak or unlinked matches are discarded, retained privately or shown to
   curators. Owner: ProductBoard with the Biblio team and Raven.
-- How Raven claims a matched system-owned record and handles later harvests after
-  researcher edits. The result is one resumable draft, not a duplicate. Owner: Raven.
-- How a co-author gains sight of the claimed draft in their research-output list.
+- How Raven claims a system-owned record on the first persisted action and handles
+  later harvests after researcher edits without creating a duplicate. Owner: Raven.
+- How a co-author gains sight of the claimed Work in their research-output list.
   Owner: Raven.
+- Whether Reject records a reason and if reason capture belongs in phase 1B. Owner:
+  Product, Biblio team and Raven.
 
 **Later:**
 

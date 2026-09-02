@@ -10,20 +10,27 @@ their owners and the feature's temporary drafts and WIP entry are deleted.
 Two source-trust routes for harvested research output. Read in this order:
 
 **Stage:** Prototype and kit
-**Accepted:** Direction through the wireframe brief; **Added for you** contains Plato
-imports and curator-added Works.
-**Blocking:** None for wireframing; Raven questions remain labelled stubs.
-**Next:** Build Phase 1A, then Phase 1B, with canonical kit coverage.
+**Accepted:** [DD-003](../decisions/DD-003-candidate-review-is-a-focused-round.md):
+filtered, paginated Found for you overview that holds the history; focused one-at-a-time
+review rounds; **Review** per card, **Add** completes; the Work is claimed on the first
+persisted action. Lightweight **Added for you** activity.
+**Blocking:** None for prototyping; Raven questions remain labelled stubs. Reject-reason
+capture stays an open product question.
+**Next:** Rebuild the prototype and kit to the breadboard and brief, then complete
+wide, narrow and accessibility review.
 
 1. [`CANDIDATES-BET.md`](CANDIDATES-BET.md) — the problem, phased release,
    boundaries, measures and backend questions.
-2. [`CANDIDATES-FLOW.md`](CANDIDATES-FLOW.md) — review-round behavior and
-   wireframes for Found for you and Added for you.
+2. [`CANDIDATES-BREADBOARD.md`](CANDIDATES-BREADBOARD.md) — places, affordances and
+   wiring for the overview, focused review and Added for you behavior.
 3. [`CANDIDATES-WIREFRAME-BRIEF.md`](CANDIDATES-WIREFRAME-BRIEF.md) — HTML prototype
    artifacts, state inventory, boundaries and review gate.
 
-The flow supersedes the candidate block in `templates/biblio-researcher/dashboard.html`.
-That fixture stays in place only until the candidate draft is accepted and rebuilt.
+Found for you has replaced Suggestions on the dashboard. `candidate-review.html`
+becomes the overview, `candidate-focused-review.html` is new and
+`candidate-history.html` is deleted. Pending requests are a separate future workflow
+(`docs/DOMAIN-VOCABULARY.md`, “Accepted value and pending request”), not part of
+Candidates.
 
 ## Query builder (Advanced search) — handed off, cleanup pending
 

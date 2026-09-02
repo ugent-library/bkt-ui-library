@@ -6,7 +6,7 @@ Build <phase and surface>. Label unresolved backend behavior as prototype stubs.
 
 ## Read first
 
-`AGENTS.md` · [bet](<FEATURE>-BET.md) · [flow](<FEATURE>-FLOW.md) · <domain owners> ·
+`AGENTS.md` · [bet](<FEATURE>-BET.md) · [breadboard](<FEATURE>-BREADBOARD.md) · <domain owners> ·
 <accepted decisions>.
 
 ## Prototype artifacts
@@ -40,7 +40,7 @@ one page.
 - Name the primary action and visual order of secondary actions.
 - Define URLs, back/refresh behavior, focus after replacement and live announcements.
 - Preserve complete labels; define stacking or reflow at narrow widths.
-- Name candidate-specific semantic and accessible-name requirements.
+- Name feature-specific semantic and accessible-name requirements.
 - Verify desktop, narrow split-screen and 375 px without horizontal scrolling.
 
 ## Boundaries

@@ -31,7 +31,7 @@ visible design can proceed safely.
 |---|---|---|
 | Evidence | Demand notes, personas, current code and domain sources establish the problem. | Claims are sourced or labelled assumptions. |
 | Bet | `PRODUCT-BET-TEMPLATE.md` fixes the first useful release, no-gos, measures and ask. | Product accepts the direction and boundaries. |
-| Flow | `FLOW-TEMPLATE.md` fixes entry, actions, outcomes, resumption, failure and concurrency behavior. | Product accepts every visible path; blocking choices are answered. |
+| Breadboard | `BREADBOARD-TEMPLATE.md` fixes the places, affordances and connections without deciding layout. | Product can play through every visible path, including resumption, failure and concurrency; blocking choices are answered. |
 | Wireframe brief | `WIREFRAME-BRIEF-TEMPLATE.md` fixes artifacts, states, preservation, responsive and accessibility requirements, and kit coverage. | Product accepts the build brief. |
 | Prototype and kit | Full-page states show the experience. Canonical kit examples cover every reusable part used. | `npm test`, wide and narrow browser review, accessibility pre-flight and human design acceptance. |
 | Issue handoff | `ISSUE-TEMPLATE.md` slices accepted work for Raven and links prototypes and kit patterns. Filed issues take ownership of implementation scope. | Live facts have owners; temporary drafts and the feature's WIP entry are removed. The design workflow is done. |
@@ -69,9 +69,9 @@ owner:
 - implementation scope, dependencies and invisible behavior → filed Raven issues;
 - demand and priority → ProductBoard and its evidence.
 
-Delete the feature's bet, flow, wireframe brief, local issue drafts and WIP entry after
-their live facts have owners. Keep no local completion archive; git and the filed
-issues retain history. Do not wait for Raven implementation to land.
+Delete the feature's bet, breadboard, wireframe brief, local issue drafts and WIP
+entry after their live facts have owners. Keep no local completion archive; git and
+the filed issues retain history. Do not wait for Raven implementation to land.
 
 Development feedback starts a new, bounded design review. Update the owning prototype,
 kit page, decision or issue directly. Create a WIP note only when the feedback opens an

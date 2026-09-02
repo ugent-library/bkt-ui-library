@@ -40,6 +40,19 @@ Pending requests do not alter the public surface. Public pages keep showing the 
 accepted value until the Biblio team accepts the request. This is the workflow form of
 `docs/RESPONSIBILITIES.md`: review follows responsibility, not the whole record.
 
+The intended workflow runs in two directions. A reviewer or curator asks a researcher,
+proxy or depositor to complete or clarify a value during review. A researcher, proxy
+or depositor proposes a correction or addition for curator review, on their own or in
+answer to such a request, and can record that they do not know a value. The
+conversation may carry an optional message. A request belongs to a field or section
+(`docs/RESPONSIBILITIES.md`, P7); how Raven models that level is to be decided with
+Raven.
+
+Raven has no pending-request entity yet: its workflow comments are record-level
+events, and it refuses a non-draft record that is incomplete. Until Raven models it,
+no design shows Pending request as a record status or adds ask-Biblio controls to a
+form. The Candidates flow works without it.
+
 ### Policy-risk value
 
 A policy-risk value decides whether Biblio can expose a file or object without legal,
@@ -84,8 +97,12 @@ Who moves visibility, mapped to raven's mechanisms:
 - **Visibility persists through review.** Reviewed-and-private is a valid end state
   (confidential, on-file). A curator can change visibility at any time after
   draft — a late publication, or a takedown.
-- **Trusted import sources seed visibility directly.** Harvested records never pass
-  through submit.
+- **A harvested record is a system-owned private draft.** Raven's `Import` creates it
+  with the system user as owner; sources never change deposit status
+  (`raven/docs/architecture-overview.md`, Sources and ingest; Authorization). It
+  reaches the public site only through submit and a visibility change: a researcher
+  adds a Candidate, or a curator completes a direct-added Work. Whether trusted
+  sources may skip review is UGent policy, still open (`docs/wip/CANDIDATES-BET.md`).
 
 The submit and return defaults are UGent deposit policy layered on raven's
 independent axes: raven's `Submit` and `Return` move the workflow state, and
@@ -149,8 +166,9 @@ In new responsibility-bounded workflows, missing policy-risk answers should beco
 pending requests rather than whole-record locks where possible.
 
 "Complete metadata" opens the record's edit form. The researcher fast lane — an edit
-view scoped to the missing fields — is a separate design, out of scope for the
-work-card issues and not yet designed.
+view scoped to the missing fields — is the focused review pattern (see Candidate). It
+exists for candidates today; applying it to Incomplete Works is intended but not yet
+designed, and out of scope for the work-card issues.
 
 Missing metadata that affects card scanning can also appear where the value would
 normally sit, as a compact metadata item: `Missing access`, `Missing year`, `Missing
@@ -187,16 +205,32 @@ Two-layer model:
 In the UI: a contributor in the deposit form is a Person. They may be **linked** (has a `person_identity_id`, shown as a UGent-identified person) or **unlinked** (known by name only — valid and expected for external co-authors). The distinction matters for person-centric queries but not for display rendering.
 
 ### Contributor
-A Person as they appear on a specific Work. Carries: display name, role (`author`, `editor`, `translator`, &hellip;), affiliation at time of work, and optionally a link to a PersonIdentity.
+A Person as they appear on a specific Work. Carries: display name, role (`author`, `editor`, `translator`, &hellip;), position, and optionally a link to a PersonIdentity. It carries no affiliation of its own: the affiliation shown next to a linked contributor is the Person's current one (`raven/docs/metadata-work-fields.md`). The Work's fixed institutional attribution is the Credited organization below.
 
 Ordered by `pos` (fracdex) — order is semantically meaningful (author order on a paper matters).
 
 In the UI: rendered in `bt-work-card__authors` on cards, and as the editable people list in the deposit flow. UGent-affiliated contributors are distinguished from external ones.
 
 ### Organization
-An institutional entity (faculty, department, research group, university). Hierarchical — an org can be `part_of` another, with temporal bounds on that relationship.
+An institutional entity (faculty, department, research group, university). Hierarchical — an org can be `part_of` another; Raven stores the current parent only, without validity periods.
 
 In the UI: shown as metadata on the detail page sidebar, as affiliation labels on contributors in the deposit flow, and as a facet filter in the backoffice list.
+
+### Credited organization
+The Work's own institutional attribution: the faculty or department that claims the
+output. Raven stores it on the Work as `credited_organizations`
+(`raven/docs/metadata-work-fields.md`) and keeps no affiliation history on a Person.
+
+The attribution is fixed on the record when the record is created and never follows
+the researcher to a later affiliation. A harvested record carries the attribution its
+source supplies; Plato does, and most sources do. At deposit or claim the form
+prefills it from the researcher's current affiliation, the researcher confirms or
+corrects it — a researcher-owned value (`docs/RESPONSIBILITIES.md`) — and the record
+keeps it.
+
+In the UI: the faculty facet on backoffice lists, including the Found for you
+overview, filters on this value; a record without one is counted under no faculty.
+The focused candidate review shows it as a value to confirm.
 
 ### Project
 A funded research project (e.g. an FWO or BOF grant). Has start/end dates and can have person–project roles (PI, co-PI, researcher).
@@ -216,12 +250,19 @@ A private, system-owned Work harvested from an external source and matched to a
 researcher through their linked PersonIdentity. A Candidate is already a Work before
 the researcher reviews it.
 
-In the UI: **Found for you** on the researcher dashboard. **Review and add** claims
-the existing Work as the researcher's draft and opens the prefilled deposit flow.
-Before that action, dashboard **Review** or a candidate title opens the full candidate
-without changing it. **Reject** removes only that researcher's match; **Skip** defers
-it to the next review round. Neither action deletes the Work. The count reflects
-pending matches for the current researcher.
+In the UI: **Found for you** on the researcher dashboard. The dashboard summarizes at
+most three candidates and counts every pending match. **View all** and the navigation
+item open a filtered, paginated overview whose status filter — New, Skipped, Added,
+Rejected — also holds the review history; a title opens that overview at its candidate
+without changing it. **Review N research outputs** starts a one-at-a-time round through
+the New and Skipped candidates. **Review** on a card opens the focused review page: an
+identity summary and only the missing or researcher-owned fields. **Add** claims the
+existing Work and submits it; **Save for later** and **Edit the full record** claim it
+as a draft. Opening, **Skip** and **Reject** never claim. **Reject** is the broad
+disposition for a candidate that is not theirs, is a duplicate, or is better handled by
+another matched researcher; it removes only that researcher's match. **Skip** defers it
+to the next review round. Neither deletes, merges or reassigns the Work. The decision
+rationale is [DD-003](decisions/DD-003-candidate-review-is-a-focused-round.md).
 
 ### Direct-added Work
 A Work added to a researcher's output without their action after authorship was
@@ -374,10 +415,12 @@ A named set of Works, editable by curators. Used for OAI-PMH sets, open access s
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
 
 ### ~~Candidate review (backoffice)~~ ✓ `templates/biblio-researcher/candidate-review.html`
-The researcher reviews their matched Candidates one at a time through **Review and
-add**, **Reject** and **Skip**. It reuses each harvested Work and does not assume a
-curator candidate inbox. Claimed and rejected history lives in
-`candidate-history.html`; the behavior draft is `docs/wip/CANDIDATES-FLOW.md`.
+Being rebuilt to DD-003. `candidate-review.html` becomes the Found for you overview:
+the candidate list filtered by New, Skipped, Added and Rejected, which also holds the
+review history. `candidate-focused-review.html` reviews one candidate at a time through
+**Add**, **Skip**, **Reject**, **Save for later** and **Edit the full record**. Both
+reuse each harvested Work and assume no curator candidate inbox. The behavior draft is
+`docs/wip/CANDIDATES-BREADBOARD.md`.
 
 ### ~~Curator review queue (backoffice)~~ ✓ `templates/biblio-team/`
 The curator-side view of the `submitted → public` workflow. Dashboard, queue overview (Wachtrij), single-record review with inline editing and AI suggestions, team health overview. Distinct from the researcher deposit flow.
@@ -442,8 +485,8 @@ Heritage objects in particular may need a distinct template — the Boekentoren 
 | Template | Entity / concept |
 |----------|------------------|
 | `dashboard.html` | Researcher inbox + activity |
-| `candidate-review.html` | Candidate review — one-at-a-time review (Found for you) |
-| `candidate-history.html` | Review history — claimed and rejected candidates |
+| `candidate-review.html` | Found for you overview — filtered candidate list and review history |
+| `candidate-focused-review.html` | Focused candidate review — one candidate, round or single |
 | `search-researcher.html` | My research output list |
 | `settings-profile.html` | Settings — own profile (display name, contact, language) |
 | `settings-accounts.html` | Settings — connected accounts (ORCID, UGent login, WoS ResearcherID) |

@@ -79,7 +79,7 @@ Facet counts (the numbers next to filter checkboxes) also come from OpenSearch a
 
 The backoffice has two distinct starting points depending on the user:
 
-**Researcher / submitter view** — "My work". Scoped to the current user's own works and candidates suggested for them.
+**Researcher / submitter view** — "My work". Scoped to the current user's own works and candidates found for them.
 
 **Curator / librarian view** — institution-wide. Scoped to all works the curator has rights over (their org, their assigned projects, or globally).
 
@@ -93,15 +93,23 @@ Templates should not conflate these. All backoffice pages include one sidebar pa
 and matched to the current user's linked PersonIdentity. A Candidate is already a
 Work; review never creates a copy.
 
-Relevant UI states:
-- **Pending** — the match is awaiting review. Opening it changes nothing.
-- **Claimed** — **Review and add** made the same Work the researcher's draft. Leaving
-  the deposit puts it under Incomplete work; submitting moves it to Submitted.
-- **Rejected** — only this researcher's match is dismissed; history offers Undo.
-- **Skipped** — held for the next review round.
+Match states, in the words the researcher sees:
+- **New** — the match awaits a decision. Opening it changes nothing.
+- **Skipped** — held for the next review round. New and Skipped together are the
+  pending matches the dashboard counts and a round works through.
+- **Added** — the researcher persisted something: **Add** submitted the Work, or
+  **Save for later** and **Edit the full record** made it an Incomplete draft with
+  **Resume**. The same Work, never a copy.
+- **Rejected** — a broad disposition for a candidate that is not theirs, is a
+  duplicate, or is better handled by another matched researcher. Only this
+  researcher's match is dismissed; the Work is not deleted, merged or reassigned,
+  and the overview offers Undo.
 
-Once one researcher claims a shared Candidate, matched co-authors stop seeing it as a
-Candidate and see the resulting Work in their research output.
+The Work is claimed on the first persisted action and never on opening, Skip or
+Reject. Once one researcher claims a shared Candidate, matched co-authors stop seeing
+it as a Candidate. They are told a co-author or the Biblio team added it and see the
+Work in their research output once it is submitted; another owner's draft is never
+linked.
 
 **Added for you** is separate. It shows Works added without researcher action after
 authorship was established: current Plato imports and Works added by a curator. Each
@@ -114,7 +122,7 @@ detail and completion views offer **Not yours?**, which uses the Biblio helpdesk
 while leaving the Work unchanged. **View all** opens the direct-added state in My
 research output.
 
-The draft behavior and wireframes live in `docs/wip/CANDIDATES-FLOW.md`.
+The draft topology and behavior live in `docs/wip/CANDIDATES-BREADBOARD.md`.
 
 ---
 
@@ -126,7 +134,7 @@ When adding an author in the deposit form, the user may:
 
 An unlinked author is not an error state. It is normal for works with external co-authors. Do not design the form to treat missing identity links as incomplete.
 
-A linked UGent author shows their affiliation (department). An unlinked author shows "External".
+A linked UGent author shows their current affiliation (department), read from the person record. An unlinked author shows "External". The Work's own faculty attribution is the credited organization, fixed on the record (`DOMAIN-VOCABULARY.md`).
 
 ---
 
