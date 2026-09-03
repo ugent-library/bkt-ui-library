@@ -73,9 +73,9 @@ Access status is the one fixed badge recipe: `text-bg-success` + `if-open-access
 
 **Faculty colours** — keyed by live Biblio org code, defined in `_utilities.scss`: `bg-faculty-<code>` (brand fill + readable foreground) and `bg-faculty-<code>-light` (12% tint, holds body text). Never inline a faculty hex.
 
-**Alert modifiers** — on top of Bootstrap `.alert`/`.alert-*`. `alert--seamless-inbox` (borderless flat, researcher inbox) is kept — it mirrors the old-backoffice inbox alerts. `alert--dashed` (2px dashed border) is ⚠️ TBD — may not survive review. `alert--sm` is stable.
+**Alert modifiers** — on top of Bootstrap `.alert`/`.alert-*`. `alert--dashed` (2px dashed border) is ⚠️ TBD — may not survive review. `alert--sm` is stable.
 
-**Undemoed but kept** — `u-notifications`, `bt-toolbar__middle`, `u-main__sidebar--border-left`, and `alert--seamless-inbox` have no kit demo yet. Each mirrors an old-backoffice component (toasts/flash, `bc-toolbar-center`, sub-sidebar, inbox alerts), so they sit in the `intentional` list in `scripts/check-classes.js`; every other unused class fails the gate.
+**Undemoed but kept** — `u-notifications`, `bt-toolbar__middle` and `u-main__sidebar--border-left` have no kit demo yet. Each mirrors an old-backoffice component (toasts/flash, `bc-toolbar-center`, sub-sidebar, inbox alerts), so they sit in the `intentional` list in `scripts/check-classes.js`; every other unused class fails the gate.
 
 **Modal width** — `modal-dialog--wide` is the only Booktower modal modifier: it sets
 `--bs-modal-width` and nothing else, so it stacks on `modal-dialog modal-xl` rather than

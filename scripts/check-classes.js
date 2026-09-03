@@ -36,7 +36,7 @@ const runtime = /^(htmx-|if$|if-)/;
 // classes kept for old-backoffice parity but not yet demoed (see docs/CLASS-USAGE.md).
 const intentional = new Set([
   'u-notifications', 'bt-toolbar__middle', 'bt-panel__body--form',
-  'u-main__sidebar--border-left', 'alert--seamless-inbox', // kept API, undemoed
+  'u-main__sidebar--border-left', // kept API, undemoed
   // Detail-globe SVG illustration — kept for a planned page, not yet wired (_svg-animations.scss)
   'axis', 'axisDot', 'faintFill', 'fast', 'gLat', 'gMer', 'gRimInner', 'gRimOuter',
   'pinDot', 'pinMed', 'pinShoot', 'pinShort', 'pinTall', 'shimmer', 'shimmerSmall',

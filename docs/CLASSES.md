@@ -12,7 +12,6 @@ excluded — they are not part of the component API.
 
 ```
 alert--dashed
-alert--seamless-inbox
 alert--sm
 
 badge--lg
