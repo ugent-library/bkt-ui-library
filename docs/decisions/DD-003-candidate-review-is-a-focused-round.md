@@ -58,7 +58,7 @@ title.
 ## Revisit when
 
 Revisit if researchers open Review mainly to inspect and the disclosure does not
-serve that, or if round summaries and overview filters stop matching how candidates
+serve that, or if the round confirmation and overview filters stop matching how candidates
 arrive in volume.
 
 ## References

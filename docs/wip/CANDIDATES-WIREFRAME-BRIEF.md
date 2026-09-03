@@ -30,9 +30,11 @@ Prototype Candidates. Label Raven unknowns as stubs.
    status with **Resume** or **View**. Rejected cards offer **Undo**. Delete
    `candidate-history.html` and every reference to it.
 4. Add `candidate-focused-review.html` with round and single states. Identity summary
-   as a compact Work card; only missing or researcher-owned fields, credited
-   organization included (prefilled from the researcher's current affiliation, to
-   confirm); a read-only
+   as a compact Work card; only the missing fields — a credited organization the
+   source supplied is not re-asked, and when it supplied none the researcher's
+   current affiliation is offered as a visible suggestion with a one-action Add,
+   never preselected. When nothing is missing the page shows the identity, the
+   imported fields and the decisions alone. A read-only
    disclosure of the imported fields; primary **Submit publicly** as a split button
    whose one alternative is **Submit privately**, then **Save draft**, **Reject**,
    **Skip**, and the quiet link **Edit the full record**; Back to the opening place.
@@ -44,7 +46,8 @@ Prototype Candidates. Label Raven unknowns as stubs.
    return restore them; every decision clears them; nothing is claimed. No
    unsaved-changes prompt or dialog. Raven implements the memory; the prototype
    describes it in a source-local note and builds nothing.
-6. Round summary state with decision totals and the next-round explanation.
+6. The round's last decision returns to the dashboard: a confirmation states the
+   round's decision totals, and the dashboard sections say what remains.
 7. No Reject-reason control; a source-local prototype note keeps the question open.
    No Pending-request controls or status anywhere in Candidates.
 
@@ -57,9 +60,9 @@ Prototype Candidates. Label Raven unknowns as stubs.
 | Overview | Action success/failure | Announcement, Undo or Retry; preserved order and count |
 | Overview | Claimed elsewhere | Card removed, announcement says a co-author or the Biblio team added it, no Undo |
 | Focused | Round pending, nothing missing, single | Position and remaining (round only), identity, researcher fields, disclosure |
-| Focused | Action failed | Preserved values, Retry |
-| Focused | Claimed elsewhere, on open or on Submit | No form; "View the resulting Work" only when it is submitted, an explanation when it is still someone else's draft; Next candidate |
-| Round summary | Complete | Totals and next-round explanation |
+| Focused | Action failed | Preserved values; the header actions retry |
+| Focused | Claimed elsewhere, on open or on Submit | No form; a submitted claim says the Work sits under the researcher's research output, another owner's draft says it appears there once submitted; Next candidate |
+| Dashboard | After a round | Confirmation of the round's decisions; the sections carry what remains |
 
 ## Reusable kit coverage
 
