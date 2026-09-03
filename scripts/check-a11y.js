@@ -53,17 +53,7 @@ for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', '
 
 // ── P1-P5 — the pagination bar ───────────────────────────────────────────────
 // Known old markup reports without failing. Aligned entries fail until removed from this set.
-const PAGINATION_DRIFT = new Set([
-  'templates/biblio-public/public-works.html',
-  'templates/biblio-public/public-researchers.html',
-  'templates/biblio-public/public-researcher-detail.html',
-  'templates/biblio-public/public-project-detail.html',
-  'templates/biblio-public/public-organisation-detail.html',
-  'templates/biblio-researcher/search-researcher.html',
-  'templates/biblio-team/curate.html',
-  'patterns/search-and-filtering.html',
-  'patterns/layout-shells.html',
-]);
+const PAGINATION_DRIFT = new Set([]);
 const DISPLAY_UTIL = /\bd-(none|block|inline|inline-block|flex|(sm|md|lg|xl|xxl)-(none|block|inline|inline-block|flex))\b/;
 const known = new Map();
 
