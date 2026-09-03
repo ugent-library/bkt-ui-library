@@ -223,14 +223,16 @@ output. Raven stores it on the Work as `credited_organizations`
 
 The attribution is fixed on the record when the record is created and never follows
 the researcher to a later affiliation. A harvested record carries the attribution its
-source supplies; Plato does, and most sources do. At deposit or claim the form
-prefills it from the researcher's current affiliation, the researcher confirms or
-corrects it — a researcher-owned value (`docs/RESPONSIBILITIES.md`) — and the record
-keeps it.
+source supplies; Plato does, and most sources do. A source-supplied attribution is an
+imported value and is not re-asked. Only when the source supplied none does the form
+at deposit or claim suggest the researcher's current affiliation — visibly a
+suggestion, never a preselected value — and the researcher adds, changes or replaces
+it: a researcher-owned value (`docs/RESPONSIBILITIES.md`) that the record keeps.
 
 In the UI: the faculty facet on backoffice lists, including the Found for you
 overview, filters on this value; a record without one is counted under no faculty.
-The focused candidate review shows it as a value to confirm.
+The focused candidate review shows it as a suggestion to add when the source
+supplied none.
 
 ### Project
 A funded research project (e.g. an FWO or BOF grant). Has start/end dates and can have person–project roles (PI, co-PI, researcher).
