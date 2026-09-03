@@ -4,7 +4,6 @@
   <header class="ds-page-header">
     <p class="ds-eyebrow">Elements</p>
     <h1 class="display-1">Buttons</h1>
-    <p class="lead">Five variants, three sizes. Primary is a commitment — one per view. Ghost for reversible secondary actions. Danger only for irreversible consequences. The interface has already made most decisions; buttons confirm the ones that are genuinely the user's to make.</p>
   </header>
 
 
@@ -68,7 +67,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Outline variants</h2>
-    <p class="text-muted mb-4">Bootstrap's <code>btn-outline-*</code> variants, aligned to Booktower tokens. Hover shows a subtle tint; active fills with the semantic colour. Use these when status context matters — success confirmations, warning prompts, danger actions — but a filled button would be too heavy.</p>
+    <p class="text-muted mb-4">Use these when status context matters — success confirmations, warning prompts, danger actions.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">All — default state</h3></div>
@@ -288,6 +287,25 @@
             <i class="if if-delete" aria-hidden="true"></i>
           </button>
         </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Split button — a default action plus one alternative</h3></div>
+      <div class="ds-demo-body">
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary">Submit publicly</button>
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="visually-hidden">More submit choices</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item">Submit privately</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ds-demo-notes">
+        <p>Plain Bootstrap: the default action stays one click, the toggle holds the alternatives. The toggle's name is a <code>visually-hidden</code> span. Use it only when one action is the clear default; peers of equal weight get their own buttons. Live use: the candidate focused review's Submit.</p>
       </div>
     </div>
   </section>
