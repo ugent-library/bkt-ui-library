@@ -1,6 +1,6 @@
 <!-- @title: Nutrient cycling in restored wetlands — My research output — Biblio -->
 <!-- @surface: backoffice -->
-<!-- @states: returned, reviewed -->
+<!-- @states: returned, reviewed, submitted, direct-added -->
 <!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Researcher work detail — where a card title in search-researcher.html lands.
@@ -13,8 +13,10 @@
   audit stamps), 05 (the researcher message block only — the curator block is absent
   from what a researcher is served) and 06 (actions per role and state).
 
-  Two states, one record: returned, then reviewed. Draft and submitted vary the same
-  three regions — the badge, the message block and the action row.
+  Four states, one record: returned, reviewed, submitted (a claimed candidate
+  awaiting review) and direct-added — a Plato-added draft. The quiet Not yours?
+  helpdesk route lives here on the work's own view, not on dashboard rows or list
+  cards (docs/wip/CANDIDATES-BREADBOARD.md).
 -->
 
 <div class="u-layout--app" data-surface="backoffice">
@@ -75,8 +77,23 @@
             <span class="badge text-bg-success">Reviewed</span>
             <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
             <!-- @state -->
+            <!-- @state: submitted -->
+            <span class="badge text-bg-info">Submitted</span>
+            <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+            <!-- @state -->
+            <!-- @state: direct-added -->
+            <!-- Prototype note: Draft · Private on a Plato-added work is a stub —
+                 Raven owns the status it receives (docs/wip/CANDIDATES-BET.md). -->
+            <span class="badge text-bg-warning">Draft</span>
+            <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+            <!-- @state -->
             <span class="bt-work-card__meta-item">Embargo 01/05/2026 &ndash; 01/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
+            <!-- @state: returned reviewed submitted -->
             <span class="bt-work-card__meta-item">Journal article</span>
+            <!-- @state -->
+            <!-- @state: direct-added -->
+            <span class="bt-work-card__meta-item">Doctoral thesis</span>
+            <!-- @state -->
           </div>
 
           <h1 class="h3 mb-2">Nutrient cycling in restored wetlands of the Scheldt estuary</h1>
@@ -86,6 +103,7 @@
             <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Sarah De Baets<span class="visually-hidden"> (UGent)</span></a></span>
           </p>
 
+          <!-- @state: returned reviewed submitted -->
           <p class="bt-work-card__pub mb-4">
             <a href="search-researcher.html?year=2026"><time datetime="2026">2026</time></a>
             <span class="text-muted mx-1" aria-hidden="true">·</span>
@@ -93,6 +111,14 @@
             <span class="text-muted mx-1" aria-hidden="true">·</span>
             312
           </p>
+          <!-- @state -->
+          <!-- @state: direct-added -->
+          <p class="bt-work-card__pub mb-4">
+            <a href="search-researcher.html?year=2026">(<time datetime="2026">2026</time>)</a>
+            <span>Ghent University</span>
+          </p>
+          <!-- @state -->
+
 
           <!-- @state: returned -->
           <div class="alert alert-warning alert--sm" role="note" aria-label="For the researcher">
@@ -107,9 +133,28 @@
           </div>
           <!-- @state -->
 
+          <!-- @state: direct-added -->
+          <div class="alert alert-warning alert--sm" role="note" aria-label="For the researcher">
+            <div class="d-flex align-items-start gap-2">
+              <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div>
+                <p class="mb-1"><strong>Missing:</strong> abstract, license.</p>
+                <p class="mb-0"><a href="deposit-1-1-find.html?state=direct-added" class="fw-medium">Complete metadata</a></p>
+              </div>
+            </div>
+          </div>
+          <!-- @state -->
+
           <section aria-labelledby="abstract-heading" class="mb-4">
             <h2 id="abstract-heading" class="small fw-semibold text-uppercase text-muted mb-2">Abstract</h2>
+            <!-- @state: returned reviewed submitted -->
             <p class="mb-0">Restored tidal marshes along the Scheldt accumulate nitrogen and phosphorus at rates that differ sharply from reference marshes in the first decade after breaching. This study tracks nutrient stocks across eleven sites over four growing seasons and relates them to sediment supply and inundation frequency.</p>
+            <!-- @state -->
+            <!-- @state: direct-added -->
+            <div class="bt-blank-slate">
+              <p>No abstract added yet.</p>
+            </div>
+            <!-- @state -->
           </section>
 
           <section aria-labelledby="files-heading" class="mb-4">
@@ -130,7 +175,12 @@
               <dd class="col-sm-9 mb-0"><a href="#">10.1016/j.ecss.2026.109412</a></dd>
 
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">License</dt>
+              <!-- @state: returned reviewed submitted -->
               <dd class="col-sm-9 mb-0">CC BY 4.0</dd>
+              <!-- @state -->
+              <!-- @state: direct-added -->
+              <dd class="col-sm-9 mb-0"><span class="text-warning"><i class="if if-alert" aria-hidden="true"></i> Missing license</span></dd>
+              <!-- @state -->
 
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Language</dt>
               <dd class="col-sm-9 mb-0">English</dd>
@@ -152,6 +202,7 @@
           <section aria-labelledby="history-heading">
             <h2 id="history-heading" class="small fw-semibold text-uppercase text-muted mb-2">History</h2>
             <dl class="row g-2 mb-0 small text-muted">
+              <!-- @state: returned reviewed submitted -->
               <dt class="col-sm-3 text-uppercase fw-semibold bt-text-xsmall">Created</dt>
               <dd class="col-sm-9 mb-0">Renee Peeters — 14/03/2026 09:22</dd>
 
@@ -160,6 +211,14 @@
 
               <dt class="col-sm-3 text-uppercase fw-semibold bt-text-xsmall">Last system change</dt>
               <dd class="col-sm-9 mb-0">Crossref import — 02/08/2026 03:10</dd>
+              <!-- @state -->
+              <!-- @state: direct-added -->
+              <dt class="col-sm-3 text-uppercase fw-semibold bt-text-xsmall">Created</dt>
+              <dd class="col-sm-9 mb-0">Biblio assistant via Plato — 28/08/2026 09:12</dd>
+
+              <dt class="col-sm-3 text-uppercase fw-semibold bt-text-xsmall">Last system change</dt>
+              <dd class="col-sm-9 mb-0">Plato import — 28/08/2026 09:12</dd>
+              <!-- @state -->
             </dl>
           </section>
 
@@ -167,6 +226,17 @@
 
         <div class="u-main__content-footer border-top bg-white">
           <div class="bt-toolbar px-4 py-3">
+            <!-- @state: direct-added -->
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <a href="mailto:biblio@ugent.be?subject=Not%20my%20research%20output%3A%20Nutrient%20cycling%20in%20restored%20wetlands%20(BIB-2026-01144)"
+                  class="small"
+                  aria-label="Not yours? Report Nutrient cycling in restored wetlands of the Scheldt estuary to the Biblio helpdesk">
+                  Not yours? Email biblio@ugent.be
+                </a>
+              </div>
+            </div>
+            <!-- @state -->
             <div class="bt-toolbar__right">
               <div class="bt-toolbar__item d-flex gap-2">
                 <!-- @state: returned -->
@@ -175,11 +245,25 @@
                   <i class="if if-edit if--sm" aria-hidden="true"></i> Edit &amp; resubmit
                 </a>
                 <!-- @state -->
+                <!-- @state: direct-added -->
+                <a href="deposit-1-1-find.html?state=direct-added" class="btn btn-primary btn-sm"
+                  aria-label="Complete: Nutrient cycling in restored wetlands of the Scheldt estuary">
+                  <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
+                </a>
+                <!-- @state -->
                 <!-- @state: reviewed -->
                 <a href="#" class="btn btn-ghost btn-sm"
                   aria-label="Request changes: Nutrient cycling in restored wetlands of the Scheldt estuary">
                   <i class="if if-message if--sm" aria-hidden="true"></i> Request changes
                 </a>
+                <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
+                  aria-label="View public page: Nutrient cycling in restored wetlands of the Scheldt estuary">
+                  <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
+                </a>
+                <!-- @state -->
+                <!-- @state: submitted -->
+                <!-- Awaiting review; whether the owner edits a submitted record
+                     directly is still open in raven (docs/DOMAIN-VOCABULARY.md). -->
                 <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
                   aria-label="View public page: Nutrient cycling in restored wetlands of the Scheldt estuary">
                   <i class="if if-eye if--sm" aria-hidden="true"></i> View public page

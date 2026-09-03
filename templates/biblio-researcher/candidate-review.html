@@ -1,6 +1,6 @@
 <!-- @title: Research output found for you — Biblio -->
 <!-- @surface: backoffice -->
-<!-- @states: default, filtered, empty, action-success, claimed-elsewhere, action-failed, paginated -->
+<!-- @states: default, filtered, empty, action-success, claimed-elsewhere, action-failed -->
 <!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Found for you overview (DD-003, docs/wip/CANDIDATES-BREADBOARD.md): a filtered,
@@ -59,14 +59,6 @@
           <div class="bt-toolbar__item">
             <a href="candidate-focused-review.html" class="btn btn-primary btn-sm">
               Review 4 research outputs
-              <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
-            </a>
-          </div>
-          <!-- @state -->
-          <!-- @state: paginated -->
-          <div class="bt-toolbar__item">
-            <a href="candidate-focused-review.html" class="btn btn-primary btn-sm">
-              Review 45 research outputs
               <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
             </a>
           </div>
@@ -237,35 +229,6 @@
             </div>
           </fieldset>
           <!-- @state -->
-          <!-- @state: paginated -->
-          <fieldset class="mb-4">
-            <legend class="form-label fw-semibold mb-2">Status</legend>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="crs-f-new" checked
-                aria-label="New (40 results)">
-              <label class="form-check-label flex-grow-1" for="crs-f-new">New</label>
-              <span class="badge bg-transparent pe-1" aria-hidden="true">40</span>
-            </div>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="crs-f-skipped" checked
-                aria-label="Skipped (5 results)">
-              <label class="form-check-label flex-grow-1" for="crs-f-skipped">Skipped</label>
-              <span class="badge bg-transparent pe-1" aria-hidden="true">5</span>
-            </div>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="crs-f-added"
-                aria-label="Added (12 results)">
-              <label class="form-check-label flex-grow-1" for="crs-f-added">Added</label>
-              <span class="badge bg-transparent pe-1" aria-hidden="true">12</span>
-            </div>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="crs-f-rejected"
-                aria-label="Rejected (3 results)">
-              <label class="form-check-label flex-grow-1" for="crs-f-rejected">Rejected</label>
-              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
-            </div>
-          </fieldset>
-          <!-- @state -->
 
           <hr>
 
@@ -355,9 +318,6 @@
               <!-- @state: empty -->
               Show 0 research outputs
               <!-- @state -->
-              <!-- @state: paginated -->
-              Show 45 research outputs
-              <!-- @state -->
             </button>
           </div>
         </div>
@@ -365,7 +325,7 @@
 
       <!-- Results -->
       <section class="u-main__content">
-        <div class="u-main__content-header border-bottom px-4 py-3">
+        <div class="u-main__content-header">
 
           <div role="search" aria-label="Search within research output found for you">
             <label for="cr-search" class="visually-hidden">Search by title, author, DOI</label>
@@ -383,14 +343,15 @@
             </div>
           </div>
 
-          <div class="bt-toolbar m-0">
+          <!-- Filter bar: /patterns/filter-picker.html. Prototype note: one chip per
+               dimension; this page lists two values in full and truncates to +N
+               beyond, while filter-bar.js renders first value +N — which form wins
+               is open. -->
+          <div class="bt-toolbar p-0">
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item">
                 <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
-                  <!-- Prototype note: one chip per dimension, values listed in full.
-                       filter-bar.js and patterns/filter-picker.html render first
-                       value +N instead; which form wins is open. -->
-                  <!-- @state: default action-failed action-success claimed-elsewhere empty paginated -->
+                  <!-- @state: default action-failed action-success claimed-elsewhere empty -->
                   <div class="filter-chip-group">
                     <button type="button" class="badge badge--outline" aria-label="Edit filter: Status is New, Skipped"><span class="fw-light">Status:</span> New, Skipped</button>
                     <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is New, Skipped"><i class="if if-close if--xs" aria-hidden="true"></i></button>
@@ -409,22 +370,6 @@
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                   Clear all filters
                 </button>
-              </div>
-              <div class="bt-toolbar__item">
-                <span class="text-muted" aria-live="polite">
-                  <!-- @state: default action-failed -->
-                  5 research outputs
-                  <!-- @state -->
-                  <!-- @state: filtered -->
-                  7 research outputs
-                  <!-- @state -->
-                  <!-- @state: action-success claimed-elsewhere -->
-                  4 research outputs
-                  <!-- @state -->
-                  <!-- @state: paginated -->
-                  45 research outputs
-                  <!-- @state -->
-                </span>
               </div>
             </div>
           </div>
@@ -474,7 +419,7 @@
             <li id="cand-icu-transfer"><article class="bt-work-card" aria-labelledby="cr-1-title">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
               </div>
@@ -488,10 +433,6 @@
                   <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
                 </p>
                 <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span><span>DOI 10.1234/jcm.2025.0142</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
               </div>
               <div class="bt-work-card__footer">
                 <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -512,7 +453,7 @@
             <li id="cand-responsible-ai"><article class="bt-work-card" aria-labelledby="cr-2-title">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Crossref</span>
+                  <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Crossref<span class="visually-hidden">, matched through your linked identity</span></span>
                   <span class="bt-work-card__meta-item">Conference paper</span>
                 </div>
               </div>
@@ -525,10 +466,6 @@
                   <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
                 </p>
                 <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Workshop on Responsible Clinical AI</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
               </div>
               <div class="bt-work-card__footer">
                 <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -549,7 +486,7 @@
             <li id="cand-soft-actuator"><article class="bt-work-card" aria-labelledby="cr-3-title">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
               </div>
@@ -563,10 +500,6 @@
                   <span class="bt-work-card__author"><a href="?q=Mina%20Okafor">Mina Okafor</a></span>
                 </p>
                 <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Polymer Science</span><span>DOI 10.1234/ps.2026.0117</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
               </div>
               <div class="bt-work-card__footer">
                 <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -587,7 +520,7 @@
             <li id="cand-icu-forecasting"><article class="bt-work-card" aria-labelledby="cr-4-title">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">ORCID</span>
+                  <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> ORCID<span class="visually-hidden">, matched through your linked identity</span></span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
               </div>
@@ -600,10 +533,6 @@
                   <span class="bt-work-card__author"><a href="?q=Priya%20Raman">Priya Raman</a></span>
                 </p>
                 <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Artificial Intelligence in Medicine</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
               </div>
               <div class="bt-work-card__footer">
                 <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -624,7 +553,7 @@
             <li id="cand-thermal-drift"><article class="bt-work-card" aria-labelledby="cr-5-title">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
                   <span class="bt-work-card__meta-item">Journal article</span>
                 </div>
               </div>
@@ -637,10 +566,6 @@
                   <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>
                 </p>
                 <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Sensors and Actuators A</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
                 <div class="bt-work-card__meta">
                   <i class="if if-skip-right-line text-muted" aria-hidden="true"></i>
                   <span class="bt-work-card__meta-item">Skipped in your last round</span>
@@ -730,117 +655,6 @@
           </div>
           <!-- @state -->
 
-          <!-- @state: paginated -->
-          <!-- Prototype note: the page-2 fixture is abridged to three cards; the real
-               page renders the full page of results. -->
-          <ol class="list-unstyled mb-0" aria-label="Research output found for you">
-            <li><article class="bt-work-card" aria-labelledby="cr-p2-1-title">
-              <div class="bt-work-card__header">
-                <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Web of Science</span>
-                  <span class="bt-work-card__meta-item">Journal article</span>
-                </div>
-              </div>
-              <div class="bt-work-card__body">
-                <p id="cr-p2-1-title" class="bt-work-card__title">
-                  Federated learning for rare disease cohorts
-                </p>
-                <p class="bt-work-card__authors">
-                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
-                  <span class="bt-work-card__author"><a href="?q=Elena%20Neri">Elena Neri</a></span>
-                </p>
-                <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Journal of Biomedical Informatics</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
-              </div>
-              <div class="bt-work-card__footer">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
-                    aria-label="Review: Federated learning for rare disease cohorts">
-                    Review
-                  </a>
-                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
-                    aria-label="Reject: Federated learning for rare disease cohorts">
-                    Reject
-                  </a>
-                </div>
-              </div>
-            </article></li>
-
-            <li><article class="bt-work-card" aria-labelledby="cr-p2-2-title">
-              <div class="bt-work-card__header">
-                <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Crossref</span>
-                  <span class="bt-work-card__meta-item">Conference paper</span>
-                </div>
-              </div>
-              <div class="bt-work-card__body">
-                <p id="cr-p2-2-title" class="bt-work-card__title">
-                  Sensor fusion for early sepsis alerts
-                </p>
-                <p class="bt-work-card__authors">
-                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
-                  <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
-                </p>
-                <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Clinical AI Symposium</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
-              </div>
-              <div class="bt-work-card__footer">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
-                    aria-label="Review: Sensor fusion for early sepsis alerts">
-                    Review
-                  </a>
-                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
-                    aria-label="Reject: Sensor fusion for early sepsis alerts">
-                    Reject
-                  </a>
-                </div>
-              </div>
-            </article></li>
-
-            <li><article class="bt-work-card" aria-labelledby="cr-p2-3-title">
-              <div class="bt-work-card__header">
-                <div class="bt-work-card__meta">
-                  <span class="badge text-bg-secondary">Web of Science</span>
-                  <span class="bt-work-card__meta-item">Journal article</span>
-                </div>
-              </div>
-              <div class="bt-work-card__body">
-                <p id="cr-p2-3-title" class="bt-work-card__title">
-                  Wearable ECG electrode placement under motion
-                </p>
-                <p class="bt-work-card__authors">
-                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
-                  <span class="bt-work-card__author"><a href="?q=Priya%20Raman">Priya Raman</a></span>
-                </p>
-                <p class="bt-work-card__pub"><span>(<time datetime="2022">2022</time>)</span><span>Physiological Measurement</span></p>
-                <div class="bt-work-card__meta">
-                  <i class="if if-user text-muted" aria-hidden="true"></i>
-                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
-                </div>
-              </div>
-              <div class="bt-work-card__footer">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
-                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
-                    aria-label="Review: Wearable ECG electrode placement under motion">
-                    Review
-                  </a>
-                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
-                    aria-label="Reject: Wearable ECG electrode placement under motion">
-                    Reject
-                  </a>
-                </div>
-              </div>
-            </article></li>
-          </ol>
-          <!-- @state -->
-
         </div><!-- /results-list -->
 
         <!-- Results bar: /patterns/pagination.html — pagination and count left, page
@@ -871,18 +685,10 @@
                     <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
                   </ul>
                   <!-- @state -->
-                  <!-- @state: paginated -->
-                  <ul class="pagination pagination-sm">
-                    <li class="page-item"><a class="page-link" href="?state=default" aria-label="Previous page"><i class="if if-chevron-left" aria-hidden="true"></i></a></li>
-                    <li class="page-item"><a class="page-link" href="?state=default">1</a></li>
-                    <li class="page-item active"><a class="page-link" href="?state=paginated" aria-current="page">2</a></li>
-                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
-                  </ul>
-                  <!-- @state -->
                 </nav>
               </div>
               <div class="bt-toolbar__item">
-                <span class="text-muted small">
+                <span class="text-muted small" aria-live="polite" id="result-count">
                   <!-- @state: default action-failed -->
                   <span class="visually-hidden">Showing </span>1&ndash;5 of 5
                   <!-- @state -->
@@ -894,9 +700,6 @@
                   <!-- @state -->
                   <!-- @state: empty -->
                   0 research outputs
-                  <!-- @state -->
-                  <!-- @state: paginated -->
-                  <span class="visually-hidden">Showing </span>26&ndash;45 of 45
                   <!-- @state -->
                 </span>
               </div>

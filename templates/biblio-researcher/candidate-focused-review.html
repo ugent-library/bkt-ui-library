@@ -1,0 +1,1054 @@
+<!-- @title: Review research output — Found for you — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: round-pending, round-nothing-missing, single, action-failed, claimed-elsewhere-submitted, claimed-elsewhere-draft -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
+<!--
+  Focused candidate review (DD-003, docs/wip/CANDIDATES-BREADBOARD.md): a routed
+  page, one URL per candidate with a round parameter in the real implementation.
+  Opening claims nothing. Submit publicly (the default) and Submit privately claim
+  the harvested Work and submit it; Save draft and Edit the full record claim it as
+  an Incomplete draft and keep entered values; Skip, Reject and Back never claim.
+  In round states Submit, Skip and Reject
+  open the next candidate, the last one the dashboard, which confirms the round;
+  in the single state every
+  exit, Skip included, returns to the place that opened it and the decision is
+  announced there in #action-status ("Skipped: <title>. It returns in your next
+  review round."). After a decision the real implementation swaps #review-region,
+  moves focus to it and announces the decision, Undo availability and the remaining
+  count through #action-status. Raven owns every endpoint: submit, save, skip, reject,
+  upload.
+
+  Raven's implementation keeps typed values in browser session storage per
+  candidate: Back, refresh and return restore them; Submit, Save draft, Edit the
+  full record, Skip and Reject clear them. The memory is per browser — Save draft
+  is the durable route. There is no unsaved-changes prompt. The prototype describes
+  this behaviour without implementing it.
+
+  Prototype note: reason capture on Reject (none, optional or required) is an open
+  product decision — the page shows no reason control. States sample a round of
+  five: positions 2 and 3 are modelled, decisions on position 3 return to the
+  dashboard.
+  The single fixture models a dashboard-opened review — its actions return to the
+  dashboard, and the breadcrumb leads to the overview. Sources, projects and counts are fixtures.
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+<!-- @include: templates/partials/main-sidebar.html -->
+<!-- @active: suggestions -->
+
+  <main id="main-content">
+
+    <!-- Live region for decision confirmations and the remaining count -->
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden">
+      <!-- @state: round-pending -->
+      Submitted: Transfer learning across hospitals: a multicentric ICU study. 3 research outputs left.
+      <!-- @state -->
+      <!-- @state: round-nothing-missing -->
+      Submitted: Workshop notes on responsible AI in clinical decision support. 2 research outputs left.
+      <!-- @state -->
+      <!-- @state: claimed-elsewhere-submitted -->
+      Already added by a co-author or the Biblio team.
+      <!-- @state -->
+      <!-- @state: claimed-elsewhere-draft -->
+      Someone else is completing this research output. It will appear under your research output once it is submitted.
+      <!-- @state -->
+    </span>
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <nav aria-label="Breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="candidate-review.html">Found for you</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Review</li>
+              </ol>
+            </nav>
+            <h1 class="h3 mb-0">Review research output <!-- @state: round-pending action-failed claimed-elsewhere-submitted claimed-elsewhere-draft -->2/5<!-- @state --> <!-- @state: round-nothing-missing -->3/5<!-- @state -->
+            </h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <!-- @state: round-pending action-failed -->
+            <div class="bt-toolbar__item">
+              <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-ghost"
+                aria-label="Skip: Workshop notes on responsible AI in clinical decision support — returns in your next review round">
+                Skip
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-ghost"
+                aria-label="Reject: Workshop notes on responsible AI in clinical decision support">
+                Reject
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-ghost"
+                aria-label="Save draft: Workshop notes on responsible AI in clinical decision support">
+                Save draft
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <div class="btn-group">
+                <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-primary"
+                  aria-label="Submit publicly: Workshop notes on responsible AI in clinical decision support">
+                  Submit publicly
+                </a>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="visually-hidden">More submit choices</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="candidate-focused-review.html?state=round-nothing-missing"
+                      aria-label="Submit privately: Workshop notes on responsible AI in clinical decision support — kept off the public site">
+                      Submit privately
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <!-- @state -->
+
+          <!-- @state: round-nothing-missing -->
+            <div class="bt-toolbar__item">
+              <a href="dashboard.html?state=round-finished" class="btn btn-ghost"
+                aria-label="Skip: Soft actuator design for grip — returns in your next review round">
+                Skip
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <a href="dashboard.html?state=round-finished" class="btn btn-ghost"
+                aria-label="Reject: Soft actuator design for grip">
+                Reject
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <a href="dashboard.html?state=round-finished" class="btn btn-ghost"
+                aria-label="Save draft: Soft actuator design for grip">
+                Save draft
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <div class="btn-group">
+                <a href="dashboard.html?state=round-finished" class="btn btn-primary"
+                  aria-label="Submit publicly: Soft actuator design for grip">
+                  Submit publicly
+                </a>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="visually-hidden">More submit choices</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="dashboard.html?state=round-finished"
+                      aria-label="Submit privately: Soft actuator design for grip — kept off the public site">
+                      Submit privately
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <!-- @state -->
+
+          <!-- @state: single -->
+            <div class="bt-toolbar__item">
+              <a href="dashboard.html" class="btn btn-ghost"
+                aria-label="Skip: Transfer learning across hospitals: a multicentric ICU study — returns in your next review round">
+                Skip
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <a href="dashboard.html" class="btn btn-ghost"
+                aria-label="Reject: Transfer learning across hospitals: a multicentric ICU study">
+                Reject
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <a href="dashboard.html" class="btn btn-ghost"
+                aria-label="Save draft: Transfer learning across hospitals: a multicentric ICU study">
+                Save draft
+              </a>
+            </div>
+            <div class="bt-toolbar__item">
+              <div class="btn-group">
+                <a href="dashboard.html" class="btn btn-primary"
+                  aria-label="Submit publicly: Transfer learning across hospitals: a multicentric ICU study">
+                  Submit publicly
+                </a>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="visually-hidden">More submit choices</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <a class="dropdown-item" href="dashboard.html"
+                      aria-label="Submit privately: Transfer learning across hospitals: a multicentric ICU study — kept off the public site">
+                      Submit privately
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          <!-- @state -->
+        </div>
+      </div>
+      <!-- TBD how to make this clear without actually having to add more cognitive load for our audience
+       <p class="small text-end mb-0" id="fr-s-submit-desc">Submitting publicly sends this research output to the Biblio team and puts it on the public site.</p> -->
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body pt-4">
+          <!-- Focus lands here after each decision swap (D4). -->
+          <div id="review-region" class="col-lg-8" tabindex="-1">
+
+            <!-- @state: action-failed -->
+            <div class="alert alert-danger" role="alert">
+              <p>
+                <strong>Submit failed.</strong>
+                <br>
+                Nothing was changed. Please retry to submit.
+              </p>
+            </div>
+            <!-- @state -->
+
+            <!-- @state: claimed-elsewhere-submitted -->
+            <div class="alert alert-info">
+              <p class="mb-3"><strong>
+                Already added by a co-author or the Biblio team.</strong>
+                <br>
+                You can view it under your research output.
+              </p>
+              <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-primary btn-sm">
+                Next candidate
+                <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+              </a>
+            </div>
+            <!-- @state -->
+
+            <!-- @state: claimed-elsewhere-draft -->
+            <div class="alert alert-info">
+              <p class="mb-3"><strong>Someone else is completing this research output.</strong>
+                <br>
+                It will appear under your research output once it is submitted.
+              </p>
+              <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-primary btn-sm">
+                Next candidate
+                <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+              </a>
+            </div>
+            <!-- @state -->
+
+            <!-- Identity summary — not a form -->
+            <!-- @state: round-pending action-failed claimed-elsewhere-submitted claimed-elsewhere-draft -->
+            <div class="card mb-4">
+              <article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="fr-c2-title">
+                <div class="bt-work-card__header">
+                  <div class="bt-work-card__meta">
+                    <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Crossref<span class="visually-hidden">, matched through your linked identity</span></span>
+                    <span class="bt-work-card__meta-item">Conference paper</span>
+                  </div>
+                </div>
+                <div class="bt-work-card__body">
+                  <p id="fr-c2-title" class="bt-work-card__title">
+                    Workshop notes on responsible AI in clinical decision support
+                  </p>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                    <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                  </p>
+                  <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Workshop on Responsible Clinical AI</span><span>DOI 10.5555/rcai.2024.0071</span></p>
+                </div>
+                <div class="alert alert-warning alert--sm my-2" role="note" aria-label="For the researcher">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <p class="mb-0"><strong>Missing:</strong> full-text file, funding, license.</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <!-- @state -->
+            <!-- @state: single -->
+            <div class="card mb-4">
+              <article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="fr-c1-title">
+                <div class="bt-work-card__header">
+                  <div class="bt-work-card__meta">
+                    <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="bt-work-card__body">
+                  <p id="fr-c1-title" class="bt-work-card__title">
+                    Transfer learning across hospitals: a multicentric ICU study
+                  </p>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                    <span class="bt-work-card__author"><a href="?q=Marc%20Lef%C3%A8vre">Marc Lefèvre</a></span>,
+                    <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                  </p>
+                  <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span><span>DOI 10.1234/jcm.2025.0142</span></p>
+                </div>
+              </article>
+            </div>
+            <!-- @state -->
+            <!-- @state: round-nothing-missing -->
+            <div class="card mb-4">
+              <article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="fr-c3-title">
+                <div class="bt-work-card__header">
+                  <div class="bt-work-card__meta">
+                    <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                    <span class="bt-work-card__meta-item">Journal article</span>
+                  </div>
+                </div>
+                <div class="bt-work-card__body">
+                  <p id="fr-c3-title" class="bt-work-card__title">
+                    Soft actuator design for grip
+                  </p>
+                  <p class="bt-work-card__authors">
+                    <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>,
+                    <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                    <span class="bt-work-card__author"><a href="?q=Mina%20Okafor">Mina Okafor</a></span>
+                  </p>
+                  <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Polymer Science</span><span>DOI 10.1234/ps.2026.0117</span></p>
+                </div>
+              </article>
+            </div>
+            <!-- @state -->
+
+
+            <!-- real impl: form POST /candidates/<id> — Add is its submit button; Raven owns the endpoint -->
+            <!-- @state: round-pending -->
+            <div class="d-flex flex-column gap-4 mb-4">
+              <div>
+                <div class="bt-title-toolbar">
+                  <h2 class="h6 mb-0">Credited organization</h2>
+                  <!-- Intentionally inert until docs/wip/ENTITY-PICKERS.md is settled. -->
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add organization
+                  </button>
+                </div>
+                <!-- Prototype note: nothing is preselected — the affiliation-based value stays a
+                     suggestion until the researcher adds it (design principle 05). The Add
+                     controls are stubs. -->
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <i class="if if-building text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                     <p class="badge text-bg-secondary mb-1">Suggested: current organisation</p>
+                     <p class="fw-semibold mb-0">Department of Electronics and Information Systems</p>
+                    <div class="text-muted small">Faculty of Engineering and Architecture</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Reject suggested organization: Department of Electronics and Information Systems">
+                    Reject
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm"
+                    aria-label="Add suggested organization: Department of Electronics and Information Systems">
+                    <i class="if if-add if--sm" aria-hidden="true"></i> Add
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="h6 mb-2">Full text</h2>
+                <label class="bt-file-drop d-block" for="fr-p-file">
+                  <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
+                  <span class="bt-file-drop__text d-block">Drag a file here, or <strong>browse</strong></span>
+                  <span class="bt-file-drop__hint d-block">PDF, DOCX, EPUB — max 500 MB</span>
+                  <input type="file" id="fr-p-file" class="visually-hidden" accept=".pdf,.docx,.epub"
+                    hx-post="/deposit/upload"
+                    hx-target="#fr-p-file-list"
+                    hx-swap="innerHTML"
+                    hx-indicator="#fr-p-upload-indicator">
+                </label>
+                <span id="fr-p-upload-indicator" class="htmx-indicator small text-muted d-block" aria-live="polite">
+                  Uploading&hellip;
+                </span>
+                <div id="fr-p-file-list" aria-live="polite"></div>
+              </div>
+
+              <fieldset>
+                <legend class="form-label">File version</legend>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="file_version" id="fr-p-version-am" value="accepted-manuscript">
+                  <label class="form-check-label" for="fr-p-version-am">Accepted manuscript</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="file_version" id="fr-p-version-pv" value="published-version">
+                  <label class="form-check-label" for="fr-p-version-pv">Published version</label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="form-label mb-3">Who can see your full text / dataset?</legend>
+                <div class="d-flex flex-column gap-2">
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-p-oa-open" value="open" checked>
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-p-oa-open">Open access</label>
+                      <span class="text-muted small">Anyone can read and download immediately. Maximum visibility and impact.</span>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-p-oa-embargo" value="embargo">
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-p-oa-embargo">Under embargo</label>
+                      <span class="text-muted small">Files become publicly available after a date you choose. Metadata is visible now.</span>
+                      <!-- real impl shows/hides this on the "Under embargo" radio; hidden is the AT-correct toggle -->
+                      <div id="fr-p-embargo-date-field" class="mt-3" hidden>
+                        <label for="fr-p-embargo-date" class="form-label">
+                          Release date
+                          <span class="text-danger" aria-hidden="true">*</span>
+                        </label>
+                        <div class="col-5">
+                          <input type="date" id="fr-p-embargo-date" name="embargo_date" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-p-oa-closed" value="closed">
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-p-oa-closed">Restricted</label>
+                      <span class="text-muted small">Only users you approve can access the files. Metadata remains discoverable.</span>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="form-label">How can your research be used?</legend>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-p-license-cc-by" value="cc-by-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-p-license-cc-by">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY 4.0</span>
+                          <span class="small mb-0 d-block">Attribution</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-p-license-cc-by-sa" value="cc-by-sa-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-p-license-cc-by-sa">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-SA 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, ShareAlike</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-p-license-cc-by-nc" value="cc-by-nc-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-p-license-cc-by-nc">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-NC 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, NonCommercial</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-p-license-cc-by-nc-sa" value="cc-by-nc-sa-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-p-license-cc-by-nc-sa">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-NC-SA 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, NC, ShareAlike</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-p-license-cc0" value="cc0-1.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-p-license-cc0">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC0 1.0</span>
+                          <span class="small mb-0 d-block">Public Domain</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-p-license-all-rights" value="all-rights-reserved" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-p-license-all-rights">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">All Rights Reserved</span>
+                          <span class="small mb-0 d-block">No reuse without permission</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div>
+                <div class="bt-title-toolbar">
+                  <h2 class="h6 mb-0">Project</h2>
+                  <!-- Intentionally inert until docs/wip/ENTITY-PICKERS.md is settled. -->
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add project
+                  </button>
+                </div>
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <i class="if if-briefcase text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                     <p class="badge text-bg-secondary mb-1">Suggested: matched project</p>
+                     <p class="fw-semibold mb-0">Streaming analytics for intensive care</p>
+                    <div class="text-muted small">FWO Research project, 2023–2027</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Reject suggested project: Streaming analytics for intensive care">
+                    Reject
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm"
+                    aria-label="Add suggested project: Streaming analytics for intensive care">
+                    <i class="if if-add if--sm" aria-hidden="true"></i> Add
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <!-- @state -->
+
+            <!-- @state: single -->
+            <div class="d-flex flex-column gap-5 mb-4">
+
+              <div>
+                <div class="bt-title-toolbar">
+                  <h2 class="h6 mb-0">Credited organization</h2>
+                  <!-- Intentionally inert until docs/wip/ENTITY-PICKERS.md is settled. -->
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add organization
+                  </button>
+                </div>
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <i class="if if-building text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                     <p class="badge text-bg-secondary mb-1">Suggested: current organisation</p>
+                     <p class="fw-semibold mb-0">Department of Electronics and Information Systems</p>
+                    <div class="text-muted small">Faculty of Engineering and Architecture</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Reject suggested organization: Department of Electronics and Information Systems">
+                    Reject
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm"
+                    aria-label="Add suggested organization: Department of Electronics and Information Systems">
+                    <i class="if if-add if--sm" aria-hidden="true"></i> Add
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="h6 mb-2">Full text</h2>
+                <label class="bt-file-drop d-block mb-2" for="fr-s-file">
+                  <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
+                  <span class="bt-file-drop__text d-block">Drag a file here, or <strong>browse</strong></span>
+                  <span class="bt-file-drop__hint d-block">PDF, DOCX, EPUB — max 500 MB</span>
+                  <input type="file" id="fr-s-file" class="visually-hidden" accept=".pdf,.docx,.epub"
+                    hx-post="/deposit/upload"
+                    hx-target="#fr-s-file-list"
+                    hx-swap="innerHTML"
+                    hx-indicator="#fr-s-upload-indicator">
+                </label>
+                <span id="fr-s-upload-indicator" class="htmx-indicator small text-muted d-block" aria-live="polite">
+                  Uploading&hellip;
+                </span>
+                <div id="fr-s-file-list" aria-live="polite"></div>
+              </div>
+
+              <fieldset>
+                <legend class="form-label">File version</legend>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="file_version" id="fr-s-version-am" value="accepted-manuscript">
+                  <label class="form-check-label" for="fr-s-version-am">Accepted manuscript</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="file_version" id="fr-s-version-pv" value="published-version">
+                  <label class="form-check-label" for="fr-s-version-pv">Published version</label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="form-label mb-3">Who can see your full text / dataset?</legend>
+                <div class="d-flex flex-column gap-2">
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-s-oa-open" value="open" checked>
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-s-oa-open">Open access</label>
+                      <span class="text-muted small">Anyone can read and download immediately. Maximum visibility and impact.</span>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-s-oa-embargo" value="embargo">
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-s-oa-embargo">Under embargo</label>
+                      <span class="text-muted small">Files become publicly available after a date you choose. Metadata is visible now.</span>
+                      <!-- real impl shows/hides this on the "Under embargo" radio; hidden is the AT-correct toggle -->
+                      <div id="fr-s-embargo-date-field" class="mt-3" hidden>
+                        <label for="fr-s-embargo-date" class="form-label">
+                          Release date
+                          <span class="text-danger" aria-hidden="true">*</span>
+                        </label>
+                        <div class="col-5">
+                          <input type="date" id="fr-s-embargo-date" name="embargo_date" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-s-oa-closed" value="closed">
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-s-oa-closed">Restricted</label>
+                      <span class="text-muted small">Only users you approve can access the files. Metadata remains discoverable.</span>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="form-label">How can your research be used?</legend>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-s-license-cc-by" value="cc-by-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-s-license-cc-by">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY 4.0</span>
+                          <span class="small mb-0 d-block">Attribution</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-s-license-cc-by-sa" value="cc-by-sa-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-s-license-cc-by-sa">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-SA 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, ShareAlike</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-s-license-cc-by-nc" value="cc-by-nc-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-s-license-cc-by-nc">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-NC 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, NonCommercial</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-s-license-cc-by-nc-sa" value="cc-by-nc-sa-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-s-license-cc-by-nc-sa">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-NC-SA 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, NC, ShareAlike</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-s-license-cc0" value="cc0-1.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-s-license-cc0">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC0 1.0</span>
+                          <span class="small mb-0 d-block">Public Domain</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-s-license-all-rights" value="all-rights-reserved" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-s-license-all-rights">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">All Rights Reserved</span>
+                          <span class="small mb-0 d-block">No reuse without permission</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div>
+                <div class="bt-title-toolbar">
+                  <h2 class="h6 mb-0">Project</h2>
+                  <!-- Intentionally inert until docs/wip/ENTITY-PICKERS.md is settled. -->
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add project
+                  </button>
+                </div>
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <i class="if if-briefcase text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                     <p class="badge text-bg-secondary mb-1">Suggested: matched project</p>
+                     <p class="fw-semibold mb-0">Streaming analytics for intensive care</p>
+                    <div class="text-muted small">FWO Research project, 2023–2027</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Reject suggested project: Streaming analytics for intensive care">
+                    Reject
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm"
+                    aria-label="Add suggested project: Streaming analytics for intensive care">
+                    <i class="if if-add if--sm" aria-hidden="true"></i> Add
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <!-- @state -->
+
+            <!-- @state: action-failed -->
+            <div class="d-flex flex-column gap-5 mb-4">
+
+              <div>
+                <div class="bt-title-toolbar">
+                  <h2 class="h6 mb-0">Credited organization</h2>
+                  <!-- Intentionally inert until docs/wip/ENTITY-PICKERS.md is settled. -->
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add organization
+                  </button>
+                </div>
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <i class="if if-building text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                     <p class="badge text-bg-secondary mb-1">Suggested: current organisation</p>
+                     <p class="fw-semibold mb-0">Department of Electronics and Information Systems</p>
+                    <div class="text-muted small">Faculty of Engineering and Architecture</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Reject suggested organization: Department of Electronics and Information Systems">
+                    Reject
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm"
+                    aria-label="Add suggested organization: Department of Electronics and Information Systems">
+                    <i class="if if-add if--sm" aria-hidden="true"></i> Add
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <h2 class="h6 mb-2">Full text</h2>
+                <!-- Entered values preserved after the failed Add: the upload stays -->
+                <div class="bg-white border rounded p-3 mb-2 d-flex align-items-center gap-3">
+                  <i class="if if-file-pdf text-muted" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                    <div class="small fw-semibold">responsible-ai-workshop-notes.pdf</div>
+                    <div class="text-muted small">1,8 MB</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Remove file responsible-ai-workshop-notes.pdf">
+                    <i class="if if-delete if--sm" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <label class="bt-file-drop d-block mb-2" for="fr-f-file">
+                  <i class="if if-upload bt-file-drop__icon" aria-hidden="true"></i>
+                  <span class="bt-file-drop__text d-block">Drag a file here, or <strong>browse</strong></span>
+                  <span class="bt-file-drop__hint d-block">PDF, DOCX, EPUB — max 500 MB</span>
+                  <input type="file" id="fr-f-file" class="visually-hidden" accept=".pdf,.docx,.epub"
+                    hx-post="/deposit/upload"
+                    hx-target="#fr-f-file-list"
+                    hx-swap="innerHTML"
+                    hx-indicator="#fr-f-upload-indicator">
+                </label>
+                <span id="fr-f-upload-indicator" class="htmx-indicator small text-muted d-block" aria-live="polite">
+                  Uploading&hellip;
+                </span>
+                <div id="fr-f-file-list" aria-live="polite"></div>
+              </div>
+
+              <fieldset>
+                <legend class="form-label">File version</legend>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="file_version" id="fr-f-version-am" value="accepted-manuscript" checked>
+                  <label class="form-check-label" for="fr-f-version-am">Accepted manuscript</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="file_version" id="fr-f-version-pv" value="published-version">
+                  <label class="form-check-label" for="fr-f-version-pv">Published version</label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="form-label mb-3">Who can see your full text / dataset?</legend>
+                <div class="d-flex flex-column gap-2">
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-f-oa-open" value="open" checked>
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-f-oa-open">Open access</label>
+                      <span class="text-muted small">Anyone can read and download immediately. Maximum visibility and impact.</span>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-f-oa-embargo" value="embargo">
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-f-oa-embargo">Under embargo</label>
+                      <span class="text-muted small">Files become publicly available after a date you choose. Metadata is visible now.</span>
+                      <!-- real impl shows/hides this on the "Under embargo" radio; hidden is the AT-correct toggle -->
+                      <div id="fr-f-embargo-date-field" class="mt-3" hidden>
+                        <label for="fr-f-embargo-date" class="form-label">
+                          Release date
+                          <span class="text-danger" aria-hidden="true">*</span>
+                        </label>
+                        <div class="col-5">
+                          <input type="date" id="fr-f-embargo-date" name="embargo_date" class="form-control" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3 align-items-start p-3 bg-white border rounded">
+                    <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="oa" id="fr-f-oa-closed" value="closed">
+                    <div>
+                      <label class="fw-semibold d-block" for="fr-f-oa-closed">Restricted</label>
+                      <span class="text-muted small">Only users you approve can access the files. Metadata remains discoverable.</span>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="form-label">How can your research be used?</legend>
+                <div class="row g-3">
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-f-license-cc-by" value="cc-by-4.0" autocomplete="off" checked>
+                      <label class="card-body d-flex gap-3" for="fr-f-license-cc-by">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY 4.0</span>
+                          <span class="small mb-0 d-block">Attribution</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-f-license-cc-by-sa" value="cc-by-sa-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-f-license-cc-by-sa">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-SA 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, ShareAlike</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-f-license-cc-by-nc" value="cc-by-nc-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-f-license-cc-by-nc">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-NC 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, NonCommercial</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-f-license-cc-by-nc-sa" value="cc-by-nc-sa-4.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-f-license-cc-by-nc-sa">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC BY-NC-SA 4.0</span>
+                          <span class="small mb-0 d-block">Attribution, NC, ShareAlike</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-f-license-cc0" value="cc0-1.0" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-f-license-cc0">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">CC0 1.0</span>
+                          <span class="small mb-0 d-block">Public Domain</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="card">
+                      <input type="radio" class="btn-check" name="license" id="fr-f-license-all-rights" value="all-rights-reserved" autocomplete="off">
+                      <label class="card-body d-flex gap-3" for="fr-f-license-all-rights">
+                        <i class="if if-cc if--xxl flex-shrink-0 mt-1" aria-hidden="true"></i>
+                        <span>
+                          <span class="h6 mb-0 d-block">All Rights Reserved</span>
+                          <span class="small mb-0 d-block">No reuse without permission</span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <div>
+                <div class="bt-title-toolbar">
+                  <h2 class="h6 mb-0">Project</h2>
+                  <!-- Intentionally inert until docs/wip/ENTITY-PICKERS.md is settled. -->
+                  <button type="button" class="btn btn-ghost btn-sm">
+                    <i class="if if-add if--sm" aria-hidden="true"></i>
+                    Add project
+                  </button>
+                </div>
+                <div class="d-flex align-items-center gap-3 p-3 bg-white border rounded">
+                  <i class="if if-briefcase text-muted flex-shrink-0" aria-hidden="true"></i>
+                  <div class="flex-grow-1">
+                     <p class="badge text-bg-secondary mb-1">Suggested: matched project</p>
+                     <p class="fw-semibold mb-0">Streaming analytics for intensive care</p>
+                    <div class="text-muted small">FWO Research project, 2023–2027</div>
+                  </div>
+                  <button type="button" class="btn btn-ghost btn-sm"
+                    aria-label="Reject suggested project: Streaming analytics for intensive care">
+                    Reject
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm"
+                    aria-label="Add suggested project: Streaming analytics for intensive care">
+                    <i class="if if-add if--sm" aria-hidden="true"></i> Add
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <!-- @state -->
+
+
+            <!-- Read-only imported projection; opening it changes nothing -->
+            <!-- @state: round-pending action-failed -->
+            <div class="d-flex align-items-baseline justify-content-between gap-3 mb-4">
+              <details class="flex-grow-1">
+                <summary class="h6">Show all imported fields</summary>
+                <dl class="row g-2 mb-0 mt-2 small">
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Title</dt>
+                  <dd class="col-sm-9 mb-0">Workshop notes on responsible AI in clinical decision support</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Contributors</dt>
+                  <dd class="col-sm-9 mb-0">Sofie Van Hoecke, Ines Delcroix</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Container</dt>
+                  <dd class="col-sm-9 mb-0">Workshop on Responsible Clinical AI</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Year</dt>
+                  <dd class="col-sm-9 mb-0">2024</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
+                  <dd class="col-sm-9 mb-0">10.5555/rcai.2024.0071</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Publisher</dt>
+                  <dd class="col-sm-9 mb-0">CEUR Workshop Proceedings</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Volume / issue / pages</dt>
+                  <dd class="col-sm-9 mb-0">pp. 44&ndash;52</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Source</dt>
+                  <dd class="col-sm-9 mb-0">Crossref</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Credited organization</dt>
+                  <dd class="col-sm-9 mb-0">None supplied</dd>
+                </dl>
+              </details>
+              <a href="deposit-1-1-find.html" class="small flex-shrink-0"
+                aria-label="Edit the full record: Workshop notes on responsible AI in clinical decision support">
+                Edit the full record
+              </a>
+            </div>
+            <!-- @state -->
+            <!-- @state: single -->
+            <div class="d-flex align-items-baseline justify-content-between gap-3 mb-4">
+              <details class="flex-grow-1">
+                <summary class="h6">Show all imported fields</summary>
+                <dl class="row g-2 mb-0 mt-2 small">
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Title</dt>
+                  <dd class="col-sm-9 mb-0">Transfer learning across hospitals: a multicentric ICU study</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Contributors</dt>
+                  <dd class="col-sm-9 mb-0">Sofie Van Hoecke, Marc Lefèvre, Tayo Okafor</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Container</dt>
+                  <dd class="col-sm-9 mb-0">Journal of Clinical Monitoring</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Year</dt>
+                  <dd class="col-sm-9 mb-0">2025</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
+                  <dd class="col-sm-9 mb-0">10.1234/jcm.2025.0142</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Publisher</dt>
+                  <dd class="col-sm-9 mb-0">Springer</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Volume / issue / pages</dt>
+                  <dd class="col-sm-9 mb-0">41(2), pp. 118&ndash;131</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Source</dt>
+                  <dd class="col-sm-9 mb-0">Web of Science</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Credited organization</dt>
+                  <dd class="col-sm-9 mb-0">None supplied</dd>
+                </dl>
+              </details>
+              <a href="deposit-1-1-find.html" class="small flex-shrink-0"
+                aria-label="Edit the full record: Transfer learning across hospitals: a multicentric ICU study">
+                Edit the full record
+              </a>
+            </div>
+            <!-- @state -->
+            <!-- @state: round-nothing-missing -->
+            <div class="d-flex align-items-baseline justify-content-between gap-3 mb-4">
+              <details class="flex-grow-1">
+                <summary class="h6">Show all imported fields</summary>
+                <dl class="row g-2 mb-0 mt-2 small">
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Title</dt>
+                  <dd class="col-sm-9 mb-0">Soft actuator design for grip</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Contributors</dt>
+                  <dd class="col-sm-9 mb-0">Jun Ito, Karel De Vos, Mina Okafor</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Container</dt>
+                  <dd class="col-sm-9 mb-0">Polymer Science</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Year</dt>
+                  <dd class="col-sm-9 mb-0">2026</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
+                  <dd class="col-sm-9 mb-0">10.1234/ps.2026.0117</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Publisher</dt>
+                  <dd class="col-sm-9 mb-0">Elsevier</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Volume / issue / pages</dt>
+                  <dd class="col-sm-9 mb-0">112, pp. 55&ndash;63</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Source</dt>
+                  <dd class="col-sm-9 mb-0">Web of Science</dd>
+                  <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">Credited organization</dt>
+                  <dd class="col-sm-9 mb-0">Faculty of Engineering and Architecture (as supplied by Web of Science)</dd>
+                </dl>
+              </details>
+              <a href="deposit-1-1-find.html" class="small flex-shrink-0"
+                aria-label="Edit the full record: Soft actuator design for grip">
+                Edit the full record
+              </a>
+            </div>
+            <!-- @state -->
+
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

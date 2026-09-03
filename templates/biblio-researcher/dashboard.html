@@ -1,7 +1,7 @@
 <!-- @title: Dashboard — Split queue — Biblio -->
 <!-- @surface: backoffice -->
 <!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
-<!-- @states: filled, empty, message -->
+<!-- @states: filled, empty, message, added-only, found-only, round-finished -->
 
 <div class="u-layout--app" data-surface="backoffice">
 
@@ -20,8 +20,8 @@
           <div class="bt-toolbar__item">
             <h1 class="h5 mb-0 fw-semibold d-flex align-items-center gap-2">
               Inbox
-              <!-- @state: filled message -->
-                <span class="badge text-bg-primary">7</span>
+              <!-- @state: filled message added-only found-only round-finished -->
+                <span class="badge text-bg-primary">9</span>
               <!-- @state -->
             </h1>
           </div>
@@ -39,9 +39,6 @@
 
     <div class="u-main__body">
       <section class="u-main__content">
-        <!-- <div class="alert alert-success alert--seamless-inbox" role="alert">
-          <p class="mb-0"><i class="if if-check-circle flex-shrink-0 mt-1" aria-hidden="true"></i> <strong>Submitted</strong>: Urban forests as essential infrastructure for climate resilience and biodiversity.</p>
-        </div> -->
 
         <div class="u-main__content-body bt-bg">
 
@@ -108,250 +105,311 @@
                 </div>
               </section> -->
 
-              <!-- @state: filled message -->
-                <!-- Prototype note: This candidate block is superseded by
-                     docs/wip/CANDIDATES-FLOW.md; replace it when that draft is accepted. -->
-                <!-- ── Suggestions (claims to decide) ── -->
-                <section aria-labelledby="suggestions-heading">
+              <!-- @state: round-finished -->
+                <div class="alert alert-success mb-0" role="status">
+                  <p class="mb-0"><i class="if if-check-circle flex-shrink-0 mt-1" aria-hidden="true"></i> <strong>Round finished:</strong> 2 submitted, 1 rejected, 1 skipped, 1 saved as draft.</p>
+                </div>
+              <!-- @state -->
 
-                  <div class="card">
-                    <div class="bt-toolbar px-4 py-3">
-                      <div class="bt-toolbar__left">
-                        <div class="bt-toolbar__item">
-                          <h2 id="suggestions-heading" class="h6 mb-0 d-flex align-items-center gap-2">
-                            <i class="if if-message-ai if--md" aria-hidden="true"></i>
-                            Suggestions
-                            <span class="badge text-bg-secondary">2</span>
-                          </h2>
-                        </div>
-                      </div>
-                      <div class="bt-toolbar__right">
-                        <div class="bt-toolbar__item">
-                          <a href="#" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <article class="px-4 py-3 border-top" aria-labelledby="claim-1-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <a href="#" id="claim-1-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Transfer learning across hospitals: a multicentric ICU study
-                          </a>
-                          <p class="small mb-1">
-                            S. Van Hoecke, M. Lefèvre, T. Okafor · 2025 · Journal article
-                          </p>
-                          <span class="badge text-bg-secondary">Web of Science</span> <span class="fw-normal small">High-confidence match.</span>
-                          <!-- <div class="progress mt-2 w-50 mb-1" style="height: 4px" role="progressbar" aria-label="Match confidence: 86%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-primary" style="width: 86%"></div>
-                          </div>
-                          <p class="small mb-0" aria-hidden="true">86% match confidence</p>
-                          <p class="visually-hidden">Match confidence: 86 out of 100</p> -->
-                        </div>
-                        <div class="d-flex gap-2 flex-shrink-0">
-                          <button type="button" class="btn btn-ghost btn-sm"
-                            aria-label="Not mine: Transfer learning across hospitals: a multicentric ICU study"
-                            hx-post="/suggestions/claim-1/reject"
-                            hx-target="closest article"
-                            hx-swap="outerHTML"
-                            hx-indicator="#action-status">
-                            Not mine
-                          </button>
-                          <button type="button" class="btn btn-primary btn-sm"
-                            aria-label="Confirm mine: Transfer learning across hospitals: a multicentric ICU study"
-                            hx-post="/suggestions/claim-1/confirm"
-                            hx-target="closest article"
-                            hx-swap="outerHTML"
-                            hx-indicator="#action-status">
-                            <!-- <i class="if if-check" aria-hidden="true"></i> -->
-                            Review &amp; confirm
-                          </button>
-                        </div>
-                      </div>
-                    </article>
-
-                    <article class="px-4 py-3 border-top" aria-labelledby="claim-2-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <a href="#" id="claim-2-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Workshop notes on responsible AI in clinical decision support
-                          </a>
-                          <p class="small mb-1">
-                            S. Van Hoecke et al. · 2024 · Conference paper
-                          </p>
-                          <span class="badge text-bg-secondary">Crossref</span> <span class="fw-normal small">74% match.</span>
-                          <!-- <div class="progress mt-2 w-50 mb-1" style="height: 4px" role="progressbar" aria-label="Match confidence: 74%" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-primary" style="width: 74%"></div>
-                          </div>
-                          <p class="small mb-0" aria-hidden="true">74% match confidence</p>
-                          <p class="visually-hidden">Match confidence: 74 out of 100</p> -->
-                        </div>
-                        <div class="d-flex gap-2 flex-shrink-0">
-                          <button type="button" class="btn btn-ghost btn-sm"
-                            aria-label="Not mine: Workshop notes on responsible AI in clinical decision support"
-                            hx-post="/suggestions/claim-2/reject"
-                            hx-target="closest article"
-                            hx-swap="outerHTML"
-                            hx-indicator="#action-status">
-                            Not mine
-                          </button>
-                          <button type="button" class="btn btn-primary btn-sm"
-                            aria-label="Confirm mine: Workshop notes on responsible AI in clinical decision support"
-                            hx-post="/suggestions/claim-2/confirm"
-                            hx-target="closest article"
-                            hx-swap="outerHTML"
-                            hx-indicator="#action-status">
-                            <!-- <i class="if if-check" aria-hidden="true"></i> -->
-                            Review &amp; confirm
-                          </button>
-                        </div>
-                      </div>
-                    </article>
-
-
-                    <!-- <article class="px-4 py-3" aria-labelledby="claim-3-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <a href="#" id="claim-3-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Benchmark dataset for wearable PPG signal quality (BeWearPPG)
-                          </a>
-                          <p class="small">
-                            <span class="badge text-bg-secondary me-1">ORCID</span>
-                            S. Van Hoecke et al. · 2025 · Dataset
-                          </p>
-                          <div class="progress mt-2 w-50 mb-1" style="height: 4px" role="progressbar" aria-label="Match confidence: 91%" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar bg-primary" style="width: 91%"></div>
-                          </div>
-                          <p class="small mb-0" aria-hidden="true">91% match confidence</p>
-                          <p class="visually-hidden">Match confidence: 91 out of 100</p>
-                        </div>
-                        <div class="d-flex gap-2 flex-shrink-0">
-                          <button type="button" class="btn btn-ghost btn-sm"
-                            aria-label="Not mine: Benchmark dataset for wearable PPG signal quality"
-                            hx-post="/suggestions/claim-3/reject"
-                            hx-target="closest article"
-                            hx-swap="outerHTML"
-                            hx-indicator="#action-status">
-                            Not mine
-                          </button>
-                          <button type="button" class="btn btn-primary btn-sm"
-                            aria-label="Confirm mine: Benchmark dataset for wearable PPG signal quality"
-                            hx-post="/suggestions/claim-3/confirm"
-                            hx-target="closest article"
-                            hx-swap="outerHTML"
-                            hx-indicator="#action-status">
-                            <i class="if if-check" aria-hidden="true"></i>
-                            Review &amp; confirm
-                          </button>
-                        </div>
-                      </div>
-                    </article> -->
-
-                  </div>
-                </section>
-
-                <!-- ── Missing fields (to complete) ── -->
+              <!-- @state: filled message added-only found-only round-finished -->
+                <!-- ── Incomplete work (to complete) ── -->
                 <section aria-labelledby="complete-heading">
                   <div class="card">
-                    <div class="bt-toolbar px-4 py-3">
+                    <div class="bt-toolbar bt-toolbar--bordered px-4 py-3">
                       <div class="bt-toolbar__left">
                         <div class="bt-toolbar__item">
                           <h2 id="complete-heading" class="h6 mb-0 d-flex align-items-center gap-2">
                             <i class="if if-draft if--md" aria-hidden="true"></i>
                             Incomplete work
-                            <span class="badge text-bg-secondary">3</span>
+                            <span class="badge text-bg-secondary">4</span>
                           </h2>
                         </div>
                       </div>
                       <div class="bt-toolbar__right">
                         <div class="bt-toolbar__item">
-                          <a href="#" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                          <a href="search-researcher.html" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
                         </div>
                       </div>
                     </div>
 
+                  <ol class="list-unstyled mb-0" aria-label="Incomplete research output">
                     <!-- Returned for revision — most urgent, first -->
-                    <article class="px-4 py-3 border-top" aria-labelledby="returned-1-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <p class="badge text-bg-danger-light small mb-1">Returned for revision</p>
-                          <span class="badge text-bg-info-light fw-normal" aria-hidden="true">74% complete</span>
-                          <a href="#" id="returned-1-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Contrastive learning for cross-lingual biomedical text mining
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="returned-1-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-warning">Pending request</span>
+                          <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                          <span class="bt-work-card__meta-item">Conference paper</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="deposit-1-1-find.html" class="btn btn-primary btn-xs"
+                            aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
+                            <i class="if if-edit if--sm" aria-hidden="true"></i> Edit &amp; resubmit
                           </a>
-                          <p class="small mb-2">2024 · Conference paper</p>
-                          <div class="alert alert-light alert--sm mb-0 d-inline-block">
-                            <p class="mb-0 fst-italic">
-                              <i class="if if-message me-1" aria-hidden="true"></i>
-                              Please confirm the open access licence.
-                            </p>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="returned-1-title" class="bt-work-card__title">
+                          <a href="work-detail.html?state=returned">Contrastive learning for cross-lingual biomedical text mining</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><time datetime="2024">2024</time></p>
+                        <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                          <div class="d-flex align-items-start gap-2">
+                            <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <p class="mb-0"><strong>Biblio message:</strong> please confirm the open access licence.</p>
                           </div>
                         </div>
-                        <div class="flex-shrink-0">
-                          <a href="#" class="btn btn-outline-warning btn-sm"
-                            aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
-                            Edit &amp; resubmit
+                      </div>
+                    </article></li>
+
+                    <!-- Direct-added Plato draft — the strong completion action for
+                         Added for you entries lives here (docs/wip/CANDIDATES-BREADBOARD.md) -->
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="missing-plato-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-warning">Draft</span>
+                          <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                          <span class="bt-work-card__meta-item">Doctoral thesis</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="deposit-1-1-find.html?state=direct-added" class="btn btn-primary btn-xs"
+                            aria-label="Complete: Self-healing polymer networks for soft robotics">
+                            <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
                           </a>
                         </div>
                       </div>
-                    </article>
-
-                    <article class="px-4 py-3 border-top" aria-labelledby="missing-1-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <p class="badge text-bg-warning-light small mb-1">Missing: full-text file, funding, license</p>
-                          <span class="badge text-bg-info-light fw-normal" aria-hidden="true">74% complete</span>
-                          <a href="#" id="missing-1-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Real-time atrial fibrillation detection on edge devices
-                          </a>
-                          <p class="small mb-0">2025 · Journal article</p>
+                      <div class="bt-work-card__body">
+                        <p id="missing-plato-title" class="bt-work-card__title">
+                          <a href="work-detail.html?state=direct-added">Self-healing polymer networks for soft robotics</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Jonas Baert<span class="visually-hidden"> (UGent)</span></a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
+                        <div class="bt-work-card__meta">
+                          <i class="if if-message-ai text-muted" aria-hidden="true"></i>
+                          <span class="bt-work-card__meta-item">Added by Biblio assistant via Plato</span>
                         </div>
-                        <div class="flex-shrink-0">
-                          <a href="#" class="btn btn-outline-warning btn-sm"
+                        <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                          <div class="d-flex align-items-start gap-2">
+                            <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <p class="mb-0"><strong>Missing:</strong> abstract, license.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article></li>
+
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="missing-1-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-warning">Draft</span>
+                          <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                          <span class="bt-work-card__meta-item">No full text</span>
+                          <span class="bt-work-card__meta-item">Journal article</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="deposit-1-1-find.html" class="btn btn-primary btn-xs"
                             aria-label="Complete: Real-time atrial fibrillation detection on edge devices">
-                            Complete
+                            <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
                           </a>
                         </div>
                       </div>
-                    </article>
-
-                    <article class="px-4 py-3 border-top" aria-labelledby="missing-2-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <p class="badge text-bg-warning-light small mb-1">Missing: abstract, peer-review status</p>
-                          <span class="badge text-bg-info-light fw-normal" aria-hidden="true">74% complete</span>
-                          <a href="#" id="missing-2-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Tutorial: building reproducible ML pipelines for biosignals
-                          </a>
-                          <p class="small mb-0">2024 · Conference paper</p>
+                      <div class="bt-work-card__body">
+                        <p id="missing-1-title" class="bt-work-card__title">
+                          <a href="work-detail.html">Real-time atrial fibrillation detection on edge devices</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><time datetime="2025">2025</time></p>
+                        <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                          <div class="d-flex align-items-start gap-2">
+                            <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <p class="mb-0"><strong>Missing:</strong> full-text file, funding, license.</p>
+                          </div>
                         </div>
-                        <div class="flex-shrink-0">
-                          <a href="#" class="btn btn-outline-warning btn-sm"
-                            aria-label="Complete: Tutorial: building reproducible ML pipelines for biosignals">
-                            Complete
+                      </div>
+                    </article></li>
+
+                    <!-- Prototype note: 4 incomplete works exist in this fixture; the
+                         dashboard renders the first 3, the badge keeps the total. -->
+                  </ol>
+                  </div>
+                </section>
+              <!-- @state -->
+
+              <!-- @state: filled message found-only -->
+                <!-- ── Found for you (candidates to review) ── -->
+                <!-- Prototype note: source badges are fixtures — no feed is chosen yet
+                     (docs/wip/CANDIDATES-BET.md). The fixture holds New candidates
+                     only; a skipped candidate stays in this pending set with its
+                     "Skipped in your last round" row. Titles open the overview at
+                     their candidate and change nothing. -->
+                <section aria-labelledby="found-for-you-heading">
+                  <div class="card">
+                    <div class="bt-toolbar bt-toolbar--bordered px-4 py-3">
+                      <div class="bt-toolbar__left">
+                        <div class="bt-toolbar__item">
+                          <h2 id="found-for-you-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                            <i class="if if-message-ai if--md" aria-hidden="true"></i>
+                            Found for you
+                            <span class="badge text-bg-secondary">5</span>
+                          </h2>
+                        </div>
+                      </div>
+                      <div class="bt-toolbar__right">
+                        <div class="bt-toolbar__item">
+                          <a href="candidate-review.html" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="bt-toolbar__item">
+                          <a href="candidate-focused-review.html" class="btn btn-primary btn-xs">
+                            Review 5 research outputs
+                            <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
                           </a>
                         </div>
                       </div>
-                    </article>
+                    </div>
 
-                    <!-- <article class="px-4 py-3 border-top" aria-labelledby="missing-3-title">
-                      <div class="d-flex align-items-start justify-content-between gap-3">
-                        <div class="flex-grow-1 min-w-0">
-                          <p class="badge text-bg-warning-light small mb-1">Missing: license, linked publication</p>
-                          <a href="#" id="missing-3-title" class="small fw-semibold text-reset text-decoration-none d-block mb-1">
-                            Wearable cohort dataset (preview release)
-                          </a>
-                          <p class="small mb-0">2024 · Dataset</p>
+                    <ol class="list-unstyled mb-0" aria-label="Research output found for you">
+                      <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-1-title">
+                        <div class="bt-work-card__header">
+                          <div class="bt-work-card__meta">
+                            <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                            <span class="bt-work-card__meta-item">Journal article</span>
+                          </div>
+                          <div class="bt-work-card__actions">
+                            <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                              aria-label="Review: Transfer learning across hospitals: a multicentric ICU study">Review</a>
+                          </div>
                         </div>
-                        <div class="flex-shrink-0">
-                          <a href="#" class="btn btn-secondary btn-sm"
-                            aria-label="Complete: Wearable cohort dataset (preview release)">
-                            Complete
+                        <div class="bt-work-card__body">
+                          <p id="ffy-1-title" class="bt-work-card__title">
+                            <a href="candidate-review.html#cand-icu-transfer">Transfer learning across hospitals: a multicentric ICU study</a>
+                          </p>
+                          <p class="bt-work-card__authors">
+                            <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                            <span class="bt-work-card__author"><a href="?q=Marc%20Lef%C3%A8vre">Marc Lefèvre</a></span>,
+                            <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                          </p>
+                          <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span><span>DOI 10.1234/jcm.2025.0142</span></p>
+                        </div>
+                      </article></li>
+
+                      <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-2-title">
+                        <div class="bt-work-card__header">
+                          <div class="bt-work-card__meta">
+                            <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Crossref<span class="visually-hidden">, matched through your linked identity</span></span>
+                            <span class="bt-work-card__meta-item">Conference paper</span>
+                          </div>
+                          <div class="bt-work-card__actions">
+                            <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                              aria-label="Review: Workshop notes on responsible AI in clinical decision support">Review</a>
+                          </div>
+                        </div>
+                        <div class="bt-work-card__body">
+                          <p id="ffy-2-title" class="bt-work-card__title">
+                            <a href="candidate-review.html#cand-responsible-ai">Workshop notes on responsible AI in clinical decision support</a>
+                          </p>
+                          <p class="bt-work-card__authors">
+                            <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                            <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                          </p>
+                          <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Workshop on Responsible Clinical AI</span></p>
+                        </div>
+                      </article></li>
+
+                      <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-3-title">
+                        <div class="bt-work-card__header">
+                          <div class="bt-work-card__meta">
+                            <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                            <span class="bt-work-card__meta-item">Journal article</span>
+                          </div>
+                          <div class="bt-work-card__actions">
+                            <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                              aria-label="Review: Soft actuator design for grip">Review</a>
+                          </div>
+                        </div>
+                        <div class="bt-work-card__body">
+                          <p id="ffy-3-title" class="bt-work-card__title">
+                            <a href="candidate-review.html#cand-soft-actuator">Soft actuator design for grip</a>
+                          </p>
+                          <p class="bt-work-card__authors">
+                            <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>,
+                            <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                            <span class="bt-work-card__author"><a href="?q=Mina%20Okafor">Mina Okafor</a></span>
+                          </p>
+                          <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Polymer Science</span><span>DOI 10.1234/ps.2026.0117</span></p>
+                        </div>
+                      </article></li>
+
+                      <!-- Prototype note: 5 pending candidates exist in this fixture;
+                           the dashboard renders the first 3, the badge keeps the total. -->
+                    </ol>
+                  </div>
+                </section>
+              <!-- @state -->
+
+
+              <!-- @state: round-finished -->
+                <!-- ── Found for you after a round: the skipped candidate is what remains ── -->
+                <section aria-labelledby="found-for-you-rf-heading">
+                  <div class="card">
+                    <div class="bt-toolbar bt-toolbar--bordered px-4 py-3">
+                      <div class="bt-toolbar__left">
+                        <div class="bt-toolbar__item">
+                          <h2 id="found-for-you-rf-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                            <i class="if if-message-ai if--md" aria-hidden="true"></i>
+                            Found for you
+                            <span class="badge text-bg-secondary">1</span>
+                          </h2>
+                        </div>
+                      </div>
+                      <div class="bt-toolbar__right">
+                        <div class="bt-toolbar__item">
+                          <a href="candidate-review.html" class="text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="bt-toolbar__item">
+                          <a href="candidate-focused-review.html" class="btn btn-primary btn-xs">
+                            Review 1 research output
+                            <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
                           </a>
                         </div>
                       </div>
-                    </article> -->
+                    </div>
 
+                    <ol class="list-unstyled mb-0" aria-label="Research output found for you">
+                      <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-rf-1-title">
+                        <div class="bt-work-card__header">
+                          <div class="bt-work-card__meta">
+                            <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                            <span class="bt-work-card__meta-item">Journal article</span>
+                          </div>
+                          <div class="bt-work-card__actions">
+                            <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                              aria-label="Review: Thermal drift compensation in tactile sensor arrays">Review</a>
+                          </div>
+                        </div>
+                        <div class="bt-work-card__body">
+                          <p id="ffy-rf-1-title" class="bt-work-card__title">
+                            <a href="candidate-review.html#cand-thermal-drift">Thermal drift compensation in tactile sensor arrays</a>
+                          </p>
+                          <p class="bt-work-card__authors">
+                            <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                            <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>
+                          </p>
+                          <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Sensors and Actuators A</span></p>
+                          <div class="bt-work-card__meta">
+                            <i class="if if-skip-right-line text-muted" aria-hidden="true"></i>
+                            <span class="bt-work-card__meta-item">Skipped in your last round</span>
+                          </div>
+                        </div>
+                      </article></li>
+                    </ol>
                   </div>
                 </section>
               <!-- @state -->
@@ -397,7 +455,7 @@
               <!-- @state -->
             </div>
 
-            <!-- RIGHT: added on your behalf + activity feed -->
+            <!-- RIGHT: activity feed -->
             <div class="col-lg-4 d-flex flex-column gap-4">
 
               <!-- @state: message -->
@@ -417,46 +475,65 @@
                 </div>
               <!-- @state -->
 
-              <!-- ── Added on your behalf ── -->
-              <section aria-labelledby="added-heading">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                  <h2 id="added-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
-                    Added on your behalf
-                    <span class="badge text-bg-secondary">2</span>
-                  </h2>
-                  <a href="#" class="small text-muted text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
-                </div>
+              <!-- @state: filled message added-only round-finished -->
+                <!-- ── Added for you ── -->
+                <!-- Prototype note: Work state, not source, decides whether a row
+                     offers Complete. Not yours? lives on the work's own view and
+                     on the completion form, not on the row. -->
+                <section aria-labelledby="added-for-you-heading">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 id="added-for-you-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
+                      Added for you
+                      <span class="badge text-bg-secondary">3</span>
+                    </h2>
+                    <a href="search-researcher.html?state=direct-added" class="small text-muted text-decoration-none">View all <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+                  </div>
 
-                <ol class="list-unstyled mb-0" aria-label="Work recently added on your behalf">
-                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
-                    <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
-                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2h ago</span>
-                    <p class="small mb-0"><span class="fw-semibold">Biblio assistant</span> imported a dissertation via Plato:
-                      <a href="#" id="added-1-title">
-                        A survey of self-supervised learning for physiological signals
-                      </a>
-                    </p>
-                  </li>
-                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
-                    <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
-                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2d ago</span>
-                    <p class="small mb-0"><strong>Biblio assistant</strong> imported a dissertation via Plato:
-                      <a href="#" id="added-2-title">
-                        Wearable sensing for longitudinal cardiac monitoring
-                      </a>
-                    </p>
-                  </li>
-                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
-                    <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
-                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
-                    <p class="small mb-0"><span class="fw-semibold">Marie Curator</span> added a new Journal article:
-                      <a href="#" id="added-3-title">
-                        Annotated dataset of arrhythmia episodes
-                      </a>
-                    </p>
-                  </li>
-                </ol>
-              </section>
+                  <ol class="list-unstyled mb-0" aria-label="Research output added for you">
+                    <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                      <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                      <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2h ago</span>
+                      <div class="flex-grow-1 min-w-0">
+                        <p class="small mb-0"><span class="fw-semibold">Biblio assistant</span> imported a dissertation via Plato:
+                          <a href="work-detail.html?state=direct-added" id="afy-1-title">
+                            Self-healing polymer networks for soft robotics
+                          </a>
+                        </p>
+                        <p class="small mb-0 mt-1 d-flex align-items-center gap-2 flex-wrap">
+                          <span class="badge text-bg-warning-light">Needs completion</span>
+                          <a href="deposit-1-1-find.html?state=direct-added"
+                            aria-label="Complete: Self-healing polymer networks for soft robotics">Complete</a>
+                        </p>
+                      </div>
+                    </li>
+                    <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                      <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                      <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">3d ago</span>
+                      <div class="flex-grow-1 min-w-0">
+                        <p class="small mb-0"><span class="fw-semibold">Marie Curator</span> added a new Dataset:
+                          <a href="work-detail.html?state=direct-added" id="afy-2-title">
+                            Annotated dataset of arrhythmia episodes
+                          </a>
+                        </p>
+                        <p class="small mb-0 mt-1 d-flex align-items-center gap-2 flex-wrap">
+                          <span class="badge text-bg-warning-light">Needs completion</span>
+                          <a href="deposit-1-1-find.html?state=direct-added"
+                            aria-label="Complete: Annotated dataset of arrhythmia episodes">Complete</a>
+                        </p>
+                      </div>
+                    </li>
+                    <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                      <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                      <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                      <p class="small mb-0"><span class="fw-semibold">Marie Curator</span> added a new Dataset:
+                        <a href="work-detail.html?state=reviewed" id="afy-3-title">
+                          Coastal adaptation dataset for the Belgian coast
+                        </a>
+                      </p>
+                    </li>
+                  </ol>
+                </section>
+              <!-- @state -->
 
               <!-- ── Recent activity ── -->
               <section aria-labelledby="activity-heading">

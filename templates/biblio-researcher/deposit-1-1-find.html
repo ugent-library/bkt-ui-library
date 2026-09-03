@@ -1,10 +1,15 @@
 <!-- @title: Add research output — Step 1: Describe (prefilled) -->
 <!-- @surface: backoffice -->
+<!-- @states: identifier, direct-added -->
 <!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
   Describe flow — Step 1 (prefilled from identifier lookup)
   Shows the same form as deposit-1-0-find.html with metadata already populated
   from an external source (Crossref, PubMed, etc.) and a confirmation notice.
+
+  The direct-added state is the completion route for Added for you entries: the
+  notice names the import and carries the quiet Not yours? helpdesk route
+  (docs/wip/CANDIDATES-BREADBOARD.md). Only the notice varies between the states.
 
   Go templ params needed:
     work_id        string
@@ -124,6 +129,7 @@
           <!-- real impl: form POST /deposit/new --><div class="col-8">
 
             <!-- Prefill confirmation notice -->
+            <!-- @state: identifier -->
             <div class="alert alert-info mb-4" role="status">
               <h3 class="h6 mb-1">
                 <i class="if if-info-circle" aria-hidden="true"></i>
@@ -134,6 +140,24 @@
                 Review the fields below — only correct what's wrong.
               </p>
             </div>
+            <!-- @state -->
+            <!-- @state: direct-added -->
+            <div class="alert alert-info mb-4" role="status">
+              <h3 class="h6 mb-1">
+                <i class="if if-info-circle" aria-hidden="true"></i>
+                Does everything look right?
+              </h3>
+              <p class="mb-1">
+                <strong>Added for you</strong> — the Biblio assistant imported this record via Plato.
+                Review the fields below — only correct what's wrong.
+              </p>
+              <p class="mb-0">
+                <a href="mailto:biblio@ugent.be?subject=Not%20my%20research%20output%3A%20Urban%20forests%20as%20essential%20infrastructure%20for%20climate%20resilience"
+                  aria-label="Not yours: Urban forests as essential infrastructure for climate resilience — email the Biblio helpdesk">
+                  Not yours? Email biblio@ugent.be</a> — the record stays unchanged until the Biblio team acts.
+              </p>
+            </div>
+            <!-- @state -->
 
             <div class="d-flex flex-column gap-5 mb-5">
 
