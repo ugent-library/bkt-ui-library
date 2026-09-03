@@ -1,6 +1,6 @@
 <!-- @title: Research output — Researcher — Biblio -->
 <!-- @surface: backoffice -->
-<!-- @states: default, no-results -->
+<!-- @states: default, direct-added, no-results -->
 <!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
 <!--
 
@@ -257,29 +257,32 @@
             </div>
           </div>
 
+          <!-- Filter bar stub in the public-works composition: split chips, Add filter,
+               Clear all filters (patterns/filter-picker.html). -->
           <div class="bt-toolbar m-0">
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item">
-                <span class="text-muted">Filtered by:</span>
+                <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+                  <div class="filter-chip-group">
+                    <button type="button" class="badge badge--outline" aria-label="Edit filter: Status is Reviewed"><span class="fw-light">Status:</span> Reviewed</button>
+                    <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is Reviewed"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                  </div>
+                  <div class="filter-chip-group">
+                    <button type="button" class="badge badge--outline" aria-label="Edit filter: Visibility is Public"><span class="fw-light">Visibility:</span> Public</button>
+                    <button type="button" class="badge badge--outline" aria-label="Remove filter: Visibility is Public"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                  </div>
+                </div>
               </div>
               <div class="bt-toolbar__item">
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is Reviewed">
-                  Status: Reviewed
-                  <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                <!-- Prototype note: Add filter is a stub — which extra dimensions this
+                     list offers is undecided (docs/SEARCH-AND-FILTERING.md). -->
+                <button type="button" class="btn btn-ghost btn-sm">
+                  <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
                 </button>
               </div>
               <div class="bt-toolbar__item">
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Visibility is Public">
-                  Visibility: Public
-                  <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div class="bt-toolbar__item">
-                <span class="text-muted" aria-live="polite">812 research outputs</span>
-              </div>
-              <div class="bt-toolbar__item">
-                <button type="button" class="btn btn-ghost btn-sm text-muted py-0">
-                  Clear all
+                <button type="button" class="btn btn-ghost btn-sm">
+                  <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
                 </button>
               </div>
             </div>
@@ -559,6 +562,88 @@
           </div>
           <!-- @state -->
 
+          <!-- @state: direct-added -->
+          <!-- Direct-added work: the two variants of a work added without researcher
+               action. See docs/wip/CANDIDATES-BREADBOARD.md — Added for you. -->
+          <!-- Prototype note: Draft · Private on the Plato card is a stub — Raven owns
+               the status a Plato-added work receives (docs/wip/CANDIDATES-BET.md). -->
+          <ol class="list-unstyled mb-0">
+
+            <li><article class="bt-work-card" aria-labelledby="da-card-title-01">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-warning">Draft</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                  <span class="bt-work-card__meta-item">Doctoral thesis</span>
+                </div>
+                <div class="bt-work-card__actions">
+                  <a href="deposit-1-1-find.html?state=direct-added" class="btn btn-primary btn-sm"
+                    aria-label="Complete: Self-healing polymer networks for soft robotics">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
+                  </a>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="da-card-title-01" class="bt-work-card__title">
+                  <a href="work-detail.html?state=direct-added">Self-healing polymer networks for soft robotics</a>
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Baert<span class="visually-hidden"> (UGent)</span></a></span>
+                </p>
+                <p class="bt-work-card__pub"><a href="?year=2026"><time datetime="2026">2026</time></a></p>
+                <div class="alert alert-warning alert--sm mb-0 mt-2" role="note" aria-label="For the researcher">
+                  <div class="d-flex align-items-start gap-2">
+                    <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                    <div>
+                      <p class="mb-1"><strong>Missing:</strong> abstract, license.</p>
+                      <p class="mb-0"><a href="deposit-1-1-find.html?state=direct-added" class="fw-medium">Complete metadata</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="bt-work-card__meta align-items-center">
+                  <span>Created 28/08/2026 09:12 by Biblio assistant via Plato</span>
+                </div>
+              </div>
+            </article></li>
+
+            <li><article class="bt-work-card" aria-labelledby="da-card-title-02">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-success">Reviewed</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="bt-work-card__meta-item">Open</span>
+                  <span class="bt-work-card__meta-item">Dataset</span>
+                </div>
+                <div class="bt-work-card__actions">
+                  <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
+                    aria-label="View public page: Coastal adaptation dataset for the Belgian coast">
+                    <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
+                  </a>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="da-card-title-02" class="bt-work-card__title">
+                  <a href="work-detail.html?state=reviewed">Coastal adaptation dataset for the Belgian coast</a>
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Renee Peeters<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Instituut%20voor%20Kustonderzoek">Instituut voor Kustonderzoek</a></span>
+                </p>
+                <p class="bt-work-card__pub"><a href="?year=2025"><time datetime="2025">2025</time></a><span class="text-muted mx-1" aria-hidden="true">·</span><a href="?container=Zenodo">Zenodo</a></p>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="bt-work-card__meta align-items-center">
+                  <span>Created 21/08/2026 14:02 by Marie Curator</span>
+                  <span>Last edited 21/08/2026 14:02 by Marie Curator</span>
+                </div>
+              </div>
+            </article></li>
+
+          </ol>
+          <!-- @state -->
+
           <!-- @state: no-results -->
           <div class="p-4">
             <div class="bt-blank-slate bt-blank-slate--muted" role="status">
@@ -580,16 +665,46 @@
         <!-- @state: default -->
         <div class="u-main__content-footer border-top">
           <!-- Results bar: /patterns/pagination.html -->
-          <nav class="bt-toolbar px-4 py-2" aria-label="Research output pagination">
+          <div class="bt-toolbar px-4 py-2">
             <div class="bt-toolbar__left">
-              <ul class="pagination pagination-sm mb-0">
-                <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">‹</a></li>
-                <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">›</a></li>
-              </ul>
-              <span class="text-muted small ms-3" aria-live="polite"><span class="d-none d-md-inline-block visually-hidden">Showing </span>1&ndash;20 of 4,831</span>
+              <div class="bt-toolbar__item">
+                <nav aria-label="Research output pagination">
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                    <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+                    <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                    <li class="page-item"><a class="page-link" href="?page=194">194</a></li>
+                    <li class="page-item"><a class="page-link" href="?page=2" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted small"><span class="visually-hidden">Showing </span>1&ndash;25 of 4,831</span>
+              </div>
             </div>
-          </nav>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <label for="rs-page-size" class="visually-hidden">Results per page</label>
+                <select id="rs-page-size" class="form-select form-select-sm">
+                  <option value="10">10 per page</option>
+                  <option value="25" selected>25 per page</option>
+                  <option value="50">50 per page</option>
+                  <option value="100">100 per page</option>
+                </select>
+              </div>
+              <div class="bt-toolbar__item">
+                <!-- Sort values are provisional (patterns/pagination.html). -->
+                <label for="rs-sort" class="visually-hidden">Sort by</label>
+                <select id="rs-sort" class="form-select form-select-sm">
+                  <option value="year-desc" selected>Year (new to old)</option>
+                  <option value="year-asc">Year (old to new)</option>
+                  <option value="title-asc">Title (A&ndash;Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- @state -->
 

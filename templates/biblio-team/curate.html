@@ -477,24 +477,28 @@
             </div>
           </div>
 
-          <!-- Active filter chips -->
+          <!-- Filter bar stub in the public-works composition: split chips, Add filter,
+               Clear all filters (patterns/filter-picker.html). -->
           <div class="bt-toolbar">
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item">
-                <span class="text-muted">Filtered by:</span>
+                <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+                  <div class="filter-chip-group">
+                    <button type="button" class="badge badge--outline" aria-label="Edit filter: Status is Submitted"><span class="fw-light">Status:</span> Submitted</button>
+                    <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is Submitted"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                  </div>
+                </div>
               </div>
               <div class="bt-toolbar__item">
-                <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is Submitted">
-                  Status: Submitted
-                  <i class="if if-close if--xs ms-1" aria-hidden="true"></i>
+                <!-- Prototype note: Add filter is a stub — the curator dimension set is
+                     undecided (docs/SEARCH-AND-FILTERING.md, backoffice search). -->
+                <button type="button" class="btn btn-ghost btn-sm">
+                  <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
                 </button>
               </div>
               <div class="bt-toolbar__item">
-                <span class="text-muted" aria-live="polite">14 research outputs</span>
-              </div>
-              <div class="bt-toolbar__item">
-                <button type="button" class="btn btn-ghost btn-sm text-muted py-0">
-                  Clear all
+                <button type="button" class="btn btn-ghost btn-sm">
+                  <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
                 </button>
               </div>
             </div>
@@ -988,26 +992,42 @@
         <!-- Pagination -->
         <div class="u-main__content-footer">
           <!-- Results bar: /patterns/pagination.html -->
-          <nav class="bt-toolbar" aria-label="Research output pagination">
+          <div class="bt-toolbar">
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item">
-                <ul class="pagination pagination-sm mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#" aria-current="page">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next page">›</a>
-                  </li>
-                </ul>
+                <nav aria-label="Research output pagination">
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                    <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
+                  </ul>
+                </nav>
               </div>
               <div class="bt-toolbar__item">
-                <span class="text-muted" aria-live="polite"><span class="d-none d-md-inline-block visually-hidden">Showing </span>1&ndash;14 of 14</span>
+                <span class="text-muted small"><span class="visually-hidden">Showing </span>1&ndash;14 of 14</span>
               </div>
             </div>
-          </nav>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <label for="cu-page-size" class="visually-hidden">Results per page</label>
+                <select id="cu-page-size" class="form-select form-select-sm">
+                  <option value="10">10 per page</option>
+                  <option value="25" selected>25 per page</option>
+                  <option value="50">50 per page</option>
+                  <option value="100">100 per page</option>
+                </select>
+              </div>
+              <div class="bt-toolbar__item">
+                <!-- Sort values are provisional (patterns/pagination.html). -->
+                <label for="cu-sort" class="visually-hidden">Sort by</label>
+                <select id="cu-sort" class="form-select form-select-sm">
+                  <option value="submitted-desc" selected>Newest submission first</option>
+                  <option value="submitted-asc">Oldest submission first</option>
+                  <option value="year-desc">Year (new to old)</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- @state -->
 
