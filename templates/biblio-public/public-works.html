@@ -714,22 +714,22 @@
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <!-- Pagination is only styled, does not work. Make it work according to bootstrap patterns. Pattern: /patterns/pagination.html -->
-            <nav aria-label="Research output pagination (top)" class="d-flex align-items-center gap-3">
-              <ul class="pagination pagination-sm mb-0">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
-                <li class="page-item"><a class="page-link" href="#">18</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next page">›</a>
-                </li>
-              </ul>
+            <div class="bt-toolbar__item">
+              <nav aria-label="Research output pagination (top)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="#">18</a></li>
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
               <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–27 of 27 research outputs</span>
-            </nav>
+            </div>
           </div>
           <div class="bt-toolbar__right">
             <div class="bt-toolbar__item d-none d-lg-block">
@@ -1727,24 +1727,26 @@
         </ol>
 
         <!-- Results bar: /patterns/pagination.html -->
-        <nav class="bt-toolbar mt-2 pt-3" aria-label="Research output pagination (bottom)">
+        <div class="bt-toolbar mt-2 pt-3">
           <div class="bt-toolbar__left">
-            <ul class="pagination pagination-sm mb-0">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous page" aria-disabled="true">‹</a>
-              </li>
-              <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item" aria-hidden="true"><span class="page-link">&hellip;</span></li>
-              <li class="page-item"><a class="page-link" href="#">18</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next page">›</a>
-              </li>
-            </ul>
-            <span class="text-muted small"><span class="visually-hidden">Showing </span> 1–27 of 27 research outputs</span>
+            <div class="bt-toolbar__item">
+              <nav aria-label="Research output pagination (bottom)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
+                  <li class="page-item"><a class="page-link" href="#">18</a></li>
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small"><span class="visually-hidden">Showing </span>1–27 of 27 research outputs</span>
+            </div>
           </div>
-        </nav>
+        </div>
         <!-- @state -->
 
         <!-- @state: no-results -->

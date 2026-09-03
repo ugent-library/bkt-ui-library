@@ -6,6 +6,24 @@ system, or do I reach for something new?"
 
 ---
 
+## Pagination markup aligned everywhere (v2.30, 2026-09-03)
+
+The v2.11 results-bar markup now holds across the repository. The nine files listed in
+`PAGINATION_DRIFT` are aligned and the allowance in `scripts/check-a11y.js` is empty, so
+`check:a11y` fails any old-markup occurrence anywhere. No class changed — `booktower.css`
+needs no re-copy.
+
+Consumers who adapted a pagination bar from `public-works.html`, a public detail or
+directory page, or a backoffice list before this date mirrored the old markup. Re-apply
+the v2.11 table below: inert page items are `<span class="page-link">` in
+`li.page-item.disabled` (an anchor again the moment a target page exists — the server
+decides per render), arrows are `if-chevron-*` icons, the count sits beside the `<nav>`,
+the screen-reader prefix is plain `visually-hidden`, and `ul.pagination` carries no
+`mb-0`. Backoffice list bars also gained page size and sort on the right, per the
+kit page.
+
+---
+
 ## Breaking change — advanced search is one builder, and search shares its contracts (v2.29, 2026-08-21)
 
 Consumers sync from v2.21 — `584b9dd/2026-08-11`, the stamp raven carries: 40 classes
