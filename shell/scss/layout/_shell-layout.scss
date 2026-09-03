@@ -254,6 +254,7 @@ body {
 }
 
 .bt-nav-state-list {
+  display: block;
   padding-left: var(--bt-sp-5);
 }
 
@@ -279,10 +280,23 @@ body {
 }
 
 .bt-nav-state-btn {
-  padding: 2px 6px;
+  display: block;
+  width: 100%;
+  padding: 2px var(--bt-sp-2);
+  overflow: hidden;
+  border-left: 2px solid transparent;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   letter-spacing: 1px;
   font-size: var(--bt-text-xs);
+}
+
+.bt-nav-state-btn.is-active,
+.bt-nav-state-btn.is-active:hover {
+  color: var(--bt-white);
+  background-color: transparent;
+  border-left-color: var(--bt-yellow);
 }
 
 .bt-nav-state-btn:hover,

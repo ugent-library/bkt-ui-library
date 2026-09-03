@@ -1,0 +1,928 @@
+<!-- @title: Research output found for you — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: default, filtered, empty, action-success, claimed-elsewhere, action-failed, paginated -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
+<!--
+  Found for you overview (DD-003, docs/wip/CANDIDATES-BREADBOARD.md): a filtered,
+  paginated candidate list on the filter-first backoffice shell. The status filter
+  (New, Skipped, Added, Rejected; New and Skipped default) also holds the review
+  history. Opening changes nothing. Review opens the focused page for one candidate;
+  Review N research outputs starts a round through the New and Skipped set.
+
+  The search field narrows within the list; filters and search combine. After Reject
+  or Undo the real implementation removes or restores the card, announces the
+  decision, Undo availability and the remaining count through #action-status and
+  moves focus to #results-list. Raven owns every endpoint: reject, undo, review,
+  search, sort.
+
+  Prototype note: states sample the flow — every Review link opens the focused
+  single fixture, and Reject links open the one modelled outcome per state. Source
+  badges, counts and the sort options are fixtures; no candidate feed is chosen
+  (docs/wip/CANDIDATES-BET.md).
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+<!-- @include: templates/partials/main-sidebar.html -->
+<!-- @active: suggestions -->
+
+  <main id="main-content">
+
+    <!-- Live region for decision confirmations, Undo availability and the count -->
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden">
+      <!-- @state: action-success -->
+      Rejected: Soft actuator design for grip. Undo is available. 4 research outputs left.
+      <!-- @state -->
+      <!-- @state: claimed-elsewhere -->
+      Already added by a co-author or the Biblio team: Transfer learning across hospitals: a multicentric ICU study. 4 research outputs left.
+      <!-- @state -->
+    </span>
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h3 mb-0">Research output found for you</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <!-- @state: default filtered action-failed -->
+          <div class="bt-toolbar__item">
+            <a href="candidate-focused-review.html" class="btn btn-primary btn-sm">
+              Review 5 research outputs
+              <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
+          <!-- @state -->
+          <!-- @state: action-success claimed-elsewhere -->
+          <div class="bt-toolbar__item">
+            <a href="candidate-focused-review.html" class="btn btn-primary btn-sm">
+              Review 4 research outputs
+              <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
+          <!-- @state -->
+          <!-- @state: paginated -->
+          <div class="bt-toolbar__item">
+            <a href="candidate-focused-review.html" class="btn btn-primary btn-sm">
+              Review 45 research outputs
+              <i class="if if-arrow-right if--xs" aria-hidden="true"></i>
+            </a>
+          </div>
+          <!-- @state -->
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body u-main__body--split u-main__body--filter-drawer">
+
+      <!-- Facet sidebar. Prototype note: facet counts are fixtures — the Status group
+           tracks each state's story, the other groups keep the default numbers. -->
+      <aside class="u-main__sidebar u-main__sidebar--border-right offcanvas-xl offcanvas-start"
+        tabindex="-1" id="found-filters-offcanvas" aria-label="Filter by">
+
+        <div class="offcanvas-header d-xl-none border-bottom">
+          <h2 class="h5 mb-0">Filters</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+            data-bs-target="#found-filters-offcanvas" aria-label="Close filters"></button>
+        </div>
+
+        <div class="offcanvas-body flex-column p-0">
+        <div class="p-3">
+
+          <!-- Status — also the review history (DD-003) -->
+          <!-- @state: default action-failed -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-a-new" checked
+                aria-label="New (4 results)">
+              <label class="form-check-label flex-grow-1" for="crs-a-new">New</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">4</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-a-skipped" checked
+                aria-label="Skipped (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-a-skipped">Skipped</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-a-added"
+                aria-label="Added (2 results)">
+              <label class="form-check-label flex-grow-1" for="crs-a-added">Added</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-a-rejected"
+                aria-label="Rejected (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-a-rejected">Rejected</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </fieldset>
+          <!-- @state -->
+          <!-- @state: filtered -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-b-new" checked
+                aria-label="New (4 results)">
+              <label class="form-check-label flex-grow-1" for="crs-b-new">New</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">4</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-b-skipped" checked
+                aria-label="Skipped (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-b-skipped">Skipped</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-b-added" checked
+                aria-label="Added (2 results)">
+              <label class="form-check-label flex-grow-1" for="crs-b-added">Added</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-b-rejected"
+                aria-label="Rejected (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-b-rejected">Rejected</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </fieldset>
+          <!-- @state -->
+          <!-- @state: action-success -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-c-new" checked
+                aria-label="New (3 results)">
+              <label class="form-check-label flex-grow-1" for="crs-c-new">New</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-c-skipped" checked
+                aria-label="Skipped (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-c-skipped">Skipped</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-c-added"
+                aria-label="Added (2 results)">
+              <label class="form-check-label flex-grow-1" for="crs-c-added">Added</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-c-rejected"
+                aria-label="Rejected (2 results)">
+              <label class="form-check-label flex-grow-1" for="crs-c-rejected">Rejected</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+          </fieldset>
+          <!-- @state -->
+          <!-- @state: claimed-elsewhere -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-d-new" checked
+                aria-label="New (3 results)">
+              <label class="form-check-label flex-grow-1" for="crs-d-new">New</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-d-skipped" checked
+                aria-label="Skipped (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-d-skipped">Skipped</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-d-added"
+                aria-label="Added (2 results)">
+              <label class="form-check-label flex-grow-1" for="crs-d-added">Added</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-d-rejected"
+                aria-label="Rejected (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-d-rejected">Rejected</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </fieldset>
+          <!-- @state -->
+          <!-- @state: empty -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-e-new" checked
+                aria-label="New (0 results)">
+              <label class="form-check-label flex-grow-1" for="crs-e-new">New</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">0</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-e-skipped" checked
+                aria-label="Skipped (0 results)">
+              <label class="form-check-label flex-grow-1" for="crs-e-skipped">Skipped</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">0</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-e-added"
+                aria-label="Added (2 results)">
+              <label class="form-check-label flex-grow-1" for="crs-e-added">Added</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-e-rejected"
+                aria-label="Rejected (1 result)">
+              <label class="form-check-label flex-grow-1" for="crs-e-rejected">Rejected</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </fieldset>
+          <!-- @state -->
+          <!-- @state: paginated -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Status</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-f-new" checked
+                aria-label="New (40 results)">
+              <label class="form-check-label flex-grow-1" for="crs-f-new">New</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">40</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-f-skipped" checked
+                aria-label="Skipped (5 results)">
+              <label class="form-check-label flex-grow-1" for="crs-f-skipped">Skipped</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">5</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-f-added"
+                aria-label="Added (12 results)">
+              <label class="form-check-label flex-grow-1" for="crs-f-added">Added</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">12</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crs-f-rejected"
+                aria-label="Rejected (3 results)">
+              <label class="form-check-label flex-grow-1" for="crs-f-rejected">Rejected</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+          </fieldset>
+          <!-- @state -->
+
+          <hr>
+
+          <!-- Source -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Source</legend>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crc-wos"
+                aria-label="Web of Science (3 results)">
+              <label class="form-check-label flex-grow-1" for="crc-wos">Web of Science</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crc-crossref"
+                aria-label="Crossref (1 result)">
+              <label class="form-check-label flex-grow-1" for="crc-crossref">Crossref</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crc-orcid"
+                aria-label="ORCID (1 result)">
+              <label class="form-check-label flex-grow-1" for="crc-orcid">ORCID</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </fieldset>
+
+          <hr>
+
+          <!-- Publication year -->
+          <fieldset class="mb-4">
+            <legend class="form-label fw-semibold mb-2">Publication year</legend>
+            <div class="d-flex gap-2 align-items-center">
+              <label for="cry-from" class="visually-hidden">From year</label>
+              <input type="number" id="cry-from" class="form-control form-control-sm" placeholder="From" min="1800" max="2099">
+              <span class="text-muted small" aria-hidden="true">–</span>
+              <label for="cry-to" class="visually-hidden">To year</label>
+              <input type="number" id="cry-to" class="form-control form-control-sm" placeholder="To" min="1800" max="2099">
+            </div>
+          </fieldset>
+
+          <hr>
+
+          <!-- Faculty — the record's credited organizations. A record without one is
+               counted under no faculty, so the counts sum below the total. -->
+          <fieldset class="mb-0">
+            <legend class="form-label fw-semibold mb-2">Faculty</legend>
+            <label for="crf-search" class="visually-hidden">Search faculties</label>
+            <input type="search" id="crf-search" class="form-control form-control-sm mb-2"
+              placeholder="Search faculties&hellip;" autocomplete="off">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crf-ea"
+                aria-label="Faculty of Engineering and Architecture (2 results)">
+              <label class="form-check-label flex-grow-1" for="crf-ea">Faculty of Engineering and Architecture</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crf-we"
+                aria-label="Faculty of Sciences (1 result)">
+              <label class="form-check-label flex-grow-1" for="crf-we">Faculty of Sciences</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="crf-ge"
+                aria-label="Faculty of Medicine and Health Sciences (1 result)">
+              <label class="form-check-label flex-grow-1" for="crf-ge">Faculty of Medicine and Health Sciences</label>
+              <span class="badge bg-transparent pe-1" aria-hidden="true">1</span>
+            </div>
+          </fieldset>
+
+        </div>
+        </div>
+
+        <div class="d-xl-none p-3 border-top">
+          <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-ghost text-muted">Clear all</button>
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
+              data-bs-dismiss="offcanvas" data-bs-target="#found-filters-offcanvas">
+              <!-- @state: default action-failed -->
+              Show 5 research outputs
+              <!-- @state -->
+              <!-- @state: filtered -->
+              Show 7 research outputs
+              <!-- @state -->
+              <!-- @state: action-success claimed-elsewhere -->
+              Show 4 research outputs
+              <!-- @state -->
+              <!-- @state: empty -->
+              Show 0 research outputs
+              <!-- @state -->
+              <!-- @state: paginated -->
+              Show 45 research outputs
+              <!-- @state -->
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Results -->
+      <section class="u-main__content">
+        <div class="u-main__content-header border-bottom px-4 py-3">
+
+          <div role="search" aria-label="Search within research output found for you">
+            <label for="cr-search" class="visually-hidden">Search by title, author, DOI</label>
+            <!-- real impl: form GET /candidates?q=… — raven owns search behaviour -->
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <button type="button" class="btn btn-secondary btn-sm d-xl-none flex-shrink-0"
+                data-bs-toggle="offcanvas" data-bs-target="#found-filters-offcanvas"
+                aria-controls="found-filters-offcanvas">
+                <i class="if if-filter-3-line if--sm" aria-hidden="true"></i>
+                Filters
+              </button>
+              <i class="if if-search if--sm text-muted flex-shrink-0" aria-hidden="true"></i>
+              <input type="search" id="cr-search" class="form-control form-control-sm border-0 bg-transparent shadow-none"
+                placeholder="Search by title, author, DOI&hellip;">
+            </div>
+          </div>
+
+          <div class="bt-toolbar m-0">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
+                  <!-- Prototype note: one chip per dimension, values listed in full.
+                       filter-bar.js and patterns/filter-picker.html render first
+                       value +N instead; which form wins is open. -->
+                  <!-- @state: default action-failed action-success claimed-elsewhere empty paginated -->
+                  <div class="filter-chip-group">
+                    <button type="button" class="badge badge--outline" aria-label="Edit filter: Status is New, Skipped"><span class="fw-light">Status:</span> New, Skipped</button>
+                    <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is New, Skipped"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                  </div>
+                  <!-- @state -->
+                  <!-- @state: filtered -->
+                  <div class="filter-chip-group">
+                    <button type="button" class="badge badge--outline" aria-label="Edit filter: Status is New, Skipped, Added"><span class="fw-light">Status:</span> New, Skipped +1</button>
+                    <button type="button" class="badge badge--outline" aria-label="Remove filter: Status is New, Skipped, Added"><i class="if if-close if--xs" aria-hidden="true"></i></button>
+                  </div>
+                  <!-- @state -->
+                </div>
+              </div>
+              <div class="bt-toolbar__item">
+                <button type="button" class="btn btn-ghost btn-sm">
+                  <i class="if if-close if--xs" aria-hidden="true"></i>
+                  Clear all filters
+                </button>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted" aria-live="polite">
+                  <!-- @state: default action-failed -->
+                  5 research outputs
+                  <!-- @state -->
+                  <!-- @state: filtered -->
+                  7 research outputs
+                  <!-- @state -->
+                  <!-- @state: action-success claimed-elsewhere -->
+                  4 research outputs
+                  <!-- @state -->
+                  <!-- @state: paginated -->
+                  45 research outputs
+                  <!-- @state -->
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Focus lands here after a decision swap (D4). -->
+        <div id="results-list" class="u-main__content-body pt-0" tabindex="-1">
+
+          <!-- @state: action-success -->
+          <div class="alert alert-success alert--sm">
+            <div class="d-flex align-items-start gap-2">
+              <i class="if if-check-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <p class="mb-0"><strong>Rejected:</strong> Soft actuator design for grip.
+                <a href="candidate-review.html" class="fw-medium"
+                  aria-label="Undo rejection: Soft actuator design for grip">Undo</a>
+              </p>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: claimed-elsewhere -->
+          <div class="alert alert-info alert--sm">
+            <div class="d-flex align-items-start gap-2">
+              <i class="if if-info-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <p class="mb-0"><strong>Already added by a co-author or the Biblio team:</strong> Transfer learning across hospitals: a multicentric ICU study.</p>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: action-failed -->
+          <div class="alert alert-danger alert--sm" role="alert">
+            <div class="d-flex align-items-start gap-2">
+              <i class="if if-error-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <p class="mb-0"><strong>Reject failed.</strong> Nothing was changed; the candidate is still yours to review.
+                <a href="candidate-review.html?state=action-success" class="fw-medium"
+                  aria-label="Retry Reject: Soft actuator design for grip">Retry Reject</a>
+              </p>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: default filtered action-failed action-success claimed-elsewhere -->
+          <ol class="list-unstyled mb-0" aria-label="Research output found for you">
+          <!-- @state -->
+
+            <!-- @state: default filtered action-failed action-success -->
+            <li id="cand-icu-transfer"><article class="bt-work-card" aria-labelledby="cr-1-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-1-title" class="bt-work-card__title">
+                  Transfer learning across hospitals: a multicentric ICU study
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Marc%20Lef%C3%A8vre">Marc Lefèvre</a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span><span>DOI 10.1234/jcm.2025.0142</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Transfer learning across hospitals: a multicentric ICU study">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=claimed-elsewhere" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Transfer learning across hospitals: a multicentric ICU study">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+            <!-- @state -->
+
+            <!-- @state: default filtered action-failed action-success claimed-elsewhere -->
+            <li id="cand-responsible-ai"><article class="bt-work-card" aria-labelledby="cr-2-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Crossref</span>
+                  <span class="bt-work-card__meta-item">Conference paper</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-2-title" class="bt-work-card__title">
+                  Workshop notes on responsible AI in clinical decision support
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Workshop on Responsible Clinical AI</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Workshop notes on responsible AI in clinical decision support">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Workshop notes on responsible AI in clinical decision support">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+            <!-- @state -->
+
+            <!-- @state: default filtered action-failed claimed-elsewhere -->
+            <li id="cand-soft-actuator"><article class="bt-work-card" aria-labelledby="cr-3-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-3-title" class="bt-work-card__title">
+                  Soft actuator design for grip
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>,
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Mina%20Okafor">Mina Okafor</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Polymer Science</span><span>DOI 10.1234/ps.2026.0117</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Soft actuator design for grip">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Soft actuator design for grip">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+            <!-- @state -->
+
+            <!-- @state: default filtered action-failed action-success claimed-elsewhere -->
+            <li id="cand-icu-forecasting"><article class="bt-work-card" aria-labelledby="cr-4-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">ORCID</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-4-title" class="bt-work-card__title">
+                  Graph neural networks for ICU load forecasting
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Priya%20Raman">Priya Raman</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Artificial Intelligence in Medicine</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Graph neural networks for ICU load forecasting">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Graph neural networks for ICU load forecasting">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+            <!-- @state -->
+
+            <!-- @state: default filtered action-failed action-success claimed-elsewhere -->
+            <li id="cand-thermal-drift"><article class="bt-work-card" aria-labelledby="cr-5-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-5-title" class="bt-work-card__title">
+                  Thermal drift compensation in tactile sensor arrays
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Sensors and Actuators A</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+                <div class="bt-work-card__meta">
+                  <i class="if if-skip-right-line text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Skipped in your last round</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Thermal drift compensation in tactile sensor arrays">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Thermal drift compensation in tactile sensor arrays">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+            <!-- @state -->
+
+            <!-- @state: filtered -->
+            <!-- Added cards are ordinary researcher Work cards; they join the list
+                 when the Added status is filtered in. -->
+            <li><article class="bt-work-card" aria-labelledby="cr-added-1-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-warning">Draft</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+                <div class="bt-work-card__actions">
+                  <a href="deposit-1-1-find.html" class="btn btn-primary btn-sm"
+                    aria-label="Resume: Polymer network modelling for stretchable electronics">
+                    <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Resume
+                  </a>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-added-1-title" class="bt-work-card__title">
+                  Polymer network modelling for stretchable electronics
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Polymer Science</span></p>
+              </div>
+            </article></li>
+
+            <li><article class="bt-work-card" aria-labelledby="cr-added-2-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-info">Submitted</span>
+                  <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+                <div class="bt-work-card__actions">
+                  <a href="work-detail.html?state=submitted" class="btn btn-ghost btn-sm"
+                    aria-label="View: Soft robotics grippers for fruit harvesting">
+                    <i class="if if-eye if--sm" aria-hidden="true"></i> View
+                  </a>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-added-2-title" class="bt-work-card__title">
+                  <a href="work-detail.html?state=submitted">Soft robotics grippers for fruit harvesting</a>
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>npj Robotics</span></p>
+              </div>
+            </article></li>
+            <!-- @state -->
+
+          <!-- @state: default filtered action-failed action-success claimed-elsewhere -->
+          </ol>
+          <!-- @state -->
+
+          <!-- @state: empty -->
+          <div class="p-4">
+            <div class="bt-blank-slate" role="status">
+              <p class="h5 mb-2">Nothing found for you right now</p>
+              <p class="mb-0">New matches appear here and on your dashboard.</p>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: paginated -->
+          <!-- Prototype note: the page-2 fixture is abridged to three cards; the real
+               page renders the full page of results. -->
+          <ol class="list-unstyled mb-0" aria-label="Research output found for you">
+            <li><article class="bt-work-card" aria-labelledby="cr-p2-1-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-p2-1-title" class="bt-work-card__title">
+                  Federated learning for rare disease cohorts
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Elena%20Neri">Elena Neri</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Journal of Biomedical Informatics</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Federated learning for rare disease cohorts">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Federated learning for rare disease cohorts">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+
+            <li><article class="bt-work-card" aria-labelledby="cr-p2-2-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Crossref</span>
+                  <span class="bt-work-card__meta-item">Conference paper</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-p2-2-title" class="bt-work-card__title">
+                  Sensor fusion for early sepsis alerts
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Clinical AI Symposium</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Sensor fusion for early sepsis alerts">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Sensor fusion for early sepsis alerts">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+
+            <li><article class="bt-work-card" aria-labelledby="cr-p2-3-title">
+              <div class="bt-work-card__header">
+                <div class="bt-work-card__meta">
+                  <span class="badge text-bg-secondary">Web of Science</span>
+                  <span class="bt-work-card__meta-item">Journal article</span>
+                </div>
+              </div>
+              <div class="bt-work-card__body">
+                <p id="cr-p2-3-title" class="bt-work-card__title">
+                  Wearable ECG electrode placement under motion
+                </p>
+                <p class="bt-work-card__authors">
+                  <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                  <span class="bt-work-card__author"><a href="?q=Priya%20Raman">Priya Raman</a></span>
+                </p>
+                <p class="bt-work-card__pub"><span>(<time datetime="2022">2022</time>)</span><span>Physiological Measurement</span></p>
+                <div class="bt-work-card__meta">
+                  <i class="if if-user text-muted" aria-hidden="true"></i>
+                  <span class="bt-work-card__meta-item">Matched through your linked identity</span>
+                </div>
+              </div>
+              <div class="bt-work-card__footer">
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                  <a href="candidate-focused-review.html?state=single" class="btn btn-primary btn-sm"
+                    aria-label="Review: Wearable ECG electrode placement under motion">
+                    Review
+                  </a>
+                  <a href="candidate-review.html?state=action-success" class="btn btn-secondary btn-sm"
+                    aria-label="Reject: Wearable ECG electrode placement under motion">
+                    Reject
+                  </a>
+                </div>
+              </div>
+            </article></li>
+          </ol>
+          <!-- @state -->
+
+        </div><!-- /results-list -->
+
+        <!-- Results bar: /patterns/pagination.html — pagination and count left, page
+             size and sort right. The bar renders in every state so the affordances
+             keep their place; only the page list and the count follow the state. -->
+        <div class="u-main__content-footer border-top">
+          <div class="bt-toolbar px-4 py-2">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <nav aria-label="Research output pagination">
+                  <!-- @state: default action-failed action-success claimed-elsewhere -->
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                    <li class="page-item active"><a class="page-link" href="?page=1" aria-current="page">1</a></li>
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
+                  </ul>
+                  <!-- @state -->
+                  <!-- @state: filtered -->
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                    <li class="page-item active"><a class="page-link" href="?state=filtered" aria-current="page">1</a></li>
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
+                  </ul>
+                  <!-- @state -->
+                  <!-- @state: empty -->
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
+                  </ul>
+                  <!-- @state -->
+                  <!-- @state: paginated -->
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item"><a class="page-link" href="?state=default" aria-label="Previous page"><i class="if if-chevron-left" aria-hidden="true"></i></a></li>
+                    <li class="page-item"><a class="page-link" href="?state=default">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="?state=paginated" aria-current="page">2</a></li>
+                    <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-right" aria-hidden="true"></i></span></li>
+                  </ul>
+                  <!-- @state -->
+                </nav>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted small">
+                  <!-- @state: default action-failed -->
+                  <span class="visually-hidden">Showing </span>1&ndash;5 of 5
+                  <!-- @state -->
+                  <!-- @state: filtered -->
+                  <span class="visually-hidden">Showing </span>1&ndash;7 of 7
+                  <!-- @state -->
+                  <!-- @state: action-success claimed-elsewhere -->
+                  <span class="visually-hidden">Showing </span>1&ndash;4 of 4
+                  <!-- @state -->
+                  <!-- @state: empty -->
+                  0 research outputs
+                  <!-- @state -->
+                  <!-- @state: paginated -->
+                  <span class="visually-hidden">Showing </span>26&ndash;45 of 45
+                  <!-- @state -->
+                </span>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <label for="cr-page-size" class="visually-hidden">Results per page</label>
+                <select id="cr-page-size" class="form-select form-select-sm">
+                  <option value="10">10 per page</option>
+                  <option value="25" selected>25 per page</option>
+                  <option value="50">50 per page</option>
+                  <option value="100">100 per page</option>
+                </select>
+              </div>
+              <div class="bt-toolbar__item">
+                <label for="cr-sort" class="visually-hidden">Sort by</label>
+                <select id="cr-sort" class="form-select form-select-sm">
+                  <option value="match-desc" selected>Newest match first</option>
+                  <option value="match-asc">Oldest match first</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+</div>

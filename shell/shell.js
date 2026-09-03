@@ -15,6 +15,15 @@
   const PROTO_KEY = 'bt-prototype-mode';
 
   function setProtoMode(on) {
+    if (!on) {
+      const revealAfterOpen = event => {
+        if (event.target !== shell) return;
+        shell.removeEventListener('transitionend', revealAfterOpen);
+        revealActiveNavItem();
+      };
+      shell.addEventListener('transitionend', revealAfterOpen);
+    }
+
     shell.classList.toggle('prototype-mode', on);
     sessionStorage.setItem(PROTO_KEY, on ? '1' : '');
   }
@@ -264,17 +273,30 @@
   // ─── Nav scroll position persistence ──────────────────────────────────────────
   const NAV_SCROLL_KEY = 'bt-nav-scroll';
 
+  function getActiveNavItem() {
+    if (!navBody) return null;
+
+    return navBody.querySelector('.bt-nav-state-btn.is-active')
+      || navBody.querySelector('.bt-nav-link.active');
+  }
+
+  function revealActiveNavItem() {
+    const activeItem = getActiveNavItem();
+    if (!activeItem) return false;
+
+    const group = activeItem.closest('.bt-nav-group');
+    if (group) setGroupOpen(group, true);
+
+    const navRect = navBody.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+    navBody.scrollTop += itemRect.top - navRect.top - (navBody.clientHeight - itemRect.height) / 2;
+    return true;
+  }
+
   if (navBody) {
-    // Restore saved scroll position
     const savedScroll = sessionStorage.getItem(NAV_SCROLL_KEY);
-    if (savedScroll !== null) {
+    if (!revealActiveNavItem() && savedScroll !== null) {
       navBody.scrollTop = parseInt(savedScroll, 10);
-    } else {
-      // First visit — scroll active item into view
-      const activeLink = navBody.querySelector('.bt-nav-link.active');
-      if (activeLink) {
-        activeLink.scrollIntoView({ block: 'nearest' });
-      }
     }
 
     // Save scroll position before navigating away
