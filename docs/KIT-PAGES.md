@@ -5,26 +5,28 @@ design system. Read two nearby pages before adding one.
 
 ## Visible content
 
-A kit page may show:
+A kit page shows; it does not explain. Demos carry the variants and states. Prose earns its
+place only as:
 
-- what the pattern is and when to use it;
-- canonical variants and states;
+- purpose and when to choose the pattern;
 - behavior a static example cannot show, including focus and keyboard behavior;
 - accessibility requirements specific to the pattern;
 - links to the owning partial, contract or implementation guide.
 
-Keep rationale only when it helps a reader choose between patterns. Move cross-page rules,
-architecture and implementation contracts to `docs/`. Put unsettled work that coordinates several
+A trap that is dangerous to leave unstated earns a sentence; raise it before writing it. Move
+cross-page rules, architecture and implementation contracts to `docs/`. Put unsettled work that
+coordinates several
 pages, people or repositories in `docs/wip/` or an issue. Do not create a document only to repeat a
 source-local prototype note. Git owns routine iteration. If an alternative explains an accepted
 choice that may need defending later, record it in `docs/decisions/`.
 
 Do not show roadmap status, issue acceptance criteria, implementation plans, old behavior or a tour
-of JavaScript and SCSS. Do not copy a contract from `docs/`; link it.
+of markup, JavaScript or SCSS. Do not copy or summarize a contract from `docs/`; link it.
 
-As a review threshold, keep explanatory prose below 250 words on an element page and 500 on a
-pattern page. Demo labels, fixture content and reference tables do not count. A foundation page may
-run longer when its prose is the subject, as on Design Principles.
+`npm run check:prose` enforces the ceilings: explanatory prose stays below 250 words on an element
+page and 500 on a pattern page. Demo labels, fixture content, reference tables, headings and code
+do not count. A foundation page may run longer when its prose is the subject, as on Design
+Principles.
 
 ## HTML comments
 
@@ -65,6 +67,7 @@ markup.
       <!-- live component HTML -->
     </div>
   </div>
+  <div class="ds-demo-note">Notes</div>
 </section>
 ```
 

@@ -101,7 +101,7 @@ A pagination nav is named after the entity in the list — the wording rule is `
 </button>
 ```
 
-**B4. Row actions must include the record name in their label.** A keyboard or screen reader user navigating by button has no visual row context. This applies to every action button inside `card-research`, table rows, and list items.
+**B4. Row actions must include the record name in their label.** A keyboard or screen reader user navigating by button has no visual row context. This applies to every action button inside `card-research`, table rows, and list items. The label is the visible action plus the record name and nothing more; consequences and explanations never ride in a label.
 
 ```html
 <!-- ✓ Correct -->
