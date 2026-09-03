@@ -23,8 +23,8 @@ Prototype Candidates. Label Raven unknowns as stubs.
    backoffice shell: a search field that narrows within the list, status filter (New,
    Skipped, Added, Rejected; New and Skipped selected by default), source, publication
    year and faculty filters (faculty: multi-select with search, on the record's
-   credited organizations), pagination, count that names the entity. Applied filters
-   render as the public-works split chips. New
+   credited organizations), and the results bar, which carries the only result
+   count. Applied filters render as the public-works split chips. New
    and Skipped cards are full candidate cards with source, match evidence, **Review**
    and **Reject**; a Skipped card says it was skipped. Added cards show the Work's own
    status with **Resume** or **View**. Rejected cards offer **Undo**. Delete
@@ -56,7 +56,7 @@ Prototype Candidates. Label Raven unknowns as stubs.
 | Surface | State | Must make visible |
 |---|---|---|
 | Dashboard | Added/Found/both/neither | Counts, direct actions, existing regions |
-| Overview | Default, filtered, empty | Search, filters, entity count, cards per status, results bar |
+| Overview | Default, filtered, empty | Search, filters, cards per status, results bar |
 | Overview | Action success/failure | Announcement, Undo or Retry; preserved order and count |
 | Overview | Claimed elsewhere | Card removed, announcement says a co-author or the Biblio team added it, no Undo |
 | Focused | Round pending, nothing missing, single | Position and remaining (round only), identity, researcher fields, disclosure |
