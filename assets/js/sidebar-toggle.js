@@ -16,6 +16,8 @@
     button.setAttribute('aria-expanded', String(!isSlim));
     button.setAttribute('aria-label', isSlim ? 'Expand sidebar' : 'Collapse sidebar');
 
+    if (typeof bootstrap === 'undefined') return;
+
     sidebar.querySelectorAll('a.nav-link[data-bs-toggle="tooltip"]').forEach(function (link) {
       var tooltip = bootstrap.Tooltip.getOrCreateInstance(link, { placement: 'right' });
       if (isSlim) {
@@ -25,16 +27,6 @@
         tooltip.disable();
       }
     });
-  }
-
-  function applyInitialState() {
-    var sidebar = document.getElementById('bt-sidebar');
-    if (!sidebar) return;
-
-    var button = document.querySelector('.bt-sidebar__toggle button[aria-controls="bt-sidebar"]');
-    if (!button) return;
-
-    updateToggleState(button, sidebar, narrowSidebarQuery.matches);
   }
 
   function syncWithViewport() {
@@ -61,9 +53,8 @@
     updateToggleState(button, sidebar, willBeSlim);
   });
 
-  // Runs after DOMContentLoaded so Bootstrap is guaranteed to be available.
   document.addEventListener('DOMContentLoaded', function () {
-    applyInitialState();
+    syncWithViewport();
     narrowSidebarQuery.addEventListener('change', syncWithViewport);
   });
 })();
