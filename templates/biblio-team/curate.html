@@ -53,48 +53,6 @@
   <!-- @active: curate -->
 
   <main id="main-content">
-
-    <!-- ══ Page header ══ -->
-    <div class="u-main__header">
-      <div class="bt-toolbar">
-        <div class="bt-toolbar__left">
-          <div class="bt-toolbar__item">
-            <h1 class="bt-toolbar__title">Research output</h1>
-          </div>
-          <div class="bt-toolbar__item">
-            <span class="text-muted">
-              <i class="if if-building if--xs me-1" aria-hidden="true"></i>
-              Sciences, Engineering &amp; Architecture
-            </span>
-          </div>
-          <div class="bt-toolbar__item">
-            <span class="text-muted" aria-live="polite" id="result-count">4,831 research outputs</span>
-          </div>
-        </div>
-        <div class="bt-toolbar__right">
-          <div class="bt-toolbar__item">
-            <div class="dropdown">
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                <i class="if if-download if--sm" aria-hidden="true"></i>
-                Export
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">CSV</a></li>
-                <li><a class="dropdown-item" href="#">BibTeX</a></li>
-                <li><a class="dropdown-item" href="#">RIS</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="bt-toolbar__item">
-            <a href="deposit-1-0-find.html" class="btn btn-primary btn-sm">
-              <i class="if if-add if--sm" aria-hidden="true"></i>
-              Add research
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- ══ Body: facet sidebar + results ══ -->
     <div class="u-main__body u-main__body--split u-main__body--filter-drawer">
 
@@ -454,6 +412,42 @@
         <!-- Search + active filters -->
         <div class="u-main__content-header">
 
+          <div class="bt-toolbar">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <h1 class="bt-toolbar__title">Curate</h1>
+              </div>
+              <div class="bt-toolbar__item">
+                <span class="text-muted" aria-live="polite" id="result-count">4&thinsp;831 research outputs</span>
+              </div>
+              <!-- <div class="bt-toolbar__item"> TBD: do we keep scopes or not
+                <span class="text-muted">
+                  in Sciences, Engineering &amp; Architecture
+                </span>
+              </div> -->
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Export
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">CSV</a></li>
+                    <li><a class="dropdown-item" href="#">BibTeX</a></li>
+                    <li><a class="dropdown-item" href="#">RIS</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="bt-toolbar__item">
+                <a href="deposit-1-0-find.html" class="btn btn-primary btn-sm">
+                  <i class="if if-add if--sm" aria-hidden="true"></i>
+                  Add research output
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div class="bt-toolbar bt-toolbar--bordered">
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item d-xl-none">
@@ -479,7 +473,9 @@
 
           <!-- Filter bar stub in the public-works composition: split chips, Add filter,
                Clear all filters (patterns/filter-picker.html). -->
-          <div class="bt-toolbar">
+                <!-- Prototype note: Add filter is a stub — the curator dimension set is
+                     undecided (docs/SEARCH-AND-FILTERING.md, backoffice search). -->
+          <!-- Redesign in progress: readout only visible on smaller screens <div class="bt-toolbar p-0">
             <div class="bt-toolbar__left">
               <div class="bt-toolbar__item">
                 <div class="d-flex flex-wrap align-items-center gap-2" role="group" aria-label="Active filters">
@@ -490,8 +486,6 @@
                 </div>
               </div>
               <div class="bt-toolbar__item">
-                <!-- Prototype note: Add filter is a stub — the curator dimension set is
-                     undecided (docs/SEARCH-AND-FILTERING.md, backoffice search). -->
                 <button type="button" class="btn btn-ghost btn-sm">
                   <i class="if if-add if--xs" aria-hidden="true"></i> Add filter
                 </button>
@@ -501,7 +495,7 @@
                   <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
                 </button>
               </div>
-            </div>
+            </div> -->
             <!--
             Hidden for now
             <div class="bt-toolbar__right">
@@ -518,7 +512,7 @@
                 </div>
               </div>
             </div> -->
-          </div>
+          <!-- </div> -->
 
           <!-- Bulk actions — hidden until rows selected -->
           <div id="c-bulk-bar" data-bulk-bar role="toolbar" aria-label="Bulk actions" hidden>
