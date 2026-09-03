@@ -20,10 +20,11 @@ Prototype Candidates. Label Raven unknowns as stubs.
    quiet **Review** on every candidate card. Titles open the overview at their
    candidate without changing it. Remove the review-history button.
 3. Rebuild `candidate-review.html` as the Found for you overview on the filter-first
-   backoffice shell: status filter (New, Skipped, Added, Rejected; New and Skipped
-   selected by default), source, publication year and faculty filters (faculty:
-   multi-select with search, on the record's credited organizations), pagination,
-   count that names the entity. New
+   backoffice shell: a search field that narrows within the list, status filter (New,
+   Skipped, Added, Rejected; New and Skipped selected by default), source, publication
+   year and faculty filters (faculty: multi-select with search, on the record's
+   credited organizations), pagination, count that names the entity. Applied filters
+   render as the public-works split chips. New
    and Skipped cards are full candidate cards with source, match evidence, **Review**
    and **Reject**; a Skipped card says it was skipped. Added cards show the Work's own
    status with **Resume** or **View**. Rejected cards offer **Undo**. Delete
@@ -32,13 +33,17 @@ Prototype Candidates. Label Raven unknowns as stubs.
    as a compact Work card; only missing or researcher-owned fields, credited
    organization included (prefilled from the researcher's current affiliation, to
    confirm); a read-only
-   disclosure of the imported fields; **Add**, **Skip**, **Reject**, quiet **Save for
-   later** and **Edit the full record**, Back to the opening place. Skip is available
-   in both modes; in single mode it returns to the opening place. Do not reuse the
-   deposit stepper or `deposit.html`. State beneath Add what it does.
-5. Typed values are remembered in the browser per candidate by a registered
-   `assets/js` module: Back, refresh and return restore them; Skip and Reject clear
-   them; nothing is claimed. No unsaved-changes prompt or dialog.
+   disclosure of the imported fields; primary **Submit publicly** as a split button
+   whose one alternative is **Submit privately**, then **Save draft**, **Reject**,
+   **Skip**, and the quiet link **Edit the full record**; Back to the opening place.
+   Skip is available in both modes; in single mode it returns to the opening place. Do
+   not reuse the deposit stepper or `deposit.html`. The interface carries no
+   explanation copy; how the submit consequence becomes clear is an open pattern
+   question, kept as a source-local note.
+5. Typed values are remembered in the browser per candidate: Back, refresh and
+   return restore them; every decision clears them; nothing is claimed. No
+   unsaved-changes prompt or dialog. Raven implements the memory; the prototype
+   describes it in a source-local note and builds nothing.
 6. Round summary state with decision totals and the next-round explanation.
 7. No Reject-reason control; a source-local prototype note keeps the question open.
    No Pending-request controls or status anywhere in Candidates.
@@ -48,13 +53,12 @@ Prototype Candidates. Label Raven unknowns as stubs.
 | Surface | State | Must make visible |
 |---|---|---|
 | Dashboard | Added/Found/both/neither | Counts, direct actions, existing regions |
-| Overview | Default, filtered, empty, paged | Filters, entity count, cards per status, pagination |
+| Overview | Default, filtered, empty | Search, filters, entity count, cards per status, results bar |
 | Overview | Action success/failure | Announcement, Undo or Retry; preserved order and count |
 | Overview | Claimed elsewhere | Card removed, announcement says a co-author or the Biblio team added it, no Undo |
 | Focused | Round pending, nothing missing, single | Position and remaining (round only), identity, researcher fields, disclosure |
-| Focused | Returned with remembered values | Restored values, nothing claimed |
 | Focused | Action failed | Preserved values, Retry |
-| Focused | Claimed elsewhere, on open or on Add | No form; "View the resulting Work" only when it is submitted, an explanation when it is still someone else's draft; Next candidate |
+| Focused | Claimed elsewhere, on open or on Submit | No form; "View the resulting Work" only when it is submitted, an explanation when it is still someone else's draft; Next candidate |
 | Round summary | Complete | Totals and next-round explanation |
 
 ## Reusable kit coverage
@@ -64,7 +68,7 @@ Prototype Candidates. Label Raven unknowns as stubs.
 | Full and compact Work card | `patterns/work-card.html` | Compact candidate: **Review**; full candidate: **Review**, **Reject**, skipped marker; Added and Rejected examples |
 | Added activity row | `patterns/activity-rows.html` | Keep dashboard and kit examples synced |
 | Facets and pagination | `patterns/facets.html`, `patterns/pagination.html` | Reuse; add a status example only when none fits |
-| Remembered-values script | `docs/JAVASCRIPT.md` | Register the module; no kit page |
+| Split button | `elements/buttons.html` | Add one example: default action plus one alternative |
 
 Focused review composes existing parts; add kit coverage only for changed reusable
 components.

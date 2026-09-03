@@ -256,9 +256,10 @@ item open a filtered, paginated overview whose status filter — New, Skipped, A
 Rejected — also holds the review history; a title opens that overview at its candidate
 without changing it. **Review N research outputs** starts a one-at-a-time round through
 the New and Skipped candidates. **Review** on a card opens the focused review page: an
-identity summary and only the missing or researcher-owned fields. **Add** claims the
-existing Work and submits it; **Save for later** and **Edit the full record** claim it
-as a draft. Opening, **Skip** and **Reject** never claim. **Reject** is the broad
+identity summary and only the missing or researcher-owned fields. **Submit publicly**
+(the default) or **Submit privately** claims the existing Work and submits it; **Save
+draft** and **Edit the full record** claim it as a draft. Opening, **Skip** and
+**Reject** never claim. **Reject** is the broad
 disposition for a candidate that is not theirs, is a duplicate, or is better handled by
 another matched researcher; it removes only that researcher's match. **Skip** defers it
 to the next review round. Neither deletes, merges or reassigns the Work. The decision
@@ -415,10 +416,11 @@ A named set of Works, editable by curators. Used for OAI-PMH sets, open access s
 Works from the Boekentoren erfgoedcollectie (manuscripts, maps, rare books, archival items). These may share the Work data model but have distinct display needs: high-resolution image viewer, physical location, digitisation status, loan requests, and provenance. The Boekentoren is an officially recognised Erfgoedbibliotheek — heritage display is a primary public mission, not an edge case.
 
 ### ~~Candidate review (backoffice)~~ ✓ `templates/biblio-researcher/candidate-review.html`
-Being rebuilt to DD-003. `candidate-review.html` becomes the Found for you overview:
+Built to DD-003. `candidate-review.html` is the Found for you overview:
 the candidate list filtered by New, Skipped, Added and Rejected, which also holds the
 review history. `candidate-focused-review.html` reviews one candidate at a time through
-**Add**, **Skip**, **Reject**, **Save for later** and **Edit the full record**. Both
+**Submit publicly**, **Submit privately**, **Save draft**, **Reject**, **Skip** and
+**Edit the full record**. Both
 reuse each harvested Work and assume no curator candidate inbox. The behavior draft is
 `docs/wip/CANDIDATES-BREADBOARD.md`.
 

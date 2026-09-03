@@ -22,22 +22,19 @@ of pending matches. Three routes leave it, each with one intent:
 The focused page shows an identity summary — title, contributors, year, output type,
 source and match evidence — and only the fields that are missing or that the
 researcher owns. Imported values that need no decision sit behind a read-only
-disclosure. The deposit stepper is not used. The actions are **Add**, **Skip**,
-**Reject**, **Save for later** and **Edit the full record**; Skip holds the candidate
-for the next round from either mode.
+disclosure. The deposit stepper is not used. The primary action is **Submit publicly**,
+a split button whose one alternative is **Submit privately**. The other actions are
+**Save draft**, **Reject** and **Skip**, plus **Edit the full record**; Skip holds the
+candidate for the next round from either mode.
 
-The harvested Work is claimed the first time the researcher persists something: Add,
-Save for later or Edit the full record. Opening, Skip, Reject and Back never claim.
-After a claim the Work is an ordinary draft or submission in the researcher's own
-output. Matched co-authors stop seeing the candidate; they are told a co-author or the
-Biblio team added it and reach the Work once it is submitted. Another owner's draft is
-never linked.
+The harvested Work is claimed the first time the researcher persists something:
+Submit publicly, Submit privately, Save draft or Edit the full record. Opening, Skip,
+Reject and Back never claim. Matched co-authors then see no candidate and reach the
+Work once it is submitted; another owner's draft is never linked.
 
-Values typed on the focused page are remembered in the browser for that candidate:
-Back, refresh and return restore them without claiming anything. Skip and Reject
-discard them; Save for later and Edit the full record keep them in the draft. There is
-no unsaved-changes prompt. Progress reads as position and remaining count, never as
-completed.
+The browser remembers typed values per candidate: Back, refresh and return restore
+them without claiming; Skip and Reject discard them. No unsaved-changes prompt.
+Progress reads as position and remaining count, never as completed.
 
 ## Because
 
@@ -52,12 +49,11 @@ opening non-mutating and needs no un-claim path in Raven.
 
 ## Trade-off
 
-Two review surfaces instead of one. The focused page composes the compact card and
-form parts, plus a small script that remembers typed values per candidate; that memory
-is per browser and dies with cleared storage, so Save for later stays the durable
-route. Editing the full record leaves the round;
-the researcher comes back through the overview. **Review** becomes the fourth meaning
-of that word on the dashboard; accessible names carry the title to tell them apart.
+Two review surfaces instead of one, a new split button, and a small script whose
+memory dies with the browser session — Save draft stays the durable route. Editing the
+full record leaves the round; the researcher returns through the overview. **Review**
+becomes the fourth meaning of that word on the dashboard; accessible names carry the
+title.
 
 ## Revisit when
 

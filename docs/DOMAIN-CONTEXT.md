@@ -97,9 +97,9 @@ Match states, in the words the researcher sees:
 - **New** — the match awaits a decision. Opening it changes nothing.
 - **Skipped** — held for the next review round. New and Skipped together are the
   pending matches the dashboard counts and a round works through.
-- **Added** — the researcher persisted something: **Add** submitted the Work, or
-  **Save for later** and **Edit the full record** made it an Incomplete draft with
-  **Resume**. The same Work, never a copy.
+- **Added** — the researcher persisted something: **Submit publicly** or **Submit
+  privately** submitted the Work, or **Save draft** and **Edit the full record** made
+  it an Incomplete draft with **Resume**. The same Work, never a copy.
 - **Rejected** — a broad disposition for a candidate that is not theirs, is a
   duplicate, or is better handled by another matched researcher. Only this
   researcher's match is dismissed; the Work is not deleted, merged or reassigned,

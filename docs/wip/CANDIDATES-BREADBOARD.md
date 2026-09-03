@@ -29,7 +29,7 @@ ENTRY: Researcher opens the Found for you navigation item --> {Found overview}
 {Found overview}
   "Filtered, paginated list; status New, Skipped, Added, Rejected; source"
   "Default filter: New and Skipped, newest match first"
-  <Status filter> <Source filter> <Publication Year filter> <Faculty filter, multi select with search> <Page>
+  <Search within the list> <Status filter> <Source filter> <Publication Year filter> <Faculty filter, multi select with search> <Page>
   [Review N research outputs] --> {Focused review / round}
   [Review] --> {Focused review / single}
   [Reject]
@@ -48,7 +48,7 @@ ENTRY: Researcher opens the Found for you navigation item --> {Found overview}
    when submitted"
   [Show all imported fields] --> {Focused review / round} read-only; nothing changes
   <Missing and researcher-owned values>
-  [Add]
+  [Submit publicly] or [Submit privately]
     + success; claim and submit --> {Focused review / round} next candidate
     + last candidate --> {Round summary}
     + claimed elsewhere; say so, link the Work only when submitted --> next candidate
@@ -59,7 +59,7 @@ ENTRY: Researcher opens the Found for you navigation item --> {Found overview}
   [Reject]
     + remove match, announce Undo --> {Focused review / round} next candidate
     + last candidate --> {Round summary}
-  [Save for later] --> claim as Incomplete draft --> next candidate or {Round summary}
+  [Save draft] --> claim as Incomplete draft --> next candidate or {Round summary}
   [Edit the full record] --> claim as Incomplete draft --> OUT: Existing deposit;
     its return route is {Found overview}
   [Back] --> {Found overview} or {Dashboard / candidates available}
@@ -77,7 +77,7 @@ ENTRY: Researcher opens the Found for you navigation item --> {Found overview}
   [Retry] --> {Found overview}
 
 {Round summary}
-  "Added, rejected, skipped and saved-for-later totals"
+  "Submitted, rejected, skipped and saved-as-draft totals"
   "Skipped candidates and new arrivals form the next round"
   [Dashboard] --> {Dashboard / candidates available}
   [Found for you] --> {Found overview}
@@ -88,10 +88,10 @@ ENTRY: Researcher opens the Found for you navigation item --> {Found overview}
 - Opening any place changes nothing. Back, refresh and return preserve the round and
   position. Values typed in focused review are remembered in the browser for that
   candidate and restored on return, without claiming; Skip and Reject discard them,
-  Save for later and Edit the full record keep them in the draft. No unsaved-changes
+  Save draft and Edit the full record keep them in the draft. No unsaved-changes
   prompt.
-- The Work is claimed on the first persisted action: Add, Save for later or Edit the
-  full record. Skip, Reject and Back never claim. A claim removes the candidate for
+- The Work is claimed on the first persisted action: Submit publicly, Submit privately,
+  Save draft or Edit the full record. Skip, Reject and Back never claim. A claim removes the candidate for
   every matched co-author; they are told a co-author or the Biblio team added it and
   reach the Work only once it is submitted. Another owner's draft is never linked.
 - A round is the New and Skipped set at its start. New arrivals raise the dashboard

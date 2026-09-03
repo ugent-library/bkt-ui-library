@@ -12,12 +12,13 @@ Two source-trust routes for harvested research output. Read in this order:
 **Stage:** Prototype and kit
 **Accepted:** [DD-003](../decisions/DD-003-candidate-review-is-a-focused-round.md):
 filtered, paginated Found for you overview that holds the history; focused one-at-a-time
-review rounds; **Review** per card, **Add** completes; the Work is claimed on the first
-persisted action. Lightweight **Added for you** activity.
+review rounds; **Review** per card, **Submit publicly** or **Submit privately**
+completes; the Work is claimed on the first persisted action. Lightweight **Added for
+you** activity.
 **Blocking:** None for prototyping; Raven questions remain labelled stubs. Reject-reason
 capture stays an open product question.
-**Next:** Rebuild the prototype and kit to the breadboard and brief, then complete
-wide, narrow and accessibility review.
+**Next:** Human design acceptance of the rebuilt prototype and kit coverage, then
+Raven issue drafting.
 
 1. [`CANDIDATES-BET.md`](CANDIDATES-BET.md) — the problem, phased release,
    boundaries, measures and backend questions.
