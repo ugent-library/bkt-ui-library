@@ -191,9 +191,9 @@ The old biblio reasons — `withdrawn` (author request), `retracted` (integrity)
 `takedown` (legal) — have no raven counterpart yet. Scholarly *retraction* is not
 deletion: a retracted article stays public with a retraction notice (an editorial
 state). **Retraction will be built in raven; the timing is open** —
-the prototype designs ahead: a retracted work carries `badge text-bg-danger`
-"Retracted" on public and backoffice cards (the work stays public; the detail page
-carries the notice).
+the prototype designs ahead: a retracted work carries `badge text-bg-light border`
+with `if-arrow-go-back` and the text "Retracted" on public and backoffice cards (the
+work stays public; the detail page carries the notice).
 
 ### Person
 A real-world individual who contributed to research output. May be known only by name (external, unlinked) or linked to a canonical authority record.
