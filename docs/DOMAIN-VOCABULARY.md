@@ -21,10 +21,11 @@ The authoritative list of work kinds lives in `raven/docs/raven-design.md`. It i
 
 All kinds are collectively referred to as **research output** — not "publications" or "publications and datasets". The term "publications" is not used in the UI. This is intentional: new kinds may be added in the future without requiring a UI redesign.
 
-In the UI: shown as a `badge text-bg-primary` badge and controls which form fields
-appear. The deposit flow asks for evidence first — an identifier, source, file or
-harvested Work — and lets the system infer the work kind where it can. Asking the
-depositor to choose the kind is the fallback, not the first task.
+In the UI: shown as a `badge text-bg-primary` badge on record pages, a plain meta
+value on cards, and controls which form fields appear. The deposit flow asks for
+evidence first — an identifier, source, file or harvested Work — and lets the system
+infer the work kind where it can. Asking the depositor to choose the kind is a fallback,
+not the first task.
 
 ### Accepted value and pending request
 
@@ -48,10 +49,12 @@ conversation may carry an optional message. A request belongs to a field or sect
 (`docs/RESPONSIBILITIES.md`, P7); how Raven models that level is to be decided with
 Raven.
 
-Raven has no pending-request entity yet: its workflow comments are record-level
-events, and it refuses a non-draft record that is incomplete. Until Raven models it,
-no design shows Pending request as a record status or adds ask-Biblio controls to a
-form. The Candidates flow works without it.
+Raven has no pending-request entity yet: its workflow comments are record-level events.
+The prototype designs ahead: backoffice cards show Pending request as a review-state badge
+(see Status → badge mapping). Until Raven models it, no design adds ask-Biblio controls
+to a form. The Candidates flow works without it. "Incomplete" is an interface label, it
+does not mean the record was incomplete on deposit, but something could be filled with
+an incorrect term and thus gets a pending request.
 
 ### Policy-risk value
 
@@ -119,15 +122,13 @@ the record level.
 An **external deposit's** access and embargo (data on Zenodo, EGA, …) still need
 their own mapping in raven. The UI maps to that field once it lands.
 
-In the UI (backoffice cards): deposit status is one badge — `draft` →
-`badge text-bg-warning`, `submitted` → `badge text-bg-info`, `returned` →
-`badge text-bg-danger`, `reviewed` → `badge text-bg-success`. Record visibility is a
-separate neutral badge with an icon **and a visible label**: `if-eye Public` or
-`if-eye-off Private` — the icon never stands alone. Public cards never show deposit
-status or record visibility: a deliberate absence, the public card must not leak
-workflow. File access renders as a plain `bt-work-card__meta-item` ("Open",
-"Restricted", "Embargo <start date> – <end date> | Private [if-arrow-right] Open"),
-never as a badge on the backoffice.
+In the UI (backoffice cards): the review state is one badge and record visibility a
+separate fact badge — the tables and tier order live under Status → badge mapping.
+The visibility badge carries an icon **and a visible label**: `if-eye Public` or
+`if-eye-off Private` — the icon never stands alone; the badge is omitted only on a
+draft, which is never visible. Public cards never show
+deposit status or record visibility: a deliberate absence, the public card must not
+leak workflow.
 
 In the researcher view, a submitted work is awaiting review; its status reads
 "Submitted". After review the list shows "Reviewed" — for now, researchers see all
@@ -137,8 +138,10 @@ four statuses on their own list.
 
 Two blocks, split by audience — lines inside, never columns:
 
-**For the researcher** — `alert alert-warning alert--sm`, visible to researcher *and*
-curator. Lines, in order: automated missing items the researcher is accountable for;
+**For the researcher** — `alert alert-light alert--sm` at rest; `alert-warning` only
+on a card whose filled badge marks the viewer's move (see `CLASS-USAGE.md`, Alert
+modifiers). Visible to researcher *and* curator.
+Lines, in order: automated missing items the researcher is accountable for;
 the **Biblio message** (curator → researcher note); the "Complete metadata" call to
 action. Examples include the file or external object, file-version/access-risk answers,
 abstract, contributors, keywords, projects and licence, when the active work profile
@@ -192,8 +195,7 @@ The old biblio reasons — `withdrawn` (author request), `retracted` (integrity)
 deletion: a retracted article stays public with a retraction notice (an editorial
 state). **Retraction will be built in raven; the timing is open** —
 the prototype designs ahead: a retracted work carries `badge text-bg-light border`
-with `if-arrow-go-back` and the text "Retracted" on public and backoffice cards (the
-work stays public; the detail page carries the notice).
+with `if-arrow-go-back` and the text "Retracted" on public and backoffice cards.
 
 ### Person
 A real-world individual who contributed to research output. May be known only by name (external, unlinked) or linked to a canonical authority record.
@@ -550,29 +552,57 @@ A zero state is copy, not a count: "No results for … with these filters" is ab
 
 ## Status → badge mapping
 
-| `deposit_status` | Badge | Colour |
-|----------|-------|--------|
-| `draft` | `badge text-bg-warning` | Yellow |
-| `submitted` | `badge text-bg-info` | Blue |
-| `returned` | `badge text-bg-danger` | Red |
-| `reviewed` | `badge text-bg-success` | Green |
+Backoffice cards order status in three tiers: the review state first, facts second,
+meta text last.
 
-Record visibility is a separate neutral badge on backoffice cards: `if-eye Public` /
-`if-eye-off Private`.
+### 1. Review state
 
-Work access (raven's `Work.Access()`): on **public** cards a badge, and only open access carries colour — open →
-`badge text-bg-success` + `if-open-access`, restricted → `badge text-bg-secondary` +
-`if-lock`, embargo → `badge text-bg-secondary` + `if-time`, naming the date ("Embargo
-until 1 May 2027"), closed → `badge text-bg-secondary`, text only. On **backoffice**
-cards never a badge — a plain `bt-work-card__meta-item` ("Open", "Restricted",
-"Embargo <start date> – <end date> | Private [if-arrow-right] Open" when both
-dates and both access levels are available). The backoffice drops the noun so a
-curator scans a column;
-the public card keeps "Restricted access", which is what a reader outside academia
-understands.
+One badge says where the record stands in review. Hue follows the state; weight
+follows the viewer: filled only when the state waits on the current viewer, soft
+otherwise. At most one filled badge per card.
+
+| Review state | Soft | Filled — waits on the current viewer |
+|---|---|---|
+| Draft | `badge text-bg-warning-light`, always | — |
+| Submitted | `badge text-bg-info-light`, always | — |
+| Returned | `badge text-bg-danger-light` on curator lists | `badge text-bg-danger` on the researcher's own dashboard |
+| Pending request | `badge text-bg-warning-light`, labelled "Request by you", for the party that asked | `badge text-bg-warning`, labelled "Pending request", for whoever it waits on |
+| Reviewed | `badge text-bg-success-light`, always | — |
+
+The label, not colour or weight, carries the pending request's direction
+(`ACCESSIBILITY.md` G3); weight only echoes it.
+
+### 2. Facts
+
+Fact badges follow the review state, in fixed order: record visibility, then
+Retracted. A fact never asks for anything.
+
+| Fact | Badge |
+|---|---|
+| Record visibility | `badge text-bg-light border` + `if-eye` "Public" / `if-eye-off` "Private" — omitted only on a draft, which is never visible |
+| Retracted | `badge text-bg-light border` + `if-arrow-go-back` "Retracted" — identical on public and backoffice |
+
+### 3. Meta text
+
+Plain `bt-work-card__meta-item` values close the row, in fixed order: work kind, then
+"No full text" only when the full text is actually missing, then access level
+("Open", "Restricted", "Embargo <start date> – <end date> | Private [if-arrow-right]
+Open" when both dates and both access levels are available). Work kind and file
+access are never badges on the backoffice.
+
+### Public cards
+
+Work access (raven's `Work.Access()`) is the only public badge system, and only open
+access carries colour — open → `badge text-bg-success` + `if-open-access`, restricted
+→ `badge text-bg-secondary` + `if-lock`, embargo → `badge text-bg-secondary` +
+`if-time`, naming the date ("Embargo until 1 May 2027"), closed → `badge
+text-bg-secondary`, text only. The public card keeps
+"Restricted access", which is what a reader outside academia understands; the
+backoffice drops the noun so a curator scans a column. Retracted is the one badge
+both surfaces share; on public it renders after the access badge.
 
 Work kind is `badge text-bg-primary` (blue) on record pages; on cards it is a plain
-`bt-work-card__meta-item`, so the badge slot stays access (public) or deposit status
+`bt-work-card__meta-item`, so the badge slot stays access (public) or review state
 (backoffice).
 
 ### Heritage / diamond OA badges

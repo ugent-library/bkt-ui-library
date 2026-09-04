@@ -57,11 +57,12 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 - **Contrast.** Solid badges need a dark-enough background to clear WCAG AA with white text: success uses green-700, danger red-600, because their 500/600 steps fail. Warning is the exception — dark text on orange-500, since no amber passes with white.
 - **Size** is fixed at `--bt-text-xs` (12px), not Bootstrap's `.75em`, which shrinks to 9px inside `bt-meta-list`.
 - **The neutral metadata badge** (counts, codes, roles) is `badge text-bg-light border` — a utility composition, not its own class. `text-bg-light` is borderless by default, so add `.border` on white.
+- **Backoffice card badges come in tiers** — review state first, facts second, meta text last; the status tables live in `DOMAIN-VOCABULARY.md` (Status → badge mapping).
 - **A clickable badge** is a `<button>` or `<a>` carrying `.badge`, styled squared with pointer, hover and focus. Element-based, no extra class. This is the only interactive badge case; a plain status badge stays a `<span>`.
 - **The chip whose editor is open** adds Bootstrap's `.active` to `badge--outline`, plus `aria-current="true"` on the label half. That is a state class — there is no `badge--active`.
 - **A `<button>` directly inside a badge** (the query builder's person tokens) is the element-based remove control: sized, transparent and colour-inheriting, with a soft hover. No extra class.
 
-Access status is the one fixed badge recipe: `text-bg-success` + `if-open-access` for open access, `text-bg-secondary` + `if-lock` for restricted, `text-bg-secondary` + `if-time` for embargo (badge names the date) — never `text-bg-warning`, which reads as an error and competes with open access, `text-bg-transparent` + `if-forbid` for embargo (badge names the date) — closed access is never rendered on a public page. Those are the whole access badge vocabulary. `badge--lg` is the tap-target size; `badge--tab` is the quiet type-tab variant in the search suggest overlay — its active state is the selected type filter, so it pairs with `role="tab"` and `aria-selected`.
+Access status is the one fixed badge recipe: `text-bg-success` + `if-open-access` for open access, `text-bg-secondary` + `if-lock` for restricted, `text-bg-secondary` + `if-time` for embargo (badge names the date) so it does not compete with open access and does not read as a warning. Closed access is never rendered on a public page. `badge--lg` is the tap-target size; `badge--tab` is the quiet type-tab variant in the search suggest overlay — its active state is the selected type filter, so it pairs with `role="tab"` and `aria-selected`.
 
 **Buttons** — `btn-xs`/`btn-sm`/`btn`/`btn-lg` all defined; all standard Bootstrap variants (including `btn-ghost`) and all `btn-outline-*` variants are overridden with Booktower tokens.
 
@@ -73,7 +74,7 @@ Access status is the one fixed badge recipe: `text-bg-success` + `if-open-access
 
 **Faculty colours** — keyed by live Biblio org code, defined in `_utilities.scss`: `bg-faculty-<code>` (brand fill + readable foreground) and `bg-faculty-<code>-light` (12% tint, holds body text). Never inline a faculty hex.
 
-**Alert modifiers** — on top of Bootstrap `.alert`/`.alert-*`. `alert--dashed` (2px dashed border) is ⚠️ TBD — may not survive review. `alert--sm` is stable.
+**Alert modifiers** — on top of Bootstrap `.alert`/`.alert-*`. `alert--dashed` (2px dashed border) is ⚠️ TBD — may not survive review. `alert--sm` is stable. Message blocks on dashboard cards are `alert alert-light alert--sm` at rest; `alert-warning` is reserved for the card whose filled badge already marks it as the viewer's move, and then only when the card needs the block at all — never both loud at once.
 
 **Undemoed but kept** — `u-notifications`, `bt-toolbar__middle` and `u-main__sidebar--border-left` have no kit demo yet. Each mirrors an old-backoffice component (toasts/flash, `bc-toolbar-center`, sub-sidebar, inbox alerts), so they sit in the `intentional` list in `scripts/check-classes.js`; every other unused class fails the gate.
 
