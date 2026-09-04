@@ -1,0 +1,484 @@
+<!-- @title: Dashboard — Ranked queue — Biblio -->
+<!-- @surface: backoffice -->
+<!-- ⚠️ WIP — backoffice is not settled; do not implement in raven yet -->
+<!--
+  Dashboard — Ranked queue. Design variant of dashboard.html (Split queue);
+  the two pages coexist for side-by-side comparison.
+
+  Left column acts: an attention zone of rare, event-driven cards, Found for
+  you, then one ranked queue (Needs your action) replacing Incomplete work.
+  Right column reads: log lines link to works but carry no action verbs.
+  Invariant: each item has exactly one actionable home — an attention card OR
+  a queue row — and may appear in any number of log lines. The Plato
+  dissertation demonstrates it: attention card + Added for you line + Recent
+  activity line, and no queue row while its card shows.
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+<!-- @include: templates/partials/backoffice-header.html -->
+<!-- @include: templates/partials/main-sidebar.html -->
+<!-- @active: dashboard -->
+
+  <main id="main-content">
+
+    <!-- Live region for HTMX action confirmations -->
+    <span id="action-status" role="status" aria-live="polite" class="visually-hidden"></span>
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="h5 mb-0 fw-semibold d-flex align-items-center gap-2">
+              Inbox
+              <span class="badge text-bg-primary">21</span>
+            </h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="#" class="btn btn-outline-primary">
+              <i class="if if-add if--sm" aria-hidden="true"></i>
+              Add research output
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+
+        <div class="u-main__content-body bt-bg py-4">
+
+          <!-- ============================================================
+               TWO-COLUMN LAYOUT: action left, awareness right
+               ============================================================ -->
+          <div class="row g-4 align-items-start justify-content-between">
+
+            <!-- LEFT: action -->
+            <div class="col-lg-7 d-flex flex-column gap-4">
+
+              <!-- ============================================================
+                    ATTENTION ZONE — rare, event-driven cards
+                    ============================================================ -->
+              <!-- Prototype note: card slots are EventLine, Title, SeverityToken
+                   (warning grade only), PrimaryAction, Dismiss (handoff grade
+                   only). Warnings first, then handoffs newest-first. No cap. -->
+              <ol class="list-unstyled mb-0 d-flex flex-column gap-3" aria-label="Needs attention">
+
+                <!-- Warning grade: red, not dismissible -->
+                <li>
+                  <div class="alert alert-danger d-flex align-items-center justify-content-between mb-0 py-3" role="alert">
+                    <div class="d-flex gap-3">
+                      <i class="if if-error-circle if--lg" aria-hidden="true"></i>
+                      <div>
+                        <p class="small mb-1">FWO announced a deadline</p>
+                        <h2 class="h6 mb-0 d-flex align-items-center gap-2">
+                          Review for FWO deadline in 30 days
+                          <span class="badge text-bg-danger-light">3</span>
+                        </h2>
+                        <!-- OPEN: deadline windows are backend state — what starts the
+                             30-day countdown and which works fall in the set. EventLine
+                             wants source + past-tense verb; a future deadline strains that. -->
+                      </div>
+                    </div>
+                    <div>
+                      <!-- OPEN: dismissal persistence is backend state — where a dismissal
+                          is stored and whether a dismissed handoff returns. -->
+                      <button type="button" class="btn btn-ghost btn-sm" data-bs-dismiss="alert"
+                        aria-label="Dismiss: dissertation imported from Plato">
+                        <i class="if if-close" aria-hidden="true"></i>
+                      </button>
+                      <a href="#" class="btn btn-danger">
+                        Review
+                        <i class="if if-arrow-right" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </div>
+                </li>
+
+                <!-- Handoff grade: neutral, dismissible -->
+                <li>
+                  <div class="alert alert-success d-flex justify-content-between mb-0 py-3" role="status">
+                    <div class="d-flex gap-3">
+                      <i class="if if-graduation-cap-line if--lg" aria-hidden="true"></i>
+                      <div>
+                        <p class="small mb-1">Imported from Plato</p>
+                        <h2 class="h6 mb-0">1 dissertation</h2>
+                      </div>
+                    </div>
+                    <div>
+                      <a href="deposit-1-1-find.html?state=direct-added" class="btn btn-success"
+                        aria-label="Complete: Self-healing polymer networks for soft robotics">Complete <i class="if if-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="alert alert-info d-flex justify-content-between mb-0 py-3" role="status">
+                    <div>
+                      <p class="small mb-1">You uploaded a BibTeX file</p>
+                      <h2 class="h6 mb-0">8 draft publications</h2>
+                    </div>
+                    <div>
+                      <!-- OPEN: dismissal persistence is backend state — where a dismissal
+                          is stored and whether a dismissed handoff returns. -->
+                      <button type="button" class="btn btn-ghost btn-sm" data-bs-dismiss="alert"
+                        aria-label="Dismiss: dissertation imported from Plato">
+                        <i class="if if-close" aria-hidden="true"></i>
+                      </button>
+                      <!-- OPEN: Continue needs the upload batch id — backend state; the
+                          endpoint is a stub. -->
+                      <a href="#" class="btn btn-primary"
+                        aria-label="Continue: 8 draft publications">Continue <i class="if if-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </li>
+              </ol>
+
+              <!-- ── Needs your action (one ranked queue, replaces Incomplete work) ── -->
+              <!-- Prototype note: the title "Needs your action" is provisional — a
+                   decision under review. Tier 1 (curator asked) sorts above tier 2
+                   (your drafts, oldest first); rows reuse the incomplete-work card
+                   unchanged — only their text differs. -->
+              <section aria-labelledby="action-queue-heading">
+                <div class="card">
+                  <div class="bt-toolbar bt-toolbar--bordered px-4 py-3">
+                    <div class="bt-toolbar__left">
+                      <div class="bt-toolbar__item">
+                        <h2 id="action-queue-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                          <i class="if if-list-check if--md" aria-hidden="true"></i>
+                          Needs your action
+                          <span class="badge text-bg-secondary">4</span>
+                        </h2>
+                      </div>
+                    </div>
+                    <div class="bt-toolbar__right">
+                      <div class="bt-toolbar__item">
+                        <a href="search-researcher.html" class="small text-decoration-none">View all</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ol class="list-unstyled mb-0" aria-label="Research output that needs your action">
+                    <!-- Tier 1: a curator asked for something specific -->
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ask-1-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-warning">Pending request</span>
+                          <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                          <span class="bt-work-card__meta-item">Conference paper</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="deposit-1-1-find.html" class="btn btn-primary btn-xs"
+                            aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
+                            <i class="if if-edit if--sm" aria-hidden="true"></i> Edit &amp; resubmit
+                          </a>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="ask-1-title" class="bt-work-card__title">
+                          <a href="work-detail.html?state=returned">Contrastive learning for cross-lingual biomedical text mining</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><time datetime="2024">2024</time></p>
+                        <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                          <div class="d-flex align-items-start gap-2">
+                            <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <p class="mb-0"><strong>Marie Curator asked:</strong> add published full text.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article></li>
+
+                    <!-- Tier 2: your drafts with missing fields, oldest first -->
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="draft-1-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-warning">Draft</span>
+                          <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                          <span class="bt-work-card__meta-item">No full text</span>
+                          <span class="bt-work-card__meta-item">Journal article</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="deposit-1-1-find.html" class="btn btn-primary btn-xs"
+                            aria-label="Complete: Real-time atrial fibrillation detection on edge devices">
+                            <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
+                          </a>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="draft-1-title" class="bt-work-card__title">
+                          <a href="work-detail.html">Real-time atrial fibrillation detection on edge devices</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><time datetime="2025">2025</time></p>
+                        <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                          <div class="d-flex align-items-start gap-2">
+                            <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <p class="mb-0"><strong>Missing:</strong> full-text file, funding, license.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article></li>
+
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="draft-2-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-warning">Draft</span>
+                          <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                          <span class="bt-work-card__meta-item">Dataset</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="deposit-1-1-find.html?state=direct-added" class="btn btn-primary btn-xs"
+                            aria-label="Complete: Annotated dataset of arrhythmia episodes">
+                            <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
+                          </a>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="draft-2-title" class="bt-work-card__title">
+                          <a href="work-detail.html?state=direct-added">Annotated dataset of arrhythmia episodes</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Marie Surcher<span class="visually-hidden"> (UGent)</span></a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
+                        <div class="bt-work-card__meta">
+                          <i class="if if-user text-muted" aria-hidden="true"></i>
+                          <span class="bt-work-card__meta-item">Added by Marie Curator</span>
+                        </div>
+                        <div class="alert alert-warning alert--sm mb-1 mt-2" role="note" aria-label="For the researcher">
+                          <div class="d-flex align-items-start gap-2">
+                            <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                            <p class="mb-0"><strong>Missing:</strong> abstract, license.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </article></li>
+
+                    <!-- Prototype note: 4 items exist in this fixture; the dashboard
+                         renders the first 3 in tier order, the badge keeps the total.
+                         The Plato dissertation and the BibTeX drafts are not rows —
+                         their attention cards are the actionable home. -->
+                  </ol>
+                </div>
+              </section>
+              <!-- Prototype note: source badges are fixtures — no feed is chosen yet
+                   (docs/wip/CANDIDATES-BET.md). The fixture holds New candidates
+                   only; a skipped candidate stays in this pending set with its
+                   "Skipped in your last round" row. Titles open the overview at
+                   their candidate and change nothing. -->
+              <section aria-labelledby="found-for-you-heading">
+                <div class="card">
+                  <div class="bt-toolbar bt-toolbar--bordered px-4 py-3">
+                    <div class="bt-toolbar__left">
+                      <div class="bt-toolbar__item">
+                        <h2 id="found-for-you-heading" class="h6 mb-0 d-flex align-items-center gap-2">
+                          <i class="if if-message-ai if--md" aria-hidden="true"></i>
+                          Found for you
+                          <span class="badge text-bg-secondary">5</span>
+                        </h2>
+                      </div>
+                    </div>
+                    <div class="bt-toolbar__right gap-3">
+                      <div class="bt-toolbar__item">
+                        <a href="candidate-review.html" class="small text-decoration-none">View all</a>
+                      </div>
+                      <div class="bt-toolbar__item">
+                        <a href="candidate-focused-review.html" class="btn btn-primary btn-xs">
+                          Review 5 research outputs
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ol class="list-unstyled mb-0" aria-label="Research output found for you">
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-1-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                          <span class="bt-work-card__meta-item">Journal article</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                            aria-label="Review: Transfer learning across hospitals: a multicentric ICU study">Review</a>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="ffy-1-title" class="bt-work-card__title">
+                          <a href="candidate-review.html#cand-icu-transfer">Transfer learning across hospitals: a multicentric ICU study</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Marc%20Lef%C3%A8vre">Marc Lefèvre</a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Tayo%20Okafor">Tayo Okafor</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span><span>DOI 10.1234/jcm.2025.0142</span></p>
+                      </div>
+                    </article></li>
+
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-2-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Crossref<span class="visually-hidden">, matched through your linked identity</span></span>
+                          <span class="bt-work-card__meta-item">Conference paper</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                            aria-label="Review: Workshop notes on responsible AI in clinical decision support">Review</a>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="ffy-2-title" class="bt-work-card__title">
+                          <a href="candidate-review.html#cand-responsible-ai">Workshop notes on responsible AI in clinical decision support</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Workshop on Responsible Clinical AI</span></p>
+                      </div>
+                    </article></li>
+
+                    <li><article class="bt-work-card bt-work-card--compact px-4" aria-labelledby="ffy-3-title">
+                      <div class="bt-work-card__header">
+                        <div class="bt-work-card__meta">
+                          <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+                          <span class="bt-work-card__meta-item">Journal article</span>
+                        </div>
+                        <div class="bt-work-card__actions">
+                          <a href="candidate-focused-review.html?state=single" class="btn btn-ghost btn-xs"
+                            aria-label="Review: Soft actuator design for grip">Review</a>
+                        </div>
+                      </div>
+                      <div class="bt-work-card__body">
+                        <p id="ffy-3-title" class="bt-work-card__title">
+                          <a href="candidate-review.html#cand-soft-actuator">Soft actuator design for grip</a>
+                        </p>
+                        <p class="bt-work-card__authors">
+                          <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>,
+                          <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="/templates/biblio-public/public-researcher-detail.html">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+                          <span class="bt-work-card__author"><a href="?q=Mina%20Okafor">Mina Okafor</a></span>
+                        </p>
+                        <p class="bt-work-card__pub"><span>(<time datetime="2026">2026</time>)</span><span>Polymer Science</span><span>DOI 10.1234/ps.2026.0117</span></p>
+                      </div>
+                    </article></li>
+
+                    <!-- Prototype note: 5 pending candidates exist in this fixture;
+                         the dashboard renders the first 3, the badge keeps the total. -->
+                  </ol>
+                </div>
+              </section>
+            </div>
+
+            <!-- RIGHT: awareness — read-only logs -->
+            <div class="col-lg-4 d-flex flex-column gap-4">
+
+              <!-- ── Added for you ── -->
+              <!-- Prototype note: log lines link to the work for reading; action
+                   verbs live only in the left column. The Plato line stays while
+                   its attention card shows — logs always record. -->
+              <section aria-labelledby="added-for-you-heading">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h2 id="added-for-you-heading" class="small fw-bold text-uppercase text-muted mb-0 d-flex align-items-center gap-2">
+                    Added for you
+                    <span class="badge text-bg-secondary">3</span>
+                  </h2>
+                  <a href="search-researcher.html?state=direct-added" class="small text-muted text-decoration-none">View all</a>
+                </div>
+
+                <ol class="list-unstyled mb-0" aria-label="Research output added for you">
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2h ago</span>
+                    <p class="small mb-0"><span class="fw-semibold">Biblio assistant</span> imported a dissertation via Plato:
+                      <a href="work-detail.html?state=direct-added" id="afy-1-title">
+                        Self-healing polymer networks for soft robotics
+                      </a>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">3d ago</span>
+                    <p class="small mb-0"><span class="fw-semibold">Marie Curator</span> added a new Dataset:
+                      <a href="work-detail.html?state=direct-added" id="afy-2-title">
+                        Annotated dataset of arrhythmia episodes
+                      </a>
+                    </p>
+                  </li>
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                    <p class="small mb-0"><span class="fw-semibold">Marie Curator</span> added a new Dataset:
+                      <a href="work-detail.html?state=reviewed" id="afy-3-title">
+                        Coastal adaptation dataset for the Belgian coast
+                      </a>
+                    </p>
+                  </li>
+                </ol>
+              </section>
+
+              <!-- ── Recent activity ── -->
+              <section aria-labelledby="activity-heading">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                  <h2 id="activity-heading" class="small fw-bold text-uppercase text-muted mb-0">Recent activity</h2>
+                  <a href="#" class="small text-muted text-decoration-none">View all</a>
+                </div>
+
+                <ol class="list-unstyled mb-0" aria-label="Recent changes to your research output">
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-message-ai if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">2h ago</span>
+                    <p class="small mb-0"><strong>Biblio assistant</strong> imported a dissertation via Plato: <a href="work-detail.html?state=direct-added" class="text-reset">'Self-healing polymer networks for soft robotics'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-user if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">Yesterday</span>
+                    <p class="small mb-0"><strong>You</strong> attached a PDF for <a href="#" class="text-reset">'A survey of self-supervised learning&hellip;'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">3d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> confirmed two co-authors for <a href="#" class="text-reset">'Open hardware for low-cost ECG&hellip;'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">3d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> confirmed two co-authors for <a href="#" class="text-reset">'Open hardware for low-cost ECG&hellip;'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> linked software to <a href="#" class="text-reset">'Annotated dataset of arrhythmia episodes'</a></p>
+                  </li>
+
+                  <li class="d-flex align-items-baseline gap-2 py-2 border-bottom">
+                    <i class="if if-service if--sm flex-shrink-0 text-muted" aria-hidden="true"></i>
+                    <span class="small text-muted flex-shrink-0" style="min-width: 4.5rem">6d ago</span>
+                    <p class="small mb-0"><strong>The Biblio team</strong> linked software to <a href="#" class="text-reset">'Annotated dataset of arrhythmia episodes'</a></p>
+                  </li>
+                </ol>
+              </section>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>
