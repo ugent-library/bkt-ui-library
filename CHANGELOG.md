@@ -6,6 +6,72 @@ system, or do I reach for something new?"
 
 ---
 
+## Result actions recomposed, one class removed — re-adapt and re-copy (v2.32, 2026-09-04)
+
+**The results bar's actions are one button.** On `public-works.html` the separate Save
+search and Share dropdowns merged into one Actions dropdown, hooked through
+`data-result-actions`, `data-result-actions-toggle` and `data-result-actions-modal`.
+The new `assets/js/result-actions.js` returns focus to that button when a dialog
+opened from the menu closes (`docs/JAVASCRIPT.md`). A consumer who adapted the results
+bar re-adapts it and carries the new script.
+
+**The builder's field list carries its contract id.** Every entry in
+`templates/partials/search-field-list.html` now sets `data-qb-field` to its id in
+`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`; the label may differ from the id. A
+consumer who adapted the partial rather than the contract re-applies the ids.
+
+**`alert--seamless-inbox` is removed.** It mirrored the old backoffice's full-width
+inbox flash and `docs/CLASS-USAGE.md` listed it as kept; that promise ends here.
+Confirmations render as a standard `alert` inside the scrollable content column, never
+in the page chrome.
+
+**The compiled assets changed.** The last work card inside a `.card` no longer draws a
+doubled bottom border — compiled CSS only, no markup change. The icon font gained
+`if-archive-line`, `if-bank-line`, `if-barcode-line` and `if-gallery-line`
+(pre-ingest icon set, PR #25); a consumer on an older copy misses the glyphs until it
+re-copies.
+
+**The surface question is rephrased.** `docs/CONSUMING-BOOKTOWER.md` and
+`docs/UI-LAYER.md` now decide `data-surface` by product layer — presenting metadata to
+the wider public, or entering and managing it — never by user role. No markup changes.
+
+### Class migration
+
+| Removed | Use instead |
+|---------|-------------|
+| `alert--seamless-inbox` | `alert alert-*` inside the content column |
+
+---
+
+## Candidates become an overview and a focused round (v2.31, 2026-09-04)
+
+Backoffice only — every backoffice template still says do not implement in raven yet.
+Nothing here asks a consumer to act; this records direction.
+
+**Found for you replaces the candidate inbox.** `candidate-review.html` is the
+filtered overview: search, a status filter whose values include review history, and
+the results bar in every state. `candidate-focused-review.html` completes candidates
+one at a time and asks only what the source did not supply; imported values sit behind
+a read-only disclosure. `candidate-history.html` is deleted. The dashboard confirms a
+finished round inside its content column. Decision record:
+`docs/decisions/DD-003-candidate-review-is-a-focused-round.md`.
+
+**Backoffice conventions now hold across the templates.** The page's primary action
+sits in the page header. Applied filters render as the public-works split chips. The
+results bar renders in every state and carries the page's only result count. Submit is
+a split button: Submit publicly, with Submit privately as the one alternative. A
+suggestion offers Add and Reject, never Remove. Interface copy explains nothing — a
+control that needs explanation is redesigned instead.
+
+**Additive classes** `bt-work-card--compact` and `bt-work-card__meta--borderless` are
+in `docs/CLASSES.md`. The candidate card rows, badge palette, split button and
+searchable facet are demoed on the kit pages.
+
+**Explorations** that may not survive review: `dashboard-ranked-queue.html` and batch
+reviews in `curate.html`.
+
+---
+
 ## Pagination markup aligned everywhere (v2.30, 2026-09-03)
 
 The v2.11 results-bar markup now holds across the repository. The nine files listed in
@@ -21,6 +87,10 @@ decides per render), arrows are `if-chevron-*` icons, the count sits beside the 
 the screen-reader prefix is plain `visually-hidden`, and `ul.pagination` carries no
 `mb-0`. Backoffice list bars also gained page size and sort on the right, per the
 kit page.
+
+The same commit removed the count lines inside the organisations directory's cards —
+"3 of 13 faculties shown" and "1 department, 200 research outputs". A consumer that
+adapted `public-organisations.html` removes them too.
 
 ---
 
