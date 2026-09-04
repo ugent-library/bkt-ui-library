@@ -595,8 +595,7 @@ access are never badges on the backoffice.
 Work access (raven's `Work.Access()`) is the only public badge system, and only open
 access carries colour — open → `badge text-bg-success` + `if-open-access`, restricted
 → `badge text-bg-secondary` + `if-lock`, embargo → `badge text-bg-secondary` +
-`if-time`, naming the date ("Embargo until 1 May 2027"), closed → `badge
-text-bg-secondary`, text only. The public card keeps
+`if-time`, naming the date ("Embargo until 1 May 2027"). The public card keeps
 "Restricted access", which is what a reader outside academia understands; the
 backoffice drops the noun so a curator scans a column. Retracted is the one badge
 both surfaces share; on public it renders after the access badge.
