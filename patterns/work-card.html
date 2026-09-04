@@ -30,10 +30,10 @@
             <article class="bt-work-card" aria-labelledby="grammar-title">
               <div class="bt-work-card__header">
                 <div class="bt-work-card__meta">
-                  <span class="badge text-bg-info">Submitted</span>
+                  <span class="badge text-bg-info-light">Submitted</span>
                   <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-                  <span class="bt-work-card__meta-item">Open</span>
                   <span class="bt-work-card__meta-item">Journal article</span>
+                  <span class="bt-work-card__meta-item">Open</span>
                 </div>
                 <div class="bt-work-card__actions">
                   <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Example work title">
@@ -75,8 +75,8 @@
           <tr>
             <th scope="row">State header</th>
             <td>Access, type, and public conditions</td>
-            <td>Deposit status, record visibility, access, type, and condition</td>
-            <td>Deposit status, record visibility, access, type, and condition</td>
+            <td>Review state, record visibility, then meta text: type, condition, and access</td>
+            <td>Review state, record visibility, then meta text: type, condition, and access</td>
           </tr>
           <tr>
             <th scope="row">Title</th>
@@ -123,29 +123,22 @@
 
   <section class="ds-section" id="states">
     <h2 class="h4 mb-3">States, access, and actions</h2>
-    <p class="mb-3 col-8">Backoffice cards keep four facts distinct — deposit status, record visibility, file access and record condition (<code>docs/DOMAIN-VOCABULARY.md</code>, Work status). Render each separately.</p>
 
     <div class="row g-4">
       <div class="col-lg-6">
-        <h3 class="h5 mb-3">Status badge recipe</h3>
+        <h3 class="h5 mb-3">Status row recipe</h3>
         <div class="ds-demo">
           <div class="ds-demo-body" data-surface="backoffice">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning">Draft</span>
-              <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
-              <span class="badge text-bg-info">Submitted</span>
-              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="badge text-bg-danger">Returned</span>
-              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="badge text-bg-warning">Pending request</span>
-              <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
-              <span class="badge text-bg-success">Reviewed</span>
+              <span class="badge text-bg-success-light">Reviewed</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
               <span class="badge text-bg-light border"><i class="if if-arrow-go-back" aria-hidden="true"></i> Retracted</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
+              <span class="bt-work-card__meta-item">Restricted</span>
             </div>
           </div>
         </div>
-        <p class="text-muted small mb-0">The badges sit together because they answer different questions; visibility always carries visible text (<code>docs/DOMAIN-VOCABULARY.md</code>).</p>
+        <p class="text-muted small mb-0">One review-state badge, then facts, then meta text; visibility always carries visible text. Weights and labels: <a href="/elements/badges.html">badges</a>.</p>
       </div>
 
       <div class="col-lg-6">
@@ -159,7 +152,7 @@
               <tr><th scope="row">Public file</th><td>Open access</td><td>Open</td></tr>
               <tr><th scope="row">Restricted file</th><td>Restricted access</td><td>Restricted</td></tr>
               <tr><th scope="row">Embargoed file</th><td>Embargo until date</td><td>Embargo &lt;start date&gt; &ndash; &lt;end date&gt; | Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</td></tr>
-              <tr><th scope="row">Private file</th><td>Hidden</td><td>Private</td></tr>
+              <tr><th scope="row">Private file</th><td>No trace</td><td>Private</td></tr>
               <tr><th scope="row">No file</th><td>No access item</td><td>No full text only when actionable</td></tr>
             </tbody>
           </table>
@@ -276,12 +269,6 @@
               <span class="text-muted">et al. +6 more authors</span>
             </p>
             <p class="bt-work-card__pub"><a href="#">(<time datetime="2020">2020</time>)</a> <a href="#"><cite>International Journal of Environmental Research and Public Health</cite></a> <span>17(7), pp. 12-32</span></p>
-            <div class="alert alert-danger alert--sm mb-0" role="note">
-              <div class="d-flex align-items-start gap-2">
-                <i class="if if-alert flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <p class="mb-0"><strong>Retracted:</strong> this record has been retracted.</p>
-              </div>
-            </div>
           </div>
         </article>
       </div>
@@ -298,10 +285,9 @@
         <article class="bt-work-card" aria-labelledby="wc-researcher-draft">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning">Draft</span>
-              <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
-              <span class="bt-work-card__meta-item">No full text</span>
+              <span class="badge text-bg-warning-light">Draft</span>
               <span class="bt-work-card__meta-item">Dataset</span>
+              <span class="bt-work-card__meta-item">No full text</span>
             </div>
             <div class="bt-work-card__actions">
               <div class="bt-work-card__action-group">
@@ -328,7 +314,7 @@
               <span class="text-muted">+2 more contributors</span>
             </p>
             <p class="bt-work-card__pub"><a href="#">(<time datetime="2026">2026</time>)</a> <a href="#">Zenodo</a> <a href="#">DOI pending</a> <a href="#">CSV</a></p>
-            <div class="alert alert-warning alert--sm mb-2" role="note" aria-label="For the researcher">
+            <div class="alert alert-light alert--sm mb-2" role="note" aria-label="For the researcher">
               <div class="d-flex align-items-start gap-2">
                 <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
                 <div>
@@ -375,8 +361,7 @@
         <article class="bt-work-card" aria-labelledby="wc-researcher-direct-added">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning">Draft</span>
-              <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+              <span class="badge text-bg-warning-light">Draft</span>
               <span class="bt-work-card__meta-item">Doctoral thesis</span>
             </div>
             <div class="bt-work-card__actions">
@@ -391,7 +376,7 @@
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Baert<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
-            <div class="alert alert-warning alert--sm mb-2" role="note" aria-label="For the researcher">
+            <div class="alert alert-light alert--sm mb-2" role="note" aria-label="For the researcher">
               <div class="d-flex align-items-start gap-2">
                 <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
                 <div>
@@ -409,7 +394,7 @@
         </article>
       </div>
       <div class="ds-demo-notes">
-        <p>Provenance lives in the created-by line: an automated import names the Biblio assistant and its source; a curator addition names the person. Work state decides the action — this incomplete draft leads with Complete. Draft · Private is a placeholder; Raven owns the status a Plato-added work receives.</p>
+        <p>Provenance lives in the created-by line: an automated import names the Biblio assistant and its source; a curator addition names the person. Work state decides the action — this incomplete draft leads with Complete. Draft is a placeholder; Raven owns the status a Plato-added work receives.</p>
       </div>
     </div>
 
@@ -523,11 +508,11 @@
         <article class="bt-work-card" aria-labelledby="wc-researcher-reviewed">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Reviewed</span>
+              <span class="badge text-bg-success-light">Reviewed</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
               <span class="badge text-bg-light border"><i class="if if-arrow-go-back" aria-hidden="true"></i> Retracted</span>
-              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
               <span class="bt-work-card__meta-item">Journal article</span>
+              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
             </div>
             <div class="bt-work-card__actions">
               <div class="bt-work-card__action-group">
@@ -589,10 +574,10 @@
         <article class="bt-work-card" aria-labelledby="wc-curator-submitted">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-info">Submitted</span>
+              <span class="badge text-bg-info-light">Submitted</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Restricted</span>
               <span class="bt-work-card__meta-item">Journal article</span>
+              <span class="bt-work-card__meta-item">Restricted</span>
             </div>
             <div class="bt-work-card__actions">
               <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Overdue athletes salaries in professional football">
@@ -608,7 +593,7 @@
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Arnold Vermeersch<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
             <p class="bt-work-card__pub"><a href="#">(<time>2024</time>)</a> <a href="#">European Journal of Crime, Criminal Law and Criminal Justice</a> <span>Vol. 32, Issue 1, pp. 58-79</span></p>
-            <div class="alert alert-warning alert--sm mb-1" role="note" aria-label="For the researcher">
+            <div class="alert alert-light alert--sm mb-1" role="note" aria-label="For the researcher">
               <div class="d-flex align-items-start gap-2">
                 <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
                 <div>
@@ -668,10 +653,10 @@
         <article class="bt-work-card" aria-labelledby="wc-curator-missing-access">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-info">Submitted</span>
+              <span class="badge text-bg-info-light">Submitted</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item text-warning"><i class="if if-alert" aria-hidden="true"></i> Missing access</span>
               <span class="bt-work-card__meta-item">Dataset</span>
+              <span class="bt-work-card__meta-item text-warning"><i class="if if-alert" aria-hidden="true"></i> Missing access</span>
               <span class="bt-work-card__meta-item">CC-BY-4.0</span>
             </div>
             <div class="bt-work-card__actions">
@@ -688,7 +673,7 @@
               <span class="bt-work-card__author"><a href="?q=Instituut%20voor%20Landbouwonderzoek">Instituut voor Landbouwonderzoek</a></span>
             </p>
             <p class="bt-work-card__pub"><a href="#">(<time>2026</time>)</a> <a href="#">DataverseUGent</a> <span>DOI 10.48804/BTU7KS</span> <span>CSV, NetCDF</span></p>
-            <div class="alert alert-warning alert--sm mb-1" role="note" aria-label="For the researcher">
+            <div class="alert alert-light alert--sm mb-1" role="note" aria-label="For the researcher">
               <div class="d-flex align-items-start gap-2">
                 <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
                 <div>
@@ -751,10 +736,10 @@
         <article class="bt-work-card" aria-labelledby="wc-curator-reviewed">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Reviewed</span>
+              <span class="badge text-bg-success-light">Reviewed</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
               <span class="bt-work-card__meta-item">Journal article</span>
+              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
             </div>
             <div class="bt-work-card__actions">
               <a href="#" class="btn btn-ghost btn-sm" aria-label="View: Neuropsychiatric aspects of COVID-19 pandemic">
@@ -820,10 +805,10 @@
         <article class="bt-work-card" aria-labelledby="wc-dataset">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-success">Reviewed</span>
+              <span class="badge text-bg-success-light">Reviewed</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Open</span>
               <span class="bt-work-card__meta-item">Dataset</span>
+              <span class="bt-work-card__meta-item">Open</span>
               <span class="bt-work-card__meta-item">CC-BY-4.0</span>
             </div>
             <div class="bt-work-card__actions">
@@ -885,10 +870,10 @@
         <article class="bt-work-card" aria-labelledby="wc-software">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-info">Submitted</span>
+              <span class="badge text-bg-info-light">Submitted</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Open</span>
               <span class="bt-work-card__meta-item">Software</span>
+              <span class="bt-work-card__meta-item">Open</span>
               <span class="bt-work-card__meta-item">MIT licence</span>
             </div>
             <div class="bt-work-card__actions">
@@ -926,10 +911,9 @@
           <li><article class="bt-work-card bt-work-card--compact" aria-labelledby="wc-compact-draft">
             <div class="bt-work-card__header">
               <div class="bt-work-card__meta">
-                <span class="badge text-bg-warning">Draft</span>
-                <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
-                <span class="bt-work-card__meta-item">No full text</span>
+                <span class="badge text-bg-warning-light">Draft</span>
                 <span class="bt-work-card__meta-item">Journal article</span>
+                <span class="bt-work-card__meta-item">No full text</span>
               </div>
               <div class="bt-work-card__actions">
                 <a href="#" class="btn btn-primary btn-xs" aria-label="Complete: Real-time atrial fibrillation detection on edge devices">
@@ -946,7 +930,7 @@
                 <span class="bt-work-card__author"><a href="?q=Ines%20Delcroix">Ines Delcroix</a></span>
               </p>
               <p class="bt-work-card__pub"><time datetime="2025">2025</time></p>
-              <div class="alert alert-warning alert--sm mb-0 mt-2" role="note" aria-label="For the researcher">
+              <div class="alert alert-light alert--sm mb-0 mt-2" role="note" aria-label="For the researcher">
                 <div class="d-flex align-items-start gap-2">
                   <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
                   <p class="mb-0"><strong>Missing:</strong> full-text file, funding, license.</p>

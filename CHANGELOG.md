@@ -6,6 +6,31 @@ system, or do I reach for something new?"
 
 ---
 
+## Badge semantics: three tiers and viewer-dependent weight (v2.33, 2026-09-04)
+
+No CSS changed — every class already existed. A consumer who adapted cards, rows or
+message blocks re-adapts the markup; the compiled assets need no re-copy.
+
+**Backoffice cards order status in three tiers.** Work kind
+and file access are never badges on the backoffice — table Type and Access cells
+render plain text. The tables live in `docs/DOMAIN-VOCABULARY.md`, Status → badge
+mapping.
+
+**Weight follows the viewer.** Review-state badges are soft (`text-bg-*-light`) at
+rest; filled (`text-bg-warning`, `text-bg-danger`) only when the state waits on the
+current viewer, at most one filled badge per card.
+
+**The visibility badge is omitted on drafts.** Every other state keeps Public or
+Private.
+
+**Retracted is one badge on both surfaces.**
+
+**Message blocks on cards rest quiet.** `alert alert-light alert--sm` at rest;
+`alert-warning` only on a card whose filled badge already marks it as the viewer's
+move. Curator rows never carry `alert-warning` — the queue itself frames the work.
+
+---
+
 ## Result actions recomposed, one class removed — re-adapt and re-copy (v2.32, 2026-09-04)
 
 **The results bar's actions are one button.** On `public-works.html` the separate Save
