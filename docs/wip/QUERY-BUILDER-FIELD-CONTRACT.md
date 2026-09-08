@@ -21,8 +21,9 @@ The public builder ships first; backoffice reuses it with more fields.
   explicitly. Labels stay free to differ: the UI says *Funding programme*, the id says
   `funding_program`.
 
-`templates/partials/search-field-list.html` follows the public table. Fix this contract first when
-they disagree.
+`templates/partials/search-field-list.html` follows the public table and
+`templates/partials/search-field-list-backoffice.html` the backoffice table. Fix this contract
+first when they disagree.
 
 | Operator | What it means to the user |
 |---|---|

@@ -6,6 +6,23 @@ system, or do I reach for something new?"
 
 ---
 
+## Backoffice lists carry the Advanced search dialog, with backoffice fields (v2.34, 2026-09-08)
+
+No CSS changed — the new rows reuse existing classes. A consumer adopting the backoffice
+builder re-adapts markup only.
+
+**The backoffice works lists open the public Advanced search dialog.** The researcher and
+curator lists compose the same partials and `query-builder.js` as `public-works.html`; the
+toolbar gains the Advanced search trigger.
+
+**The chooser gains three backoffice-only groups** — Curation, Record dates, Journal
+metrics — from `templates/partials/search-field-list-backoffice.html`, one entry per row of
+the Backoffice-only table in `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`. The public chooser
+is unchanged; the gate keeps curation fields off the public surface.
+
+**Two row shapes are new**: `qb-row-date` (is at least, is at most, is between over date
+inputs) and `qb-row-quantity` (is more than, is less than, is between over a number).
+
 ## Badge semantics: three tiers and viewer-dependent weight (v2.33, 2026-09-04)
 
 No CSS changed — every class already existed. A consumer who adapted cards, rows or

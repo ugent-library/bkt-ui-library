@@ -1,0 +1,69 @@
+<!-- @example: /patterns/query-builder.html -->
+<!--
+  The backoffice-only chooser groups: one entry per row of the Backoffice-only table in
+  docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, rendered after the public groups of
+  search-field-list.html. The @state gate limits them to the backoffice hosts' states, so the
+  public surface never receives a curation field (docs/SEARCH-AND-FILTERING.md rule 5).
+  Classification, VABB and JCR values live in raven catalogs, so their selects keep the
+  placeholder; VABB and JCR exposure is undecided — the contract's Backoffice decisions own it.
+-->
+<!-- @state: default direct-added no-matches -->
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-curation">
+  <p class="dropdown-header" id="qb-g-curation">Curation</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="visibility" data-qb-label="Record visibility" data-qb-template="qb-row-choice"
+      data-qb-values="Public,Restricted,Private">Record visibility</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="deposit_status" data-qb-label="Deposit status" data-qb-template="qb-row-choice"
+      data-qb-values="Draft,Submitted,Returned,Reviewed">Deposit status</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="ugent_classification" data-qb-label="Classification"
+      data-qb-template="qb-row-choice">Classification</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_evaluation" data-qb-label="VABB evaluation" data-qb-template="qb-row-choice"
+      data-qb-ops="is,is not">VABB evaluation</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_type" data-qb-label="VABB type"
+      data-qb-template="qb-row-choice">VABB type</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_submission_year" data-qb-label="VABB submission year"
+      data-qb-template="qb-row-year"
+      data-qb-ops="is,is at least,is at most,is between">VABB submission year</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-dates">
+  <p class="dropdown-header" id="qb-g-dates">Record dates</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="created_at" data-qb-label="Date created"
+      data-qb-template="qb-row-date">Date created</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="updated_at" data-qb-label="Date last changed"
+      data-qb-template="qb-row-date">Date last changed</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="defense_date" data-qb-label="Date defended"
+      data-qb-template="qb-row-date">Date defended</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-metrics">
+  <p class="dropdown-header" id="qb-g-metrics">Journal metrics</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_impact_factor" data-qb-label="JCR impact factor"
+      data-qb-template="qb-row-quantity">JCR impact factor</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_category" data-qb-label="JCR category"
+      data-qb-template="qb-row-choice">JCR category</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_quartile" data-qb-label="JCR category quartile"
+      data-qb-template="qb-row-choice">JCR category quartile</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_decile" data-qb-label="JCR category decile"
+      data-qb-template="qb-row-choice">JCR category decile</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_vigintile" data-qb-label="JCR category vigintile"
+      data-qb-template="qb-row-choice">JCR category vigintile</button></li>
+  </ul>
+</div>
+<!-- @state -->
