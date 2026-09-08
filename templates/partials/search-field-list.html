@@ -6,15 +6,14 @@
   chooser holds the same list. Ids repeat because each row clones that template; identify()
   re-ids every clone.
 
-  An entry carries its contract id (data-qb-field) and names the row template that carries its
-  shape. The id matches the contract; the label may not. Where the contract narrows the
-  template's operators the entry lists what its field keeps (data-qb-ops), and where the
-  contract supplies a select's values the entry carries them (data-qb-values); a select whose
-  values live in a raven catalog names none and keeps its placeholder.
+  Where the contract narrows the template's operators the entry lists what its field keeps
+  (data-qb-ops), and where the contract supplies a select's values the entry carries them
+  (data-qb-values); a select whose values live in a raven catalog names none and keeps its
+  placeholder.
 
   Plain dropdown-header + dropdown-item, as the works Add-filter menu uses: inside the chooser
   panel they are padded rows with a hover band, because the slot is a dropdown-menu and Bootstrap's
-  item variables are in scope there. Outside one, the same markup falls back to a plain list of links.
+  item variables are in scope there.
 -->
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-subject">
   <p class="dropdown-header" id="qb-g-subject">Subject</p>

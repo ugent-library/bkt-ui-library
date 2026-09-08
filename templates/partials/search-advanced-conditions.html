@@ -1,28 +1,25 @@
 <!--
-  The Advanced search condition editor: the builder itself and nothing around it. The host supplies
-  the heading this form is named by (id="conditions-heading"), the box it sits in and the bar under
-  it — search-advanced-dialog.html, on public-works.html. The layout is argued at
-  patterns/query-builder.html.
+  The host supplies the heading this form is named by (id="conditions-heading"), the box it sits
+  in and the bar under it — search-advanced-dialog.html, on public-works.html. The layout is
+  argued at patterns/query-builder.html.
 
   Top-level items are this element's direct [data-qb-row] and [data-qb-group] children, so a row
   carries no extra marker attribute.
 
-  The picker panels are not in here. Picking a person, an organization or a project is the same
-  act as on the results page, so each is the same panel the works filter bar clones:
-  people-picker-panel.html, organization-picker-panel.html and project-picker-panel.html, which
-  the host includes alongside this file. A row's value cell holds the "Add a&hellip;" button and
-  an empty [data-qb-picker-slot] naming the panel that is cloned into it.
+  Picking a person, an organization or a project is the same act as on the results page, so each
+  is the same panel the works filter bar clones: people-picker-panel.html,
+  organization-picker-panel.html and project-picker-panel.html, which the host includes alongside
+  this file.
 
   The built blocks also name the host pages' own states: public-works.html's (results, best-bet,
-  no-results, no-query, facet-set-in-builder) and the backoffice lists' (default, direct-added —
-  search-researcher.html and curate.html). Drop them and the dialog renders empty; no check
-  catches it.
+  no-results, no-query, facet-set-in-builder) and the backoffice lists' (default, direct-added,
+  no-matches — search-researcher.html and curate.html). Drop them and the dialog renders empty;
+  no check catches it.
 
-  Public fields only. The field list and its per-field operators are in
-  docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md, and docs/SEARCH-AND-FILTERING.md rule 5 keeps curation
-  fields off the public surface. Values and URLs are placeholders; raven owns the public URL
-  grammar.
-  States: builder-empty, builder-one-condition, builder-full-query, builder-or-group, builder-no-results.
+  The fields and their per-field operators are in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. The
+  chooser holds the public list; the backoffice states add search-field-list-backoffice.html, and
+  docs/SEARCH-AND-FILTERING.md rule 5 keeps curation fields off the public surface. The demo rows
+  are public fields.
 -->
 <!-- [html-validate-disable-next wcag/h32 -- submit button bound externally by form="qb-form"] -->
 <form id="qb-form" action="public-works.html" method="get"
@@ -107,7 +104,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: builder-full-query builder-no-results results best-bet no-results no-query facet-set-in-builder default direct-added -->
+    <!-- @state: builder-full-query builder-no-results results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -151,7 +148,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: builder-full-query results best-bet no-results no-query facet-set-in-builder default direct-added -->
+    <!-- @state: builder-full-query results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
 
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
@@ -1274,7 +1271,7 @@
 
   </div>
 
-  <!-- @state: builder-empty builder-full-query builder-one-condition builder-or-group builder-no-results results best-bet no-results no-query facet-set-in-builder default direct-added -->
+  <!-- @state: builder-empty builder-full-query builder-one-condition builder-or-group builder-no-results results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
   <div class="bt-query-builder__add">
     <div class="dropdown">
       <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="dropdown"
@@ -1301,6 +1298,7 @@
       </div>
       <div class="bt-panel__body bt-panel__body--list">
         <!-- @include: templates/partials/search-field-list.html -->
+        <!-- @include: templates/partials/search-field-list-backoffice.html -->
       </div>
   </template>
 
@@ -1592,6 +1590,98 @@
           <label class="visually-hidden" for="qb-t-year-val-list" data-qb-list hidden>Years</label>
           <input type="text" class="form-control form-control-sm" id="qb-t-year-val-list"
             inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <template id="qb-row-date">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-date-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-date-op" data-qb-op>
+          <option>is at least</option>
+          <option>is at most</option>
+          <option data-qb-pair-op>is between</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-date-val" data-qb-single>Date</label>
+          <input type="date" class="form-control form-control-sm bt-query-builder__date"
+            id="qb-t-date-val" data-qb-single>
+          <span class="small text-muted" data-qb-pair hidden>and</span>
+          <label class="visually-hidden" for="qb-t-date-val-to" data-qb-pair hidden>Last date</label>
+          <input type="date" class="form-control form-control-sm bt-query-builder__date"
+            id="qb-t-date-val-to" data-qb-pair hidden>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <template id="qb-row-quantity">
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-qty-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-qty-op" data-qb-op>
+          <option>is more than</option>
+          <option>is less than</option>
+          <option data-qb-pair-op>is between</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <label class="visually-hidden" for="qb-t-qty-val" data-qb-single>Value</label>
+          <input type="number" step="any" class="form-control form-control-sm bt-query-builder__quantity"
+            id="qb-t-qty-val" data-qb-single>
+          <span class="small text-muted" data-qb-pair hidden>and</span>
+          <label class="visually-hidden" for="qb-t-qty-val-to" data-qb-pair hidden>Upper value</label>
+          <input type="number" step="any" class="form-control form-control-sm bt-query-builder__quantity"
+            id="qb-t-qty-val-to" data-qb-pair hidden>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
