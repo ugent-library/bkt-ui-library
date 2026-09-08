@@ -428,6 +428,13 @@
             </div>
             <div class="bt-toolbar__right">
               <div class="bt-toolbar__item">
+                <a href="curate.html?advanced=1" class="btn btn-ghost btn-sm"
+                  data-bs-toggle="modal" data-bs-target="#advanced-search-modal">
+                  <i class="if if-search-eye-line" aria-hidden="true"></i>
+                  Advanced search
+                </a>
+              </div>
+              <div class="bt-toolbar__item">
                 <div class="dropdown">
                   <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     Export
@@ -1032,5 +1039,17 @@
   </main>
 </div>
 
+<!-- Ungated on purpose: a @state block cannot wrap this include — docs/SERVER.md. -->
+<div class="modal fade" id="advanced-search-modal" tabindex="-1"
+  aria-labelledby="advanced-search-title">
+  <!-- @include: templates/partials/search-advanced-dialog.html -->
+</div>
+
+<!-- @include: templates/partials/filter-editor-templates.html -->
+<!-- @include: templates/partials/people-picker-panel.html -->
+<!-- @include: templates/partials/organization-picker-panel.html -->
+<!-- @include: templates/partials/project-picker-panel.html -->
+
 <script src="/assets/js/view-toggle.js"></script>
 <script src="/assets/js/bulk-select.js"></script>
+<script src="/assets/js/query-builder.js"></script>
