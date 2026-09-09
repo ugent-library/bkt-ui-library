@@ -36,13 +36,11 @@ first when they disagree.
 
 ## Public
 
-The public builder offers this list and nothing else. `docs/SEARCH-AND-FILTERING.md`
-rule 5 owns public field placement. `docs/SURFACES.md` defines the product layers; it
-does not decide which fields the public builder exposes.
+The public builder offers these fields. Rule 5 in `docs/SEARCH-AND-FILTERING.md`
+decides which fields may be public.
 
 | id | label | covers (legacy) | operators | value input |
 |---|---|---|---|---|
-| `q` | Words or topic | `basic`, bare text on a power form | contains, does not contain | text |
 | `title` | Title | `title` | contains, does not contain, is, is not | text |
 | `abstract` | Abstract | `abstract` | contains, does not contain, is, is not | text |
 | `keyword` | Keywords | `keyword`; alias `subject` | contains, does not contain, is, is not | text |
@@ -57,8 +55,7 @@ does not decide which fields the public builder exposes.
 | `conference` | Conference | `conference` | contains, does not contain, is, is not | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
 | `language` | Language | `language` | is, is not, is any of | select |
-| `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text | is, is not, is any of | select: Open access, Restricted, Under embargo, No full text |
-| `files` | Files | `file` | is, is not, is any of | select: A file here, Somewhere else, Nothing deposited |
+| `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is, is not, is any of | select: Open access, Restricted, Under embargo, Metadata only |
 | `license` | Licence | — | is, is not, is any of | select: CC0 1.0, CC BY 4.0, CC BY-SA 4.0, CC BY-NC 4.0, CC BY-ND 4.0, CC BY-NC-SA 4.0, CC BY-NC-ND 4.0, In copyright, Rights unknown, Other licence |
 | `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 | `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | select: Author version, Accepted version, Published version, Updated version |
@@ -77,8 +74,7 @@ does not decide which fields the public builder exposes.
 - Published in means the container and may be qualified by kind. Journal abbreviations also match.
   Conference means the event and matches its name, organiser or location.
 - Funding programme reaches a work through its projects.
-- Files says whether content is here, elsewhere or absent. Access says whether it opens. Attached
-  content says which visible file kind exists. The main-content option reads *Full text or dataset*.
+- Access says whether it opens. Attached content says which visible file kind exists.
 - Licence uses the record's closed list. *Rights unknown* matches that explicit value, not an unset
   licence; *Other licence* matches a value outside the named list.
 
@@ -90,8 +86,7 @@ does not decide which fields the public builder exposes.
 | `soleauthor`, `firstauthor`, `lastauthor` | contributor roles "as sole author", "as first author", "as last author" |
 | `external` | organization *is* / *is not* Ghent University |
 | `embargo` | access value "Under embargo" |
-| has-full-text | access value "No full text" |
-| metadata-only | files value "Nothing deposited" |
+| metadata-only | access value "Metadata only" |
 | biblio or raven record id, `vabbid` | identifier, recognised by its scheme |
 | `articletype`, `misctype`, `conferencetype`, `dissertationtype` | work-type aliases |
 | `subject` | keyword alias |
@@ -139,11 +134,13 @@ No row offers `volume`, `issue`, `issuetitle`, `articlenumber`, `firstpage`, `la
 
 ## Translator only
 
+Context for raven's translator, not a specification — raven decides every translation.
 Legacy names a translated query may carry, which no builder row offers:
 
-| legacy name | treatment |
+| legacy name | context |
 |---|---|
-| `field`, `for`, `of` | parse artifacts from logged queries — fail closed |
+| `field`, `for`, `of` | parse artifacts from logged queries |
+| `basic`, bare text | the search box carries it |
 | `author.affiliation` | the work's credited organization answers it; see Organization above `TBD` this is different from the old Biblio |
 | `publicationstatus` | alias spelling of `publication_status` |
 
@@ -153,11 +150,9 @@ Legacy names a translated query may carry, which no builder row offers:
    replaces approval and what carries submission.
 2. Does Copyright statement filter the rendered licence sentence, require a Raven rights field, or
    disappear in favour of Licence?
-3. Do curators act differently on an external link and a resolving identifier? If not, keep both
-   under *Somewhere else*.
-4. Does Raven keep `full_text` behind the public label *Full text or dataset*, rename the role, or add
+3. Does Raven keep `full_text` behind the public label *Full text or dataset*, rename the role, or add
    a data-specific role?
-5. Does *in any container* reach legacy values that migration routed to `publisher`? Raven must
+4. Does *in any container* reach legacy values that migration routed to `publisher`? Raven must
    answer from the mapping.
 
 The count's behaviour, and how exact it may be, is asked where it is decided:

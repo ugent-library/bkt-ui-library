@@ -57,7 +57,7 @@ whatever its proposed label reads.
 |---|---|---:|---|---|---|
 | C1.01 | `author = PERSON_1` | 1,033 | A+B | in scope |  |
 | C1.02 | `author exact PERSON_1` | 979 | A+B | in scope |  |
-| C1.03 | `basic = TEXT` | 680 | A+B | in scope |  |
+| C1.03 | `basic = TEXT` | 680 | A+B | not exposed | the search box carries it (`q`) |
 | C1.04 | `doi = DOI_1` | 645 | A+B | in scope |  |
 | C1.05 | `title = TEXT` | 369 | A+B | in scope |  |
 | C1.06 | `type any "journalArticle"` | 366 | A+B | in scope |  |
@@ -131,7 +131,7 @@ whatever its proposed label reads.
 | C1.74 | `copyrightstatement <> STATEMENT_1` | 1 | A+B | in scope |  |
 | C1.75 | `copyrightstatement any "STATEMENT_1"` | 1 | A+B | in scope |  |
 | C1.76 | `editor any "PERSON_1"` | 1 | A+B | in scope |  |
-| C1.77 | `file <> FILE_1` | 1 | A+B | in scope |  |
+| C1.77 | `file <> 1` | 1 | A+B | in scope | legacy has-file boolean — Access level *is* Metadata only |
 | C1.78 | `for all "TEXT"` | 1 | B | translator-only | parse artifact — must not crash |
 | C1.79 | `jcr.impact_factor > 5` | 1 | A+B | not exposed | backoffice field — the public builder drops it |
 | C1.80 | `language <> eng` | 1 | A+B | in scope |  |
@@ -202,7 +202,7 @@ whatever its proposed label reads.
 | C3.38 | `title = TEXT AND language any "eng"` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.39 | `author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1) AND type exact journalArticle` | 1 | A+B | in scope | single-field value list, 1 OR term, author/editor idiom |
 | C3.40 | `author exact PERSON_1 AND type any "journalArticle" AND affiliation any "ORG_1"` | 1 | A+B | in scope | composite, 1 OR term |
-| C3.41 | `basic = TEXT AND affiliation any "ORG_1"` | 1 | A+B | in scope | composite, 1 OR term |
+| C3.41 | `basic = TEXT AND affiliation any "ORG_1"` | 1 | A+B | in scope | composite, 1 OR term; basic rides in the search box |
 | C3.42 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND accesslevel all "open"` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.43 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and file.access <> open AND field <> FIELD_1 AND classification any "A1" AND publication_status exact published and external exact 0` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.44 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and external exact 0 and file.access exact open and embargo exact 0` | 1 | A+B | in scope | composite, 1 OR term |
@@ -211,9 +211,9 @@ whatever its proposed label reads.
 | C3.47 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND vabb_approved exact 1` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.48 | `title = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term |
 | C3.49 | `author = PERSON_1 AND year >= 2020 AND type any "journalArticle" AND classification any "A1" AND affiliation any "ORG_1" AND publicationstatus any "published"` | 1 | A+B | in scope | composite, 1 OR term |
-| C3.50 | `basic = TEXT AND year >= 2020 AND type any "journalArticle" AND publicationstatus any "published" AND articletype any "original"` | 1 | A+B | in scope | composite, 1 OR term |
+| C3.50 | `basic = TEXT AND year >= 2020 AND type any "journalArticle" AND publicationstatus any "published" AND articletype any "original"` | 1 | A+B | in scope | composite, 1 OR term; basic rides in the search box |
 | C3.51 | `(basic = TEXT or … or basic = TEXT  (3 terms)) AND author = PERSON_1` | 1 | A+B | in scope | needs `contains any of` on a text row — field contract open question 4 |
-| C3.52 | `basic = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term |
+| C3.52 | `basic = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term; basic rides in the search box |
 | C3.53 | `title any "TEXT" and (author any "PERSON_1" or type exact journalArticle)` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.54 | `publisher = PUBLISHER_1 or … or publisher = PUBLISHER_1  (3 terms)` | 1 | A+B | in scope | single-field value list, 2-4 OR terms |
 | C3.55 | `(type exact journalArticle) OR (type exact journalArticle)` | 1 | A+B | in scope | single-field value list, 1 OR term |

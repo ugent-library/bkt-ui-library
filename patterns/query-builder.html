@@ -23,16 +23,18 @@
         <div class="bt-query-builder__conditions">
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Words or topic</p>
+            <p class="mb-0 fw-semibold">Title</p>
           </div>
           <div class="bt-query-builder__phrase">
             <label class="visually-hidden" for="kit-qb-op">Operator, condition 1</label>
             <select class="form-select form-select-sm" id="kit-qb-op" data-qb-op>
               <option selected>contains</option>
               <option>does not contain</option>
+              <option>is</option>
+              <option>is not</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <label class="visually-hidden" for="kit-qb-val">Words, condition 1</label>
+              <label class="visually-hidden" for="kit-qb-val">Title, condition 1</label>
               <input type="text" class="form-control form-control-sm" id="kit-qb-val" value="quantum computing">
             </div>
           </div>
@@ -52,7 +54,7 @@
               </ul>
             </div>
             <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-              aria-label="Remove condition 1: words or topic contains quantum computing">
+              aria-label="Remove condition 1: title contains quantum computing">
               <i class="if if-delete if--xs" aria-hidden="true"></i>
             </button>
           </div>
