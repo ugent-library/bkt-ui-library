@@ -1,36 +1,30 @@
 <!--
-  The advanced-search field list: the four groups every chooser shows, one entry per public
-  field in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
+  The advanced-search field list: every chooser group, one entry per field in
+  docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. Backoffice-only entries and groups are gated to the
+  backoffice surface (docs/SEARCH-AND-FILTERING.md rule 5).
 
   Included by search-advanced-conditions.html, inside the #qb-chooser template, so every row's
   chooser holds the same list. Ids repeat because each row clones that template; identify()
   re-ids every clone.
 
-  An entry carries its contract id (data-qb-field) and names the row template that carries its
-  shape. The id matches the contract; the label may not. Where the contract narrows the
-  template's operators the entry lists what its field keeps (data-qb-ops), and where the
-  contract supplies a select's values the entry carries them (data-qb-values); a select whose
-  values live in a raven catalog names none and keeps its placeholder.
 
   Plain dropdown-header + dropdown-item, as the works Add-filter menu uses: inside the chooser
   panel they are padded rows with a hover band, because the slot is a dropdown-menu and Bootstrap's
-  item variables are in scope there. Outside one, the same markup falls back to a plain list of links.
+  item variables are in scope there.
 -->
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-subject">
   <p class="dropdown-header" id="qb-g-subject">Subject</p>
   <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="q" data-qb-label="Words or topic" data-qb-template="qb-row-text"
-      data-qb-ops="contains,does not contain">Words or topic</button></li>
-    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="title" data-qb-label="Title" data-qb-template="qb-row-text"
-      data-qb-ops="contains,does not contain,is,is not">Title</button></li>
+      data-qb-op-fixed="matches">Title</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="abstract" data-qb-label="Abstract" data-qb-template="qb-row-text"
       data-qb-ops="contains,does not contain,is,is not">Abstract</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="keyword" data-qb-label="Keywords" data-qb-template="qb-row-text"
-      data-qb-ops="contains,does not contain,is,is not">Keywords</button></li>
+      data-qb-op-fixed="is"
+      data-qb-help="Separate by commas or semicolons.">Keywords</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-people">
@@ -38,58 +32,151 @@
   <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="contributor" data-qb-label="Person" data-qb-template="qb-row-contributor">Person</button></li>
+    <!-- @surface-only: public -->
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="organization" data-qb-label="Organization" data-qb-template="qb-row-entity"
+      data-qb-op-fixed="is"
+      data-qb-panel="organization-picker" data-qb-add="Add an organization">Organization</button></li>
+    <!-- @surface-only -->
+    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="organization" data-qb-label="Organization" data-qb-template="qb-row-entity"
       data-qb-panel="organization-picker" data-qb-add="Add an organization">Organization</button></li>
+    <!-- @surface-only -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="project" data-qb-label="Project" data-qb-template="qb-row-entity"
+      data-qb-op-fixed="is"
       data-qb-panel="project-picker" data-qb-add="Add a project">Project</button></li>
-    <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="funding_program" data-qb-label="Funding programme" data-qb-template="qb-row-text"
-      data-qb-ops="contains,is,is not,is any of">Funding programme</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-publication">
   <p class="dropdown-header" id="qb-g-publication">Publication</p>
   <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="work_type" data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button></li>
+      data-qb-field="work_type" data-qb-label="Publication type" data-qb-template="qb-row-choice"
+      data-qb-op-fixed="is" data-qb-multi-values
+      data-qb-values="Journal article,Book,Edited book,Book part,Book review,Reference entry,Journal issue,Conference paper,Conference abstract,Conference poster,Conference presentation,Preprint,Working paper,Report,Doctoral thesis,Magazine article,Newspaper article,Online post,Media appearance,Lecture,Dataset,Software,Other">Publication type</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="year" data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
+      data-qb-field="year" data-qb-label="Publication year" data-qb-template="qb-row-year"
+      data-qb-ops="is,is between">Publication year</button></li>
+    <!-- @surface-only: backoffice -->
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="defense_date" data-qb-label="Date defended"
+      data-qb-template="qb-row-date">Date defended</button></li>
+    <!-- @surface-only -->
+    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publication_status" data-qb-label="Publication status" data-qb-template="qb-row-choice"
       data-qb-values="Unpublished,In press,Published">Publication status</button></li>
+    <!-- @surface-only -->
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="container" data-qb-label="Published in" data-qb-template="qb-row-container">Published in</button></li>
+      data-qb-field="container" data-qb-label="Appeared in" data-qb-template="qb-row-container"
+      data-qb-help="Titles and identifiers both match; separate by semicolons.">Appeared in</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="conference" data-qb-label="Conference" data-qb-template="qb-row-text"
-      data-qb-ops="contains,does not contain,is,is not">Conference</button></li>
+      data-qb-op-fixed="is">Conference</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publisher" data-qb-label="Publisher" data-qb-template="qb-row-text"
       data-qb-ops="contains,does not contain,is,is not">Publisher</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="language" data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
+      data-qb-field="language" data-qb-label="Language" data-qb-template="qb-row-choice"
+      data-qb-op-fixed="is" data-qb-multi-values
+      data-qb-values="Abkhazian,Achinese,Acoli,Adangme,Adyghe,Afar,Afrihili,Afrikaans,Afro-Asiatic languages,Ainu,Akan,Akkadian,Albanian,Aleut,Algonquian languages,Altaic languages,Amharic,Ancient Greek,Angika,Apache languages,Arabic,Aragonese,Arapaho,Arawak,Armenian,Aromanian,Artificial languages,Assamese,Asturian,Athapascan languages,Australian languages,Austronesian languages,Avaric,Avestan,Awadhi,Aymara,Azerbaijani,Balinese,Baltic languages,Baluchi,Bambara,Bamileke languages,Banda languages,Bantu languages,Basa,Bashkir,Basque,Batak languages,Beja,Belarusian,Bemba,Bengali,Berber languages,Bhojpuri,Bihari languages,Bikol,Bini,Bislama,Blin,Blissymbols,Bosnian,Braj,Breton,Buginese,Bulgarian,Buriat,Burmese,Caddo,Catalan,Caucasian languages,Cebuano,Celtic languages,Central American Indian languages,Central Khmer,Chagatai,Chamic languages,Chamorro,Chechen,Cherokee,Cheyenne,Chibcha,Chichewa,Chinese,Chinook jargon,Chipewyan,Choctaw,Church Slavic,Chuukese,Chuvash,Classical Newari,Classical Syriac,Coptic,Cornish,Corsican,Cree,Creek,Creoles and pidgins,Crimean Tatar,Croatian,Cushitic languages,Czech,Dakota,Danish,Dargwa,Delaware,Dinka,Divehi,Dogri,Dravidian languages,Duala,Dutch,Dyula,Dzongkha,Eastern Frisian,Efik,Egyptian,Ekajuk,Elamite,English,English based Creoles and pidgins,Erzya,Esperanto,Estonian,Ewe,Ewondo,Fang,Fanti,Faroese,Fijian,Filipino,Finnish,Finno-Ugrian languages,Fon,French,French-based Creoles and pidgins,Friulian,Fulah,Ga,Gaelic,Galibi Carib,Galician,Ganda,Gayo,Gbaya,Geez,Georgian,German,Germanic languages,Gilbertese,Gondi,Gorontalo,Gothic,Grebo,Guarani,Gujarati,Gwich'in,Haida,Haitian,Hausa,Hawaiian,Hebrew,Herero,Hiligaynon,Himachali languages,Hindi,Hiri Motu,Hittite,Hmong,Hungarian,Hupa,Iban,Icelandic,Ido,Igbo,Ijo languages,Iloko,Inari Sami,Indic languages,Indo-European languages,Indonesian,Ingush,Interlingua,Interlingue,Inuktitut,Inupiaq,Iranian languages,Irish,Iroquoian languages,Italian,Japanese,Javanese,Judeo-Arabic,Judeo-Persian,Kabardian,Kabyle,Kachin,Kalaallisut,Kalmyk,Kamba,Kannada,Kanuri,Kara-Kalpak,Karachay-Balkar,Karelian,Karen languages,Kashmiri,Kashubian,Kawi,Kazakh,Khasi,Khoisan languages,Khotanese,Kikuyu,Kimbundu,Kinyarwanda,Kirghiz,Klingon,Komi,Kongo,Konkani,Korean,Kosraean,Kpelle,Kru languages,Kuanyama,Kumyk,Kurdish,Kurukh,Kutenai,Ladino,Lahnda,Lamba,Land Dayak languages,Lao,Latin,Latvian,Lezghian,Limburgan,Lingala,Lithuanian,Lojban,Low German,Lower Sorbian,Lozi,Luba-Katanga,Luba-Lulua,Luiseno,Lule Sami,Lunda,Luo,Lushai,Luxembourgish,Macedonian,Madurese,Magahi,Maithili,Makasar,Malagasy,Malay,Malayalam,Maltese,Manchu,Mandar,Mandingo,Manipuri,Manobo languages,Manx,Maori,Mapudungun,Marathi,Mari,Marshallese,Marwari,Masai,Mayan languages,Mende,Mi'kmaq,Middle Dutch,Middle English,Middle French,Middle High German,Middle Irish,Minangkabau,Mirandese,Modern Greek,Mohawk,Moksha,Mon-Khmer languages,Mongo,Mongolian,Mossi,Multiple languages,Munda languages,N'Ko,Nahuatl languages,Nauru,Navajo,Ndonga,Neapolitan,Nepal Bhasa,Nepali,Nias,Niger-Kordofanian languages,Nilo-Saharan languages,Niuean,No linguistic content,Nogai,North American Indian languages,North Ndebele,Northern Frisian,Northern Sami,Norwegian,Norwegian Bokmål,Norwegian Nynorsk,Nubian languages,Nyamwezi,Nyankole,Nyoro,Nzima,Occitan,Official Aramaic,Ojibwa,Old English,Old French,Old High German,Old Irish,Old Norse,Old Persian,Old Provençal,Oriya,Oromo,Osage,Ossetian,Otomian languages,Ottoman Turkish,Pahlavi,Palauan,Pali,Pampanga,Pangasinan,Panjabi,Papiamento,Papuan languages,Pedi,Persian,Philippine languages,Phoenician,Pohnpeian,Polish,Portuguese,Portuguese-based Creoles and pidgins,Prakrit languages,Pushto,Quechua,Rajasthani,Rapanui,Rarotongan,Reserved for local use,Romance languages,Romanian,Romansh,Romany,Rundi,Russian,Salishan languages,Samaritan Aramaic,Sami languages,Samoan,Sandawe,Sango,Sanskrit,Santali,Sardinian,Sasak,Scots,Selkup,Semitic languages,Serbian,Serer,Shan,Shona,Sichuan Yi,Sicilian,Sidamo,Sign Languages,Siksika,Sindhi,Sinhala,Sino-Tibetan languages,Siouan languages,Skolt Sami,Slave,Slavic languages,Slovak,Slovenian,Sogdian,Somali,Songhai languages,Soninke,Sorbian languages,South American Indian languages,South Ndebele,Southern Altai,Southern Sami,Southern Sotho,Spanish,Sranan Tongo,Sukuma,Sumerian,Sundanese,Susu,Swahili,Swati,Swedish,Swiss German,Syriac,Tagalog,Tahitian,Tai languages,Tajik,Tamashek,Tamil,Tatar,Telugu,Tereno,Tetum,Thai,Tibetan,Tigre,Tigrinya,Timne,Tiv,Tlicho,Tlingit,Tok Pisin,Tokelau,Tonga (Nyasa),Tonga (Tonga Islands),Tsimshian,Tsonga,Tswana,Tumbuka,Tupi languages,Turkish,Turkmen,Tuvalu,Tuvinian,Twi,Udmurt,Ugaritic,Uighur,Ukrainian,Umbundu,Uncoded languages,Undetermined,Upper Sorbian,Urdu,Uzbek,Vai,Venda,Vietnamese,Volapük,Votic,Wakashan languages,Walloon,Waray,Washo,Welsh,Western Frisian,Wolaitta,Wolof,Xhosa,Yakut,Yao,Yapese,Yiddish,Yoruba,Yupik languages,Zande languages,Zapotec,Zaza,Zenaga,Zhuang,Zulu,Zuni">Language</button></li>
+    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="identifier" data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
+    <!-- @surface-only -->
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-access">
   <p class="dropdown-header" id="qb-g-access">Access and files</p>
   <ul class="list-unstyled mb-0">
+    <!-- Keep the variants' values in step. -->
+    <!-- @surface-only: public -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="access" data-qb-label="Access level" data-qb-template="qb-row-choice"
-      data-qb-values="Open access,Restricted,Under embargo,No full text">Access level</button></li>
+      data-qb-op-fixed="is"
+      data-qb-values="Open access,Restricted,Under embargo,Metadata only">Access level</button></li>
+    <!-- @surface-only -->
+    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="files" data-qb-label="Files" data-qb-template="qb-row-choice"
-      data-qb-values="A file here,Somewhere else,Nothing deposited">Files</button></li>
+      data-qb-field="access" data-qb-label="Access level" data-qb-template="qb-row-choice"
+      data-qb-ops="is,is not"
+      data-qb-values="Open access,Restricted,Under embargo,Metadata only">Access level</button></li>
+    <!-- @surface-only -->
+    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="license" data-qb-label="Licence" data-qb-template="qb-row-choice"
-      data-qb-values="CC0 1.0,CC BY 4.0,CC BY-SA 4.0,CC BY-NC 4.0,CC BY-ND 4.0,CC BY-NC-SA 4.0,CC BY-NC-ND 4.0,In copyright,Rights unknown,Other licence">Licence</button></li>
+      data-qb-op-fixed="is"
+      data-qb-values="CC0 1.0,CC BY 4.0,CC BY-SA 4.0,CC BY-NC 4.0,CC BY-ND 4.0,CC BY-NC-SA 4.0,CC BY-NC-ND 4.0,In copyright,Rights unknown,Other licence,No licence">Licence</button></li>
+    <!-- @surface-only -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="file_type" data-qb-label="Attached content" data-qb-template="qb-row-choice"
       data-qb-values="Full text or dataset,Supplementary material,Table of contents,Peer review report,Colophon,Data fact sheet,Agreement">Attached content</button></li>
+    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publication_version" data-qb-label="Full-text version" data-qb-template="qb-row-choice"
       data-qb-values="Author version,Accepted version,Published version,Updated version">Full-text version</button></li>
+    <!-- @surface-only -->
   </ul>
 </div>
+<!-- @surface-only: backoffice -->
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-curation">
+  <p class="dropdown-header" id="qb-g-curation">Curation</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="record_history" data-qb-label="Record history"
+      data-qb-template="qb-row-record-history">Record history</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="visibility" data-qb-label="Record visibility" data-qb-template="qb-row-choice"
+      data-qb-values="Public,Restricted,Private">Record visibility</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="deposit_status" data-qb-label="Deposit status" data-qb-template="qb-row-choice"
+      data-qb-values="Draft,Submitted,Returned,Reviewed">Deposit status</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="ugent_classification" data-qb-label="Classification"
+      data-qb-template="qb-row-choice"
+      data-qb-values="A1,A2,A3,A4,B1,B2,B3,C1,C3,D1,V,U">Classification</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_evaluation" data-qb-label="VABB evaluation" data-qb-template="qb-row-choice"
+      data-qb-ops="is,is not"
+      data-qb-values="Approved,Not approved">VABB evaluation</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_type" data-qb-label="VABB type"
+      data-qb-template="qb-row-choice"
+      data-qb-values="VABB-1,VABB-2,VABB-3,VABB-4,VABB-5">VABB type</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_submission_year" data-qb-label="VABB submission year"
+      data-qb-template="qb-row-year"
+      data-qb-ops="is,is at least,is at most,is between">VABB submission year</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-metrics">
+  <p class="dropdown-header" id="qb-g-metrics">Journal metrics</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_impact_factor" data-qb-label="JCR impact factor"
+      data-qb-template="qb-row-quantity">JCR impact factor</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_category" data-qb-label="JCR category"
+      data-qb-template="qb-row-choice"
+      data-qb-op-fixed="is" data-qb-multi-values
+      data-qb-values="Astronomy &amp; Astrophysics,Biochemistry &amp; Molecular Biology,Cell Biology,Ecology,Economics,History,Immunology,Linguistics,Microbiology,Neurosciences,Oncology,Sociology,Veterinary Sciences">JCR category</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_quartile" data-qb-label="JCR category quartile"
+      data-qb-template="qb-row-choice"
+      data-qb-op-fixed="is" data-qb-multi-values
+      data-qb-values="1,2,3,4">JCR category quartile</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_decile" data-qb-label="JCR category decile"
+      data-qb-template="qb-row-choice"
+      data-qb-op-fixed="is" data-qb-multi-values
+      data-qb-values="1,2,3,4,5,6,7,8,9,10">JCR category decile</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_vigintile" data-qb-label="JCR category vigintile"
+      data-qb-template="qb-row-choice"
+      data-qb-op-fixed="is" data-qb-multi-values
+      data-qb-values="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20">JCR category vigintile</button></li>
+  </ul>
+</div>
+<!-- @surface-only -->

@@ -6,6 +6,40 @@ system, or do I reach for something new?"
 
 ---
 
+## Backoffice-only markup is gated by surface, not state names (v2.36, 2026-09-09)
+
+No CSS changed. The server renders `<!-- @surface-only: backoffice -->` blocks only on pages
+declaring that `@surface`; a page without one renders no surface blocks. The field list's
+backoffice entries and groups and the Licence and Identifier demo rows use the gate; arrival
+and action state lists keep their state names. Mechanism: `docs/SERVER.md` → Surface blocks.
+
+## The builder's field set splits per surface (v2.35, 2026-09-09)
+
+**Words or topic and Files are gone from both builders.** Open text belongs to the page's
+search box; Access level's "No full text" value is renamed **Metadata only**.
+
+**Licence, Identifier, Publication status and Full-text version are backoffice-only.** One
+field list now carries every chooser group: `templates/partials/search-field-list.html`, with
+backoffice-only entries and groups gated to the backoffice states.
+`search-field-list-backoffice.html` no longer exists.
+
+## Backoffice lists carry the Advanced search dialog, with backoffice fields (v2.34, 2026-09-08)
+
+No CSS changed — the new rows reuse existing classes. A consumer adopting the backoffice
+builder re-adapts markup only.
+
+**The backoffice works lists open the public Advanced search dialog.** The researcher and
+curator lists compose the same partials and `query-builder.js` as `public-works.html`; the
+toolbar gains the Advanced search trigger.
+
+**The chooser gains three backoffice-only groups** — Curation, Record dates, Journal
+metrics — from `templates/partials/search-field-list-backoffice.html`, one entry per row of
+the Backoffice-only table in `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`. The public chooser
+is unchanged; the gate keeps curation fields off the public surface.
+
+**Two row shapes are new**: `qb-row-date` (is at least, is at most, is between over date
+inputs) and `qb-row-quantity` (is more than, is less than, is between over a number).
+
 ## Badge semantics: three tiers and viewer-dependent weight (v2.33, 2026-09-04)
 
 No CSS changed — every class already existed. A consumer who adapted cards, rows or

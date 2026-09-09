@@ -4,7 +4,7 @@ about: Port a booktower-ui-library prototype into raven
 title: "[public][02] Advanced search: condition rows and the field chooser"
 ---
 
-<!-- Draft. Query-builder track: docs/wip/README.md. Child of epic 00. -->
+<!-- Refile source for raven #225: copy the body over the issue at the reveal. -->
 
 ## Why
 
@@ -16,14 +16,11 @@ without rebuilding it.
 ## What
 
 - [ ] Each row follows the selected field's anatomy
-- [ ] The chooser offers the 21 public fields from the field contract and is searchable
+- [ ] The chooser offers the 14 public fields from the field contract and is searchable
 - [ ] Changing the field replaces that row in place
 - [ ] Two rows may use one field; two Person rows require both people to match
-- `out of scope` Value controls — issue 03
-- `out of scope` Approximate count — issue 04
-
-If two same-field rows find nothing, the interface may suggest an OR group. Issue 04
-owns that recovery decision.
+- `out of scope` Value controls — #226
+- `out of scope` Approximate count — #227
 
 **Prototype:** [full query](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-full-query)
 and [empty builder](https://bkt-ui.vercel.app/templates/biblio-public/public-works.html?state=builder-empty)
@@ -43,5 +40,4 @@ Prototype URLs are placeholders. UI copy uses Raven's translation files.
 
 ## Dependencies
 
-Blocked by the epic's address decision. Licence also requires Raven to expose the
-field to public search.
+Blocked by the address decision in epic #223.

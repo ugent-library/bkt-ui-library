@@ -21,9 +21,10 @@ hierarchy and selection state are shown.
 
 ## Project
 
-The picker still needs:
+The programme line is settled: the Funding programme field folded into Project and relies
+on the picker showing and matching it. The picker still needs:
 
-- the metadata that distinguishes projects with the same name: funder, programme,
+- the remaining metadata that distinguishes projects with the same name: funder,
   grant number, years or a tested combination;
 - one action term, **Add project** or **Link project**, used here and in the deposit flow.
 

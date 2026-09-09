@@ -128,6 +128,7 @@ bt-panel__year-input
 bt-query-builder__add
 bt-query-builder__alts
 bt-query-builder__conditions
+bt-query-builder__date
 bt-query-builder__group
 bt-query-builder__group-foot
 bt-query-builder__phrase
