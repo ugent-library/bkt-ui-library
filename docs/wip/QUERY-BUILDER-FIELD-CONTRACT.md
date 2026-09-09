@@ -123,5 +123,5 @@ decides which fields may be public.
 
 ## Open questions
 
-The count's behaviour, and how exact it may be, is asked where it is decided:
+The count's behaviour, including how exact it is, is decided in
 [`ISSUE-04`](QUERY-BUILDER-ISSUE-04-count.md).

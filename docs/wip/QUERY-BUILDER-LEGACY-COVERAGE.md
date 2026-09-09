@@ -17,7 +17,7 @@ decides.
 | `abstract` | Abstract | `abstract` | contains, does not contain, is, is not | — |
 | `keyword` | Keywords | `keyword`; alias `subject` | is | — |
 | `contributor` `TBD` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is | role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor |
-| `organization` | Organization | `affiliation`, `external` | is | — |
+| `organization` | Organization | `affiliation`, `external` | is; the backoffice adds is not | — |
 | `project` | Project | `project`, `project.id` | is | — |
 | `work_type` | Publication type | `type`; subtype aliases | is | — |
 | `year` | Publication year | `year`, ranges | is, is between | — |
@@ -39,11 +39,11 @@ decides.
 | `vabb_submission_year` | VABB submission year | `vabbyear` | is, is at least, is at most, is between | — |
 | `record_history` `TBD` | Record history | `datecreated`, `dateupdated`; the reviewed date carries the legacy approval (raven names it) | a from–to date pair | which event: created / last changed / reviewed |
 | `defense_date` | Date defended | `defence.date` | is at least, is at most, is between | — |
-| `jcr_impact_factor` `TBD` | JCR impact factor | `jcr.impact_factor` | is more than, is less than, is between | — |
-| `jcr_category` `TBD` | JCR category | `jcr.category` | is, is not, is any of | — |
-| `jcr_quartile` `TBD` | JCR category quartile | `jcr.categoryquartile` | is, is not, is any of | — |
-| `jcr_decile` `TBD` | JCR category decile | `jcr.categorydecile` | is, is not, is any of | — |
-| `jcr_vigintile` `TBD` | JCR category vigintile | `jcr.categoryvigintile` | is, is not, is any of | — |
+| `jcr_impact_factor` | JCR impact factor | `jcr.impact_factor` | is more than, is less than, is between | — |
+| `jcr_category` `TBD` | JCR category | `jcr.category` | is | — |
+| `jcr_quartile` | JCR category quartile | `jcr.categoryquartile` | is | — |
+| `jcr_decile` | JCR category decile | `jcr.categorydecile` | is | — |
+| `jcr_vigintile` | JCR category vigintile | `jcr.categoryvigintile` | is | — |
 
 ## Folded into another row
 
@@ -51,7 +51,7 @@ decides.
 |---|---|
 | `promoter` | contributor role "as supervisor" |
 | `soleauthor`, `firstauthor`, `lastauthor` | contributor roles "as sole author", "as first author", "as last author" |
-| `external` | organization *is* Ghent University |
+| `external` | organization *is* / *is not* Ghent University |
 | `embargo` | access value "Under embargo" |
 | metadata-only | access value "Metadata only" |
 | biblio or raven record id, `vabbid` | identifier, recognised by its scheme |

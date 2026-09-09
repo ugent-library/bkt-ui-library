@@ -33,15 +33,20 @@ becomes the overview, `candidate-focused-review.html` is new and
 (`docs/DOMAIN-VOCABULARY.md`, “Accepted value and pending request”), not part of
 Candidates.
 
-## Query builder (Advanced search) — handed off, cleanup pending
+## Query builder (Advanced search) — phase-1 revision, issues being rewritten
 
 One visual builder replacing Advanced and Expert search. **Reading order for a first review:**
 
-**Stage:** Issue handoff cleanup
-**Accepted:** Prototype and issue set filed as Raven #223–#230.
+**Stage:** Phase-1 prototype revision on `feature/query-builder-phase-1`; the filed
+issues are being rewritten against it per
+[`QUERY-BUILDER-ISSUE-REWRITE.md`](QUERY-BUILDER-ISSUE-REWRITE.md).
+**Accepted:** Prototype and issue set filed as Raven #223–#230, plus the phase-2
+placeholder #295. The backoffice field set is phase 2 (fields TBD); OR groups are
+phase 3 (#230).
 **Blocking:** Ownership audit before deleting the legacy drafts.
-**Next:** Move any live facts to their owners, delete local drafts and remove this WIP
-entry. Raven issues own implementation.
+**Next:** Land the remaining revision steps, file the issue edits, then move live
+facts to their owners and remove this WIP entry. The field contract is promoted out
+of `docs/wip/`, not deleted; the other drafts go. Raven issues own implementation.
 
 1. [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) — the proposal: problem, capability,
    definition of done, risks. Start here; it is one page.
@@ -50,7 +55,10 @@ entry. Raven issues own implementation.
 3. [`QUERY-BUILDER-MEASUREMENT.md`](QUERY-BUILDER-MEASUREMENT.md) — what we measure and why.
 4. `QUERY-BUILDER-ISSUE-*` — local copies of the implementation issues, filed as
    [raven #223](https://github.com/ugent-library/raven/issues/223) (the epic) with children
-   #224–#230. These copies are pending handoff cleanup. Start at
+   #224–#230 and the phase-2 placeholder #295. The rewritten copies (00, 02–05;
+   08 refiles #295) are refile sources;
+   [`QUERY-BUILDER-ISSUE-REWRITE.md`](QUERY-BUILDER-ISSUE-REWRITE.md) lists what
+   changed. Start at
    [`ISSUE-00-EPIC`](QUERY-BUILDER-ISSUE-00-EPIC.md), which names the children and the order
    they land in. [`ISSUE-01`](QUERY-BUILDER-ISSUE-01-measurement.md) (#224) goes to the lead
    developer as a conversation first. Every **Screenshot** callout names its capture in
@@ -60,6 +68,8 @@ entry. Raven issues own implementation.
 
 Supporting material, read as needed:
 
+- [`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md) — translator context:
+  the legacy names each field covers, the folds and the drops. Not a specification.
 - [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) — 194 acceptance cases (all
   values are fixtures), the gate for "every existing query keeps working". The numbers behind
   it: [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md).
