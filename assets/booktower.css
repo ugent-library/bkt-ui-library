@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 23ee631/2026-09-09 */
+/*! Booktower 0576795/2026-09-09 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -2004,6 +2004,20 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-panel__year-input {
   width: 120px;
+}
+
+.csl-entry:has(> .csl-left-margin + .csl-right-inline) {
+  display: grid;
+  grid-template-columns: -webkit-max-content minmax(0, 1fr);
+  grid-template-columns: max-content minmax(0, 1fr);
+  -moz-column-gap: 0.5em;
+       column-gap: 0.5em;
+}
+.csl-entry:has(> .csl-left-margin + .csl-right-inline) > .csl-left-margin {
+  white-space: nowrap;
+}
+.csl-entry:has(> .csl-left-margin + .csl-right-inline) > .csl-right-inline {
+  overflow-wrap: anywhere;
 }
 
 /* -- bt-query-builder -- */
