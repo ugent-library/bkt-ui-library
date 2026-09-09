@@ -619,7 +619,7 @@
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-val-10">Identifiers, condition 10</label>
           <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="qb-val-10"
-            rows="3" aria-describedby="qb-val-10-help qb-val-10-recognised qb-val-10-over qb-val-10-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+            rows="6" aria-describedby="qb-val-10-help qb-val-10-recognised qb-val-10-over qb-val-10-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
   01K2KG9EFW5T 01KFW5TB8167 10.1038/s41586-024-07123-4 10.1103/PhysRevLett.132.010801 01KW5TB8167M 01K9EFW5TB81
   01KPQ4D2KG9E 01K30SYZCNAV 01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF
   01K4D2KG9EFW 01KHPQ4D2KG9 01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
@@ -813,7 +813,7 @@
     </div>
 
 
-    <!-- Prototype note: the spelling feedback ("nothing matches this spelling") is phase 2. -->
+    <!-- Prototype note: the spelling feedback ("nothing matches this spelling") is phase 3. -->
     <div class="bt-query-builder__row bt-query-builder__row--error" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -868,7 +868,7 @@
     <!-- @state -->
 
     <!-- @state: builder-or-group -->
-    <!-- Prototype note: OR groups are phase 2. A group is a state of a row, made by the
+    <!-- Prototype note: OR groups are phase 3. A group is a state of a row, made by the
           row's "or…" action; it collapses back to a plain row when one alternative is left. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">
@@ -1285,8 +1285,8 @@
           <option>series</option>
           <option>show or lecture series</option>
           <option>venue</option>
-          <!-- Prototype note: publisher place is provisional — the fuzzy-search
-               downside is unknown. -->
+          <!-- Prototype note: publisher place's fuzzy-search behaviour is untested —
+               raven checks it at implementation. -->
           <option>publisher place</option>
         </select>
         <span class="small text-muted" data-qb-op-fixed>is</span>
@@ -1328,7 +1328,11 @@
         </div>
       </div>
       <div class="bt-query-builder__phrase">
-        <span class="small text-muted" data-qb-op-fixed>is</span>
+        <label class="visually-hidden" for="qb-t-entity-op">Operator</label>
+        <select class="form-select form-select-sm" id="qb-t-entity-op" data-qb-op>
+          <option>is</option>
+          <option>is not</option>
+        </select>
         <div class="bt-query-builder__row-value" data-qb-value>
           <div class="dropdown">
             <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
@@ -1589,11 +1593,11 @@
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-t-qty-val" data-qb-single>Value</label>
-          <input type="number" step="any" class="form-control form-control-sm bt-query-builder__year"
+          <input type="number" step="any" class="form-control form-control-sm bt-query-builder__date"
             id="qb-t-qty-val" data-qb-single>
           <span class="small text-muted" data-qb-pair hidden>and</span>
           <label class="visually-hidden" for="qb-t-qty-val-to" data-qb-pair hidden>Upper value</label>
-          <input type="number" step="any" class="form-control form-control-sm bt-query-builder__year"
+          <input type="number" step="any" class="form-control form-control-sm bt-query-builder__date"
             id="qb-t-qty-val-to" data-qb-pair hidden>
         </div>
       </div>
@@ -1712,7 +1716,7 @@
     </div>
   </template>
 
-<!-- The group a row becomes. Prototype note: OR groups are phase 2. -->
+<!-- The group a row becomes. Prototype note: OR groups are phase 3. -->
   <template id="qb-group">
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">

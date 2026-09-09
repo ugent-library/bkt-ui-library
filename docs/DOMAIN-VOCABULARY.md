@@ -585,7 +585,7 @@ Retracted. A fact never asks for anything.
 ### 3. Meta text
 
 Plain `bt-work-card__meta-item` values close the row, in fixed order: work kind, then
-"No full text" only when the full text is actually missing, then access level
+"Metadata only" only when the full text is actually missing, then access level
 ("Open", "Restricted", "Embargo <start date> – <end date> | Private [if-arrow-right]
 Open" when both dates and both access levels are available). Work kind and file
 access are never badges on the backoffice.

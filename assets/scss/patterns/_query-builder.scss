@@ -77,6 +77,14 @@
   align-items: stretch;
 }
 
+/* Chrome under-sizes the row's grid track around a field-sized textarea, so the
+   content overflows into the next row; inside the builder the box stays fixed and
+   scrolls instead. */
+.bt-query-builder__row .bt-textarea-auto {
+  field-sizing: fixed;
+}
+
+
 .bt-query-builder__row--error {
   background-color: var(--bt-red-50);
 }

@@ -579,7 +579,8 @@ const handler = async (req, res) => {
   }
 
   html = injectShell(filePath, html, urlPath, activeState, parsedTemplate?.note);
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  // HTML needs no-store too: heuristically cached pages made template edits look broken.
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
   res.end(html);
 };
 

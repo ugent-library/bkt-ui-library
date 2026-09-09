@@ -11,7 +11,7 @@ identifier appears in this file. The frequencies are real: occurrences in human 
 
 | subset | source | contract | owner | gate |
 |---|---|---|---|---|
-| **A — builder expressibility** | human `form` queries (advanced + expert, n=3,589) | the builder can author this query | **prototype** | every case is either authorable, or signed off as *field not exposed* or *over cap* |
+| **A — builder expressibility** | human `form` queries (advanced + expert, n=3,589) | the builder can author this query | **prototype** | every case is either authorable, or signed off as *field not exposed*, *over cap* or *parked for a later phase* |
 | **B — translator fidelity** | all of A **plus** machine `direct`/`link` traffic and legacy embed parameters | the legacy query keeps resolving to the right new query | raven | 100%, no exceptions — this is the "100% keeps working" constraint |
 
 B is strictly larger than A, and it is **not prototype scope**: it is the translator
@@ -128,8 +128,8 @@ whatever its proposed label reads.
 | C1.71 | `accesslevel all "open"` | 1 | A+B | in scope |  |
 | C1.72 | `author all "PERSON_1"` | 1 | A+B | in scope |  |
 | C1.73 | `author.affiliation any "ORG_1"` | 1 | A+B | in scope |  |
-| C1.74 | `copyrightstatement <> STATEMENT_1` | 1 | A+B | in scope |  |
-| C1.75 | `copyrightstatement any "STATEMENT_1"` | 1 | A+B | in scope |  |
+| C1.74 | `copyrightstatement <> STATEMENT_1` | 1 | A+B | not exposed | the licence renders the statement; Licence is the condition |
+| C1.75 | `copyrightstatement any "STATEMENT_1"` | 1 | A+B | not exposed | the licence renders the statement; Licence is the condition |
 | C1.76 | `editor any "PERSON_1"` | 1 | A+B | in scope |  |
 | C1.77 | `file <> 1` | 1 | A+B | in scope | legacy has-file boolean — Access level *is* Metadata only |
 | C1.78 | `for all "TEXT"` | 1 | B | translator-only | parse artifact — must not crash |
@@ -212,7 +212,7 @@ whatever its proposed label reads.
 | C3.48 | `title = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term |
 | C3.49 | `author = PERSON_1 AND year >= 2020 AND type any "journalArticle" AND classification any "A1" AND affiliation any "ORG_1" AND publicationstatus any "published"` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
 | C3.50 | `basic = TEXT AND year >= 2020 AND type any "journalArticle" AND publicationstatus any "published" AND articletype any "original"` | 1 | A+B | backoffice | composite, 1 OR term; basic rides in the search box; backoffice builder field |
-| C3.51 | `(basic = TEXT or … or basic = TEXT  (3 terms)) AND author = PERSON_1` | 1 | A+B | in scope | needs `contains any of` on a text row — field contract open question 4 |
+| C3.51 | `(basic = TEXT or … or basic = TEXT  (3 terms)) AND author = PERSON_1` | 1 | A+B | parked | waits for phase-3 OR groups; revived only on demand |
 | C3.52 | `basic = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term; basic rides in the search box |
 | C3.53 | `title any "TEXT" and (author any "PERSON_1" or type exact journalArticle)` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.54 | `publisher = PUBLISHER_1 or … or publisher = PUBLISHER_1  (3 terms)` | 1 | A+B | in scope | single-field value list, 2-4 OR terms |
@@ -235,7 +235,7 @@ whatever its proposed label reads.
 | case | query | observed | subset | scope | note |
 |---|---|---:|---|---|---|
 | C5.01 | `id any "ID_1 … _763"` | 1 | A+B | over cap | 763 values / 9,336 chars — the URL ceiling case |
-| C5.02 | `author exact PERSON_1 OR … OR author exact PERSON_85` | 1 | A+B | over cap | longhand chain collapses into one list row up to the cap (5 public / 20 backoffice); the translator carries the 85 |
+| C5.02 | `author exact PERSON_1 OR … OR author exact PERSON_85` | 1 | A+B | over cap | longhand chain collapses into one list row up to the cap; the translator carries the 85 |
 | C5.03 | `author = PERSON_1 AND year >= 2015 AND classification any "A1" AND external exact 0` | 57 | A+B | in scope | most common multi-condition shape |
 
 ## C6 — machine contract (the head of machine traffic, 99.5% of 72.9M hits) — 24 cases

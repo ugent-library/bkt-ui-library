@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 919f657/2026-09-09 */
+/*! Booktower 8675a39/2026-09-09 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -2079,6 +2079,13 @@ a.bt-avatar--outline:hover:not(:disabled) {
 .bt-query-builder__row--batch .bt-query-builder__row-value {
   flex-direction: column;
   align-items: stretch;
+}
+
+/* Chrome under-sizes the row's grid track around a field-sized textarea, so the
+   content overflows into the next row; inside the builder the box stays fixed and
+   scrolls instead. */
+.bt-query-builder__row .bt-textarea-auto {
+  field-sizing: fixed;
 }
 
 .bt-query-builder__row--error {

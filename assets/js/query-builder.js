@@ -105,10 +105,29 @@ document.addEventListener('DOMContentLoaded', function () {
     return row.closest('[data-surface]')?.dataset.surface === 'backoffice' ? 20 : 5;
   }
 
+  // Inside an open panel the cap disables what it will not take.
+  function syncPanelCap(row, slot) {
+    const boxes = slot.querySelectorAll('[data-picker-rows] input[type="checkbox"]');
+    const full = Array.from(boxes).filter(b => b.checked).length >= capOf(row);
+    boxes.forEach(b => { if (!b.checked) b.disabled = full; });
+  }
+
   function capAdd(row) {
     const cell = row.querySelector('[data-qb-value]');
     const add = cell && cell.querySelector('[data-qb-picker-slot]')?.closest('.dropdown');
-    if (add) add.hidden = cell.querySelectorAll('[data-qb-token]').length >= capOf(row);
+    if (!add) return;
+    const capped = cell.querySelectorAll('[data-qb-token]').length >= capOf(row);
+    if (add.hasAttribute('data-qb-multi')) {
+      // The multi control is op-gated; the cap may hide it but never reveal it.
+      const select = row.querySelector('.bt-query-builder__value-select');
+      const op = row.querySelector('[data-qb-op]');
+      const chosen = op && op.selectedIndex >= 0 && op.options[op.selectedIndex];
+      const active = (select && select.hidden) ||
+        Boolean(chosen && chosen.hasAttribute('data-qb-multi-op'));
+      add.hidden = capped || !active;
+    } else {
+      add.hidden = capped;
+    }
   }
 
   // The row's actions must always name the condition they act on — a screen reader user has to
@@ -326,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pickerSlot.querySelectorAll('[data-picker-rows] input').forEach(box => {
         box.checked = present.includes(box.dataset.id);
       });
+      syncPanelCap(row, pickerSlot);
       return;
     }
 
@@ -506,6 +526,10 @@ document.addEventListener('DOMContentLoaded', function () {
   list.addEventListener('change', event => {
     const row = event.target.closest('[data-qb-row]');
     if (row && event.target.hasAttribute('data-qb-op')) syncValueShape(row);
+    const slot = event.target.closest('[data-qb-picker-slot]');
+    if (row && slot && event.target.matches('[data-picker-rows] input[type="checkbox"]')) {
+      syncPanelCap(row, slot);
+    }
     sync();
   });
 
