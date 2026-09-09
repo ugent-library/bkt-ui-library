@@ -6,6 +6,13 @@ system, or do I reach for something new?"
 
 ---
 
+## Backoffice-only markup is gated by surface, not state names (v2.36, 2026-09-09)
+
+No CSS changed. The server renders `<!-- @surface-only: backoffice -->` blocks only on pages
+declaring that `@surface`; a page without one renders no surface blocks. The field list's
+backoffice entries and groups and the Licence and Identifier demo rows use the gate; arrival
+and action state lists keep their state names. Mechanism: `docs/SERVER.md` → Surface blocks.
+
 ## The builder's field set splits per surface (v2.35, 2026-09-09)
 
 **Words or topic and Files are gone from both builders.** Open text belongs to the page's
