@@ -9,12 +9,13 @@ Fields, labels, operators and inputs offered by each surface. Raven owns backend
 The public builder ships first; backoffice reuses it with more fields.
 
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
-- `is any of` joins values of one field. An OR group joins separate conditions. Two Person rows
-  therefore mean both people.
+- Several values in one condition match any of them; `is any of` spells it where the operator
+  is a choice. An OR group joins separate conditions. Two Person rows therefore mean both
+  people.
 - A qualifier changes how the same kind of value is read, such as a person's role. Otherwise the
   question gets a separate field entry.
-- List inputs accept pasted batches, report unread values and direct oversized links to Save this
-  search.
+- List inputs accept pasted batches and report unread values. A condition takes at most five
+  values on the public surface; the backoffice identifier box takes twenty.
 - Public URLs expose only public records. Committed examples use fixtures.
 - An id is Raven's filter name, so a shared URL and a Raven query read alike. Where Raven names
   no filter, the id follows Raven's naming grammar. A row that deviates from either says so
@@ -28,6 +29,7 @@ they disagree.
 |---|---|
 | `contains` / `does not contain` | the text holds, or lacks, the words entered |
 | `is` / `is not` | matches, or excludes, the whole value, exactly as written |
+| `matches` | the words match as the search box matches them; raven owns the matching rule |
 | `is any of` | matches any value in the list pasted or picked |
 | `is at least` / `is at most` | the year named counts as inside the bound |
 | `is between` | both years named count as inside |
@@ -40,19 +42,19 @@ decides which fields may be public.
 
 | id | label | covers (legacy) | operators | value input |
 |---|---|---|---|---|
-| `title` | Title | `title` | contains, does not contain, is, is not | text |
+| `title` | Title | `title` | matches | text; autocompletes against titles (`TBD` raven capability) |
 | `abstract` | Abstract | `abstract` | contains, does not contain, is, is not | text |
-| `keyword` | Keywords | `keyword`; alias `subject` | contains, does not contain, is, is not | text |
-| `contributor` `TBD` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is, is not, is any of · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker, one token per person |
-| `organization` | Organization | `affiliation`, `external` | is, is not, is any of | organization picker |
-| `project` | Project | `project`, `project.id` | is, is not, is any of | project picker |
-| `work_type` | Publication type | `type`; subtype aliases | is, is not, is any of | select |
-| `year` | Publication year | `year`, ranges | is, is not, is any of, is between, is at least, is at most | year input; a pair for between; a comma-separated list for any of |
-| `container` | Appeared in | `parent`, `publication` | contains, does not contain, is, is not · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
-| `conference` | Conference | `conference` | contains, does not contain, is, is not | text |
+| `keyword` | Keywords | `keyword`; alias `subject` | is | text; several comma-separated values; autocompletes (`TBD` raven capability) |
+| `contributor` `TBD` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker; several tokens match any of them |
+| `organization` | Organization | `affiliation`, `external` | is | organization picker; several tokens match any of them |
+| `project` | Project | `project`, `project.id` | is | project picker; several tokens match any of them |
+| `work_type` | Publication type | `type`; subtype aliases | is | select |
+| `year` | Publication year | `year`, ranges | is, is between | a comma-separated year list for is; a pair for between |
+| `container` | Appeared in | `parent`, `publication` | is · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
+| `conference` | Conference | `conference` | is | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
-| `language` | Language | `language` | is, is not, is any of | select |
-| `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is, is not, is any of | select: Open access, Restricted, Under embargo, Metadata only |
+| `language` | Language | `language` | is | select |
+| `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is | select: Open access, Restricted, Under embargo, Metadata only |
 | `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 
 ### Public decisions
@@ -60,7 +62,8 @@ decides which fields may be public.
 - Person includes role and author position. Organization means the credit recorded on the work,
   based on affiliation at the time rather than a person's current post. It therefore stays stable
   when a person moves or holds several posts. Matching a unit includes its descendants. The legacy
-  `external` field becomes Ghent University *is* or *is not*.
+  `external` field becomes Ghent University *is*; its negation lost its route when
+  Organization narrowed to *is*.
 - The Person id is `TBD`: Raven's live person filter is named `author` and carries no role, so
   Raven must name the role-aware filter this row needs. `contributor` matches its field name.
 - Year bounds are inclusive.
@@ -78,7 +81,7 @@ decides which fields may be public.
 |---|---|
 | `promoter` | contributor role "as supervisor" |
 | `soleauthor`, `firstauthor`, `lastauthor` | contributor roles "as sole author", "as first author", "as last author" |
-| `external` | organization *is* / *is not* Ghent University |
+| `external` | organization *is* Ghent University |
 | `embargo` | access value "Under embargo" |
 | metadata-only | access value "Metadata only" |
 | biblio or raven record id, `vabbid` | identifier, recognised by its scheme |
@@ -94,7 +97,7 @@ decides which fields may be public.
 | `deposit_status` | Deposit status | — | is, is not, is any of | — |
 | `publication_status` | Publication status | `publication_status`, `publicationstatus` | is, is not, is any of | — |
 | `identifier` | Identifier | `doi`, `issn`, `identifier`, `id`, `vabbid` | is any of, is, is not | — |
-| `license` | Licence | — | is, is not, is any of | — |
+| `license` | Licence | — | is | — |
 | `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | — |
 | `ugent_classification` | Classification | `classification` | is, is not, is any of | — |
 | `vabb_evaluation` | VABB evaluation `TBD` | `vabb_approved` | is, is not | — |
@@ -116,6 +119,8 @@ decides which fields may be public.
   licence* matches an unset licence; *Other licence* matches a value outside the named list.
 - Identifier lookup on the public surface stays in the search box (rule 3); the paste box is
   backoffice.
+- Access level gains *is not* on the backoffice; legacy `file.access <> open` (103 logged)
+  stays authorable there.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year remain
   separate external assertions; their exposure is undecided.
 - Created, changed and defended remain separate dates. Open question 1 covers legacy workflow dates.

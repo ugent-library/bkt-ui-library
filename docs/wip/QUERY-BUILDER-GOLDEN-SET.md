@@ -11,7 +11,7 @@ identifier appears in this file. The frequencies are real: occurrences in human 
 
 | subset | source | contract | owner | gate |
 |---|---|---|---|---|
-| **A — builder expressibility** | human `form` queries (advanced + expert, n=3,589) | the builder can author this query | **prototype** | every case is either authorable, or signed off as *field not exposed* |
+| **A — builder expressibility** | human `form` queries (advanced + expert, n=3,589) | the builder can author this query | **prototype** | every case is either authorable, or signed off as *field not exposed* or *over cap* |
 | **B — translator fidelity** | all of A **plus** machine `direct`/`link` traffic and legacy embed parameters | the legacy query keeps resolving to the right new query | raven | 100%, no exceptions — this is the "100% keeps working" constraint |
 
 B is strictly larger than A, and it is **not prototype scope**: it is the translator
@@ -70,7 +70,7 @@ whatever its proposed label reads.
 | C1.13 | `affiliation any "ORG_1"` | 201 | A+B | in scope |  |
 | C1.14 | `year >= 2020` | 132 | A+B | in scope |  |
 | C1.15 | `affiliation exact ORG_1` | 105 | A+B | in scope |  |
-| C1.16 | `file.access <> open` | 103 | A+B | in scope |  |
+| C1.16 | `file.access <> open` | 103 | A+B | backoffice |  |
 | C1.17 | `file.access exact open` | 99 | A+B | in scope |  |
 | C1.18 | `year = 2020` | 90 | A+B | in scope |  |
 | C1.19 | `year any "2020"` | 85 | A+B | in scope |  |
@@ -207,7 +207,7 @@ whatever its proposed label reads.
 | C3.43 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and file.access <> open AND field <> FIELD_1 AND classification any "A1" AND publication_status exact published and external exact 0` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
 | C3.44 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and external exact 0 and file.access exact open and embargo exact 0` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.45 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and external exact 0 and file.access exact open and embargo exact 0 AND classification any "A1" AND publication_status exact published` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
-| C3.46 | `author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1) AND file.access exact restricted and file.access <> open and external exact 0` | 1 | A+B | in scope | composite, 1 OR term |
+| C3.46 | `author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1) AND file.access exact restricted and file.access <> open and external exact 0` | 1 | A+B | backoffice | composite, 1 OR term |
 | C3.47 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND vabb_approved exact 1` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.48 | `title = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term |
 | C3.49 | `author = PERSON_1 AND year >= 2020 AND type any "journalArticle" AND classification any "A1" AND affiliation any "ORG_1" AND publicationstatus any "published"` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
@@ -234,7 +234,7 @@ whatever its proposed label reads.
 
 | case | query | observed | subset | scope | note |
 |---|---|---:|---|---|---|
-| C5.01 | `id any "ID_1 … _763"` | 1 | A+B | backoffice | 763 values / 9,336 chars — the URL ceiling case; backoffice builder field |
+| C5.01 | `id any "ID_1 … _763"` | 1 | A+B | over cap | 763 values / 9,336 chars — the URL ceiling case |
 | C5.02 | `author exact PERSON_1 OR … OR author exact PERSON_85` | 1 | A+B | in scope | longhand chain must collapse into one list row |
 | C5.03 | `author = PERSON_1 AND year >= 2015 AND classification any "A1" AND external exact 0` | 57 | A+B | in scope | most common multi-condition shape |
 

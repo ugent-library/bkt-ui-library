@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!cell) return '';
     const tokens = Array.from(cell.querySelectorAll('[data-qb-token]'))
       .map(token => token.textContent.trim());
-    if (tokens.length) return tokens.join(', ');
+    if (tokens.length) return tokens.join(operatorText(row) === 'is' ? ' or ' : ', ');
     return Array.from(cell.querySelectorAll('input:not([type="search"]), select, textarea'))
       .filter(el => !el.hidden && !el.closest('[data-qb-picker-slot]'))
       .map(el => el.tagName === 'SELECT'
@@ -67,14 +67,20 @@ document.addEventListener('DOMContentLoaded', function () {
       .join(' and ');
   }
 
+  function operatorText(row) {
+    const fixed = row.querySelector('[data-qb-op-fixed]');
+    if (fixed) return fixed.textContent.trim();
+    const op = row.querySelector('[data-qb-op]');
+    return op && op.selectedIndex >= 0 ? op.options[op.selectedIndex].text : '';
+  }
+
   function conditionName(row) {
     const field = row.querySelector('[data-qb-change-field]');
-    const op = row.querySelector('[data-qb-op]');
     let value = valueOf(row);
     if (value.length > 60) value = value.slice(0, 57) + '…';
     return [
       field ? field.textContent.trim() : 'condition',
-      op && op.selectedIndex >= 0 ? op.options[op.selectedIndex].text : '',
+      operatorText(row),
       value,
     ].filter(Boolean).join(' ');
   }
@@ -108,6 +114,22 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!keep.includes(option.textContent)) option.remove();
       });
     }
+    if (choice.dataset.qbOpFixed) {
+      const op = row.querySelector('[data-qb-op]');
+      const label = op && row.querySelector('label[for="' + op.id + '"]');
+      if (label) label.remove();
+      if (op) {
+        const fixed = document.createElement('span');
+        fixed.className = 'small text-muted';
+        fixed.setAttribute('data-qb-op-fixed', '');
+        fixed.textContent = choice.dataset.qbOpFixed;
+        op.replaceWith(fixed);
+      }
+    }
+    if (choice.dataset.qbHint) {
+      const input = row.querySelector('[data-qb-value] input');
+      if (input) input.placeholder = choice.dataset.qbHint;
+    }
     // A choice carries its select's values where the contract fixes them (data-qb-values); a
     // field whose values live in a raven catalog names none and keeps the placeholder.
     if (choice.dataset.qbValues) {
@@ -122,6 +144,9 @@ document.addEventListener('DOMContentLoaded', function () {
       row.querySelector('[data-qb-add-label]').textContent = choice.dataset.qbAdd;
     }
     identify(row);
+    // The template's initial input visibility matches its first option; narrowing can
+    // change which option that is.
+    if (row.querySelector('[data-qb-op]')) syncValueShape(row);
 
     if (pending.mode === 'replace') pending.row.replaceWith(row);
     else if (pending.mode === 'alt') pending.group.querySelector('[data-qb-alts]').append(row);

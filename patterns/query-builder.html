@@ -26,13 +26,7 @@
             <p class="mb-0 fw-semibold">Title</p>
           </div>
           <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qb-op">Operator, condition 1</label>
-            <select class="form-select form-select-sm" id="kit-qb-op" data-qb-op>
-              <option selected>contains</option>
-              <option>does not contain</option>
-              <option>is</option>
-              <option>is not</option>
-            </select>
+            <span class="small text-muted" data-qb-op-fixed>matches</span>
             <div class="bt-query-builder__row-value" data-qb-value>
               <label class="visually-hidden" for="kit-qb-val">Title, condition 1</label>
               <input type="text" class="form-control form-control-sm" id="kit-qb-val" value="quantum computing">
@@ -54,7 +48,7 @@
               </ul>
             </div>
             <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-              aria-label="Remove condition 1: title contains quantum computing">
+              aria-label="Remove condition 1: title matches quantum computing">
               <i class="if if-delete if--xs" aria-hidden="true"></i>
             </button>
           </div>
@@ -66,9 +60,8 @@
           <div class="bt-query-builder__phrase">
             <label class="visually-hidden" for="kit-qb-op-2">Operator, condition 2</label>
             <select class="form-select form-select-sm" id="kit-qb-op-2" data-qb-op>
-              <option selected>is between</option>
-              <option>is at least</option>
-              <option>is at most</option>
+              <option data-qb-list-op>is</option>
+              <option selected data-qb-pair-op>is between</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
               <label class="visually-hidden" for="kit-qb-from">First year, condition 2</label>
@@ -111,10 +104,10 @@
         <div class="bt-query-builder__conditions">
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Title</p>
+            <p class="mb-0 fw-semibold">Abstract</p>
           </div>
           <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qbv-text-op">Operator, Title</label>
+            <label class="visually-hidden" for="kit-qbv-text-op">Operator, Abstract</label>
             <select class="form-select form-select-sm" id="kit-qbv-text-op" data-qb-op>
               <option selected>contains</option>
               <option>does not contain</option>
@@ -122,7 +115,7 @@
               <option>is not</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <label class="visually-hidden" for="kit-qbv-text-val">Value, Title</label>
+              <label class="visually-hidden" for="kit-qbv-text-val">Value, Abstract</label>
               <input type="text" class="form-control form-control-sm" id="kit-qbv-text-val" value="machine learning">
             </div>
           </div>
@@ -150,25 +143,25 @@
         </div>
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Licence</p>
+            <p class="mb-0 fw-semibold">Deposit status</p>
           </div>
           <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qbv-multi-op">Operator, Licence</label>
+            <label class="visually-hidden" for="kit-qbv-multi-op">Operator, Deposit status</label>
             <select class="form-select form-select-sm" id="kit-qbv-multi-op" data-qb-op>
               <option>is</option>
               <option>is not</option>
               <option selected>is any of</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <span class="badge text-bg-primary-light" data-qb-token data-id="CC BY 4.0">
-                CC BY 4.0
-                <button type="button" aria-label="Remove CC BY 4.0 from the Licence condition">
+              <span class="badge text-bg-primary-light" data-qb-token data-id="Submitted">
+                Submitted
+                <button type="button" aria-label="Remove Submitted from the Deposit status condition">
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                 </button>
               </span>
-              <span class="badge text-bg-primary-light" data-qb-token data-id="CC0 1.0">
-                CC0 1.0
-                <button type="button" aria-label="Remove CC0 1.0 from the Licence condition">
+              <span class="badge text-bg-primary-light" data-qb-token data-id="Returned">
+                Returned
+                <button type="button" aria-label="Remove Returned from the Deposit status condition">
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                 </button>
               </span>
@@ -194,12 +187,7 @@
               <option>as editor</option>
               <option>as supervisor</option>
             </select>
-            <label class="visually-hidden" for="kit-qbv-person-op">Operator, Person</label>
-            <select class="form-select form-select-sm" id="kit-qbv-person-op" data-qb-op>
-              <option selected>is</option>
-              <option>is not</option>
-              <option>is any of</option>
-            </select>
+            <span class="small text-muted" data-qb-op-fixed>is</span>
             <div class="bt-query-builder__row-value" data-qb-value>
               <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
@@ -222,12 +210,8 @@
           <div class="bt-query-builder__phrase">
             <label class="visually-hidden" for="kit-qbv-year-op">Operator, Publication year</label>
             <select class="form-select form-select-sm" id="kit-qbv-year-op" data-qb-op>
-              <option>is</option>
-              <option>is not</option>
-              <option>is any of</option>
-              <option selected>is between</option>
-              <option>is at least</option>
-              <option>is at most</option>
+              <option data-qb-list-op>is</option>
+              <option selected data-qb-pair-op>is between</option>
             </select>
             <div class="bt-query-builder__row-value" data-qb-value>
               <label class="visually-hidden" for="kit-qbv-year-from">First year, Publication year</label>
@@ -252,7 +236,7 @@
             <div class="bt-query-builder__row-value" data-qb-value>
               <label class="visually-hidden" for="kit-qbv-batch-val">Identifiers</label>
               <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="kit-qbv-batch-val" rows="2">10.1038/s41586-024-07123-4 01KMXJ30SYZC 01K167MXJ30S</textarea>
-              <p class="form-text mb-0">Separate by spaces, commas, or line breaks.</p>
+              <p class="form-text mb-0">Separate by spaces, commas, or line breaks. Up to 20 identifiers.</p>
             </div>
           </div>
         </div>
@@ -260,7 +244,7 @@
       </div>
     </div>
 
-    <p class="mt-4 mb-0">Top-level rows use AND. A row can become a one-level OR group through its More menu. <em>Is any of</em> still means multiple values for one field.</p>
+    <p class="mt-4 mb-0">A row can become a one-level OR group through its More menu.</p>
   </section>
 
   <section class="ds-section">
@@ -303,7 +287,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">When a facet cannot express the condition</h2>
-    <p class="mb-4">A condition can express a negation, range, or pasted batch that a facet cannot. The facet reports that it is controlled by advanced search and links back to the condition. See the <a href="/templates/biblio-public/public-works.html?state=facet-set-in-builder">facet-set-in-builder</a> state; the rationale lives in <code>docs/wip/QUERY-BUILDER-ISSUE-05-dialog.md</code>.</p>
+    <p class="mb-4">A condition can express a negation, a range, a pasted batch, or a value the facet does not offer. See the <a href="/templates/biblio-public/public-works.html?state=facet-set-in-builder">facet-set-in-builder</a> state; the rationale lives in <code>docs/wip/QUERY-BUILDER-ISSUE-05-dialog.md</code>.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Held by an advanced condition</h3></div>
@@ -315,7 +299,7 @@
               <i class="if if-search-eye-line if--sm" aria-hidden="true"></i>
               Set in advanced search
             </p>
-            <p class="mb-2">is not <strong>Open access</strong></p>
+            <p class="mb-2">is <strong>Metadata only</strong></p>
             <a href="/templates/biblio-public/public-works.html?advanced=1" class="btn btn-ghost btn-sm px-0">
               Edit this condition
             </a>

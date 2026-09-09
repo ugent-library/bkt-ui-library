@@ -149,8 +149,8 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 - **Hosts:** public works. Pattern and openable states: `patterns/query-builder.html`.
 - **Markup contract:** Row, group, chooser, token and picker markup lives in
   `search-advanced-conditions.html` and its included partials. Choices name the row template,
-  allowed operators, fixed values and picker panel through `data-qb-*`; the script carries no field
-  catalog.
+  allowed or fixed operators, fixed values, an input hint and picker panel through `data-qb-*`;
+  the script carries no field catalog.
 - **Input/output:** Listens for click, input and change in `#qb-conditions`, Bootstrap dropdown events
   and dialog toggles; dispatches no custom event.
 - **Status:** Prototype-only. Production renders query state and count server-side; static states
