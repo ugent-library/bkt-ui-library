@@ -368,7 +368,7 @@ here**. A picker filter has to resolve to a countable value. raven holds a journ
 on each work, not as an authority record. People filter by the name instead, and the current
 biblio offers them nothing else: its advanced form carries the name and no ISSN option at all.
 Two routes carry the name — a card's or record's journal title links to a text search on it,
-per Rule 3, Scoped links, and Advanced search's **Published in** row matches the name as
+per Rule 3, Scoped links, and Advanced search's **Appeared in** row matches the name as
 printed and narrows to journals on request. The ISSN stays the exact route, and machines and
 permalinks use it. The suggest panel additionally offers a known-item shortcut — pasting a full
 DOI jumps straight to the work — but the filter is not restricted to that. The Identifier

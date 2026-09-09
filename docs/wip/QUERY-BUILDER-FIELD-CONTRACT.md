@@ -18,8 +18,8 @@ The public builder ships first; backoffice reuses it with more fields.
 - Public URLs expose only public records. Committed examples use fixtures.
 - An id is Raven's filter name, so a shared URL and a Raven query read alike. Where Raven names
   no filter, the id follows Raven's naming grammar. A row that deviates from either says so
-  explicitly. Labels stay free to differ: the UI says *Funding programme*, the id says
-  `funding_program`.
+  explicitly. Labels stay free to differ: the UI says *Publication type*, the id says
+  `work_type`.
 
 `templates/partials/search-field-list.html` follows these tables. Fix this contract first when
 they disagree.
@@ -46,10 +46,9 @@ decides which fields may be public.
 | `contributor` `TBD` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is, is not, is any of · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker, one token per person |
 | `organization` | Organization | `affiliation`, `external` | is, is not, is any of | organization picker |
 | `project` | Project | `project`, `project.id` | is, is not, is any of | project picker |
-| `funding_program` | Funding programme | `project.euframeworkprogramme` | contains, is, is not, is any of | text |
 | `work_type` | Publication type | `type`; subtype aliases | is, is not, is any of | select |
 | `year` | Publication year | `year`, ranges | is, is not, is any of, is between, is at least, is at most | year input; a pair for between; a comma-separated list for any of |
-| `container` | Published in | `parent`, `publication` | contains, does not contain, is, is not · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series | text |
+| `container` | Appeared in | `parent`, `publication` | contains, does not contain, is, is not · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
 | `conference` | Conference | `conference` | contains, does not contain, is, is not | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
 | `language` | Language | `language` | is, is not, is any of | select |
@@ -65,9 +64,12 @@ decides which fields may be public.
 - The Person id is `TBD`: Raven's live person filter is named `author` and carries no role, so
   Raven must name the role-aware filter this row needs. `contributor` matches its field name.
 - Year bounds are inclusive.
-- Published in means the container and may be qualified by kind. Journal abbreviations also match.
+- Appeared in means the container and may be qualified by kind. Journal abbreviations also match.
+  *Publisher place* is provisional: the fuzzy-search downside is unknown.
   Conference means the event and matches its name, organiser or location.
-- Funding programme reaches a work through its projects.
+- Funding programme reaches a work through its projects and has no row: the project picker
+  shows each project's programme and its search matches it. Renaming the Project label to say
+  so is undecided.
 - Access says whether it opens. Attached content says which visible file kind exists.
 
 ## Folded into another row
@@ -82,6 +84,7 @@ decides which fields may be public.
 | biblio or raven record id, `vabbid` | identifier, recognised by its scheme |
 | `articletype`, `misctype`, `conferencetype`, `dissertationtype` | work-type aliases |
 | `subject` | keyword alias |
+| `project.euframeworkprogramme` | project — the picker shows and matches each project's programme |
 
 ## Backoffice only
 
@@ -109,8 +112,8 @@ decides which fields may be public.
 ### Backoffice decisions
 
 - Publication status describes the work, not its deposit. It has no sidebar facet.
-- Licence uses the record's closed list. *Rights unknown* matches that explicit value, not an unset
-  licence; *Other licence* matches a value outside the named list.
+- Licence uses the record's closed list. *Rights unknown* matches that explicit value; *No
+  licence* matches an unset licence; *Other licence* matches a value outside the named list.
 - Identifier lookup on the public surface stays in the search box (rule 3); the paste box is
   backoffice.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year remain
