@@ -35,7 +35,8 @@ for (const [file, limit] of Object.entries(instructionLimits)) {
 }
 
 const draftLimits = {
-  'docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md': 1800,
+  'docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md': 1500,
+  'docs/wip/QUERY-BUILDER-LEGACY-COVERAGE.md': 950,
   'docs/wip/QUERY-BUILDER-MEASUREMENT.md': 500,
   'docs/wip/QUERY-BUILDER-OR-GROUPS.md': 650,
 };

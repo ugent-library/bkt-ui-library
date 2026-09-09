@@ -286,8 +286,7 @@ elsewhere, not here.
 **Access vs. version and classification.** The public sidebar carries only **Access** ("can
 I read it?"). **Full-text version** — the COAR published / accepted / author-version
 distinction — earns no sidebar slot either, because it is a repository-savvy distinction and
-the record shows it per file. It is a field in public Advanced search, on the same reading that
-put publication status there: the builder has no space budget and the sidebar does.
+the record shows it per file. It is a backoffice builder field, as is publication status.
 **Classification** (A1/A2/… research-evaluation tags) is a curator tag, so it earns no public
 slot; it is a backoffice builder field, and the field ledger holds its values. Publisher-side publication status is not a
 separate axis; raven models it as `PublicationVersions`, which the full-text-version field
@@ -369,7 +368,7 @@ here**. A picker filter has to resolve to a countable value. raven holds a journ
 on each work, not as an authority record. People filter by the name instead, and the current
 biblio offers them nothing else: its advanced form carries the name and no ISSN option at all.
 Two routes carry the name — a card's or record's journal title links to a text search on it,
-per Rule 3, Scoped links, and Advanced search's **Published in** row matches the name as
+per Rule 3, Scoped links, and Advanced search's **Appeared in** row matches the name as
 printed and narrows to journals on request. The ISSN stays the exact route, and machines and
 permalinks use it. The suggest panel additionally offers a known-item shortcut — pasting a full
 DOI jumps straight to the work — but the filter is not restricted to that. The Identifier

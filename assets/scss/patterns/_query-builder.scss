@@ -77,6 +77,14 @@
   align-items: stretch;
 }
 
+/* Chrome under-sizes the row's grid track around a field-sized textarea, so the
+   content overflows into the next row; inside the builder the box stays fixed and
+   scrolls instead. */
+.bt-query-builder__row .bt-textarea-auto {
+  field-sizing: fixed;
+}
+
+
 .bt-query-builder__row--error {
   background-color: var(--bt-red-50);
 }
@@ -107,7 +115,7 @@
   min-width: 0;
 }
 
-.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-textarea-auto) {
+.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-query-builder__date, .bt-textarea-auto) {
   flex: 1 1 12rem;
   min-width: 8rem;
 }
@@ -120,6 +128,13 @@
   flex: 0 0 5.5rem;
   width: 5.5rem;
   min-width: 5.5rem;
+}
+
+/* A date value plus its picker icon; 5.5rem clips it. */
+.bt-query-builder__date {
+  flex: 0 0 8.75rem;
+  width: 8.75rem;
+  min-width: 8.75rem;
 }
 
 .bt-query-builder__row-actions {

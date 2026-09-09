@@ -6,6 +6,42 @@ system, or do I reach for something new?"
 
 ---
 
+## One query builder serves both surfaces (v2.37, 2026-09-09)
+
+CSS changed — re-copy the compiled assets. New `bt-query-builder__date` sizes date and
+decimal inputs; builder textareas no longer auto-grow (Chrome under-sized their grid rows);
+`bt-query-builder__year` and the row hooks are otherwise unchanged.
+
+**The backoffice works lists open the public Advanced search dialog.** The researcher and
+curator lists compose the same partials and `query-builder.js` as `public-works.html`. One
+field list carries every chooser group; backoffice entries are gated by surface (v2.36).
+The dialog demos one condition per field on each surface.
+
+**Fields follow the contract** (`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`). Words or topic
+and Files are gone — the search box owns open text. Published in is **Appeared in**, with
+*anywhere*, *venue* and *publisher place* kinds. Funding programme folds under Project; the
+picker shows each project's programme. "No full text" is **Metadata only**, on cards too.
+Licence gains **No licence**. Publication type, Language, Classification, VABB and JCR carry
+their catalogs (raven's where they exist, mock values where they don't).
+
+**Most fields hold one fixed operator**, shown as text — *is*, or *matches* on Title; several
+values in one condition match any of them and read out as "or". Publication year's *is
+between* leaves an end open ("2015 and later"). Values cap at five public and twenty
+backoffice: pickers disable at the cap, the paste box reports what it drops. **Record
+history** is one condition — event, from–to dates, and an actor picker
+(`actor-picker-panel.html`). OR groups and the spelling feedback are phase 3; the backoffice
+field set is phase 2; facets keep reporting through the chip bar only.
+
+New row templates: `qb-row-date`, `qb-row-quantity`, `qb-row-record-history`, `qb-row-actor`.
+Legacy coverage for the translator split into `docs/wip/QUERY-BUILDER-LEGACY-COVERAGE.md`.
+
+## Backoffice-only markup is gated by surface, not state names (v2.36, 2026-09-09)
+
+No CSS changed. The server renders `<!-- @surface-only: backoffice -->` blocks only on pages
+declaring that `@surface`; a page without one renders no surface blocks. The field list's
+backoffice entries and the backoffice demo rows use the gate; arrival and action state lists
+keep their state names. Mechanism: `docs/SERVER.md` → Surface blocks.
+
 ## Badge semantics: three tiers and viewer-dependent weight (v2.33, 2026-09-04)
 
 No CSS changed — every class already existed. A consumer who adapted cards, rows or

@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!cell) return '';
     const tokens = Array.from(cell.querySelectorAll('[data-qb-token]'))
       .map(token => token.textContent.trim());
-    if (tokens.length) return tokens.join(', ');
+    if (tokens.length) return tokens.join(operatorText(row) === 'is' ? ' or ' : ', ');
     return Array.from(cell.querySelectorAll('input:not([type="search"]), select, textarea'))
-      .filter(el => !el.hidden)
+      .filter(el => !el.hidden && !el.closest('[data-qb-picker-slot]'))
       .map(el => el.tagName === 'SELECT'
         ? el.options[el.selectedIndex].text
         : (el.value || '').trim())
@@ -67,16 +67,67 @@ document.addEventListener('DOMContentLoaded', function () {
       .join(' and ');
   }
 
+  function operatorText(row) {
+    const fixed = row.querySelector('[data-qb-op-fixed]');
+    if (fixed) return fixed.textContent.trim();
+    const op = row.querySelector('[data-qb-op]');
+    return op && op.selectedIndex >= 0 ? op.options[op.selectedIndex].text : '';
+  }
+
   function conditionName(row) {
     const field = row.querySelector('[data-qb-change-field]');
-    const op = row.querySelector('[data-qb-op]');
+    const name = field ? field.textContent.trim() : 'condition';
+    if (row.hasAttribute('data-qb-history')) {
+      const qual = row.querySelector('select');
+      const event = qual && qual.selectedIndex >= 0 ? qual.options[qual.selectedIndex].text : '';
+      const actors = Array.from(row.querySelectorAll('[data-qb-token]'))
+        .map(t => t.textContent.trim()).join(' or ');
+      const dates = Array.from(row.querySelectorAll('input[type="date"]'))
+        .map(el => el.value.trim());
+      const span = dates[0] && dates[1] ? `between ${dates[0]} and ${dates[1]}`
+        : dates[0] ? `from ${dates[0]}` : dates[1] ? `up to ${dates[1]}` : '';
+      return [name, event, span, 'by', actors || 'anyone'].filter(Boolean).join(' ');
+    }
+    if (operatorText(row) === 'is between') {
+      const from = row.querySelector('[data-qb-value] input[data-qb-single]');
+      const to = row.querySelector('[data-qb-value] input[data-qb-pair]');
+      const f = from && !from.hidden && from.value.trim();
+      const t = to && !to.hidden && to.value.trim();
+      if (f && !t) return name + ' is ' + f + ' and later';
+      if (t && !f) return name + ' is ' + t + ' and earlier';
+    }
     let value = valueOf(row);
     if (value.length > 60) value = value.slice(0, 57) + '…';
-    return [
-      field ? field.textContent.trim() : 'condition',
-      op && op.selectedIndex >= 0 ? op.options[op.selectedIndex].text : '',
-      value,
-    ].filter(Boolean).join(' ');
+    return [name, operatorText(row), value].filter(Boolean).join(' ');
+  }
+
+  function capOf(row) {
+    return row.closest('[data-surface]')?.dataset.surface === 'backoffice' ? 20 : 5;
+  }
+
+  // Inside an open panel the cap disables what it will not take.
+  function syncPanelCap(row, slot) {
+    const boxes = slot.querySelectorAll('[data-picker-rows] input[type="checkbox"]');
+    const full = Array.from(boxes).filter(b => b.checked).length >= capOf(row);
+    boxes.forEach(b => { if (!b.checked) b.disabled = full; });
+  }
+
+  function capAdd(row) {
+    const cell = row.querySelector('[data-qb-value]');
+    const add = cell && cell.querySelector('[data-qb-picker-slot]')?.closest('.dropdown');
+    if (!add) return;
+    const capped = cell.querySelectorAll('[data-qb-token]').length >= capOf(row);
+    if (add.hasAttribute('data-qb-multi')) {
+      // The multi control is op-gated; the cap may hide it but never reveal it.
+      const select = row.querySelector('.bt-query-builder__value-select');
+      const op = row.querySelector('[data-qb-op]');
+      const chosen = op && op.selectedIndex >= 0 && op.options[op.selectedIndex];
+      const active = (select && select.hidden) ||
+        Boolean(chosen && chosen.hasAttribute('data-qb-multi-op'));
+      add.hidden = capped || !active;
+    } else {
+      add.hidden = capped;
+    }
   }
 
   // The row's actions must always name the condition they act on — a screen reader user has to
@@ -108,11 +159,35 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!keep.includes(option.textContent)) option.remove();
       });
     }
+    if (choice.dataset.qbOpFixed) {
+      const op = row.querySelector('[data-qb-op]');
+      const label = op && row.querySelector('label[for="' + op.id + '"]');
+      if (label) label.remove();
+      if (op) {
+        const fixed = document.createElement('span');
+        fixed.className = 'small text-muted';
+        fixed.setAttribute('data-qb-op-fixed', '');
+        fixed.textContent = choice.dataset.qbOpFixed;
+        op.replaceWith(fixed);
+      }
+    }
+    if (choice.dataset.qbHelp) {
+      const help = document.createElement('p');
+      help.className = 'form-text mb-0';
+      help.textContent = choice.dataset.qbHelp;
+      row.querySelector('[data-qb-value]').append(help);
+    }
     // A choice carries its select's values where the contract fixes them (data-qb-values); a
     // field whose values live in a raven catalog names none and keeps the placeholder.
     if (choice.dataset.qbValues) {
       const select = row.querySelector('[data-qb-value] select');
       choice.dataset.qbValues.split(',').forEach(v => select.add(new Option(v)));
+    }
+    if (choice.dataset.qbMultiValues != null) {
+      const multi = row.querySelector('[data-qb-multi]');
+      const select = row.querySelector('.bt-query-builder__value-select');
+      // The hidden select still feeds the checklist panel its rows.
+      if (multi && select) { multi.hidden = false; select.hidden = true; }
     }
     // An entity choice also names the panel its slot clones and the Add-button copy.
     if (choice.dataset.qbPanel) {
@@ -122,6 +197,9 @@ document.addEventListener('DOMContentLoaded', function () {
       row.querySelector('[data-qb-add-label]').textContent = choice.dataset.qbAdd;
     }
     identify(row);
+    // The template's initial input visibility matches its first option; narrowing can
+    // change which option that is.
+    if (row.querySelector('[data-qb-op]')) syncValueShape(row);
 
     if (pending.mode === 'replace') pending.row.replaceWith(row);
     else if (pending.mode === 'alt') pending.group.querySelector('[data-qb-alts]').append(row);
@@ -209,6 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const or = row.querySelector('[data-qb-or]');
           if (or) or.closest('.dropdown').hidden = true;
           nameRow(row);
+          capAdd(row);
         });
         return;
       }
@@ -221,6 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const or = item.querySelector('[data-qb-or]');
       if (or) or.closest('.dropdown').hidden = false;
       nameRow(item);
+      capAdd(item);
     });
 
     restoreBlank();
@@ -265,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pickerSlot.querySelectorAll('[data-picker-rows] input').forEach(box => {
         box.checked = present.includes(box.dataset.id);
       });
+      syncPanelCap(row, pickerSlot);
       return;
     }
 
@@ -306,18 +387,6 @@ document.addEventListener('DOMContentLoaded', function () {
       button.closest('[data-qb-token]').remove();
     } else if (button.hasAttribute('data-qb-or')) {
       toGroup(button.closest('[data-qb-row]'));
-    } else if (button.hasAttribute('data-qb-combine')) {
-      // The note's offer: this row and the same-field row above it become one group's
-      // alternatives. "Split into 'and' rows" is the way back.
-      const row = button.closest('[data-qb-row]');
-      let prev = row.previousElementSibling;
-      while (prev && !prev.hasAttribute('data-qb-row')) prev = prev.previousElementSibling;
-      if (!prev) return;
-      button.closest('[data-qb-note]').remove();
-      const group = document.getElementById('qb-group').content.firstElementChild.cloneNode(true);
-      prev.before(group);
-      group.querySelector('[data-qb-alts]').append(prev, row);
-      [prev, row].forEach(el => el.classList.remove('bt-query-builder__row--warning'));
     } else if (button.hasAttribute('data-qb-remove-group')) {
       unwrap(button.closest('[data-qb-group]'));
     } else if (button.hasAttribute('data-qb-remove')) {
@@ -378,7 +447,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const cell = row.querySelector('[data-qb-value]');
     panel.querySelectorAll('[data-picker-rows] input[type="checkbox"]').forEach(box => {
       const existing = row.querySelector(`[data-qb-token][data-id="${box.dataset.id}"]`);
-      if (box.checked && !existing) cell.insertBefore(token(box), panel.parentElement);
+      if (box.checked && !existing &&
+        cell.querySelectorAll('[data-qb-token]').length < capOf(row)) {
+        cell.insertBefore(token(box), panel.parentElement);
+      }
       if (!box.checked && existing) existing.remove();
     });
   }
@@ -454,6 +526,10 @@ document.addEventListener('DOMContentLoaded', function () {
   list.addEventListener('change', event => {
     const row = event.target.closest('[data-qb-row]');
     if (row && event.target.hasAttribute('data-qb-op')) syncValueShape(row);
+    const slot = event.target.closest('[data-qb-picker-slot]');
+    if (row && slot && event.target.matches('[data-picker-rows] input[type="checkbox"]')) {
+      syncPanelCap(row, slot);
+    }
     sync();
   });
 

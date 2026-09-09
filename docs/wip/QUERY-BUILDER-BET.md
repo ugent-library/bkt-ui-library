@@ -49,14 +49,15 @@ with the API.
 ## Rabbit holes
 
 - Existing embeds depend on the citation-style and info-block parameters.
-- Durable addresses must preserve OR, negation and observed identifier batches of up
-  to 763 values.
+- Durable addresses must preserve OR, negation and identifier batches up to the cap.
 - Request classification must remain comparable with the current form, link, direct
   and bot baseline.
 - The legacy translator is a separate development workstream.
 
 ## No-gos
 
+- A free-field condition searching all metadata, later full text too — out of scope for
+  now; the search box carries open text.
 - Simple search and results-list redesign
 - Curator analysis, cross-tabs or bulk operations
 - A new query language or URL grammar defined in the prototype
@@ -81,7 +82,7 @@ copying can still be success.
 **Blockers**
 
 1. Can Raven give every supported query a durable public address, including OR,
-   negation and long batches? Raven may answer that a supported shape is impossible.
+   negation and capped batches? Raven may answer that a supported shape is impossible.
 2. Does the public and backoffice field selection in the field contract stand?
 
 **Later**

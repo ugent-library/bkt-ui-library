@@ -1,67 +1,96 @@
 <!-- @example: /patterns/filter-picker.html -->
-<!-- Shared markup: docs/JAVASCRIPT.md. Provisional rows: docs/wip/ENTITY-PICKERS.md. -->
+<!-- Shared markup: docs/JAVASCRIPT.md. Provisional rows: docs/wip/ENTITY-PICKERS.md.
+     The programme line is load-bearing: Funding programme folded into Project because
+     picker search matches the whole row (docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md). -->
 
 <template id="project-picker">
   <p class="bt-panel__title" data-picker-title>Project</p>
   <div class="bt-panel__body">
     <label class="visually-hidden" for="project-search">Search projects</label>
     <input type="search" class="form-control form-control-sm" id="project-search"
-      data-picker-search placeholder="Search project&hellip;" autocomplete="off">
+      data-picker-search placeholder="Search project or programme&hellip;" autocomplete="off">
   </div>
   <div class="bt-panel__body bt-panel__body--checklist" role="group"
     aria-label="Projects matching your search" data-picker-rows>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-1" data-id="fwo-g012">
       <label class="form-check-label" for="project-1">
-        <span data-picker-name>FWO G0.12N</span>
+        <span class="bt-result__name" data-picker-name>Adaptive Photonic Sensing</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">FWO G0.12N</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-2" data-id="horizon-openair">
       <label class="form-check-label" for="project-2">
-        <span data-picker-name>Horizon Europe &mdash; OpenAIR</span>
+        <span class="bt-result__name" data-picker-name>OpenAIR</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">Horizon Europe</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-3" data-id="bof-starting">
       <label class="form-check-label" for="project-3">
-        <span data-picker-name>BOF Starting Grant</span>
+        <span class="bt-result__name" data-picker-name>Quantum Memory Materials</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">BOF Starting Grant</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-4" data-id="era-net">
       <label class="form-check-label" for="project-4">
-        <span data-picker-name>ERA-NET Cofund</span>
+        <span class="bt-result__name" data-picker-name>Urban Climate Twins</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">ERA-NET Cofund</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-5" data-id="vlaio-tetra">
       <label class="form-check-label" for="project-5">
-        <span data-picker-name>VLAIO TETRA</span>
+        <span class="bt-result__name" data-picker-name>Smart Textile Integration</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">VLAIO TETRA</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-6" data-id="iof-valorisation">
       <label class="form-check-label" for="project-6">
-        <span data-picker-name>IOF Valorisation</span>
+        <span class="bt-result__name" data-picker-name>LightLab Prototyping</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">IOF Valorisation</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-7" data-id="fwo-sb">
       <label class="form-check-label" for="project-7">
-        <span data-picker-name>FWO SB PhD</span>
+        <span class="bt-result__name" data-picker-name>Neural Speech Interfaces</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">FWO SB PhD</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-8" data-id="ugent-goa">
       <label class="form-check-label" for="project-8">
-        <span data-picker-name>UGent GOA</span>
+        <span class="bt-result__name" data-picker-name>Post-Growth Urban Economics</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">UGent GOA</span>
+        </span>
       </label>
     </div>
     <div class="form-check">
       <input class="form-check-input" type="checkbox" id="project-9" data-id="marie-curie">
       <label class="form-check-label" for="project-9">
-        <span data-picker-name>Marie Sk&#322;odowska-Curie</span>
+        <span class="bt-result__name" data-picker-name>FlowMatters</span>
+        <span class="bt-meta-list bt-meta-list--xs">
+          <span class="bt-meta-list__item">Marie Sk&#322;odowska-Curie</span>
+        </span>
       </label>
     </div>
   </div>

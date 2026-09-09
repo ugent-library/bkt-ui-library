@@ -1,19 +1,14 @@
 <!-- @example: /patterns/people-search.html#checkable-rich-rows -->
 <!--
-  Partial: people-picker-panel.html
-  The people picker: a search box over checkable rich rows. Two hosts pick several people at
-  once, the works Person filter and the query builder's Person condition. Picking a person is
-  one act, so both clone this one panel.
+  Two hosts pick several people at once, the works Person filter and the query builder's Person
+  condition.
 
   Include once per page carrying either host, alongside filter-editor-templates.html.
 
-  A row is identified by its data-id, never by the name in its label: two people share a name,
-  which is what the rich row exists to tell apart. data-person-ugent marks a person with a UGent
-  person record behind them, and the query builder crests exactly those tokens. A row without it
-  is a person the index knows externally.
+  data-person-ugent marks a person with a UGent person record behind them, and the query builder
+  crests exactly those tokens. A row without it is a person the index knows externally.
 
-  Placeholder people, mirroring the PEOPLE array in people-search-stub.js. In production a row
-  comes from /people/search, which returns UGent people and index-known external people alike.
+  Placeholder people, mirroring the PEOPLE array in people-search-stub.js.
 -->
 
 <template id="person-picker">

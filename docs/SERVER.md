@@ -92,8 +92,8 @@ A template represents its data-dependent variants as **states in one file** — 
 - Without `?state=`, the **first declared state** renders — declare the default state first.
 - The `@states` declaration must sit in the leading meta-comment block (with `@title`,
   `@surface`): the run of one-line comments at the top of the file, in any order, plain
-  comments allowed. The first `@include`, `@state` marker, multi-line comment or markup
-  line ends it.
+  comments allowed. The first `@include`, `@state` or `@surface-only` marker, multi-line
+  comment or markup line ends it.
 - **Every meta declaration sits on one line, however long it runs.** A wrapped `@states` is read as
   no states at all, and every block renders at once.
 - A block cannot span another `@state` block; the closing marker is `<!-- @state -->`. Includes
@@ -110,6 +110,25 @@ A template represents its data-dependent variants as **states in one file** — 
   unavoidably share a visible name, put
   `<!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->`
   directly above each variant — see `public-work-detail.html`.
+
+## Surface blocks
+
+`@surface-only` gates markup to one surface the way `@state` gates it to a state:
+
+```html
+<!-- @surface-only: backoffice -->
+&hellip;markup shown only on backoffice pages&hellip;
+<!-- @surface-only -->
+```
+
+- A block renders only when the page's `@surface` declaration matches. A page without
+  `@surface` renders no surface blocks: gated markup fails closed.
+- The filter runs after includes resolve and before the state filter, so a partial's
+  blocks answer to the including page's surface.
+- A surface block and a state block may contain one another whole; they must not
+  interleave.
+- `npm run check:states` fails the build on an unclosed block, a surface other than
+  `public` or `backoffice`, and interleaving.
 
 ## Configuration
 

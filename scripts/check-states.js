@@ -1,5 +1,5 @@
-// Fails the build on @state declarations and blocks the server would silently mis-render.
-// The five rules, and what each one breaks: docs/SERVER.md → Template states.
+// Fails the build on @state and @surface-only blocks the server would silently mis-render.
+// The rules, and what each one breaks: docs/SERVER.md → Template states and Surface blocks.
 const fs = require('fs');
 const path = require('path');
 
@@ -10,6 +10,8 @@ const META = /^\s*<!--\s*@(title|surface|states)\s*:/i;
 const STATES = /^\s*<!--\s*@states\s*:\s*(.*?)\s*-->\s*$/i;
 const OPEN = /<!--\s*@state:\s*([\w][\w\s-]*?)\s*-->/;
 const CLOSE = /<!--\s*@\/?state\s*-->/;
+const SURFACE_OPEN = /<!--\s*@surface-only:\s*(.*?)\s*-->/;
+const SURFACE_CLOSE = /<!--\s*@\/?surface-only\s*-->/;
 const INCLUDE = /<!--\s*@include:\s*([^\s]+)\s*-->/;
 
 const files = [];
@@ -38,12 +40,13 @@ for (const file of files) {
   const lines = read(file);
   const found = [];
   let open = null;
+  let openSurface = null;
 
   // mirror of server.js parseMetaAndBody — change both together
   let metaEnd = 0;
   for (const line of lines) {
     if (!/^\s*<!--.*-->\s*$/.test(line)) break;
-    if (/<!--\s*@(include\b|\/?state\b)/.test(line)) break;
+    if (/<!--\s*@(include\b|\/?state\b|\/?surface-only\b)/.test(line)) break;
     metaEnd += 1;
   }
 
@@ -67,8 +70,29 @@ for (const file of files) {
       open = { names: opener[1].trim().split(/\s+/), line: i + 1, includes: [] };
       return;
     }
+    const surfaceOpener = line.match(SURFACE_OPEN);
+    if (surfaceOpener) {
+      if (surfaceOpener[1] !== 'public' && surfaceOpener[1] !== 'backoffice') {
+        errors.push(`${rel(file)}:${i + 1}  @surface-only surface "${surfaceOpener[1]}" — the ` +
+          'server matches only public and backoffice');
+      }
+      openSurface = { line: i + 1 };
+      return;
+    }
+    if (SURFACE_CLOSE.test(line)) {
+      if (open && openSurface && open.line > openSurface.line) {
+        errors.push(`${rel(file)}:${open.line}  @state block still open where the @surface-only ` +
+          `block from line ${openSurface.line} closes — nest whole blocks, never interleave`);
+      }
+      openSurface = null;
+      return;
+    }
     if (!open) return;
     if (CLOSE.test(line)) {
+      if (openSurface && openSurface.line > open.line) {
+        errors.push(`${rel(file)}:${openSurface.line}  @surface-only block still open where the ` +
+          `@state block from line ${open.line} closes — nest whole blocks, never interleave`);
+      }
       found.push(open);
       open = null;
       return;
@@ -78,6 +102,7 @@ for (const file of files) {
   });
 
   if (open) errors.push(`${rel(file)}:${open.line}  @state block never closed`);
+  if (openSurface) errors.push(`${rel(file)}:${openSurface.line}  @surface-only block never closed`);
   blocks.set(file, found);
 }
 

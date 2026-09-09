@@ -182,12 +182,12 @@ function parseMetaAndBody(raw, filePath) {
   const lines = raw.split('\n');
   const meta = {};
   let i = 0;
-  // mirrored in scripts/check-states.js — change both together. @state must
-  // end the head: an eaten opener breaks its block.
+  // mirrored in scripts/check-states.js — change both together. @state and
+  // @surface-only must end the head: an eaten opener breaks its block.
   while (i < lines.length) {
     const line = lines[i];
     if (!/^\s*<!--.*-->\s*$/.test(line)) break;
-    if (/<!--\s*@(include\b|\/?state\b)/.test(line)) break;
+    if (/<!--\s*@(include\b|\/?state\b|\/?surface-only\b)/.test(line)) break;
     const m = line.match(/^\s*<!--\s*@([\w-]+)\s*:\s*(.*?)\s*-->\s*$/);
     if (m) meta[m[1].toLowerCase()] = m[2];
     i += 1;
@@ -202,6 +202,23 @@ function parseMetaAndBody(raw, filePath) {
     meta.stateList = meta.states.split(',').map(s => s.trim()).filter(Boolean);
   }
   return { meta, body };
+}
+
+// ─── Surface filtering ────────────────────────────────────────────────────────
+// Unlike states, no match means no fallback: a page without @surface renders no
+// surface blocks at all, so gated markup fails closed.
+function filterSurfaceContent(html, surface) {
+  return html.replace(
+    /<!--\s*@surface-only:\s*([\w-]+)\s*-->[\s\S]*?<!--\s*@\/?surface-only\s*-->/g,
+    (match, name) => {
+      if (name === surface) {
+        return match
+          .replace(/^<!--\s*@surface-only:\s*[\w-]+\s*-->\s*/, '')
+          .replace(/\s*<!--\s*@\/?surface-only\s*-->$/, '');
+      }
+      return '';
+    }
+  );
 }
 
 // ─── State filtering ──────────────────────────────────────────────────────────
@@ -300,7 +317,8 @@ function renderBodyTemplate(raw, filePath, activeState) {
   const { meta, body: rawBody } = parseMetaAndBody(raw, filePath);
   const state = activeState || meta.stateList?.[0] || null;
   const resolved = resolveIncludes(rawBody, filePath);
-  const stateFiltered = filterStateContent(resolved, state);
+  const surfaceFiltered = filterSurfaceContent(resolved, meta.surface);
+  const stateFiltered = filterStateContent(surfaceFiltered, state);
   const body = stripHtmlComments(stateFiltered);
   const surface = meta.surface ? ` data-surface="${meta.surface}"` : '';
   const headCss = DEFAULT_CSS.map(href => `  <link rel="stylesheet" href="${href}">`).join('\n');
@@ -561,7 +579,8 @@ const handler = async (req, res) => {
   }
 
   html = injectShell(filePath, html, urlPath, activeState, parsedTemplate?.note);
-  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+  // HTML needs no-store too: heuristically cached pages made template edits look broken.
+  res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
   res.end(html);
 };
 
