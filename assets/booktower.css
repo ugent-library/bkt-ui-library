@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 3e93734/2026-09-09 */
+/*! Booktower 217e3c2/2026-09-09 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -2111,7 +2111,7 @@ a.bt-avatar--outline:hover:not(:disabled) {
   min-width: 0;
 }
 
-.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-textarea-auto) {
+.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-query-builder__date, .bt-textarea-auto) {
   flex: 1 1 12rem;
   min-width: 8rem;
 }
@@ -2124,6 +2124,13 @@ a.bt-avatar--outline:hover:not(:disabled) {
   flex: 0 0 5.5rem;
   width: 5.5rem;
   min-width: 5.5rem;
+}
+
+/* A date value plus its picker icon; 5.5rem clips it. */
+.bt-query-builder__date {
+  flex: 0 0 8.75rem;
+  width: 8.75rem;
+  min-width: 8.75rem;
 }
 
 .bt-query-builder__row-actions {

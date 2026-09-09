@@ -77,6 +77,17 @@ document.addEventListener('DOMContentLoaded', function () {
   function conditionName(row) {
     const field = row.querySelector('[data-qb-change-field]');
     const name = field ? field.textContent.trim() : 'condition';
+    if (row.hasAttribute('data-qb-history')) {
+      const qual = row.querySelector('select');
+      const event = qual && qual.selectedIndex >= 0 ? qual.options[qual.selectedIndex].text : '';
+      const actors = Array.from(row.querySelectorAll('[data-qb-token]'))
+        .map(t => t.textContent.trim()).join(' or ');
+      const dates = Array.from(row.querySelectorAll('input[type="date"]'))
+        .map(el => el.value.trim());
+      const span = dates[0] && dates[1] ? `between ${dates[0]} and ${dates[1]}`
+        : dates[0] ? `from ${dates[0]}` : dates[1] ? `up to ${dates[1]}` : '';
+      return [name, event, span, 'by', actors || 'anyone'].filter(Boolean).join(' ');
+    }
     if (operatorText(row) === 'is between') {
       const from = row.querySelector('[data-qb-value] input[data-qb-single]');
       const to = row.querySelector('[data-qb-value] input[data-qb-pair]');

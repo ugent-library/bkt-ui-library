@@ -37,8 +37,7 @@ decides.
 | `vabb_evaluation` | VABB evaluation | `vabb_approved` | is, is not | — |
 | `vabb_type` | VABB type | `vabbtype` | is, is not, is any of | — |
 | `vabb_submission_year` | VABB submission year | `vabbyear` | is, is at least, is at most, is between | — |
-| `record_date` `TBD` | Record date | `datecreated`, `dateupdated`; the reviewed date carries the legacy approval (raven names it) | is at least, is at most, is between | which date: created / last changed / reviewed |
-| `record_actor` `TBD` | Changed by | — | is | which event: created / last changed / reviewed |
+| `record_history` `TBD` | Record history | `datecreated`, `dateupdated`; the reviewed date carries the legacy approval (raven names it) | a from–to date pair | which event: created / last changed / reviewed |
 | `defense_date` | Date defended | `defence.date` | is at least, is at most, is between | — |
 | `jcr_impact_factor` `TBD` | JCR impact factor | `jcr.impact_factor` | is more than, is less than, is between | — |
 | `jcr_category` `TBD` | JCR category | `jcr.category` | is, is not, is any of | — |

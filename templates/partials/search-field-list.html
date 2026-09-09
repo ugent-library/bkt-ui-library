@@ -46,17 +46,23 @@
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="work_type" data-qb-label="Publication type" data-qb-template="qb-row-choice"
       data-qb-op-fixed="is" data-qb-multi-values
-      data-qb-values="Journal article,Review article,Book,Book chapter,Conference paper,Conference abstract,Poster,Presentation,Dissertation,Dataset,Software,Report,Working paper,Policy report,Annotation,Annotation collection,Research communication">Publication type</button></li>
+      data-qb-values="Journal article,Book,Edited book,Book part,Book review,Reference entry,Journal issue,Conference paper,Conference abstract,Conference poster,Conference presentation,Preprint,Working paper,Report,Doctoral thesis,Magazine article,Newspaper article,Online post,Media appearance,Lecture,Dataset,Software,Other">Publication type</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="year" data-qb-label="Publication year" data-qb-template="qb-row-year"
       data-qb-ops="is,is between">Publication year</button></li>
+    <!-- @surface-only: backoffice -->
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="defense_date" data-qb-label="Date defended"
+      data-qb-template="qb-row-date">Date defended</button></li>
+    <!-- @surface-only -->
     <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publication_status" data-qb-label="Publication status" data-qb-template="qb-row-choice"
       data-qb-values="Unpublished,In press,Published">Publication status</button></li>
     <!-- @surface-only -->
     <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="container" data-qb-label="Appeared in" data-qb-template="qb-row-container">Appeared in</button></li>
+      data-qb-field="container" data-qb-label="Appeared in" data-qb-template="qb-row-container"
+      data-qb-help="Separate by semicolons.">Appeared in</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="conference" data-qb-label="Conference" data-qb-template="qb-row-text"
       data-qb-op-fixed="is">Conference</button></li>
@@ -110,6 +116,9 @@
   <p class="dropdown-header" id="qb-g-curation">Curation</p>
   <ul class="list-unstyled mb-0">
     <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="record_history" data-qb-label="Record history"
+      data-qb-template="qb-row-record-history">Record history</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="visibility" data-qb-label="Record visibility" data-qb-template="qb-row-choice"
       data-qb-values="Public,Restricted,Private">Record visibility</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
@@ -131,20 +140,6 @@
       data-qb-field="vabb_submission_year" data-qb-label="VABB submission year"
       data-qb-template="qb-row-year"
       data-qb-ops="is,is at least,is at most,is between">VABB submission year</button></li>
-  </ul>
-</div>
-<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-dates">
-  <p class="dropdown-header" id="qb-g-dates">Record dates</p>
-  <ul class="list-unstyled mb-0">
-    <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="created_at" data-qb-label="Date created"
-      data-qb-template="qb-row-date">Date created</button></li>
-    <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="updated_at" data-qb-label="Date last changed"
-      data-qb-template="qb-row-date">Date last changed</button></li>
-    <li><button class="dropdown-item" type="button" data-qb-choice
-      data-qb-field="defense_date" data-qb-label="Date defended"
-      data-qb-template="qb-row-date">Date defended</button></li>
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-metrics">

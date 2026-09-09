@@ -299,7 +299,7 @@
       <div class="bt-query-builder__phrase">
         <label class="visually-hidden" for="qb-qual-4">Kind of container, condition 4</label>
         <select class="form-select form-select-sm" id="qb-qual-4">
-          <option>in any container</option>
+          <option>anywhere</option>
           <option selected>journal</option>
           <option>book</option>
           <option>proceedings</option>
@@ -826,7 +826,7 @@
       <div class="bt-query-builder__phrase">
         <label class="visually-hidden" for="qbz-qual-3">Kind of container, condition 3</label>
         <select class="form-select form-select-sm" id="qbz-qual-3">
-          <option selected>in any container</option>
+          <option selected>anywhere</option>
           <option>journal</option>
           <option>book</option>
           <option>proceedings</option>
@@ -887,7 +887,7 @@
           <div class="bt-query-builder__phrase">
             <label class="visually-hidden" for="qbg-qual-1a">Kind of container, alternative 1</label>
             <select class="form-select form-select-sm" id="qbg-qual-1a">
-              <option selected>in any container</option>
+              <option selected>anywhere</option>
               <option>journal</option>
               <option>book</option>
               <option>proceedings</option>
@@ -1276,7 +1276,7 @@
       <div class="bt-query-builder__phrase">
         <label class="visually-hidden" for="qb-t-container-qual">Kind of container</label>
         <select class="form-select form-select-sm" id="qb-t-container-qual">
-          <option selected>in any container</option>
+          <option selected>anywhere</option>
           <option>journal</option>
           <option>book</option>
           <option>proceedings</option>
@@ -1485,13 +1485,71 @@
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-t-date-val" data-qb-single>Date</label>
-          <input type="date" class="form-control form-control-sm"
+          <input type="date" class="form-control form-control-sm bt-query-builder__date"
             id="qb-t-date-val" data-qb-single>
           <span class="small text-muted" data-qb-pair hidden>and</span>
           <label class="visually-hidden" for="qb-t-date-val-to" data-qb-pair hidden>Last date</label>
-          <input type="date" class="form-control form-control-sm"
+          <input type="date" class="form-control form-control-sm bt-query-builder__date"
             id="qb-t-date-val-to" data-qb-pair hidden>
         </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Actions for this condition">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><button type="button" class="dropdown-item" data-qb-or>
+              <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+            </button></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove this condition">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </template>
+  <!-- The record-history condition: one event — created, last changed or reviewed — by
+       whom (empty = anyone) and when (empty = any time). -->
+  <template id="qb-row-record-history">
+    <div class="bt-query-builder__row" data-qb-row data-qb-history>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Field</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+              aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-t-rh-qual">Which event</label>
+        <select class="form-select form-select-sm" id="qb-t-rh-qual">
+          <option selected>created</option>
+          <option>last changed</option>
+          <option>reviewed</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="small text-muted">from</span>
+          <label class="visually-hidden" for="qb-t-rh-from">From date</label>
+          <input type="date" class="form-control form-control-sm bt-query-builder__date" id="qb-t-rh-from">
+          <span class="small text-muted">to</span>
+          <label class="visually-hidden" for="qb-t-rh-to">To date</label>
+          <input type="date" class="form-control form-control-sm bt-query-builder__date" id="qb-t-rh-to">
+          <span class="small text-muted">by</span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a person or the system
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a person or the system" data-qb-picker-slot="actor-picker"></div>
+          </div>
+        </div>
+        <p class="form-text mb-0 w-100">Empty means any time, by anyone.</p>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
         <div class="dropdown">
