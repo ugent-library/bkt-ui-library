@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .map(token => token.textContent.trim());
     if (tokens.length) return tokens.join(', ');
     return Array.from(cell.querySelectorAll('input:not([type="search"]), select, textarea'))
-      .filter(el => !el.hidden)
+      .filter(el => !el.hidden && !el.closest('[data-qb-picker-slot]'))
       .map(el => el.tagName === 'SELECT'
         ? el.options[el.selectedIndex].text
         : (el.value || '').trim())
