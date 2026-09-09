@@ -1,0 +1,15 @@
+// Bootstrap utilities would require rewriting citeproc-js output. These
+// renderer-owned classes preserve its number/text split (docs/CLASS-USAGE.md).
+.csl-entry:has(> .csl-left-margin + .csl-right-inline) {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  column-gap: 0.5em;
+
+  > .csl-left-margin {
+    white-space: nowrap;
+  }
+
+  > .csl-right-inline {
+    overflow-wrap: anywhere;
+  }
+}

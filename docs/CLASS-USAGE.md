@@ -133,3 +133,7 @@ changelog says what replaced it.
 ## Icon names — verified source of truth
 
 Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any `if-[name]` not present in that file.
+
+## Generated citations
+
+`csl-entry`, `csl-left-margin` and `csl-right-inline` are citeproc-js classes, not Booktower names. Keep the generated HTML intact. When an entry contains the number/text pair, Booktower places the number beside the text, aligns continuation lines with the text and allows long URLs to wrap. Unnumbered entries retain their normal flow. Font, border and padding come from the surrounding citation widget. Examples: [Citations](../patterns/citations.html).
