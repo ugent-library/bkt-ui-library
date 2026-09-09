@@ -1,6 +1,8 @@
 # Query builder field contract — draft
 
-Fields, labels, operators and inputs offered by each surface. Raven owns backend mappings. Evidence:
+Fields, labels, operators and inputs offered by each surface. Raven owns backend mappings.
+Which legacy names each field covers, the folds and the drops:
+[`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md). Evidence:
 [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md); cases:
 [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md).
 
@@ -39,22 +41,22 @@ they disagree.
 The public builder offers these fields. Rule 5 in `docs/SEARCH-AND-FILTERING.md`
 decides which fields may be public.
 
-| id | label | covers (legacy) | operators | value input |
-|---|---|---|---|---|
-| `title` | Title | `title` | matches | text; autocompletes against titles (`TBD` raven capability) |
-| `abstract` | Abstract | `abstract` | contains, does not contain, is, is not | text |
-| `keyword` | Keywords | `keyword`; alias `subject` | is | text; several values separated by commas or semicolons; autocompletes (`TBD` raven capability) |
-| `contributor` `TBD` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker; several tokens match any of them |
-| `organization` | Organization | `affiliation`, `external` | is | organization picker; several tokens match any of them |
-| `project` | Project | `project`, `project.id` | is | project picker; several tokens match any of them |
-| `work_type` | Publication type | `type`; subtype aliases | is | token picker over the v1 type list in `docs/work-types/WORK-TYPES.md`; several tokens match any of them |
-| `year` | Publication year | `year`, ranges | is, is between | a year list for is, separated by commas or semicolons; a pair for between, either end may stay empty (from X / up to Y) |
-| `container` | Appeared in | `parent`, `publication` | is · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
-| `conference` | Conference | `conference` | is | text |
-| `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
-| `language` | Language | `language` | is | token picker over raven's closed ISO 639-2/B vocabulary (`language.go`); names from the standard's English names; several tokens match any of them |
-| `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is | select: Open access, Restricted, Under embargo, Metadata only |
-| `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
+| id | label | operators | value input |
+|---|---|---|---|
+| `title` | Title | matches | text; autocompletes against titles (`TBD` raven capability) |
+| `abstract` | Abstract | contains, does not contain, is, is not | text |
+| `keyword` | Keywords | is | text; several values separated by commas or semicolons; autocompletes (`TBD` raven capability) |
+| `contributor` `TBD` | Person | is · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker; several tokens match any of them |
+| `organization` | Organization | is | organization picker; several tokens match any of them |
+| `project` | Project | is | project picker; several tokens match any of them |
+| `work_type` | Publication type | is | token picker over the v1 type list in `docs/work-types/WORK-TYPES.md`; several tokens match any of them |
+| `year` | Publication year | is, is between | a year list for is, separated by commas or semicolons; a pair for between, either end may stay empty (from X / up to Y) |
+| `container` | Appeared in | is · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
+| `conference` | Conference | is | text |
+| `publisher` | Publisher | contains, does not contain, is, is not | text |
+| `language` | Language | is | token picker over raven's closed ISO 639-2/B vocabulary (`language.go`); names from the standard's English names; several tokens match any of them |
+| `access` | Access level | is | select: Open access, Restricted, Under embargo, Metadata only |
+| `file_type` | Attached content | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 
 ### Public decisions
 
@@ -74,42 +76,28 @@ decides which fields may be public.
   so is undecided.
 - Access says whether it opens. Attached content says which visible file kind exists.
 
-## Folded into another row
-
-| field | where it went |
-|---|---|
-| `promoter` | contributor role "as supervisor" |
-| `soleauthor`, `firstauthor`, `lastauthor` | contributor roles "as sole author", "as first author", "as last author" |
-| `external` | organization *is* Ghent University |
-| `embargo` | access value "Under embargo" |
-| metadata-only | access value "Metadata only" |
-| biblio or raven record id, `vabbid` | identifier, recognised by its scheme |
-| `articletype`, `misctype`, `conferencetype`, `dissertationtype` | work-type aliases |
-| `subject` | keyword alias |
-| `project.euframeworkprogramme` | project — the picker shows and matches each project's programme |
-
 ## Backoffice only
 
-| id | label | covers (legacy) | operators | qualifier |
-|---|---|---|---|---|
-| `visibility` | Record visibility | — | is, is not, is any of | — |
-| `deposit_status` | Deposit status | — | is, is not, is any of | — |
-| `publication_status` | Publication status | `publication_status`, `publicationstatus` | is, is not, is any of | — |
-| `identifier` | Identifier | `doi`, `issn`, `identifier`, `id`, `vabbid` | is any of, is, is not | — |
-| `license` | Licence | — | is | — |
-| `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | — |
-| `ugent_classification` | Classification | `classification` | is, is not, is any of | — |
-| `vabb_evaluation` | VABB evaluation | `vabb_approved` | is, is not | — |
-| `vabb_type` | VABB type | `vabbtype` | is, is not, is any of | — |
-| `vabb_submission_year` | VABB submission year | `vabbyear` | is, is at least, is at most, is between | — |
-| `created_at` | Date created | `datecreated` | is at least, is at most, is between | — |
-| `updated_at` | Date last changed | `dateupdated` | is at least, is at most, is between | — |
-| `defense_date` | Date defended | `defence.date` | is at least, is at most, is between | — |
-| `jcr_impact_factor` | JCR impact factor `TBD` | `jcr.impact_factor` | is more than, is less than, is between | — |
-| `jcr_category` | JCR category `TBD` | `jcr.category` | is, is not, is any of | — |
-| `jcr_quartile` | JCR category quartile `TBD` | `jcr.categoryquartile` | is, is not, is any of | — |
-| `jcr_decile` | JCR category decile `TBD` | `jcr.categorydecile` | is, is not, is any of | — |
-| `jcr_vigintile` | JCR category vigintile `TBD` | `jcr.categoryvigintile` | is, is not, is any of | — |
+| id | label | operators | qualifier |
+|---|---|---|---|
+| `visibility` | Record visibility | is, is not, is any of | — |
+| `deposit_status` | Deposit status | is, is not, is any of | — |
+| `publication_status` | Publication status | is, is not, is any of | — |
+| `identifier` | Identifier | is any of, is, is not | — |
+| `license` | Licence | is | — |
+| `publication_version` | Full-text version | is, is not, is any of | — |
+| `ugent_classification` | Classification | is, is not, is any of | — |
+| `vabb_evaluation` | VABB evaluation | is, is not | — |
+| `vabb_type` | VABB type | is, is not, is any of | — |
+| `vabb_submission_year` | VABB submission year | is, is at least, is at most, is between | — |
+| `created_at` | Date created | is at least, is at most, is between | — |
+| `updated_at` | Date last changed | is at least, is at most, is between | — |
+| `defense_date` | Date defended | is at least, is at most, is between | — |
+| `jcr_impact_factor` | JCR impact factor `TBD` | is more than, is less than, is between | — |
+| `jcr_category` | JCR category `TBD` | is, is not, is any of | — |
+| `jcr_quartile` | JCR category quartile `TBD` | is, is not, is any of | — |
+| `jcr_decile` | JCR category decile `TBD` | is, is not, is any of | — |
+| `jcr_vigintile` | JCR category vigintile `TBD` | is, is not, is any of | — |
 
 ### Backoffice decisions
 
@@ -132,24 +120,6 @@ decides which fields may be public.
 | id | label | state |
 |---|---|---|
 | `copyright_statement` | Copyright statement | The current system stores no such value and renders the sentence from the licence, so nothing is drawn while open question 2 stands |
-
-## Dropped
-
-No row offers `volume`, `issue`, `issuetitle`, `articlenumber`, `firstpage`, `lastpage`,
-`alternativetitle`, `editor.affiliation` or `orcid`: none drew a human query or machine hit in
-2026-H1. The translator must still resolve saved queries that contain them.
-
-## Translator only
-
-Context for raven's translator, not a specification — raven decides every translation.
-Legacy names a translated query may carry, which no builder row offers:
-
-| legacy name | context |
-|---|---|
-| `field`, `for`, `of` | parse artifacts from logged queries |
-| `basic`, bare text | the search box carries it |
-| `author.affiliation` | the work's credited organization answers it; see Organization above `TBD` this is different from the old Biblio |
-| `publicationstatus` | alias spelling of `publication_status` |
 
 ## Open questions
 
