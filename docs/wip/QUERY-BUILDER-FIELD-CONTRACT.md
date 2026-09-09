@@ -10,7 +10,7 @@ The public builder ships first; backoffice reuses it with more fields.
 
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
 - Several values in one condition match any of them; `is any of` spells it where the operator
-  is a choice. An OR group joins separate conditions. Two Person rows therefore mean both
+  is a choice. An OR group joins separate conditions (phase 2). Two Person rows therefore mean both
   people.
 - A qualifier changes how the same kind of value is read, such as a person's role. Otherwise the
   question gets a separate field entry.
@@ -44,16 +44,16 @@ decides which fields may be public.
 |---|---|---|---|---|
 | `title` | Title | `title` | matches | text; autocompletes against titles (`TBD` raven capability) |
 | `abstract` | Abstract | `abstract` | contains, does not contain, is, is not | text |
-| `keyword` | Keywords | `keyword`; alias `subject` | is | text; several comma-separated values; autocompletes (`TBD` raven capability) |
+| `keyword` | Keywords | `keyword`; alias `subject` | is | text; several values separated by commas or semicolons; autocompletes (`TBD` raven capability) |
 | `contributor` `TBD` | Person | `author`, `editor`, `promoter`, `soleauthor`, `firstauthor`, `lastauthor` | is · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker; several tokens match any of them |
 | `organization` | Organization | `affiliation`, `external` | is | organization picker; several tokens match any of them |
 | `project` | Project | `project`, `project.id` | is | project picker; several tokens match any of them |
-| `work_type` | Publication type | `type`; subtype aliases | is | select |
-| `year` | Publication year | `year`, ranges | is, is between | a comma-separated year list for is; a pair for between |
+| `work_type` | Publication type | `type`; subtype aliases | is | token picker over the v1 type list in `docs/work-types/WORK-TYPES.md`; several tokens match any of them |
+| `year` | Publication year | `year`, ranges | is, is between | a year list for is, separated by commas or semicolons; a pair for between |
 | `container` | Appeared in | `parent`, `publication` | is · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
 | `conference` | Conference | `conference` | is | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
-| `language` | Language | `language` | is | select |
+| `language` | Language | `language` | is | token picker over raven's closed ISO 639-2/B vocabulary (`language.go`); names from the standard's English names; several tokens match any of them |
 | `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is | select: Open access, Restricted, Under embargo, Metadata only |
 | `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 
@@ -100,9 +100,9 @@ decides which fields may be public.
 | `license` | Licence | — | is | — |
 | `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | — |
 | `ugent_classification` | Classification | `classification` | is, is not, is any of | — |
-| `vabb_evaluation` | VABB evaluation `TBD` | `vabb_approved` | is, is not | — |
-| `vabb_type` | VABB type `TBD` | `vabbtype` | is, is not, is any of | — |
-| `vabb_submission_year` | VABB submission year `TBD` | `vabbyear` | is, is at least, is at most, is between | — |
+| `vabb_evaluation` | VABB evaluation | `vabb_approved` | is, is not | — |
+| `vabb_type` | VABB type | `vabbtype` | is, is not, is any of | — |
+| `vabb_submission_year` | VABB submission year | `vabbyear` | is, is at least, is at most, is between | — |
 | `created_at` | Date created | `datecreated` | is at least, is at most, is between | — |
 | `updated_at` | Date last changed | `dateupdated` | is at least, is at most, is between | — |
 | `defense_date` | Date defended | `defence.date` | is at least, is at most, is between | — |
@@ -121,8 +121,9 @@ decides which fields may be public.
   backoffice.
 - Access level gains *is not* on the backoffice; legacy `file.access <> open` (103 logged)
   stays authorable there.
-- Classification is UGent's publication typology. VABB evaluation, type and submission year remain
-  separate external assertions; their exposure is undecided.
+- Classification is UGent's publication typology. VABB evaluation, type and submission year
+  remain separate external assertions. The prototype's Classification and VABB value lists are
+  assumptions; raven's catalogs confirm them.
 - Created, changed and defended remain separate dates. Open question 1 covers legacy workflow dates.
 - Each JCR metric remains separate because its value and operators differ. Exposure depends on the
   Clarivate licence and Raven's journal-data ownership.

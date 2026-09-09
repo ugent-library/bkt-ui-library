@@ -126,15 +126,23 @@ document.addEventListener('DOMContentLoaded', function () {
         op.replaceWith(fixed);
       }
     }
-    if (choice.dataset.qbHint) {
-      const input = row.querySelector('[data-qb-value] input');
-      if (input) input.placeholder = choice.dataset.qbHint;
+    if (choice.dataset.qbHelp) {
+      const help = document.createElement('p');
+      help.className = 'form-text mb-0';
+      help.textContent = choice.dataset.qbHelp;
+      row.querySelector('[data-qb-value]').append(help);
     }
     // A choice carries its select's values where the contract fixes them (data-qb-values); a
     // field whose values live in a raven catalog names none and keeps the placeholder.
     if (choice.dataset.qbValues) {
       const select = row.querySelector('[data-qb-value] select');
       choice.dataset.qbValues.split(',').forEach(v => select.add(new Option(v)));
+    }
+    if (choice.dataset.qbMultiValues != null) {
+      const multi = row.querySelector('[data-qb-multi]');
+      const select = row.querySelector('.bt-query-builder__value-select');
+      // The hidden select still feeds the checklist panel its rows.
+      if (multi && select) { multi.hidden = false; select.hidden = true; }
     }
     // An entity choice also names the panel its slot clones and the Add-button copy.
     if (choice.dataset.qbPanel) {
@@ -331,18 +339,6 @@ document.addEventListener('DOMContentLoaded', function () {
       button.closest('[data-qb-token]').remove();
     } else if (button.hasAttribute('data-qb-or')) {
       toGroup(button.closest('[data-qb-row]'));
-    } else if (button.hasAttribute('data-qb-combine')) {
-      // The note's offer: this row and the same-field row above it become one group's
-      // alternatives. "Split into 'and' rows" is the way back.
-      const row = button.closest('[data-qb-row]');
-      let prev = row.previousElementSibling;
-      while (prev && !prev.hasAttribute('data-qb-row')) prev = prev.previousElementSibling;
-      if (!prev) return;
-      button.closest('[data-qb-note]').remove();
-      const group = document.getElementById('qb-group').content.firstElementChild.cloneNode(true);
-      prev.before(group);
-      group.querySelector('[data-qb-alts]').append(prev, row);
-      [prev, row].forEach(el => el.classList.remove('bt-query-builder__row--warning'));
     } else if (button.hasAttribute('data-qb-remove-group')) {
       unwrap(button.closest('[data-qb-group]'));
     } else if (button.hasAttribute('data-qb-remove')) {

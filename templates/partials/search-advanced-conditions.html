@@ -259,7 +259,8 @@
             value="2020" min="1800" max="2100" data-qb-pair>
           <label class="visually-hidden" for="qb-val-3-list" data-qb-list hidden>Years, condition 3</label>
           <input type="text" class="form-control form-control-sm" id="qb-val-3-list"
-            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
+            inputmode="numeric" data-qb-list hidden>
+          <p class="form-text mb-0" data-qb-list hidden>Separate by commas or semicolons.</p>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -624,7 +625,7 @@
           <!-- Written out, not computed: the prototype shows what recognition reports, it does
                 not recognise. The counts and the listed lines match the sample above. -->
           <p class="form-text mb-0" id="qb-val-10-help">
-            Separate by spaces, commas, or line breaks. Up to 20 identifiers.
+            Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.
           </p>
           <p class="form-text mb-0" id="qb-val-10-recognised">
             <strong>20 identifiers recognised.</strong> 18 Biblio IDs, 2 DOIs.
@@ -792,12 +793,11 @@
         </button>
       </div>
       <p class="small mb-0 bt-query-builder__row-note" data-qb-note>Both Person conditions must match.
-        Remove a condition, or
-        <button type="button" class="btn btn-link btn-sm p-0 align-baseline" data-qb-combine>turn
-          one into an &lsquo;or&rsquo; group</button>.</p>
+        Remove a condition.</p>
     </div>
 
 
+    <!-- Prototype note: the spelling feedback ("nothing matches this spelling") is phase 2. -->
     <div class="bt-query-builder__row bt-query-builder__row--error" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -852,8 +852,8 @@
     <!-- @state -->
 
     <!-- @state: builder-or-group -->
-    <!-- An OR group is a state of a row, made by the row's "or…" action; it collapses
-          back to a plain row when one alternative is left. -->
+    <!-- Prototype note: OR groups are phase 2. A group is a state of a row, made by the
+          row's "or…" action; it collapses back to a plain row when one alternative is left. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">
         &hellip;where <em>any</em> of these conditions is true:
@@ -1094,7 +1094,8 @@
             min="1800" max="2100" data-qb-pair hidden>
           <label class="visually-hidden" for="qbg-val-2-list" data-qb-list>Years, condition 2</label>
           <input type="text" class="form-control form-control-sm" id="qbg-val-2-list" value="2020"
-            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list>
+            inputmode="numeric" data-qb-list>
+          <p class="form-text mb-0" data-qb-list>Separate by commas or semicolons.</p>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1274,8 +1275,7 @@
         <span class="small text-muted" data-qb-op-fixed>is</span>
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-t-container-val">Value</label>
-          <input type="text" class="form-control form-control-sm" id="qb-t-container-val"
-            placeholder="Title or identifier">
+          <input type="text" class="form-control form-control-sm" id="qb-t-container-val">
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1425,7 +1425,8 @@
             min="1800" max="2100" data-qb-pair hidden>
           <label class="visually-hidden" for="qb-t-year-val-list" data-qb-list hidden>Years</label>
           <input type="text" class="form-control form-control-sm" id="qb-t-year-val-list"
-            inputmode="numeric" placeholder="2018, 2021, 2024" data-qb-list hidden>
+            inputmode="numeric" data-qb-list hidden>
+          <p class="form-text mb-0" data-qb-list hidden>Separate by commas or semicolons.</p>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1612,7 +1613,7 @@
           <label class="visually-hidden" for="qb-t-batch-val">Identifiers</label>
           <textarea class="form-control form-control-sm font-monospace bt-textarea-auto"
             id="qb-t-batch-val" rows="3"></textarea>
-          <p class="form-text mb-0">Separate by spaces, commas, or line breaks. Up to 20 identifiers.</p>
+          <p class="form-text mb-0">Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.</p>
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
@@ -1635,7 +1636,7 @@
     </div>
   </template>
 
-<!-- The group a row becomes. -->
+<!-- The group a row becomes. Prototype note: OR groups are phase 2. -->
   <template id="qb-group">
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">
