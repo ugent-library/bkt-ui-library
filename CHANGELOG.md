@@ -6,6 +6,16 @@ system, or do I reach for something new?"
 
 ---
 
+## The builder's field set splits per surface (v2.35, 2026-09-09)
+
+**Words or topic and Files are gone from both builders.** Open text belongs to the page's
+search box; Access level's "No full text" value is renamed **Metadata only**.
+
+**Licence, Identifier, Publication status and Full-text version are backoffice-only.** One
+field list now carries every chooser group: `templates/partials/search-field-list.html`, with
+backoffice-only entries and groups gated to the backoffice states.
+`search-field-list-backoffice.html` no longer exists.
+
 ## Backoffice lists carry the Advanced search dialog, with backoffice fields (v2.34, 2026-09-08)
 
 No CSS changed — the new rows reuse existing classes. A consumer adopting the backoffice

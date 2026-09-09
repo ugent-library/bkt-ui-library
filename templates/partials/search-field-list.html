@@ -1,6 +1,8 @@
 <!--
-  The advanced-search field list: the four groups every chooser shows, one entry per public
-  field in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
+  The advanced-search field list: every chooser group, one entry per field in
+  docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. Backoffice-only entries and groups are gated to the
+  backoffice states, keeping curation fields off the public surface
+  (docs/SEARCH-AND-FILTERING.md rule 5).
 
   Included by search-advanced-conditions.html, inside the #qb-chooser template, so every row's
   chooser holds the same list. Ids repeat because each row clones that template; identify()
@@ -52,9 +54,11 @@
       data-qb-field="work_type" data-qb-label="Publication type" data-qb-template="qb-row-choice">Publication type</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="year" data-qb-label="Publication year" data-qb-template="qb-row-year">Publication year</button></li>
+    <!-- @state: default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publication_status" data-qb-label="Publication status" data-qb-template="qb-row-choice"
       data-qb-values="Unpublished,In press,Published">Publication status</button></li>
+    <!-- @state -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="container" data-qb-label="Published in" data-qb-template="qb-row-container">Published in</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
@@ -65,8 +69,10 @@
       data-qb-ops="contains,does not contain,is,is not">Publisher</button></li>
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="language" data-qb-label="Language" data-qb-template="qb-row-choice">Language</button></li>
+    <!-- @state: default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="identifier" data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
+    <!-- @state -->
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-access">
@@ -75,14 +81,78 @@
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="access" data-qb-label="Access level" data-qb-template="qb-row-choice"
       data-qb-values="Open access,Restricted,Under embargo,Metadata only">Access level</button></li>
+    <!-- @state: default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="license" data-qb-label="Licence" data-qb-template="qb-row-choice"
       data-qb-values="CC0 1.0,CC BY 4.0,CC BY-SA 4.0,CC BY-NC 4.0,CC BY-ND 4.0,CC BY-NC-SA 4.0,CC BY-NC-ND 4.0,In copyright,Rights unknown,Other licence">Licence</button></li>
+    <!-- @state -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="file_type" data-qb-label="Attached content" data-qb-template="qb-row-choice"
       data-qb-values="Full text or dataset,Supplementary material,Table of contents,Peer review report,Colophon,Data fact sheet,Agreement">Attached content</button></li>
+    <!-- @state: default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publication_version" data-qb-label="Full-text version" data-qb-template="qb-row-choice"
       data-qb-values="Author version,Accepted version,Published version,Updated version">Full-text version</button></li>
+    <!-- @state -->
   </ul>
 </div>
+<!-- @state: default direct-added no-matches -->
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-curation">
+  <p class="dropdown-header" id="qb-g-curation">Curation</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="visibility" data-qb-label="Record visibility" data-qb-template="qb-row-choice"
+      data-qb-values="Public,Restricted,Private">Record visibility</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="deposit_status" data-qb-label="Deposit status" data-qb-template="qb-row-choice"
+      data-qb-values="Draft,Submitted,Returned,Reviewed">Deposit status</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="ugent_classification" data-qb-label="Classification"
+      data-qb-template="qb-row-choice">Classification</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_evaluation" data-qb-label="VABB evaluation" data-qb-template="qb-row-choice"
+      data-qb-ops="is,is not">VABB evaluation</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_type" data-qb-label="VABB type"
+      data-qb-template="qb-row-choice">VABB type</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="vabb_submission_year" data-qb-label="VABB submission year"
+      data-qb-template="qb-row-year"
+      data-qb-ops="is,is at least,is at most,is between">VABB submission year</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-dates">
+  <p class="dropdown-header" id="qb-g-dates">Record dates</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="created_at" data-qb-label="Date created"
+      data-qb-template="qb-row-date">Date created</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="updated_at" data-qb-label="Date last changed"
+      data-qb-template="qb-row-date">Date last changed</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="defense_date" data-qb-label="Date defended"
+      data-qb-template="qb-row-date">Date defended</button></li>
+  </ul>
+</div>
+<div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-metrics">
+  <p class="dropdown-header" id="qb-g-metrics">Journal metrics</p>
+  <ul class="list-unstyled mb-0">
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_impact_factor" data-qb-label="JCR impact factor"
+      data-qb-template="qb-row-quantity">JCR impact factor</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_category" data-qb-label="JCR category"
+      data-qb-template="qb-row-choice">JCR category</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_quartile" data-qb-label="JCR category quartile"
+      data-qb-template="qb-row-choice">JCR category quartile</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_decile" data-qb-label="JCR category decile"
+      data-qb-template="qb-row-choice">JCR category decile</button></li>
+    <li><button class="dropdown-item" type="button" data-qb-choice
+      data-qb-field="jcr_vigintile" data-qb-label="JCR category vigintile"
+      data-qb-template="qb-row-choice">JCR category vigintile</button></li>
+  </ul>
+</div>
+<!-- @state -->

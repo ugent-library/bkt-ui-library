@@ -16,10 +16,8 @@
   no-matches — search-researcher.html and curate.html). Drop them and the dialog renders empty;
   no check catches it.
 
-  The fields and their per-field operators are in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. The
-  chooser holds the public list; the backoffice states add search-field-list-backoffice.html, and
-  docs/SEARCH-AND-FILTERING.md rule 5 keeps curation fields off the public surface. The demo rows
-  are public fields.
+  The fields and their per-field operators are in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. A
+  demo row in a block that public states share must be a public field.
 -->
 <!-- [html-validate-disable-next wcag/h32 -- submit button bound externally by form="qb-form"] -->
 <form id="qb-form" action="public-works.html" method="get"
@@ -465,6 +463,123 @@
     </div>
 
 
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Organization</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-7">Operator, condition 7</label>
+        <select class="form-select form-select-sm" id="qb-op-7" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="fac-we">
+            Faculty of Sciences
+            <button type="button" aria-label="Remove Faculty of Sciences from condition 7">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add an organization
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add an organization" data-qb-picker-slot="organization-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 7: organization is Faculty of Sciences">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 7: organization is Faculty of Sciences">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="bt-query-builder__row" data-qb-row>
+      <div class="bt-query-builder__row-kind">
+        <div class="dropdown">
+          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
+            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Project</button>
+          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
+            aria-label="Choose a field" data-qb-chooser-slot></div>
+        </div>
+      </div>
+      <div class="bt-query-builder__phrase">
+        <label class="visually-hidden" for="qb-op-8">Operator, condition 8</label>
+        <select class="form-select form-select-sm" id="qb-op-8" data-qb-op>
+          <option selected>is</option>
+          <option>is not</option>
+          <option>is any of</option>
+        </select>
+        <div class="bt-query-builder__row-value" data-qb-value>
+          <span class="badge text-bg-primary-light" data-qb-token data-id="horizon-openair">
+            Horizon Europe &mdash; OpenAIR
+            <button type="button" aria-label="Remove Horizon Europe — OpenAIR from condition 8">
+              <i class="if if-close if--xs" aria-hidden="true"></i>
+            </button>
+          </span>
+          <div class="dropdown">
+            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
+              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
+              <i class="if if-add if--xs" aria-hidden="true"></i>
+              Add a project
+            </button>
+            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
+              aria-label="Add a project" data-qb-picker-slot="project-picker"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bt-query-builder__row-actions" data-qb-actions>
+        <div class="dropdown">
+          <button type="button" class="btn btn-ghost btn-sm text-muted"
+            data-bs-toggle="dropdown" aria-expanded="false"
+            aria-label="Actions for condition 8: project is Horizon Europe — OpenAIR">
+            <i class="if if-more if--xs" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <button type="button" class="dropdown-item" data-qb-or>
+                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
+              </button>
+            </li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
+          aria-label="Remove condition 8: project is Horizon Europe — OpenAIR">
+          <i class="if if-delete if--xs" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <!-- @state -->
+
+    <!-- @state: default direct-added no-matches -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -475,15 +590,15 @@
         </div>
       </div>
       <div class="bt-query-builder__phrase">
-        <label class="visually-hidden" for="qb-op-7">Operator, condition 7</label>
-        <select class="form-select form-select-sm" id="qb-op-7" data-qb-op>
+        <label class="visually-hidden" for="qb-op-9">Operator, condition 9</label>
+        <select class="form-select form-select-sm" id="qb-op-9" data-qb-op>
           <option selected>is</option>
           <option>is not</option>
           <option data-qb-multi-op>is any of</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <label class="visually-hidden" for="qb-val-7">Licence, condition 7</label>
-          <select class="form-select form-select-sm bt-query-builder__value-select" id="qb-val-7">
+          <label class="visually-hidden" for="qb-val-9">Licence, condition 9</label>
+          <select class="form-select form-select-sm bt-query-builder__value-select" id="qb-val-9">
             <option>CC0 1.0</option>
             <option>CC BY 4.0</option>
             <option>CC BY-SA 4.0</option>
@@ -510,7 +625,7 @@
         <div class="dropdown">
           <button type="button" class="btn btn-ghost btn-sm text-muted"
             data-bs-toggle="dropdown" aria-expanded="false"
-            aria-label="Actions for condition 7: licence is In copyright">
+            aria-label="Actions for condition 9: licence is In copyright">
             <i class="if if-more if--xs" aria-hidden="true"></i>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -522,7 +637,7 @@
           </ul>
         </div>
         <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-          aria-label="Remove condition 7: licence is In copyright">
+          aria-label="Remove condition 9: licence is In copyright">
           <i class="if if-delete if--xs" aria-hidden="true"></i>
         </button>
       </div>
@@ -541,16 +656,16 @@
         </div>
       </div>
       <div class="bt-query-builder__phrase">
-        <label class="visually-hidden" for="qb-op-8">Operator, condition 8</label>
-        <select class="form-select form-select-sm" id="qb-op-8" data-qb-op>
+        <label class="visually-hidden" for="qb-op-10">Operator, condition 10</label>
+        <select class="form-select form-select-sm" id="qb-op-10" data-qb-op>
           <option selected>is any of</option>
           <option>is</option>
           <option>is not</option>
         </select>
         <div class="bt-query-builder__row-value" data-qb-value>
-          <label class="visually-hidden" for="qb-val-8">Identifiers, condition 8</label>
-          <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="qb-val-8"
-            rows="3" aria-describedby="qb-val-8-help qb-val-8-recognised qb-val-8-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+          <label class="visually-hidden" for="qb-val-10">Identifiers, condition 10</label>
+          <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="qb-val-10"
+            rows="3" aria-describedby="qb-val-10-help qb-val-10-recognised qb-val-10-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
   01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81 01KPQ4D2KG9E 01K30SYZCNAV
   01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF 01K4D2KG9EFW 01KHPQ4D2KG9
   01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX 01KJ30SYZCNA 01KZCNAVRHPQ
@@ -579,13 +694,13 @@
   01KCNAVRHPQ4 01KSYZCNAVRH 01K67MXJ30SY 01KKG9EFW5TB ISBN-onbekend zie-bijlage-3</textarea>
           <!-- Written out, not computed: the prototype shows what recognition reports, it does
                 not recognise. The counts and the listed lines match the sample above. -->
-          <p class="form-text mb-0" id="qb-val-8-help">
+          <p class="form-text mb-0" id="qb-val-10-help">
             Separate by spaces, commas, or line breaks.
           </p>
-          <p class="form-text mb-0" id="qb-val-8-recognised">
+          <p class="form-text mb-0" id="qb-val-10-recognised">
             <strong>160 identifiers recognised.</strong> 156 Biblio IDs, 4 DOIs.
           </p>
-          <div class="alert alert-warning alert--sm m-0" id="qb-val-8-unrecognised">
+          <div class="alert alert-warning alert--sm m-0" id="qb-val-10-unrecognised">
             <p class="mb-1">
               <i class="if if-alert me-1" aria-hidden="true"></i>
               <strong>2 lines were not recognised and are not being searched.</strong>
@@ -604,7 +719,7 @@
         <div class="dropdown">
           <button type="button" class="btn btn-ghost btn-sm text-muted"
             data-bs-toggle="dropdown" aria-expanded="false"
-            aria-label="Actions for condition 8: identifier is any of 160 IDs">
+            aria-label="Actions for condition 10: identifier is any of 160 IDs">
             <i class="if if-more if--xs" aria-hidden="true"></i>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -616,121 +731,7 @@
           </ul>
         </div>
         <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-          aria-label="Remove condition 8: identifier is any of 160 IDs">
-          <i class="if if-delete if--xs" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-
-
-    <div class="bt-query-builder__row" data-qb-row>
-      <div class="bt-query-builder__row-kind">
-        <div class="dropdown">
-          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
-            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Organization</button>
-          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
-            aria-label="Choose a field" data-qb-chooser-slot></div>
-        </div>
-      </div>
-      <div class="bt-query-builder__phrase">
-        <label class="visually-hidden" for="qb-op-9">Operator, condition 9</label>
-        <select class="form-select form-select-sm" id="qb-op-9" data-qb-op>
-          <option selected>is</option>
-          <option>is not</option>
-          <option>is any of</option>
-        </select>
-        <div class="bt-query-builder__row-value" data-qb-value>
-          <span class="badge text-bg-primary-light" data-qb-token data-id="fac-we">
-            Faculty of Sciences
-            <button type="button" aria-label="Remove Faculty of Sciences from condition 9">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </span>
-          <div class="dropdown">
-            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
-              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
-              <i class="if if-add if--xs" aria-hidden="true"></i>
-              Add an organization
-            </button>
-            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-              aria-label="Add an organization" data-qb-picker-slot="organization-picker"></div>
-          </div>
-        </div>
-      </div>
-      <div class="bt-query-builder__row-actions" data-qb-actions>
-        <div class="dropdown">
-          <button type="button" class="btn btn-ghost btn-sm text-muted"
-            data-bs-toggle="dropdown" aria-expanded="false"
-            aria-label="Actions for condition 9: organization is Faculty of Sciences">
-            <i class="if if-more if--xs" aria-hidden="true"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <button type="button" class="dropdown-item" data-qb-or>
-                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
-              </button>
-            </li>
-          </ul>
-        </div>
-        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-          aria-label="Remove condition 9: organization is Faculty of Sciences">
-          <i class="if if-delete if--xs" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-
-
-    <div class="bt-query-builder__row" data-qb-row>
-      <div class="bt-query-builder__row-kind">
-        <div class="dropdown">
-          <button type="button" class="bt-btn-inline-edit" data-qb-change-field
-            data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="dialog">Project</button>
-          <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
-            aria-label="Choose a field" data-qb-chooser-slot></div>
-        </div>
-      </div>
-      <div class="bt-query-builder__phrase">
-        <label class="visually-hidden" for="qb-op-10">Operator, condition 10</label>
-        <select class="form-select form-select-sm" id="qb-op-10" data-qb-op>
-          <option selected>is</option>
-          <option>is not</option>
-          <option>is any of</option>
-        </select>
-        <div class="bt-query-builder__row-value" data-qb-value>
-          <span class="badge text-bg-primary-light" data-qb-token data-id="horizon-openair">
-            Horizon Europe &mdash; OpenAIR
-            <button type="button" aria-label="Remove Horizon Europe — OpenAIR from condition 10">
-              <i class="if if-close if--xs" aria-hidden="true"></i>
-            </button>
-          </span>
-          <div class="dropdown">
-            <button type="button" class="badge badge--outline" data-bs-toggle="dropdown"
-              data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
-              <i class="if if-add if--xs" aria-hidden="true"></i>
-              Add a project
-            </button>
-            <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" role="dialog"
-              aria-label="Add a project" data-qb-picker-slot="project-picker"></div>
-          </div>
-        </div>
-      </div>
-      <div class="bt-query-builder__row-actions" data-qb-actions>
-        <div class="dropdown">
-          <button type="button" class="btn btn-ghost btn-sm text-muted"
-            data-bs-toggle="dropdown" aria-expanded="false"
-            aria-label="Actions for condition 10: project is Horizon Europe — OpenAIR">
-            <i class="if if-more if--xs" aria-hidden="true"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <button type="button" class="dropdown-item" data-qb-or>
-                <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
-              </button>
-            </li>
-          </ul>
-        </div>
-        <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-          aria-label="Remove condition 10: project is Horizon Europe — OpenAIR">
+          aria-label="Remove condition 10: identifier is any of 160 IDs">
           <i class="if if-delete if--xs" aria-hidden="true"></i>
         </button>
       </div>
@@ -1254,7 +1255,6 @@
       </div>
       <div class="bt-panel__body bt-panel__body--list">
         <!-- @include: templates/partials/search-field-list.html -->
-        <!-- @include: templates/partials/search-field-list-backoffice.html -->
       </div>
   </template>
 

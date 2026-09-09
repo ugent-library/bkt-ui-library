@@ -58,7 +58,7 @@ whatever its proposed label reads.
 | C1.01 | `author = PERSON_1` | 1,033 | A+B | in scope |  |
 | C1.02 | `author exact PERSON_1` | 979 | A+B | in scope |  |
 | C1.03 | `basic = TEXT` | 680 | A+B | not exposed | the search box carries it (`q`) |
-| C1.04 | `doi = DOI_1` | 645 | A+B | in scope |  |
+| C1.04 | `doi = DOI_1` | 645 | A+B | backoffice | backoffice builder field |
 | C1.05 | `title = TEXT` | 369 | A+B | in scope |  |
 | C1.06 | `type any "journalArticle"` | 366 | A+B | in scope |  |
 | C1.07 | `publication exact JOURNAL_1` | 282 | A+B | in scope |  |
@@ -66,7 +66,7 @@ whatever its proposed label reads.
 | C1.09 | `year exact 2020` | 258 | A+B | in scope |  |
 | C1.10 | `external exact 0` | 257 | A+B | in scope |  |
 | C1.11 | `parent = JOURNAL_1` | 257 | A+B | in scope |  |
-| C1.12 | `id any "ID_1"` | 235 | A+B | in scope |  |
+| C1.12 | `id any "ID_1"` | 235 | A+B | backoffice | backoffice builder field |
 | C1.13 | `affiliation any "ORG_1"` | 201 | A+B | in scope |  |
 | C1.14 | `year >= 2020` | 132 | A+B | in scope |  |
 | C1.15 | `affiliation exact ORG_1` | 105 | A+B | in scope |  |
@@ -76,12 +76,12 @@ whatever its proposed label reads.
 | C1.19 | `year any "2020"` | 85 | A+B | in scope |  |
 | C1.20 | `affiliation <> ORG_1` | 79 | A+B | in scope |  |
 | C1.21 | `project.id exact PROJECT_1` | 73 | A+B | in scope |  |
-| C1.22 | `publication_status exact published` | 73 | A+B | in scope |  |
+| C1.22 | `publication_status exact published` | 73 | A+B | backoffice | backoffice builder field |
 | C1.23 | `project = PROJECT_1` | 70 | A+B | in scope |  |
 | C1.24 | `file.access any "open"` | 67 | A+B | in scope |  |
 | C1.25 | `abstract = TEXT` | 66 | A+B | in scope |  |
 | C1.26 | `type exact journalArticle` | 65 | A+B | in scope |  |
-| C1.27 | `publicationstatus any "published"` | 61 | A+B | in scope |  |
+| C1.27 | `publicationstatus any "published"` | 61 | A+B | backoffice | backoffice builder field |
 | C1.28 | `affiliation = ORG_1` | 59 | A+B | in scope |  |
 | C1.29 | `parent exact JOURNAL_1` | 58 | A+B | in scope |  |
 | C1.30 | `file.access = open` | 57 | A+B | in scope |  |
@@ -103,7 +103,7 @@ whatever its proposed label reads.
 | C1.46 | `subject = KEYWORD_1` | 19 | A+B | in scope |  |
 | C1.47 | `type <> journalArticle` | 19 | A+B | in scope |  |
 | C1.48 | `year < 2020` | 16 | A+B | in scope |  |
-| C1.49 | `id = ID_1` | 11 | A+B | in scope |  |
+| C1.49 | `id = ID_1` | 11 | A+B | backoffice | backoffice builder field |
 | C1.50 | `conferencetype any "proceedingsPaper"` | 10 | A+B | in scope |  |
 | C1.51 | `datecreated >= 2024` | 10 | A+B | in scope |  |
 | C1.52 | `field <> FIELD_1` | 10 | B | translator-only | parse artifact — must not crash |
@@ -118,12 +118,12 @@ whatever its proposed label reads.
 | C1.61 | `publisher exact PUBLISHER_1` | 6 | A+B | in scope |  |
 | C1.62 | `accesslevel = open` | 5 | A+B | in scope |  |
 | C1.63 | `conference = CONF_1` | 4 | A+B | in scope |  |
-| C1.64 | `identifier any "ID_1"` | 4 | A+B | in scope |  |
+| C1.64 | `identifier any "ID_1"` | 4 | A+B | backoffice | backoffice builder field |
 | C1.65 | `embargo = 0` | 3 | A+B | in scope |  |
-| C1.66 | `file.publicationversion exact publishedVersion` | 3 | A+B | in scope |  |
+| C1.66 | `file.publicationversion exact publishedVersion` | 3 | A+B | backoffice | backoffice builder field |
 | C1.67 | `abstract all "TEXT"` | 2 | A+B | in scope |  |
 | C1.68 | `accesslevel any "open"` | 2 | A+B | in scope |  |
-| C1.69 | `file.publicationversion any "publishedVersion"` | 2 | A+B | in scope |  |
+| C1.69 | `file.publicationversion any "publishedVersion"` | 2 | A+B | backoffice | backoffice builder field |
 | C1.70 | `publisher any "PUBLISHER_1"` | 2 | A+B | in scope |  |
 | C1.71 | `accesslevel all "open"` | 1 | A+B | in scope |  |
 | C1.72 | `author all "PERSON_1"` | 1 | A+B | in scope |  |
@@ -145,10 +145,10 @@ whatever its proposed label reads.
 
 | case | query | observed | subset | scope | note |
 |---|---|---:|---|---|---|
-| C2.01 | `id any "ID_1 … _763"` | 1 | A+B | in scope | longest observed batch: 763 values |
-| C2.02 | `id any "ID_1 … _18"` | 235 | A+B | in scope | median batch: 18 values (n=235) |
-| C2.03 | `identifier any "ID_1 … _200"` | 1 | A+B | in scope | longest observed batch: 200 values |
-| C2.04 | `identifier any "ID_1 … _27"` | 4 | A+B | in scope | median batch: 27 values (n=4) |
+| C2.01 | `id any "ID_1 … _763"` | 1 | A+B | backoffice | longest observed batch: 763 values; backoffice builder field |
+| C2.02 | `id any "ID_1 … _18"` | 235 | A+B | backoffice | median batch: 18 values (n=235); backoffice builder field |
+| C2.03 | `identifier any "ID_1 … _200"` | 1 | A+B | backoffice | longest observed batch: 200 values; backoffice builder field |
+| C2.04 | `identifier any "ID_1 … _27"` | 4 | A+B | backoffice | median batch: 27 values (n=4); backoffice builder field |
 | C2.05 | `project any "PROJECT_1 … _189"` | 3 | A+B | in scope | longest observed batch: 189 values |
 | C2.06 | `project any "PROJECT_1 … _99"` | 7 | A+B | in scope | median batch: 99 values (n=7) |
 | C2.07 | `author any "PERSON_1 … _99"` | 1 | A+B | in scope | longest observed batch: 99 values |
@@ -164,23 +164,23 @@ whatever its proposed label reads.
 |---|---|---:|---|---|---|
 | C3.01 | `PERSON_1 OR author exact PERSON_1 or … or author exact PERSON_1  (13 terms) AND year any "2020" AND affiliation exact ORG_1 AND external exact 0` | 29 | A+B | in scope | composite, 5-20 OR terms |
 | C3.02 | `PERSON_1 OR author exact PERSON_1 or … or author exact PERSON_1  (21 terms) AND year any "2020" AND affiliation exact ORG_1 AND external exact 0` | 16 | A+B | in scope | composite, 21+ OR terms |
-| C3.03 | `doi = DOI_1 or … or DOI_50` | 13 | A+B | in scope | single-field value list, 21+ OR terms |
+| C3.03 | `doi = DOI_1 or … or DOI_50` | 13 | A+B | backoffice | single-field value list, 21+ OR terms; backoffice builder field |
 | C3.04 | `PERSON_1 or PERSON_1` | 8 | A+B | in scope | single-field value list, 1 OR term |
 | C3.05 | `author = PERSON_1 or … or PERSON_1  (10 terms) AND year exact 2020 AND type any "journalArticle"` | 7 | A+B | in scope | composite, 5-20 OR terms |
 | C3.06 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND accesslevel exact open` | 6 | A+B | in scope | composite, 1 OR term |
 | C3.07 | `author = PERSON_1 OR author = PERSON_1` | 5 | A+B | in scope | single-field value list, 1 OR term |
-| C3.08 | `id = ID_1 or … or ID_20` | 5 | A+B | in scope | single-field value list, 5-20 OR terms |
+| C3.08 | `id = ID_1 or … or ID_20` | 5 | A+B | backoffice | single-field value list, 5-20 OR terms; backoffice builder field |
 | C3.09 | `(parent = JOURNAL_1 OR publisher = PUBLISHER_1) AND year any "2020"` | 5 | A+B | in scope | composite, 1 OR term |
 | C3.10 | `project = PROJECT_1` | 4 | A+B | in scope | single-field value list, 1 OR term |
 | C3.11 | `author = PERSON_1 or … or PERSON_11` | 4 | A+B | in scope | single-field value list, 5-20 OR terms |
 | C3.12 | `PERSON_1 or … or PERSON_1  (5 terms)` | 4 | A+B | in scope | single-field value list, 2-4 OR terms |
-| C3.13 | `id = ID_1 or … or ID_105` | 4 | A+B | in scope | single-field value list, 21+ OR terms |
+| C3.13 | `id = ID_1 or … or ID_105` | 4 | A+B | backoffice | single-field value list, 21+ OR terms; backoffice builder field |
 | C3.14 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND accesslevel = open` | 3 | A+B | in scope | composite, 1 OR term |
 | C3.15 | `author = PERSON_1 or … or PERSON_44` | 3 | A+B | in scope | single-field value list, 21+ OR terms |
 | C3.16 | `publication exact JOURNAL_1 or JOURNAL_1` | 3 | A+B | in scope | single-field value list, 1 OR term |
-| C3.17 | `doi = DOI_1 or doi = DOI_1` | 3 | A+B | in scope | single-field value list, 1 OR term |
+| C3.17 | `doi = DOI_1 or doi = DOI_1` | 3 | A+B | backoffice | single-field value list, 1 OR term; backoffice builder field |
 | C3.18 | `author = PERSON_1 or … or PERSON_15` | 3 | A+B | in scope | single-field value list, 5-20 OR terms |
-| C3.19 | `doi = DOI_1 or … or DOI_18` | 3 | A+B | in scope | single-field value list, 5-20 OR terms |
+| C3.19 | `doi = DOI_1 or … or DOI_18` | 3 | A+B | backoffice | single-field value list, 5-20 OR terms; backoffice builder field |
 | C3.20 | `PERSON_1 OR author exact PERSON_1 or … or author exact PERSON_1  (4 terms) AND year any "2020" AND affiliation exact ORG_1 AND external exact 0` | 2 | A+B | in scope | composite, 2-4 OR terms |
 | C3.21 | `author = PERSON_1 or … or PERSON_1  (7 terms) AND year exact 2020` | 2 | A+B | in scope | composite, 5-20 OR terms |
 | C3.22 | `author = PERSON_1 AND type any "journalArticle" AND affiliation any "ORG_1"` | 2 | A+B | in scope | composite, 1 OR term |
@@ -188,7 +188,7 @@ whatever its proposed label reads.
 | C3.24 | `abstract = TEXT` | 2 | A+B | in scope | single-field value list, 1 OR term |
 | C3.25 | `parent = JOURNAL_1` | 2 | A+B | in scope | single-field value list, 1 OR term |
 | C3.26 | `publication = JOURNAL_1 or … or JOURNAL_20` | 2 | A+B | in scope | single-field value list, 5-20 OR terms |
-| C3.27 | `id = ID_1(ID_1 or … or ID_1  (3 terms) )` | 2 | A+B | in scope | single-field value list, 2-4 OR terms |
+| C3.27 | `id = ID_1(ID_1 or … or ID_1  (3 terms) )` | 2 | A+B | backoffice | single-field value list, 2-4 OR terms; backoffice builder field |
 | C3.28 | `datecreated >= 2024 and datecreated <= 2024 and type <> journalArticle or researchData` | 2 | A+B | in scope | composite, 1 OR term |
 | C3.29 | `(type = journalArticle) OR (type = journalArticle)` | 2 | A+B | in scope | single-field value list, 1 OR term |
 | C3.30 | `classification = A1 OR classification = A1` | 2 | A+B | in scope | single-field value list, 1 OR term |
@@ -204,14 +204,14 @@ whatever its proposed label reads.
 | C3.40 | `author exact PERSON_1 AND type any "journalArticle" AND affiliation any "ORG_1"` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.41 | `basic = TEXT AND affiliation any "ORG_1"` | 1 | A+B | in scope | composite, 1 OR term; basic rides in the search box |
 | C3.42 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND accesslevel all "open"` | 1 | A+B | in scope | composite, 1 OR term |
-| C3.43 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and file.access <> open AND field <> FIELD_1 AND classification any "A1" AND publication_status exact published and external exact 0` | 1 | A+B | in scope | composite, 1 OR term |
+| C3.43 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and file.access <> open AND field <> FIELD_1 AND classification any "A1" AND publication_status exact published and external exact 0` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
 | C3.44 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and external exact 0 and file.access exact open and embargo exact 0` | 1 | A+B | in scope | composite, 1 OR term |
-| C3.45 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and external exact 0 and file.access exact open and embargo exact 0 AND classification any "A1" AND publication_status exact published` | 1 | A+B | in scope | composite, 1 OR term |
+| C3.45 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) and external exact 0 and file.access exact open and embargo exact 0 AND classification any "A1" AND publication_status exact published` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
 | C3.46 | `author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1) AND file.access exact restricted and file.access <> open and external exact 0` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.47 | `(author exact PERSON_1 or (type any "bookEditor issueEditor" and editor exact PERSON_1)) AND vabb_approved exact 1` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.48 | `title = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term |
-| C3.49 | `author = PERSON_1 AND year >= 2020 AND type any "journalArticle" AND classification any "A1" AND affiliation any "ORG_1" AND publicationstatus any "published"` | 1 | A+B | in scope | composite, 1 OR term |
-| C3.50 | `basic = TEXT AND year >= 2020 AND type any "journalArticle" AND publicationstatus any "published" AND articletype any "original"` | 1 | A+B | in scope | composite, 1 OR term; basic rides in the search box |
+| C3.49 | `author = PERSON_1 AND year >= 2020 AND type any "journalArticle" AND classification any "A1" AND affiliation any "ORG_1" AND publicationstatus any "published"` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
+| C3.50 | `basic = TEXT AND year >= 2020 AND type any "journalArticle" AND publicationstatus any "published" AND articletype any "original"` | 1 | A+B | backoffice | composite, 1 OR term; basic rides in the search box; backoffice builder field |
 | C3.51 | `(basic = TEXT or … or basic = TEXT  (3 terms)) AND author = PERSON_1` | 1 | A+B | in scope | needs `contains any of` on a text row — field contract open question 4 |
 | C3.52 | `basic = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term; basic rides in the search box |
 | C3.53 | `title any "TEXT" and (author any "PERSON_1" or type exact journalArticle)` | 1 | A+B | in scope | composite, 1 OR term |
@@ -234,7 +234,7 @@ whatever its proposed label reads.
 
 | case | query | observed | subset | scope | note |
 |---|---|---:|---|---|---|
-| C5.01 | `id any "ID_1 … _763"` | 1 | A+B | in scope | 763 values / 9,336 chars — the URL ceiling case |
+| C5.01 | `id any "ID_1 … _763"` | 1 | A+B | backoffice | 763 values / 9,336 chars — the URL ceiling case; backoffice builder field |
 | C5.02 | `author exact PERSON_1 OR … OR author exact PERSON_85` | 1 | A+B | in scope | longhand chain must collapse into one list row |
 | C5.03 | `author = PERSON_1 AND year >= 2015 AND classification any "A1" AND external exact 0` | 57 | A+B | in scope | most common multi-condition shape |
 

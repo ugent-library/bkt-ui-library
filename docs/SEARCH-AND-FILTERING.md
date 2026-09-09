@@ -286,8 +286,7 @@ elsewhere, not here.
 **Access vs. version and classification.** The public sidebar carries only **Access** ("can
 I read it?"). **Full-text version** — the COAR published / accepted / author-version
 distinction — earns no sidebar slot either, because it is a repository-savvy distinction and
-the record shows it per file. It is a field in public Advanced search, on the same reading that
-put publication status there: the builder has no space budget and the sidebar does.
+the record shows it per file. It is a backoffice builder field, as is publication status.
 **Classification** (A1/A2/… research-evaluation tags) is a curator tag, so it earns no public
 slot; it is a backoffice builder field, and the field ledger holds its values. Publisher-side publication status is not a
 separate axis; raven models it as `PublicationVersions`, which the full-text-version field

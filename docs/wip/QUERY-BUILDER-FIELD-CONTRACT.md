@@ -21,9 +21,8 @@ The public builder ships first; backoffice reuses it with more fields.
   explicitly. Labels stay free to differ: the UI says *Funding programme*, the id says
   `funding_program`.
 
-`templates/partials/search-field-list.html` follows the public table and
-`templates/partials/search-field-list-backoffice.html` the backoffice table. Fix this contract
-first when they disagree.
+`templates/partials/search-field-list.html` follows these tables. Fix this contract first when
+they disagree.
 
 | Operator | What it means to the user |
 |---|---|
@@ -50,20 +49,15 @@ decides which fields may be public.
 | `funding_program` | Funding programme | `project.euframeworkprogramme` | contains, is, is not, is any of | text |
 | `work_type` | Publication type | `type`; subtype aliases | is, is not, is any of | select |
 | `year` | Publication year | `year`, ranges | is, is not, is any of, is between, is at least, is at most | year input; a pair for between; a comma-separated list for any of |
-| `publication_status` | Publication status | `publication_status`, `publicationstatus` | is, is not, is any of | select: Unpublished, In press, Published |
 | `container` | Published in | `parent`, `publication` | contains, does not contain, is, is not · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series | text |
 | `conference` | Conference | `conference` | contains, does not contain, is, is not | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
 | `language` | Language | `language` | is, is not, is any of | select |
 | `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is, is not, is any of | select: Open access, Restricted, Under embargo, Metadata only |
-| `license` | Licence | — | is, is not, is any of | select: CC0 1.0, CC BY 4.0, CC BY-SA 4.0, CC BY-NC 4.0, CC BY-ND 4.0, CC BY-NC-SA 4.0, CC BY-NC-ND 4.0, In copyright, Rights unknown, Other licence |
 | `file_type` | Attached content | `file.kind` | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
-| `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | select: Author version, Accepted version, Published version, Updated version |
-| `identifier` | Identifier | `doi`, `issn`, `identifier`, `id`, `vabbid` | is any of, is, is not | paste box |
 
 ### Public decisions
 
-- Publication status describes the work, not its deposit. It has no sidebar facet.
 - Person includes role and author position. Organization means the credit recorded on the work,
   based on affiliation at the time rather than a person's current post. It therefore stays stable
   when a person moves or holds several posts. Matching a unit includes its descendants. The legacy
@@ -75,8 +69,6 @@ decides which fields may be public.
   Conference means the event and matches its name, organiser or location.
 - Funding programme reaches a work through its projects.
 - Access says whether it opens. Attached content says which visible file kind exists.
-- Licence uses the record's closed list. *Rights unknown* matches that explicit value, not an unset
-  licence; *Other licence* matches a value outside the named list.
 
 ## Folded into another row
 
@@ -97,6 +89,10 @@ decides which fields may be public.
 |---|---|---|---|---|
 | `visibility` | Record visibility | — | is, is not, is any of | — |
 | `deposit_status` | Deposit status | — | is, is not, is any of | — |
+| `publication_status` | Publication status | `publication_status`, `publicationstatus` | is, is not, is any of | — |
+| `identifier` | Identifier | `doi`, `issn`, `identifier`, `id`, `vabbid` | is any of, is, is not | — |
+| `license` | Licence | — | is, is not, is any of | — |
+| `publication_version` | Full-text version | `file.publicationversion` | is, is not, is any of | — |
 | `ugent_classification` | Classification | `classification` | is, is not, is any of | — |
 | `vabb_evaluation` | VABB evaluation `TBD` | `vabb_approved` | is, is not | — |
 | `vabb_type` | VABB type `TBD` | `vabbtype` | is, is not, is any of | — |
@@ -112,6 +108,11 @@ decides which fields may be public.
 
 ### Backoffice decisions
 
+- Publication status describes the work, not its deposit. It has no sidebar facet.
+- Licence uses the record's closed list. *Rights unknown* matches that explicit value, not an unset
+  licence; *Other licence* matches a value outside the named list.
+- Identifier lookup on the public surface stays in the search box (rule 3); the paste box is
+  backoffice.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year remain
   separate external assertions; their exposure is undecided.
 - Created, changed and defended remain separate dates. Open question 1 covers legacy workflow dates.
