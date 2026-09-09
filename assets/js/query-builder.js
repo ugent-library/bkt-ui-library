@@ -76,13 +76,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function conditionName(row) {
     const field = row.querySelector('[data-qb-change-field]');
+    const name = field ? field.textContent.trim() : 'condition';
+    if (operatorText(row) === 'is between') {
+      const from = row.querySelector('[data-qb-value] input[data-qb-single]');
+      const to = row.querySelector('[data-qb-value] input[data-qb-pair]');
+      const f = from && !from.hidden && from.value.trim();
+      const t = to && !to.hidden && to.value.trim();
+      if (f && !t) return name + ' is ' + f + ' and later';
+      if (t && !f) return name + ' is ' + t + ' and earlier';
+    }
     let value = valueOf(row);
     if (value.length > 60) value = value.slice(0, 57) + '…';
-    return [
-      field ? field.textContent.trim() : 'condition',
-      operatorText(row),
-      value,
-    ].filter(Boolean).join(' ');
+    return [name, operatorText(row), value].filter(Boolean).join(' ');
+  }
+
+  function capOf(row) {
+    return row.closest('[data-surface]')?.dataset.surface === 'backoffice' ? 20 : 5;
+  }
+
+  function capAdd(row) {
+    const cell = row.querySelector('[data-qb-value]');
+    const add = cell && cell.querySelector('[data-qb-picker-slot]')?.closest('.dropdown');
+    if (add) add.hidden = cell.querySelectorAll('[data-qb-token]').length >= capOf(row);
   }
 
   // The row's actions must always name the condition they act on — a screen reader user has to
@@ -242,6 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const or = row.querySelector('[data-qb-or]');
           if (or) or.closest('.dropdown').hidden = true;
           nameRow(row);
+          capAdd(row);
         });
         return;
       }
@@ -254,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const or = item.querySelector('[data-qb-or]');
       if (or) or.closest('.dropdown').hidden = false;
       nameRow(item);
+      capAdd(item);
     });
 
     restoreBlank();
@@ -399,7 +416,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const cell = row.querySelector('[data-qb-value]');
     panel.querySelectorAll('[data-picker-rows] input[type="checkbox"]').forEach(box => {
       const existing = row.querySelector(`[data-qb-token][data-id="${box.dataset.id}"]`);
-      if (box.checked && !existing) cell.insertBefore(token(box), panel.parentElement);
+      if (box.checked && !existing &&
+        cell.querySelectorAll('[data-qb-token]').length < capOf(row)) {
+        cell.insertBefore(token(box), panel.parentElement);
+      }
       if (!box.checked && existing) existing.remove();
     });
   }

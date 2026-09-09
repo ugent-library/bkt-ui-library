@@ -6,16 +6,15 @@ Fields, labels, operators and inputs offered by each surface. Raven owns backend
 
 ## Contract rules
 
-The public builder ships first; backoffice reuses it with more fields.
-
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
 - Several values in one condition match any of them; `is any of` spells it where the operator
   is a choice. An OR group joins separate conditions (phase 2). Two Person rows therefore mean both
   people.
 - A qualifier changes how the same kind of value is read, such as a person's role. Otherwise the
   question gets a separate field entry.
-- List inputs accept pasted batches and report unread values. A condition takes at most five
-  values on the public surface; the backoffice identifier box takes twenty.
+- List inputs accept pasted batches and report unread values, including what the cap drops.
+  A condition takes at most five values on the public surface and twenty on the backoffice;
+  raising the backoffice number is expected, not scheduled.
 - Public URLs expose only public records. Committed examples use fixtures.
 - An id is Raven's filter name, so a shared URL and a Raven query read alike. Where Raven names
   no filter, the id follows Raven's naming grammar. A row that deviates from either says so
@@ -32,7 +31,7 @@ they disagree.
 | `matches` | the words match as the search box matches them; raven owns the matching rule |
 | `is any of` | matches any value in the list pasted or picked |
 | `is at least` / `is at most` | the year named counts as inside the bound |
-| `is between` | both years named count as inside |
+| `is between` | the years named count as inside; an empty end leaves that side open |
 | `is more than` / `is less than` | a quantity, not a point in time — impact factor, not year |
 
 ## Public
@@ -49,7 +48,7 @@ decides which fields may be public.
 | `organization` | Organization | `affiliation`, `external` | is | organization picker; several tokens match any of them |
 | `project` | Project | `project`, `project.id` | is | project picker; several tokens match any of them |
 | `work_type` | Publication type | `type`; subtype aliases | is | token picker over the v1 type list in `docs/work-types/WORK-TYPES.md`; several tokens match any of them |
-| `year` | Publication year | `year`, ranges | is, is between | a year list for is, separated by commas or semicolons; a pair for between |
+| `year` | Publication year | `year`, ranges | is, is between | a year list for is, separated by commas or semicolons; a pair for between, either end may stay empty (from X / up to Y) |
 | `container` | Appeared in | `parent`, `publication` | is · where: in any container / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place `TBD` | text; an identifier also matches (`TBD` schemes — raven names them) |
 | `conference` | Conference | `conference` | is | text |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | text |
@@ -59,13 +58,13 @@ decides which fields may be public.
 
 ### Public decisions
 
-- Person includes role and author position. Organization means the credit recorded on the work,
+- Organization means the credit recorded on the work,
   based on affiliation at the time rather than a person's current post. It therefore stays stable
   when a person moves or holds several posts. Matching a unit includes its descendants. The legacy
   `external` field becomes Ghent University *is*; its negation lost its route when
   Organization narrowed to *is*.
 - The Person id is `TBD`: Raven's live person filter is named `author` and carries no role, so
-  Raven must name the role-aware filter this row needs. `contributor` matches its field name.
+  Raven must name the role-aware filter this row needs.
 - Year bounds are inclusive.
 - Appeared in means the container and may be qualified by kind. Journal abbreviations also match.
   *Publisher place* is provisional: the fuzzy-search downside is unknown.
@@ -129,8 +128,6 @@ decides which fields may be public.
   Clarivate licence and Raven's journal-data ownership.
 
 ## Undecided
-
-On the table, with no surface yet. Each entry names the open question that settles it.
 
 | id | label | state |
 |---|---|---|

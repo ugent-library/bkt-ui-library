@@ -222,11 +222,11 @@ whatever its proposed label reads.
 
 | case | query | observed | subset | scope | note |
 |---|---|---:|---|---|---|
-| C4.01 | `year >= 2015` | 132 | A+B | in scope |  |
+| C4.01 | `year >= 2015` | 132 | A+B | in scope | authorable as an open-ended between |
 | C4.02 | `year >= 2015 AND year <= 2020` | 54 | A+B | in scope |  |
-| C4.03 | `year <= 2020` | 25 | A+B | in scope |  |
-| C4.04 | `year > 2015` | 25 | A+B | in scope |  |
-| C4.05 | `year < 2020` | 17 | A+B | in scope |  |
+| C4.03 | `year <= 2020` | 25 | A+B | in scope | authorable as an open-ended between |
+| C4.04 | `year > 2015` | 25 | A+B | in scope | authorable as an open-ended between; the strict bound authors as the next year |
+| C4.05 | `year < 2020` | 17 | A+B | in scope | authorable as an open-ended between; the strict bound authors as the previous year |
 | C4.06 | `datecreated >= 2024` | 10 | A+B | in scope |  |
 | C4.07 | `datecreated <= 2024` | 9 | A+B | in scope |  |
 
@@ -235,7 +235,7 @@ whatever its proposed label reads.
 | case | query | observed | subset | scope | note |
 |---|---|---:|---|---|---|
 | C5.01 | `id any "ID_1 … _763"` | 1 | A+B | over cap | 763 values / 9,336 chars — the URL ceiling case |
-| C5.02 | `author exact PERSON_1 OR … OR author exact PERSON_85` | 1 | A+B | in scope | longhand chain must collapse into one list row |
+| C5.02 | `author exact PERSON_1 OR … OR author exact PERSON_85` | 1 | A+B | over cap | longhand chain collapses into one list row up to the cap (5 public / 20 backoffice); the translator carries the 85 |
 | C5.03 | `author = PERSON_1 AND year >= 2015 AND classification any "A1" AND external exact 0` | 57 | A+B | in scope | most common multi-condition shape |
 
 ## C6 — machine contract (the head of machine traffic, 99.5% of 72.9M hits) — 24 cases

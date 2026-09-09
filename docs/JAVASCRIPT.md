@@ -144,7 +144,7 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 
 ### `query-builder.js`
 
-- **Purpose:** Runs advanced-search rows, field changes, value shapes, shared picker panels, OR
+- **Purpose:** Runs advanced-search rows, field changes, value shapes, value caps, shared picker panels, OR
   groups, blank-state restoration and accessible action names.
 - **Hosts:** public works. Pattern and openable states: `patterns/query-builder.html`.
 - **Markup contract:** Row, group, chooser, token and picker markup lives in

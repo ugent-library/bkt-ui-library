@@ -257,6 +257,7 @@
           <label class="visually-hidden" for="qb-val-3-to" data-qb-pair>Last year, condition 3</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-val-3-to"
             value="2020" min="1800" max="2100" data-qb-pair>
+          <p class="form-text mb-0" data-qb-pair>Leave one year empty for an open end.</p>
           <label class="visually-hidden" for="qb-val-3-list" data-qb-list hidden>Years, condition 3</label>
           <input type="text" class="form-control form-control-sm" id="qb-val-3-list"
             inputmode="numeric" data-qb-list hidden>
@@ -618,18 +619,33 @@
         <div class="bt-query-builder__row-value" data-qb-value>
           <label class="visually-hidden" for="qb-val-10">Identifiers, condition 10</label>
           <textarea class="form-control form-control-sm font-monospace bt-textarea-auto" id="qb-val-10"
-            rows="3" aria-describedby="qb-val-10-help qb-val-10-recognised qb-val-10-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
-  01K2KG9EFW5T 01KFW5TB8167 01KW5TB8167M 01K9EFW5TB81 01KPQ4D2KG9E 01K30SYZCNAV
-  01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF 01K4D2KG9EFW 01KHPQ4D2KG9
-  10.1038/s41586-024-07123-4 10.1103/PhysRevLett.132.010801 ISBN-onbekend zie-bijlage-3</textarea>
+            rows="3" aria-describedby="qb-val-10-help qb-val-10-recognised qb-val-10-over qb-val-10-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
+  01K2KG9EFW5T 01KFW5TB8167 10.1038/s41586-024-07123-4 10.1103/PhysRevLett.132.010801 01KW5TB8167M 01K9EFW5TB81
+  01KPQ4D2KG9E 01K30SYZCNAV 01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF
+  01K4D2KG9EFW 01KHPQ4D2KG9 01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
+  01KJ30SYZCNA 01KZCNAVRHPQ ISBN-onbekend zie-bijlage-3</textarea>
           <!-- Written out, not computed: the prototype shows what recognition reports, it does
                 not recognise. The counts and the listed lines match the sample above. -->
           <p class="form-text mb-0" id="qb-val-10-help">
             Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.
           </p>
           <p class="form-text mb-0" id="qb-val-10-recognised">
-            <strong>20 identifiers recognised.</strong> 18 Biblio IDs, 2 DOIs.
+            <strong>20 identifiers kept.</strong> 18 Biblio IDs, 2 DOIs.
           </p>
+          <div class="alert alert-warning alert--sm m-0" id="qb-val-10-over">
+            <p class="mb-1">
+              <i class="if if-alert me-1" aria-hidden="true"></i>
+              <strong>6 identifiers are over the limit of 20 and are not being searched.</strong>
+            </p>
+            <ul class="font-monospace">
+              <li>01KYZCNAVRHP</li>
+              <li>01KB8167MXJ3</li>
+              <li>01KRHPQ4D2KG</li>
+              <li>01K5TB8167MX</li>
+              <li>01KJ30SYZCNA</li>
+              <li>01KZCNAVRHPQ</li>
+            </ul>
+          </div>
           <div class="alert alert-warning alert--sm m-0" id="qb-val-10-unrecognised">
             <p class="mb-1">
               <i class="if if-alert me-1" aria-hidden="true"></i>
@@ -1092,6 +1108,7 @@
           <label class="visually-hidden" for="qbg-val-2-to" data-qb-pair hidden>Last year, condition 2</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qbg-val-2-to"
             min="1800" max="2100" data-qb-pair hidden>
+          <p class="form-text mb-0" data-qb-pair hidden>Leave one year empty for an open end.</p>
           <label class="visually-hidden" for="qbg-val-2-list" data-qb-list>Years, condition 2</label>
           <input type="text" class="form-control form-control-sm" id="qbg-val-2-list" value="2020"
             inputmode="numeric" data-qb-list>
@@ -1423,6 +1440,7 @@
           <label class="visually-hidden" for="qb-t-year-val-to" data-qb-pair hidden>Last year</label>
           <input type="number" class="form-control form-control-sm bt-query-builder__year" id="qb-t-year-val-to"
             min="1800" max="2100" data-qb-pair hidden>
+          <p class="form-text mb-0" data-qb-pair hidden>Leave one year empty for an open end.</p>
           <label class="visually-hidden" for="qb-t-year-val-list" data-qb-list hidden>Years</label>
           <input type="text" class="form-control form-control-sm" id="qb-t-year-val-list"
             inputmode="numeric" data-qb-list hidden>
