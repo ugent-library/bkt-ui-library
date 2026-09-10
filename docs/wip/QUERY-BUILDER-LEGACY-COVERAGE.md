@@ -57,13 +57,12 @@ decides.
 | biblio or raven record id, `vabbid` | identifier, recognised by its scheme |
 | `articletype`, `misctype`, `conferencetype`, `dissertationtype` | work-type aliases |
 | `subject` | keyword alias |
-| `project.euframeworkprogramme` | project — the picker shows and matches each project's programme |
 
 ## Dropped
 
 No row offers `volume`, `issue`, `issuetitle`, `articlenumber`, `firstpage`, `lastpage`,
-`alternativetitle`, `editor.affiliation` or `orcid`: none drew a human query or machine hit in
-2026-H1. The translator must still resolve saved queries that contain them. They come back
+`alternativetitle`, `editor.affiliation`, `orcid` or `project.euframeworkprogramme`: none drew
+a human query or machine hit in 2026-H1. The translator must still resolve saved queries that contain them. They come back
 if curators or reviewers turn out to still use them.
 
 ## Translator only

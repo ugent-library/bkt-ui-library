@@ -134,7 +134,8 @@ rested on.
 | `publication_status` | 134 | 1.2K | expose — a fact about the work rather than about the deposit, and the most-authored field the ledger had kept off the public page |
 | `file.publicationversion` | 5 | — | expose — thin evidence, exposed on the same reading as `publication_status` |
 | `soleauthor`, `firstauthor`, `lastauthor` | none in this log | 75 | **expose as roles on the Person row.** The 75 hits are saved URLs someone built before this log began; each also filters a classification code, and the backoffice builder offers both |
-| `file.kind`, `project.euframeworkprogramme` | never | — | expose — a team decision, not a log finding: neither was ever offered, so the log says nothing either way |
+| `file.kind` | never | — | expose — a team decision, not a log finding: it was never offered, so the log says nothing either way |
+| `project.euframeworkprogramme` | never | — | **no condition** (2026-09-10) — shown as project metadata in the picker, never filtered on: raven holds it as free text with no authority, so it cannot be faceted; the 173 log lines naming a framework programme are keyword searches for a topic |
 | `conference` | 4 | — | expose — a poster or a talk has no proceedings volume, so its conference name is the only way to find it |
 | `license` | never | — | expose — biblio and raven both show a licence, and neither lets anyone search one; a developer should say what indexing it takes |
 | `copyrightstatement` | 2 | 2 | undecided — the backoffice renders this sentence from the licence and stores nothing (`frontoffice/record.go`), so a row would filter a rendered value; both queries are licence queries |
