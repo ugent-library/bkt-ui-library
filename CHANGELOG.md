@@ -6,6 +6,19 @@ system, or do I reach for something new?"
 
 ---
 
+## Alternative-title hierarchy on public work details (v2.38, 2026-09-10)
+
+CSS changed — re-copy the compiled assets. Public work-detail pages can render
+stored alternative titles in a single `bt-alt-titles` block between the primary
+title and contributors. Order entries subtitle, translated title, then other
+title; emphasize subtitles with `bt-alt-titles__item--subtitle`; render
+translated and other labels as muted small text. Do not truncate entries, and
+omit the block when there are no alternative titles.
+
+New classes: `bt-alt-titles`, `bt-alt-titles__item`,
+`bt-alt-titles__item--subtitle`. See `docs/CLASS-USAGE.md` for the consumer
+markup contract.
+
 ## One query builder serves both surfaces (v2.37, 2026-09-09)
 
 CSS changed — re-copy the compiled assets. New `bt-query-builder__date` sizes date and
