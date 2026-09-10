@@ -473,19 +473,45 @@ document.addEventListener('DOMContentLoaded', function () {
     return node;
   }
 
-  // Search-within, as the same panels do in the works filter bar
   list.addEventListener('input', event => {
     const search = event.target.closest('[data-picker-search]');
     if (!search) return;
     const needle = search.value.trim().toLowerCase();
     search.closest('[data-qb-picker-slot]')
       .querySelectorAll('[data-picker-rows] .form-check').forEach(option => {
+        const label = option.querySelector('label');
         option.hidden = Boolean(needle) &&
-          !option.querySelector('label').textContent.toLowerCase().includes(needle);
+          !label.textContent.toLowerCase().includes(needle);
+        markMatches(label, option.hidden ? '' : needle);
       });
   });
 
-  // The operator decides the value's shape; docs/JAVASCRIPT.md names the shapes and hooks.
+  function markMatches(label, needle) {
+    label.querySelectorAll('mark').forEach(hit => hit.replaceWith(hit.textContent));
+    label.normalize();
+    if (!needle) return;
+    const walker = document.createTreeWalker(label, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) nodes.push(node);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      const frag = document.createDocumentFragment();
+      let from = 0;
+      let at = text.toLowerCase().indexOf(needle);
+      while (at !== -1) {
+        frag.append(text.slice(from, at));
+        const hit = document.createElement('mark');
+        hit.textContent = text.slice(at, at + needle.length);
+        frag.append(hit);
+        from = at + needle.length;
+        at = text.toLowerCase().indexOf(needle, from);
+      }
+      if (!from) return;
+      frag.append(text.slice(from));
+      node.replaceWith(frag);
+    });
+  }
+
   function syncValueShape(row) {
     const op = row.querySelector('[data-qb-op]');
     const chosen = op.selectedIndex >= 0 && op.options[op.selectedIndex];
