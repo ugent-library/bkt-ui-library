@@ -14,6 +14,8 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 
 **List wrapper** — cards rendered as a list of results belong inside `<ol class="list-unstyled mb-0">` with each card wrapped in `<li>`. A plain `<section>` wrapper is wrong: it is an unlabelled landmark and AT cannot announce a count.
 
+**Alternative titles** — On a public work-detail page, put `bt-alt-titles` between the `h1` and contributors. Render one `bt-alt-titles__item` per stored entry, ordered subtitle → translated → other. Add `bt-alt-titles__item--subtitle` to the subtitle. Put each translated or other label in a plain `small text-muted` span; `bt-alt-titles__label` does not exist. Do not truncate items. Omit the block when the record has no entries. Defined in `patterns/_booktower-components.scss`.
+
 **Facets sidebar** — plain Bootstrap: `fieldset`, `legend`, `form-check*`, spacing utilities, Collapse. The old custom facet classes (`bt-facets`, `bt-facet-name`, `bt-facet-separator`, `bt-results-col`) do not exist. Show-more toggle: put the overflow in `<div class="collapse">` with a `data-bs-toggle="collapse"` button + `if-chevron-down` after it; the button must carry `aria-expanded="false"` when the list starts collapsed (do not rely on `.collapsed`, which Bootstrap only adds after the first click). Documented at `/patterns/facets.html`.
 
 **Sub-sidebar navigation** — `.bt-sidebar a.nav-link` already applies `display:flex`, `align-items:center`, `gap`, and padding. Do not add `d-flex`/`align-items-center`/`gap-*`/`p-*` utilities on nav links inside `bt-sidebar`.

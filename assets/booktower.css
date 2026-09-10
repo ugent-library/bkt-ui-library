@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 23ee631/2026-09-09 */
+/*! Booktower ad4457c/2026-09-09 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -493,7 +493,13 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--s-heading-leading);
   font-weight: var(--s-heading-weight);
   color: var(--s-heading-color);
+  overflow-wrap: break-word;
   text-wrap: balance;
+}
+
+h1 [lang], h2 [lang], h3 [lang], h4 [lang], h5 [lang], h6 [lang] {
+  -webkit-hyphens: auto;
+          hyphens: auto;
 }
 
 h1 {
@@ -1725,6 +1731,31 @@ a.badge:focus-visible {
   display: flex;
   align-items: center;
   gap: 3px;
+}
+
+/* -- bt-alt-titles -- */
+/*
+  Bootstrap's list group gives title variants list-item structure they do not
+  have; typography utilities would repeat this treatment at each call site.
+*/
+.bt-alt-titles {
+  margin-bottom: var(--bt-sp-8);
+}
+
+.bt-alt-titles__item {
+  margin-bottom: var(--bt-sp-4);
+  font-size: var(--bt-text-md);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.bt-alt-titles__item:last-child {
+  margin-bottom: 0;
+}
+
+.bt-alt-titles__item--subtitle {
+  font-size: var(--bt-text-lg);
+  font-weight: 500;
 }
 
 /* -- bt-avatar -- */
