@@ -6,6 +6,29 @@ system, or do I reach for something new?"
 
 ---
 
+## Project picker rows name their values (v2.39, 2026-09-10)
+
+CSS changed — re-copy the compiled assets. A project picker row now labels its acronym,
+project ID, funder and programme, so no value can be mistaken for the project's name.
+*Project ID* is the project's own identifier, as in raven, not a grant's award number.
+Identifiers sit in `code`, as they do on the project pages, and the row search matches
+all of them. Stack one `bt-meta-list` per group; a picker panel
+spaces stacked groups apart and keeps each group's wrapped lines tight, so a project with
+two funders reads as two grants. Picker panel rows drop `bt-meta-list--xs` for the base
+size, which is what makes a labelled value readable; the dense variant stays for the
+people-search overlay. A filter-bar picker keeps the panel's own search placeholder
+rather than one built from the filter's label.
+
+**Every picker panel and checklist editor now marks what a search matched**, in both the
+works filter bar and the query builder — person, organization, project and actor alike.
+Search-within already matched the whole row; the match is now visible in it.
+
+**Funding programme is project metadata, not a field.** The picker shows it on each
+funding entry and the row search matches it; no condition filters on it. Nobody asked for
+one, and raven holds it as free text with no authority behind it. The earlier fold, which
+treated picking projects as a way to filter by programme, is withdrawn; a condition
+arrives only on an explicit ask.
+
 ## Alternative-title hierarchy on public work details (v2.38, 2026-09-10)
 
 CSS changed — re-copy the compiled assets. Public work-detail pages can render
