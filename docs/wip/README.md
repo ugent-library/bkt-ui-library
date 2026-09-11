@@ -80,6 +80,30 @@ Two documents these reference live in `notes/`, which is not in the repository:
 `PLAN-measurement.md` (the house measurement standard, product-owned) and
 `REPORT-search-log-analysis.md` (the base search-log analysis). Ask if you need them.
 
+## Review & curation flow — flow wireframes
+
+The review flow of the next Biblio: analysis, email notifications and
+high-level flow wireframes. The analysis and its actor-level breadboards
+precede the bet and per-screen breadboards by design.
+
+**Stage:** Flow wireframes (pre-bet)
+**Accepted:** [`REVIEW-FLOW-ANALYSIS.md`](REVIEW-FLOW-ANALYSIS.md) is the
+baseline (`✚` marks settled); one full-landscape flow map plus four
+clickable place pages in `flows/review/`; email is opt-in, researchers and
+proxies only, and the recipient decides the cadence
+([`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md)).
+**Blocking:** Acceptance of
+[`REVIEW-FLOW-WIREFRAME-BRIEF.md`](REVIEW-FLOW-WIREFRAME-BRIEF.md).
+**Next:** Build `flows/review/` per the brief.
+
+1. [`REVIEW-FLOW-ANALYSIS.md`](REVIEW-FLOW-ANALYSIS.md) — the baseline:
+   model, rail, actor flow breadboards, Raven dependencies, assumptions and
+   open questions.
+2. [`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md) —
+   cadence, digest shape, the setting.
+3. [`REVIEW-FLOW-WIREFRAME-BRIEF.md`](REVIEW-FLOW-WIREFRAME-BRIEF.md) —
+   the build brief for `flows/review/`.
+
 ## Other active design work
 
 - [`ENTITY-PICKERS.md`](ENTITY-PICKERS.md) — organization and project picker questions.

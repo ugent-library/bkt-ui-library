@@ -32,29 +32,46 @@ not the first task.
 This flow is still experimental in both booktower-ui-library and Raven.
 
 The record shows its **accepted values** — the values the Biblio team stands
-behind, on the public site and in the backoffice. A researcher, proxy or curator
-proposes a new value; that proposal is a **pending request**, and the Biblio team
-accepts it, declines it or asks for clarification. A work can carry multiple
-pending requests at once.
+behind, on the public site and in the backoffice. A **pending request** marks one
+value or section as under discussion. A work can carry multiple pending requests
+at once.
 
-Pending requests do not alter the public surface. Public pages keep showing the last
-accepted value until the Biblio team accepts the request. This is the workflow form of
-`docs/RESPONSIBILITIES.md`: review follows responsibility, not the whole record.
+Two origins create a pending request:
 
-The intended workflow runs in two directions. A reviewer or curator asks a researcher,
-proxy or depositor to complete or clarify a value during review. A researcher, proxy
-or depositor proposes a correction or addition for curator review, on their own or in
-answer to such a request, and can record that they do not know a value. The
+- A curator uses **Request changes**: they name the fields and add one message.
+  The owner gets a view scoped to those fields; deposit status and record
+  visibility stay put.
+- An owner uses **Suggest a change** on a reviewed work. The proposed fields stay
+  separate from the accepted work and public page until the Biblio team accepts or
+  adapts them.
+
+During deposit, **don't know** remains an unresolved answer in the Work's existing
+review flow; it does not create a pending request. On a reviewed Work, it is a
+proposed change and follows **Suggest a change**.
+
+A curator may accept the proposed values, adapt and accept them, decline them with a
+comment, or ask for clarification. Accepting or adapting updates the work; declining
+leaves it unchanged. Asking for clarification keeps the request open.
+
+An owner edits their own draft, submitted or returned work directly. On a reviewed
+work, **Suggest a change** stores the proposed fields in a pending request instead of
+updating the accepted work. The public page keeps showing the accepted values until
+the Biblio team accepts or adapts the request
+(`docs/wip/REVIEW-FLOW-ANALYSIS.md`, §5).
+
+Pending requests do not alter the public surface. This is the workflow form of
+`docs/RESPONSIBILITIES.md`: review follows responsibility, not the whole record. The
 conversation may carry an optional message. A request belongs to a field or section
 (`docs/RESPONSIBILITIES.md`, P7); how Raven models that level is to be decided with
 Raven.
 
 Raven has no pending-request entity yet: its workflow comments are record-level events.
-The prototype designs ahead: backoffice cards show Pending request as a review-state badge
-(see Status → badge mapping). Until Raven models it, no design adds ask-Biblio controls
-to a form. The Candidates flow works without it. "Incomplete" is an interface label, it
-does not mean the record was incomplete on deposit, but something could be filled with
-an incorrect term and thus gets a pending request.
+The prototype designs ahead: backoffice cards show Pending request as a review-state
+badge and reviewed Works offer Suggest a change (see Status → badge mapping).
+Development must confirm how Raven stores and settles the proposed values. The
+Candidates flow works without it. "Incomplete" is an interface label; it does not mean
+the record was incomplete on deposit, but something could be filled with an incorrect
+term and therefore get a pending request.
 
 ### Policy-risk value
 
@@ -62,11 +79,13 @@ A policy-risk value decides whether Biblio can expose a file or object without l
 contractual or institutional risk. Access level, licence, embargo, file version and
 the four doctoral-thesis questions are policy-risk values.
 
-When a depositor cannot answer a policy-risk question, the interface records the
-uncertainty, applies the safest configured access state, and creates a review request.
-The fallback state is still an open Biblio-team decision, informed by Open Science
-Policy. Until it is settled, designs must show explicit unresolved access instead of
-assuming closed, restricted or hidden.
+A depositor can record **don't know** on any value. During deposit, it remains an
+unresolved answer in the Work's review flow. On a reviewed Work, it becomes a pending
+request (see Accepted value and pending request). A policy-risk value adds one effect:
+the file falls back to closed — withheld from every reader — until the answer is
+settled. The closed fallback is the design's pick, still to be confirmed by the
+Biblio team with Open Science Policy. The UI shows the fallback as unresolved, never
+as an access state the depositor chose.
 
 ### Work status — two axes
 
@@ -374,11 +393,12 @@ under "Accepted value and pending request": it runs beside the deposit status an
 never moves it. The "Request changes" action creates one. Raven modelling is
 planned.
 
-A researcher edits their own record in two ways. When in draft, submitted or
-returned: they edit it directly, whatever the record's visibility.
-Once it is reviewed, they suggest a change, which becomes a pending request.
-Raven grants owner edits on drafts and returned records today; whether the owner
-also edits their own submitted record directly is still to clear out in raven.
+A researcher edits their own draft, submitted or returned record directly. On a
+reviewed record, **Suggest a change** stores proposed values separately; the accepted
+record and public page change only when the Biblio team accepts or adapts the request.
+Raven grants owner edits on drafts and returned records today; submitted edits and
+suggested changes to reviewed records are asks on Raven
+(`docs/wip/REVIEW-FLOW-ANALYSIS.md`, §§5 and 7).
 
 Workflow transitions carry an optional free-text comment (raven's event `comment`
 field) — the back-and-forth between submitter and curator rides on the events:

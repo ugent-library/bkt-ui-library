@@ -111,11 +111,10 @@ correctness, classification, or licence rules.
 
 Researchers are accountable for access-risk answers that only they can give,
 including whether a doctoral thesis contains patent-sensitive, privacy-sensitive,
-publication-planning or published-material risks. They should be able to propose
-corrections to researcher-owned values at any time. If a proposed change affects
-public access, licence, embargo, file version or another policy-risk value on an
-accepted public record, the change becomes a review request. Until the Biblio team
-accepts it, the public surface keeps showing the last accepted value.
+publication-planning or published-material risks. They can correct their own draft,
+submitted or returned work directly. On a reviewed work, a correction becomes a
+pending request. Until the Biblio team accepts or adapts it, the accepted record and
+public surface remain unchanged.
 
 ### Machines
 
