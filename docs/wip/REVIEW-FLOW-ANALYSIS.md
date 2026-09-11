@@ -1,16 +1,20 @@
 # Review & curation flow — analysis
 
-Home: `booktower-ui-library/docs/wip/REVIEW-FLOW-ANALYSIS.md`. The flow is
-prototyped in booktower and implemented in raven after; raven gets a pointer
-when the design is ready to cross over. Not a breadboard in the house sense
-(`docs/BREADBOARD-TEMPLATE.md`); this analysis feeds a review-flow bet and
-per-screen breadboards.
+Home: `booktower-ui-library/docs/wip/REVIEW-FLOW-ANALYSIS.md`. Booktower
+prototypes the flow; raven implements it after. Raven gets a pointer when the
+design is ready to cross over. This analysis feeds high-level flow
+wireframes (who does what — every assumption visualised for discussion), a
+review-flow bet, and per-screen breadboards; it is not itself a breadboard
+in the house sense (`docs/BREADBOARD-TEMPLATE.md`).
 
 **Sources** (git dates this file):
 
 - raven `main`: `deposit_status.go`, `revisions.go`, `grant.go`,
   `app/backoffice.go`, `docs/architecture-overview.md`,
   `docs/metadata-work-fields.md`.
+- old biblio (`biblio-backoffice` main): `views/*/edit_message.templ`,
+  `views/dataset/message_body.templ`,
+  `cypress/e2e/*/edit/biblio-messages.cy.ts`.
 - Design documents: the merged deletion plan
   (`raven/docs/plans/2026-08-26-record-deletion-design.md`; only `Delete` is
   implemented), booktower's `DOMAIN-VOCABULARY.md` and the candidates bet.
@@ -20,24 +24,24 @@ checkouts as surveyed:
 
 | Mark | Source of the claim |
 |------|---------------------|
-| `●` | Observed in raven `main` |
+| `●` | Observed in a surveyed checkout: raven `main`, or old biblio where said |
 | `◐` | Written in a design document (deletion plan, domain vocabulary, candidates bet) |
 | `○` | No source — the design must close it |
 | `✚` | Decision of this analysis |
 
-The design is built from this analysis; the design — not the analysis — goes
-to raven. Marks freeze here as the baseline the design is checked against.
+We build the design from this analysis; the design — not the analysis — goes
+to raven. The marks freeze here as the baseline for checking the design.
 
 ---
 
 ## 1. Mental model: one rail, one axis, one layer — and the side quests
 
-The **deposit rail** (the only state machine) crossed with **record
-visibility** (private or public, §6), the **communication layer** riding both,
-and the **side quests** around them. All are independent facts about one work
-— none implies another; a combination is legal unless a named gate refuses it
-(the draft-is-private CHECK; the duplicate-cluster gates on Review and on
-going public).
+The model crosses the **deposit rail** (the only state machine) with **record
+visibility** (private or public, §6); the **communication layer** rides both,
+and the **side quests** sit around them. All are independent facts about one
+work — none implies another, and any combination is legal unless a named gate
+refuses it (the draft-is-private CHECK; the duplicate-cluster gates on Review
+and on going public).
 
 ```
                             RECORD VISIBILITY
@@ -46,8 +50,8 @@ going public).
  │ draft     │ always — DB CHECK ●       │ impossible ●                │
  ├───────────┼───────────────────────────┼─────────────────────────────┤
  │ submitted │ the opt-out:              │ THE DEFAULT — submit        │
- │           │ "Submit privately" ◐      │ publishes unless opted      │
- │           │                           │ out (UGent policy) ◐        │
+ │           │ "Submit privately" ◐✚     │ publishes unless opted      │
+ │           │                           │ out (UGent policy) ◐✚       │
  ├───────────┼───────────────────────────┼─────────────────────────────┤
  │ returned  │ always — Return           │ does not exist: Return      │
  │           │ unpublishes ◐✚            │ composes                    │
@@ -67,20 +71,13 @@ The engine keeps rail and visibility independent; UGent deposit policy (the
 
 The communication layer (definitions in §5):
 
-```
- blocking ask       ● Return + comment (required): yanks the record back
-                      to the owner and makes it private again ◐✚
- non-blocking ask   ✚ Request changes: curator names fields + message;
-                      the owner gets a scoped view; state and visibility
-                      stay put — works on submitted AND reviewed records
- the owner's ask    ✚ the owner edits directly — no gates before review,
-                      re-review after (no-locking decision, §5); ◐ change
-                      request remains for works the owner cannot edit
- messages           every message rides an action ◐; migrated old-biblio
-                      messages arrive action-less, so standing storage is
-                      needed ✚; whether NEW action-free messages may be
-                      written is open ○
-```
+| Channel | Who acts | What happens |
+|---|---|---|
+| Return | curator | Blocking. The comment is required `●`; the record goes back to the owner and turns private again `◐✚`. |
+| Request changes | curator | Non-blocking `✚`. The curator names fields and adds one message; the owner gets a view scoped to those fields; deposit status and visibility stay put. Works on submitted and reviewed records. |
+| Direct edit | the owner — the researcher the work belongs to, or a proxy acting for them | Never an ask `✚`. The owner edits in every state; an edit after approval enters the re-review queue (no-locking decision, §5). |
+| Suggest a change | a researcher or proxy without edit rights on that work or field | Becomes a pending request `◐`; a curator accepts it, declines it or asks for clarification. Raven model open `○`. |
+| Messages | any actor | Every message rides an action `◐`. Migrated old-biblio messages arrive action-less, so standing storage is needed `✚`; whether new action-free messages may be written is open `○`. |
 
 The side quests — not review states; each holds one fact the biblio-team
 discussion cannot lose (details in §6):
@@ -106,32 +103,32 @@ discussion cannot lose (details in §6):
                   public-or-not. Decision: the record axis is
                   private/public; restricted stays a file value (§6).
  CLASSIFICATION ● fields, not a state — but curator territory: protected
-                  schemes are curator-only (read-only for owners,
-                  re-asserted server-side); the shared form carries
-                  per-field permissions, and classifying is part of what
-                  curation does during review.
- FILE ACCESS ●    out of the review model; enters only as the source of
-                  the derived access state (§6) and through the
-                  policy-risk rule (§5).
+                  schemes belong to curators; owners see them read-only
+                  and the server re-asserts their current values on every
+                  save. The shared form carries per-field permissions,
+                  and curation classifies during review.
+ FILE ACCESS ●    stays out of the review model; it enters only as the
+                  source of the derived access state (§6) and through
+                  the policy-risk rule (§5).
 ```
 
 Naming: file access level, derived access state and record visibility all
 spell values from one `Visibility` enum, and the metadata docs call record
 visibility "Access". Every screen must say which level it shows — *visibility*
 for the record, *access level* for the file, *access state* for the derived
-answer. Filed as a raven issue.
+answer. We filed the naming bug as a raven issue.
 
 ### Compound actions: one gesture, several axes
 
-The UI composes two engine commands in one transaction; the model never gains
-a combined state.
+The UI composes two engine commands in one transaction; the model keeps one
+state per axis.
 
 ```
   USER INTENT                        =  AXIS MOVES (one transaction)
   ─────────────────────────────────────────────────────────────────────
 ● "approve and make public"          =  Review + SetVisibility(public)
                                         (built — the precedent)
-◐ "Submit publicly (default) /       =  Submit + SetVisibility
+◐✚ "Submit publicly (default) /      =  Submit + SetVisibility
    Submit privately"                    (decided in the vocabulary and
                                          candidates bet; raven mechanism
                                          open — visibility can only move
@@ -176,13 +173,16 @@ review rounds and Submit / Skip / Reject-my-match (§5). "Added for you"
 covers direct additions (Plato, curator-added). Phase 1A surfaces direct
 additions; 1B needs a first candidate feed.
 
+Provenance stays visible wherever a work appears `✚`: harvested (and from
+which source `●`) or deposited (and by whom).
+
 ---
 
 ## 3. The deposit rail (the state machine)
 
 Every transition into a non-draft state runs full completeness validation and
-carries a revision match — a concurrent edit surfaces as a conflict, nothing
-is silently overwritten.
+carries a revision match — a concurrent edit surfaces as a conflict instead
+of a silent overwrite.
 
 ```
                         Submit ●
@@ -211,10 +211,18 @@ is silently overwritten.
 Three paths beside the happy one:
 
 ```
-CURATOR SHORTCUT ●          A curator may Review a work straight from DRAFT —
-                            no Submit step. Built for harvested system-owned
-draft ──── Review ──────>   drafts; the researcher is never involved.
-                 reviewed
+CURATOR COMPLETION ●✚       Main lets a curator review a draft directly,
+                            skipping Submit — harvest needs this because
+                            harvested works land as system-owned drafts.
+draft ──── Review ──────>   Kept, reframed ✚: when a curator completes a
+                 reviewed   work, that completion IS the review — the work
+                            lands as reviewed in one act. What this design
+                            drops is the expectation: reviewers are not
+                            responsible for drafts and there is no draft
+                            queue; harvested work reaches people through
+                            the candidate flow (§2). Curators still see
+                            drafts for checks (main hides a researcher's
+                            draft from curators ●, reversed here, §4).
 
 SAVE + TRANSITION ●         The edit form posts ONE action (save / submit /
                             return / review): field changes, file changes and
@@ -222,12 +230,14 @@ one form post =             the transition commit or roll back together. On
 one transaction             validation failure the form re-renders with the
                             user's edits and staged uploads intact.
 
-REQUEST LOOP ✚              A curator asks for changes WITHOUT moving the
-                            record: request names fields + message → owner
-submitted ──┐               gets a view focused on those fields (full form
-reviewed  ──┤ no state      one click away) → reviewer settles the delta:
-            │ change        accept / adapt / reject, and closes the request.
-            └─> owner edits   The non-blocking sibling of Return (§5).
+REQUEST LOOP ✚              A curator asks for changes without changing the
+                            record status. The curator picks the fields that
+submitted ──┐               need work and adds one message. The owner opens
+reviewed  ──┤ no state      a view showing exactly those fields (full form
+            │ change        one click away) and edits. The reviewer then
+            └─> owner edits   judges what changed in those fields — accept /
+                              adapt / reject — and closes the request. The
+                              non-blocking sibling of Return (§5).
 ```
 
 Audit: every transition writes an event with actor and optional comment —
@@ -244,19 +254,25 @@ each round (§7).
 PLACE: QUEUES
 ─────────────
 ● backoffice search, filterable on deposit_status
+✚ curators see every work, drafts included — checks without
+    responsibility: no draft queue, no draft expectation. Drafts stay OUT
+    of curator search and lists; a curator reaches one directly (link,
+    id, the researcher's page) when doing a check
 ✚ dedicated queues, one command per button:
     Submitted        [Approve] [Return + comment] [Request changes]
     Re-review        works edited after approval — [Approve] (sees diff)
     Candidates ◐     [Adopt into researcher's works] — feed-dependent
     Duplicates       [Consolidate] (opens survivor prefilled)
-    Requests         open requests and their deltas — accept/adapt/reject
+    Requests         open pending requests, whatever their origin:
+                     curator asks (settle the delta), researcher
+                     suggestions, deposit-time don't-knows
 ✚ bulk: same command per selected row, one transaction each — one refusal
     leaves the others done (partial-success UI needed, §9)
 
 PLACE: WORK SHOW / REVIEW PANEL
 ───────────────────────────────
 ● metadata display                        ● internal notes (curator-only)
-● workflow buttons rendered exactly       ● files with access level + embargo
+● workflow buttons appear exactly         ● files with access level + embargo
   when the handler would accept them      ● [Change subtype] (with preview)
 ● [Return + comment] [Review]             ● [Reject source]
 ● [Set visibility] (blocked → public      ● [Merge] — see tombstones, §6
@@ -264,6 +280,9 @@ PLACE: WORK SHOW / REVIEW PANEL
 ● [Delete]                                  + message; [Close request]
 ✚ rounds history: one comment per         ✚ delta view: what changed since
   transition, both directions               the return / the approval
+✚ migrated old-biblio message             ✚ the owner sees it too — old
+  (one text per work): read-only            biblio showed it to both sides
+  here                                      and let both write it (§5)
 ```
 
 ## 5. Places — researcher / proxy side
@@ -273,11 +292,12 @@ PLACE: MY WORKS / DASHBOARD
 ───────────────────────────
 ● list of own works with status        ○ no "action needed" inbox — returns
 ● proxy sees the proxied user's works    and requests announce themselves
-  (grants re-target "own"; role          only when the work is opened
-  never elevates)                      ◐ "Found for you": candidate rounds —
-◐ "Added for you": Plato imports and     Review / Submit publicly (default) /
-  curator-added works; "Not yours?"      Submit privately / Save draft /
-  opens a helpdesk mail                  Skip / Reject-my-match
+  (grants re-target "own"; role          only when the researcher opens
+  never elevates)                        the work
+◐ "Added for you": Plato imports and   ◐ "Found for you": candidate rounds —
+  curator-added works; "Not yours?"      Review / Submit publicly (default) /
+  opens a helpdesk mail                  Submit privately / Save draft /
+                                         Skip / Reject-my-match
 
 PLACE: WORK FORM
 ────────────────
@@ -285,27 +305,35 @@ PLACE: WORK FORM
   per-file access level + embargo        render read-only
 ● [Save] [Submit for review]           ● returned: curator's comment in a
 ● [Delete] (draft only)                  banner; [Submit] re-validates
-◐ policy-risk rule: an unanswerable access/licence/embargo question records
-  the uncertainty, applies the safest configured state, and CREATES A REVIEW
-  REQUEST — a second deposit→review entrance beside Submit (fallback state:
-  open Open Science Policy decision)
+◐ don't-know path, on any value: the depositor records that they do not
+  know it; the record keeps moving and the don't-know becomes a pending
+  request. A policy-risk value — access level, licence, embargo, file
+  version, the doctoral-thesis questions — adds one effect: the safest
+  configured state applies while the request is open. Which state is
+  safest is an undecided Open Science Policy question
+✚ a don't-know submit follows the submit default: the record goes public
+  unless the depositor chose "Submit privately". On a policy-risk value
+  the file carries the risk in its safest state (e.g. closed) until a
+  curator settles the pending request
 
 PLACE: SUBMITTED / REVIEWED WORK
 ────────────────────────────────
 ● read-only for the owner in main — the de facto lock the no-locking
   decision removes
-✚ the owner edits freely: no gates before review; after review the edit
-  enters the re-review queue
+✚ the owner edits freely: no gates before review; an unprompted edit
+  after review enters the re-review queue
 ✚ incoming Request changes: a view focused on the requested fields, the
   full form one click away
-◐ change request ("a requested change", vocabulary) for works the owner
-  cannot edit — shape and outcome notification open ○
+◐ Suggest a change, for fields and works the actor cannot edit —
+  protected classifications included ✚; it becomes a pending request
+✚ migrated old-biblio message, when one exists: read-only (Migration,
+  below)
 ```
 
 ### The communication layer
 
 **Decision: no locking.** The old backoffice let reviewers lock and unlock a
-record; locking is removed — a researcher can always fix their work:
+record. We removed locking: a researcher can always fix their work.
 
 ```
  not yet reviewed     the owner edits freely — no gates. Review approves
@@ -321,48 +349,95 @@ record; locking is removed — a researcher can always fix their work:
                         those fields, full form one click away. The
                         reviewer settles the delta: accept (re-approve),
                         adapt (edit, then approve), or reject (restore the
-                        changed fields to their approved values — a comment
-                        is encouraged; require vs encourage is under
-                        discussion, §8).
+                        changed fields to their approved values — a
+                        comment is encouraged; the team still discusses
+                        require vs encourage, §8).
+                      an edit while a request is open rides that request:
+                      the reviewer settles it there, and the work stays
+                      out of the re-review queue ✚
 ```
+
+**Naming `◐`.** The vocabulary already owns this language ("Accepted value
+and pending request"): one entity, the **pending request** — field-scoped,
+several per work, badge-mapped. Three origins create one: a curator
+*requests* changes (Request changes), a researcher or proxy *suggests* a
+change, a depositor records a *don't-know* at deposit. Two settlements:
+the curator answers a proposed value (accept / decline / ask
+clarification `◐`); the reviewer judges the owner's edits after a request
+(accept / adapt / reject `✚`, §8).
 
 Consequences. The request is focus and tracking, not permission — the raven
 ask is two grant rows, `edit_submitted:own` and `edit_reviewed:own`
 (curator-only in `main` `●`). Return remains the blocking queue signal.
-Reject needs field history from the engine (§7). The change request shrinks
-to works the owner cannot edit. Mid-review edits make the conflict screen a
+Reject needs field history from the engine (§7). The suggestion covers
+works and fields the owner cannot edit. Mid-review edits make the conflict
+screen a
 daily path, not an edge case. And — known and accepted — with the publish
 default, an unreviewed public record can change live before a curator sees
 it.
 
 **Messages ride actions** `◐`: there is no standing message and no thread;
-the internal note is the only standing text, and it is curator-only. A message
-is never required of the researcher — an edit, a resubmit or a response to a
+the internal note is the only standing text, and it is curator-only. The
+researcher never owes a message — an edit, a resubmit or a response to a
 request may carry one, optionally `✚`. Reviewer comments on Return and
 reject: `main` requires one on Return `●`; this design prefers encouraging
-over blocking `✚` — a reviewer should never be stopped by an empty comment
-box. Expected to draw push-back; logged as a discussion, not a decision (§8).
-So a missing conversation is a missing *action*:
+over blocking `✚` — an empty comment box should never stop a reviewer. We
+expect push-back and log it as a discussion, not a decision (§8). So a
+missing conversation is a missing *action*:
 
 | Ask | Carrier |
 |---|---|
 | Curator → researcher, non-blocking | `✚` Request changes (above) |
 | Curator → researcher, blocking | `●` Return + required comment |
 | Researcher → curator, on own work | `✚` edit directly (no locking) |
-| Researcher → curator, on works they cannot edit | `◐` change request — shape open `○` |
-| Researcher → curator, free message | `○` none; today's escape is a helpdesk mail |
+| Researcher → curator, on works or fields they cannot edit | `◐` Suggest a change → pending request (raven model open `○`) |
+| Researcher → curator, free message | `○` none; old biblio's `Message` was this channel — dropping it is a removal; today's escape is a helpdesk mail |
 | "That harvested work is mine" | `○` no claim flow; nearest: person-link auto-match `●` |
 | "Withdraw my work" | `○` in-app; withdrawal = curator Delete with reason `◐` |
 | External takedown demand | `◐` Delete with reason `takedown` |
 | Curator ↔ curator | `●` internal notes |
 
-**Migration.** Old biblio carries standing messages attached to no action.
-`Message` is currently *not imported* (`metadata-work-fields.md`, "What's out
-of scope") — the text dies at migration; `ReviewerNote` survives into
-curator-only notes; `AdditionalInfo` survives as work metadata. Decision `✚`:
-standing storage for migrated messages must exist, so the catalog's silent
-drop of `Message` needs reversing or an explicit re-decision. Whether *new*
-action-free messages can be written on top of that storage is open `○`.
+**Migration.** Old biblio's `Message` is one overwritable free-text field
+per work — the "Biblio Messages" tab, card "Messages from and for Biblio
+team" — written and read by researchers and the biblio team alike, no
+thread, no history: a save replaces the text `●`. The migration field
+catalog drops it and glosses it "depositor's submission message"
+(`metadata-work-fields.md`, "What's out of scope") — narrower than the
+code — so the text dies at migration. `ReviewerNote` survives into
+curator-only notes; `AdditionalInfo` survives as work metadata `●`.
+Decision `✚`: storage for the migrated text must exist — the catalog must
+reverse the drop, or the team must re-decide it explicitly. It surfaces
+read-only on the work show / review panel (§4) and to the owner on their
+work — owners may have authored it. Whether people may write *new*
+action-free messages stays open `○`. Dropping the channel is a removal,
+not a neutral gap — old biblio's Message WAS the researcher's free line
+to the team.
+
+### Email notifications
+
+**Decision `✚`: email is opt-in.** A per-user setting turns email updates
+on. The setting exists for researchers and proxies; curators and reviewers
+work without email. Mail goes out when *someone else* acts on a work in
+the recipient's "my works" scope; the recipient's own actions stay silent.
+Each mail links to the work, or to the scoped view when a request carries
+it.
+
+| Event that mails (setting on) | Trigger | The mail carries |
+|---|---|---|
+| Work returned | curator Return | the curator's comment + link |
+| Changes requested | curator opens a request | named fields, message, link to the scoped view |
+| Suggestion settled `✚` | curator accepts or declines | the outcome + comment |
+| Request settled against you | reviewer rejects or adapts | which fields changed or were restored, comment |
+| Work approved | Review or re-approval | link; states the public/private outcome |
+| Work deleted or merged | curator Delete/Merge past draft | reason label; redirect or tombstone target |
+| Found for you `◐` | new candidates matched | a digest; cadence open `○` |
+| Added for you `◐` | Plato or curator adds a work | link + the "Not yours?" path |
+
+Scope answers §9 gap 10 for email `✚`: every opted-in person whose "my
+works" covers the work (owner and active proxies) gets the mail; a settled
+suggestion also mails its suggester, whose "my works" need not cover the
+work `✚`. In-app routing stays open. Cadence, digest shape and the setting itself:
+[`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md).
 
 ---
 
@@ -370,11 +445,11 @@ action-free messages can be written on top of that storage is open `○`.
 
 ### Record visibility
 
-**Decision: two-valued — private / public.** No read surface ever
-distinguished `restricted` (every check is `== public`), the badge already
-collapsed it, and its one documented use — the embargoed external deposit —
-is written but never read. Restricted stays a file value. Consequences: the
-embargoed external deposit needs its own carrier (the vocabulary lists
+**Decision: two-valued — private / public.** Every read surface checks
+`== public`; `restricted` never had a reader. The badge already collapsed
+it, and its one documented use — the embargoed external deposit — raven
+writes and nothing reads. Restricted stays a file value. Consequences:
+the embargoed external deposit needs its own carrier (the vocabulary lists
 external access + embargo as a mapping still to land), and dropping the value
 is engine work, tracked with the naming issue. Reopening `restricted` needs
 what it never had: a reader.
@@ -385,8 +460,11 @@ what it never had: a reader.
  ● first arrival at public stamps made_public_at — the point of no return
    for deletion semantics (below)
  ● gates on the way to public: draft (CHECK) and an open duplicate cluster
- ◐ policy: submit publishes by default; review is not a precondition for
-   public
+ ◐✚ an open pending request leaves the way to public open ("pending
+    requests do not alter the public surface"); on a policy-risk value
+    the file's safest state carries the risk
+ ◐✚ policy: submit publishes by default; review is not a precondition
+    for public
 ```
 
 ### Deletion & tombstones
@@ -405,15 +483,15 @@ what it never had: a reader.
                     permalink 302s ●; redirects stay one hop
 ```
 
-Deletion is its own axis: restore brings back the exact prior state; reasons
-(withdrawn / takedown) are labels driving tombstone wording and audit,
+Deletion is its own axis: Restore brings back the exact prior state; reasons
+(withdrawn / takedown) are labels that drive tombstone wording and audit,
 nothing else; raven deletes content, never identity `◐`. Duplicates are a
 Merge, never a Delete — see the side quests panel.
 
 ### Retraction
 
-Not a state anywhere. A retracted work stays active and public; a metadata
-field drives the banner and the link to the retraction notice `◐`. Whether
+A retracted work stays active and public: a metadata field, not a state,
+drives the banner and the link to the retraction notice `◐`. Whether
 the file stays open is a per-case call on the file axis.
 
 ### File access level (pointer only)
@@ -424,36 +502,36 @@ touch file access; lifting an embargo never signals "changed since approval"
 
 ### Derived access state (computed, not stored)
 
-The record's outward "open access" answer. No field, no editor — it follows
-from the files: public full-text file or external full-text link → open;
+The record's outward "open access" answer. It follows from the files alone,
+with no field and no editor: public full-text file or external full-text
+link → open;
 scheduled public lift → embargo; restricted full text → restricted; else
 none (`Work.Access()` `●`). It feeds the `open_access` trait and the COAR
 access right in the OpenAIRE format, where a second derivation with diverging
 rules lives `●`. Cards' "Open access / Restricted" is this level, never
-record visibility. One derivation should survive; filed with the naming
-issue.
+record visibility. One derivation should survive; the naming issue tracks it.
 
 ---
 
 ## 7. Asks from raven
 
-What this design needs from the engine, stated as needs — how each is met is
-raven's call.
+What this design needs from the engine, stated as needs — raven decides how
+to meet each one.
 
 | Need | raven `main` today |
 |---|---|
 | Owners edit their own work in every state (`edit_submitted:own`, `edit_reviewed:own`) | curator-only past draft and returned |
+| Curators open any draft directly (checks); drafts stay out of curator search and lists | a real user's draft is hidden from other curators entirely |
 | An approved-version snapshot, and reading the fields as they stood at it | absent — the projection is current-only |
 | Re-approval after edits | `reviewed` is terminal |
 | A "changed since approval" read for the re-review queue | absent |
-| A request entity: named fields, a message, open/closed, closed by the reviewer | absent |
+| The pending-request entity (vocabulary): field-scoped, several per work, an origin (curator ask, researcher suggestion, deposit don't-know), a message, open/closed, settled-by | absent — workflow comments are record-level events |
 | Reject: restore the changed fields to their approved values, with a comment | impossible — no field history |
-| Standing storage for messages (migrated `Message` texts arrive attached to no action) | `Message` is dropped by the migration field catalog |
-| Notifications to users on transitions and requests | job-outcome tray only |
+| Storage for the migrated `Message` text (one per work), readable by curator and owner | the migration field catalog drops `Message`, glossing it as one-directional |
+| Per-user email opt-in; mail to researchers and proxies on the §5 email events; in-app notifications undesigned (§9) | job-outcome tray only |
 | Submit-publishes compound and an owner-side publish grant | no visibility capability exists in the grant matrix |
 | A carrier for the embargoed external deposit | record-level `restricted`: written, never read |
 | Per-researcher candidate status (New / Skipped / Added / Rejected) | absent |
-| Change request on works the owner cannot edit | absent |
 | Curator queues as first-class reads | search filter on deposit_status only |
 
 ## 8. Shaky grounds
@@ -464,20 +542,22 @@ Claims this design builds on that no accepted document backs.
 |---|---|---|
 | The re-review stack (approved snapshot, re-approval, changed-since-approval) | no accepted design provides it; `main` cannot reconstruct approved fields | raven team — commit to a mechanism |
 | Submit publishes by default; Return unpublishes | lives only in booktower's domain vocabulary | biblio team + Open Science Policy |
-| Policy-risk fallback state | explicitly open in the vocabulary | Open Science Policy |
+| Policy-risk fallback state | explicitly undecided in the vocabulary | Open Science Policy |
 | Candidate feed | none exists (WoS is a manual upload; no Crossref/ORCID feed) — phase 1B is blocked on it | raven roadmap |
 | Reject = per-field restore to approved values | this analysis's interpretation of "reject, adapt, accept" | the team |
-| Reviewer comments: encourage, not require | `main` requires one on Return; this design would drop the hard requirement so a reviewer is never blocked by an empty comment box — expected to draw push-back | team discussion |
-| Old biblio `Message` direction | the migration doc says depositor→curator; the vocabulary says curator→researcher — the sources disagree | team memory, or old biblio's data |
+| Reviewer comments: encourage, not require | `main` requires one on Return; this design would drop the hard requirement so an empty comment box never blocks a reviewer — we expect push-back | team discussion |
+| No locking: the owner edits a reviewed work directly; the suggestion stays for what they cannot edit | the vocabulary now carries this path (re-synced ahead of crossover), but only booktower documents back it — biblio-team acceptance is pending | biblio team |
 | Review is centrally organized | never asked out loud; the grant matrix has no org scoping, so faculty-scoped review is impossible today | biblio team |
 | Volumes (queue sizes, rounds per work, curator count) | assumed, never measured | one query on old biblio's database |
 
 ## 9. Gaps — no design yet (`○`)
 
-1. **Notifications.** Who hears what, on which channel — returns, requests,
-   outcomes. Only a job-outcome tray exists.
+1. **Notifications, in-app.** Email is decided (§5): opt-in, researchers
+   and proxies only. Who hears what inside the app (returns, requests,
+   outcomes) is still open; only a job-outcome tray exists.
 2. **"Action needed" surface.** Returns and requests announce themselves only
-   when the work is opened; the request loop is this surface's first tenant.
+   when the researcher opens the work; the request loop is this surface's
+   first tenant.
 3. **Claim flow.** "That harvested work is mine" has no path.
 4. **Self-service withdrawal.** Deleting past draft is a curator act; the
    researcher-side ask is undesigned.
@@ -492,5 +572,6 @@ Claims this design builds on that no accepted document backs.
 9. **Reviewer coordination.** No assignment, claiming, or "being reviewed by"
    signal anywhere; two curators on one submission meet only the late
    conflict.
-10. **Proxy message routing.** Proxy deposited: who receives the return, the
+10. **Proxy message routing, in-app.** Email is answered in §5 (everyone in
+    scope who opted in). In-app: proxy deposited, who sees the return, the
     request, the outcome — researcher, proxy, or both.
