@@ -6,6 +6,9 @@
     <p class="ds-eyebrow">Flow overview</p>
     <h1 class="display-2">Review and curation</h1>
     <p class="lead">Open any card to use that exact screen. The three actor lanes show what each person sees; the last lane shows what changes outside their app.</p>
+    <p class="small text-muted">Each action button opens the state that action leads to.</p>
+    <!-- Prototype note: border-danger marks the cards added in this review round. Remove the markers once they are accepted. -->
+    <p class="small text-muted">A red border marks a card added in this round.</p>
     <div class="d-flex flex-wrap gap-2 mt-3">
       <a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-primary">Start as researcher</a>
       <a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-outline-primary">Start as proxy</a>
@@ -27,6 +30,7 @@
             <p class="small mb-0">Needs your action and Recent activity.</p>
           </div></article>
 
+
           <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
             Inbox: needs your action.
             <br>
@@ -36,13 +40,14 @@
           <article class="card mb-2" aria-labelledby="map-researcher-return"><div class="card-body p-3">
             <h4 id="map-researcher-return" class="h6"><a href="/templates/review-flow/researcher.html?state=returned">Returned Work</a></h4>
             <p class="small mb-2">Curator message, Returned status, private visibility.</p>
-            <a href="/templates/review-flow/researcher.html?state=revise" class="btn btn-outline-primary btn-sm">Edit and submit again</a>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/researcher.html?state=revise" class="btn btn-primary btn-sm">Edit Work</a><a href="/templates/review-flow/researcher.html?state=submitted" class="btn btn-outline-primary btn-sm">Submit again</a></div>
+            <p class="small text-muted mt-2 mb-0">Submitting again returns the Work to the shared review queue.</p>
           </div></article>
 
           <article class="card mb-2" aria-labelledby="map-researcher-request"><div class="card-body p-3">
             <h4 id="map-researcher-request" class="h6"><a href="/templates/review-flow/researcher.html?state=request">Requested changes</a></h4>
             <p class="small mb-2">Only named fields first; full form remains available.</p>
-            <a href="/templates/review-flow/researcher.html?state=request-sent" class="btn btn-outline-primary btn-sm">See sent response</a>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/researcher.html?state=request-sent" class="btn btn-primary btn-sm">Send changes</a><a href="/templates/review-flow/researcher.html?state=edit" class="btn btn-ghost btn-sm">Open full form</a></div>
           </div></article>
 
           <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
@@ -54,18 +59,57 @@
           <article class="card mb-2" aria-labelledby="map-researcher-suggest"><div class="card-body p-3">
             <h4 id="map-researcher-suggest" class="h6"><a href="/templates/review-flow/researcher.html?state=reviewed">Reviewed Work</a></h4>
             <p class="small mb-2">Suggest a change; do not edit accepted values directly.</p>
-            <a href="/templates/review-flow/researcher.html?state=suggestion" class="btn btn-outline-primary btn-sm">Open suggestion</a>
+            <a href="/templates/review-flow/researcher.html?state=suggestion" class="btn btn-primary btn-sm">Suggest a change</a>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-researcher-suggestion-sent"><div class="card-body p-3">
+            <h4 id="map-researcher-suggestion-sent" class="h6"><a href="/templates/review-flow/researcher.html?state=suggestion-sent">Suggestion sent</a></h4>
+            <p class="small mb-2">The accepted value stays public until a curator settles it.</p>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-primary btn-sm">Back to Inbox</a><a href="/templates/review-flow/curator.html?state=settle" class="btn btn-outline-primary btn-sm">Open curator request</a></div>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-researcher-activity"><div class="card-body p-3">
+            <h4 id="map-researcher-activity" class="h6"><a href="/templates/review-flow/researcher.html?state=activity">Recent activity</a></h4>
+            <p class="small mb-2">Settled outcomes, including suggestions this person sent.</p>
+            <a href="/templates/review-flow/researcher.html?state=reviewed" class="btn btn-primary btn-sm">View Work</a>
           </div></article>
 
           <hr>
 
           <p class="small text-center mb-2">New work</p>
 
-          <article class="card" aria-labelledby="map-researcher-new"><div class="card-body p-3">
+          <article class="card mb-2" aria-labelledby="map-researcher-new"><div class="card-body p-3">
             <p class="small mb-1">Another entry</p>
             <h4 id="map-researcher-new" class="h6"><a href="/templates/review-flow/researcher.html?state=new">New Work</a></h4>
             <p class="small mb-2">Create a private draft, edit, then submit.</p>
-            <a href="/templates/review-flow/researcher.html?state=edit" class="btn btn-outline-primary btn-sm">Open Work form</a>
+            <a href="/templates/review-flow/researcher.html?state=edit" class="btn btn-primary btn-sm">Add file / DOI</a>
+            <!-- deliberately not "continue", leave it -->
+          </div></article>
+
+          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
+            <b>Edit and submit</b>
+          </p>
+
+          <article class="card mb-2" aria-labelledby="map-researcher-form"><div class="card-body p-3">
+            <h4 id="map-researcher-form" class="h6"><a href="/templates/review-flow/researcher.html?state=edit">Work form</a></h4>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/researcher.html?state=submitted" class="btn btn-primary btn-sm">Submit</a><a href="/templates/review-flow/researcher.html?state=private-submitted" class="btn btn-outline-primary btn-sm">Submit privately</a><a href="/templates/review-flow/researcher.html?state=my-works" class="btn btn-ghost btn-sm">Save draft</a></div>
+            <p class="small text-muted mt-2 mb-0">Reached from New Work, a returned Work and Open full form.</p>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-researcher-submitted"><div class="card-body p-3">
+            <h4 id="map-researcher-submitted" class="h6"><a href="/templates/review-flow/researcher.html?state=submitted">Work submitted</a></h4>
+            <p class="small mb-2">Public by default. Waiting in the shared review queue.</p>
+            <a href="/templates/review-flow/curator.html?state=review" class="btn btn-outline-primary btn-sm">Open curator review</a>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-researcher-private-submitted"><div class="card-body p-3">
+            <h4 id="map-researcher-private-submitted" class="h6"><a href="/templates/review-flow/researcher.html?state=private-submitted">Work submitted privately</a></h4>
+            <p class="small mb-2">Review does not publish it. A curator changes visibility deliberately.</p>
+            <a href="/templates/review-flow/curator.html?state=queue" class="btn btn-outline-primary btn-sm">Open review queue</a>
+          </div></article>
+
+          <hr>
+
+          <article class="card" aria-labelledby="map-researcher-my-works"><div class="card-body p-3">
+            <h4 id="map-researcher-my-works" class="h6"><a href="/templates/review-flow/researcher.html?state=my-works">My works</a></h4>
+            <p class="small mb-2">Own Works and their status.</p>
+            <a href="/templates/review-flow/researcher.html?state=new" class="btn btn-primary btn-sm">New Work</a>
           </div></article>
         </div></div>
       </section>
@@ -80,34 +124,81 @@
             <p class="small mb-0">All permitted researchers; every item names its owner.</p>
           </div></article>
 
-          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i> Act for the named researcher</p>
+
+          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
+            Inbox: needs your action.
+            <br>
+            <b>Act for the named researcher</b>
+          </p>
 
           <article class="card mb-2" aria-labelledby="map-proxy-return"><div class="card-body p-3">
             <h4 id="map-proxy-return" class="h6"><a href="/templates/review-flow/proxy.html?state=returned">Returned Work</a></h4>
             <p class="small mb-2">The acting-for context remains visible.</p>
-            <a href="/templates/review-flow/proxy.html?state=edit" class="btn btn-outline-primary btn-sm">Edit and submit</a>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/proxy.html?state=edit" class="btn btn-primary btn-sm">Edit Work</a><a href="/templates/review-flow/proxy.html?state=submitted" class="btn btn-outline-primary btn-sm">Submit again</a></div>
+            <p class="small text-muted mt-2 mb-0">Submitting again returns the Work to the shared review queue.</p>
           </div></article>
 
           <article class="card mb-2" aria-labelledby="map-proxy-request"><div class="card-body p-3">
             <h4 id="map-proxy-request" class="h6"><a href="/templates/review-flow/proxy.html?state=request">Requested changes</a></h4>
             <p class="small mb-2">Respond within the researcher's Work.</p>
-            <a href="/templates/review-flow/proxy.html?state=request-sent" class="btn btn-outline-primary btn-sm">See sent response</a>
+            <a href="/templates/review-flow/proxy.html?state=request-sent" class="btn btn-primary btn-sm">Send changes</a>
           </div></article>
+
+          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
+            Inbox: recent activity
+            <br>
+            <b>Actions on a reviewed Work</b>
+          </p>
 
           <article class="card mb-2" aria-labelledby="map-proxy-suggest"><div class="card-body p-3">
             <h4 id="map-proxy-suggest" class="h6"><a href="/templates/review-flow/proxy.html?state=reviewed">Reviewed Work</a></h4>
             <p class="small mb-2">A proxy can suggest changes for the owner.</p>
-            <a href="/templates/review-flow/proxy.html?state=suggestion" class="btn btn-outline-primary btn-sm">Open suggestion</a>
+            <a href="/templates/review-flow/proxy.html?state=suggestion" class="btn btn-primary btn-sm">Suggest a change</a>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-proxy-suggestion-sent"><div class="card-body p-3">
+            <h4 id="map-proxy-suggestion-sent" class="h6"><a href="/templates/review-flow/proxy.html?state=suggestion-sent">Suggestion sent</a></h4>
+            <p class="small mb-2">The accepted value stays public until a curator settles it.</p>
+            <a href="/templates/review-flow/curator.html?state=settle" class="btn btn-outline-primary btn-sm">Open curator request</a>
           </div></article>
 
           <hr>
 
           <p class="small text-center mb-2">New work</p>
 
-          <article class="card" aria-labelledby="map-proxy-new"><div class="card-body p-3">
+          <article class="card mb-2" aria-labelledby="map-proxy-new"><div class="card-body p-3">
             <p class="small mb-1">Another entry</p>
             <h4 id="map-proxy-new" class="h6"><a href="/templates/review-flow/proxy.html?state=new">New Work</a></h4>
-            <p class="small mb-0">Choose Acting for inline only when the entry point is ambiguous.</p>
+            <p class="small mb-2">Choose Acting for inline only when the entry point is ambiguous.</p>
+            <a href="/templates/review-flow/proxy.html?state=edit" class="btn btn-primary btn-sm">Add file / DOI</a>
+            <!-- deliberately not "continue", leave it -->
+          </div></article>
+
+          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
+            <b>Edit and submit</b>
+          </p>
+
+          <article class="card mb-2" aria-labelledby="map-proxy-form"><div class="card-body p-3">
+            <h4 id="map-proxy-form" class="h6"><a href="/templates/review-flow/proxy.html?state=edit">Work form</a></h4>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/proxy.html?state=submitted" class="btn btn-primary btn-sm">Submit</a><a href="/templates/review-flow/proxy.html?state=private-submitted" class="btn btn-outline-primary btn-sm">Submit privately</a><a href="/templates/review-flow/proxy.html?state=all" class="btn btn-ghost btn-sm">Save draft</a></div>
+            <p class="small text-muted mt-2 mb-0">Reached from New Work, a returned Work and Open full form.</p>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-proxy-submitted"><div class="card-body p-3">
+            <h4 id="map-proxy-submitted" class="h6"><a href="/templates/review-flow/proxy.html?state=submitted">Work submitted</a></h4>
+            <p class="small mb-2">Public by default. Waiting in the shared review queue.</p>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-primary btn-sm">Back to Proxy Inbox</a><a href="/templates/review-flow/curator.html?state=review" class="btn btn-outline-primary btn-sm">Open curator review</a></div>
+          </div></article>
+          <article class="card border-danger mb-2" aria-labelledby="map-proxy-private-submitted"><div class="card-body p-3">
+            <h4 id="map-proxy-private-submitted" class="h6"><a href="/templates/review-flow/proxy.html?state=private-submitted">Work submitted privately</a></h4>
+            <p class="small mb-2">Review does not publish it. A curator changes visibility deliberately.</p>
+            <a href="/templates/review-flow/curator.html?state=queue" class="btn btn-outline-primary btn-sm">Open review queue</a>
+          </div></article>
+
+          <hr>
+
+          <article class="card" aria-labelledby="map-proxy-all"><div class="card-body p-3">
+            <h4 id="map-proxy-all" class="h6"><a href="/templates/review-flow/proxy.html?state=all">All proxied research</a></h4>
+            <p class="small mb-2">Works for every permitted researcher.</p>
+            <a href="/templates/review-flow/proxy.html?state=new" class="btn btn-primary btn-sm">New Work</a>
           </div></article>
         </div></div>
       </section>
@@ -122,12 +213,16 @@
             <p class="small mb-0">Submitted Works. No assignment or lock.</p>
           </div></article>
 
-          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i> Open Work</p>
+          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
+            Inbox: needs your action.
+            <br>
+            <b>Open Work</b>
+          </p>
 
           <article class="card mb-2" aria-labelledby="map-curator-review"><div class="card-body p-3">
             <h4 id="map-curator-review" class="h6"><a href="/templates/review-flow/curator.html?state=review">Work review</a></h4>
             <p class="small mb-2">Metadata, provenance, file, visibility and history.</p>
-            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/curator.html?state=approved" class="btn btn-primary btn-sm">Approve</a><a href="/templates/review-flow/curator.html?state=return" class="btn btn-outline-primary btn-sm">Return</a><a href="/templates/review-flow/curator.html?state=request-changes" class="btn btn-ghost btn-sm">Request changes</a></div>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/curator.html?state=approved" class="btn btn-primary btn-sm">Approve</a><a href="/templates/review-flow/curator.html?state=request-changes" class="btn btn-outline-primary btn-sm">Request changes</a><a href="/templates/review-flow/curator.html?state=return" class="btn btn-ghost btn-sm">Return</a></div>
           </div></article>
 
           <article class="card mb-2" aria-labelledby="map-curator-requests"><div class="card-body p-3">
@@ -136,12 +231,16 @@
             <p class="small mb-0">Replies and suggestions awaiting action.</p>
           </div></article>
 
-          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i> Open request</p>
+          <p class="small text-center mb-2"><i class="if if-arrow-down" aria-hidden="true"></i>
+            Inbox: needs your action.
+            <br>
+            <b>Open request</b>
+          </p>
 
           <article class="card" aria-labelledby="map-curator-settle"><div class="card-body p-3">
             <h4 id="map-curator-settle" class="h6"><a href="/templates/review-flow/curator.html?state=settle">Settle request</a></h4>
             <p class="small mb-2">Compare accepted and proposed values.</p>
-            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/curator.html?state=accepted" class="btn btn-primary btn-sm">Accept</a><a href="/templates/review-flow/curator.html?state=adapted" class="btn btn-outline-primary btn-sm">Adapt</a><a href="/templates/review-flow/curator.html?state=declined" class="btn btn-ghost btn-sm">Decline</a></div>
+            <div class="d-flex flex-wrap gap-1"><a href="/templates/review-flow/curator.html?state=accepted" class="btn btn-primary btn-sm">Accept</a><a href="/templates/review-flow/curator.html?state=adapted" class="btn btn-outline-primary btn-sm">Adapt and accept</a><a href="/templates/review-flow/curator.html?state=declined" class="btn btn-ghost btn-sm">Decline</a><a href="/templates/review-flow/curator.html?state=clarification" class="btn btn-ghost btn-sm">Ask for clarification</a></div>
           </div></article>
         </div></div>
       </section>
@@ -185,7 +284,7 @@
     <h2 id="related-flow-heading" class="h4 mb-3">Related flows</h2>
     <div class="row g-3">
       <div class="col-md-6"><div class="card"><div class="card-body p-3"><h3 class="h6">Candidates</h3><p class="small">Feed-dependent candidate review stays in its existing prototype.</p><a href="/templates/biblio-researcher/candidate-review.html" class="btn btn-outline-primary btn-sm">In design – Open candidate flow</a></div></div></div>
-      <div class="col-md-6"><div class="card"><div class="card-body p-3"><h3 class="h6">Duplicates</h3><p class="small">Consolidation stays in the existing curator prototype.</p> <p>Not designed yet</p></div></div>
+      <div class="col-md-6"><div class="card"><div class="card-body p-3"><h3 class="h6">Duplicates</h3><p class="small">Consolidation stays in the existing curator prototype.</p> <p>Not designed yet</p></div></div></div>
     </div>
     <details class="mt-3"><summary class="small">Deferred items</summary><p class="small mt-2 mb-0">Reviewer assignment, the proxy chooser beyond the inline field, conflict overlap treatment and an in-product withdrawal request are not designed here.</p></details>
   </section>
