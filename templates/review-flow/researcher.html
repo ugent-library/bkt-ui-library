@@ -1,0 +1,395 @@
+<!-- @title: Review flow — researcher -->
+<!-- @surface: backoffice -->
+<!-- @states: inbox, my-works, new, edit, revise, submitted, private-submitted, returned, request, request-sent, reviewed, suggestion, suggestion-sent, activity -->
+
+<div class="bt-toolbar bt-toolbar--bordered" data-surface="backoffice">
+  <div class="bt-toolbar__left">
+    <div class="bt-toolbar__item"><strong>Prototype only</strong></div>
+    <div class="bt-toolbar__item">Researcher path</div>
+  </div>
+  <div class="bt-toolbar__right">
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/" class="btn btn-ghost btn-sm">Flow overview</a></div>
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-ghost btn-sm">Proxy view</a></div>
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-ghost btn-sm">Curator view</a></div>
+  </div>
+</div>
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/researcher-header.html -->
+  <!-- @include: templates/review-flow/partials/researcher-sidebar.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">
+              <!-- @state: inbox -->Inbox<!-- @state -->
+              <!-- @state: my-works -->My works<!-- @state -->
+              <!-- @state: new -->New Work<!-- @state -->
+              <!-- @state: edit revise -->Edit Work<!-- @state -->
+              <!-- @state: submitted private-submitted -->Work submitted<!-- @state -->
+              <!-- @state: returned -->Returned Work<!-- @state -->
+              <!-- @state: request -->Changes requested<!-- @state -->
+              <!-- @state: request-sent -->Changes sent<!-- @state -->
+              <!-- @state: reviewed -->Reviewed Work<!-- @state -->
+              <!-- @state: suggestion -->Suggest a change<!-- @state -->
+              <!-- @state: suggestion-sent -->Suggestion sent<!-- @state -->
+              <!-- @state: activity -->Recent activity<!-- @state -->
+            </h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item">
+            <a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-ghost btn-sm">
+              <i class="if if-arrow-left" aria-hidden="true"></i>
+              Inbox
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+
+          <!-- @state: inbox -->
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="researcher-action-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-3">
+                    <h2 id="researcher-action-heading" class="h4 mb-0">Needs your action</h2>
+                    <span class="badge text-bg-primary">2</span>
+                  </div>
+                  <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="researcher-return-title">
+                        <div class="bt-work-card__header">
+                          <span class="badge text-bg-warning">Returned</span>
+                          <span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Private</span>
+                        </div>
+                        <div class="bt-work-card__body">
+                          <p id="researcher-return-title" class="bt-work-card__title">
+                            <a href="/templates/review-flow/researcher.html?state=returned">Urban forests as essential infrastructure for climate resilience</a>
+                          </p>
+                          <p class="mb-0">Please confirm the manuscript version before submitting again.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="researcher-request-title">
+                        <div class="bt-work-card__header">
+                          <span class="badge text-bg-primary">Changes requested</span>
+                          <span class="badge text-bg-success"><i class="if if-open-access" aria-hidden="true"></i> Public</span>
+                        </div>
+                        <div class="bt-work-card__body">
+                          <p id="researcher-request-title" class="bt-work-card__title">
+                            <a href="/templates/review-flow/researcher.html?state=request">Mapping wetland recovery across the Scheldt basin</a>
+                          </p>
+                          <p class="mb-0">Project and funding information need your input.</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+
+            <section class="col-xl-4" aria-labelledby="researcher-recent-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="researcher-recent-heading" class="h4 mb-3">Recent activity</h2>
+                  <p class="fw-semibold mb-1">Suggestion accepted</p>
+                  <p class="small mb-3">Your corrected project link is now part of the Work.</p>
+                  <a href="/templates/review-flow/researcher.html?state=activity" class="btn btn-outline-primary btn-sm">View outcome</a>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: my-works -->
+          <section class="card" aria-labelledby="researcher-works-heading">
+            <div class="card-body p-4">
+              <div class="bt-title-toolbar mb-3">
+                <h2 id="researcher-works-heading" class="h4 mb-0">All my works</h2>
+                <a href="/templates/review-flow/researcher.html?state=new" class="btn btn-primary btn-sm">New Work</a>
+              </div>
+              <ol class="list-unstyled mb-0">
+                <li>
+                  <article class="bt-work-card" aria-labelledby="researcher-work-submitted-title">
+                    <div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                    <div class="bt-work-card__body"><p id="researcher-work-submitted-title" class="bt-work-card__title"><a href="/templates/review-flow/researcher.html?state=submitted">Urban forests as essential infrastructure for climate resilience</a></p><p class="mb-0">Journal article · 2026 · DOI 10.1111/geb.13844</p></div>
+                  </article>
+                </li>
+                <li>
+                  <article class="bt-work-card" aria-labelledby="researcher-work-reviewed-title">
+                    <div class="bt-work-card__header"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                    <div class="bt-work-card__body"><p id="researcher-work-reviewed-title" class="bt-work-card__title"><a href="/templates/review-flow/researcher.html?state=reviewed">Mapping wetland recovery across the Scheldt basin</a></p><p class="mb-0">Dataset · 2025 · DOI 10.5281/zenodo.14920431</p></div>
+                  </article>
+                </li>
+              </ol>
+            </div>
+          </section>
+          <!-- @state -->
+
+          <!-- @state: new -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="researcher-new-heading">
+              <div class="card"><div class="card-body p-4">
+                <h2 id="researcher-new-heading" class="h4 mb-2">Start with what you have</h2>
+                <p>We look for an existing record before you enter the details.</p>
+                <form action="/templates/review-flow/researcher.html" method="get">
+                  <input type="hidden" name="state" value="edit">
+                  <label for="researcher-evidence" class="form-label">DOI, identifier, link or title</label>
+                  <div class="input-group">
+                    <input type="text" id="researcher-evidence" name="evidence" class="form-control" value="10.1111/geb.13844" autocomplete="off">
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                  </div>
+                </form>
+                <p class="small mt-3 mb-0">You can also continue without an identifier and enter the Work manually.</p>
+              </div></div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-new-effect-heading">
+              <div class="alert alert-light">
+                <h2 id="researcher-new-effect-heading" class="h6">What happens next</h2>
+                <p class="small mb-0">A human-created Work starts as your private draft. Imported source values remain traceable.</p>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: revise -->
+          <div class="alert alert-warning" role="status">
+            <strong>Returned:</strong> confirm the uploaded manuscript version. This Work is private until you submit it again.
+          </div>
+          <!-- @state -->
+          <!-- @state: edit revise -->
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8">
+              <form action="/templates/review-flow/researcher.html" method="get" class="d-flex flex-column gap-4">
+                <section class="card" aria-labelledby="researcher-edit-details-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-details-heading" class="h4 mb-3">Work details</h2>
+                    <div class="mb-3">
+                      <label for="researcher-edit-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label>
+                      <input type="text" id="researcher-edit-title" name="title" class="form-control" value="Urban forests as essential infrastructure for climate resilience" required autocomplete="off">
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="researcher-edit-type" class="form-label">Type</label>
+                        <select id="researcher-edit-type" name="type" class="form-select"><option selected>Journal article</option><option>Dataset</option><option>Book chapter</option></select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="researcher-edit-doi" class="form-label">DOI</label>
+                        <input type="text" id="researcher-edit-doi" name="doi" class="form-control" value="10.1111/geb.13844" autocomplete="off">
+                      </div>
+                    </div>
+                    <hr>
+                    <label for="researcher-edit-contributors" class="form-label">Contributors</label>
+                    <input type="text" id="researcher-edit-contributors" name="contributors" class="form-control" value="Wouter Bosmans; Karen De Pauw; Judith Van den Berg" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-label="Work project and funding fields">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-context-heading" class="h4 mb-3">Project and funding</h2>
+                    <label for="researcher-edit-project" class="form-label">Project</label>
+                    <select id="researcher-edit-project" name="project" class="form-select mb-3"><option selected>GreenCity — climate-ready public space</option><option>No project</option></select>
+                    <label for="researcher-edit-funding" class="form-label">Funding reference</label>
+                    <input type="text" id="researcher-edit-funding" name="funding" class="form-control" value="BOF24/GOA/014" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-labelledby="researcher-edit-file-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-file-heading" class="h4 mb-3">File and access</h2>
+                    <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> urban-forests-aam.pdf</p>
+                    <p class="small">Accepted manuscript · PDF · 2.1 MB</p>
+                    <fieldset>
+                      <legend class="form-label">File access</legend>
+                      <div class="form-check"><input class="form-check-input" type="radio" name="file_access" id="researcher-access-open" value="open" checked><label class="form-check-label" for="researcher-access-open">Open access</label></div>
+                      <div class="form-check"><input class="form-check-input" type="radio" name="file_access" id="researcher-access-restricted" value="restricted"><label class="form-check-label" for="researcher-access-restricted">Restricted</label></div>
+                    </fieldset>
+                    <hr>
+                    <p class="form-label mb-1">Protected classifications</p>
+                    <p class="mb-0">VABB: A1 journal article <span class="small">(read-only)</span></p>
+                  </div>
+                </section>
+
+                <section class="card" aria-labelledby="researcher-edit-submit-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-submit-heading" class="h4 mb-2">Submit</h2>
+                    <p>Submit publishes the record by default. Choose the private option when it should stay out of the public site.</p>
+                    <div class="d-flex flex-wrap gap-2">
+                      <button type="submit" name="state" value="submitted" class="btn btn-primary">Submit</button>
+                      <button type="submit" name="state" value="private-submitted" class="btn btn-outline-primary">Submit privately</button>
+                      <button type="submit" name="state" value="my-works" class="btn btn-ghost">Save draft</button>
+                    </div>
+                  </div>
+                </section>
+              </form>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="researcher-source-heading">
+              <div class="card"><div class="card-body p-4">
+                <h2 id="researcher-source-heading" class="h5">Source</h2>
+                <dl class="mb-0"><dt>Record</dt><dd>Deposited by Wouter Bosmans</dd><dt>Metadata</dt><dd>Crossref, corrected by Wouter</dd><dt>Last saved</dt><dd class="mb-0">Today, 10:42</dd></dl>
+              </div></div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: submitted -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-label="Submitted Work summary">
+              <div class="card"><div class="card-body p-4">
+                <span class="badge text-bg-primary mb-3">Submitted</span>
+                <h2 id="researcher-submitted-heading" class="h4">Urban forests as essential infrastructure for climate resilience</h2>
+                <p>Journal article · Wouter Bosmans, Karen De Pauw, Judith Van den Berg · 2026</p>
+                <dl class="row mb-0"><dt class="col-sm-4">Record visibility</dt><dd class="col-sm-8">Public</dd><dt class="col-sm-4">File access</dt><dd class="col-sm-8">Open access</dd><dt class="col-sm-4">Next</dt><dd class="col-sm-8 mb-0">Waiting in the shared review queue</dd></dl>
+              </div></div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-submitted-path-heading">
+              <div class="card"><div class="card-body p-4">
+                <h2 id="researcher-submitted-path-heading" class="h5">Inspect the next actor</h2>
+                <p class="small">The record is already public. Review changes its review status, not its visibility.</p>
+                <a href="/templates/review-flow/curator.html?state=review" class="btn btn-outline-primary btn-sm">Open curator review</a>
+              </div></div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: private-submitted -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-label="Privately submitted Work summary">
+              <div class="card"><div class="card-body p-4">
+                <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Private</span></div>
+                <h2 class="h4">Urban forests as essential infrastructure for climate resilience</h2>
+                <p>Journal article · Wouter Bosmans, Karen De Pauw, Judith Van den Berg · 2026</p>
+                <p class="mb-0">Waiting in the shared review queue. The record is not on the public site.</p>
+              </div></div>
+            </section>
+            <aside class="col-xl-4" aria-label="Private submission next step"><div class="card"><div class="card-body p-4"><h2 class="h5">Next</h2><p class="small">Review does not publish it automatically. A curator can change visibility deliberately.</p><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-outline-primary btn-sm">Open review queue</a></div></div></aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: returned -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-label="Returned Work summary">
+              <div class="card"><div class="card-body p-4">
+                <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Private</span></div>
+                <h2 id="researcher-returned-heading" class="h4">Urban forests as essential infrastructure for climate resilience</h2>
+                <div class="alert alert-warning"><strong>Marie Curator:</strong> Please confirm whether the uploaded PDF is the accepted manuscript or the published version.</div>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="/templates/review-flow/researcher.html?state=revise" class="btn btn-primary">Edit Work</a>
+                  <a href="/templates/review-flow/researcher.html?state=submitted" class="btn btn-outline-primary">Submit again</a>
+                </div>
+              </div></div>
+            </section>
+            <aside class="col-xl-4" aria-label="Return history">
+              <div class="card"><div class="card-body p-4"><h2 id="researcher-return-history-heading" class="h5">History</h2><ol class="small mb-0"><li>Returned by Marie · Today</li><li>Submitted by Wouter · Yesterday</li></ol></div></div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: request -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-label="Requested project and funding fields">
+              <form action="/templates/review-flow/researcher.html" method="get" class="card">
+                <input type="hidden" name="state" value="request-sent">
+                <div class="card-body p-4">
+                  <span class="badge text-bg-primary mb-3">Changes requested</span>
+                  <h2 id="researcher-request-heading" class="h4">Project and funding</h2>
+                  <p>Marie Curator: Which project funded the fieldwork? Add the project and funding reference.</p>
+                  <label for="researcher-request-project" class="form-label">Project</label>
+                  <select id="researcher-request-project" name="project" class="form-select mb-3"><option selected>GreenCity — climate-ready public space</option><option>No project</option></select>
+                  <label for="researcher-request-reference" class="form-label">Funding reference</label>
+                  <input type="text" id="researcher-request-reference" name="reference" class="form-control mb-3" value="BOF24/GOA/014" autocomplete="off">
+                  <label for="researcher-request-message" class="form-label">Message <span class="small">(optional)</span></label>
+                  <textarea id="researcher-request-message" name="message" class="form-control mb-3" rows="3">This project covered the fieldwork and data preparation.</textarea>
+                  <div class="d-flex flex-wrap gap-2"><button type="submit" class="btn btn-primary">Send changes</button><a href="/templates/review-flow/researcher.html?state=edit" class="btn btn-ghost">Open full form</a></div>
+                </div>
+              </form>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-request-current-heading">
+              <div class="card"><div class="card-body p-4"><h2 id="researcher-request-current-heading" class="h5">Current Work</h2><p class="small">Reviewed · Public</p><p class="fw-semibold mb-1">Mapping wetland recovery across the Scheldt basin</p><p class="small mb-0">The public record stays unchanged while this request is open.</p></div></div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: request-sent -->
+          <section class="card" aria-labelledby="researcher-request-sent-heading">
+            <div class="card-body p-4">
+              <span class="badge text-bg-primary mb-3">Waiting for curator</span>
+              <h2 id="researcher-request-sent-heading" class="h4">Your changes were sent</h2>
+              <p>The Work itself has not changed yet. Your proposed project and funding reference are in the open request.</p>
+              <div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-primary">Back to Inbox</a><a href="/templates/review-flow/curator.html?state=settle" class="btn btn-outline-primary">Open curator request</a></div>
+            </div>
+          </section>
+          <!-- @state -->
+
+          <!-- @state: reviewed -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="researcher-reviewed-heading">
+              <div class="card"><div class="card-body p-4">
+                <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                <h2 id="researcher-reviewed-heading" class="h4">Mapping wetland recovery across the Scheldt basin</h2>
+                <p>Dataset · Wouter Bosmans, Annelies De Smet · 2025</p>
+                <dl class="row"><dt class="col-sm-4">DOI</dt><dd class="col-sm-8">10.5281/zenodo.14920431</dd><dt class="col-sm-4">Project</dt><dd class="col-sm-8">Delta Futures</dd><dt class="col-sm-4">File</dt><dd class="col-sm-8">wetland-recovery.csv · Open access</dd><dt class="col-sm-4">Classification</dt><dd class="col-sm-8">Environmental sciences · read-only</dd></dl>
+                <a href="/templates/review-flow/researcher.html?state=suggestion" class="btn btn-primary">Suggest a change</a>
+              </div></div>
+            </section>
+            <aside class="col-xl-4" aria-label="Reviewed Work history"><div class="card"><div class="card-body p-4"><h2 id="researcher-reviewed-history-heading" class="h5">History</h2><ol class="small mb-0"><li>Reviewed by Marie · 3 Jun</li><li>Submitted by Wouter · 2 Jun</li></ol></div></div></aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: suggestion -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="researcher-suggestion-heading">
+              <form action="/templates/review-flow/researcher.html" method="get" class="card">
+                <input type="hidden" name="state" value="suggestion-sent">
+                <div class="card-body p-4">
+                  <h2 id="researcher-suggestion-heading" class="h4">Propose corrected values</h2>
+                  <p>The public record keeps its accepted values until a curator accepts these changes.</p>
+                  <label for="researcher-suggestion-project" class="form-label">Project</label>
+                  <select id="researcher-suggestion-project" name="project" class="form-select mb-3"><option selected>GreenCity — climate-ready public space</option><option>Delta Futures</option></select>
+                  <label for="researcher-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
+                  <textarea id="researcher-suggestion-message" name="message" class="form-control mb-3" rows="3">The dataset belongs to GreenCity, not Delta Futures.</textarea>
+                  <button type="submit" class="btn btn-primary">Send suggestion</button>
+                </div>
+              </form>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-suggestion-accepted-heading"><div class="card"><div class="card-body p-4"><h2 id="researcher-suggestion-accepted-heading" class="h5">Accepted value</h2><p class="form-label mb-1">Project</p><p class="mb-0">Delta Futures</p></div></div></aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: suggestion-sent -->
+          <section class="card" aria-labelledby="researcher-suggestion-sent-heading">
+            <div class="card-body p-4">
+              <span class="badge text-bg-primary mb-3">Suggestion pending</span>
+              <h2 id="researcher-suggestion-sent-heading" class="h4">Suggestion sent</h2>
+              <p>The public record still shows <strong>Delta Futures</strong>. Your proposed value, <strong>GreenCity</strong>, is visible only in the review flow.</p>
+              <div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-primary">Back to Inbox</a><a href="/templates/review-flow/curator.html?state=settle" class="btn btn-outline-primary">Open curator request</a></div>
+            </div>
+          </section>
+          <!-- @state -->
+
+          <!-- @state: activity -->
+          <section class="card" aria-labelledby="researcher-activity-heading">
+            <div class="card-body p-4">
+              <span class="badge text-bg-success mb-3">Accepted</span>
+              <h2 id="researcher-activity-heading" class="h4">Project correction accepted</h2>
+              <p>Marie Curator accepted your suggestion. The Work and public record now show <strong>GreenCity — climate-ready public space</strong>.</p>
+              <p class="small">Today, 11:18 · Recorded in Work history</p>
+              <a href="/templates/review-flow/researcher.html?state=reviewed" class="btn btn-primary">View Work</a>
+            </div>
+          </section>
+          <!-- @state -->
+
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

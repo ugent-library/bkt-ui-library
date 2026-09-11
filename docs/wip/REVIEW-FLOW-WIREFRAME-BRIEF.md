@@ -2,7 +2,7 @@
 
 <!-- Follow docs/SPEC-WRITING.md. Maximum 500 words. -->
 
-Build a low-fidelity, clickable review prototype under `flows/review/`. It has two
+Build a low-fidelity, clickable review prototype under `templates/review-flow/`. It has two
 connected parts:
 
 1. The overview shows screens as simple cards in researcher, proxy and curator
@@ -18,7 +18,7 @@ connected parts:
 
 ## Overview
 
-Create `flows/review/index.html`. Each card represents one app-flow page or state and
+Create `templates/review-flow/index.html`. Each card represents one app-flow page or state and
 shows its heading, essential context and actions. Every card links to that exact page
 and state. Give system and public-record effects their own quiet lane; they are not
 actor walkthroughs.

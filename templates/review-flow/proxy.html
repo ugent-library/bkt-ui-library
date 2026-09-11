@@ -1,0 +1,171 @@
+<!-- @title: Review flow — proxy -->
+<!-- @surface: backoffice -->
+<!-- @states: inbox, all, new, edit, returned, request, request-sent, reviewed, suggestion, suggestion-sent, submitted, private-submitted -->
+
+<div class="bt-toolbar bt-toolbar--bordered" data-surface="backoffice">
+  <div class="bt-toolbar__left">
+    <div class="bt-toolbar__item"><strong>Prototype only</strong></div>
+    <div class="bt-toolbar__item">Proxy path</div>
+  </div>
+  <div class="bt-toolbar__right">
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/" class="btn btn-ghost btn-sm">Flow overview</a></div>
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-ghost btn-sm">Researcher view</a></div>
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-ghost btn-sm">Curator view</a></div>
+  </div>
+</div>
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/proxy-header.html -->
+  <!-- @include: templates/review-flow/partials/proxy-sidebar.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left"><div class="bt-toolbar__item">
+          <h1 class="bt-toolbar__title">
+            <!-- @state: inbox -->Proxy Inbox<!-- @state -->
+            <!-- @state: all -->All proxied research<!-- @state -->
+            <!-- @state: new -->New Work<!-- @state -->
+            <!-- @state: edit -->Edit Work<!-- @state -->
+            <!-- @state: returned -->Returned Work<!-- @state -->
+            <!-- @state: request -->Changes requested<!-- @state -->
+            <!-- @state: request-sent -->Changes sent<!-- @state -->
+            <!-- @state: reviewed -->Reviewed Work<!-- @state -->
+            <!-- @state: suggestion -->Suggest a change<!-- @state -->
+            <!-- @state: suggestion-sent -->Suggestion sent<!-- @state -->
+            <!-- @state: submitted private-submitted -->Work submitted<!-- @state -->
+          </h1>
+        </div></div>
+        <div class="bt-toolbar__right"><div class="bt-toolbar__item"><a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Proxy Inbox</a></div></div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <!-- @state: inbox -->
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="proxy-action-heading">
+              <div class="card"><div class="card-body p-4">
+                <div class="bt-title-toolbar mb-3"><h2 id="proxy-action-heading" class="h4 mb-0">Needs your action</h2><span class="badge text-bg-primary">3</span></div>
+                <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                  <li>
+                    <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-return-title">
+                      <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                      <div class="bt-work-card__body"><p id="proxy-return-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy.html?state=returned">Characterisation of biofilm formation on stainless steel surfaces</a></p><p class="mb-0">Please confirm the manuscript version.</p></div>
+                    </article>
+                  </li>
+                  <li>
+                    <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-request-title">
+                      <div class="bt-work-card__header"><span class="badge text-bg-primary">Changes requested</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                      <div class="bt-work-card__body"><p id="proxy-request-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy.html?state=request">Biofilm dynamics under repeated cleaning cycles</a></p><p class="mb-0">Project information needs a response.</p></div>
+                    </article>
+                  </li>
+                  <li>
+                    <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-other-title">
+                      <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Lina Vermeulen</span></div>
+                      <div class="bt-work-card__body"><p id="proxy-other-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy.html?state=all">Portable sensing for coastal water quality</a></p><p class="mb-0">Contributor order needs attention.</p></div>
+                    </article>
+                  </li>
+                </ol>
+              </div></div>
+            </section>
+            <section class="col-xl-4" aria-labelledby="proxy-recent-heading"><div class="card"><div class="card-body p-4"><h2 id="proxy-recent-heading" class="h4">Recent activity</h2><p class="fw-semibold mb-1">Suggestion accepted</p><p class="small mb-0">For Harm Van Acker · Project updated today</p></div></div></section>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: all -->
+          <section class="card" aria-labelledby="proxy-all-heading"><div class="card-body p-4">
+            <div class="bt-title-toolbar mb-3"><h2 id="proxy-all-heading" class="h4 mb-0">Works for permitted researchers</h2><a href="/templates/review-flow/proxy.html?state=new" class="btn btn-primary btn-sm">New Work</a></div>
+            <ol class="list-unstyled mb-0">
+              <li><article class="bt-work-card" aria-labelledby="proxy-all-harm-title"><div class="bt-work-card__header"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-light border">Harm Van Acker</span></div><div class="bt-work-card__body"><p id="proxy-all-harm-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy.html?state=reviewed">Biofilm dynamics under repeated cleaning cycles</a></p><p class="mb-0">Journal article · 2025</p></div></article></li>
+              <li><article class="bt-work-card" aria-labelledby="proxy-all-lina-title"><div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-light border">Lina Vermeulen</span></div><div class="bt-work-card__body"><p id="proxy-all-lina-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy.html?state=submitted">Portable sensing for coastal water quality</a></p><p class="mb-0">Dataset · 2026</p></div></article></li>
+            </ol>
+          </div></section>
+          <!-- @state -->
+
+          <!-- @state: new -->
+          <section class="card" aria-labelledby="proxy-new-heading"><div class="card-body p-4">
+            <h2 id="proxy-new-heading" class="h4">Start a Work</h2>
+            <form action="/templates/review-flow/proxy.html" method="get">
+              <input type="hidden" name="state" value="edit">
+              <div class="row g-3 mb-3">
+                <div class="col-md-5"><label for="proxy-new-person" class="form-label">Acting for</label><select id="proxy-new-person" name="person" class="form-select"><option selected>Harm Van Acker</option><option>Lina Vermeulen</option></select></div>
+                <div class="col-md-7"><label for="proxy-new-evidence" class="form-label">DOI, identifier, link or title</label><input type="text" id="proxy-new-evidence" name="evidence" class="form-control" value="10.1080/08927014.2025.2201234" autocomplete="off"></div>
+              </div>
+              <p class="small">The researcher is chosen inline because this New Work entry point is ambiguous. It is then carried through the flow.</p>
+              <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+          </div></section>
+          <!-- @state -->
+
+          <!-- @state: edit -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <form action="/templates/review-flow/proxy.html" method="get" class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="proxy-edit-details-heading"><div class="card-body p-4">
+                <h2 id="proxy-edit-details-heading" class="h4">Work details</h2>
+                <label for="proxy-edit-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label><input type="text" id="proxy-edit-title" name="title" class="form-control mb-3" value="Characterisation of biofilm formation on stainless steel surfaces" required autocomplete="off">
+                <div class="row g-3"><div class="col-md-6"><label for="proxy-edit-type" class="form-label">Type</label><select id="proxy-edit-type" name="type" class="form-select"><option selected>Journal article</option><option>Dataset</option></select></div><div class="col-md-6"><label for="proxy-edit-doi" class="form-label">DOI</label><input type="text" id="proxy-edit-doi" name="doi" class="form-control" value="10.1080/08927014.2025.2201234" autocomplete="off"></div></div>
+                <hr><p class="form-label mb-1">Contributors</p><p class="mb-0">Harm Van Acker · Tony Coenye · Louise Martinez-Garcia</p>
+              </div></section>
+              <section class="card" aria-labelledby="proxy-edit-file-heading"><div class="card-body p-4">
+                <h2 id="proxy-edit-file-heading" class="h4">File and access</h2><p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> biofilm-formation-aam.pdf</p><p class="small">Accepted manuscript · 1.8 MB</p>
+                <fieldset><legend class="form-label">File access</legend><div class="form-check"><input class="form-check-input" type="radio" name="access" id="proxy-access-open" value="open" checked><label class="form-check-label" for="proxy-access-open">Open access</label></div><div class="form-check"><input class="form-check-input" type="radio" name="access" id="proxy-access-restricted" value="restricted"><label class="form-check-label" for="proxy-access-restricted">Restricted</label></div></fieldset>
+              </div></section>
+              <section class="card" aria-labelledby="proxy-edit-submit-heading"><div class="card-body p-4"><h2 id="proxy-edit-submit-heading" class="h4">Submit</h2><p>Submit publishes by default. Submit privately keeps the record out of the public site.</p><div class="d-flex flex-wrap gap-2"><button type="submit" name="state" value="submitted" class="btn btn-primary">Submit</button><button type="submit" name="state" value="private-submitted" class="btn btn-outline-primary">Submit privately</button><button type="submit" name="state" value="all" class="btn btn-ghost">Save draft</button></div></div></section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="proxy-edit-owner-heading"><div class="card"><div class="card-body p-4"><h2 id="proxy-edit-owner-heading" class="h5">Work owner</h2><p class="fw-semibold mb-1">Harm Van Acker</p><p class="small mb-0">Created by Mieke Declercq acting as proxy. Proxy permissions are managed elsewhere.</p></div></div></aside>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: returned -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <section class="card" aria-label="Returned Work summary"><div class="card-body p-4"><div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-secondary">Private</span></div><h2 id="proxy-returned-heading" class="h4">Characterisation of biofilm formation on stainless steel surfaces</h2><div class="alert alert-warning"><strong>Marie Curator:</strong> Please confirm whether the PDF is the accepted manuscript or published version.</div><a href="/templates/review-flow/proxy.html?state=edit" class="btn btn-primary">Edit Work</a></div></section>
+          <!-- @state -->
+
+          <!-- @state: request -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <form action="/templates/review-flow/proxy.html" method="get" class="card">
+            <input type="hidden" name="state" value="request-sent">
+            <div class="card-body p-4"><span class="badge text-bg-primary mb-3">Changes requested</span><h2 class="h4">Project</h2><p>Marie Curator: Which project supported this experiment?</p><label for="proxy-request-project" class="form-label">Project</label><select id="proxy-request-project" name="project" class="form-select mb-3"><option selected>Microbial biofilm dynamics</option><option>No project</option></select><label for="proxy-request-message" class="form-label">Message <span class="small">(optional)</span></label><textarea id="proxy-request-message" name="message" class="form-control mb-3" rows="3">Confirmed with Harm: this is the correct project.</textarea><button type="submit" class="btn btn-primary">Send changes</button></div>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: request-sent -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <section class="card" aria-labelledby="proxy-request-sent-heading"><div class="card-body p-4"><span class="badge text-bg-primary mb-3">Waiting for curator</span><h2 id="proxy-request-sent-heading" class="h4">Changes sent</h2><p>The proposed project is in the open request. The reviewed Work stays unchanged until settlement.</p><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-primary">Back to Proxy Inbox</a><a href="/templates/review-flow/curator.html?state=settle" class="btn btn-outline-primary">Open curator request</a></div></div></section>
+          <!-- @state -->
+
+          <!-- @state: reviewed -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <section class="card" aria-labelledby="proxy-reviewed-heading"><div class="card-body p-4"><div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div><h2 id="proxy-reviewed-heading" class="h4">Biofilm dynamics under repeated cleaning cycles</h2><dl class="row"><dt class="col-sm-4">Project</dt><dd class="col-sm-8">Industrial Hygiene Lab</dd><dt class="col-sm-4">Classification</dt><dd class="col-sm-8">Microbiology · read-only</dd></dl><a href="/templates/review-flow/proxy.html?state=suggestion" class="btn btn-primary">Suggest a change</a></div></section>
+          <!-- @state -->
+
+          <!-- @state: suggestion -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <form action="/templates/review-flow/proxy.html" method="get" class="card">
+            <input type="hidden" name="state" value="suggestion-sent">
+            <div class="card-body p-4"><h2 class="h4">Propose corrected values</h2><p>The accepted Work and public page stay unchanged until a curator accepts this suggestion.</p><label for="proxy-suggestion-project" class="form-label">Project</label><select id="proxy-suggestion-project" name="project" class="form-select mb-3"><option selected>Microbial biofilm dynamics</option><option>Industrial Hygiene Lab</option></select><label for="proxy-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label><textarea id="proxy-suggestion-message" name="message" class="form-control mb-3" rows="3">Harm confirmed the project correction.</textarea><button type="submit" class="btn btn-primary">Send suggestion</button></div>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: suggestion-sent -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <section class="card" aria-labelledby="proxy-suggestion-sent-heading"><div class="card-body p-4"><span class="badge text-bg-primary mb-3">Suggestion pending</span><h2 id="proxy-suggestion-sent-heading" class="h4">Suggestion sent</h2><p>The public record still shows <strong>Industrial Hygiene Lab</strong>. The proposal is visible in Requests.</p><a href="/templates/review-flow/curator.html?state=settle" class="btn btn-outline-primary">Open curator request</a></div></section>
+          <!-- @state -->
+
+          <!-- @state: submitted -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <section class="card" aria-label="Submitted Work summary"><div class="card-body p-4"><span class="badge text-bg-primary mb-3">Submitted</span><h2 id="proxy-submitted-heading" class="h4">Characterisation of biofilm formation on stainless steel surfaces</h2><dl class="row mb-3"><dt class="col-sm-4">Owner</dt><dd class="col-sm-8">Harm Van Acker</dd><dt class="col-sm-4">Submitted by</dt><dd class="col-sm-8">Mieke Declercq, proxy</dd><dt class="col-sm-4">Visibility</dt><dd class="col-sm-8">Public</dd></dl><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-primary">Back to Proxy Inbox</a><a href="/templates/review-flow/curator.html?state=review" class="btn btn-outline-primary">Open curator review</a></div></div></section>
+          <!-- @state -->
+
+          <!-- @state: private-submitted -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <section class="card" aria-label="Privately submitted Work summary"><div class="card-body p-4"><div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-secondary">Private</span></div><h2 class="h4">Characterisation of biofilm formation on stainless steel surfaces</h2><dl class="row mb-3"><dt class="col-sm-4">Owner</dt><dd class="col-sm-8">Harm Van Acker</dd><dt class="col-sm-4">Submitted by</dt><dd class="col-sm-8">Mieke Declercq, proxy</dd><dt class="col-sm-4">Visibility</dt><dd class="col-sm-8">Private</dd></dl><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-outline-primary">Open review queue</a></div></section>
+          <!-- @state -->
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

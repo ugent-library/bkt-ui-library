@@ -1,0 +1,178 @@
+<!-- @title: Review flow — curator -->
+<!-- @surface: backoffice -->
+<!-- @states: queue, review, approved, return, returned, request-changes, request-sent, requests, settle, accepted, adapted, declined, clarification -->
+
+<div class="bt-toolbar bt-toolbar--bordered" data-surface="backoffice">
+  <div class="bt-toolbar__left">
+    <div class="bt-toolbar__item"><strong>Prototype only</strong></div>
+    <div class="bt-toolbar__item">Curator path</div>
+  </div>
+  <div class="bt-toolbar__right">
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/" class="btn btn-ghost btn-sm">Flow overview</a></div>
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher.html?state=inbox" class="btn btn-ghost btn-sm">Researcher view</a></div>
+    <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy.html?state=inbox" class="btn btn-ghost btn-sm">Proxy view</a></div>
+  </div>
+</div>
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left"><div class="bt-toolbar__item">
+          <h1 class="bt-toolbar__title">
+            <!-- @state: queue -->Review queue<!-- @state -->
+            <!-- @state: review -->Review Work<!-- @state -->
+            <!-- @state: approved -->Work approved<!-- @state -->
+            <!-- @state: return -->Return Work<!-- @state -->
+            <!-- @state: returned -->Work returned<!-- @state -->
+            <!-- @state: request-changes -->Request changes<!-- @state -->
+            <!-- @state: request-sent -->Request sent<!-- @state -->
+            <!-- @state: requests -->Requests<!-- @state -->
+            <!-- @state: settle -->Review request<!-- @state -->
+            <!-- @state: accepted -->Request accepted<!-- @state -->
+            <!-- @state: adapted -->Request adapted<!-- @state -->
+            <!-- @state: declined -->Request declined<!-- @state -->
+            <!-- @state: clarification -->Clarification requested<!-- @state -->
+          </h1>
+        </div></div>
+        <div class="bt-toolbar__right"><div class="bt-toolbar__item"><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div></div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+
+          <!-- @state: queue -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-queue-heading">
+              <div class="card"><div class="card-body p-4">
+                <div class="bt-title-toolbar mb-2"><h2 id="curator-queue-heading" class="h4 mb-0">Submitted</h2><span class="badge text-bg-primary">14</span></div>
+                <p>One shared queue. Open a Work to review it.</p>
+                <ol class="list-unstyled mb-0">
+                  <li><article class="bt-work-card" aria-labelledby="curator-queue-proxy-title"><div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div><div class="bt-work-card__body"><p id="curator-queue-proxy-title" class="bt-work-card__title"><a href="/templates/review-flow/curator.html?state=review">Characterisation of biofilm formation on stainless steel surfaces</a></p><p class="mb-1">Journal article · Harm Van Acker · 2025</p><p class="small mb-0">Submitted by Mieke Declercq, acting as proxy · 2 hours ago</p></div></article></li>
+                  <li><article class="bt-work-card" aria-labelledby="curator-queue-researcher-title"><div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-secondary">Private</span></div><div class="bt-work-card__body"><p id="curator-queue-researcher-title" class="bt-work-card__title"><a href="/templates/review-flow/curator.html?state=review">A multilingual corpus for civic participation research</a></p><p class="mb-1">Dataset · Sara Peeters · 2026</p><p class="small mb-0">Submitted by Sara Peeters · Yesterday</p></div></article></li>
+                </ol>
+              </div></div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="curator-other-queues-heading">
+              <div class="card"><div class="card-body p-4">
+                <h2 id="curator-other-queues-heading" class="h5">Other work</h2>
+                <div class="d-flex flex-column gap-2"><a href="/templates/review-flow/curator.html?state=requests" class="btn btn-outline-primary text-start">Requests <span class="badge text-bg-primary">4</span></a><a href="/templates/biblio-researcher/candidate-review.html" class="btn btn-ghost text-start">Candidates</a><a href="/templates/biblio-team/curate.html?view=duplicates" class="btn btn-ghost text-start">Duplicates</a></div>
+                <details class="mt-3"><summary class="small">Coordination note</summary><p class="small mt-2 mb-0">Reviewer assignment is deferred. This flow has no claim, lock or My Queue.</p></details>
+              </div></div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: review -->
+          <form action="/templates/review-flow/curator.html" method="get" class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="curator-review-details-heading"><div class="card-body p-4">
+                <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                <h2 id="curator-review-details-heading" class="h4">Work details</h2>
+                <label for="curator-review-title" class="form-label">Title</label><input type="text" id="curator-review-title" name="title" class="form-control mb-3" value="Characterisation of biofilm formation on stainless steel surfaces" autocomplete="off">
+                <div class="row g-3"><div class="col-md-5"><label for="curator-review-type" class="form-label">Type</label><select id="curator-review-type" name="type" class="form-select"><option selected>Journal article</option><option>Dataset</option><option>Book chapter</option></select></div><div class="col-md-7"><label for="curator-review-doi" class="form-label">DOI</label><input type="text" id="curator-review-doi" name="doi" class="form-control" value="10.1080/08927014.2025.2201234" autocomplete="off"></div></div>
+                <hr><p class="form-label mb-1">Contributors</p><p>Harm Van Acker · Tony Coenye · Louise Martinez-Garcia</p><p class="form-label mb-1">Provenance</p><p class="mb-0">Crossref, corrected by Mieke Declercq acting for Harm Van Acker</p>
+              </div></section>
+
+              <section class="card" aria-labelledby="curator-review-context-heading"><div class="card-body p-4">
+                <h2 id="curator-review-context-heading" class="h4">Context</h2>
+                <div class="row g-3"><div class="col-md-6"><label for="curator-review-project" class="form-label">Project</label><select id="curator-review-project" name="project" class="form-select"><option selected>Microbial biofilm dynamics</option><option>No project</option></select></div><div class="col-md-6"><label for="curator-review-funding" class="form-label">Funding reference</label><input type="text" id="curator-review-funding" name="funding" class="form-control" value="01G00420" autocomplete="off"></div></div>
+                <hr><p class="form-label mb-1">Protected classification</p><p class="mb-0">VABB: A1 journal article</p>
+              </div></section>
+
+              <section class="card" aria-labelledby="curator-review-files-heading"><div class="card-body p-4">
+                <h2 id="curator-review-files-heading" class="h4">File and access</h2><p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> biofilm-formation-aam.pdf</p><p class="small">Accepted manuscript · PDF · 1.8 MB</p>
+                <div class="row g-3"><div class="col-md-6"><label for="curator-review-file-access" class="form-label">File access</label><select id="curator-review-file-access" name="file_access" class="form-select"><option selected>Open access</option><option>Restricted</option><option>Embargo</option></select></div><div class="col-md-6"><label for="curator-review-visibility" class="form-label">Record visibility</label><select id="curator-review-visibility" name="visibility" class="form-select"><option selected>Public</option><option>Private</option></select></div></div>
+              </div></section>
+
+              <section class="card" aria-labelledby="curator-review-actions-heading"><div class="card-body p-4"><h2 id="curator-review-actions-heading" class="h4">Decision</h2><div class="d-flex flex-wrap gap-2"><button type="submit" name="state" value="approved" class="btn btn-primary">Approve</button><a href="/templates/review-flow/curator.html?state=return" class="btn btn-outline-primary">Return</a><a href="/templates/review-flow/curator.html?state=request-changes" class="btn btn-ghost">Request changes</a></div></div></section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="curator-review-history-heading"><div class="card"><div class="card-body p-4"><h2 id="curator-review-history-heading" class="h5">History</h2><ol class="small mb-3"><li>Submitted by Mieke, proxy · Today</li><li>Created from Crossref · Yesterday</li></ol><p class="form-label mb-1">Submission message</p><p class="small mb-0">Harm confirmed this is the accepted manuscript.</p></div></div></aside>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: approved -->
+          <section class="card" aria-labelledby="curator-approved-heading"><div class="card-body p-4"><div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div><h2 id="curator-approved-heading" class="h4">Work approved</h2><p>The accepted record is reviewed. Its visibility remains public.</p><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-primary">Next Work</a><a href="/templates/review-flow/proxy.html?state=all" class="btn btn-outline-primary">Open proxy outcome</a></div></div></section>
+          <!-- @state -->
+
+          <!-- @state: return -->
+          <form action="/templates/review-flow/curator.html" method="get" class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-return-heading"><div class="card"><div class="card-body p-4">
+              <input type="hidden" name="state" value="returned">
+              <h2 id="curator-return-heading" class="h4">Return to the owner</h2><p>Return blocks progress and makes the Work private.</p>
+              <label for="curator-return-message" class="form-label">Message <span class="text-danger" aria-hidden="true">*</span></label><textarea id="curator-return-message" name="message" class="form-control mb-3" rows="4" required>Please confirm whether the uploaded PDF is the accepted manuscript or the published version.</textarea>
+              <button type="submit" class="btn btn-primary">Return Work</button>
+            </div></div></section>
+            <aside class="col-xl-4" aria-labelledby="curator-return-effect-heading"><div class="alert alert-warning"><h2 id="curator-return-effect-heading" class="h6">Effect</h2><p class="small mb-0">Status becomes Returned. Record visibility becomes private. File access does not change.</p></div></aside>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: returned -->
+          <section class="card" aria-labelledby="curator-returned-heading"><div class="card-body p-4"><span class="badge text-bg-warning mb-3">Returned · Private</span><h2 id="curator-returned-heading" class="h4">Work returned</h2><p>The owner and authorized proxies now see this under <strong>Needs your action</strong>. The message is attached to the return.</p><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-primary">Back to queue</a><a href="/templates/review-flow/researcher.html?state=returned" class="btn btn-outline-primary">Open researcher view</a><a href="/templates/review-flow/proxy.html?state=returned" class="btn btn-outline-primary">Open proxy view</a></div></div></section>
+          <!-- @state -->
+
+          <!-- @state: request-changes -->
+          <form action="/templates/review-flow/curator.html" method="get" class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-request-changes-heading"><div class="card"><div class="card-body p-4">
+              <input type="hidden" name="state" value="request-sent">
+              <h2 id="curator-request-changes-heading" class="h4">Ask for named changes</h2><p>The Work stays in its current status and visibility.</p>
+              <fieldset class="mb-3"><legend class="form-label">Fields that need work</legend><div class="form-check"><input class="form-check-input" type="checkbox" id="curator-request-project" name="fields[]" value="project" checked><label class="form-check-label" for="curator-request-project">Project</label></div><div class="form-check"><input class="form-check-input" type="checkbox" id="curator-request-funding" name="fields[]" value="funding" checked><label class="form-check-label" for="curator-request-funding">Funding reference</label></div><div class="form-check"><input class="form-check-input" type="checkbox" id="curator-request-file" name="fields[]" value="file"><label class="form-check-label" for="curator-request-file">File version</label></div></fieldset>
+              <label for="curator-request-message" class="form-label">Message</label><textarea id="curator-request-message" name="message" class="form-control mb-3" rows="4">Which project funded the fieldwork? Add the project and funding reference.</textarea>
+              <button type="submit" class="btn btn-primary">Send request</button>
+            </div></div></section>
+            <aside class="col-xl-4" aria-labelledby="curator-request-scope-heading"><div class="card"><div class="card-body p-4"><h2 id="curator-request-scope-heading" class="h5">Owner sees</h2><p class="small mb-0">The selected fields and this message first, with the full form one action away.</p></div></div></aside>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: request-sent -->
+          <section class="card" aria-labelledby="curator-request-sent-heading"><div class="card-body p-4"><span class="badge text-bg-primary mb-3">Request open</span><h2 id="curator-request-sent-heading" class="h4">Changes requested</h2><p>The Work has not changed. The request appears in Needs your action for the owner and authorized proxies.</p><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator.html?state=queue" class="btn btn-primary">Back to queue</a><a href="/templates/review-flow/researcher.html?state=request" class="btn btn-outline-primary">Open researcher view</a><a href="/templates/review-flow/proxy.html?state=request" class="btn btn-outline-primary">Open proxy view</a></div></div></section>
+          <!-- @state -->
+
+          <!-- @state: requests -->
+          <section class="card" aria-labelledby="curator-requests-heading"><div class="card-body p-4">
+            <div class="bt-title-toolbar mb-3"><h2 id="curator-requests-heading" class="h4 mb-0">Replies and suggestions</h2><span class="badge text-bg-primary">4</span></div>
+            <ol class="list-unstyled mb-0">
+              <li><article class="bt-work-card" aria-labelledby="curator-request-reply-title"><div class="bt-work-card__header"><span class="badge text-bg-primary">Reply received</span><span class="badge text-bg-light border">Project and funding</span></div><div class="bt-work-card__body"><p id="curator-request-reply-title" class="bt-work-card__title"><a href="/templates/review-flow/curator.html?state=settle">Mapping wetland recovery across the Scheldt basin</a></p><p class="mb-1">Wouter Bosmans proposed GreenCity · Today</p><p class="small mb-0">Opened by Marie Curator</p></div></article></li>
+              <li><article class="bt-work-card" aria-labelledby="curator-request-suggestion-title"><div class="bt-work-card__header"><span class="badge text-bg-primary">Suggestion</span><span class="badge text-bg-light border">Project</span></div><div class="bt-work-card__body"><p id="curator-request-suggestion-title" class="bt-work-card__title"><a href="/templates/review-flow/curator.html?state=settle">Biofilm dynamics under repeated cleaning cycles</a></p><p class="mb-1">Mieke Declercq, proxy for Harm Van Acker · Yesterday</p><p class="small mb-0">Public record still uses the accepted value</p></div></article></li>
+            </ol>
+          </div></section>
+          <!-- @state -->
+
+          <!-- @state: settle -->
+          <form action="/templates/review-flow/curator.html" method="get" class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-settle-heading"><div class="card"><div class="card-body p-4">
+              <span class="badge text-bg-primary mb-3">Suggestion</span><h2 id="curator-settle-heading" class="h4">Project correction</h2><p>Wouter Bosmans: The dataset belongs to GreenCity, not Delta Futures.</p>
+              <fieldset><legend class="form-label">Project value</legend><div class="border rounded p-3 mb-2"><div class="form-check"><input class="form-check-input" type="radio" name="project_value" id="curator-value-proposed" value="proposed" checked><label class="form-check-label" for="curator-value-proposed"><strong>Proposed value</strong><br>GreenCity — climate-ready public space</label></div></div><div class="border rounded p-3"><div class="form-check"><input class="form-check-input" type="radio" name="project_value" id="curator-value-current" value="current"><label class="form-check-label" for="curator-value-current"><strong>Accepted value</strong><br>Delta Futures</label></div></div></fieldset>
+              <label for="curator-settle-comment" class="form-label mt-3">Comment <span class="small">(optional)</span></label><textarea id="curator-settle-comment" name="comment" class="form-control mb-3" rows="3"></textarea>
+              <div class="d-flex flex-wrap gap-2"><button type="submit" name="state" value="accepted" class="btn btn-primary">Accept</button><button type="submit" name="state" value="adapted" class="btn btn-outline-primary">Adapt and accept</button><button type="submit" name="state" value="declined" class="btn btn-ghost">Decline</button><button type="submit" name="state" value="clarification" class="btn btn-ghost">Ask for clarification</button></div>
+            </div></div></section>
+            <aside class="col-xl-4" aria-labelledby="curator-settle-context-heading"><div class="card"><div class="card-body p-4"><h2 id="curator-settle-context-heading" class="h5">Current Work</h2><p class="small">Reviewed · Public</p><p class="fw-semibold mb-1">Mapping wetland recovery across the Scheldt basin</p><p class="small mb-0">The public page keeps the accepted value until this request is accepted or adapted.</p></div></div></aside>
+          </form>
+          <!-- @state -->
+
+          <!-- @state: accepted -->
+          <section class="card" aria-label="Accepted request outcome"><div class="card-body p-4"><span class="badge text-bg-success mb-3">Accepted</span><h2 id="curator-accepted-heading" class="h4">Request closed</h2><p>The Work and public page now show <strong>GreenCity — climate-ready public space</strong>. The outcome remains in Work history and the sender's Recent activity.</p><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator.html?state=requests" class="btn btn-primary">Back to Requests</a><a href="/templates/review-flow/researcher.html?state=activity" class="btn btn-outline-primary">Open researcher outcome</a></div></div></section>
+          <!-- @state -->
+
+          <!-- @state: adapted -->
+          <section class="card" aria-label="Adapted request outcome"><div class="card-body p-4"><span class="badge text-bg-success mb-3">Adapted and accepted</span><h2 id="curator-adapted-heading" class="h4">Request closed</h2><p>The curator-adjusted project value is now accepted and public. The proposal and final value remain in history.</p><a href="/templates/review-flow/curator.html?state=requests" class="btn btn-primary">Back to Requests</a></div></section>
+          <!-- @state -->
+
+          <!-- @state: declined -->
+          <section class="card" aria-label="Declined request outcome"><div class="card-body p-4"><span class="badge text-bg-secondary mb-3">Declined</span><h2 id="curator-declined-heading" class="h4">Request closed</h2><p>The Work and public page still show <strong>Delta Futures</strong>. The outcome and comment remain in history and Recent activity.</p><a href="/templates/review-flow/curator.html?state=requests" class="btn btn-primary">Back to Requests</a></div></section>
+          <!-- @state -->
+
+          <!-- @state: clarification -->
+          <section class="card" aria-labelledby="curator-clarification-heading"><div class="card-body p-4"><span class="badge text-bg-primary mb-3">Request open</span><h2 id="curator-clarification-heading" class="h4">Clarification requested</h2><p>The request stays open and returns to Needs your action for the owner and authorized proxies. The Work is unchanged.</p><div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator.html?state=requests" class="btn btn-primary">Back to Requests</a><a href="/templates/review-flow/researcher.html?state=request" class="btn btn-outline-primary">Open researcher view</a></div></div></section>
+          <!-- @state -->
+
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
