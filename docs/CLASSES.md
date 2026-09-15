@@ -280,6 +280,8 @@ if-barcode-line
 
 if-book
 
+if-bookmark-fill
+
 if-bookmark-line
 
 if-booktower
