@@ -21,15 +21,20 @@ hierarchy and selection state are shown.
 
 ## Project
 
-The programme line is settled: the Funding programme field folded into Project and relies
-on the picker showing and matching it. The picker still needs:
+A row names the project, labels its acronym and project ID, then carries one line per
+funding entry with that entry's funder and programme. *Project ID* is the project's own
+identifier, the sense raven gives the term, not a grant's award number. Period and a
+Research Explorer link stay on the project pages: in a 480px panel they cost more room
+than they earn.
 
-- the remaining metadata that distinguishes projects with the same name: funder,
-  grant number, years or a tested combination;
-- one action term, **Add project** or **Link project**, used here and in the deposit flow.
+Funder is shown to recognise a project, never to filter on: raven holds it as free text
+with no authority ([raven#55](https://github.com/ugent-library/raven/issues/55)).
 
-Raven owns the available project metadata. Design chooses the row and action wording
-after that data is confirmed.
+Still open: one action term, **Add project** or **Link project**, used here and in the
+deposit flow.
+
+Raven's field set is
+[`metadata-project-fields.md`](https://github.com/ugent-library/raven/blob/main/docs/metadata-project-fields.md).
 
 ## References
 

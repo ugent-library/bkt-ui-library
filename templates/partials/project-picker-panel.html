@@ -1,95 +1,180 @@
 <!-- @example: /patterns/filter-picker.html -->
-<!-- Shared markup: docs/JAVASCRIPT.md. Provisional rows: docs/wip/ENTITY-PICKERS.md.
-     The programme line is load-bearing: Funding programme folded into Project because
-     picker search matches the whole row (docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md). -->
+<!-- Prototype note: the project ids are real, the rest is placeholder. Two rows share a
+     title and one project carries two funders, both on purpose. -->
 
 <template id="project-picker">
   <p class="bt-panel__title" data-picker-title>Project</p>
   <div class="bt-panel__body">
     <label class="visually-hidden" for="project-search">Search projects</label>
     <input type="search" class="form-control form-control-sm" id="project-search"
-      data-picker-search placeholder="Search project or programme&hellip;" autocomplete="off">
+      data-picker-search placeholder="Search project, acronym, funder or programme&hellip;"
+      autocomplete="off">
   </div>
   <div class="bt-panel__body bt-panel__body--checklist" role="group"
     aria-label="Projects matching your search" data-picker-rows>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-1" data-id="fwo-g012">
+      <input class="form-check-input" type="checkbox" id="project-1"
+        data-id="fwo-g012">
       <label class="form-check-label" for="project-1">
         <span class="bt-result__name" data-picker-name>Adaptive Photonic Sensing</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">FWO G0.12N</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: APHOS</span>
+          <span class="bt-meta-list__item">Project ID: <code>01G00715</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: FWO</span>
+          <span class="bt-meta-list__item">Programme: Research Project</span>
         </span>
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-2" data-id="horizon-openair">
+      <input class="form-check-input" type="checkbox" id="project-2"
+        data-id="msca-sediment">
       <label class="form-check-label" for="project-2">
-        <span class="bt-result__name" data-picker-name>OpenAIR</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">Horizon Europe</span>
+        <span class="bt-result__name" data-picker-name>Coastal Sediment Flux</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: SEDIFLUX</span>
+          <span class="bt-meta-list__item">Project ID: <code>3F004820</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: European Commission</span>
+          <span class="bt-meta-list__item">Programme: MSCA Postdoctoral Fellowship</span>
         </span>
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-3" data-id="bof-starting">
+      <input class="form-check-input" type="checkbox" id="project-3"
+        data-id="horizon-flowmatters">
       <label class="form-check-label" for="project-3">
-        <span class="bt-result__name" data-picker-name>Quantum Memory Materials</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">BOF Starting Grant</span>
-        </span>
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-4" data-id="era-net">
-      <label class="form-check-label" for="project-4">
-        <span class="bt-result__name" data-picker-name>Urban Climate Twins</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">ERA-NET Cofund</span>
-        </span>
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-5" data-id="vlaio-tetra">
-      <label class="form-check-label" for="project-5">
-        <span class="bt-result__name" data-picker-name>Smart Textile Integration</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">VLAIO TETRA</span>
-        </span>
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-6" data-id="iof-valorisation">
-      <label class="form-check-label" for="project-6">
-        <span class="bt-result__name" data-picker-name>LightLab Prototyping</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">IOF Valorisation</span>
-        </span>
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-7" data-id="fwo-sb">
-      <label class="form-check-label" for="project-7">
-        <span class="bt-result__name" data-picker-name>Neural Speech Interfaces</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">FWO SB PhD</span>
-        </span>
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-8" data-id="ugent-goa">
-      <label class="form-check-label" for="project-8">
-        <span class="bt-result__name" data-picker-name>Post-Growth Urban Economics</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">UGent GOA</span>
-        </span>
-      </label>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="project-9" data-id="marie-curie">
-      <label class="form-check-label" for="project-9">
         <span class="bt-result__name" data-picker-name>FlowMatters</span>
-        <span class="bt-meta-list bt-meta-list--xs">
-          <span class="bt-meta-list__item">Marie Sk&#322;odowska-Curie</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Project ID: <code>12B4B24N</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: European Commission</span>
+          <span class="bt-meta-list__item">Programme: Horizon Europe</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-4"
+        data-id="iof-valorisation">
+      <label class="form-check-label" for="project-4">
+        <span class="bt-result__name" data-picker-name>LightLab Prototyping</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: LIGHTLAB</span>
+          <span class="bt-meta-list__item">Project ID: <code>41K07811</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: Ghent University</span>
+          <span class="bt-meta-list__item">Programme: IOF Valorisation</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-5"
+        data-id="fwo-sb">
+      <label class="form-check-label" for="project-5">
+        <span class="bt-result__name" data-picker-name>Neural Speech Interfaces</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: NEUSPEECH</span>
+          <span class="bt-meta-list__item">Project ID: <code>01MR0110</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: FWO</span>
+          <span class="bt-meta-list__item">Programme: SB PhD Fellowship</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-6"
+        data-id="horizon-openair">
+      <label class="form-check-label" for="project-6">
+        <span class="bt-result__name" data-picker-name>OpenAIR</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Project ID: <code>13v01221</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: European Commission</span>
+          <span class="bt-meta-list__item">Programme: Horizon Europe</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-7"
+        data-id="ugent-goa">
+      <label class="form-check-label" for="project-7">
+        <span class="bt-result__name" data-picker-name>Post-Growth Urban Economics</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: POSTGROW</span>
+          <span class="bt-meta-list__item">Project ID: <code>01MRA110</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: Ghent University</span>
+          <span class="bt-meta-list__item">Programme: Concerted Research Action</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-8"
+        data-id="bof-starting">
+      <label class="form-check-label" for="project-8">
+        <span class="bt-result__name" data-picker-name>Quantum Memory Materials</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: QMEM</span>
+          <span class="bt-meta-list__item">Project ID: <code>01MR0210</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: Ghent University</span>
+          <span class="bt-meta-list__item">Programme: BOF Starting Grant</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-9"
+        data-id="fwo-quantum-memory">
+      <label class="form-check-label" for="project-9">
+        <span class="bt-result__name" data-picker-name>Quantum Memory Materials</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: QUMEM</span>
+          <span class="bt-meta-list__item">Project ID: <code>01MR0410</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: FWO</span>
+          <span class="bt-meta-list__item">Programme: Research Project</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-10"
+        data-id="vlaio-tetra">
+      <label class="form-check-label" for="project-10">
+        <span class="bt-result__name" data-picker-name>Smart Textile Integration</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: SMARTEX</span>
+          <span class="bt-meta-list__item">Project ID: <code>01MR0510</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: VLAIO</span>
+          <span class="bt-meta-list__item">Programme: TETRA</span>
+        </span>
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="project-11"
+        data-id="horizon-urbantwin">
+      <label class="form-check-label" for="project-11">
+        <span class="bt-result__name" data-picker-name>Urban Climate Twins</span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Acronym: URBTWIN</span>
+          <span class="bt-meta-list__item">Project ID: <code>13v20120</code></span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: European Commission</span>
+          <span class="bt-meta-list__item">Programme: Horizon Europe</span>
+        </span>
+        <span class="bt-meta-list">
+          <span class="bt-meta-list__item">Funder: FWO</span>
         </span>
       </label>
     </div>

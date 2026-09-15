@@ -71,8 +71,10 @@ decides which fields may be public.
 - Appeared in means the container and may be qualified by kind. Journal abbreviations also match.
   *Anywhere* includes `publisher` where raven's crosswalk makes it the container (reports,
   online posts). Conference means the event and matches its name, organiser or location.
-- Funding programme reaches a work through its projects and has no row: the project picker
-  shows each project's programme and its search matches it. The label stays *Project*.
+- Funding programme is project metadata, not a field of its own. The project picker shows it
+  on each funding entry and whole-row search matches it; no condition filters on it. Nobody
+  asked for one, and raven holds it as free text with no authority behind it, so it cannot be
+  faceted. Build a condition only on an explicit ask.
 - Access says whether it opens. Attached content says which visible file kind exists. Its
   *Full text or dataset* value means the record's main file: raven's role stays `full_text`,
   and a dataset's data lives at its identifier.

@@ -67,6 +67,10 @@ bg-faculty-we-light
 
 bg-success-light
 
+bt-alt-titles
+bt-alt-titles__item
+bt-alt-titles__item--subtitle
+
 bt-avatar
 bt-avatar--large
 bt-avatar--outline

@@ -134,11 +134,11 @@
       frag.querySelector('[data-picker-title]').remove();
       frag.querySelector('[data-picker-actions]').remove();
 
+      // No placeholder: the panel's own names what the row search matches.
       const search = frag.querySelector('[data-picker-search]');
       const searchLabel = frag.querySelector(`label[for="${search.id}"]`);
       search.id = prefix + search.id;
       searchLabel.htmlFor = search.id;
-      search.placeholder = 'Search ' + def.label.toLowerCase() + '…';
 
       const rows = frag.querySelector('[data-picker-rows]');
       rows.setAttribute('aria-label', 'Select ' + def.label);
@@ -198,8 +198,35 @@
         filterEditor.querySelectorAll('[data-editor-options] .form-check, [data-picker-rows] .form-check')
           .forEach(row => {
             row.hidden = q !== '' && !row.textContent.toLowerCase().includes(q);
+            markMatches(row.querySelector('label'), row.hidden ? '' : q);
           });
       });
+
+  function markMatches(label, needle) {
+    label.querySelectorAll('mark').forEach(hit => hit.replaceWith(hit.textContent));
+    label.normalize();
+    if (!needle) return;
+    const walker = document.createTreeWalker(label, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) nodes.push(node);
+    nodes.forEach(node => {
+      const text = node.nodeValue;
+      const frag = document.createDocumentFragment();
+      let from = 0;
+      let at = text.toLowerCase().indexOf(needle);
+      while (at !== -1) {
+        frag.append(text.slice(from, at));
+        const hit = document.createElement('mark');
+        hit.textContent = text.slice(at, at + needle.length);
+        frag.append(hit);
+        from = at + needle.length;
+        at = text.toLowerCase().indexOf(needle, from);
+      }
+      if (!from) return;
+      frag.append(text.slice(from));
+      node.replaceWith(frag);
+    });
+  }
     }
 
     function applyEditor(filterId, def) {

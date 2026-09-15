@@ -153,7 +153,8 @@ change still performs one suggest request and the counts remain the live
 server totals. The tabs use `aria-selected`, roving keyboard focus, and wrap
 visually on narrow screens. The free-text submit row remains available in
 every view; Recent belongs to All. Every rendered entity tab carries its live
-server count; zero-result groups are omitted.
+server count; an entity group with no hits is omitted. Omission stops at the
+entity group: a facet value follows "Filters don't disappear at zero" below.
 
 ### Scoped links on cards and record pages
 

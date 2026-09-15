@@ -1,0 +1,42 @@
+<!-- @title: Review flow curator sidebar -->
+<!-- @surface: backoffice -->
+
+<nav class="bt-sidebar bt-sidebar--bordered bt-sidebar--flush" aria-label="Section navigation">
+  <p class="bt-sidebar__group-label">Curation</p>
+  <!-- @state: queue review approved return returned request-changes request-sent -->
+  <a href="/templates/review-flow/curator.html?state=queue" class="nav-link active" aria-current="page">
+    <i class="if if-list-check" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Review queue</span>
+    <span class="badge text-bg-primary badge--total">14<span class="visually-hidden"> works</span></span>
+  </a>
+  <!-- @state -->
+  <!-- @state: requests settle accepted adapted declined clarification -->
+  <a href="/templates/review-flow/curator.html?state=queue" class="nav-link">
+    <i class="if if-list-check" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Review queue</span>
+    <span class="badge text-bg-primary badge--total">14<span class="visually-hidden"> works</span></span>
+  </a>
+  <!-- @state -->
+  <!-- @state: requests settle accepted adapted declined clarification -->
+  <a href="/templates/review-flow/curator.html?state=requests" class="nav-link active" aria-current="page">
+    <i class="if if-request-change" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Requests</span>
+    <span class="badge text-bg-primary badge--total">4<span class="visually-hidden"> requests</span></span>
+  </a>
+  <!-- @state -->
+  <!-- @state: queue review approved return returned request-changes request-sent -->
+  <a href="/templates/review-flow/curator.html?state=requests" class="nav-link">
+    <i class="if if-request-change" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Requests</span>
+    <span class="badge text-bg-primary badge--total">4<span class="visually-hidden"> requests</span></span>
+  </a>
+  <!-- @state -->
+  <a href="/templates/biblio-researcher/candidate-review.html" class="nav-link">
+    <i class="if if-notification" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Candidates</span>
+  </a>
+  <a href="/templates/biblio-team/curate.html?view=duplicates" class="nav-link">
+    <i class="if if-copy" aria-hidden="true"></i>
+    <span class="bt-sidebar__label">Duplicates</span>
+  </a>
+</nav>
