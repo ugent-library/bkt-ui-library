@@ -157,8 +157,8 @@ ENTRY: curator opens Review --> {Queues}
   "Round history and changes since Return or approval" ✚
   "Migrated old-Biblio message, read-only" ✚
   [Approve]
-  [Return with comment]
   [Request changes] --> {Request changes}
+  [Return with comment]
   [Set visibility]
     + accepted --> {Work review}
     + duplicate cluster open --> {Publication blocked}
@@ -452,8 +452,8 @@ This design needs the following capabilities. Raven decides how to provide them.
 | Need | Raven `main` today |
 |---|---|
 | Owners edit submitted Works directly and propose changes to reviewed Works | Only curators can edit past draft and returned; proposed changes do not exist |
-| Curators open any draft directly; drafts remain outside queues and search results | A researcher's draft is hidden from other curators |
-| Approved snapshots and field values at approval | Only the current projection exists |
+| Curators open any draft directly; drafts remain outside queues and search results | A researcher's draft is hidden from other curators (via view as + untouched drafts that are going to be removed will be deleted, this will be communicated. With deadlines we can ping that something is still there.) |
+| Approved snapshots and field values at approval | Only the current projection exists -> approvals are live immediately (for now, TBD with open science) |
 | Field- or section-scoped pending requests, several per Work, with origin, message, status and settlement actor | Workflow comments are record-level events |
 | Proposed values stay outside the Work and public site until acceptance; accept or adapt applies them | A normal update replaces the public projection immediately |
 | Migrated Message storage readable by owner and curator | The migration catalog drops Message |
