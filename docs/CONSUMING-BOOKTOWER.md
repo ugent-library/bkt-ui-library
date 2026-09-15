@@ -316,7 +316,7 @@ Every consuming project should preserve these:
 - accessible names for icon-only buttons
 - `aria-current="page"` on active navigation
 - no visual-only state changes without accessible feedback
-- modal openers carry `aria-labelledby` and, on confirmations, `aria-describedby` — and *not* `role`, `aria-modal` or `aria-hidden`, which Bootstrap's JS sets at runtime (rule E6)
+- modal roots carry `role="dialog"` and `aria-labelledby`, and, on confirmations, `aria-describedby` — and *not* `aria-modal` or `aria-hidden`, which Bootstrap's JS sets at runtime (rule E6)
 
 See the pre-flight checklist in `docs/ACCESSIBILITY.md`. Where a component is plain
 Bootstrap, the accessible relationships your server must emit are still Booktower-owned:
