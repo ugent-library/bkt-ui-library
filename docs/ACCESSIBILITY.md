@@ -62,6 +62,8 @@ Projects pagination / Researchers pagination ← another list, another entity
 
 A pagination nav is named after the entity in the list — the wording rule is `docs/DOMAIN-VOCABULARY.md`; the labels in full, single bar, repeated bar and several lists on one page, are pinned in the kit: `patterns/pagination.html`.
 
+Numbered page links and browse letters take no `aria-label`. "2" is already the name, and the labelled `<nav>` around the list gives the context WCAG 2.4.4 asks for at AA. Naming them "Page 2" is 2.4.9, which is AAA and above our target. The arrow links are the exception: their only content is an icon, so they carry `aria-label="Next page"` and `"Previous page"`.
+
 **A6. Landmark regions used correctly.**
 - `<header>` for the topbar (`bt-navbar`)
 - `<main>` for primary content
