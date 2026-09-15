@@ -63,8 +63,8 @@ endpoints.
 - `GET /lists?q=<text>` replaces the checklist. The search input triggers on `input` and `search`,
   not `keyup`, so the native clear control also refreshes the list.
 - `POST /lists` creates a list and returns it selected. `PUT /lists/<slug>` and
-  `DELETE /lists/<slug>` update membership without replacing the checklist, so the typed query and
-  open panel stay in place.
+  `DELETE /lists/<slug>` return the row (`<prefix>-<slug>-row`), swapped in place, so the typed
+  query and open panel survive and a ticked row gains its Open link.
 
 The fixture does not persist membership after a later checklist render.
 

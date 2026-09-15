@@ -176,7 +176,9 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
   }
 
   if (/^\/lists\/[^/]+$/.test(urlPath) && (method === 'PUT' || method === 'DELETE')) {
-    return respond('', 180, 204, 'text/plain; charset=utf-8');
+    const slug = urlPath.slice('/lists/'.length);
+    const prefix = target.replace(new RegExp(`-${slug}-row$`), '') || 'atl';
+    return respond(c.renderListRow(prefix, slug, method === 'PUT'), 180);
   }
 
   return false;

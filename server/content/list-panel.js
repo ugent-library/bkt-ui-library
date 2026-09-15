@@ -23,5 +23,10 @@ module.exports = function renderListPanel(prefix) {
     <button type="submit" class="visually-hidden">Search lists</button>
   </form>
 </div>
-<div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists" id="${prefix}-lists">${renderListPicker(prefix)}</div>`;
+<div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists" id="${prefix}-lists">${renderListPicker(prefix)}</div>
+<div class="bt-panel__actions">
+  <a href="/templates/biblio-researcher/lists.html" class="btn btn-ghost btn-sm">
+    My lists <i class="if if-arrow-right if--sm" aria-hidden="true"></i>
+  </a>
+</div>`;
 };

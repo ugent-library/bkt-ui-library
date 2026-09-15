@@ -1,6 +1,6 @@
 <!-- @title: Urban forests as essential infrastructure — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: files, v1, logged-in, restricted, embargo, no-files, thesis, alt-titles -->
+<!-- @states: files, v1, logged-in, restricted, embargo, no-files, thesis, alt-titles, in-list -->
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,7 +48,7 @@
             <!-- @state: thesis alt-titles -->
             <span class="badge text-bg-primary">Doctoral thesis</span>
             <!-- @state -->
-            <!-- @state: files logged-in v1 -->
+            <!-- @state: files logged-in in-list v1 -->
             <span class="badge text-bg-success">
               <i class="if if-open-access" aria-hidden="true"></i> Open access
             </span>
@@ -140,7 +140,7 @@
                Login links carry the post-login return URL.
                No fullText file: no button (external full text out of scope). -->
           <div class="d-flex align-items-center gap-3">
-            <!-- @state: files logged-in -->
+            <!-- @state: files logged-in in-list -->
             <a href="#" class="btn btn-primary" download>
               <i class="if if-download" aria-hidden="true"></i>
               Download Full Text
@@ -165,6 +165,8 @@
               Open access from <time datetime="2027-05-01">1 May 2027</time>
             </span>
             <!-- @state -->
+            <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+            <!-- @state: files v1 logged-in restricted embargo no-files thesis alt-titles -->
             <div class="dropdown">
               <button type="button" class="btn btn-secondary dropdown-toggle"
                 data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
@@ -172,11 +174,25 @@
                 hx-target="#atl-wd-panel" hx-swap="innerHTML" hx-indicator="#atl-wd-loading">
                 <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
               </button>
-              <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
               <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-wd-panel" role="dialog" aria-label="Add to list">
                 <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wd-loading" aria-live="polite">Loading your lists&hellip;</p>
               </div>
             </div>
+            <!-- @state -->
+            <!-- Saved state of the same toggle: patterns/panel.html#already-in-a-list -->
+            <!-- @state: in-list -->
+            <div class="dropdown">
+              <button type="button" class="btn btn-secondary dropdown-toggle"
+                data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog"
+                hx-get="/lists/panel?work=wdl" hx-trigger="click once"
+                hx-target="#atl-wdl-panel" hx-swap="innerHTML" hx-indicator="#atl-wdl-loading">
+                <i class="if if-bookmark-fill" aria-hidden="true"></i> In 1 list
+              </button>
+              <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-wdl-panel" role="dialog" aria-label="Add to list">
+                <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-wdl-loading" aria-live="polite">Loading your lists&hellip;</p>
+              </div>
+            </div>
+            <!-- @state -->
             <!-- A panel, matching Add to list beside it. Container rule:
                  patterns/query-builder.html. -->
             <div class="dropdown">
@@ -235,7 +251,7 @@
               Share
             </button> -->
           </div>
-          <!-- @state: files logged-in -->
+          <!-- @state: files logged-in in-list -->
           <p class="small text-muted mt-2">Accepted manuscript &middot; Open Access &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
           <!-- @state: restricted -->
@@ -374,7 +390,7 @@
           <!-- Duplicate of the Files section for the logged-in viewer (state blocks
                cannot nest): restricted files render like open ones — filename,
                download — keeping their Restricted badge. -->
-          <!-- @state: logged-in -->
+          <!-- @state: logged-in in-list -->
           <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
           <section aria-labelledby="files-heading-login" class="mb-5">
             <h2 id="files-heading-login" class="h4 mb-3">Files</h2>
@@ -628,7 +644,7 @@
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
               <dd class="col-sm-9 mb-0"><a href="https://doi.org/10.1002/ppp3.70125">10.1002/ppp3.70125</a></dd>
 
-              <!-- @state: files logged-in -->
+              <!-- @state: files logged-in in-list -->
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">License</dt>
               <dd class="col-sm-9 mb-0"><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></dd>
               <!-- @state -->
