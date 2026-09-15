@@ -12,7 +12,7 @@
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Add-to-list picker — search-first</h3>
-      <div class="ds-demo-body">
+      <div class="ds-demo-body" data-surface="public">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
           <p class="bt-panel__title">Add this work to a list</p>
           <div class="bt-panel__body">
@@ -56,7 +56,7 @@
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Nothing matches — create the typed name</h3>
-      <div class="ds-demo-body">
+      <div class="ds-demo-body" data-surface="public">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
           <p class="bt-panel__title">Add this work to a list</p>
           <div class="bt-panel__body">
@@ -75,13 +75,18 @@
               </button>
             </form>
           </div>
+          <div class="bt-panel__actions">
+            <a href="/templates/biblio-researcher/lists.html" class="btn btn-ghost btn-sm">
+              My lists <i class="if if-arrow-right if--sm" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Partly matched — create is still offered</h3>
-      <div class="ds-demo-body">
+      <div class="ds-demo-body" data-surface="public">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
           <p class="bt-panel__title">Add this work to a list</p>
           <div class="bt-panel__body">
@@ -96,6 +101,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="p4-reading" checked>
               <label class="form-check-label" for="p4-reading">Reading list</label>
+              <a href="/templates/biblio-researcher/list-detail.html" class="bt-link-more" aria-label="Open Reading list">Open <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
             </div>
             <form action="/lists" method="post">
               <input type="hidden" name="name" value="Reading">
@@ -104,13 +110,18 @@
               </button>
             </form>
           </div>
+          <div class="bt-panel__actions">
+            <a href="/templates/biblio-researcher/lists.html" class="btn btn-ghost btn-sm">
+              My lists <i class="if if-arrow-right if--sm" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">No lists yet — the panel opens in the create state</h3>
-      <div class="ds-demo-body">
+      <div class="ds-demo-body" data-surface="public">
         <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
           <p class="bt-panel__title">Add this work to a list</p>
           <div class="bt-panel__body bt-panel__body--form">
@@ -121,6 +132,11 @@
                 <button type="submit" class="btn btn-secondary btn-sm text-nowrap">Create</button>
               </div>
             </form>
+          </div>
+          <div class="bt-panel__actions">
+            <a href="/templates/biblio-researcher/lists.html" class="btn btn-ghost btn-sm">
+              My lists <i class="if if-arrow-right if--sm" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
