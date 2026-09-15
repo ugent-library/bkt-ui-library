@@ -1,9 +1,3 @@
-/**
- * The picker's list body (patterns/panel.html).
- * Membership is stateless — "Reading list" is always the member, so a tick made
- * in the browser is lost on re-render.
- */
-
 const slugify = require('./slugify');
 
 const LISTS = [
@@ -33,7 +27,6 @@ function renderRow(prefix, slug, name, member) {
 </div>`;
 }
 
-// A created list is not in LISTS; its slug stands in for its name.
 const listName = slug => (LISTS.find(list => list.slug === slug) || { name: slug.replace(/-/g, ' ') }).name;
 
 function renderListPicker(prefix, q = '', created = false) {
@@ -45,8 +38,6 @@ function renderListPicker(prefix, q = '', created = false) {
   const matches = LISTS.filter(list => list.name.toLowerCase().includes(needle));
   const rows = matches.map(list => renderRow(prefix, list.slug, list.name, list.member)).join('');
 
-  // No create row at an exact name: the list is already in the checklist, which
-  // is what refuses duplicates.
   if (!query || LISTS.some(list => list.name.toLowerCase() === needle)) return rows;
 
   return rows + `

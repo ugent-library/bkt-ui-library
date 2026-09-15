@@ -1,12 +1,4 @@
-/**
- * HTMX endpoint map for the prototype. Each URL returns a mock fragment from
- * server/content.js. To add a route, add a branch here; to change what it
- * returns, edit the matching render* in content.js.
- *
- * handleTemplateHtmx returns true when it handled the request, false to let
- * the static file server take over. loadFragment is injected by server.js
- * (it belongs to the template engine).
- */
+/** Routes: docs/SERVER.md. Returns false to fall through to the static file server. */
 
 const c = require('./content');
 
@@ -163,12 +155,10 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
     return respond(c.renderRelatedWorks(), 420);
   }
 
-  // ?work=<id> becomes the panel's id prefix.
   if (urlPath === '/lists/panel' && method === 'GET') {
     return respond(c.renderListPanel(`atl-${params.work || 'x'}`), 240);
   }
 
-  // Prefix comes back via the target id, <prefix>-lists.
   if (urlPath === '/lists' && (method === 'GET' || method === 'POST')) {
     const prefix = target.replace(/-lists$/, '') || 'atl';
     if (method === 'GET') return respond(c.renderListPicker(prefix, params.q || ''), 200);

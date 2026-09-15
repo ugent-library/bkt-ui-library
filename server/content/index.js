@@ -1,10 +1,3 @@
-/**
- * Barrel for the mock content blocks. One file per block in this folder;
- * this index re-exports them so server/htmx-routes.js can require('./content')
- * and reach every block by name. To add a block: create a file here that
- * exports its render function, then add a line below.
- */
-
 module.exports = {
   slugify: require('./slugify'),
   renderBackofficeResultsRows: require('./backoffice-results-rows'),

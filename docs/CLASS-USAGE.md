@@ -67,7 +67,7 @@ Companion to the generated [`CLASSES.md`](CLASSES.md): what that list can't expr
 
 Access status is the one fixed badge recipe: `text-bg-success` + `if-open-access` for open access, `text-bg-secondary` + `if-lock` for restricted, `text-bg-secondary` + `if-time` for embargo (badge names the date) so it does not compete with open access and does not read as a warning. Closed access is never rendered on a public page. `badge--lg` is the tap-target size; `badge--tab` is the quiet type-tab variant in the search suggest overlay — its active state is the selected type filter, so it pairs with `role="tab"` and `aria-selected`.
 
-**Links** — `bt-link-more` is the link that opens the complete list a heading, count or row stands for: View all, All, Open. It is small and muted, with no underline until hover, and takes an optional trailing `if-arrow-right if--xs`. Never spell it as `small text-muted text-decoration-none`. Defined in `elements/_links.scss`; demo at `elements/buttons.html`.
+**Links** — `bt-link-more` is the link that opens the complete list a heading, count or row stands for: View all, All, Open. It is small and muted, with no underline until hover, and takes an optional trailing `if-arrow-right if--xs`. Never spell it as `small text-muted text-decoration-none`. Defined in `elements/_buttons.scss`; demo at `elements/buttons.html`.
 
 **Buttons** — `btn-xs`/`btn-sm`/`btn`/`btn-lg` all defined; all standard Bootstrap variants (including `btn-ghost`) and all `btn-outline-*` variants are overridden with Booktower tokens.
 

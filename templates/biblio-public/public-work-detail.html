@@ -165,7 +165,7 @@
               Open access from <time datetime="2027-05-01">1 May 2027</time>
             </span>
             <!-- @state -->
-            <!-- Loads on first open, as raven does. Markup + states: patterns/panel.html. -->
+            <!-- Markup and states: patterns/panel.html. -->
             <!-- @state: files v1 logged-in restricted embargo no-files thesis alt-titles -->
             <div class="dropdown">
               <button type="button" class="btn btn-secondary dropdown-toggle"
@@ -193,8 +193,7 @@
               </div>
             </div>
             <!-- @state -->
-            <!-- A panel, matching Add to list beside it. Container rule:
-                 patterns/query-builder.html. -->
+            <!-- Container rule: patterns/query-builder.html. -->
             <div class="dropdown">
               <button type="button" class="btn btn-ghost dropdown-toggle"
                 data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-haspopup="dialog">
@@ -257,8 +256,6 @@
           <!-- @state: restricted -->
           <p class="small text-muted mt-2">Accepted manuscript &middot; Restricted &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
-          <!-- No files, or all files private: same state, indistinguishable —
-               private existence is never revealed (patent risk, tech transfer) -->
           <!-- @state: no-files -->
           <p class="small text-muted mt-2">No full text available in Biblio</p>
           <!-- @state -->
@@ -381,8 +378,6 @@
                   </p>
                 </div>
               </li>
-
-              <!-- private files: never rendered — not even a count (patent risk, tech transfer) -->
             </ul>
           </section>
           <!-- @state -->
@@ -474,8 +469,6 @@
                   Download
                 </a>
               </li>
-
-              <!-- private files: never rendered, also for logged-in public visitors -->
             </ul>
           </section>
           <!-- @state -->
@@ -660,17 +653,12 @@
             </dl>
           </div>
 
-          <!-- Research disciplines — NOT SHOWN, pending review (M, 2026-07-21). raven
-               models them (research_disciplines; scheme is deployer config: UGent
-               categories / Frascati / OECD / ANZSRC) but the vocabulary needs a policy
-               review before public display. Also cut from the works sidebar — live
-               Subject facet drew ~269 sessions in 7 months of logs. -->
+          <!-- Research disciplines — not shown, pending the vocabulary review.
+               Grounds: docs/SEARCH-AND-FILTERING.md. -->
 
           <!-- Keywords -->
           <div class="mb-4">
             <h3 class="form-label d-block mb-2">Keywords</h3>
-            <!-- Keyword badges navigate to the keyword-scoped works search (Rule 3) —
-                 the highest-volume refinement in the live logs (~252k sessions / 7 months). -->
             <div class="d-flex flex-wrap gap-1">
               <a href="public-works.html?keyword=urban-climate" class="badge text-bg-secondary text-decoration-none">Urban climate</a>
               <a href="public-works.html?keyword=resilience" class="badge text-bg-secondary text-decoration-none">Resilience</a>

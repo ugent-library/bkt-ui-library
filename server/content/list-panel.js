@@ -1,10 +1,3 @@
-/**
- * The add-to-list panel (patterns/panel.html), lazy-loaded per record.
- * The id prefix keeps open panels from colliding; the form scopes `q` and gives
- * Enter a submit path.
- * Real impl: with no session this returns the login prompt body instead.
- */
-
 const renderListPicker = require('./list-picker');
 
 module.exports = function renderListPanel(prefix) {
