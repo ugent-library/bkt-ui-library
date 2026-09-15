@@ -42,7 +42,12 @@
       });
     });
 
-    clearAllBtn.addEventListener('click', () => { activeFilters = {}; renderChips(); closeEditor(); });
+    clearAllBtn.addEventListener('click', () => {
+      Object.values(activeFilters).forEach(f => untick(f));
+      activeFilters = {};
+      renderChips();
+      closeEditor();
+    });
 
     document.getElementById(prefix + 'add-filter-btn')?.addEventListener('click', closeEditor);
 
@@ -294,9 +299,12 @@
           edit.setAttribute('aria-current', 'true');
         }
 
-        edit.addEventListener('click', () =>
-          openEditor(id, activeFilters[id], edit.closest('.filter-chip-group')));
+        edit.addEventListener('click', () => {
+          if (f.checkbox) return revealBox(f.checkbox);
+          openEditor(id, activeFilters[id], edit.closest('.filter-chip-group'));
+        });
         remove.addEventListener('click', () => {
+          untick(f);
           removeFilter(id);
           if (editingFilter === id) closeEditor();
         });
@@ -306,6 +314,24 @@
 
       clearAllBtn.hidden = Object.keys(activeFilters).length === 0;
       syncPickerState();
+    }
+
+    function untick(f) {
+      const box = f.checkbox && document.getElementById(f.checkbox);
+      if (box) box.checked = false;
+    }
+
+    // A closed offcanvas is still laid out, and cannot take focus.
+    function revealBox(boxId) {
+      const box = document.getElementById(boxId);
+      if (!box) return;
+      const sheet = box.closest('.offcanvas, .offcanvas-lg');
+      if (sheet && getComputedStyle(sheet).visibility === 'hidden') {
+        sheet.addEventListener('shown.bs.offcanvas', () => box.focus(), { once: true });
+        bootstrap.Offcanvas.getOrCreateInstance(sheet).show();
+        return;
+      }
+      box.focus();
     }
 
     function syncPickerState() {
