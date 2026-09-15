@@ -24,13 +24,16 @@
   In production the address renders the open dialog; here ?state= does, per
   patterns/query-builder.html.
 
+  Every state renders one of two result spaces, and each space carries its own numbers —
+  facet counts, result count, pagination, the tray count, the sheet's apply button and
+  Export.
+
   The facet-set-in-builder state is this page's own: the Full text access facet reporting that
   an advanced condition holds it, instead of contradicting it with empty checkboxes.
 
   The Add-filter control (public discovery "search-it" dimensions) is wired by
   filter-bar.js: pick a filter → editor opens; a chip appears; click a chip to edit,
-  × to remove. Two chips are pre-applied so the bar starts populated. Chips are
-  client-side stubs and don't refilter the list yet.
+  × to remove. Chips are client-side stubs and don't refilter the list yet.
 -->
 
 <!-- @include: templates/partials/public-header.html -->
@@ -63,9 +66,9 @@
             </label>
 
             <!-- Box value derives from ?q= (Rule 1), so it varies per state. -->
-            <!-- The × clears the query only: its href drops q and keeps every filter param
-                 (Rule 2). Production re-renders the current URL without q; here ?state= is the
-                 kit's own, so the click lands on the empty box. An empty box hides the ×. -->
+            <!-- The × clears the query only, keeping every filter param (Rule 2). Here the
+                 href carries ?state= instead: the kit's no-query state is the whole corpus,
+                 so it renders no chips. An empty box hides the ×. -->
             <!-- [html-validate-disable-block no-dup-id, form-dup-name -- @state blocks; one renders at a time] -->
             <!-- @state: results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
             <div class="input-group input-group-lg mb-3">
@@ -87,7 +90,7 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
-              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open&amp;author=jane-doe&amp;keywords=climate-change"
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query"
                 aria-label="Clear search">
                 <i class="if if-close" aria-hidden="true"></i>
               </a>
@@ -114,7 +117,7 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
-              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open"
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query"
                 aria-label="Clear search">
                 <i class="if if-close" aria-hidden="true"></i>
               </a>
@@ -141,7 +144,7 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
-              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open&amp;author=jane-doe&amp;keywords=climate-change"
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query"
                 aria-label="Clear search">
                 <i class="if if-close" aria-hidden="true"></i>
               </a>
@@ -168,7 +171,7 @@
                 data-hx-target="#suggest-panel"
                 data-hx-swap="innerHTML"
                 data-hx-indicator="#suggest-indicator">
-              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query&amp;access=open"
+              <a class="btn btn-ghost bt-search-clear" href="public-works.html?state=no-query"
                 aria-label="Clear search" hidden>
                 <i class="if if-close" aria-hidden="true"></i>
               </a>
@@ -209,16 +212,19 @@
                   <!-- Chips rendered by filter-bar.js from data-initial-filters —
                       per state: a name search and an empty query start clean. -->
                   <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
-                  <!-- @state: results no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+                  <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips"
                     data-initial-filters='{
+                      "access":   { "label": "Full text access", "displayValue": "Open access", "rawValue": ["open"], "checkbox": "f-oa" },
+                      "type":     { "label": "Type", "displayValue": "Journal article", "rawValue": ["journal_article"], "checkbox": "f-journal" },
+                      "year":     { "label": "Year", "displayValue": "2024", "rawValue": ["2024"], "checkbox": "f-2024" },
                       "person":   { "label": "Person", "displayValue": "Jane Doe", "rawValue": [{ "id": "p-jd2", "label": "Jane Doe" }] },
                       "keywords": { "label": "Keywords", "displayValue": "Climate change", "rawValue": ["climate-change"] }
                     }'>
                   </div>
                   <!-- @state -->
-                  <!-- @state: best-bet no-query builder-empty -->
+                  <!-- @state: no-query builder-empty -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips">
                   </div>
@@ -315,8 +321,17 @@
              view. The × always closes the sheet. -->
         <div class="offcanvas-header d-lg-none border-bottom">
           <div id="wf-head-list">
+            <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
             <h2 class="h5 mb-0" id="filters-offcanvas-title">Filters</h2>
+            <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+            <span class="text-muted small" id="wf-sheet-count">27 research outputs</span>
+            <!-- @state -->
+            <!-- @state: no-query builder-empty -->
             <span class="text-muted small" id="wf-sheet-count">179 research outputs</span>
+            <!-- @state -->
+            <!-- @state: no-results -->
+            <span class="text-muted small" id="wf-sheet-count">0 research outputs</span>
+            <!-- @state -->
           </div>
           <button type="button" class="btn btn-ghost px-0 fs-5" id="wf-head-back" hidden>
             <i class="if if-arrow-left" aria-hidden="true"></i>
@@ -332,6 +347,8 @@
 
         <div id="wf-sheet-main" class="p-3 p-lg-0">
 
+        <!-- [html-validate-disable-block no-dup-id, form-dup-name -- @state blocks; one renders at a time] -->
+
         <!-- Access — first (OA-forward per UB2030) -->
 
         <!-- Prototype note: the facet reporting the advanced condition is out of scope for
@@ -345,7 +362,7 @@
               <i class="if if-search-eye-line if--sm" aria-hidden="true"></i>
               Set in advanced search
             </p>
-            <p class="mb-2">is <strong>Metadata only</strong></p>
+            <p class="mb-2">is <strong>Open access</strong></p>
             <a href="public-works.html?advanced=1" class="btn btn-ghost btn-sm px-0"
               data-bs-toggle="modal" data-bs-target="#advanced-search-modal">
               Edit this condition
@@ -354,101 +371,128 @@
         </fieldset>
         <!-- @state -->
 
-        <!-- @state: results best-bet no-results no-query builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
+        <!-- Nothing recounts on a tick, so the zero-results state keeps the narrowed
+             counts. -->
+        <!-- @state: results best-bet no-results builder-full-query builder-one-condition builder-or-group builder-no-results -->
         <fieldset>
           <legend class="form-label h6 mb-2">Full text access</legend>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-oa" checked
-              aria-label="Open access (142 results)">
+              aria-label="Open access (27 results)">
             <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
-            <span class="text-muted small" aria-hidden="true">142</span>
+            <span class="text-muted small" aria-hidden="true">27</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-embargo"
-              aria-label="Under embargo (11 results)">
+              aria-label="Under embargo (4 results)">
             <label class="form-check-label flex-grow-1" for="f-embargo">Under embargo</label>
-            <span class="text-muted small" aria-hidden="true">11</span>
+            <span class="text-muted small" aria-hidden="true">4</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-restricted"
-              aria-label="Restricted (37 results)">
+              aria-label="Restricted (6 results)">
             <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
-            <span class="text-muted small" aria-hidden="true">37</span>
+            <span class="text-muted small" aria-hidden="true">6</span>
+          </div>
+        </fieldset>
+        <!-- @state -->
+
+        <!-- @state: no-query builder-empty -->
+        <fieldset>
+          <legend class="form-label h6 mb-2">Full text access</legend>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-oa"
+              aria-label="Open access (112 results)">
+            <label class="form-check-label flex-grow-1" for="f-oa">Open access</label>
+            <span class="text-muted small" aria-hidden="true">112</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-embargo"
+              aria-label="Under embargo (9 results)">
+            <label class="form-check-label flex-grow-1" for="f-embargo">Under embargo</label>
+            <span class="text-muted small" aria-hidden="true">9</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-restricted"
+              aria-label="Restricted (27 results)">
+            <label class="form-check-label flex-grow-1" for="f-restricted">Restricted</label>
+            <span class="text-muted small" aria-hidden="true">27</span>
           </div>
         </fieldset>
         <!-- @state -->
 
         <hr>
 
+        <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
         <!-- Type -->
         <fieldset>
           <legend class="form-label h6 mb-2">Type</legend>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-journal" checked
-              aria-label="Journal article (88 results)">
+              aria-label="Journal article (27 results)">
             <label class="form-check-label flex-grow-1" for="f-journal">Journal article</label>
-            <span class="text-muted small" aria-hidden="true">88</span>
+            <span class="text-muted small" aria-hidden="true">27</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-conference"
-              aria-label="Conference paper (31 results)">
+              aria-label="Conference paper (5 results)">
             <label class="form-check-label flex-grow-1" for="f-conference">Conference paper</label>
-            <span class="text-muted small" aria-hidden="true">31</span>
+            <span class="text-muted small" aria-hidden="true">5</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-dataset"
-              aria-label="Dataset (24 results)">
+              aria-label="Dataset (3 results)">
             <label class="form-check-label flex-grow-1" for="f-dataset">Dataset</label>
-            <span class="text-muted small" aria-hidden="true">24</span>
+            <span class="text-muted small" aria-hidden="true">3</span>
           </div>
           <div class="collapse" id="type-more">
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-book-part"
-                aria-label="Book chapter (12 results)">
+                aria-label="Book chapter (2 results)">
               <label class="form-check-label flex-grow-1" for="f-book-part">Book chapter</label>
-              <span class="text-muted small" aria-hidden="true">12</span>
-            </div>
-            <div class="d-flex form-check">
-              <input class="form-check-input me-2" type="checkbox" id="f-book"
-                aria-label="Book (6 results)">
-              <label class="form-check-label flex-grow-1" for="f-book">Book</label>
-              <span class="text-muted small" aria-hidden="true">6</span>
+              <span class="text-muted small" aria-hidden="true">2</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-doctoral-thesis"
-                aria-label="Doctoral thesis (8 results)">
+                aria-label="Doctoral thesis (2 results)">
               <label class="form-check-label flex-grow-1" for="f-doctoral-thesis">Doctoral thesis</label>
-              <span class="text-muted small" aria-hidden="true">8</span>
+              <span class="text-muted small" aria-hidden="true">2</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-book"
+                aria-label="Book (1 result)">
+              <label class="form-check-label flex-grow-1" for="f-book">Book</label>
+              <span class="text-muted small" aria-hidden="true">1</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-preprint"
-                aria-label="Preprint (5 results)">
+                aria-label="Preprint (1 result)">
               <label class="form-check-label flex-grow-1" for="f-preprint">Preprint</label>
-              <span class="text-muted small" aria-hidden="true">5</span>
+              <span class="text-muted small" aria-hidden="true">1</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-report"
-                aria-label="Report (4 results)">
+                aria-label="Report (1 result)">
               <label class="form-check-label flex-grow-1" for="f-report">Report</label>
-              <span class="text-muted small" aria-hidden="true">4</span>
+              <span class="text-muted small" aria-hidden="true">1</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-conf-abstract"
-                aria-label="Conference abstract (3 results)">
+                aria-label="Conference abstract (1 result)">
               <label class="form-check-label flex-grow-1" for="f-conf-abstract">Conference abstract</label>
-              <span class="text-muted small" aria-hidden="true">3</span>
+              <span class="text-muted small" aria-hidden="true">1</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-conf-poster"
-                aria-label="Conference poster (2 results)">
+                aria-label="Conference poster (0 results)">
               <label class="form-check-label flex-grow-1" for="f-conf-poster">Conference poster</label>
-              <span class="text-muted small" aria-hidden="true">2</span>
+              <span class="text-muted small" aria-hidden="true">0</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-conf-presentation"
-                aria-label="Conference presentation (2 results)">
+                aria-label="Conference presentation (0 results)">
               <label class="form-check-label flex-grow-1" for="f-conf-presentation">Conference presentation</label>
-              <span class="text-muted small" aria-hidden="true">2</span>
+              <span class="text-muted small" aria-hidden="true">0</span>
             </div>
           </div>
           <button type="button" class="btn btn-ghost btn-sm px-0 mt-1"
@@ -465,28 +509,34 @@
         <fieldset>
           <legend class="form-label h6 mb-2">Year</legend>
           <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2026"
+              aria-label="2026 (4 results)">
+            <label class="form-check-label flex-grow-1" for="f-2026">2026</label>
+            <span class="text-muted small" aria-hidden="true">4</span>
+          </div>
+          <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-2025"
-              aria-label="2025 (38 results)">
+              aria-label="2025 (9 results)">
             <label class="form-check-label flex-grow-1" for="f-2025">2025</label>
-            <span class="text-muted small" aria-hidden="true">38</span>
+            <span class="text-muted small" aria-hidden="true">9</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-2024" checked
-              aria-label="2024 (31 results)">
+              aria-label="2024 (27 results)">
             <label class="form-check-label flex-grow-1" for="f-2024">2024</label>
-            <span class="text-muted small" aria-hidden="true">31</span>
+            <span class="text-muted small" aria-hidden="true">27</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-2023"
-              aria-label="2023 (28 results)">
+              aria-label="2023 (6 results)">
             <label class="form-check-label flex-grow-1" for="f-2023">2023</label>
-            <span class="text-muted small" aria-hidden="true">28</span>
+            <span class="text-muted small" aria-hidden="true">6</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-2022"
-              aria-label="2022 (19 results)">
+              aria-label="2022 (3 results)">
             <label class="form-check-label flex-grow-1" for="f-2022">2022</label>
-            <span class="text-muted small" aria-hidden="true">19</span>
+            <span class="text-muted small" aria-hidden="true">3</span>
           </div>
           <div class="mt-2">
             <p class="text-muted small mb-1">Custom range</p>
@@ -522,35 +572,235 @@
             </button>
           </div>
           <div class="d-flex form-check">
-            <input class="form-check-input me-2" type="checkbox" id="f-en" checked
-              aria-label="English (161 results)">
+            <input class="form-check-input me-2" type="checkbox" id="f-en"
+              aria-label="English (22 results)">
             <label class="form-check-label flex-grow-1" for="f-en">English</label>
-            <span class="text-muted small" aria-hidden="true">161</span>
+            <span class="text-muted small" aria-hidden="true">22</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-nl"
-              aria-label="Dutch (9 results)">
+              aria-label="Dutch (3 results)">
             <label class="form-check-label flex-grow-1" for="f-nl">Dutch</label>
-            <span class="text-muted small" aria-hidden="true">9</span>
+            <span class="text-muted small" aria-hidden="true">3</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-de"
-              aria-label="German (4 results)">
+              aria-label="German (1 result)">
             <label class="form-check-label flex-grow-1" for="f-de">German</label>
-            <span class="text-muted small" aria-hidden="true">4</span>
+            <span class="text-muted small" aria-hidden="true">1</span>
           </div>
           <div class="d-flex form-check">
             <input class="form-check-input me-2" type="checkbox" id="f-fr"
-              aria-label="French (3 results)">
+              aria-label="French (1 result)">
             <label class="form-check-label flex-grow-1" for="f-fr">French</label>
-            <span class="text-muted small" aria-hidden="true">3</span>
+            <span class="text-muted small" aria-hidden="true">1</span>
           </div>
           <div class="collapse" id="lang-more">
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-es"
-                aria-label="Spanish (2 results)">
+                aria-label="Spanish (0 results)">
               <label class="form-check-label flex-grow-1" for="f-es">Spanish</label>
-              <span class="text-muted small" aria-hidden="true">2</span>
+              <span class="text-muted small" aria-hidden="true">0</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-it"
+                aria-label="Italian (0 results)">
+              <label class="form-check-label flex-grow-1" for="f-it">Italian</label>
+              <span class="text-muted small" aria-hidden="true">0</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-ru"
+                aria-label="Russian (0 results)">
+              <label class="form-check-label flex-grow-1" for="f-ru">Russian</label>
+              <span class="text-muted small" aria-hidden="true">0</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-zh"
+                aria-label="Chinese (0 results)">
+              <label class="form-check-label flex-grow-1" for="f-zh">Chinese</label>
+              <span class="text-muted small" aria-hidden="true">0</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm px-0 mt-1"
+            data-bs-toggle="collapse" data-bs-target="#lang-more"
+            aria-expanded="false" aria-controls="lang-more">
+            More languages <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </button>
+        </fieldset>
+        <!-- @state -->
+
+        <!-- @state: no-query builder-empty -->
+        <fieldset>
+          <legend class="form-label h6 mb-2">Type</legend>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-journal"
+              aria-label="Journal article (64 results)">
+            <label class="form-check-label flex-grow-1" for="f-journal">Journal article</label>
+            <span class="text-muted small" aria-hidden="true">64</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-conference"
+              aria-label="Conference paper (22 results)">
+            <label class="form-check-label flex-grow-1" for="f-conference">Conference paper</label>
+            <span class="text-muted small" aria-hidden="true">22</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-dataset"
+              aria-label="Dataset (15 results)">
+            <label class="form-check-label flex-grow-1" for="f-dataset">Dataset</label>
+            <span class="text-muted small" aria-hidden="true">15</span>
+          </div>
+          <div class="collapse" id="type-more">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-book-part"
+                aria-label="Book chapter (12 results)">
+              <label class="form-check-label flex-grow-1" for="f-book-part">Book chapter</label>
+              <span class="text-muted small" aria-hidden="true">12</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-doctoral-thesis"
+                aria-label="Doctoral thesis (9 results)">
+              <label class="form-check-label flex-grow-1" for="f-doctoral-thesis">Doctoral thesis</label>
+              <span class="text-muted small" aria-hidden="true">9</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-book"
+                aria-label="Book (7 results)">
+              <label class="form-check-label flex-grow-1" for="f-book">Book</label>
+              <span class="text-muted small" aria-hidden="true">7</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-preprint"
+                aria-label="Preprint (6 results)">
+              <label class="form-check-label flex-grow-1" for="f-preprint">Preprint</label>
+              <span class="text-muted small" aria-hidden="true">6</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-report"
+                aria-label="Report (5 results)">
+              <label class="form-check-label flex-grow-1" for="f-report">Report</label>
+              <span class="text-muted small" aria-hidden="true">5</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-conf-abstract"
+                aria-label="Conference abstract (4 results)">
+              <label class="form-check-label flex-grow-1" for="f-conf-abstract">Conference abstract</label>
+              <span class="text-muted small" aria-hidden="true">4</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-conf-poster"
+                aria-label="Conference poster (3 results)">
+              <label class="form-check-label flex-grow-1" for="f-conf-poster">Conference poster</label>
+              <span class="text-muted small" aria-hidden="true">3</span>
+            </div>
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-conf-presentation"
+                aria-label="Conference presentation (3 results)">
+              <label class="form-check-label flex-grow-1" for="f-conf-presentation">Conference presentation</label>
+              <span class="text-muted small" aria-hidden="true">3</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost btn-sm px-0 mt-1"
+            data-bs-toggle="collapse" data-bs-target="#type-more"
+            aria-expanded="false" aria-controls="type-more">
+            More types <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
+          </button>
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+          <legend class="form-label h6 mb-2">Year</legend>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2026"
+              aria-label="2026 (21 results)">
+            <label class="form-check-label flex-grow-1" for="f-2026">2026</label>
+            <span class="text-muted small" aria-hidden="true">21</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2025"
+              aria-label="2025 (44 results)">
+            <label class="form-check-label flex-grow-1" for="f-2025">2025</label>
+            <span class="text-muted small" aria-hidden="true">44</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2024"
+              aria-label="2024 (38 results)">
+            <label class="form-check-label flex-grow-1" for="f-2024">2024</label>
+            <span class="text-muted small" aria-hidden="true">38</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2023"
+              aria-label="2023 (31 results)">
+            <label class="form-check-label flex-grow-1" for="f-2023">2023</label>
+            <span class="text-muted small" aria-hidden="true">31</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-2022"
+              aria-label="2022 (26 results)">
+            <label class="form-check-label flex-grow-1" for="f-2022">2022</label>
+            <span class="text-muted small" aria-hidden="true">26</span>
+          </div>
+          <div class="mt-2">
+            <p class="text-muted small mb-1">Custom range</p>
+            <div class="row g-2">
+              <div class="col">
+                <label for="year-from" class="visually-hidden">From year</label>
+                <input type="number" id="year-from" name="year_from"
+                  class="form-control form-control-sm" placeholder="From" min="1800" max="2030">
+              </div>
+              <div class="col">
+                <label for="year-to" class="visually-hidden">To year</label>
+                <input type="number" id="year-to" name="year_to"
+                  class="form-control form-control-sm" placeholder="To" min="1800" max="2030">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+          <legend class="form-label h6 mb-2">Language</legend>
+          <!-- Search-within (long tail) — same checklist-search field as the Add-filter editor. Prototype affordance, not wired. -->
+          <label for="lang-facet-search" class="visually-hidden">Search languages</label>
+          <div class="input-group input-group-sm mb-2">
+            <input type="search" id="lang-facet-search" class="form-control"
+              placeholder="Search languages&hellip;" autocomplete="off" data-checklist-search>
+            <button type="button" class="btn btn-ghost bt-search-clear" aria-label="Clear search" hidden>
+              <i class="if if-close" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-en"
+              aria-label="English (143 results)">
+            <label class="form-check-label flex-grow-1" for="f-en">English</label>
+            <span class="text-muted small" aria-hidden="true">143</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-nl"
+              aria-label="Dutch (17 results)">
+            <label class="form-check-label flex-grow-1" for="f-nl">Dutch</label>
+            <span class="text-muted small" aria-hidden="true">17</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-de"
+              aria-label="German (7 results)">
+            <label class="form-check-label flex-grow-1" for="f-de">German</label>
+            <span class="text-muted small" aria-hidden="true">7</span>
+          </div>
+          <div class="d-flex form-check">
+            <input class="form-check-input me-2" type="checkbox" id="f-fr"
+              aria-label="French (5 results)">
+            <label class="form-check-label flex-grow-1" for="f-fr">French</label>
+            <span class="text-muted small" aria-hidden="true">5</span>
+          </div>
+          <div class="collapse" id="lang-more">
+            <div class="d-flex form-check">
+              <input class="form-check-input me-2" type="checkbox" id="f-es"
+                aria-label="Spanish (3 results)">
+              <label class="form-check-label flex-grow-1" for="f-es">Spanish</label>
+              <span class="text-muted small" aria-hidden="true">3</span>
             </div>
             <div class="d-flex form-check">
               <input class="form-check-input me-2" type="checkbox" id="f-it"
@@ -577,6 +827,7 @@
             More languages <i class="if if-chevron-down if--xs" aria-hidden="true"></i>
           </button>
         </fieldset>
+        <!-- @state -->
 
         <!-- Organization facet — HIDDEN, do not remove. Decision (M): org filtering will
              be handled via SEARCH, not a sidebar facet — revisit later. Kept here as a
@@ -625,10 +876,24 @@
         <div class="d-lg-none p-3 border-top" id="wf-sheet-footer">
           <div class="d-flex align-items-center gap-2" id="wf-foot-list">
             <span id="wf-clear-slot"></span>
+            <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
+              data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
+              Show 27 research outputs
+            </button>
+            <!-- @state -->
+            <!-- @state: no-query builder-empty -->
             <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
               data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
               Show 179 research outputs
             </button>
+            <!-- @state -->
+            <!-- @state: no-results -->
+            <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
+              data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
+              Show 0 research outputs
+            </button>
+            <!-- @state -->
           </div>
           <div class="align-items-center gap-2 d-none" id="wf-foot-detail">
             <button type="button" class="btn btn-ghost text-danger" id="wf-foot-remove">Remove filter</button>
@@ -641,6 +906,8 @@
       <!-- ── Results ─────────────────────────────────────────────────────── -->
       <div class="col-lg-9" id="search-results">
 
+        <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
+
         <div class="d-flex justify-content-between align-items-center gap-2 mb-4 d-lg-none">
           <button type="button" class="btn btn-secondary rounded-pill"
             data-bs-toggle="offcanvas" data-bs-target="#filters-offcanvas"
@@ -651,7 +918,7 @@
             <div class="dropdown">
               <button class="btn btn-outline-secondary rounded-pill dropdown-toggle" type="button"
                 data-bs-toggle="dropdown" aria-expanded="false" aria-label="Results per page">
-                10 / page
+                50 / page
               </button>
               <ul class="dropdown-menu dropdown-menu-end">
                 <li><button type="button" class="dropdown-item">10 per page</button></li>
@@ -708,26 +975,11 @@
         </article>
         <!-- @state -->
 
-        <!-- @state: results best-bet no-query facet-set-in-builder builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
-        <!-- no-query: an empty ?q= is the full result space, most-recent-first —
-             never the blank slate. Its real count is the full corpus; 179 is shared
-             placeholder data. -->
+        <!-- 27 results at 50 per page is one page: the bar keeps the count and drops the
+             pagination (/patterns/pagination.html). -->
+        <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
-            <!-- Pagination is only styled, does not work. Make it work according to bootstrap patterns. Pattern: /patterns/pagination.html -->
-            <div class="bt-toolbar__item">
-              <nav aria-label="Research output pagination (top)">
-                <ul class="pagination pagination-sm">
-                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
-                  <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
-                  <li class="page-item"><a class="page-link" href="#">18</a></li>
-                  <li class="page-item"><a class="page-link" href="#" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
-                </ul>
-              </nav>
-            </div>
             <div class="bt-toolbar__item">
               <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–27 of 27 research outputs</span>
             </div>
@@ -789,6 +1041,92 @@
             </div>
           </div>
         </div>
+        <!-- @state -->
+        <!-- @state: no-query builder-empty -->
+        <!-- no-query: an empty ?q= is the whole corpus, most-recent-first — never the
+             blank slate. Pagination is only styled, does not work. Make it work according
+             to bootstrap patterns. -->
+        <div class="bt-toolbar mb-4">
+          <div class="bt-toolbar__left">
+            <div class="bt-toolbar__item">
+              <nav aria-label="Research output pagination (top)">
+                <ul class="pagination pagination-sm">
+                  <li class="page-item disabled"><span class="page-link"><i class="if if-chevron-left" aria-hidden="true"></i></span></li>
+                  <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="bt-toolbar__item">
+              <span class="text-muted small" aria-live="polite" id="result-count"><span class="visually-hidden">Showing </span>1–50 of 179 research outputs</span>
+            </div>
+          </div>
+          <div class="bt-toolbar__right">
+            <div class="bt-toolbar__item d-none d-lg-block">
+              <label for="page-size" class="visually-hidden">Results per page</label>
+              <select id="page-size" class="form-select form-select-sm">
+                <option value="10">10 per page</option>
+                <option value="25">25 per page</option>
+                <option value="50" selected>50 per page</option>
+                <option value="100">100 per page</option>
+              </select>
+            </div>
+            <div class="bt-toolbar__item d-none d-lg-block">
+              <!-- WORK IN PROGRESS: We do not know which sorting to use yet, do not build, just stub -->
+              <label for="sort-by" class="visually-hidden">Sort by</label>
+              <select id="sort-by" class="form-select form-select-sm">
+                <option value="relevance">Relevance</option>
+                <option value="year-desc" selected>Year (new to old)</option>
+                <option value="year-asc">Year (old to new)</option>
+                <option value="title-asc">Title (A–Z)</option>
+                <option value="author-asc">First author (A–Z)</option>
+              </select>
+            </div>
+            <!-- Actions, set level — the counterpart of a work card's Add to list / Cite row.
+                 Which action sits here and which is a panel: patterns/query-builder.html. -->
+            <div class="bt-toolbar__item">
+              <div class="dropdown" data-result-actions>
+                <button type="button" class="btn btn-ghost btn-sm dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-expanded="false" data-result-actions-toggle>
+                  <i class="if if-more" aria-hidden="true"></i>
+                  Actions
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#save-search-modal">
+                      <i class="if if-bookmark-line if--sm me-2" aria-hidden="true"></i>
+                      Save search
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#share-search-modal">
+                      <i class="if if-share if--sm me-2" aria-hidden="true"></i>
+                      Share search
+                    </button>
+                  </li>
+                  <li>
+                    <button type="button" class="dropdown-item"
+                      data-bs-toggle="modal" data-bs-target="#export-modal">
+                      <i class="if if-download if--sm me-2" aria-hidden="true"></i>
+                      Export research outputs
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- @state -->
+
+        <!-- The list is one fixed set of 27 cards, a showcase of every card variant — so
+             it matches the narrowed count exactly, and stands in, abridged, for the
+             corpus story's 179. -->
+        <!-- @state: results best-bet no-query facet-set-in-builder builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
 
         <!-- Card actions (Cite, Add to list, access CTA) and the toolbar's Save
              search / Export / Subscribe are OUT OF SCOPE for the search & filtering
@@ -1726,8 +2064,10 @@
         </div>
       </article></li>
         </ol>
+        <!-- @state -->
 
-        <!-- Results bar: /patterns/pagination.html -->
+        <!-- Pattern: /patterns/pagination.html -->
+        <!-- @state: no-query builder-empty -->
         <div class="bt-toolbar mt-2 pt-3">
           <div class="bt-toolbar__left">
             <div class="bt-toolbar__item">
@@ -1737,14 +2077,13 @@
                   <li class="page-item active"><a class="page-link" href="#" aria-current="page">1</a></li>
                   <li class="page-item"><a class="page-link" href="#">2</a></li>
                   <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item disabled" aria-hidden="true"><span class="page-link">&hellip;</span></li>
-                  <li class="page-item"><a class="page-link" href="#">18</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
                   <li class="page-item"><a class="page-link" href="#" aria-label="Next page"><i class="if if-chevron-right" aria-hidden="true"></i></a></li>
                 </ul>
               </nav>
             </div>
             <div class="bt-toolbar__item">
-              <span class="text-muted small"><span class="visually-hidden">Showing </span>1–27 of 27 research outputs</span>
+              <span class="text-muted small"><span class="visually-hidden">Showing </span>1–50 of 179 research outputs</span>
             </div>
           </div>
         </div>
@@ -1753,7 +2092,6 @@
         <!-- @state: no-results -->
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
-            <!-- [html-validate-disable-next no-dup-id -- @state blocks; one renders at a time] -->
             <span class="text-muted small" aria-live="polite" id="result-count">0 research outputs</span>
           </div>
         </div>
@@ -1773,7 +2111,7 @@
 
           <p class="text-muted mb-2">Nothing matches all your filters together. Try:</p>
           <ul class="text-muted mb-3">
-            <li>Removing a filter &mdash; Access, Year, or Language</li>
+            <li>Removing a filter &mdash; Access, Type, or Year</li>
             <li>Broadening your terms, or checking the spelling</li>
           </ul>
 
@@ -1943,7 +2281,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
+        <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+        <h2 class="modal-title h5" id="export-modal-title">Export 27 research outputs</h2>
+        <!-- @state -->
+        <!-- @state: no-query builder-empty -->
         <h2 class="modal-title h5" id="export-modal-title">Export 179 research outputs</h2>
+        <!-- @state -->
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
