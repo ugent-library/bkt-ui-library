@@ -27,6 +27,7 @@
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="p-reading" checked>
               <label class="form-check-label" for="p-reading">Reading list</label>
+              <a href="/templates/biblio-researcher/list-detail.html" class="bt-link-more" aria-label="Open Reading list">Open <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="p-quantum">
@@ -36,6 +37,11 @@
               <input class="form-check-input" type="checkbox" id="p-review">
               <label class="form-check-label" for="p-review">To cite in review</label>
             </div>
+          </div>
+          <div class="bt-panel__actions">
+            <a href="/templates/biblio-researcher/lists.html" class="btn btn-ghost btn-sm">
+              My lists <i class="if if-arrow-right if--sm" aria-hidden="true"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -146,6 +152,28 @@
     </div>
 
     <p class="mb-0 col-8 text-muted small">Prefix panel ids per record. Membership updates leave the checklist in place so the query survives; creating a list returns it selected. The prototype route contract is in <code>docs/SERVER.md</code>.</p>
+  </section>
+
+  <section class="ds-section" id="already-in-a-list">
+    <h2 class="h4 mb-3">Already in a list</h2>
+    <p class="mb-4">Ticking or unticking a list in the panel re-renders the toggle.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">In no list, one list, three lists</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="d-flex align-items-center gap-3 flex-wrap">
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle" aria-label="Add to list: Example record title">
+            <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle" aria-label="In 1 list: Example record title">
+            <i class="if if-bookmark-fill" aria-hidden="true"></i> In 1 list
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm dropdown-toggle" aria-label="In 3 lists: Example record title">
+            <i class="if if-bookmark-fill" aria-hidden="true"></i> In 3 lists
+          </button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="ds-section">
