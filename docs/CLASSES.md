@@ -213,6 +213,12 @@ btn-text
 
 btn-xs
 
+csl-entry
+
+csl-left-margin
+
+csl-right-inline
+
 drag-over
 
 ff-sans
