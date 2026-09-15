@@ -6,6 +6,28 @@ system, or do I reach for something new?"
 
 ---
 
+## The Add to list toggle shows saved state, and the panel links to lists (v2.41, 2026-09-15)
+
+CSS changed — re-copy the compiled assets and the icon fonts: `if-bookmark-fill` and `bt-link-more`
+are new. `bt-link-more` is the View all / Open link that opens the complete list; the dashboards and the
+team queue drop their `small text-muted text-decoration-none` spellings for it — re-adapt those
+templates. A work
+already in one of the viewer's lists shows the filled bookmark and the count, "In 1 list", in
+place of "Add to list". At zero the label stays "Add to list". Inside the panel a ticked list
+ends in an Open link to that list, and the footer links to My lists. Demonstrated on Panel and as
+the `in-list` state of the public work detail.
+
+## Chips can untick a sidebar filter (v2.40, 2026-09-10)
+
+No CSS change. A ticked sidebar box now has a chip above the results, and the chip's × unticks
+the box again. The chip's label leads back to the box instead of opening an editor; below `lg`
+it opens the filter sheet first, so the box is on screen when it takes focus. A chip finds its
+box by naming the id in `data-initial-filters`, and chips for the Add-filter dimensions still
+open their editor.
+
+Facets gains a second rail example: the same sidebar after a selection, where a ticked value's
+count matches the result count and values at zero keep their place.
+
 ## Project picker rows name their values (v2.39, 2026-09-10)
 
 CSS changed — re-copy the compiled assets. A project picker row now labels its acronym,
