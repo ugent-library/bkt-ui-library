@@ -25,7 +25,6 @@
   z-index: 1;
 }
 
-/* The bar owns the border and focus ring; its controls stay in normal flow. */
 .input-group--hero {
   align-items: center;
   gap: 0.375rem;
@@ -50,7 +49,6 @@
   box-shadow: none;
 }
 
-/* Bootstrap's five-:not selector otherwise squares these separate controls. */
 .input-group--hero > .btn {
   border-radius: var(--bt-radius-md) !important;
   font-size: var(--bt-text);
@@ -58,14 +56,11 @@
 
 
 /* -- bt-search-clear -- */
-/* One size token keeps the field's text gutter aligned with the overlaid clear. */
 .input-group:has(> .bt-search-clear) {
   --bt-search-clear-size:  2rem;
   --bt-search-clear-inset: 0.375rem;
 }
 
-/* Compact fields take the same clear, one step smaller — the size follows
-   Bootstrap's own group size, so no separate modifier to remember. */
 .input-group-sm:has(> .bt-search-clear) {
   --bt-search-clear-size:  1.5rem;
   --bt-search-clear-inset: 0.25rem;
@@ -89,12 +84,10 @@
   --bs-btn-hover-bg: var(--bt-gray-100);
   --bs-btn-hover-color: var(--bt-gray-1000);
   --bs-btn-active-bg: var(--bt-gray-100);
-  /* The focused field uses z-index 5 and would cover the glyph. */
   z-index: 6;
   margin-right: var(--bt-search-clear-inset);
 }
 
-/* The field reaches under the clear and reserves the same width for text. */
 .input-group > .form-control:has(+ .bt-search-clear:not([hidden])) {
   padding-right: calc(var(--bt-search-clear-size) + var(--bt-search-clear-inset) + 0.5rem);
   margin-right: calc((var(--bt-search-clear-size) + var(--bt-search-clear-inset)) * -1);
@@ -105,7 +98,6 @@
   -webkit-appearance: none;
 }
 
-/* The hero bar holds every control in flow, so nothing overlaps to pad for. */
 .input-group--hero > .bt-search-clear {
   margin-right: 0;
 }
@@ -135,8 +127,6 @@
 }
 
 /* -- Public footer -- */
-/* Uses Bootstrap grid + utilities directly.
-   Only .nav-title needs a definition (used on <h2> in footer nav columns). */
 .nav-title {
   font-size: var(--bt-text-xs);
   font-weight: 600;
@@ -147,7 +137,6 @@
 
 
 /* -- HTMX states -- */
-/* Used in research-detail.html, deposit-flow.html, backoffice-search.html */
 .htmx-indicator {
   display: none;
 }
@@ -170,8 +159,6 @@
 }
 
 /* -- Suggestions panel -- */
-// TODO: turn this into an actual semantic component instead of using helper classes.
-
 .bt-suggest-panel {
   z-index: var(--bt-z-panel);
   position: absolute;
@@ -188,8 +175,6 @@
   overflow-y: auto;
 }
 
-// Per-dropdown width is set via --bs-dropdown-min-width, not here.
-// See CLASS-USAGE.md.
 .bt-dropdown-scroll {
   max-height: 320px;
   overflow-y: auto;
@@ -197,7 +182,6 @@
   min-width: 260px;
 }
 
-// Sticky cells need an opaque background; the adjacent shadow marks the scroll edge.
 .bt-table-sticky-col {
   th:first-child,
   td:first-child {
@@ -214,9 +198,6 @@
   }
 }
 
-// Show-more toggle caret. Keyed on aria-expanded, not :not(.collapsed):
-// Bootstrap adds .collapsed only after the first interaction, so a
-// collapsed-on-load toggle would otherwise start rotated.
 [data-bs-toggle="collapse"] .if-chevron-down,
 #org-tree-toggle-all .if-chevron-down {
   transition: rotate var(--bt-dur-fast) ease;
@@ -228,11 +209,6 @@
 
 
 /* -- bt-meta-list -- */
-/*
-  Metadata line outside a work card — the file rows on the public detail page and
-  the typography demos. Inside a card the card's own __meta / __meta-item own this
-  job.
-*/
 .bt-meta-list {
   font-size: var(--bt-text-sm);
   color: var(--s-text-muted, var(--bt-text-muted));
@@ -262,10 +238,6 @@
 
 
 /* -- bt-alt-titles -- */
-/*
-  Bootstrap's list group gives title variants list-item structure they do not
-  have; typography utilities would repeat this treatment at each call site.
-*/
 .bt-alt-titles {
   margin-bottom: var(--bt-sp-8);
 }
@@ -274,7 +246,7 @@
   margin-bottom: var(--bt-sp-4);
   font-size: var(--bt-text-md);
   font-weight: 400;
-  line-height: 1.25; // No leading token exists; wrapped entries stay tighter than body copy.
+  line-height: 1.25;
 }
 
 .bt-alt-titles__item:last-child {
