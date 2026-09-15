@@ -29,7 +29,13 @@ If Bootstrap covers the use case, use it — even if you would need to override 
 
 A new Booktower class is only justified when:
 1. Bootstrap has no equivalent concept, **or**
-2. The pattern is domain-specific to Biblio and meaningfully reused across multiple templates
+2. The pattern is domain-specific to Biblio and meaningfully reused across multiple templates, **or**
+3. The same set of three or more utilities recurs on the same kind of element across templates
+
+In the third case the class exists already and lacks a name. Name it, so one rule covers every
+instance and a template names the element instead of listing its styles. `bt-link-more` is one:
+the View all link that several templates spelled with `small`, `text-muted` and
+`text-decoration-none` in differing mixes.
 
 If you proceed with a new class, state in a comment: which Bootstrap component you checked, and the specific reason it did not fit.
 
@@ -122,6 +128,6 @@ BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BE
 
 Known inconsistency: the single-purpose utilities (`bt-bg`, `bt-bg-alt`, `bt-bg-dark`, `bt-bg-white`, `bt-border`) carry `bt-`, not `u-`. They predate this rule. Do not re-prefix them ad hoc — that is a separate, deliberate cleanup pass. Until then, treat the existing `bt-*` utility names as ground truth and do not invent new ones (reference the token directly in SCSS instead).
 
-Bootstrap utilities (`d-flex`, `gap-3`, `text-muted`, `mb-4`) are used directly without wrapping.
+Bootstrap utilities (`d-flex`, `gap-3`, `text-muted`, `mb-4`) are used directly without wrapping, for a one-off adjustment. A set that recurs is a class; see Bootstrap-first above.
 
 **Do not invent new prefixes** without an explicit decision.
