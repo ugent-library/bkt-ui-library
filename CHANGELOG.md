@@ -6,13 +6,22 @@ system, or do I reach for something new?"
 
 ---
 
-## The active breadcrumb item meets AA contrast (v2.42, 2026-09-15)
+## The active breadcrumb item meets AA contrast (v2.43, 2026-09-15)
 
 CSS changed — re-copy the compiled assets. The active breadcrumb item was `gray-900` at
 `opacity: .6`, which composites to 4.3:1 on both page backgrounds and misses the 4.5:1 that
 WCAG AA asks of 14px text. It is now `gray-600` with no opacity: 5.9:1 on white, 5.6:1 on the
 public paper background. Consumer markup does not change — the item stays
 `<li class="breadcrumb-item active" aria-current="page">`.
+
+## Modal roots declare their dialog role (v2.42, 2026-09-15)
+
+No CSS change — re-adapt the modal templates. Every `.modal` root now sets `role="dialog"`
+next to its `tabindex="-1"` and `aria-labelledby`. A `<div class="modal">` without a role is a
+`generic` element, and ARIA 1.2 forbids `aria-labelledby` on `generic`, so the W3C Nu checker
+reported an error on the old markup. `aria-modal` and `aria-hidden` stay out of the markup
+and remain Bootstrap's to set. The advanced search, export, save search, share search,
+return, pickup and delete list modals all changed.
 
 ## The Add to list toggle shows saved state, and the panel links to lists (v2.41, 2026-09-15)
 
