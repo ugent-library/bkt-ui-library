@@ -6,6 +6,15 @@ system, or do I reach for something new?"
 
 ---
 
+## Modal roots declare their dialog role (v2.42, 2026-09-15)
+
+No CSS change — re-adapt the modal templates. Every `.modal` root now sets `role="dialog"`
+next to its `tabindex="-1"` and `aria-labelledby`. A `<div class="modal">` without a role is a
+`generic` element, and ARIA 1.2 forbids `aria-labelledby` on `generic`, so the W3C Nu checker
+reported an error on the old markup. `aria-modal` and `aria-hidden` stay out of the markup
+and remain Bootstrap's to set. The advanced search, export, save search, share search,
+return, pickup and delete list modals all changed.
+
 ## The Add to list toggle shows saved state, and the panel links to lists (v2.41, 2026-09-15)
 
 CSS changed — re-copy the compiled assets and the icon fonts: `if-bookmark-fill` and `bt-link-more`
