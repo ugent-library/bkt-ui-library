@@ -52,6 +52,15 @@ remove jargon made only to compress a sentence.
 Write “The selected field sets the row's operator and input,” not “The row anatomy
 derives its control surface from field selection.”
 
+State what happens before what does not; open with a negation only when the
+prohibition itself is the claim. Reserve "never" and "always" for claims that hold
+without exception. Delete a sentence that only announces the content after it.
+
+A label, heading or table cell must state a true thing with its content covered. Do
+not complete a label set for symmetry when the content contradicts the label: write
+"no request from the researcher", not "the owner's ask", when the neighbouring rows
+say "blocking ask" and the content is that the researcher requests nothing.
+
 ### Keep the conclusion, not the journey
 
 State what is true and what happens next. Routine drafting history and superseded
@@ -76,8 +85,7 @@ Do not describe a prototype's visible layout in an issue. Link it and specify wh
 picture cannot show: announcements, reload behavior, persistence, failure states and
 contract boundaries.
 
-Delete an introduction that repeats the list below it. Delete empty sections and
-sentences whose removal changes no decision or action.
+Delete empty sections and sentences whose removal changes no decision or action.
 
 ## Spec content
 
@@ -111,14 +119,6 @@ Before: “The document then walks through the three options before arriving at 
 recommended path.”
 
 After: “Use the existing picker.”
-</example>
-
-<example>
-Before: “I ran the writing pass, removed repeated material, simplified seven
-sentences and brought the issue under its target.”
-
-After: “The issue is ready. One policy question remains: can incomplete records be
-public, or must they wait for review?”
 </example>
 
 <example>
