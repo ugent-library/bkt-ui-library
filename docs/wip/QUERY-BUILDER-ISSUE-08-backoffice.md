@@ -4,7 +4,10 @@ about: Port a booktower-ui-library prototype into raven
 title: "[backoffice][08] Advanced search: the backoffice field set"
 ---
 
-<!-- Refile source for raven #295, the phase-2 placeholder. -->
+<!-- Refile source for raven #295, the phase-2 placeholder; the field set is TBD.
+File on M's word, not at the reveal. Query-builder track: docs/wip/README.md. -->
+
+To be refined
 
 ## Why
 

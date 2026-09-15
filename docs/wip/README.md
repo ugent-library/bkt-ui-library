@@ -89,12 +89,12 @@ precede the bet and per-screen breadboards by design.
 **Stage:** Flow wireframes (pre-bet)
 **Accepted:** [`REVIEW-FLOW-ANALYSIS.md`](REVIEW-FLOW-ANALYSIS.md) is the
 baseline (`✚` marks settled); one full-landscape flow map plus four
-clickable place pages in `flows/review/`; email is opt-in, researchers and
+clickable place pages in `templates/review-flow/`; email is opt-in, researchers and
 proxies only, and the recipient decides the cadence
 ([`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md)).
-**Blocking:** Acceptance of
-[`REVIEW-FLOW-WIREFRAME-BRIEF.md`](REVIEW-FLOW-WIREFRAME-BRIEF.md).
-**Next:** Build `flows/review/` per the brief.
+**Blocking:** None for prototyping; Raven implementation questions remain subtle
+notes in the flow.
+**Next:** Human design acceptance of the clickable `templates/review-flow/` prototype.
 
 1. [`REVIEW-FLOW-ANALYSIS.md`](REVIEW-FLOW-ANALYSIS.md) — the baseline:
    model, rail, actor flow breadboards, Raven dependencies, assumptions and
@@ -102,7 +102,7 @@ proxies only, and the recipient decides the cadence
 2. [`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md) —
    cadence, digest shape, the setting.
 3. [`REVIEW-FLOW-WIREFRAME-BRIEF.md`](REVIEW-FLOW-WIREFRAME-BRIEF.md) —
-   the build brief for `flows/review/`.
+   the build brief for `templates/review-flow/`.
 
 ## Other active design work
 
