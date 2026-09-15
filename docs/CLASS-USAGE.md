@@ -90,6 +90,8 @@ replacing a Bootstrap size. Reach for it when a dialog holds form rows instead o
 
 **Search box inline clear** — `bt-search-clear` is the floating × inside a search field: a circle that carries its hover as a circle, not as a block the width of the field's gutter. It goes on a `btn btn-ghost` **between the input and the submit button**, with `aria-label="Clear search"` and `if-close`, and the pair must sit in an `.input-group` — the circle rides on the field's trailing edge, which needs the flex row. Size follows the group: `input-group-sm` gets the smaller circle, so compact fields need no separate modifier. Use an `<a>` where clearing changes the address, a `<button type="button">` where the box filters a list in place. In the listing box the field reaches under it, so any other order leaves the × outside the border; in an `input-group--hero` bar every control sits in flow and the order just reads. A field carrying it shows no other clear: where the field is `type="search"`, the browser's own is suppressed. Toggle it with the `hidden` attribute — never a `d-*` utility, which strands the field's reserved gutter — and `search-clear.js` keeps it in step with what the box holds. Demo: `elements/search-bar.html`.
 
+**Generated citations** — `csl-entry`, `csl-left-margin` and `csl-right-inline` are citeproc-js output. Keep it intact. Demo: `patterns/citations.html`.
+
 ## Used straight from Bootstrap — no custom classes, do not invent any
 
 Like Table and Facets sidebar above, these components are plain Bootstrap. No `bt-*`
@@ -133,7 +135,3 @@ changelog says what replaced it.
 ## Icon names — verified source of truth
 
 Check `assets/scss/icons/_icon-font.scss` for the complete list. Do not use any `if-[name]` not present in that file.
-
-## Generated citations
-
-`csl-entry`, `csl-left-margin` and `csl-right-inline` are citeproc-js classes, not Booktower names. Keep the generated HTML intact. When an entry contains the number/text pair, Booktower places the number beside the text, aligns continuation lines with the text and allows long URLs to wrap. Unnumbered entries retain their normal flow. Font, border and padding come from the surrounding citation widget. Examples: [Citations](../patterns/citations.html).
