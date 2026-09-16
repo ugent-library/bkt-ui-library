@@ -73,6 +73,8 @@ Numbered page links and browse letters take no `aria-label`. "2" is already the 
 - `<article>` for self-contained records (search result cards)
 - Never use `<div>` where a semantic element applies
 
+**A7. A list of result cards is an `<ol class="list-unstyled mb-0">`, one card per `<li>`.** A plain `<section>` wrapper is an unlabelled landmark, and assistive technology cannot announce how many results the list holds. The card itself stays an `<article>` (see A6).
+
 ---
 
 ## B. Interactive elements — accessible names
@@ -414,6 +416,7 @@ Staff use this all day. Every extra announcement or unnecessary focus jump costs
 □ <main id="main-content"> present
 □ Skip link is first focusable element in layout wrapper
 □ Every <nav> has a distinct aria-label
+□ Result cards sit in an <ol>, one per <li>
 □ Every icon-only button: aria-label on button, aria-hidden on icon
 □ Every row action label includes the record name
 □ No aria-label that duplicates or overrides visible button text
