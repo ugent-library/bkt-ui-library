@@ -86,6 +86,9 @@ assets/scss/
 
 **The one documented exception:** `shell/scss/` compiles to `shell/shell.css` for shell chrome only (`bt-shell`, `bt-nav`, `bt-content`, `ds-page`, `ds-demo`, `ds-code`). Kit-only — no template links it and `docs/CONSUMING-BOOKTOWER.md` doesn't ship it. Edit it when the kit itself is broken, and keep the repair minimal; new styling belongs in `assets/scss/`, so the file shrinks as the design system matures.
 
+**Values come from tokens.** The type scale is in rem because type does not snap to the 4px
+grid. Reference a token in component code; do not use a raw size such as `.875rem`.
+
 **When producing HTML:** if a style is missing from the system, flag it and add it to the correct SCSS partial. No inline patches.
 
 **When producing JavaScript:** use classes for authored states and rules. Set `.style` only for unavoidable runtime-derived values allowed above, such as measured position or size.
@@ -123,6 +126,9 @@ Component code references only semantic aliases (`--bt-text`, `--bt-danger`, `--
 | `u-` | Layout — structural regions and layout shells, not visual styling | `u-layout--app`, `u-main__panel`, `u-notifications` |
 
 BEM separators: `__` for elements, `--` for modifiers. Single dash is never a BEM separator in this system.
+
+A semantic alias names a role, not a colour. Component code references an alias, never a
+palette step.
 
 `u-` is the layout prefix: a `u-` class positions or structures a region of the page (shell, grid cell, fixed overlay region) and carries no visual personality of its own — the contents bring that. `bt-` is for styled things (widgets that wrap Bootstrap, or standalone components). The split is structure vs. styling, not custom vs. Bootstrap.
 

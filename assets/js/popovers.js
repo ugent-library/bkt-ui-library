@@ -1,9 +1,6 @@
 /**
  * popovers.js — Bootstrap popovers, including inside HTMX-swapped fragments.
  * See docs/JAVASCRIPT.md.
- *
- * Triggers inside links need data-bs-container="body", or the popover is
- * injected into the <a> and becomes part of the click target.
  */
 
 (function () {

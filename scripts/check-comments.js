@@ -41,12 +41,13 @@ for (const file of files) {
 const DIRECTIVE = /^\s*@(title|surface|state|states|include|active|example)\b/;
 const WARNING = /^\s*warning:\s+[\s\S]*\bdocs\/\S+/i;
 const PROTOTYPE_NOTE = /^\s*prototype note:\s+\S[\s\S]*$/i;
+const TODO = /^\s*to-?\s?do\b/i;
 
 for (const file of kitFiles) {
   const src = fs.readFileSync(file, 'utf8');
   for (const match of src.matchAll(/<!--([\s\S]*?)-->/g)) {
     const body = match[1].trim();
-    if (DIRECTIVE.test(body) || WARNING.test(body)) continue;
+    if (DIRECTIVE.test(body) || WARNING.test(body) || TODO.test(body)) continue;
     if (PROTOTYPE_NOTE.test(body) && (body.match(/\S+/g) || []).length <= 40) continue;
     const line = src.slice(0, match.index).split('\n').length;
     hits.push(

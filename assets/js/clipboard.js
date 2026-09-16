@@ -26,7 +26,6 @@
 
       setTimeout(function () {
         if (label) label.textContent = originalText;
-        // restore, don't remove: icon-only buttons rely on it for their name
         if (originalAria !== null) button.setAttribute('aria-label', originalAria);
         else button.removeAttribute('aria-label');
         button.classList.replace('btn-outline-success', 'btn-outline-secondary');

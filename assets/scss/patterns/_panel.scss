@@ -7,7 +7,6 @@
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
-  /* Beats .dropdown-menu's own padding on load order. */
   padding: 0;
 }
 
@@ -39,8 +38,6 @@
   overflow-y: auto;
 }
 
-/* The title and the body under it are one header block — the divider belongs to
-   the boundary where the next body starts, never under the title. */
 .bt-panel__title + .bt-panel__body {
   border-top: 0;
   padding-top: 0;
@@ -63,9 +60,6 @@
   padding: var(--bt-sp-4);
 }
 
-/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio.
-   --list is the same shape for rows that act instead of tick: one scrolling column, the group
-   headings inside it. */
 .bt-panel__body--list,
 .bt-panel__body--checklist,
 .bt-panel__body--boolean {
@@ -75,7 +69,7 @@
 }
 .bt-panel__body .form-check {
   display: flex;
-  /* flex-start + the input's top offset keep the box on line 1 of multi-line rich labels. */
+
   align-items: flex-start;
   gap: var(--bt-sp-2);
   margin: 0;
@@ -96,7 +90,6 @@
   flex: 1;
 }
 
-/* Year range layout; wraps where a viewport under ~350px leaves too little room for the pair */
 .bt-panel__body--year {
   align-items: center;
   flex-wrap: wrap;

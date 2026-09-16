@@ -1,7 +1,7 @@
 // Advanced search — rows, OR groups and the chooser.
 // See docs/JAVASCRIPT.md. Row grammar and states: patterns/query-builder.html.
 
-// Prototype states open the dialog here because @state cannot wrap its include.
+// Prototype note: @state cannot wrap the include, so the dialog opens here.
 document.addEventListener('DOMContentLoaded', function () {
   const dialog = document.getElementById('advanced-search-modal');
   const open = new URLSearchParams(location.search).has('advanced') ||
@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const list = document.getElementById('qb-conditions');
   if (!list) return;
 
-  // Fixed Popper positioning escapes the scrolling modal's clipping edge. Capture runs before
-  // Bootstrap creates each dropdown, including dropdowns in cloned rows.
+  // The modal scrolls and clips its dropdowns, so each one gets fixed positioning.
+  // Capture runs before Bootstrap builds the dropdown, in cloned rows too.
   const host = list.closest('.modal');
   if (host) {
     const escapeToViewport = event => {
@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   let seq = 0;
-  // What the next chooser pick does: add a condition, replace this row's field, or add an
-  // alternative to this group.
   let pending = { mode: 'append' };
 
   const items = () =>
@@ -105,7 +103,6 @@ document.addEventListener('DOMContentLoaded', function () {
     return row.closest('[data-surface]')?.dataset.surface === 'backoffice' ? 20 : 5;
   }
 
-  // Inside an open panel the cap disables what it will not take.
   function syncPanelCap(row, slot) {
     const boxes = slot.querySelectorAll('[data-picker-rows] input[type="checkbox"]');
     const full = Array.from(boxes).filter(b => b.checked).length >= capOf(row);
@@ -118,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!add) return;
     const capped = cell.querySelectorAll('[data-qb-token]').length >= capOf(row);
     if (add.hasAttribute('data-qb-multi')) {
-      // The multi control is op-gated; the cap may hide it but never reveal it.
       const select = row.querySelector('.bt-query-builder__value-select');
       const op = row.querySelector('[data-qb-op]');
       const chosen = op && op.selectedIndex >= 0 && op.options[op.selectedIndex];
@@ -130,8 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // The row's actions must always name the condition they act on — a screen reader user has to
-  // know which row a control removes. Rewritten on every sync, since the value changes.
   function nameRow(row) {
     const name = conditionName(row);
     const more = row.querySelector('[data-qb-actions] [data-bs-toggle="dropdown"]');
@@ -142,17 +136,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Adding a row ────────────────────────────────────────────────────────────
 
-  // A pick names the template that carries its shape and the label to write into it. No row
-  // markup and no field vocabulary lives here — see docs/JAVASCRIPT.md.
   function addRow(choice) {
     const template = document.getElementById(choice.dataset.qbTemplate);
     if (!template) return;
     const row = template.content.firstElementChild.cloneNode(true);
     const label = row.querySelector('[data-qb-change-field]');
     if (label) label.textContent = choice.dataset.qbLabel;
-    // A template carries the union of its fields' operators; a choice that names a subset
-    // (data-qb-ops) keeps only those, so the operator vocabulary stays in the markup and the
-    // field contract.
     if (choice.dataset.qbOps) {
       const keep = choice.dataset.qbOps.split(',');
       row.querySelectorAll('[data-qb-op] option').forEach(option => {
@@ -177,8 +166,6 @@ document.addEventListener('DOMContentLoaded', function () {
       help.textContent = choice.dataset.qbHelp;
       row.querySelector('[data-qb-value]').append(help);
     }
-    // A choice carries its select's values where the contract fixes them (data-qb-values); a
-    // field whose values live in a raven catalog names none and keeps the placeholder.
     if (choice.dataset.qbValues) {
       const select = row.querySelector('[data-qb-value] select');
       choice.dataset.qbValues.split(',').forEach(v => select.add(new Option(v)));
@@ -186,10 +173,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (choice.dataset.qbMultiValues != null) {
       const multi = row.querySelector('[data-qb-multi]');
       const select = row.querySelector('.bt-query-builder__value-select');
-      // The hidden select still feeds the checklist panel its rows.
+      // Keep the hidden select. The checklist panel reads its options.
       if (multi && select) { multi.hidden = false; select.hidden = true; }
     }
-    // An entity choice also names the panel its slot clones and the Add-button copy.
     if (choice.dataset.qbPanel) {
       const slot = row.querySelector('[data-qb-picker-slot]');
       slot.dataset.qbPickerSlot = choice.dataset.qbPanel;
@@ -197,8 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
       row.querySelector('[data-qb-add-label]').textContent = choice.dataset.qbAdd;
     }
     identify(row);
-    // The template's initial input visibility matches its first option; narrowing can
-    // change which option that is.
     if (row.querySelector('[data-qb-op]')) syncValueShape(row);
 
     if (pending.mode === 'replace') pending.row.replaceWith(row);
@@ -228,8 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Groups ──────────────────────────────────────────────────────────────────
 
-  // A template's controls carry no id, and a clone would repeat one. Pair each control with
-  // its label here, once, at the moment the row enters the document.
   function identify(scope) {
     scope.querySelectorAll('[id]').forEach(control => {
       const old = control.id;
@@ -273,8 +255,6 @@ document.addEventListener('DOMContentLoaded', function () {
     group.remove();
   }
 
-  // ── Keeping the whole thing consistent ──────────────────────────────────────
-
   function sync() {
 
     list.querySelectorAll('[data-qb-sep]').forEach(el => el.remove());
@@ -306,7 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
     restoreBlank();
   }
 
-  // Clone the shared panel into its opener so Bootstrap anchors it to the right control.
   function fillChecklist(panel, row) {
     const rows = panel.querySelector('[data-picker-rows]');
     const select = row.querySelector('.bt-query-builder__value-select');
@@ -339,7 +318,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         identify(pickerSlot);
       }
-      // A tick means selected in both hosts, so the panel opens mirroring the row's tokens.
       const present = Array.from(row.querySelectorAll('[data-qb-token]'))
         .map(el => el.dataset.id);
       pickerSlot.querySelectorAll('[data-picker-rows] input').forEach(box => {
@@ -407,8 +385,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── The chooser: one click adds the row ─────────────────────────────────────
 
-  // The blank state's cards and list, and the Add-a-condition panel, are the same content in
-  // two containers, so one handler serves both.
   document.addEventListener('click', event => {
     const choice = event.target.closest('[data-qb-choice]');
     if (!choice) return;
@@ -442,7 +418,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── The picker panels ───────────────────────────────────────────────────────
 
-  // The ticks mirror tokens
   function applyPicked(row, panel) {
     const cell = row.querySelector('[data-qb-value]');
     panel.querySelectorAll('[data-picker-rows] input[type="checkbox"]').forEach(box => {
@@ -455,8 +430,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Crestless is the default token; a checklist row's name is its label, a rich row names
-  // itself with [data-picker-name].
   function token(box) {
     const check = box.closest('.form-check');
     const name = (check.querySelector('[data-picker-name]') || check.querySelector('label'))
@@ -561,7 +534,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Pasted identifier lists ─────────────────────────────────────────────────
 
-  // field-sizing fallback
   const autogrow = CSS.supports('field-sizing', 'content') ? null : box => {
     box.style.height = 'auto';
     box.style.height = box.scrollHeight + 'px';

@@ -27,8 +27,6 @@
 
     const scope = wrapper.getAttribute('data-directory-search') || 'entries';
 
-    // ── Show / hide ──────────────────────────────────────────────────────────
-
     function show() {
       panel.hidden = false;
       input.setAttribute('aria-expanded', 'true');
@@ -45,8 +43,6 @@
       const q = input.value.trim().toLowerCase();
       if (!q) { hide(); return; }
 
-      // Match against both the label and the meta line, so a name, a
-      // department, or an identifier all surface the right row.
       const matches = data
         .filter(item =>
           item.label.toLowerCase().includes(q) ||
@@ -117,12 +113,10 @@
       }
     });
 
-    // Hide on outside click
     document.addEventListener('click', (e) => {
       if (!wrapper.contains(e.target)) hide();
     });
 
-    // Production: the form would navigate to the directory.
     const form = input.closest('form');
     if (form) form.addEventListener('submit', hide);
   }
@@ -137,9 +131,6 @@
       .replace(/"/g, '&quot;');
   }
 
-  // Escape the label, then wrap the first case-insensitive match of the query
-  // in <mark>. Operates on the already-escaped string so the query (also
-  // escaped) lines up with what is rendered.
   function highlight(label, query) {
     const safeLabel = esc(label);
     const safeQuery = esc(query);

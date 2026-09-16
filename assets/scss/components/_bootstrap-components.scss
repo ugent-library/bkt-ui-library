@@ -5,8 +5,6 @@
   font-family: var(--bt-font-sans);
   font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
-  /* background-color, not the shorthand — background: wipes Bootstrap's
-     .form-select caret image */
   background-color: var(--bt-white);
   border: 1px solid var(--bt-gray-300);
   border-radius: var(--bt-radius);
@@ -15,8 +13,7 @@
 .form-control {
   padding: .4375rem .75rem;
 }
-/* padding-right stays Bootstrap's 2.25rem — the caret gutter. A shorthand
-   here puts text under the caret. */
+
 .form-select {
   padding-top: .4375rem;
   padding-bottom: .4375rem;
@@ -51,9 +48,6 @@
   box-shadow: 0 0 0 3px var(--bt-focus-ring-invalid);
 }
 
-/* Defined here so they beat the base .form-control/.form-select rules above,
-   which otherwise override Bootstrap's own -sm classes (equal specificity,
-   later in the cascade). */
 .form-control-sm {
   font-size: var(--bt-text-sm);
   padding: var(--bt-sp-1) var(--bt-sp-2);
@@ -94,9 +88,7 @@
 .form-check-input {
   cursor: pointer;
 }
-/* Bootstrap sets `appearance: none` on the control, which makes `accent-color`
-   a no-op, and the checked fill is baked from a Sass var (no runtime
-   --bs-form-check-* exists). So recolour the checked state directly. */
+
 .form-check-input:checked {
   background-color: var(--bt-blue-800);
   border-color: var(--bt-blue-800);
@@ -117,7 +109,6 @@
   font-size: var(--bt-text-base);
   line-height: 1.6;
 
-  /* headings otherwise take --s-heading-color; inherit follows the variant */
   h2, h3, h4, h5, h6 {
     margin: 0 0 var(--bt-sp-2) 0;
     color: inherit;
@@ -142,10 +133,6 @@
   border-style: dashed;
   border-width: 2px;
 }
-
-/* Alert variants — feed Bootstrap's per-variant vars. Icons and text inside
-   inherit --bs-alert-color; links take --bs-alert-link-color via the shared
-   rule on .alert above. */
 
 .alert-success {
   --bs-alert-bg:           var(--bt-light-success);
@@ -200,12 +187,8 @@
 /* ── Progress ────────────────────────────────────────────────────────────── */
 
 .progress {
-  /* the var also sizes the striped background correctly */
   --bs-progress-height: 8px;
 }
-
-
-
 
 /* ── btn-check-group ───────────────────────────────────────────────────────────── */
 .bt-btn-check__group {
@@ -237,12 +220,10 @@
 
 /* ── Modals ────────────────────────────────────────────────────────────────── */
 
-/* Wider than modal-xl for form rows with several controls. */
 .modal-dialog--wide {
   --bs-modal-width: min(1400px, 94vw);
 }
 
-/* Keep the exit fixed when short content would otherwise shrink the dialog. */
 .modal-dialog--wide.modal-dialog-scrollable .modal-content {
   height: 100%;
 }

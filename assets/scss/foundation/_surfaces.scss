@@ -4,17 +4,10 @@
 
    Backoffice is the default. body carries all baseline values.
    Public only overrides what genuinely differs.
-
-   Apply data-surface="public" or data-surface="backoffice" to <body>
-   or any layout container. Mix within a page if needed.
-
 */
 
 
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
-/* Also on [data-surface="backoffice"] so a backoffice container nested in a
-   public page gets its own tokens — without it, "mix within a page" only
-   worked in one direction. */
 body,
 [data-surface="backoffice"] {
   --s-heading-font:         var(--bt-font-sans);
@@ -74,9 +67,8 @@ body,
 }
 
 /* ── Surface boundaries apply their own text properties ─────────────────────── */
-/* Body gets these via the --bs-body-* bridge and reboot; nested surface
-   containers need them applied directly or body size/leading/colour would
-   inherit straight through the boundary. */
+/* Body reads these through the --bs-body-* bridge. A nested surface container
+   needs them set directly, or body size, leading and colour inherit across it. */
 [data-surface] {
   font-size: var(--s-body-size);
   line-height: var(--s-body-leading);

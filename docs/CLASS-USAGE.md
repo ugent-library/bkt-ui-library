@@ -40,6 +40,8 @@ Use `bt-detail-heading` when the `h1` is the record's own title, including when 
 
 ## Search and filtering
 
+Colour a badge with `text-bg-*`.
+
 **`badge--outline`** — an applied filter chip is `badge badge--outline` on a `<button>` or an `<a>`. `filter-chip-group` joins two such chips into one pill, a label on the left and a remove button on the right. A chip that only displays a value, with nothing to click, is `badge text-bg-primary-light` instead. [`patterns/filter-picker.html`](../patterns/filter-picker.html)
 
 **`bt-result`** — `bt-result` is one row of search results and `bt-results` is the floating list holding them. `bt-result__icon` is the icon at the start of the row. `bt-result__name` is the display name; use that class rather than a font-weight utility. Mark the chosen row with `is-selected` and `aria-selected="true"` together. [`patterns/people-search.html`](../patterns/people-search.html)

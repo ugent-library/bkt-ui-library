@@ -11,14 +11,7 @@
 
 
 /* ── Ink-alpha tokens ────────────────────────────────────────────────────────── */
-/*
-   Dark navy at varying opacities, derived from --bt-blue-900 (#09172a).
-   Named --i* for brevity — they appear 20+ times each in SVG markup.
-   Scoped here rather than in _tokens.scss because nothing outside SVG uses them.
-*/
 :root {
-  /* --bg: SVG rect background fill — alias for --bt-gray-25.
-     Named short because it appears once in the hero SVG rect. */
   --bg: var(--bt-bg-paper);
 
   --i02: rgba(9, 23, 42, .02);
@@ -50,7 +43,6 @@
 .fillFaint { fill: var(--i12); stroke: none; }
 .fillMuted { fill: var(--i12); stroke: none; }
 
-/* Background grid */
 .gridLine {
   stroke: var(--i40);
   stroke-width: .75;
@@ -216,9 +208,8 @@
 /* ── Reduced motion ──────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  /* SMIL animations (travelling particles, wheels, spines) run on their own
-     timeline and can't be stopped by CSS. The graph is decorative and
-     aria-hidden, so drop the whole layer rather than freeze each piece. */
+  /* CSS cannot stop a SMIL animation, which runs on its own timeline. The graph is
+     decorative and aria-hidden, so drop the whole layer instead. */
   .bt-hero__bg { background-color: var(--bt-bg-paper);}
   .bt-hero__bg svg { display: none; }
 }

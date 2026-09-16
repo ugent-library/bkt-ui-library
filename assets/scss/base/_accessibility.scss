@@ -2,7 +2,6 @@
    FOCUS & ACCESSIBILITY
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-/* Universal visible focus ring */
 :focus-visible {
   outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
@@ -29,9 +28,9 @@
   outline: none;
 }
 
-/* An authored display (e.g. bt-toolbar's flex) silently defeats the hidden attribute;
-   this keeps hidden trustworthy. Display utilities (d-flex) still win — never put one
-   on an element JS toggles with hidden. */
+/* A display value on the element beats the hidden attribute, and the element stays
+   visible. This rule restores hidden. A d-flex utility still wins, so never put one
+   on an element that JS hides. */
 [hidden] {
   display: none !important;
 }
@@ -48,18 +47,17 @@
   border: 0 !important;
 }
 
-/* Reduced-motion policy. */
+/* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: .01ms !important;
     animation-duration: .01ms !important;
-    /* without this, infinite animations blur at .01ms/turn instead of stopping */
+    /* Without this, an infinite animation blurs at .01ms per turn instead of stopping. */
     animation-iteration-count: 1 !important;
   }
 
-  /* Exception: Bootstrap's own reduced-motion rule slows spinners to 1.5s
-     instead of stopping them — a frozen spinner reads as "stuck". Restore
-     that upstream behaviour, which the universal rule above overrides. */
+  /* Bootstrap slows spinners to 1.5s rather than stopping them, because a frozen
+     spinner reads as stuck. The rule above overrides that, so restore it. */
   .spinner-border,
   .spinner-grow {
     animation-duration: 1.5s !important;

@@ -15,7 +15,6 @@
       input.addEventListener('input', sync);
       sync();
 
-      // Dispatch input so an in-place result list refreshes too.
       if (clear.tagName === 'BUTTON') {
         clear.addEventListener('click', function () {
           input.value = '';

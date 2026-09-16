@@ -24,6 +24,10 @@ faceting and exporting a second time inside the builder.
 The split also keeps one responsibility per region: the dialog authors the set; the results page
 supports reading and taking that set elsewhere.
 
+Two Bootstrap bases were rejected. `.list-group-item-action` brings borders and its own list
+contract, so a field choice rides on `.dropdown-item`. `.card` would nest card chrome inside the
+host's box, so a group draws only its inset band.
+
 ## Trade-off
 
 The dialog creates a strong mode and limits the vertical workspace. Long queries scroll inside it,

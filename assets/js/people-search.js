@@ -14,7 +14,6 @@
 
     if (!input || !results) return;
 
-    // ── Selection — event delegation works after every HTMX swap ───────────
     results.addEventListener('click', e => {
       const row = e.target.closest('[data-ps-row]');
       if (row) selectPerson(row.dataset);
@@ -48,11 +47,9 @@
       }
     });
 
-    // ── Show / hide results after HTMX swap ─────────────────────────────────
     results.addEventListener('htmx:afterSwap', () => {
       const count = results.querySelectorAll('[data-ps-row]').length;
       results.hidden = count === 0;
-      // No-results lives in the hint (the live region), never inside the listbox.
       if (hint) hint.textContent = count
         ? `${count} result${count !== 1 ? 's' : ''}`
         : `No people found for "${input.value}"`;
@@ -139,7 +136,6 @@
     initAll();
   }
 
-  // Re-init widgets that arrive via HTMX swap
   document.addEventListener('htmx:afterSwap', e => {
     const target = e.detail?.target;
     if (!target) return;

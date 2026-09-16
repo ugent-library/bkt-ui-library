@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower bc9f020/2026-09-16 */
+/*! Booktower 56bfea9/2026-09-16 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -15,13 +15,6 @@
   /* ── Typography ────────────────────────────────────────────────────────────── */
   --bt-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bt-font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  /*
-    Type scale — rem values by necessity, type doesn't snap to a 4px grid.
-    Never write .875rem in component code — always reference a token.
-
-    xs badges and tight UI labels · sm secondary text, small buttons ·
-    md lead text, card titles · lg h3 · xl h2 · 2xl h1 · 3xl hero only
-  */
   --bt-text-xs: 0.75rem;
   --bt-text-sm: 0.875rem;
   --bt-text-base: 1rem;
@@ -86,15 +79,10 @@
   --bt-dur-base: 200ms;
   --bt-dur-slow: 350ms;
   /* ── Z-index scale ────────────────────────────────────────────────── */
-  /*
-    Stacking order, aligned to Bootstrap's tiers. Reference a token, never a bare
-    z-index. Local stacking inside an isolated component stays local.
-    See docs/UI-LAYER.md.
-  */
   --bt-z-panel: 1000; /* floating panels: suggest, filter sheet */
   --bt-z-sticky: 1020; /* sticky chrome: app navbar, sticky headers    */
   --bt-z-overlay: 1080; /* notifications / toasts — above modal (1055)  */
-  --bt-z-skip-link: 1090; /* must beat everything to stay reachable       */
+  --bt-z-skip-link: 1090;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -128,7 +116,6 @@
   --bt-gray-800: #333333;
   --bt-gray-900: #202020;
   --bt-gray-1000: #14161a;
-  /* cool muted text for the public surface */
   --bt-blue-gray-550: color-mix(in srgb, var(--bt-gray-500), var(--bt-blue-800) 50%);
   --bt-blue-50: #e9f0fa;
   --bt-blue-100: #d5e3f6;
@@ -165,7 +152,7 @@
   --bt-orange-700: #915808;
   --bt-orange-800: #623804;
   --bt-orange-900: #311c02;
-  /* Tertiaries — accent colours for badges and illustration */
+  /* ── Tertiaries — badges and illustration ────────────────────────────── */
   --bt-yellow: #ffd200;
   --bt-dark-yellow: #e5b400;
   --bt-light-yellow: #fffae5;
@@ -178,8 +165,8 @@
   --bt-warm-orange: #fb7e3a;
   --bt-light-blue-eng: #8bbee8;
   --bt-olive: #aeb050;
-  /* Background */
-  --bt-bg-paper: #faf8f6; /* warm off-white, faintly rosy — editorial, not clinical */
+  /* ── Background ──────────────────────────────────────────────────────── */
+  --bt-bg-paper: #faf8f6;
   /* ── RGB triplets ──────────────────────────────────────────────────────────── */
   /*
     Bootstrap utilities (.text-*, .bg-*) read colours as bare triplets
@@ -199,18 +186,14 @@
   --bt-red-500-rgb: 220, 78, 40;
   --bt-orange-600-rgb: 218, 132, 11;
   /* ── Semantic aliases ──────────────────────────────────────────────────────── */
-  /*
-    Name by role, not by colour.
-    Component code references these — never the palette steps above.
-  */
-  /* Brand blues */
+  /* ── Brand blues ─────────────────────────────────────────────────────── */
   --bt-blue: var(--bt-blue-600);
   --bt-dark-blue: var(--bt-blue-800);
   --bt-light-blue: var(--bt-blue-50);
-  /* Grays */
+  /* ── Grays ───────────────────────────────────────────────────────────── */
   --bt-gray: var(--bt-gray-800);
   --bt-dark-gray: var(--bt-gray-1000);
-  /* Status */
+  /* ── Status ──────────────────────────────────────────────────────────── */
   --bt-green: var(--bt-green-500);
   --bt-dark-green: var(--bt-green-800);
   --bt-light-green: var(--bt-green-50);
@@ -220,7 +203,7 @@
   --bt-orange: var(--bt-orange-600);
   --bt-dark-orange: var(--bt-orange-800);
   --bt-light-orange: var(--bt-orange-50);
-  /* Semantic status tokens */
+  /* ── Semantic status tokens ──────────────────────────────────────────── */
   --bt-success: var(--bt-green);
   --bt-light-success: var(--bt-light-green);
   --bt-dark-success: var(--bt-dark-green);
@@ -230,15 +213,15 @@
   --bt-danger: var(--bt-red);
   --bt-light-danger: var(--bt-light-red);
   --bt-dark-danger: var(--bt-dark-red);
-  /* Text */
+  /* ── Text ────────────────────────────────────────────────────────────── */
   --bt-text: var(--bt-gray-700);
   --bt-text-muted: var(--bt-gray-550);
-  /* Icons */
+  /* ── Icons ───────────────────────────────────────────────────────────── */
   --bt-icon-default: var(--bt-gray-600);
   --bt-icon-muted: var(--bt-gray-400);
-  /* Borders */
+  /* ── Borders ─────────────────────────────────────────────────────────── */
   --bt-border-color: var(--bt-gray-150);
-  /* Backgrounds */
+  /* ── Backgrounds ─────────────────────────────────────────────────────── */
   --bt-bg: var(--bt-gray-25);
   --bt-bg-alt: var(--bt-gray-50);
   --bt-bg-dark: var(--bt-gray);
@@ -267,15 +250,8 @@
 
    Backoffice is the default. body carries all baseline values.
    Public only overrides what genuinely differs.
-
-   Apply data-surface="public" or data-surface="backoffice" to <body>
-   or any layout container. Mix within a page if needed.
-
 */
 /* ── Default = backoffice ────────────────────────────────────────────────────── */
-/* Also on [data-surface="backoffice"] so a backoffice container nested in a
-   public page gets its own tokens — without it, "mix within a page" only
-   worked in one direction. */
 body,
 [data-surface=backoffice] {
   --s-heading-font: var(--bt-font-sans);
@@ -333,9 +309,8 @@ body,
 }
 
 /* ── Surface boundaries apply their own text properties ─────────────────────── */
-/* Body gets these via the --bs-body-* bridge and reboot; nested surface
-   containers need them applied directly or body size/leading/colour would
-   inherit straight through the boundary. */
+/* Body reads these through the --bs-body-* bridge. A nested surface container
+   needs them set directly, or body size, leading and colour inherit across it. */
 [data-surface] {
   font-size: var(--s-body-size);
   line-height: var(--s-body-leading);
@@ -344,39 +319,35 @@ body,
 
 /* Global Bootstrap tokens only; component and surface overrides stay with their selectors. */
 :root {
-  /* Typography */
+  /* ── Typography ──────────────────────────────────────────────────────── */
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
   --bs-font-monospace: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   --bs-body-font-family: var(--bs-font-sans-serif);
   /* --bs-body-color and friends are bridged from the surface tokens on body —
      see _surfaces.scss. One source of truth for body text. */
-  /* Backgrounds */
+  /* ── Backgrounds ─────────────────────────────────────────────────────── */
   --bs-body-bg: var(--bt-white);
   --bs-body-bg-rgb: var(--bt-white-rgb);
-  /* Borders */
+  /* ── Borders ─────────────────────────────────────────────────────────── */
   --bs-border-color: var(--bt-border-color);
   --bs-border-color-rgb: var(--bt-gray-150-rgb);
   --bs-border-radius: var(--bt-radius);
   --bs-border-radius-sm: var(--bt-radius-sm);
   --bs-border-radius-lg: var(--bt-radius-lg);
   --bs-border-radius-xl: var(--bt-radius-xl);
-  /* Secondary / muted text (--bs-secondary-color) is surface-aware —
-     bridged per surface block in _surfaces.scss. */
-  /* Theme colours — only the -rgb triplets: the prebuilt CSS reads them in
-     utilities (.text-*, .bg-*); the non-rgb --bs-primary etc. are consumed by
-     nothing and compiled component colours can't be changed here. */
+  /* Only the -rgb triplets: the prebuilt CSS reads them in .text-* and .bg-*
+     utilities. Nothing reads --bs-primary, and component colours compile in. */
   --bs-primary-rgb: var(--bt-blue-800-rgb);
   --bs-danger-rgb: var(--bt-red-500-rgb);
   --bs-success-rgb: var(--bt-green-500-rgb);
   --bs-warning-rgb: var(--bt-orange-600-rgb);
   --bs-info-rgb: var(--bt-blue-600-rgb);
-  /* Focus */
+  /* ── Focus ───────────────────────────────────────────────────────────── */
   --bs-focus-ring-color: var(--bt-focus-ring-sm);
   --bs-focus-ring-width: 3px;
 }
 
 /* ── Component-scoped overrides ─────────────────────────────────────────────── */
-/* Bootstrap component variables must be overridden on the component selector. */
 .card {
   --bs-card-box-shadow: var(--bt-shadow-sm);
   --bs-card-border-radius: var(--bt-radius-xl);
@@ -521,7 +492,7 @@ h5 {
   font-size: var(--bt-text-base);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.06em; /* em scales with font-size */
+  letter-spacing: 0.06em;
 }
 
 h6 {
@@ -649,7 +620,6 @@ code, kbd, pre, samp {
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOCUS & ACCESSIBILITY
    ═══════════════════════════════════════════════════════════════════════════════ */
-/* Universal visible focus ring */
 :focus-visible {
   outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
@@ -678,9 +648,9 @@ code, kbd, pre, samp {
   outline: none;
 }
 
-/* An authored display (e.g. bt-toolbar's flex) silently defeats the hidden attribute;
-   this keeps hidden trustworthy. Display utilities (d-flex) still win — never put one
-   on an element JS toggles with hidden. */
+/* A display value on the element beats the hidden attribute, and the element stays
+   visible. This rule restores hidden. A d-flex utility still wins, so never put one
+   on an element that JS hides. */
 [hidden] {
   display: none !important;
 }
@@ -697,17 +667,16 @@ code, kbd, pre, samp {
   border: 0 !important;
 }
 
-/* Reduced-motion policy. */
+/* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-    /* without this, infinite animations blur at .01ms/turn instead of stopping */
+    /* Without this, an infinite animation blurs at .01ms per turn instead of stopping. */
     animation-iteration-count: 1 !important;
   }
-  /* Exception: Bootstrap's own reduced-motion rule slows spinners to 1.5s
-     instead of stopping them — a frozen spinner reads as "stuck". Restore
-     that upstream behaviour, which the universal rule above overrides. */
+  /* Bootstrap slows spinners to 1.5s rather than stopping them, because a frozen
+     spinner reads as stuck. The rule above overrides that, so restore it. */
   .spinner-border,
   .spinner-grow {
     animation-duration: 1.5s !important;
@@ -720,8 +689,6 @@ code, kbd, pre, samp {
   font-family: var(--bt-font-sans);
   font-size: var(--s-body-size, var(--bt-text-base));
   color: var(--bt-gray-1000);
-  /* background-color, not the shorthand — background: wipes Bootstrap's
-     .form-select caret image */
   background-color: var(--bt-white);
   border: 1px solid var(--bt-gray-300);
   border-radius: var(--bt-radius);
@@ -732,8 +699,6 @@ code, kbd, pre, samp {
   padding: 0.4375rem 0.75rem;
 }
 
-/* padding-right stays Bootstrap's 2.25rem — the caret gutter. A shorthand
-   here puts text under the caret. */
 .form-select {
   padding-top: 0.4375rem;
   padding-bottom: 0.4375rem;
@@ -774,9 +739,6 @@ code, kbd, pre, samp {
   box-shadow: 0 0 0 3px var(--bt-focus-ring-invalid);
 }
 
-/* Defined here so they beat the base .form-control/.form-select rules above,
-   which otherwise override Bootstrap's own -sm classes (equal specificity,
-   later in the cascade). */
 .form-control-sm {
   font-size: var(--bt-text-sm);
   padding: var(--bt-sp-1) var(--bt-sp-2);
@@ -822,9 +784,6 @@ code, kbd, pre, samp {
   cursor: pointer;
 }
 
-/* Bootstrap sets `appearance: none` on the control, which makes `accent-color`
-   a no-op, and the checked fill is baked from a Sass var (no runtime
-   --bs-form-check-* exists). So recolour the checked state directly. */
 .form-check-input:checked {
   background-color: var(--bt-blue-800);
   border-color: var(--bt-blue-800);
@@ -843,7 +802,6 @@ code, kbd, pre, samp {
   --bs-alert-margin-bottom: var(--bt-sp-4);
   font-size: var(--bt-text-base);
   line-height: 1.6;
-  /* headings otherwise take --s-heading-color; inherit follows the variant */
 }
 .alert h2, .alert h3, .alert h4, .alert h5, .alert h6 {
   margin: 0 0 var(--bt-sp-2) 0;
@@ -867,9 +825,6 @@ code, kbd, pre, samp {
   border-width: 2px;
 }
 
-/* Alert variants — feed Bootstrap's per-variant vars. Icons and text inside
-   inherit --bs-alert-color; links take --bs-alert-link-color via the shared
-   rule on .alert above. */
 .alert-success {
   --bs-alert-bg: var(--bt-light-success);
   --bs-alert-border-color: var(--bt-green-200);
@@ -920,7 +875,6 @@ code, kbd, pre, samp {
 
 /* ── Progress ────────────────────────────────────────────────────────────── */
 .progress {
-  /* the var also sizes the striped background correctly */
   --bs-progress-height: 8px;
 }
 
@@ -952,12 +906,10 @@ code, kbd, pre, samp {
 }
 
 /* ── Modals ────────────────────────────────────────────────────────────────── */
-/* Wider than modal-xl for form rows with several controls. */
 .modal-dialog--wide {
   --bs-modal-width: min(1400px, 94vw);
 }
 
-/* Keep the exit fixed when short content would otherwise shrink the dialog. */
 .modal-dialog--wide.modal-dialog-scrollable .modal-content {
   height: 100%;
 }
@@ -1265,9 +1217,6 @@ a.btn-danger,
 }
 
 /* ── Button group ───────────────────────────────────────────────────────────── */
-/*
-  Focus ring fix
-*/
 .btn-group > .btn:focus-visible {
   outline-offset: 0;
   z-index: 1;
@@ -1292,7 +1241,6 @@ a.btn-danger,
 }
 
 /* ── Badges ─────────────────────────────────────────────────────────────────── */
-/* Colour with text-bg-*, never bg-* + text-* — see CLASS-USAGE.md */
 .badge {
   --bs-badge-border-radius: var(--bt-radius-pill);
   --bs-badge-font-size: var(--bt-text-xs);
@@ -1390,7 +1338,6 @@ a.btn-danger,
   background-color: var(--bt-blue-100) !important;
 }
 
-/* Tab-style badge, scroll-spy style */
 .badge.badge--tab {
   display: inline-block;
   background: transparent;
@@ -1415,7 +1362,6 @@ a.badge--tab:hover .badge.text-bg-secondary {
   background: var(--bt-gray-200);
 }
 
-/* A remove control inside a badge (person tokens, dismissible chips) */
 .badge > button {
   display: inline-flex;
   align-items: center;
@@ -1432,7 +1378,6 @@ a.badge--tab:hover .badge.text-bg-secondary {
   background-color: color-mix(in srgb, var(--bt-blue-200) 45%, transparent);
 }
 
-/* Clickable badge */
 button.badge,
 a.badge {
   --bs-badge-border-radius: var(--bt-radius);
@@ -1794,9 +1739,6 @@ a.bt-avatar:hover:not(:disabled) {
   border-radius: var(--bt-radius);
 }
 
-/* Glyph slot — holds a faculty SVG (or other mark) centred in the chip.
-   Sized to a share of the chip so varied SVG aspect ratios sit inset,
-   not edge-to-edge; object-fit keeps them undistorted. */
 .bt-avatar__img {
   -o-object-fit: contain;
      object-fit: contain;
@@ -1896,8 +1838,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
 /* -- Filter-domain composition. The chips are clickable badges (elements/_badges),
    the editor is a bt-panel (patterns/_panel), the scrollable picker list is a
    bt-dropdown-scroll (patterns/_booktower-components); only the filter-specific glue lives here. */
-/* Applied-filter chip with a split label / remove control: two clickable
-   outline badges joined into one pill (label edits, ✕ removes). */
 .filter-chip-group {
   display: inline-flex;
   align-items: center;
@@ -1929,7 +1869,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   width: max-content;
   min-width: 16rem;
   max-width: min(24rem, 100vw - 2rem);
-  /* Beats .dropdown-menu's own padding on load order. */
   padding: 0;
 }
 
@@ -1961,8 +1900,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   overflow-y: auto;
 }
 
-/* The title and the body under it are one header block — the divider belongs to
-   the boundary where the next body starts, never under the title. */
 .bt-panel__title + .bt-panel__body {
   border-top: 0;
   padding-top: 0;
@@ -1985,9 +1922,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   padding: var(--bt-sp-4);
 }
 
-/* Option rows (checklist + boolean radios) — standard Bootstrap .form-check, no custom radio.
-   --list is the same shape for rows that act instead of tick: one scrolling column, the group
-   headings inside it. */
 .bt-panel__body--list,
 .bt-panel__body--checklist,
 .bt-panel__body--boolean {
@@ -1998,7 +1932,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
 
 .bt-panel__body .form-check {
   display: flex;
-  /* flex-start + the input's top offset keep the box on line 1 of multi-line rich labels. */
   align-items: flex-start;
   gap: var(--bt-sp-2);
   margin: 0;
@@ -2023,7 +1956,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   flex: 1;
 }
 
-/* Year range layout; wraps where a viewport under ~350px leaves too little room for the pair */
 .bt-panel__body--year {
   align-items: center;
   flex-wrap: wrap;
@@ -2048,13 +1980,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
 }
 
 /* -- bt-query-builder -- */
-/*
-  Condition editor: the list of rows and nothing around it.
-  Bootstrap checked and rejected: .list-group-item-action for a field choice, which brings borders
-  and its own list contract, so a choice rides on .dropdown-item. .card for __group, which would
-  nest card chrome inside the host's box, so the group draws only its inset band.
-*/
-/* No block rule: the host supplies the box. The dialog's modal-body is that box. */
 /* ── Lanes ────────────────────────────────────────────────────────────────── */
 .bt-query-builder__conditions,
 .bt-query-builder__alts {
@@ -2122,9 +2047,8 @@ a.bt-avatar--outline:hover:not(:disabled) {
   align-items: stretch;
 }
 
-/* Chrome under-sizes the row's grid track around a field-sized textarea, so the
-   content overflows into the next row; inside the builder the box stays fixed and
-   scrolls instead. */
+/* Chrome under-sizes the grid track around a field-sized textarea and the content
+   overflows into the next row. Here the box keeps its size and scrolls. */
 .bt-query-builder__row .bt-textarea-auto {
   field-sizing: fixed;
 }
@@ -2215,7 +2139,6 @@ a.bt-avatar--outline:hover:not(:disabled) {
   margin: var(--bt-sp-3) 0 var(--bt-sp-2) 0;
 }
 
-/* Blank state:*/
 .modal-body:has(.bt-query-builder__conditions) {
   display: flex;
   flex-direction: column;
@@ -2319,8 +2242,6 @@ img.bt-navbar__logo {
   position: relative;
 }
 
-/* The list is an overlay: results appearing or clearing must never reflow the form
-   below the input. No top offset — out of flow it stays at its in-flow spot. */
 .bt-results {
   position: absolute;
   left: 0;
@@ -2365,7 +2286,6 @@ img.bt-navbar__logo {
 }
 
 /* -- bt-work-card -- */
-/* Surface tokens adapt the same research-output card to public and backoffice. */
 .bt-work-card {
   border-bottom: var(--bt-border);
   padding-bottom: var(--bt-sp-3);
@@ -2522,8 +2442,6 @@ li:last-child > .bt-work-card {
   width: 2rem;
 }
 
-/* Compact: dashboard summary sections. Spacing only — the server sends the
-   compact payload, so no rule here may hide card content. */
 .bt-work-card--compact {
   padding-top: var(--bt-sp-2);
   padding-bottom: var(--bt-sp-2);
@@ -2679,19 +2597,17 @@ li:last-child > .bt-work-card {
   grid-area: navbar;
 }
 
-/* Left column — nav sidebar */
 .u-layout--app > .bt-sidebar {
   grid-area: sidebar;
   height: calc(100vh - var(--s-topbar-height));
   overflow-y: auto;
 }
 
-/* Main — grid-based, automatically adapts to content structure */
 .u-layout--app > main {
   grid-area: main;
   min-width: 0;
   display: grid;
-  grid-template-rows: auto 1fr auto; /* header, body, footer */
+  grid-template-rows: auto 1fr auto;
   overflow: hidden;
 }
 
@@ -2706,7 +2622,6 @@ li:last-child > .bt-work-card {
 }
 
 /* ── Main area blocks (semantic naming, no utilities needed) ──────────────────── */
-/* Optional sticky header — title bar, primary toolbar, filters, etc. */
 .u-main__header {
   grid-row: 1;
   overflow-y: visible;
@@ -2716,7 +2631,6 @@ li:last-child > .bt-work-card {
   overflow: visible;
 }
 
-/* Required body — always occupies middle row */
 .u-main__body {
   grid-row: 2;
   display: grid;
@@ -2738,7 +2652,23 @@ li:last-child > .bt-work-card {
   --bs-offcanvas-width: min(22rem, 100vw);
 }
 
-/* Optional sticky footer — pagination, action bar, bulk actions, etc. */
+.u-main__body--split:has(> .u-main__sidebar:last-child) {
+  --u-main-split-sidebar-width: 22rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--u-main-split-sidebar-width));
+}
+
+.u-main__body--split:has(> .u-main__sidebar:last-child) > .u-main__content {
+  grid-column: 1;
+}
+
+.u-main__body--split:has(> .u-main__sidebar:last-child) > .u-main__sidebar {
+  grid-column: 2;
+}
+
+.u-main__body--split > .u-main__sidebar.offcanvas-end {
+  --bs-offcanvas-width: min(22rem, 100vw);
+}
+
 .u-main__footer {
   grid-row: 3;
   overflow-y: visible;
@@ -2747,7 +2677,6 @@ li:last-child > .bt-work-card {
   background-color: var(--s-bg);
 }
 
-/* Left sidebar inside body (filters, facets, etc.) */
 .u-main__body--split > .u-main__sidebar {
   grid-column: 1;
   overflow-y: auto;
@@ -2763,7 +2692,6 @@ li:last-child > .bt-work-card {
   border-left: var(--bt-border);
 }
 
-/* Right area inside body (results, etc.) */
 .u-main__content {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -2802,6 +2730,12 @@ li:last-child > .bt-work-card {
 }
 
 @media (max-width: 1199.98px) {
+  .u-main__body--split:has(> .u-main__sidebar.offcanvas-end) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .u-main__body--split:has(> .u-main__sidebar.offcanvas-end) > .u-main__sidebar {
+    padding: 0;
+  }
   .u-main__body--filter-drawer {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2813,8 +2747,6 @@ li:last-child > .bt-work-card {
   }
 }
 /* ── u-notifications ──────────────────────────────────────────────────────────── */
-/* Fixed top-right overlay stack. Structure only — contents bring their own
-   styling and dismissal. Owns the overlay z-tier so consumers never set it. */
 .u-notifications {
   position: fixed;
   top: 0;
@@ -2866,8 +2798,6 @@ li:last-child > .bt-work-card {
   letter-spacing: 0.05em;
 }
 
-/* Nav links inside bt-sidebar carry their own flex layout.
-   d-flex / align-items-center / gap / padding utilities are not needed in templates. */
 .bt-sidebar a.nav-link {
   display: flex;
   align-items: center;
@@ -2917,8 +2847,6 @@ li:last-child > .bt-work-card {
   width: 0.5rem;
   height: 0.5rem;
   padding: 0 !important;
-  /* hide the count via the font-size var — color:transparent loses to the
-     !important colour the text-bg-* system needs */
   --bs-badge-font-size: 0;
   border: none;
   border-radius: var(--bs-border-radius-pill);
@@ -2952,14 +2880,7 @@ li:last-child > .bt-work-card {
    never applied to HTML elements.
    ═══════════════════════════════════════════════════════════════════════════════ */
 /* ── Ink-alpha tokens ────────────────────────────────────────────────────────── */
-/*
-   Dark navy at varying opacities, derived from --bt-blue-900 (#09172a).
-   Named --i* for brevity — they appear 20+ times each in SVG markup.
-   Scoped here rather than in _tokens.scss because nothing outside SVG uses them.
-*/
 :root {
-  /* --bg: SVG rect background fill — alias for --bt-gray-25.
-     Named short because it appears once in the hero SVG rect. */
   --bg: var(--bt-bg-paper);
   --i02: rgba(9, 23, 42, .02);
   --i03: rgba(9, 23, 42, .03);
@@ -3018,7 +2939,6 @@ li:last-child > .bt-work-card {
   stroke: none;
 }
 
-/* Background grid */
 .gridLine {
   stroke: var(--i40);
   stroke-width: 0.75;
@@ -3315,9 +3235,8 @@ li:last-child > .bt-work-card {
 }
 /* ── Reduced motion ──────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  /* SMIL animations (travelling particles, wheels, spines) run on their own
-     timeline and can't be stopped by CSS. The graph is decorative and
-     aria-hidden, so drop the whole layer rather than freeze each piece. */
+  /* CSS cannot stop a SMIL animation, which runs on its own timeline. The graph is
+     decorative and aria-hidden, so drop the whole layer instead. */
   .bt-hero__bg {
     background-color: var(--bt-bg-paper);
   }
@@ -3911,16 +3830,7 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 /* ═══════════════════════════════════════════════════════════════════════════════
    ICON SYSTEM — UGent icon font (.if)
    ═══════════════════════════════════════════════════════════════════════════════
-
-   The label goes on the button, never on the icon: every .if carries
-   aria-hidden="true", and an icon-only button carries aria-label.
    Examples and the rest of the rule: docs/ACCESSIBILITY.md B2.
-*/
-/*
-  .if sits inside inline-flex containers (buttons, links).
-  We use display:inline-flex + align-items:center so the glyph centres on
-  the cap-height of the surrounding text without a magic-number offset.
-  No vertical-align nudge — the parent's align-items does the work cleanly.
 */
 .if {
   display: inline-flex;
@@ -3930,14 +3840,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   flex-shrink: 0;
 }
 
-/*
-  Icons inside buttons — optical size correction
-  ────────────────────────────────────────────────
-  Icon glyphs in the UGent font render optically heavier than the text
-  beside them at equal size. Nudging icons to --bt-text-xs (12px) inside
-  14px buttons keeps them visually balanced without feeling too small.
-  The btn-lg exception brings icons back to 14px to match its 16px text.
-*/
 .btn > .if {
   font-size: var(--bt-text-base);
 }
@@ -3946,19 +3848,12 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   font-size: var(--bt-text-sm);
 }
 
-/*
-  Size variants — mapped to type scale tokens.
-  Use these when the icon needs to be a specific size regardless of context.
-  Inside .btn, don't set a size — the button's font-size drives it naturally.
-  Inside .btn-sm and .btn-lg, same rule applies.
-*/
 .if--xs {
   font-size: var(--bt-text-xs);
 } /* 11px — tight metadata, table cells */
 .if--sm {
   font-size: var(--bt-text-sm);
 } /* 14px — inline with body text      */
-/* .if (no modifier) — inherits from parent, matches surrounding text            */
 .if--lg {
   font-size: var(--bt-text-lg);
 } /* 22px — section icons              */
@@ -3978,26 +3873,15 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   transition: color var(--bt-dur-fast);
 }
 
-/*
-  Icons inside prose links — styled by p a > .if in _typography.scss.
-  Buttons, nav-links and other flex components do their own alignment.
-  Keep icon and text flush; whitespace inside an underlined link gets underlined.
-
-  Example:
-    <a href="/download"><i class="if if-download" aria-hidden="true"></i>Download PDF</a>
-
-  Do NOT add .if to .btn — buttons are already inline-flex.
-*/
 /* Booktower utilities cover repeated token behavior that Bootstrap cannot express. */
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
-/* Bootstrap has no min-width utility; flex children need min-width:0 to allow
-   text truncation. Named in Bootstrap's utility style, not bt-*. */
+/* Bootstrap utility extension */
 .min-w-0 {
   min-width: 0;
 }
 
 /* ── Forms ───────────────────────────────────────────────────────────────────── */
-/* Chromium stops growing long field-sized textareas; scroll after this cap. */
+/* Chromium fix */
 .bt-textarea-auto {
   max-height: 14rem;
   overflow-y: auto;
@@ -4035,10 +3919,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
 }
 
 /* ── Faculty backgrounds ─────────────────────────────────────────────────────── */
-/* Background + readable foreground, keyed by live Biblio org code.
-   White text where the brand colour clears 3:1; dark ink on the lighter
-   faculties (lw, tw, eb, pp, la, ps) where white would fail. Reused by
-   bt-avatar faculty chips and the organization directory. */
 .bg-faculty-lw {
   background-color: var(--bt-faculty-lw);
   color: var(--bt-blue-900);
@@ -4104,10 +3984,6 @@ i[class^=if-]:before, i[class*=" if-"]:before {
   color: var(--bt-white);
 }
 
-/* Light faculty tints — 12% of the brand colour into white, computed so the
-   tint always tracks the brand hex (no second token to keep in sync). Holds
-   body text: --bt-text clears 4.5:1 on every faculty at this mix. Muted text
-   sits close to the floor — use --bt-text, not --bt-text-muted, on these. */
 .bg-faculty-lw-light {
   background-color: color-mix(in srgb, var(--bt-faculty-lw) 12%, var(--bt-white));
   color: var(--bt-text);

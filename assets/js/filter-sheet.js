@@ -42,7 +42,7 @@
     return map;
   }
 
-  // never call on a live observer — it mutates the picker and would infinite-loop
+  // Disconnect the observer first. This mutates the picker and would loop.
   function decorateRows() {
     const vals = chipValues();
     pickerList.querySelectorAll('.dropdown-header').forEach(h => h.classList.add('d-none'));
@@ -113,8 +113,6 @@
     if (editor.hidden) { showMain(); decorateRows(); }
     else {
       showDetail();
-      // A chip tap opens the editor from the readout outside the sheet; without this the
-      // editor opens inside a shut offcanvas and the tap appears to do nothing.
       const sheet = document.getElementById('filters-offcanvas');
       if (sheet) bootstrap.Offcanvas.getOrCreateInstance(sheet).show();
     }

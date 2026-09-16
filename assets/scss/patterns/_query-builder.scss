@@ -1,12 +1,4 @@
 /* -- bt-query-builder -- */
-/*
-  Condition editor: the list of rows and nothing around it.
-  Bootstrap checked and rejected: .list-group-item-action for a field choice, which brings borders
-  and its own list contract, so a choice rides on .dropdown-item. .card for __group, which would
-  nest card chrome inside the host's box, so the group draws only its inset band.
-*/
-
-/* No block rule: the host supplies the box. The dialog's modal-body is that box. */
 
 /* ── Lanes ────────────────────────────────────────────────────────────────── */
 
@@ -77,9 +69,8 @@
   align-items: stretch;
 }
 
-/* Chrome under-sizes the row's grid track around a field-sized textarea, so the
-   content overflows into the next row; inside the builder the box stays fixed and
-   scrolls instead. */
+/* Chrome under-sizes the grid track around a field-sized textarea and the content
+   overflows into the next row. Here the box keeps its size and scrolls. */
 .bt-query-builder__row .bt-textarea-auto {
   field-sizing: fixed;
 }
@@ -172,7 +163,6 @@
   margin: var(--bt-sp-3) 0 var(--bt-sp-2) 0;
 }
 
-/* Blank state:*/
 .modal-body:has(.bt-query-builder__conditions) {
   display: flex;
   flex-direction: column;

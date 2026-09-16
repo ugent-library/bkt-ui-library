@@ -1,9 +1,6 @@
 /**
  * sidebar-toggle.js — backoffice sidebar collapse/expand toggle.
  * See docs/JAVASCRIPT.md.
- *
- * Also owns the sidebar's Bootstrap tooltips: created once, enabled only in
- * slim mode.
  */
 (function () {
   if (window.btSidebarToggleInitialised) return;
@@ -23,7 +20,7 @@
       if (isSlim) {
         tooltip.enable();
       } else {
-        tooltip.hide(); // disable() only blocks the next one
+        tooltip.hide();
         tooltip.disable();
       }
     });

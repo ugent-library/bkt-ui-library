@@ -1,17 +1,15 @@
 @charset "UTF-8";
-/*! Booktower bc9f020/2026-09-16 */
+/*! Booktower 56bfea9/2026-09-16 */
 /*
  * Booktower Design System — Shell
  * The chrome that wraps every page in the design system.
  * Disappears on Cmd/Ctrl+M (prototype mode).
  */
 /* ─── IBM Plex via Google Fonts (replace with self-hosted in production) ────── */
-/* IBM Plex — shell uses Sans only (nav labels, search, footer kbd)
-   No Serif needed — the shell is a design-system chrome, not a public page */
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap");
 /* ─── SHELL TOKENS ─────────────────────────────────────────────────────────── */
 :root {
-  /* Shell dimensions */
+  /* ── Shell dimensions ──────────────────────────────────────────────────── */
   --bt-nav-width: 260px;
 }
 
@@ -108,7 +106,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Search */
+/* ── Search ────────────────────────────────────────────────────────────── */
 .bt-search-wrap {
   position: relative;
 }
@@ -139,7 +137,7 @@ body {
   border: 1px solid var(--bt-gray-500);
 }
 
-/* Nav body */
+/* ── Nav body ──────────────────────────────────────────────────────────── */
 .bt-nav-body {
   flex: 1;
   padding: var(--bt-sp-4) 0;
@@ -230,7 +228,7 @@ body {
   border-left-color: var(--bt-white);
 }
 
-/* Template items — with dual actions */
+/* ── Template items — dual actions ─────────────────────────────────────── */
 .bt-nav-template-item {
   display: flex;
   align-items: center;
@@ -323,7 +321,7 @@ body {
   background-color: var(--bt-gray-600);
 }
 
-/* Search highlight */
+/* ── Search highlight ──────────────────────────────────────────────────── */
 .bt-nav-link.hidden,
 .bt-nav-template-item.hidden {
   display: none;
@@ -333,7 +331,7 @@ body {
   display: none;
 }
 
-/* Nav footer */
+/* ── Nav footer ────────────────────────────────────────────────────────── */
 .bt-nav-footer {
   padding: var(--bt-sp-3) var(--bt-sp-5);
   border-top: 1px solid var(--bt-gray-700);
@@ -354,7 +352,7 @@ body {
 .bt-content {
   min-height: 100vh;
   overflow-x: hidden;
-  outline: none; /* tabindex=-1, focus for skip links */
+  outline: none;
   background: var(--bt-white);
 }
 
@@ -466,8 +464,6 @@ body[data-surface=public] .bt-content {
   padding: var(--bt-sp-6) var(--bt-sp-5);
 }
 
-/* The people-search results list is a position:absolute overlay, so a demo showing it
-   open would collapse to the input's height and the list would cover the next section. */
 .ds-demo-body:has(.bt-results:not([hidden])) {
   min-height: 26rem;
 }

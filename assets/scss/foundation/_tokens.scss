@@ -16,13 +16,6 @@
   --bt-font-sans:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bt-font-mono:  'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
-  /*
-    Type scale — rem values by necessity, type doesn't snap to a 4px grid.
-    Never write .875rem in component code — always reference a token.
-
-    xs badges and tight UI labels · sm secondary text, small buttons ·
-    md lead text, card titles · lg h3 · xl h2 · 2xl h1 · 3xl hero only
-  */
   --bt-text-xs:   0.75rem;
   --bt-text-sm:   0.875rem;
   --bt-text-base: 1rem;
@@ -106,13 +99,8 @@
 
 
   /* ── Z-index scale ────────────────────────────────────────────────── */
-  /*
-    Stacking order, aligned to Bootstrap's tiers. Reference a token, never a bare
-    z-index. Local stacking inside an isolated component stays local.
-    See docs/UI-LAYER.md.
-  */
   --bt-z-panel:     1000;  /* floating panels: suggest, filter sheet */
   --bt-z-sticky:    1020;  /* sticky chrome: app navbar, sticky headers    */
   --bt-z-overlay:   1080;  /* notifications / toasts — above modal (1055)  */
-  --bt-z-skip-link: 1090;  /* must beat everything to stay reachable       */
+  --bt-z-skip-link: 1090;
 }

@@ -11,8 +11,7 @@
   document.querySelectorAll('[data-filter-bar]')
     .forEach(bar => initBar(bar.dataset.filterBar));
 
-  // Ids stay the handle rather than the bar element: filter-sheet.js moves the picker,
-  // the editor and clear-all into the mobile offcanvas, out of the bar they started in.
+  // filter-sheet.js moves these controls into the mobile offcanvas, so find them by id.
   function initBar(prefix) {
     const activeChips  = document.getElementById(prefix + 'active-chips');
     const filterEditor = document.getElementById(prefix + 'filter-editor');
@@ -77,7 +76,6 @@
       renderChips();
     }
 
-    // The bar may be narrower than the panel, so clamp to the viewport.
     function positionEditor(anchorEl) {
       const parent = filterEditor.offsetParent;
       if (!anchorEl || !parent) return;
@@ -109,7 +107,6 @@
       const options = frag.querySelector('[data-editor-options]');
       options.setAttribute('aria-label', 'Select ' + def.label);
 
-      // A short list is scannable; past eight, searching beats scrolling.
       if (def.values.length > 8) {
         frag.querySelector('[data-editor-search-label]').textContent = 'Search ' + def.label;
         frag.querySelector('[data-checklist-search]').placeholder =
@@ -133,13 +130,11 @@
       return frag;
     }
 
-    // The picker panel the button names, minus the title and footer this editor supplies itself.
     function pickerBody(def, selected) {
       const frag = clone(def.panel);
       frag.querySelector('[data-picker-title]').remove();
       frag.querySelector('[data-picker-actions]').remove();
 
-      // No placeholder: the panel's own names what the row search matches.
       const search = frag.querySelector('[data-picker-search]');
       const searchLabel = frag.querySelector(`label[for="${search.id}"]`);
       search.id = prefix + search.id;
@@ -195,8 +190,6 @@
       filterEditor.querySelector('[data-editor-remove]')
         ?.addEventListener('click', () => { removeFilter(filterId); closeEditor(); });
 
-      // Matching the whole row, not just its name, is what lets a people search find an ORCID
-      // or a department.
       const searchInput = filterEditor.querySelector('[data-checklist-search], [data-picker-search]');
       searchInput?.addEventListener('input', () => {
         const q = searchInput.value.trim().toLowerCase();
@@ -244,7 +237,6 @@
         rawValue = checked.map(c => c.value);
         displayValue = checked.length === 1 ? checked[0].label : `${checked[0].label} +${checked.length - 1}`;
       } else if (def.type === 'picker') {
-        // A row is kept by id: two rows can share a label, so the label is display only.
         const picked = [...filterEditor.querySelectorAll('[data-picker-rows] input:checked')]
           .map(cb => ({
             id: cb.dataset.id,
@@ -321,7 +313,7 @@
       if (box) box.checked = false;
     }
 
-    // A closed offcanvas is still laid out, and cannot take focus.
+    // A closed offcanvas still has layout, but cannot take focus.
     function revealBox(boxId) {
       const box = document.getElementById(boxId);
       if (!box) return;

@@ -106,18 +106,14 @@
     selectType(initial?.dataset.suggestFilter || 'all');
   }
 
-  // Show when focused with a value
   input.addEventListener('focus', () => {
     if (suppressFocusOpen) return;
     if (isDismissed()) return;
     if (input.value.trim().length > 0) showPanel();
   });
 
-  // Show on keyup whenever the input has content
-  // (covers the case where HTMX has no real endpoint in the prototype)
+  // Prototype note: HTMX has no endpoint here, so a keyup with content opens the panel.
   input.addEventListener('keyup', (event) => {
-    // When Escape moves focus here from a suggestion row, the keyup targets
-    // the input. Keep the panel closed instead of treating that keyup as text.
     if (event.key === 'Escape') {
       markDismissed();
       hidePanel();
@@ -128,7 +124,6 @@
     else hidePanel();
   });
 
-  // Show after HTMX swap if input still has a value
   document.body.addEventListener('htmx:afterSwap', (e) => {
     if (e.detail.target === panel) {
       initTypeFilter();
@@ -137,12 +132,10 @@
     }
   });
 
-  // Hide on outside click
   document.addEventListener('click', (e) => {
     if (wrapper && !wrapper.contains(e.target)) hidePanel();
   });
 
-  // Hide on form submit
   const form = input.closest('form');
   if (form) form.addEventListener('submit', hidePanel);
 

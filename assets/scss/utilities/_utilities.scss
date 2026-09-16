@@ -1,16 +1,14 @@
 /* Booktower utilities cover repeated token behavior that Bootstrap cannot express. */
 
-
 /* ── Layout ──────────────────────────────────────────────────────────────────── */
 
-/* Bootstrap has no min-width utility; flex children need min-width:0 to allow
-   text truncation. Named in Bootstrap's utility style, not bt-*. */
+/* Bootstrap utility extension */
 .min-w-0 { min-width: 0; }
 
 
 /* ── Forms ───────────────────────────────────────────────────────────────────── */
 
-/* Chromium stops growing long field-sized textareas; scroll after this cap. */
+/* Chromium fix */
 .bt-textarea-auto {
   max-height: 14rem;
   overflow-y: auto;
@@ -35,10 +33,6 @@
 
 
 /* ── Faculty backgrounds ─────────────────────────────────────────────────────── */
-/* Background + readable foreground, keyed by live Biblio org code.
-   White text where the brand colour clears 3:1; dark ink on the lighter
-   faculties (lw, tw, eb, pp, la, ps) where white would fail. Reused by
-   bt-avatar faculty chips and the organization directory. */
 
 .bg-faculty-lw { background-color: var(--bt-faculty-lw); color: var(--bt-blue-900); }
 .bg-faculty-re { background-color: var(--bt-faculty-re); color: var(--bt-white); }
@@ -57,10 +51,6 @@
 .bg-faculty-re i, .bg-faculty-we i, .bg-faculty-ge i,
 .bg-faculty-di i, .bg-faculty-fw i { color: var(--bt-white); }
 
-/* Light faculty tints — 12% of the brand colour into white, computed so the
-   tint always tracks the brand hex (no second token to keep in sync). Holds
-   body text: --bt-text clears 4.5:1 on every faculty at this mix. Muted text
-   sits close to the floor — use --bt-text, not --bt-text-muted, on these. */
 .bg-faculty-lw-light { background-color: color-mix(in srgb, var(--bt-faculty-lw) 12%, var(--bt-white)); color: var(--bt-text); }
 .bg-faculty-re-light { background-color: color-mix(in srgb, var(--bt-faculty-re) 12%, var(--bt-white)); color: var(--bt-text); }
 .bg-faculty-we-light { background-color: color-mix(in srgb, var(--bt-faculty-we) 12%, var(--bt-white)); color: var(--bt-text); }
