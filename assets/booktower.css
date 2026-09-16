@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 575ba56/2026-09-16 */
+/*! Booktower d8612df/2026-09-16 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -485,6 +485,7 @@ ul, ol {
    BASE TYPOGRAPHY — surface-aware
    Reset (box-sizing, html, body) lives in _reset.scss — not here.
    ═══════════════════════════════════════════════════════════════════════════════ */
+/* ── Heading ────────────────────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--s-heading-font);
   line-height: var(--s-heading-leading);
@@ -529,6 +530,7 @@ h6 {
   font-weight: 300;
 }
 
+/* ── Displays ───────────────────────────────────────────────────────────────── */
 .display-1,
 .display-2,
 .display-3,
@@ -574,6 +576,7 @@ h6 {
   font-weight: 300;
 }
 
+/* ── Lead ───────────────────────────────────────────────────────────────────── */
 .lead {
   line-height: var(--s-body-leading);
   font-size: var(--bt-text-md);
@@ -587,6 +590,7 @@ h6 {
   font-style: italic;
 }
 
+/* ── Body ───────────────────────────────────────────────────────────────────── */
 p {
   text-wrap: pretty;
 }
@@ -624,6 +628,7 @@ p a > .if {
   margin-right: var(--bt-sp-1);
 }
 
+/* ── Code ───────────────────────────────────────────────────────────────────── */
 code {
   background: var(--bt-bg-alt);
   color: var(--bt-text);
@@ -636,6 +641,7 @@ code, kbd, pre, samp {
   font-size: var(--bt-text-sm);
 }
 
+/* ── Utility ────────────────────────────────────────────────────────────────── */
 .ff-sans {
   font-family: var(--bt-font-sans);
 }
@@ -812,22 +818,6 @@ code, kbd, pre, samp {
   margin-top: var(--bt-sp-1);
 }
 
-.form-control-search {
-  border-radius: var(--bt-radius-pill);
-  background-color: var(--bt-bg-alt);
-  border-color: transparent;
-  padding-left: 2.25rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24' stroke='%23b5b2ae' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: 0.75rem center;
-  background-size: 16px;
-}
-
-.form-control-search:focus {
-  background-color: var(--bt-white);
-  border-color: var(--bt-blue-700);
-}
-
 .form-check-input {
   cursor: pointer;
 }
@@ -973,16 +963,6 @@ code, kbd, pre, samp {
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
-/*
-  Padding uses --bt-btn-pad-* tokens, not the layout spacing scale.
-  Button padding needs optical tuning at half-steps between 4px grid points.
-  See _tokens.scss > "Button spacers" for the values and target heights.
-
-  Target heights:
-    .btn-sm   → 32px
-    .btn      → 38px
-    .btn-lg   → 44px
-*/
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 600;
@@ -1018,8 +998,6 @@ code, kbd, pre, samp {
   outline-offset: 2px;
 }
 
-/* pointer-events: none is Bootstrap's default for :disabled but not for
-   [aria-disabled] — kept for that case */
 .btn:disabled,
 .btn[aria-disabled=true] {
   opacity: 0.6;
@@ -1032,9 +1010,7 @@ code, kbd, pre, samp {
 }
 
 /* ── Variants ───────────────────────────────────────────────────────────────── */
-/* All variants feed --bs-btn-* so Bootstrap's own state machinery
-   (:hover, :active, .active, .btn-check:checked, :disabled) applies the
-   right colours. Property overrides miss the .active and checked states. */
+/* To do: check if property overrides miss the .active and checked states. */
 .btn-primary {
   --bs-btn-bg: var(--bt-blue-800);
   --bs-btn-border-color: var(--bt-blue-800);
@@ -1065,7 +1041,7 @@ code, kbd, pre, samp {
   --bs-btn-disabled-color: var(--bt-blue-800);
 }
 
-/* Not a Bootstrap variant, but .btn reads the same vars for any class */
+/* bt variant */
 .btn-ghost {
   --bs-btn-bg: transparent;
   --bs-btn-border-color: transparent;
@@ -1073,8 +1049,6 @@ code, kbd, pre, samp {
   --bs-btn-hover-bg: var(--bt-gray-50);
   --bs-btn-hover-border-color: transparent;
   --bs-btn-hover-color: var(--bt-blue-800);
-  /* keep the hover bg through press and focus — transparent here makes the
-     background vanish mid-click */
   --bs-btn-active-bg: var(--bt-gray-50);
   --bs-btn-active-border-color: transparent;
   --bs-btn-active-color: var(--bt-gray-700);
@@ -1165,8 +1139,6 @@ a.btn-danger,
 }
 
 /* ── In-place edit ─────────────────────────────────────────────────────────── */
-/* The convention for a value edited in place: a dotted rule, no caret.
-   .btn-link checked — it carries button padding and a link's solid underline. */
 .bt-btn-inline-edit {
   max-width: 100%;
   padding: 0;
@@ -1276,8 +1248,6 @@ a.btn-danger,
   --bs-btn-hover-bg: var(--bt-gray-50);
   --bs-btn-hover-color: var(--bt-gray-700);
   --bs-btn-hover-border-color: var(--bt-gray-400);
-  /* checked/active = primary: view toggles use this variant, and a gray
-     fill read as disabled */
   --bs-btn-active-bg: var(--bt-blue-800);
   --bs-btn-active-color: white;
   --bs-btn-active-border-color: var(--bt-blue-800);
@@ -1289,7 +1259,6 @@ a.btn-danger,
   --bs-btn-hover-bg: var(--bt-gray-50);
   --bs-btn-hover-color: var(--bt-gray-1000);
   --bs-btn-hover-border-color: var(--bt-gray-1000);
-  /* checked/active = primary, same reasoning as btn-outline-light */
   --bs-btn-active-bg: var(--bt-blue-800);
   --bs-btn-active-color: white;
   --bs-btn-active-border-color: var(--bt-blue-800);
@@ -1297,9 +1266,7 @@ a.btn-danger,
 
 /* ── Button group ───────────────────────────────────────────────────────────── */
 /*
-  Bootstrap .btn-group handles radius clipping and border collapse.
-  We only need to ensure the focus ring isn't clipped by overflow:hidden.
-  Fix: use outline-offset so the ring sits outside the group border.
+  Focus ring fix
 */
 .btn-group > .btn:focus-visible {
   outline-offset: 0;

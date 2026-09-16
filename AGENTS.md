@@ -62,6 +62,7 @@ Fix reusable styling here, then copy the compiled assets again. Never patch a co
 | Product breadboard | `docs/BREADBOARD-TEMPLATE.md` |
 | HTML wireframe brief | `docs/WIREFRAME-BRIEF-TEMPLATE.md`, `docs/KIT-PAGES.md` |
 | New page or feature | `docs/SURFACES.md` |
+| Port a page from the old backoffice | `docs/MIGRATING-FROM-OLD-KIT.md` |
 | Audience or legibility | `docs/RESEARCH-PERSONAS.md` |
 | Domain meaning or workflow | `docs/DOMAIN-VOCABULARY.md`, `docs/DOMAIN-CONTEXT.md` |
 | Accountability, policy risk or AI suggestions | `docs/RESPONSIBILITIES.md` |

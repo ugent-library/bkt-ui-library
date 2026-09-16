@@ -3,6 +3,7 @@ const fs = require('fs');
 const instructionLimits = {
   'AGENTS.md': { lines: 180, words: 1800 },
   'CLAUDE.md': { lines: 20, words: 100 },
+  'docs/CLASS-USAGE.md': { lines: 140, words: 1350 },
   'docs/SPEC-WRITING.md': { lines: 150, words: 1300 },
   'docs/CODE-COMMENTS.md': { lines: 90, words: 650 },
   'docs/JAVASCRIPT.md': { lines: 230, words: 1600 },
@@ -90,6 +91,25 @@ function countKitProse(html) {
     }
   }
   return words;
+}
+
+const CHANGELOG_ENTRY_WORDS = 120;
+const changelogEntries = fs.readFileSync('CHANGELOG.md', 'utf8').split('\n## ').slice(1);
+for (const entry of changelogEntries) {
+  const [heading, ...body] = entry.split('\n');
+  let inFence = false;
+  let words = 0;
+  for (const line of body) {
+    if (/^\s*```/.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence || /^\s*\|/.test(line)) continue;
+    words += countWords(line);
+  }
+  if (words > CHANGELOG_ENTRY_WORDS) {
+    failures.push(`CHANGELOG.md — ${heading}: ${words}/${CHANGELOG_ENTRY_WORDS} prose words`);
+  }
 }
 
 let kitPages = 0;

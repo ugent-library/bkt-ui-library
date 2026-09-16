@@ -1,16 +1,5 @@
 /* ── Buttons ────────────────────────────────────────────────────────────────── */
 
-/*
-  Padding uses --bt-btn-pad-* tokens, not the layout spacing scale.
-  Button padding needs optical tuning at half-steps between 4px grid points.
-  See _tokens.scss > "Button spacers" for the values and target heights.
-
-  Target heights:
-    .btn-sm   → 32px
-    .btn      → 38px
-    .btn-lg   → 44px
-*/
-
 .btn {
   font-family: var(--bt-font-sans);
   font-weight: 600;
@@ -46,8 +35,7 @@
   outline: 3px solid var(--bt-focus-ring);
   outline-offset: 2px;
 }
-/* pointer-events: none is Bootstrap's default for :disabled but not for
-   [aria-disabled] — kept for that case */
+
 .btn:disabled,
 .btn[aria-disabled="true"] {
   opacity: .6;
@@ -61,9 +49,7 @@
 
 /* ── Variants ───────────────────────────────────────────────────────────────── */
 
-/* All variants feed --bs-btn-* so Bootstrap's own state machinery
-   (:hover, :active, .active, .btn-check:checked, :disabled) applies the
-   right colours. Property overrides miss the .active and checked states. */
+/* To do: check if property overrides miss the .active and checked states. */
 
 .btn-primary {
   --bs-btn-bg:                    var(--bt-blue-800);
@@ -101,7 +87,7 @@
   --bs-btn-disabled-color:        var(--bt-blue-800);
 }
 
-/* Not a Bootstrap variant, but .btn reads the same vars for any class */
+/* bt variant */
 .btn-ghost {
   --bs-btn-bg:                    transparent;
   --bs-btn-border-color:          transparent;
@@ -111,8 +97,6 @@
   --bs-btn-hover-border-color:    transparent;
   --bs-btn-hover-color:           var(--bt-blue-800);
 
-  /* keep the hover bg through press and focus — transparent here makes the
-     background vanish mid-click */
   --bs-btn-active-bg:             var(--bt-gray-50);
   --bs-btn-active-border-color:   transparent;
   --bs-btn-active-color:          var(--bt-gray-700);
@@ -217,8 +201,6 @@ a.btn-danger,
 
 /* ── In-place edit ─────────────────────────────────────────────────────────── */
 
-/* The convention for a value edited in place: a dotted rule, no caret.
-   .btn-link checked — it carries button padding and a link's solid underline. */
 .bt-btn-inline-edit {
   max-width: 100%;
   padding: 0;
@@ -240,7 +222,6 @@ a.btn-danger,
   border-bottom-color: var(--bt-blue-900);
   border-bottom-style: solid;
 }
-
 
 /* ── Loading state ─────────────────────────────────────────────────────────── */
 
@@ -343,8 +324,6 @@ a.btn-danger,
   --bs-btn-hover-color:         var(--bt-gray-700);
   --bs-btn-hover-border-color:  var(--bt-gray-400);
 
-  /* checked/active = primary: view toggles use this variant, and a gray
-     fill read as disabled */
   --bs-btn-active-bg:           var(--bt-blue-800);
   --bs-btn-active-color:        white;
   --bs-btn-active-border-color: var(--bt-blue-800);
@@ -358,7 +337,6 @@ a.btn-danger,
   --bs-btn-hover-color:         var(--bt-gray-1000);
   --bs-btn-hover-border-color:  var(--bt-gray-1000);
 
-  /* checked/active = primary, same reasoning as btn-outline-light */
   --bs-btn-active-bg:           var(--bt-blue-800);
   --bs-btn-active-color:        white;
   --bs-btn-active-border-color: var(--bt-blue-800);
@@ -367,9 +345,7 @@ a.btn-danger,
 
 /* ── Button group ───────────────────────────────────────────────────────────── */
 /*
-  Bootstrap .btn-group handles radius clipping and border collapse.
-  We only need to ensure the focus ring isn't clipped by overflow:hidden.
-  Fix: use outline-offset so the ring sits outside the group border.
+  Focus ring fix
 */
 .btn-group > .btn:focus-visible {
   outline-offset: 0;

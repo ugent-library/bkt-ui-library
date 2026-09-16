@@ -230,8 +230,6 @@ ff-sans
 
 filter-chip-group
 
-form-control-search
-
 htmx-indicator
 
 htmx-request
