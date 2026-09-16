@@ -4,21 +4,38 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Copy to clipboard</h1>
-    <p class="lead">A value shown in a <code>&lt;code&gt;</code> next to a button that copies it. One behaviour for both variants below, so what is displayed is always what gets copied.</p>
+    <p class="lead">Copy buttons with or without a visible label. One behaviour reads the displayed value, confirms the copy and restores the original button.</p>
   </header>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Contract</h2>
-    <p class="col-8">Put <code>data-clipboard</code> on the button and a <code>&lt;code&gt;</code> next to it in the same parent. On click, <code>assets/js/clipboard.js</code> copies that <code>&lt;code&gt;</code>'s text and confirms for two seconds &mdash; the icon becomes a check, and a button with a <code>.btn-text</code> label also swaps to &ldquo;Copied!&rdquo;. Because the copied text is read from the visible <code>&lt;code&gt;</code>, there is no second value to fall out of sync. Button and <code>&lt;code&gt;</code> may sit in either order. For dynamic sources (e.g. the active citation-format tab) add <code>data-clipboard-target="&lt;css selector&gt;"</code> and the button copies that element's text instead, resolved at click time.</p>
-    <p class="col-8 mb-0">No inline <code>onclick</code>: the behaviour is the shared script, not markup. The button variant itself is documented on <a href="/elements/buttons.html">Buttons</a>.</p>
+    <p class="col-8">Put <code>data-clipboard</code> on the button and a <code>&lt;code&gt;</code> next to it in the same parent. The script copies that visible text, so there is no second value to fall out of sync. Button and <code>&lt;code&gt;</code> may sit in either order. For a dynamic source such as the active citation tab, add <code>data-clipboard-target="&lt;css selector&gt;"</code>; the selector is resolved when the button is clicked.</p>
+    <p class="col-8">On success the copy icon becomes a check. A button with <code>.btn-text</code> temporarily reads &ldquo;Copied&rdquo;; an icon-only button temporarily uses &ldquo;Copied to clipboard&rdquo; as its accessible name. Primary and outlined copy actions also turn green for two seconds.</p>
+    <p class="col-8 mb-0">No inline <code>onclick</code>: the behaviour is the shared script, not markup. Button variants are documented on <a href="/elements/buttons.html">Buttons</a>.</p>
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Copy Biblio ID</h2>
-    <p class="mb-3 col-8">A labelled action beside a record's Biblio ID, in the work-card footer and across the backoffice. The visible button text is the accessible name; the icon is <code>aria-hidden</code>.</p>
+    <h2 class="h4 mb-3">Icon with label</h2>
+    <p class="mb-3 col-8">Wrap the visible action text in <code>.btn-text</code>. The button may resize naturally when that text changes to the success label.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Labelled button + code</h3>
+      <h3 class="ds-demo-label">Primary action + dynamic source</h3>
+      <div class="ds-demo-body">
+        <div class="col-8">
+          <p id="citation-copy-example" class="font-monospace p-3 bg-white border rounded">Aerts, R. (2025). Example research output. <em>Example Journal</em>, 12(3), 1&ndash;10.</p>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-clipboard
+            data-clipboard-target="#citation-copy-example">
+            <i class="if if-copy" aria-hidden="true"></i>
+            <span class="btn-text">Copy citation</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Compact action + adjacent code</h3>
       <div class="ds-demo-body">
         <span class="input-group w-auto">
           <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
@@ -32,11 +49,11 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">Persistent link</h2>
-    <p class="mb-3 col-8">The &ldquo;Link to this record&rdquo; box on public detail pages (work, dataset, person, organization, project). It shows the record's persistent URL &mdash; a handle for works, the canonical page for the rest &mdash; and copies exactly that. The copy button is icon-only, so its accessible name lives in <code>aria-label</code>; the script restores that label after confirming.</p>
+    <h2 class="h4 mb-3">Icon only</h2>
+    <p class="mb-3 col-8">Use <code>aria-label</code> for the action's accessible name. The visible icon changes without introducing text into the button.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Label + code + icon-only copy</h3>
+      <h3 class="ds-demo-label">Persistent link</h3>
       <div class="ds-demo-body">
         <div class="alert alert-light mb-1 col-8">
           <h4 class="form-label mb-2">Link to this record</h4>
@@ -50,14 +67,8 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Copy title</h2>
-    <p class="mb-3 col-8">For reviewers and proxies</p>
-
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Title + icon-only copy button</h3>
+      <h3 class="ds-demo-label">Title action</h3>
       <div class="ds-demo-body">
         <h2 id="card-feed-12" class="bt-work-card__title">
           <span id="card-feed-12-title">

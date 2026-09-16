@@ -18,17 +18,20 @@
       const icon = button.querySelector('.if-copy');
       const originalText = label ? label.textContent : null;
       const originalAria = button.getAttribute('aria-label');
+      const primary = button.classList.contains('btn-primary');
 
-      if (label) label.textContent = 'Copied!';
+      if (label) label.textContent = 'Copied';
       else button.setAttribute('aria-label', 'Copied to clipboard');
-      button.classList.replace('btn-outline-secondary', 'btn-outline-success');
+      if (primary) button.classList.replace('btn-primary', 'btn-success');
+      else button.classList.replace('btn-outline-secondary', 'btn-outline-success');
       if (icon) icon.classList.replace('if-copy', 'if-check');
 
       setTimeout(function () {
         if (label) label.textContent = originalText;
         if (originalAria !== null) button.setAttribute('aria-label', originalAria);
         else button.removeAttribute('aria-label');
-        button.classList.replace('btn-outline-success', 'btn-outline-secondary');
+        if (primary) button.classList.replace('btn-success', 'btn-primary');
+        else button.classList.replace('btn-outline-success', 'btn-outline-secondary');
         if (icon) icon.classList.replace('if-check', 'if-copy');
       }, 2000);
     }).catch(function () {});

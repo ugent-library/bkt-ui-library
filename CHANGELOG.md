@@ -5,6 +5,12 @@ What changed in v2, newest first. The old→new class map moved to
 
 ---
 
+## Primary copy actions confirm in green (v2.45, 2026-09-16)
+
+No CSS change. A primary copy button now turns into its green success variant while its copy icon
+and label change to a check and &ldquo;Copied&rdquo;. The button may resize naturally for the confirmation.
+See the labelled and icon-only examples in `patterns/copy-to-clipboard.html`.
+
 ## Record pages open with one heading block (v2.44, 2026-09-15)
 
 CSS changed — re-copy the compiled assets, and re-adapt the detail templates. `bt-detail-heading`
