@@ -6,6 +6,22 @@ system, or do I reach for something new?"
 
 ---
 
+## Record pages open with one heading block (v2.44, 2026-09-15)
+
+CSS changed — re-copy the compiled assets, and re-adapt the detail templates. `bt-detail-heading`
+is the status row and title at the top of a record page, and `bt-detail-heading__title` goes on its
+`h1`. Works, projects, researchers and organisations all use it; the organisation page carries no
+status row. The block owns the gap between row and title and the space below itself,
+so the markup drops the `mb-2`/`mb-3` utilities that used to set them.
+
+The backoffice record title was `h1 class="h3"`, where
+Bootstrap's class beat the `h1` element rule and supplied a size that shrank below a 1200px
+viewport and a 500 weight where the backoffice surface sets 600; the title is now the Booktower
+`--bt-text-xl` on backoffice and `--bt-text-2xl` on public, at the surface's own weight. A public
+title steps back to `--bt-text-xl` below 40rem.
+
+Canonical example: `patterns/detail-heading.html`.
+
 ## The active breadcrumb item meets AA contrast (v2.43, 2026-09-15)
 
 CSS changed — re-copy the compiled assets. The active breadcrumb item was `gray-900` at

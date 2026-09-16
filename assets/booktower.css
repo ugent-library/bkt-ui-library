@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower b32b668/2026-09-15 */
+/*! Booktower dda8cc4/2026-09-15 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -1712,7 +1712,7 @@ a.badge:focus-visible {
   margin: 0 0 var(--bt-sp-1);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--bt-sp-2);
+  gap: var(--bt-sp-3);
 }
 
 .bt-meta-list a:hover {
@@ -1732,6 +1732,34 @@ a.badge:focus-visible {
   gap: 3px;
 }
 
+/* -- bt-detail-heading -- */
+.bt-detail-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bt-sp-2);
+  margin-bottom: var(--bt-sp-2);
+}
+
+.bt-detail-heading .bt-meta-list {
+  margin-bottom: 0;
+}
+
+.bt-detail-heading__title {
+  font-size: var(--bt-text-xl);
+  max-width: 60ch;
+  margin: 0;
+}
+
+[data-surface=public] .bt-detail-heading {
+  gap: var(--bt-sp-4);
+  margin-bottom: var(--bt-sp-4);
+}
+
+@media (min-width: 40rem) {
+  [data-surface=public] .bt-detail-heading__title {
+    font-size: var(--bt-text-2xl);
+  }
+}
 /* -- bt-alt-titles -- */
 .bt-alt-titles {
   margin-bottom: var(--bt-sp-8);

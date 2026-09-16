@@ -97,6 +97,9 @@ bt-btn-check__group
 
 bt-btn-inline-edit
 
+bt-detail-heading
+bt-detail-heading__title
+
 bt-dropdown-scroll
 
 bt-file-drop
