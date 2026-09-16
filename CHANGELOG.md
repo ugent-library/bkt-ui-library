@@ -11,78 +11,57 @@ system, or do I reach for something new?"
 CSS changed — re-copy the compiled assets, and re-adapt the detail templates. `bt-detail-heading`
 is the status row and title at the top of a record page, and `bt-detail-heading__title` goes on its
 `h1`. Works, projects, researchers and organisations all use it; the organisation page carries no
-status row. The block owns the gap between row and title and the space below itself,
-so the markup drops the `mb-2`/`mb-3` utilities that used to set them.
-
-The backoffice record title was `h1 class="h3"`, where
-Bootstrap's class beat the `h1` element rule and supplied a size that shrank below a 1200px
-viewport and a 500 weight where the backoffice surface sets 600; the title is now the Booktower
-`--bt-text-xl` on backoffice and `--bt-text-2xl` on public, at the surface's own weight. A public
-title steps back to `--bt-text-xl` below 40rem.
+status row. The block owns the gap between row and title and the space below itself, so drop the
+`mb-2`/`mb-3` utilities that set them, and drop `h1 class="h3"` for a plain `h1`. Title size comes
+from the block: `--bt-text-xl` on backoffice, `--bt-text-2xl` on public, stepping back to
+`--bt-text-xl` below 40rem.
 
 Canonical example: `patterns/detail-heading.html`.
 
 ## The active breadcrumb item meets AA contrast (v2.43, 2026-09-15)
 
-CSS changed — re-copy the compiled assets. The active breadcrumb item was `gray-900` at
-`opacity: .6`, which composites to 4.3:1 on both page backgrounds and misses the 4.5:1 that
-WCAG AA asks of 14px text. It is now `gray-600` with no opacity: 5.9:1 on white, 5.6:1 on the
-public paper background. Consumer markup does not change — the item stays
-`<li class="breadcrumb-item active" aria-current="page">`.
+CSS changed — re-copy the compiled assets. The active breadcrumb item is `gray-600` at full
+opacity, in place of `gray-900` with `opacity: .6`, and meets WCAG AA at 14px. Consumer markup does
+not change — the item stays `<li class="breadcrumb-item active" aria-current="page">`.
 
 ## Modal roots declare their dialog role (v2.42, 2026-09-15)
 
-No CSS change — re-adapt the modal templates. Every `.modal` root now sets `role="dialog"`
-next to its `tabindex="-1"` and `aria-labelledby`. A `<div class="modal">` without a role is a
-`generic` element, and ARIA 1.2 forbids `aria-labelledby` on `generic`, so the W3C Nu checker
-reported an error on the old markup. `aria-modal` and `aria-hidden` stay out of the markup
-and remain Bootstrap's to set. The advanced search, export, save search, share search,
-return, pickup and delete list modals all changed.
+No CSS change — re-adapt the modal templates. Every `.modal` root now sets `role="dialog"` next to
+its `tabindex="-1"` and `aria-labelledby`; a bare `<div class="modal">` is a `generic` element and
+cannot carry `aria-labelledby`. `aria-modal` and `aria-hidden` stay out of the markup and remain
+Bootstrap's to set. The advanced search, export, save search, share search, return, pickup and
+delete list modals all changed.
 
 ## The Add to list toggle shows saved state, and the panel links to lists (v2.41, 2026-09-15)
 
 CSS changed — re-copy the compiled assets and the icon fonts: `if-bookmark-fill` and `bt-link-more`
-are new. `bt-link-more` is the View all / Open link that opens the complete list; the dashboards and the
-team queue drop their `small text-muted text-decoration-none` spellings for it — re-adapt those
-templates. A work
-already in one of the viewer's lists shows the filled bookmark and the count, "In 1 list", in
-place of "Add to list". At zero the label stays "Add to list". Inside the panel a ticked list
-ends in an Open link to that list, and the footer links to My lists. Demonstrated on Panel and as
-the `in-list` state of the public work detail.
+are new. `bt-link-more` is the View all / Open link that opens the complete list; the dashboards and
+the team queue drop their `small text-muted text-decoration-none` spellings for it — re-adapt those
+templates. A work already in one of the viewer's lists shows the filled bookmark and the count,
+"In 1 list", in place of "Add to list". Inside the panel a ticked list ends in an Open link to that
+list, and the footer links to My lists. Demonstrated on Panel and as the `in-list` state of the
+public work detail.
 
 ## Chips can untick a sidebar filter (v2.40, 2026-09-10)
 
-No CSS change. A ticked sidebar box now has a chip above the results, and the chip's × unticks
-the box again. The chip's label leads back to the box instead of opening an editor; below `lg`
-it opens the filter sheet first, so the box is on screen when it takes focus. A chip finds its
-box by naming the id in `data-initial-filters`, and chips for the Add-filter dimensions still
-open their editor.
-
-Facets gains a second rail example: the same sidebar after a selection, where a ticked value's
-count matches the result count and values at zero keep their place.
+No CSS change. A ticked sidebar box now has a chip above the results, and the chip's × unticks the
+box again. The chip's label leads back to the box instead of opening an editor; below `lg` it opens
+the filter sheet first. A chip finds its box by naming the id in `data-initial-filters`, and chips
+for the Add-filter dimensions still open their editor. Demonstrated on Facets.
 
 ## Project picker rows name their values (v2.39, 2026-09-10)
 
-CSS changed — re-copy the compiled assets. A project picker row now labels its acronym,
-project ID, funder and programme, so no value can be mistaken for the project's name.
-*Project ID* is the project's own identifier, as in raven, not a grant's award number.
-Identifiers sit in `code`, as they do on the project pages, and the row search matches
-all of them. Stack one `bt-meta-list` per group; a picker panel
-spaces stacked groups apart and keeps each group's wrapped lines tight, so a project with
-two funders reads as two grants. Picker panel rows drop `bt-meta-list--xs` for the base
-size, which is what makes a labelled value readable; the dense variant stays for the
-people-search overlay. A filter-bar picker keeps the panel's own search placeholder
-rather than one built from the filter's label.
+CSS changed — re-copy the compiled assets. A project picker row labels its acronym, project ID,
+funder and programme. *Project ID* is the project's own identifier in raven, not a grant's award
+number. Identifiers sit in `code`; the row search matches all of them. Stack one `bt-meta-list`
+per group; picker panel rows drop `bt-meta-list--xs` for the base size, and the dense variant stays
+for the people-search overlay. A filter-bar picker keeps the panel's own search placeholder rather
+than one built from the filter's label.
 
-**Every picker panel and checklist editor now marks what a search matched**, in both the
-works filter bar and the query builder — person, organization, project and actor alike.
-Search-within already matched the whole row; the match is now visible in it.
+Every picker panel and checklist editor marks what a search matched.
 
-**Funding programme is project metadata, not a field.** The picker shows it on each
-funding entry and the row search matches it; no condition filters on it. Nobody asked for
-one, and raven holds it as free text with no authority behind it. The earlier fold, which
-treated picking projects as a way to filter by programme, is withdrawn; a condition
-arrives only on an explicit ask.
+Funding programme is project metadata: the picker shows it on each funding entry and the row search
+matches it; no condition filters on it.
 
 ## Alternative-title hierarchy on public work details (v2.38, 2026-09-10)
 
@@ -99,32 +78,16 @@ markup contract.
 
 ## One query builder serves both surfaces (v2.37, 2026-09-09)
 
-CSS changed — re-copy the compiled assets. New `bt-query-builder__date` sizes date and
-decimal inputs; builder textareas no longer auto-grow (Chrome under-sized their grid rows);
-`bt-query-builder__year` and the row hooks are otherwise unchanged.
+CSS changed — re-copy the compiled assets. New `bt-query-builder__date` sizes date and decimal
+inputs; builder textareas do not auto-grow; `bt-query-builder__year` and the row hooks are
+unchanged. New row templates: `qb-row-date`, `qb-row-quantity`, `qb-row-record-history` and
+`qb-row-actor`, with `actor-picker-panel.html` for the Record history actor.
 
-**The backoffice works lists open the public Advanced search dialog.** The researcher and
-curator lists compose the same partials and `query-builder.js` as `public-works.html`. One
-field list carries every chooser group; backoffice entries are gated by surface (v2.36).
-The dialog demos one condition per field on each surface.
-
-**Fields follow the contract** (`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`). Words or topic
-and Files are gone — the search box owns open text. Published in is **Appeared in**, with
-*anywhere*, *venue* and *publisher place* kinds. Funding programme folds under Project; the
-picker shows each project's programme. "No full text" is **Metadata only**, on cards too.
-Licence gains **No licence**. Publication type, Language, Classification, VABB and JCR carry
-their catalogs (raven's where they exist, mock values where they don't).
-
-**Most fields hold one fixed operator**, shown as text — *is*, or *matches* on Title; several
-values in one condition match any of them and read out as "or". Publication year's *is
-between* leaves an end open ("2015 and later"). Values cap at five public and twenty
-backoffice: pickers disable at the cap, the paste box reports what it drops. **Record
-history** is one condition — event, from–to dates, and an actor picker
-(`actor-picker-panel.html`). OR groups and the spelling feedback are phase 3; the backoffice
-field set is phase 2; facets keep reporting through the chip bar only.
-
-New row templates: `qb-row-date`, `qb-row-quantity`, `qb-row-record-history`, `qb-row-actor`.
-Legacy coverage for the translator split into `docs/wip/QUERY-BUILDER-LEGACY-COVERAGE.md`.
+The backoffice researcher and curator works lists compose the same partials and `query-builder.js`
+as `public-works.html`, and open the public Advanced search dialog. One field list carries every
+chooser group; backoffice entries are gated by surface (v2.36). Re-adapt the field list against
+`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`, which owns every field, operator, catalog and value
+cap. Legacy coverage for the translator: `docs/wip/QUERY-BUILDER-LEGACY-COVERAGE.md`.
 
 ## Backoffice-only markup is gated by surface, not state names (v2.36, 2026-09-09)
 
@@ -135,57 +98,39 @@ keep their state names. Mechanism: `docs/SERVER.md` → Surface blocks.
 
 ## Badge semantics: three tiers and viewer-dependent weight (v2.33, 2026-09-04)
 
-No CSS changed — every class already existed. A consumer who adapted cards, rows or
-message blocks re-adapts the markup; the compiled assets need no re-copy.
+No CSS changed. Re-adapt cards, rows and message blocks; no re-copy.
 
-**Backoffice cards order status in three tiers.** Work kind
-and file access are never badges on the backoffice — table Type and Access cells
-render plain text. The tables live in `docs/DOMAIN-VOCABULARY.md`, Status → badge
-mapping.
+Backoffice cards order status in three tiers. Work kind and file access are never badges there —
+table Type and Access cells render plain text. The Status → badge mapping lives in
+`docs/DOMAIN-VOCABULARY.md`.
 
-**Weight follows the viewer.** Review-state badges are soft (`text-bg-*-light`) at
-rest; filled (`text-bg-warning`, `text-bg-danger`) only when the state waits on the
-current viewer, at most one filled badge per card.
+Review-state badges are soft (`text-bg-*-light`) at rest, filled (`text-bg-warning`,
+`text-bg-danger`) only when the state waits on the current viewer; at most one filled badge per
+card. The visibility badge is omitted on drafts; every other state keeps Public or Private.
+Retracted is one badge on both surfaces.
 
-**The visibility badge is omitted on drafts.** Every other state keeps Public or
-Private.
-
-**Retracted is one badge on both surfaces.**
-
-**Message blocks on cards rest quiet.** `alert alert-light alert--sm` at rest;
-`alert-warning` only on a card whose filled badge already marks it as the viewer's
-move. Curator rows never carry `alert-warning` — the queue itself frames the work.
+Message blocks are `alert alert-light alert--sm` at rest, `alert-warning` only on a card whose
+filled badge marks it as the viewer's move, never on a curator row.
 
 ---
 
 ## Result actions recomposed, one class removed — re-adapt and re-copy (v2.32, 2026-09-04)
 
-**The results bar's actions are one button.** On `public-works.html` the separate Save
-search and Share dropdowns merged into one Actions dropdown, hooked through
-`data-result-actions`, `data-result-actions-toggle` and `data-result-actions-modal`.
-The new `assets/js/result-actions.js` returns focus to that button when a dialog
-opened from the menu closes (`docs/JAVASCRIPT.md`). A consumer who adapted the results
-bar re-adapts it and carries the new script.
+On `public-works.html` the Save search and Share dropdowns merge into one Actions dropdown, hooked
+through `data-result-actions`, `data-result-actions-toggle` and `data-result-actions-modal`.
+Re-adapt the results bar and carry the new `assets/js/result-actions.js` (`docs/JAVASCRIPT.md`).
 
-**The builder's field list carries its contract id.** Every entry in
-`templates/partials/search-field-list.html` now sets `data-qb-field` to its id in
-`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`; the label may differ from the id. A
-consumer who adapted the partial rather than the contract re-applies the ids.
+Every entry in `templates/partials/search-field-list.html` sets `data-qb-field` to its id in
+`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`; re-apply the ids if you adapted the partial.
 
-**`alert--seamless-inbox` is removed.** It mirrored the old backoffice's full-width
-inbox flash and `docs/CLASS-USAGE.md` listed it as kept; that promise ends here.
-Confirmations render as a standard `alert` inside the scrollable content column, never
-in the page chrome.
+`alert--seamless-inbox` is removed, against the promise in `docs/CLASS-USAGE.md`. Confirmations
+render as a standard `alert` inside the scrollable content column, never in the page chrome.
 
-**The compiled assets changed.** The last work card inside a `.card` no longer draws a
-doubled bottom border — compiled CSS only, no markup change. The icon font gained
-`if-archive-line`, `if-bank-line`, `if-barcode-line` and `if-gallery-line`
-(pre-ingest icon set, PR #25); a consumer on an older copy misses the glyphs until it
-re-copies.
+Re-copy the compiled assets: the last work card inside a `.card` draws no doubled bottom border,
+and the icon font gained `if-archive-line`, `if-bank-line`, `if-barcode-line` and `if-gallery-line`.
 
-**The surface question is rephrased.** `docs/CONSUMING-BOOKTOWER.md` and
-`docs/UI-LAYER.md` now decide `data-surface` by product layer — presenting metadata to
-the wider public, or entering and managing it — never by user role. No markup changes.
+`docs/CONSUMING-BOOKTOWER.md` and `docs/UI-LAYER.md` decide `data-surface` by product layer, never
+by user role. No markup changes.
 
 ### Class migration
 
@@ -197,90 +142,68 @@ the wider public, or entering and managing it — never by user role. No markup 
 
 ## Candidates become an overview and a focused round (v2.31, 2026-09-04)
 
-Backoffice only — every backoffice template still says do not implement in raven yet.
-Nothing here asks a consumer to act; this records direction.
+Backoffice only — every backoffice template still says do not implement in raven yet. Nothing here
+asks a consumer to act.
 
-**Found for you replaces the candidate inbox.** `candidate-review.html` is the
-filtered overview: search, a status filter whose values include review history, and
-the results bar in every state. `candidate-focused-review.html` completes candidates
-one at a time and asks only what the source did not supply; imported values sit behind
-a read-only disclosure. `candidate-history.html` is deleted. The dashboard confirms a
-finished round inside its content column. Decision record:
+`candidate-review.html` is the filtered overview; `candidate-focused-review.html` completes
+candidates one at a time; `candidate-history.html` is deleted. Decision record:
 `docs/decisions/DD-003-candidate-review-is-a-focused-round.md`.
 
-**Backoffice conventions now hold across the templates.** The page's primary action
-sits in the page header. Applied filters render as the public-works split chips. The
-results bar renders in every state and carries the page's only result count. Submit is
-a split button: Submit publicly, with Submit privately as the one alternative. A
-suggestion offers Add and Reject, never Remove. Interface copy explains nothing — a
-control that needs explanation is redesigned instead.
+Backoffice conventions hold across the templates: the page's primary action sits in the page
+header, applied filters render as the public-works split chips, the results bar renders in every
+state and carries the page's only result count, Submit is a split button, and a suggestion offers
+Add and Reject, never Remove.
 
-**Additive classes** `bt-work-card--compact` and `bt-work-card__meta--borderless` are
-in `docs/CLASSES.md`. The candidate card rows, badge palette, split button and
-searchable facet are demoed on the kit pages.
+Additive classes `bt-work-card--compact` and `bt-work-card__meta--borderless` are in
+`docs/CLASSES.md`.
 
-**Explorations** that may not survive review: `dashboard-ranked-queue.html` and batch
-reviews in `curate.html`.
+Explorations that may not survive review: `dashboard-ranked-queue.html` and batch reviews in
+`curate.html`.
 
 ---
 
 ## Pagination markup aligned everywhere (v2.30, 2026-09-03)
 
-The v2.11 results-bar markup now holds across the repository. The nine files listed in
-`PAGINATION_DRIFT` are aligned and the allowance in `scripts/check-a11y.js` is empty, so
-`check:a11y` fails any old-markup occurrence anywhere. No class changed — `booktower.css`
-needs no re-copy.
+The nine files in `PAGINATION_DRIFT` are aligned and the allowance in `scripts/check-a11y.js` is empty, so `check:a11y` fails any old-markup
+occurrence anywhere. No class changed — `booktower.css` needs no re-copy.
 
-Consumers who adapted a pagination bar from `public-works.html`, a public detail or
-directory page, or a backoffice list before this date mirrored the old markup. Re-apply
-the v2.11 table below: inert page items are `<span class="page-link">` in
-`li.page-item.disabled` (an anchor again the moment a target page exists — the server
-decides per render), arrows are `if-chevron-*` icons, the count sits beside the `<nav>`,
-the screen-reader prefix is plain `visually-hidden`, and `ul.pagination` carries no
-`mb-0`. Backoffice list bars also gained page size and sort on the right, per the
-kit page.
+Re-apply the v2.11 table to any pagination bar adapted from `public-works.html`, a public detail or
+directory page, or a backoffice list: inert page items are `<span class="page-link">` in
+`li.page-item.disabled`, an anchor again once a target page exists; arrows are `if-chevron-*` icons;
+the count sits beside the `<nav>`; the screen-reader prefix is plain `visually-hidden`; and
+`ul.pagination` carries no `mb-0`. Backoffice list bars also gained page size and sort on the right.
 
-The same commit removed the count lines inside the organisations directory's cards —
-"3 of 13 faculties shown" and "1 department, 200 research outputs". A consumer that
-adapted `public-organisations.html` removes them too.
+Remove the count lines inside the organisations directory's cards if you adapted
+`public-organisations.html`.
 
 ---
 
 ## Breaking change — advanced search is one builder, and search shares its contracts (v2.29, 2026-08-21)
 
-Consumers sync from v2.21 — `584b9dd/2026-08-11`, the stamp raven carries: 40 classes
-removed, template states renamed, one page retired, the filter bar's vocabulary moved out of
-its JavaScript. Syncing means re-adapting, not re-copying. This entry replaces v2.22–v2.28,
-none of which shipped, and supersedes the two-renderings design of v2.16 and v2.20 below.
+Sync from v2.21 (`584b9dd/2026-08-11`) by re-adapting, not re-copying. This replaces v2.22–v2.28
+and supersedes v2.16 and v2.20.
 
-**Advanced search is one dialog, and its page is retired.** `public-search-advanced.html`
-goes; the builder renders once, as a wide scrollable dialog over `public-works.html`, and
-`?advanced=1` stays the address the browser pushes and production reads. An empty query is a
-legal state — the dialog opens over the unfiltered list. Decided by use: 990 of the 1,601
-sessions that used the power tier already had a result list on screen
+`public-search-advanced.html` is retired: the builder renders once, as a wide dialog over
+`public-works.html`, at `?advanced=1`. An empty query is legal
 (`docs/wip/QUERY-BUILDER-EVIDENCE.md`).
 
-**The builder is a row grammar, and the host wraps it.** The condition list owns the lanes,
-a row is field | phrase | actions, and `query-builder.js` reads rows only through
-`data-qb-*` hooks, so a cell class is styling and nothing more. Rows carry validation states
-(`__row--error`, and `__row--warning` with a note that merges same-field rows into an OR
-group). The count is production's to compute, into the `[data-qb-count]` live region. The
-contract lives in `docs/CLASS-USAGE.md` → Query builder and `docs/JAVASCRIPT.md` →
-query-builder.js; the field list follows `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`.
+`query-builder.js`, `people-search.js` and the filter bars read only hooks: `data-qb-*`,
+`[data-qb-count]`, `__row--error`, `__row--warning`, `data-picker-*`, `data-id`, `data-ps-row`,
+`data-filter-bar`. One picker panel partial per entity. Contracts: `docs/CLASS-USAGE.md`,
+`docs/JAVASCRIPT.md`, `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`.
 
-**One picker panel per entity, shared by the builder and the filter bar.** Person,
-Organization and Project each have one panel partial that both surfaces clone, hooked
-through `data-picker-*`; rows match by `data-id`, and `data-person-ugent` marks a UGent
-person record — its token carries the crest. The result row is `bt-result`, read by
-`people-search.js` through `data-ps-row`, never through a class. Contract:
-`docs/CLASS-USAGE.md` → Search result row and Panel.
+`[hidden] { display: none !important; }` — never `d-*` on an element JS toggles with `hidden`. New
+`bt-search-clear` with `search-clear.js`. `bt-panel` zeroes `dropdown-menu` padding: drop any
+`p-0`. `.form-text`: xs → sm.
 
-**The filter bar carries no vocabulary and no markup.** A bar announces itself with
-`data-filter-bar`, each picker button carries its own definition, and every node clones from
-`filter-editor-templates.html` and `filter-option-lists.html`. The works bar's Author became
-a Person picker; the researcher directory offers Organization only; the project directory
-drops Organization — participation is deferred in raven's data contract. Contract:
-`docs/JAVASCRIPT.md` → filter-bar.js.
+### Consumer sync
+
+| Do this | To these |
+|---|---|
+| Re-copy | `assets/booktower.css`; from `assets/js/`: `filter-bar.js`, `filter-sheet.js`, `people-search.js`, `people-search-stub.js` (prototype only), `query-builder.js`, `search-clear.js`, `view-toggle.js` |
+| Adopt | `filter-editor-templates.html`, `filter-option-lists.html`, the three picker panels, `search-advanced-conditions.html`, `search-advanced-actions.html`, `search-advanced-dialog.html`, `search-advanced-blank.html`, `search-field-list.html` — every node clones from these |
+| Re-sync | `add-author-form.html`, `people-search-widget.html` |
+| Move the vocabulary they carry in JS into templ markup (`docs/RENDERED-HTML-CONTRACT.md`) | Raven's `filter_bar_core.js`, `works_filter_bar.js`, `directory_filter_bar.js`, `checklist_search.js` and its three search templates |
 
 ### Class migration
 
@@ -327,8 +250,7 @@ drops Organization — participation is deferred in raven's data contract. Contr
 | `bt-query-builder__start-shape` | — |
 | `bt-query-builder__start-slot` | — |
 
-`modal-footer` also leaves the generated list: its one Booktower rule hosted
-`bt-query-builder__exit` and is gone. Bootstrap still provides the class.
+`modal-footer` leaves the generated list; Bootstrap still provides it.
 
 ### Other contract changes
 
@@ -344,146 +266,77 @@ drops Organization — participation is deferred in raven's data contract. Contr
 | Card/table view toggle | persisted to `localStorage` via `data-view-store` | session-only; a consuming app persists the choice in a cookie it reads at first paint |
 | `biblio:filter-add` event | reserved contract, never fired | removed |
 
-**Smaller changes that reach a consumer.** `[hidden] { display: none !important; }` keeps
-the hidden attribute trustworthy — never a `d-*` utility on an element JS toggles with
-`hidden`. New: `bt-search-clear` with `search-clear.js` (the search box's inline ×) and
-`bt-btn-inline-edit` (the dotted in-place-edit affordance); the hero search bar holds its
-controls in flow. Consecutive `bt-work-card__meta-item` text values are divided by a rule.
-Panel chrome is compact, and `bt-panel` zeroes the `dropdown-menu` padding — drop any `p-0`
-at call sites. `dropdown-header` is bold sentence case; `.form-text` moves from xs to sm.
-
-**Kit only.** `npm test` gains `check:states`; the server resolves nested `@include`s, notes
-partials that paint nothing, and serves assets `no-store` (`docs/SERVER.md`).
-
-**Consumers:** raven syncs from v2.21 in one step. Re-copy `assets/booktower.css` and, from
-`assets/js/`: `filter-bar.js`, `filter-sheet.js`, `people-search.js`, `people-search-stub.js`
-(prototype only), `query-builder.js`, `search-clear.js`, `view-toggle.js`. Adopt the new
-partials — `filter-editor-templates.html`, `filter-option-lists.html`, the three picker
-panels, `search-advanced-conditions.html`, `search-advanced-actions.html`,
-`search-advanced-dialog.html`, `search-advanced-blank.html`, `search-field-list.html` — and
-re-sync `add-author-form.html` and `people-search-widget.html`. Raven's own filter engines
-(`filter_bar_core.js`, `works_filter_bar.js`, `directory_filter_bar.js`,
-`checklist_search.js`) and its three search templates implement the v2.21 contract: the
-vocabulary they carry in JS moves into the templ markup, per
-`docs/RENDERED-HTML-CONTRACT.md`.
-
 ---
 
 ## Slim sidebar keeps its labels, and its tooltips wait for slim (v2.21, 2026-08-14)
 
-An icon-only sidebar link now carries its own name. In `bt-sidebar--slim` the link
-and button text is hidden from view and stays in the accessibility tree, so a screen
-reader reads the same label a sighted user reads in the expanded rail. Tooltips
-follow the same state: `sidebar-toggle.js` enables them in slim mode and disables
-them while the sidebar is expanded, where they repeated a label already on screen.
+Re-copy `assets/booktower.css`; the icon fonts are unchanged since v2.20.
 
-- `.bt-sidebar__label` and `.btn-text` are visually hidden inside
-  `.bt-sidebar--slim` rather than `display: none`. That span names the link in both
-  states.
-- A sidebar link takes no `aria-label`. Bootstrap moves `title` to
-  `data-bs-original-title` when it initialises a tooltip, so `title` never becomes
-  the accessible name, and an `aria-label` would replace the visible text with a
-  second string to keep in sync.
-- Each sidebar `title` repeats its visible label word for word.
-- Slim mode styles count badges only: every badge on a sidebar link is a count
-  badge, so `.badge:not(.badge--total)` left the stylesheet.
-- The CSS build runs autoprefixer from a repo script against `.browserslistrc`, so
-  the compiled file carries vendor prefixes the previous build omitted.
-  `shell/shell.css` now carries the same build stamp as `assets/booktower.css`.
+In `bt-sidebar--slim` the link and button text stays in the accessibility tree:
+`.bt-sidebar__label` and `.btn-text` are visually hidden inside `.bt-sidebar--slim` rather than
+`display: none`. Delete any `aria-label` you added to a sidebar link, and read each link's `title`
+against its visible label — each `title` repeats it word for word. Bootstrap moves `title` to
+`data-bs-original-title` when it initialises a tooltip. Where you mirror `sidebar-toggle.js`, enable
+the tooltips with the slim state instead of at page load.
+
+`.badge:not(.badge--total)` left the stylesheet — slim mode styles count badges only. The CSS build
+runs autoprefixer against `.browserslistrc`, and `shell/shell.css` carries the same build stamp as
+`assets/booktower.css`.
 
 | Removed | Replaced by |
 |---------|-------------|
 | `bt-navbar__nav` | nothing — the class was unused |
 | `aria-label` on a sidebar nav link | `.bt-sidebar__label`, which slim mode keeps in the accessibility tree |
 
-**Consumers:** re-copy `assets/booktower.css`; the icon fonts are unchanged since
-v2.20. Delete any `aria-label` you added to a sidebar link, and read each link's
-`title` against its visible label. Where you mirror `sidebar-toggle.js`, enable the
-tooltips with the slim state instead of at page load.
-
 ---
 
 ## Experimental Advanced search builder shared rendering (v2.20, 2026-08-12)
 
-The public advanced-search flow now has a shared builder implementation that can
-render either as a full page or as a wide dialog over the results list. This builder itself is expermiental.
+Re-copy `assets/booktower.css` after the CSS rebuild, and render the advanced-search builder from
+the shared condition and action partials rather than two separate copies. The builder renders
+either as a full page or as a wide dialog over the results list, from the same partials, with the
+conditions/actions split made explicit. The shell documents how to include partials cleanly.
 
-- The advanced-search builder is implemented from the same condition and action
-  partials in both renderings, so the page and the overlay do not drift apart.
-- The builder cards and a dedicated query-builder pattern were added around the
-  public search flow, with the conditions/actions split made explicit for
-  consumer implementations.
-- The shell is now also documented to include partials cleanly, which keeps the
-  advanced-search variants consistent with the rest of the design-system layout
-  patterns.
-
-**Consumers:** re-copy `assets/booktower.css` after the CSS rebuild and update any
-advanced-search implementation to use the shared condition/action partials rather
-than maintaining two separate copies. This is a prototype contract change for the
-public search flow; there is no legacy migration from a prior builder markup to
-preserve.
+This builder is experimental, and there is no legacy migration from a prior builder markup.
 
 ---
 
 ## Backoffice shell + work-card contract alignment (v2.19, 2026-08-12)
 
-The latest batch adds one backoffice shell pattern and tightens the consumer-facing
-sidebars and work-card references that apps should mirror.
+Re-copy `assets/booktower.css` after the CSS rebuild. The classes affected are `bt-sidebar`,
+`bt-sidebar--slim` and `badge--total`.
 
-- The app shell now supports a filter-drawer layout via
-  `u-main__body--filter-drawer` and the companion `u-main__sidebar` drawer
-  behaviour, so backoffice list screens can keep a narrow filter panel without
-  breaking the surrounding shell structure.
-- Sidebar count badges now stay visible in the expanded app sidebar and collapse
-  cleanly into the slim-dot state when `bt-sidebar--slim` is active. The main
-  sidebar markup was simplified so reusable links no longer rely on helper wrappers
-  like `d-inline-flex flex-shrink-0`.
-- Public work-card references were aligned across the kit templates and sample
-  result content so titles, access metadata, and related-work links match the
-  current card contract. No new CSS classes were introduced, but the markup and
-  route expectations now match the public work-card pattern.
+The app shell supports a filter-drawer layout via `u-main__body--filter-drawer` and the companion
+`u-main__sidebar` drawer behaviour. Sidebar count badges stay visible in the expanded app sidebar
+and collapse into the slim-dot state under `bt-sidebar--slim`; remove helper wrappers such as
+`d-inline-flex flex-shrink-0` from reusable sidebar links.
 
-**Consumers:** re-copy `assets/booktower.css` after the CSS rebuild. The classes
-most directly affected are `bt-sidebar`, `bt-sidebar--slim`, and
-`badge--total`; if you mirror the main sidebar or work-card examples, remove the
-old helper wrappers and match the current contract instead of patching the output
-by hand.
+Public work-card references are aligned across the kit templates and sample result content. No new
+CSS classes. If you mirror the main sidebar or work-card examples, match the current contract
+instead of patching the output by hand.
 
 ---
 
 ## Sidebar badge layout fix and pattern sync (v2.18, 2026-08-12)
 
-Sidebar count badges now stay visible in the expanded app sidebar and collapse cleanly
-into the slim-dot state when `bt-sidebar--slim` is active. The main sidebar markup
-was simplified so reusable links no longer require helper wrappers like
-`d-inline-flex flex-shrink-0`.
+Re-copy `assets/booktower.css` after the CSS rebuild. The only classes affected are `bt-sidebar`,
+`bt-sidebar--slim` and `badge--total`.
 
-Documentation in `patterns/sidebar.html` was aligned with the actual
-`templates/partials/main-sidebar.html` partial, and a new issue draft was added to
-`docs/wip/SIDEBAR-TOGGLE-BACKOFFICE.md`.
-
-**Consumers:** re-copy `assets/booktower.css` after the CSS rebuild. The only
-classes affected are `bt-sidebar`, `bt-sidebar--slim`, and `badge--total`.
+Sidebar count badges stay visible in the expanded app sidebar and collapse into the slim-dot state
+under `bt-sidebar--slim`. The main sidebar markup drops helper wrappers such as
+`d-inline-flex flex-shrink-0`. `patterns/sidebar.html` matches
+`templates/partials/main-sidebar.html`; issue draft in `docs/wip/SIDEBAR-TOGGLE-BACKOFFICE.md`.
 
 ## Work card contributor links and access vocabulary settle (v2.17, 2026-08-11)
 
-One CSS rule changed and the public/backoffice prototype cards were swept to match
-the work-card contract.
+Re-copy `assets/booktower.css` and update work-card contributor markup. No classes changed.
 
-Contributor names now follow one rule on both surfaces: every name is a link, and
-the identifier icon says where it goes. A name with the UGent crest or ORCID links
-to the researcher page; a name with neither runs a works search on itself (`?q=`).
-The muted, unlinked contributor form is retired. Names print as First name,
-middle name initials then surname (`Mark B. De Moor`) on public cards,
-researcher cards, curator cards, deposit
-summaries and table fallbacks.
+Every contributor name is a link, and its identifier icon says where: the UGent crest or ORCID to
+the researcher page; neither to a works search on the name (`?q=`). The muted, unlinked form is retired. Names print as first name, middle initials, surname
+(`Mark B. De Moor`) on public, researcher and curator cards, deposit summaries and table fallbacks.
+`bt-work-card__author` keeps each contributor together with `white-space: nowrap`.
 
-`bt-work-card__author` now keeps each contributor together with
-`white-space: nowrap`, and adjacent contributors get a small left margin so a crest
-visually belongs to the following name rather than floating between two
-comma-separated names.
-
-Access badges on cards now have a three-state vocabulary only:
+Access badges on cards use the table below; closed access is backoffice only.
 
 | Work-card access state | Badge |
 |---|---|
@@ -492,21 +345,10 @@ Access badges on cards now have a three-state vocabulary only:
 | Embargo | `badge text-bg-secondary` + `if-time`, naming the date |
 | Embargo | `badge text-bg-transparent` + `if-forbid` |
 
-Closed access is backoffice only.
+Cards link year and container/publisher-as-container to the works overview; projects link to detail
+pages, and publisher-as-container names render in `<cite>`.
 
-The card-link contract also narrows: cards link year and
-container/publisher-as-container to the works overview, but projects live on detail
-pages. Publisher-as-container names such as Zenodo and bioRxiv render in `<cite>`
-like the other containers.
-
-Documentation updates in `docs/wip/` close three decisions: no workflow transition
-changes visibility; retracted works remain in result lists, exports, harvesting
-sets and researcher lists with the mark carried along; the per-type reference line
-is kept.
-
-**Consumers: re-copy `assets/booktower.css` and update work-card contributor
-markup.** There are no added or removed classes, but old muted/unlinked contributor
-markup no longer matches the contract.
+Three decisions close in `docs/wip/`: visibility, retraction, per-type reference line.
 
 ## Advanced search becomes one builder in two renderings (v2.16, 2026-08-10)
 
@@ -536,23 +378,20 @@ already places off the public surface, four awaiting an exposure decision. Patte
 
 ## Token search retires; unused classes fail the gate (v2.15, 2026-08-10)
 
-Seventeen classes removed: the `token-bar` and `token-suggestions` families,
-`bt-code-block`, `bt-scroll-frame`. All of them dressed the two advanced-search
-explorations deleted in 789ae7f; `public-search-advanced.html` with
-`query-builder.js` is the surviving direction. `server/content/token-results.js`
-and its `/search` HTMX target go with them.
+Seventeen classes removed: the `token-bar` and `token-suggestions` families, `bt-code-block` and
+`bt-scroll-frame`. `public-search-advanced.html` with `query-builder.js` is the surviving
+direction. `server/content/token-results.js` and its `/search` HTMX target go with them.
 
-`check:classes` now **exits 1** on a class defined in `booktower.css` and used
-nowhere, matching the direction it already enforced for undefined classes. A
-class kept on purpose goes in the `intentional` list in
-`scripts/check-classes.js` with a reason — so "used nowhere: 0" is an invariant
-the gate holds rather than a number someone reads.
+`check:classes` now **exits 1** on a class defined in `booktower.css` and used nowhere, matching the
+direction it already enforced for undefined classes. A class kept on purpose goes in the
+`intentional` list in `scripts/check-classes.js` with a reason.
 
 **Consumers: re-copy `assets/booktower.css`.**
 
 ## Design principles move into the kit — and into the gates (v2.14, 2026-08-07)
 
-No class or CSS changes. Three URLs change.
+No class or CSS changes. Consumers: nothing to re-copy. Update any link to `/base/*` per the table
+below.
 
 | Old URL | v2.14 |
 |---|---|
@@ -560,37 +399,20 @@ No class or CSS changes. Three URLs change.
 | `/base/integration.html` | removed — `docs/CONSUMING-BOOKTOWER.md` is the integration contract |
 | `/base/design-principles.html` | `/foundations/design-principles.html` |
 
-`base/` is gone. Two of its pages predated the AGENTS.md restructure and
-duplicated docs that are now the source of truth. The third moved to
-`foundations/`, where the checks can see it: `check:classes`, `check:a11y` and
-`check:html` all glob `templates elements patterns foundations
-getting-started`, so HTML outside those five directories is validated by
-nothing. `base/` never was — the principles page carried `font-serif`, a class
-defined in no stylesheet, undetected for the page's whole life.
+`base/` is gone; the principles page moved to `foundations/`, where `check:classes`, `check:a11y`
+and `check:html` see it — they glob `templates elements patterns foundations getting-started`, and
+HTML outside those five directories is validated by nothing. `base/` carried `font-serif`, a class
+defined in no stylesheet.
 
-The page now holds six principles rather than four. **05 Trust is placed
-deliberately** and **06 Quality is reached in cycles** come from the Biblio
-2030 working strategy: metadata increasingly arrives from outside, imported
-values may publish without anyone here reading them while anything we generate
-ourselves waits for a person, and deposit is non-blocking with quality reached
-through curation cycles. **02** gained the public/backoffice
-surface split and the limit in both directions — invented complexity is ours to
-remove, responsibility is not. **03** gained the long tail, **04** machines as
-readers. Each principle carries a pass/fail test; the conflicts section resolves
-eight standing tensions and names one open question for Open Science Policy.
-
-`AGENTS.md` names all six inline, and `check:doc-refs` fails when the guide and
-the page disagree — the page stays the only copy of their content.
-
-**Consumers: nothing to re-copy.** Update any link to `/base/*`.
+The page holds six principles rather than four. Each carries a pass/fail test; the conflicts section
+resolves eight standing tensions and names one open question for Open Science Policy. `AGENTS.md`
+names all six inline, and `check:doc-refs` fails when the guide and the page disagree — the page
+stays the only copy of their content.
 
 ## Work card — BEM wrappers, and the block absorbs its only modifier (v2.13, 2026-08-07)
 
-Three classes added, four names retired. Supersedes v2.8's "Bootstrap structural
-regions stay": without a `.card` ancestor, every declaration Bootstrap ships for
-these classes resolves against undefined `--bs-card-*` variables, and
-`_booktower-work-card.scss` overrode the rest — the wrappers were Bootstrap in
-name only.
+Three classes added, four names retired. Supersedes v2.8's "Bootstrap structural regions stay":
+without a `.card` ancestor, `--bs-card-*` is undefined.
 
 | Old markup (selectors deleted) | v2.13 |
 |---|---|
@@ -599,70 +421,43 @@ name only.
 | `div.card-footer` (inside `bt-work-card`) | `div.bt-work-card__footer` |
 | `bt-work-card bt-work-card--border-bottom` | `bt-work-card` |
 
-`bt-work-card--border-bottom` is retired because every card carried it: a
-modifier no card ever omits is the block. Its declarations (`border-bottom`,
-vertical padding) moved to `.bt-work-card`, which the rename had otherwise left
-with no rule of its own. Same specificity, same source order, same rendering.
+`bt-work-card--border-bottom`'s declarations (`border-bottom`, vertical padding) moved to
+`.bt-work-card`. The wrappers also dropped four declarations that only cancelled Bootstrap —
+`background: transparent` and `border-bottom: none` on `__header`, `background: transparent` and
+`border-top: none` on `__footer`, plus `margin-bottom: 0` — all the initial value on a `<div>` with
+no `card-*` class. Every other declaration is unchanged, and real Bootstrap `.card` components
+elsewhere keep `card-*`.
 
-The wrappers also dropped four declarations that only cancelled Bootstrap —
-`background: transparent` and `border-bottom: none` on `__header`,
-`background: transparent` and `border-top: none` on `__footer`, plus
-`margin-bottom: 0`. All are the initial value on a `<div>` with no `card-*`
-class, so nothing moves. Every other declaration is unchanged.
-
-Real Bootstrap `.card` components everywhere else keep `card-*`.
-
-**Consumers: one contract change, one diff.** Re-copy `booktower.css`, rename
-the three wrappers, and drop `bt-work-card--border-bottom`. The old
-`.bt-work-card .card-*` and `.bt-work-card--border-bottom` selectors are gone
-from the compiled CSS, so old markup with new CSS loses the card's
-header/body/footer layout and the rule between cards.
+Re-copy `booktower.css`, rename the three wrappers, and drop `bt-work-card--border-bottom`. The
+`.bt-work-card .card-*` and `.bt-work-card--border-bottom` selectors are gone from the compiled
+CSS, so old markup with new CSS loses the card's header/body/footer layout and the rule between
+cards.
 
 ## Modal ARIA — Bootstrap owns the runtime attributes (v2.12, 2026-08-06)
 
-No class changes; visually inert except the two delete-list confirmations, whose footer
-buttons lost `btn-sm` to match the other eight modals.
+No class changes. Re-adapt the markup: all ten modal openers across `templates/` carry only
+`class`, `id`, `tabindex="-1"` and `aria-labelledby`, and the two delete-list confirmations' footer
+buttons drop `btn-sm`.
 
-An accessible-relationship change, so it is a contract change for consumers even though
-no class moved. All ten modal openers across `templates/` now carry only `class`, `id`,
-`tabindex="-1"` and `aria-labelledby`:
-
-- **`role="dialog"` / `aria-modal="true"` removed from static markup.** Bootstrap's modal
-  JS sets both on show and removes them on hide (5.3.3 `modal.js`, `_showElement` /
-  `_hideModal`), so markup values only duplicated runtime state. A closed `.modal` is
-  `display: none` and outside the accessibility tree either way — nothing was announced
-  before, nothing is lost now.
-- **`aria-hidden="true"` is not the replacement.** Bootstrap's documented static markup
-  includes it, but it fails `check:html`'s `hidden-focusable` rule — a modal contains
-  focusable children. Carry none of the three.
-- **`aria-describedby` added to the three confirmations** (`delete-list-modal`,
-  `return-modal`, `pickup-modal`), pointing at the sentence that states the consequence,
-  never at `.modal-body` — a body-level description makes a screen reader announce every
-  control in it. `export-modal` and `cite-modal` get none: their bodies are a form and a
-  tab set, and their titles carry the meaning.
-- **`role="alertdialog"` is unavailable.** The APG pattern for destructive confirmations,
-  but Bootstrap overwrites `role` with `dialog` on every show.
+- **Remove `role="dialog"` and `aria-modal="true"` from static markup.** Bootstrap's `modal.js`
+  sets both on show and removes them on hide (5.3.3 `_showElement` / `_hideModal`).
+- **`aria-hidden="true"` is not the replacement.** It fails `check:html`'s `hidden-focusable` rule.
+  Carry none of the three.
+- **`aria-describedby` goes on the three confirmations** (`delete-list-modal`, `return-modal`,
+  `pickup-modal`), pointing at the sentence that states the consequence, never at `.modal-body`.
+  `export-modal` and `cite-modal` get none.
+- **`role="alertdialog"` is unavailable.** Bootstrap overwrites `role` with `dialog` on every show.
 
 Rule: `docs/ACCESSIBILITY.md` E6 · consumer duty: `docs/CONSUMING-BOOKTOWER.md`
 accessibility baseline · reference example: `templates/biblio-researcher/lists.html`.
 
 ## Pagination pattern — the results bar (v2.11, 2026-08-06)
 
-The pagination bar is pinned in the new kit page `patterns/pagination.html` (pagination and
-result count left, page size / sort / more actions right, each control in its own
-`bt-toolbar__item`) and in `docs/CLASS-USAGE.md`.
+**Re-copy `booktower.css`.** No class changed, the icon fonts are unchanged, and one rule changed:
+`bt-toolbar__right` is `flex-wrap: wrap` and shrinkable, from `flex-shrink: 0`.
 
-**Consumers: re-copy `booktower.css`.** No class was added or removed — one existing rule
-changed: `bt-toolbar__right` is now `flex-wrap: wrap` and shrinkable (it was
-`flex-shrink: 0`, no wrap). A row of controls that did not fit — page size + sort + a
-menu button, below roughly 600px — overflowed the viewport horizontally; it now stacks.
-Nothing changes at widths where the row already fitted. The icon fonts are unchanged.
-
-### ⚠️ Pagination markup changed — recheck any page with a result count
-
-Because no class changed, `check:classes` stays silent: a page left on the old markup keeps
-rendering, just with the accessibility bugs below. Consumers mirroring a Booktower list bar
-(raven templates included) should apply these:
+`patterns/pagination.html` and `docs/CLASS-USAGE.md` pin the bar: each control in its own
+`bt-toolbar__item`. Apply the markup below; `check:classes` stays silent on it.
 
 | What | Was | Now | Why |
 |---|---|---|---|
@@ -674,65 +469,33 @@ rendering, just with the accessibility bugs below. Consumers mirroring a Booktow
 | Spacing | `mb-0` on `ul.pagination`, `ms-3` on the count | neither | `base/_reset.scss` zeroes list margins; the toolbar owns the gap. |
 | Toolbar children | controls sometimes bare in `bt-toolbar__left`/`__right` | every child in its own `bt-toolbar__item` | Confirmed as the pattern for consuming apps. It is also load-bearing for `form-select`: as a direct flex child, `width: 100%` makes every select shrink to one shared width and the longest label truncates (visible on `public-works` today as “Year (new to…”). |
 
-`check:a11y` now enforces the five rules above (P1–P5): `visually-hidden` beside a display
-utility, an `<a>` inside `li.page-item.disabled`, a text glyph in a `page-link`, text inside
-a pagination `<nav>`, `mb-0` on `ul.pagination`. Nine files known to be on the old markup are
-listed in `PAGINATION_DRIFT` in `scripts/check-a11y.js` so the build stays green while they
-are aligned; any new occurrence fails, and an entry that stops drifting fails too. Run
-`npm run check:pagination` for the worklist with line numbers.
-
-**`public-projects.html` is the first template on the new pattern** — read it, or the kit
-page, as the reference. It had a bare result count and no pagination; it now carries the
-full bar top and bottom (page size + sort right, `Projects pagination (top)` / `(bottom)`),
-with the counts standing in for a full directory (84 projects, 5 pages) while only 4 of the
-cards are written out. The other nine files still carry the old markup — alignment is tracked
-in `notes/PLAN-kit-gaps-from-templates.md`, Tier 2 item 6.
+`check:a11y` enforces the five rules above (P1–P5): `visually-hidden` beside a display utility, an
+`<a>` inside `li.page-item.disabled`, a text glyph in a `page-link`, text inside a pagination
+`<nav>`, `mb-0` on `ul.pagination`. Nine files on the old markup are listed in `PAGINATION_DRIFT` in
+`scripts/check-a11y.js`; `npm run check:pagination` lists them. `public-projects.html` is the
+reference template (`Projects pagination (top)` / `(bottom)`); the other nine are tracked in
+`notes/PLAN-kit-gaps-from-templates.md`, Tier 2 item 6.
 
 ---
 
 ## Backoffice status model + card completion (v2.10, 2026-07-30)
 
-No class changes. The backoffice aligns to raven's state model and the cards fill out:
+No class changes.
 
-- **Two-axis status**: deposit status (draft/submitted/returned/reviewed) is the one
-  badge; record visibility rides inside it as `if-eye`/`if-eye-off` + visually-hidden
-  text. "Published"/"Biblio public" wording is gone. File access is never a badge on
-  backoffice cards — plain `bt-work-card__meta-item` ("Open access", "Embargo until
-  <date>"). DOMAIN-VOCABULARY rewritten accordingly (two axes, deletion/tombstones,
-  raven event model; retraction: will be built in raven, timing open).
-- **Facets**: Status = the four deposit statuses (list pages + backoffice facet
-  partial); Visibility is its own facet on both list pages.
-- **One list page per role**: search-my-research and search-filter-first deleted;
-  filter-first's condensation concepts noted in curate.html.
-- **Cards**: automated missing-metadata alert (role-specific lists) in the Biblio
-  message slot; org badges muted (`text-bg-light`); projects clickable; year links
-  to the year filter in filterable views; a Returned+embargo example card added.
-- **Kit**: work-card page restructured — on-page nav; order grammar → roles &
-  views → public → researcher → curator; duplicate demo cards removed; researcher
-  demo re-labelled (was "Curator card"); public demo aligned to v1 actions (no
-  Download CTA per #141). "One card across roles and views" matrix section;
-  add-to-list recipe renders open in flow. The Biblio message pattern = automated
-  missing-metadata check + CTA + optional personalised curator note.
-- **Access badges changed** — see the table below; check any page you are working on that
-  shows access status.
-- **Cards use one row concept**: `bt-meta-list` is gone from inside work cards —
-  departments, projects, VABB and the provenance footer are `bt-work-card__meta` rows with
-  `bt-work-card__meta-item` items, same as the header row. The separator is now scoped to
-  direct children of a row (`__meta > __meta-item + __meta-item`), so stacked sub-lists draw
-  none; `.bt-work-card__meta-item .if` glues an icon to its item. `bt-meta-list` stays as
-  the off-card metadata line (detail-page file rows, typography demos) and moved to
-  `patterns/_booktower-components.scss`; its dead `__item` element was removed.
-- **Public title links**: every public card title opens
-  `templates/biblio-public/public-work-detail.html` (was `#`, and one raven-shaped
-  `/research/<id>`); backoffice titles stay `#` — no backoffice detail view yet.
-- **Search pages**: results-search hx stubs removed (raven owns search behaviour);
-  `@states: default, no-results` on both list pages with a bt-blank-slate zero-results
-  state; "did you mean" deliberately not built (raven search-quality epic).
+Deposit status (draft/submitted/returned/reviewed) is the one badge, visibility inside it as
+`if-eye`/`if-eye-off` plus visually-hidden text. File access is never a badge on a backoffice card —
+plain `bt-work-card__meta-item`. Org badges are muted (`text-bg-light`).
 
-### ⚠️ Access badges changed (v2.10) — recheck any page showing access status
+`bt-meta-list` leaves work cards: departments, projects, VABB and the footer are
+`bt-work-card__meta` rows of `bt-work-card__meta-item`; separator scoped to
+`__meta > __meta-item + __meta-item`; `.bt-work-card__meta-item .if` glues on an icon.
+`bt-meta-list` moves off-card to `patterns/_booktower-components.scss`, minus its `__item`.
 
-The badge markup for access status is different. No class was added or removed, so
-`check:classes` stays silent — a page left on the old markup keeps rendering, just wrong.
+Public card titles open `templates/biblio-public/public-work-detail.html`, not `#` or
+`/research/<id>`; backoffice titles stay `#`.
+
+Apply the access-badge table below; `check:classes` stays silent. `text-bg-warning` on an access
+badge is wrong; icons are `aria-hidden="true"`.
 
 | Access state | v2.9 and earlier | v2.10 |
 |---|---|---|
@@ -741,21 +504,12 @@ The badge markup for access status is different. No class was added or removed, 
 | Embargo | `badge text-bg-warning` + `if-time` | `badge text-bg-secondary` + `if-time` (badge names the date) |
 | Closed access | `badge text-bg-secondary` | unchanged — and it never takes an icon |
 
-**Only open access carries colour.** Restricted and embargo are correct outcomes, not
-warnings: the orange read as an error and competed with open access. `text-bg-warning` on
-an access badge is now wrong everywhere. Icons are decorative (`aria-hidden="true"`) — the
-badge text carries the meaning.
-
-Swept in this release: `public-works.html`, `public-work-detail.html`,
-`public-work-detail-dataset.html`, `public-project-detail.html`,
-`public-researcher-detail.html`, `public-organisation-detail.html`,
-`deposit-4-review.html`, `search-advanced-builder.html`,
-`partials/search-suggest-panel.html`, `server/content/search-result-cards.js`,
-`server/content/token-results.js`, and the kit pages `patterns/work-card.html`,
-`patterns/work-actions.html`, `patterns/hero.html`, `elements/badges.html`.
-
-**Backoffice cards are unaffected**: access there is plain `bt-work-card__meta-item` text,
-never a badge. If you are adding an access badge to a backoffice card, that is the bug.
+Swept: `public-works.html`, `public-work-detail.html`, `public-work-detail-dataset.html`,
+`public-project-detail.html`, `public-researcher-detail.html`, `public-organisation-detail.html`,
+`deposit-4-review.html`, `search-advanced-builder.html`, `partials/search-suggest-panel.html`,
+`server/content/search-result-cards.js`, `server/content/token-results.js`,
+`patterns/work-card.html`, `patterns/work-actions.html`, `patterns/hero.html`,
+`elements/badges.html`.
 
 ## Work card grammar — backoffice cards + add-to-list recipe (v2.9, 2026-07-30)
 
@@ -773,8 +527,8 @@ documented recipe on `patterns/panel.html`.
 
 ## Work card grammar — public surface (v2.8, 2026-07-30)
 
-Four classes added, no removals. The card's inner rows get semantic elements;
-Bootstrap structural regions (`.card-header`, `.card-body`) stay.
+Four classes added, no removals. The card's inner rows get semantic elements; Bootstrap structural
+regions (`.card-header`, `.card-body`) stay. Migrate the markup below on touch.
 
 | Old markup (still valid CSS, migrate on touch) | v2.8 |
 |---|---|
@@ -783,64 +537,47 @@ Bootstrap structural regions (`.card-header`, `.card-body`) stay.
 | `div.d-flex.align-items-center.gap-2` (card actions) | `div.bt-work-card__actions` |
 | author `<a>` with icons + space inside | `span.bt-work-card__author` — icons outside the `<a>`, spacing via CSS |
 
-Behaviour changes:
+- `bt-meta-list__item-bordered` and `bt-work-card__meta-item`: the separator renders only *between*
+  consecutive items (sibling `border-left`), never after the last item.
+- `bt-work-card__authors` drops `display:flex`/`gap` — authors are prose with comma text nodes.
+- The `.bt-work-card.card` chrome-strip rule is deleted; its one usage dropped `.card`.
+- Access state on cards is always a badge; the bordered-item and bare-sentence renderings go from
+  public cards.
+- The public `__pub` line follows `docs/wip/WORK-CARD-REFERENCE-STYLES.md` (Harvard, `<cite>`,
+  linked `<time>` year); `·` separator spans go on public.
 
-- `bt-meta-list__item-bordered` (and `bt-work-card__meta-item`): separator now
-  renders only *between* consecutive items (sibling `border-left`), never after
-  the last item.
-- `bt-work-card__authors` dropped `display:flex`/`gap` — authors are prose with
-  comma text nodes; flex made every comma a spaced flex item.
-- `.bt-work-card.card` chrome-strip rule deleted; its one usage
-  (search-advanced-builder embed preview) dropped `.card`.
-- Access state on cards is always a badge (DOMAIN-VOCABULARY mapping); the
-  bordered-item and bare-sentence renderings are gone from public cards.
-- Public `__pub` line follows `docs/wip/WORK-CARD-REFERENCE-STYLES.md` (Harvard,
-  `<cite>`, linked `<time>` year); `·` separator spans removed on public.
-
-Swept: search-result-cards.js, public-works.html, public-project-detail.html,
-work-card.html (public section), work-actions.html, search-advanced-builder.html.
-Backoffice cards (curate.html, search-researcher/my-research/filter-first/token)
-still carry the old markup — they migrate in the backoffice pass.
+Swept: search-result-cards.js, public-works.html, public-project-detail.html, work-card.html (public
+section), work-actions.html, search-advanced-builder.html. Backoffice cards still carry the old
+markup.
 
 ## HTML validity batch — check:html and check:a11y green (v2.7, 2026-07-30)
 
-No class changes. All `npm run check:html` and `check:a11y` errors fixed across kit
-pages, templates and partials, visually inert except curate-detail, which gained a
-visible `h1.bt-toolbar__title` ("Curate record") — it had no h1 at all.
+No class changes. `npm run check:html` and `check:a11y` pass; curate-detail gained
+`h1.bt-toolbar__title` ("Curate record").
 
-Conventions this locked in:
-
-- **Stub forms:** prototypes carry no `<form>` without a working submit path; the spot
-  is marked `<!-- real impl: form POST /… -->` (ACCESSIBILITY.md C6 prototype
-  exception). Markers added across the deposit flow and add-author-form.
-- **Wrapping labels keep `for`/`id`:** voice control doesn't recognise implicit
-  association, so `no-redundant-for` is off in `.htmlvalidate.json`
-  (ACCESSIBILITY.md §C1, TPGi citation). File-drop zones carry both.
-- **`@state` vs checks:** ids unique across states; duplicate landmark names get an
-  inline `html-validate-disable-next` directive (SERVER.md → Template states).
-- **Duplicate pagination navs:** named "Results pagination (top)"/"(bottom)"
-  (ACCESSIBILITY.md A5 table).
-- Redundant `role="banner"`/`"contentinfo"` and invalid `width="auto"` removed
-  everywhere; sidebar toggle's aria attributes moved from the styled div to the
-  button (`sidebar-toggle.js` selector updated to match).
-- All 19 backoffice templates (biblio-researcher + biblio-team: deposit, search,
-  settings, dashboard, curation) now carry a WIP marker: backoffice is not
-  settled, do not implement in raven yet.
+- **Stub forms:** prototypes carry no `<form>` without a working submit path; mark the spot
+  `<!-- real impl: form POST /… -->` (ACCESSIBILITY.md C6).
+- **Wrapping labels keep `for`/`id`:** `no-redundant-for` is off in `.htmlvalidate.json`
+  (ACCESSIBILITY.md §C1). File-drop zones carry both.
+- **`@state` vs checks:** ids unique across states; duplicate landmark names get an inline
+  `html-validate-disable-next` directive (SERVER.md → Template states).
+- **Duplicate pagination navs:** named "Results pagination (top)"/"(bottom)" (ACCESSIBILITY.md A5).
+- Redundant `role="banner"`/`"contentinfo"` and invalid `width="auto"` are removed; the sidebar
+  toggle's aria attributes moved to the button (`sidebar-toggle.js` selector updated).
+- All 19 backoffice templates carry a WIP marker: do not implement in raven yet.
 
 ## Filter engines consolidated into filter-bar.js (v2.6, 2026-07-15)
 
-One class removed: `filter-group--backoffice-only` (and its `[data-surface]`
-rule) — it only existed to hide backoffice groups in the deleted
-`search-filter-bar.html` partial. Surface scoping is now per-bar config, not CSS.
+One class removed: `filter-group--backoffice-only` and its `[data-surface]` rule, which dressed
+backoffice groups in the deleted `search-filter-bar.html` partial. Surface scoping is per-bar
+config, not CSS.
 
-`filter-editor.js`, `filter-stubs.js`, `directory-filters.js` and
-`directory-filters-projects.js` are replaced by one config-driven
-`assets/js/filter-bar.js`: one engine, one config per bar, self-discovered by id
-prefix (`wf-` works, `rdir-` researchers, `pdir-` projects). Editor types:
-checklist, boolean, year-range, text. The works page now uses the same live
-chip bar as the directories (two chips pre-applied) instead of static markup.
-Chips remain client-side prototype stubs. Registry: `docs/JAVASCRIPT.md`;
-interaction model: `docs/SEARCH-AND-FILTERING.md`.
+`filter-editor.js`, `filter-stubs.js`, `directory-filters.js` and `directory-filters-projects.js`
+are replaced by one config-driven `assets/js/filter-bar.js`: one engine, one config per bar,
+self-discovered by id prefix (`wf-` works, `rdir-` researchers, `pdir-` projects). Editor types:
+checklist, boolean, year-range, text. The works page uses the same live chip bar as the
+directories. Chips remain client-side prototype stubs. Registry: `docs/JAVASCRIPT.md`; interaction
+model: `docs/SEARCH-AND-FILTERING.md`.
 
 ## Copy-to-clipboard pattern (v2.5, 2026-07-14)
 
@@ -851,78 +588,60 @@ link + cite-modal Copy citation).
 
 ## Public search form + filter picker unified (v2.4, 2026-07-14)
 
-No class removals — a markup + convention consolidation. Where to look when
-building or porting search/filter UI.
+**Public search form:** one skeleton per public listing header (`public-works`,
+`public-researchers`, `public-organisations`, `public-projects`): `<form role="search">` →
+`#suggest-wrapper` → `.input-group.input-group-lg` (`type="search"` input) →
+`#suggest-panel.bt-suggest-panel`. Generic IDs: `q`, `suggest-wrapper`,
+`suggest-panel`. Only `aria-label` copy, `action` and the hook vary: `hx-*` on works,
+`data-directory-search` on directories (`elements/search-bar.html`).
 
-**Public search form:** one canonical skeleton on every public listing header
-(`public-works`, `public-researchers`, `public-organisations`,
-`public-projects`): `<form role="search">` → `#suggest-wrapper` →
-`.input-group.input-group-lg` (visually-hidden label + `type="search"` combobox
-input + submit button) → `#suggest-panel.bt-suggest-panel`. Generic IDs (`q`,
-`suggest-wrapper`, `suggest-panel`) on every page — the JS binds them. Only
-scope varies: placeholder/`aria-label` copy, the form `action`, and the one
-behaviour hook (`hx-*` omni-suggest on works vs `data-directory-search`
-client-side typeahead on the directories). Documented on
-`elements/search-bar.html` → **Listing / results-header search**.
+**Filter picker:** one markup in `search-filter-bar`, `result-filter-bar` + `-projects` /
+`-researchers`, `backoffice-facet-sidebar` and `patterns/filter-picker.html`: `role="group"`,
+`.dropdown-header` labels, plain `.dropdown-item` buttons. Removed: the per-item `py-2` and
+`d-flex align-items-center` utilities, the "Find a filter" input with its `filter-editor.js`
+guard, and the invalid `aria-labelledby` on the menu `<div>`. Row padding:
+`--bs-dropdown-item-padding-y: 0.5rem` on `.dropdown-menu`, read by `.dropdown-header` too.
+`.bt-dropdown-scroll .dropdown-item` is flex, putting an applied check (`.ms-auto`) at the edge.
 
-**Filter picker:** one markup everywhere (`search-filter-bar`,
-`result-filter-bar` + `-projects`/`-researchers`, `backoffice-facet-sidebar`,
-and the `patterns/filter-picker.html` demos): `role="group"` +
-`.dropdown-header` labels, plain `.dropdown-item` buttons. Removed the per-item
-`py-2` and `d-flex align-items-center` utilities, the unused "Find a filter"
-search input (and its `filter-editor.js` guard requirement), and the invalid
-`aria-labelledby` on the menu `<div>`. Row padding now comes from Bootstrap's
-own token — `--bs-dropdown-item-padding-y: 0.5rem` on `.dropdown-menu`, with
-`.dropdown-header` reading the same token; rows are flex via
-`.bt-dropdown-scroll .dropdown-item` so an applied item's trailing check
-(`.ms-auto`) sits at the edge.
-
-**Search-bar kit page:** documents three variants — hero pill
-(`.input-group--hero`), canonical listing search, and compact/toolbar
-(`.form-control-search`, backoffice).
+**Search-bar kit page:** `.input-group--hero` pill, listing search, `.form-control-search`
+compact/toolbar.
 
 ---
 
 ## Access CTA rules + formatting conventions (v2.3, 2026-07-13)
 
-No class changes. Behaviour and copy changes on the public surface;
-decision record is #141.
+No class changes; copy and behaviour on the public surface. Decision record: #141.
 
-**Access CTA (cards + detail header):** split into v1 (parity with
-biblio.ugent.be) and v2 (extended). Templates show v1: full CTA on the
-detail header, cards carry only Cite + Add to list — no access CTA, no
-View button (title navigates). v2 (card mirrors the header: Download /
-Access at ⟨host⟩ / Log in / Select file) is preserved as designs on the
-kit page. Also removed: **Request access** (future, no process yet),
-per-row "Log in to access" links in the Files section (login appears
-once per page), the disabled **Under embargo** button (embargo renders
-as text naming the post-embargo state), "Full Text at Publisher"
-(external open full text out of scope), and every public trace of
-`private` files — not even a count (patent risk, tech transfer).
+The access CTA splits into v1, parity with biblio.ugent.be, and v2, extended. Templates show v1:
+the full CTA on the detail header, cards carrying only Cite + Add to list. v2 — Download / Access
+at ⟨host⟩ / Log in / Select file on the card — is preserved as designs on
+`patterns/work-actions.html`.
 
-**New kit page:** `patterns/work-actions.html` — CTA designs and
-styling (icon + button variant per CTA). Rules deliberately live in
-#141, not in the kit.
+Removed: **Request access**, the per-row "Log in to access" links, the disabled **Under embargo**
+button (embargo renders as text naming the post-embargo state), "Full Text at Publisher", and every
+public trace of `private` files, not even a count (patent risk).
 
-**New doc rules:** file selection for the access CTA
-(`docs/DOMAIN-VOCABULARY.md`: full_text only, published > accepted >
-rest, format irrelevant; restricted = login-scoped) and formatting
-conventions (`docs/UI-LAYER.md`: dates dd/mm/yyyy, decimal comma,
-meta line version · access · format · size).
+New rules: access-CTA file selection in `docs/DOMAIN-VOCABULARY.md`, formatting conventions in
+`docs/UI-LAYER.md`.
 
 ---
 
 ## Bootstrap gap audit (v2.2, 2026-07-03)
 
-The findings doc is retired (2026-08-13); this section is the record of what it found and fixed. The headlines:
+The findings doc is retired (2026-08-13).
 
-**Fixed bugs:** `.form-select` caret restored (a `background:` shorthand had erased it); `bt-blank-slate` compiled again (its partial was never `@use`d); `--bs-info-rgb` matched to `--bt-blue`; disabled/toggled primary buttons no longer fall back to stock Bootstrap blue; slim-sidebar badge counts hide properly; reduced-motion no longer makes spinners blur.
+**Fixed:** the `.form-select` caret (a `background:` shorthand erased it), `bt-blank-slate`
+compiling with its partial `@use`d, `--bs-info-rgb` matched to `--bt-blue`, disabled primary buttons,
+slim-sidebar badge counts and reduced-motion spinners.
 
-**Removed:** see the migration map below for classes. Also removed: all no-op Bootstrap overrides, `patterns/research-card-backup.html`, `patterns/htmx-patterns.html` (rebuilds with the JS audit), and the duplicate `elements/toolbar.html`.
+**Removed:** the classes in the map below, all no-op Bootstrap overrides,
+`patterns/research-card-backup.html`, `patterns/htmx-patterns.html` and the duplicate
+`elements/toolbar.html`.
 
 ### Removed during v2 development — migration map
 
-Classes that existed at some point in v2 (or were documented as if they did) and are gone. `npm test` fails on any use of an undefined class; this table answers "what do I use instead". The OLD→v2 tables below cover the old `bc-`/`c-` system; this covers v2's own churn.
+Classes gone from v2's own churn. `npm test` fails on any undefined class; the OLD→v2 tables below
+cover `bc-`/`c-`.
 
 | Removed | Use instead |
 |---------|-------------|
@@ -953,17 +672,20 @@ Classes that existed at some point in v2 (or were documented as if they did) and
 | `filter-tag` | Clickable badge: `<button>`/`<a>` with `badge badge--outline` |
 | `filter-year__input` | `bt-panel__year-input` |
 
-**New rules (see docs/CSS-ARCHITECTURE.md):** feed `--bs-*` component variables instead of fighting selectors; longhands, never shorthands across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG; reduced-motion has one owner. Two guards enforce reality: `npm run check:partials` (in the build) and `npm run check:classes` (58 ghost classes → 0).
+**New rules** are in `docs/CSS-ARCHITECTURE.md`: feed `--bs-*` component variables; longhands
+across grouped selectors; raw colours only in `_colors.scss`/`_tokens.scss`/SVG.
+`npm run check:partials` and `npm run check:classes` enforce them.
 
-**Added:** `min-w-0`, `bg-success-light`, `--bt-*-rgb` triplet tokens; backoffice surface tokens now work on nested `[data-surface]` containers.
+**Added:** `min-w-0`, `bg-success-light` and `--bt-*-rgb` tokens; backoffice surface tokens work on
+nested `[data-surface]` containers.
 
 ---
 
 ## Breaking change — unified `bt-` prefix (v2.1)
 
 All component classes now use a single `bt-` prefix. The old `bc-` and `c-`
-prefixes are retired. Find-and-replace the following across every template,
-partial, and stylesheet:
+prefixes are retired. The `u-` prefix for utilities and layout shells is unchanged.
+Find-and-replace the following across every template, partial, and stylesheet:
 
 | Old class | New class |
 |-----------|-----------|
@@ -1001,11 +723,6 @@ partial, and stylesheet:
 | `c-button-toolbar` | `bt-btn-toolbar` |
 | `c-button-toolbar--wide-spacing` | `bt-btn-toolbar--wide-spacing` |
 | `c-button-toolbar--vertical` | `bt-btn-toolbar--vertical` |
-
-**Rationale:** The split between `bc-` (Bootstrap Custom) and `c-` (Component)
-was never meaningful in practice and caused constant confusion. Every Booktower
-component class now uses `bt-`. The `u-` prefix for utilities and layout shells
-is unchanged.
 
 ---
 
