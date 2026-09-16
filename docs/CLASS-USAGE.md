@@ -2,99 +2,85 @@
 
 ## Shell and layout
 
-**`u-main__*`** — a results layout is `u-main__body`, `u-main__sidebar`, `u-main__content`, `u-main__content-header` and `u-main__content-body`. `u-main__sidebar` is the facet `<aside>`; `bt-sidebar` is the app navigation rail, never a filter rail. [`patterns/layout-shells.html`](../patterns/layout-shells.html)
+**`u-main__*`** — build a results page from `u-main__body`, holding `u-main__sidebar`, `u-main__content`, `u-main__content-header` and `u-main__content-body`. The filters go in `u-main__sidebar`, which is an `<aside>`. `bt-sidebar` is the app's main navigation column and never holds filters. [`patterns/layout-shells.html`](../patterns/layout-shells.html)
 
-**`u-notifications`** — never set `z-index` at the call site. [`assets/scss/patterns/_layouts.scss`](../assets/scss/patterns/_layouts.scss)
+**`u-notifications`** — this stack positions its contents. Do not set `z-index` on anything you put inside it. [`assets/scss/patterns/_layouts.scss`](../assets/scss/patterns/_layouts.scss)
 
 ## Navigation
 
-**`bt-navbar__brand`** — the backoffice logo link. [`assets/scss/patterns/_booktower-navbar.scss`](../assets/scss/patterns/_booktower-navbar.scss)
+**`bt-sidebar`** — wrap the text of every sidebar link in `.bt-sidebar__label`. Do not give a sidebar link an `aria-label`. [`patterns/sidebar.html`](../patterns/sidebar.html)
 
-**`bt-sidebar`** — Wrap link text in `.bt-sidebar__label`; never add `aria-label` to a sidebar link. [`patterns/sidebar.html`](../patterns/sidebar.html)
-
-**`bt-toolbar`** — give each action its `bt-toolbar__item` inside `bt-toolbar__left`, `bt-toolbar__middle` or `__right`, never a flex group. `bt-title-toolbar` pairs a heading with a right-aligned button. [`patterns/toolbar.html`](../patterns/toolbar.html)
+**`bt-toolbar`** — put every toolbar action in its own `bt-toolbar__item`, inside `bt-toolbar__left`, `bt-toolbar__middle` or `bt-toolbar__right`. Do not gather actions in a wrapper `<div>` with flex utilities. `bt-title-toolbar` is a heading with one action button on the right. [`patterns/toolbar.html`](../patterns/toolbar.html)
 
 ## Lists and cards
 
-**`bt-work-card`** — `__header`, `__body` and `__footer` own their padding, so a card takes no `card-*` class. [`patterns/work-card.html`](../patterns/work-card.html)
+**`bt-work-card`** — `bt-work-card__header`, `__body` and `__footer` set their own padding. Do not add Bootstrap's `card-*` classes to a work card. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-work-card--compact`** — tightens padding, margins and gaps and nothing else: never hide, truncate or rewrite content with CSS. Its action is `btn-xs`; a full card keeps `btn-sm`. [`patterns/work-card.html`](../patterns/work-card.html)
+**`bt-work-card--compact`** — this makes the card's padding, margins and gaps smaller and changes nothing else. Do not hide, shorten or rewrite card content with CSS. The button on a compact card is `btn-xs`, and on a normal card `btn-sm`. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-work-card__meta`** — *every* metadata row in a card, not only the header one. `__meta-item` marks a text value; no divider follows a badge or trails the last value. [`patterns/work-card.html`](../patterns/work-card.html)
+**`bt-work-card__meta`** — this marks every metadata row in a card, not only the row in the header. Inside it, `bt-work-card__meta-item` marks a text value. A vertical rule appears between two neighbouring values, but never after a badge and never after the last value. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-work-card__pub`** — the reference line takes plain spans, links and `<time>` values. [`patterns/work-card.html`](../patterns/work-card.html)
+**`bt-work-card__author`** — use one of these per contributor. Put the identifier icons, such as ORCID, inside `bt-work-card__author` but outside the link. Put the `visually-hidden` text naming them inside the link. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-work-card__author`** — one contributor per element. Identifier icons go inside `bt-work-card__author` and outside its link; the `visually-hidden` identifier text goes inside the link. [`patterns/work-card.html`](../patterns/work-card.html)
+**`bt-meta-list`** — this is the metadata row used outside a card, on detail-page file rows, suggestion rows and person rows. Never use it inside a card. Each `bt-meta-list__item` pairs a leading icon with its text. `bt-meta-list--xs` is the denser version; rows inside a panel stay at the normal size. [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
 
-**`bt-meta-list`** — the metadata line outside a card; it appears in no card. `bt-meta-list__item` pairs a leading icon with its text and serves file rows, suggestion rows and person rows alike. `bt-meta-list--xs` is the dense variant, and panel rows stay at the base size. [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
+**Two metadata rows, two separators** — inside a card, `bt-work-card__meta-item` puts a vertical rule between neighbouring values. Every other metadata row, including the one in a detail heading, separates values by the row's gap instead. Both are correct. Do not change one to match the other.
 
-**`__meta-item` against `bt-meta-list`** — a card's `bt-work-card__meta-item` divides consecutive values with a rule. Every other metadata line, the detail heading included, separates them by the row's gap. Neither is a mistake to correct against the other.
-
-**Table** — plain Bootstrap; no custom table class exists. Title cell: `fw-semibold text-reset text-decoration-none` on the link, `small text-muted mt-1` on the secondary line. Action cell: `text-end` on the `<td>`, `btn-ghost btn-sm` inside. Selected row: `.table-active` on the `<tr>`.
+**Table** — tables are plain Bootstrap and Booktower adds no table class. In a title cell, put `fw-semibold text-reset text-decoration-none` on the link and `small text-muted mt-1` on the line below it. In an action cell, put `text-end` on the `<td>` and `btn-ghost btn-sm` on the buttons inside. Mark a selected row with `.table-active` on the `<tr>`.
 
 ## Detail pages
 
-**`bt-detail-heading`** — the status row and title opening a record page; it owns the space below, so add no margin utility there. Put `bt-detail-heading__title` on the `h1`. The status slot is a `bt-meta-list`, never `bt-work-card__meta-item`, omitted when the record has no badges or values. Use the block when the `h1` carries the record's title, an Edit prefix included; when the `h1` names the task, summarise the record as a `bt-work-card--compact` instead. [`patterns/detail-heading.html`](../patterns/detail-heading.html)
+**`bt-detail-heading`** — this is the status row and title at the top of a record page, status row first. It sets its own spacing below, so do not add a margin utility to it. Put `bt-detail-heading__title` on the `h1`. Build the status row from `bt-meta-list`, not `bt-work-card__meta-item`, and leave the row out when the record has no badges or values.
 
-**`bt-alt-titles`** — goes between the `h1` and the contributors on a public work-detail page. One `bt-alt-titles__item` per stored entry, ordered subtitle → translated → other, with `bt-alt-titles__item--subtitle` on the subtitle and a plain `small text-muted` span on the rest. Never truncate an item. [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
+Use `bt-detail-heading` when the `h1` is the record's own title, including when a verb comes first, as in "Edit Quantum computing". When the `h1` names a task instead, leave `bt-detail-heading` out and show the record below as a `bt-work-card--compact`. [`patterns/detail-heading.html`](../patterns/detail-heading.html)
 
-**`csl-entry`** — it, `csl-left-margin` and `csl-right-inline` are citeproc-js output. Keep it intact. [`patterns/citations.html`](../patterns/citations.html)
+**`bt-alt-titles`** — on a public work-detail page, put this between the `h1` and the contributors. Render one `bt-alt-titles__item` per stored title, in the order subtitle, translated, other. Add `bt-alt-titles__item--subtitle` to the subtitle, and label every other item with a plain `small text-muted` span. Never shorten a title. [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
+
+**`csl-entry`** — `csl-entry`, `csl-left-margin` and `csl-right-inline` come from citeproc-js. Do not restyle or rename them. [`patterns/citations.html`](../patterns/citations.html)
 
 ## Search and filtering
 
-**`badge--outline`** — an applied filter chip is `badge badge--outline` on a `<button>` or `<a>`; `filter-chip-group` joins two into a split label and remove pill. A display-only summary is `badge text-bg-primary-light`. [`patterns/filter-picker.html`](../patterns/filter-picker.html)
+**`badge--outline`** — an applied filter chip is `badge badge--outline` on a `<button>` or an `<a>`. `filter-chip-group` joins two such chips into one pill, a label on the left and a remove button on the right. A chip that only displays a value, with nothing to click, is `badge text-bg-primary-light` instead. [`patterns/filter-picker.html`](../patterns/filter-picker.html)
 
-**`bt-result`** — one row of search results, `bt-results` the floating list around them. `bt-result__icon` is the leading icon and `bt-result__name` a name line, not a font-weight utility, and `is-selected` is the chosen state, paired with `aria-selected="true"`. [`patterns/people-search.html`](../patterns/people-search.html)
+**`bt-result`** — `bt-result` is one row of search results and `bt-results` is the floating list holding them. `bt-result__icon` is the icon at the start of the row. `bt-result__name` is the display name; use that class rather than a font-weight utility. Mark the chosen row with `is-selected` and `aria-selected="true"` together. [`patterns/people-search.html`](../patterns/people-search.html)
 
-**`bt-query-builder__conditions`** — a row's markup sets no width. [`patterns/query-builder.html`](../patterns/query-builder.html)
+**`bt-query-builder__conditions`** [`patterns/query-builder.html`](../patterns/query-builder.html)
 
-- `bt-query-builder__row` takes three children and no layout classes: `bt-query-builder__row-kind`, `bt-query-builder__phrase` (role select, operator select, `bt-query-builder__row-value`) and `bt-query-builder__row-actions`.
-- `bt-query-builder__alts` is an OR group's inner list, whose alternatives line up with each other and not with the rows outside it.
-- A `bt-textarea-auto` pasted-identifier box needs `bt-query-builder__row--batch` on its row.
-- A person token is `badge text-bg-primary-light` in the value cell, beside a `badge badge--outline` button opening the picker.
-- The field chooser opens from `bt-btn-inline-edit` into a `bt-panel bt-panel--wide` on `dropdown-menu`; each group is `min-w-0` around a `dropdown-header` and a `ul.list-unstyled` of `dropdown-item` rows.
+- Give each `bt-query-builder__row` exactly three children and no layout classes: `bt-query-builder__row-kind`, then `bt-query-builder__phrase` holding the role select, the operator select and `bt-query-builder__row-value`, then `bt-query-builder__row-actions`.
+- `bt-query-builder__alts` is the inner list of an OR group. Its alternatives align with each other, not with the rows outside the group.
+- A row holding a `bt-textarea-auto` box for pasted identifiers also needs `bt-query-builder__row--batch`.
+- A person token is `badge text-bg-primary-light`, sitting in the value cell next to a `badge badge--outline` button that opens the picker.
+- The field chooser opens from a `bt-btn-inline-edit` button. Its panel is `bt-panel bt-panel--wide` on a `dropdown-menu`. Each group inside carries `min-w-0` and holds a `dropdown-header` above a `ul.list-unstyled` of `dropdown-item` rows.
 
 ## Forms and controls
 
-**`btn-ghost`** — it and every `btn-outline-*` carry Booktower tokens. [`elements/buttons.html`](../elements/buttons.html)
+**`bt-search-clear`** — put this on a `btn btn-ghost` **between the input and the submit button**, and put all three in an `.input-group`. Give it `aria-label="Clear search"` and an `if-close` icon. Use an `<a>` when clearing loads a new URL, and a `<button type="button">` when it filters a list in place. The button takes its size from the input group. On a field with `type="search"`, the browser's own clear button is hidden. [`elements/search-bar.html`](../elements/search-bar.html)
 
-**`bt-link-more`** — takes an optional trailing `if-arrow-right if--xs`. [`elements/buttons.html`](../elements/buttons.html)
+**`bt-panel`** — a panel holds a title, one or more `bt-panel__body` blocks, and an optional `bt-panel__actions` footer. [`patterns/panel.html`](../patterns/panel.html)
 
-**`bt-avatar`** — with a Bootstrap background utility it forces white text and icon colour. [`elements/avatars.html`](../elements/avatars.html)
+- A panel is as wide as its contents. Use `bt-panel--wide` when the body is replaced as the user types.
+- `--checklist`, `--boolean`, `--year`, `--form` and `--list` are the body layouts, and any panel may use any of them. Rows in a `--list` body run an action; rows in a `--checklist` body tick a box.
+- Every `bt-panel__body` is a direct child of `bt-panel`. Add `border-top-0` to a first body that has no title above it. A panel holding prose rather than body blocks sets its own padding with `p-3`.
+- On a `dropdown-menu`, `bt-panel` already removes the menu's padding, so do not add `p-0` yourself.
+- Action rows are plain `.dropdown-item`. When a checklist row ends in a link, put that link after the `form-check-label`, never inside it.
+- A `form-check-label` may carry `bt-result__name` and one `bt-meta-list` per group of values. [`patterns/people-search.html`](../patterns/people-search.html)
 
-**`bt-search-clear`** — goes on a `btn btn-ghost` **between the input and the submit button**, with `aria-label="Clear search"` and `if-close`, inside an `.input-group`. Use an `<a>` where clearing changes the address, a `<button type="button">` where the box filters in place. Size follows the group, so `input-group-sm` needs no modifier, and where the field is `type="search"` the browser's own clear is suppressed. [`elements/search-bar.html`](../elements/search-bar.html)
-
-**`bt-panel`** — a title, one or more `bt-panel__body` blocks, an optional `bt-panel__actions` footer. [`patterns/panel.html`](../patterns/panel.html)
-
-- A panel sizes to content; `bt-panel--wide` suits one whose body swaps while the user types.
-- The body layouts `--checklist`, `--boolean`, `--year`, `--form` and `--list` are generic; `--list` holds rows that act rather than tick.
-- Bodies are direct children of `bt-panel`. A first body with no title above it takes `border-top-0`; a panel holding prose instead of bodies overrides with `p-3`.
-- On a `dropdown-menu`, `bt-panel` zeroes the menu's own padding, so no `p-0` at the call site.
-- Action rows are plain `.dropdown-item`. A checklist row's trailing link goes after the `form-check-label`, never inside it.
-- A rich `form-check-label` carries `bt-result__name` plus one `bt-meta-list` per group of values. [`patterns/people-search.html`](../patterns/people-search.html)
-
-**`modal-dialog--wide`** — the only Booktower modal modifier: stack it on `modal-dialog modal-xl`, which it does not replace. [`assets/scss/components/_bootstrap-components.scss`](../assets/scss/components/_bootstrap-components.scss)
-
-**`popover--sm`** — it and `popover--dark` apply through `data-bs-custom-class`. [`elements/popovers.html`](../elements/popovers.html)
+**`modal-dialog--wide`** — add this to `modal-dialog modal-xl`. It widens that size rather than replacing it, and it is the only modal modifier Booktower adds. [`assets/scss/components/_bootstrap-components.scss`](../assets/scss/components/_bootstrap-components.scss)
 
 ## Badges and alerts
 
-- The neutral metadata badge is `badge text-bg-light border`.
-- A clickable badge is a `<button>` or `<a>` carrying `.badge`; a plain status badge stays a `<span>`. A `<button>` inside a badge is the remove control. Neither takes an extra class.
-- The chip whose editor is open adds Bootstrap's `.active` to `badge--outline`, plus `aria-current="true"` on the label half.
-- `badge--lg` is the tap-target size; `badge--tab` pairs with `role="tab"` and `aria-selected`.
-
-**`alert--sm`** — it and `alert--dashed` sit on Bootstrap `.alert` and `.alert-*`. [`elements/alerts.html`](../elements/alerts.html)
+- A badge that acts or navigates is a `<button>` or an `<a>` carrying `.badge`; a badge that only shows a status stays a `<span>`. A `<button>` placed inside a badge is its remove control. None of these needs an extra class.
+- When a chip's editor is open, add Bootstrap's `.active` to `badge--outline` and `aria-current="true"` to the label half.
 
 ## Utilities
 
-**`bg-faculty-<code>`** — it and `bg-faculty-<code>-light` are keyed by live Biblio org code. [`assets/scss/utilities/_utilities.scss`](../assets/scss/utilities/_utilities.scss)
+**`bg-faculty-<code>`** — `bg-faculty-<code>` and `bg-faculty-<code>-light` take the faculty's organisation code from Biblio, as in `bg-faculty-we`. [`assets/scss/utilities/_utilities.scss`](../assets/scss/utilities/_utilities.scss)
 
-**`bt-table-sticky-col`** — on a `.table` inside `.table-responsive` it pins the first column. `bt-dropdown-scroll` is the scrollable inner list of a `dropdown-menu` with a fixed header, and takes its width from `--bs-dropdown-min-width`. [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
+**`bt-dropdown-scroll`** — set the width of this scrolling dropdown list with `--bs-dropdown-min-width`. [`patterns/filter-picker.html`](../patterns/filter-picker.html)
 
-**`ff-sans`** — forces system-UI sans where a heading or display font would otherwise be inherited. A muted caption is Bootstrap's `small text-muted`; there is no Booktower class for one.
+**`ff-sans`** — this sets the sans-serif body font on an element that would otherwise inherit a heading or display font. For a muted caption, use Bootstrap's `small text-muted`; Booktower adds no class for one.
 
-**Icons** — use only an `if-[name]` present in [`assets/scss/icons/_icon-font.scss`](../assets/scss/icons/_icon-font.scss).
+**Icons** — use only an `if-[name]` that exists in [`assets/scss/icons/_icon-font.scss`](../assets/scss/icons/_icon-font.scss).
 
 ## Plain Bootstrap — no `bt-*` class exists, do not invent one
 
@@ -106,6 +92,6 @@ Pagination   ul.pagination pagination-sm
 Facets       fieldset, legend, form-check*, collapse
 ```
 
-A show-more button carries `aria-expanded="false"` while its `<div class="collapse">` starts collapsed; do not rely on `.collapsed`.
+A show-more button needs `aria-expanded="false"` when the `<div class="collapse">` it controls starts closed. Bootstrap only adds its own `.collapsed` class after the first click, so do not style against that.
 
-Breadcrumb rule H3 and modal ARIA rule E6: [`docs/ACCESSIBILITY.md`](ACCESSIBILITY.md).
+Breadcrumbs follow rule H3 and modal ARIA follows rule E6 in [`docs/ACCESSIBILITY.md`](ACCESSIBILITY.md).

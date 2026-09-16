@@ -1,0 +1,96 @@
+<!-- @title: Tables — Booktower Design System -->
+<!-- @surface: backoffice -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Tables</h1>
+    <p class="lead">Tables are Bootstrap. Booktower adds one class, for a first column that stays put while the rest scrolls sideways.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Sticky first column</h2>
+    <p class="mb-4">For a matrix too wide to read without scrolling, where the row label is what makes each number legible. Add <code>bt-table-sticky-col</code> to the <code>&lt;table&gt;</code>, inside a <code>.table-responsive</code>. Scroll the demo sideways. Live use: <a href="/templates/biblio-team/team-overview-matrix.html">Team overview matrix</a>.</p>
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Faculty by output type</h3></div>
+      <div class="ds-demo-body">
+        <!-- to do: figure out mb-0, the double border at the bottom inside a card, the rounded borders and refine shadow -->
+        <div class="card rounded-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0 bt-table-sticky-col" aria-label="Unreviewed queue by faculty and output type">
+              <thead class="text-uppercase text-muted small">
+                <tr>
+                  <th scope="col" class="text-nowrap">Faculty</th>
+                  <th scope="col" class="text-center">Total</th>
+                  <th scope="col" class="text-center text-nowrap">Journal article</th>
+                  <th scope="col" class="text-center text-nowrap">Book</th>
+                  <th scope="col" class="text-center text-nowrap">Book chapter</th>
+                  <th scope="col" class="text-center text-nowrap">Conference paper</th>
+                  <th scope="col" class="text-center text-nowrap">Conference poster</th>
+                  <th scope="col" class="text-center text-nowrap">Preprint</th>
+                  <th scope="col" class="text-center text-nowrap">Working paper</th>
+                  <th scope="col" class="text-center text-nowrap">Dataset</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" class="text-nowrap fw-normal">Engineering and Architecture</th>
+                  <td class="text-center">128</td>
+                  <td class="text-center">54</td>
+                  <td class="text-center">3</td>
+                  <td class="text-center">11</td>
+                  <td class="text-center">28</td>
+                  <td class="text-center">9</td>
+                  <td class="text-center">14</td>
+                  <td class="text-center">6</td>
+                  <td class="text-center">3</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-nowrap fw-normal">Sciences</th>
+                  <td class="text-center">96</td>
+                  <td class="text-center">61</td>
+                  <td class="text-center">1</td>
+                  <td class="text-center">4</td>
+                  <td class="text-center">12</td>
+                  <td class="text-center">5</td>
+                  <td class="text-center">8</td>
+                  <td class="text-center">2</td>
+                  <td class="text-center">3</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-nowrap fw-normal">Medicine and Health Sciences</th>
+                  <td class="text-center">143</td>
+                  <td class="text-center">98</td>
+                  <td class="text-center">2</td>
+                  <td class="text-center">7</td>
+                  <td class="text-center">18</td>
+                  <td class="text-center">11</td>
+                  <td class="text-center">4</td>
+                  <td class="text-center">1</td>
+                  <td class="text-center">2</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-nowrap fw-normal">Arts and Philosophy</th>
+                  <td class="text-center">71</td>
+                  <td class="text-center">22</td>
+                  <td class="text-center">9</td>
+                  <td class="text-center">26</td>
+                  <td class="text-center">6</td>
+                  <td class="text-center">2</td>
+                  <td class="text-center">3</td>
+                  <td class="text-center">2</td>
+                  <td class="text-center">1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Everything else</h2>
+    <p class="mb-0">Striping, hover, borders, sizing, alignment and responsive breakpoints are Bootstrap's own, unchanged: <a href="https://getbootstrap.com/docs/5.3/content/tables/">Bootstrap tables</a>.</p>
+  </section>
+</div>

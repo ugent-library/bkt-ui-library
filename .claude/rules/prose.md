@@ -7,7 +7,8 @@ process narration and closing summaries. Run the final cut silently; never repor
 pass or enumerate routine edits.
 
 Test every sentence: delete it, without replacement, when the markup, the demo or an
-owning doc already carries its fact. Kit pages and interfaces show; they do not
+owning doc already carries its fact. A prohibition earns its place only where
+something is breaking it. Kit pages and interfaces show; they do not
 explain. A control that needs explanation copy is a design flaw to raise, and a kit
 trap no demo can show is raised before the sentence is written. A rules recheck
 deletes or keeps — never rewords or adds; its word count only moves down.

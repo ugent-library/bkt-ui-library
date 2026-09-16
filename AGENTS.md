@@ -100,6 +100,8 @@ Before writing HTML:
 - Use only classes present in `docs/CLASSES.md`. Bootstrap comes before custom CSS.
 - Author CSS rules in `assets/scss/`. Inline styles or JavaScript style mutation are
   limited to values genuinely unknown until runtime; see `docs/CSS-ARCHITECTURE.md`.
+- Write no SCSS or JavaScript comment. A hook rejects every comment added since `HEAD`;
+  keep one only for a `docs/CODE-COMMENTS.md` Keep case and name that case in the reply.
 - Real pages have no inline scripts. Register every `assets/js/` file in
   `docs/JAVASCRIPT.md`.
 - Prefer separate prototype states to JavaScript when the transition itself is not
