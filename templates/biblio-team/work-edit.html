@@ -1,0 +1,158 @@
+<!-- @title: Edit work — Biblio -->
+<!-- @surface: backoffice -->
+<!-- @states: returned, accepted -->
+<!--
+  Curator work edit — record form with a contextual notes aside.
+
+  Demonstrates the trailing aside contract: u-main__sidebar written after
+  u-main__content sits to its right and keeps its own scroll. The header toggle
+  hides and shows it.
+
+  Prototype note: the Notes toggle sits in u-main__header beside the primary
+  action. Placement is provisional — the header composition for record pages is
+  not settled. Owner: design.
+-->
+
+<div class="u-layout--app" data-surface="backoffice">
+
+  <!-- @include: templates/partials/backoffice-header.html -->
+  <!-- @include: templates/partials/main-sidebar.html -->
+
+  <main id="main-content">
+
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+
+            <header class="bt-detail-heading">
+              <p class="bt-meta-list">
+                <!-- @state: returned -->
+                <span class="badge text-bg-danger">Returned</span>
+                <span class="badge text-bg-light border"><i class="if if-eye-off" aria-hidden="true"></i> Private</span>
+                <span class="bt-meta-list__item">Journal article</span>
+                <span class="bt-meta-list__item">Embargo 01/05/2026 &ndash; 01/05/2027</span>
+                <span class="bt-meta-list__item">Private <i class="if if-arrow-right if--xs" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
+                <!-- @state -->
+                <!-- @state: accepted -->
+                <span class="badge text-bg-success">Accepted</span>
+                <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+                <span class="bt-meta-list__item">Journal article</span>
+                <span class="bt-meta-list__item">Open</span>
+                <!-- @state -->
+              </p>
+              <h1 class="bt-detail-heading__title">Nutrient cycling in restored wetlands of the Scheldt estuary</h1>
+            </header>
+            <p class="bt-work-card__authors">
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Renee Peeters<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Sarah De Baets<span class="visually-hidden"> (UGent)</span></a></span>
+            </p>
+            <p class="bt-work-card__pub">
+              <a href="#"><time datetime="2026">2026</time></a>
+              <a href="#">Estuar. Coast. Shelf Sci.</a>
+              312
+            </p>
+
+          </div>
+        </div>
+
+        <div class="bt-toolbar__right align-self-start">
+          <div class="bt-toolbar__item">
+            <button type="button" class="btn btn-secondary"
+              data-bs-toggle="collapse" data-bs-target="#work-notes"
+              aria-controls="work-notes" aria-expanded="true">
+              <i class="if if-message if--sm" aria-hidden="true"></i>
+              Notes
+            </button>
+          </div>
+          <div class="bt-toolbar__item">
+            <button type="submit" form="work-edit-form" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body u-main__body--split">
+
+      <section class="u-main__content">
+        <div class="u-main__content-body">
+
+          <form id="work-edit-form" action="/b/works/01M2JRYB2955S1G07MG96P98XP" method="post">
+
+            <div class="mb-4">
+              <label for="work-title" class="form-label">Title</label>
+              <textarea class="form-control" id="work-title" name="title" rows="2">Nutrient cycling in restored wetlands of the Scheldt estuary</textarea>
+            </div>
+
+            <div class="mb-4">
+              <label for="work-journal" class="form-label">Journal</label>
+              <input type="text" class="form-control" id="work-journal" name="journal" value="Estuarine, Coastal and Shelf Science">
+            </div>
+
+            <div class="row g-3 mb-4">
+              <div class="col-sm-4">
+                <label for="work-year" class="form-label">Publication year</label>
+                <input type="text" class="form-control" id="work-year" name="year" value="2026">
+              </div>
+              <div class="col-sm-4">
+                <label for="work-volume" class="form-label">Volume</label>
+                <input type="text" class="form-control" id="work-volume" name="volume" value="312">
+              </div>
+              <div class="col-sm-4">
+                <label for="work-pages" class="form-label">Pages</label>
+                <input type="text" class="form-control" id="work-pages" name="pages" value="109-124">
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="work-access" class="form-label">Access level</label>
+              <select class="form-select" id="work-access" name="access">
+                <option value="private" selected>Private</option>
+                <option value="open">Open</option>
+                <option value="restricted">Restricted</option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label for="work-abstract" class="form-label">Abstract</label>
+              <textarea class="form-control" id="work-abstract" name="abstract" rows="6">Restored tidal marshes along the Scheldt estuary were monitored across four growing seasons to quantify nitrogen and phosphorus retention.</textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+
+          </form>
+
+        </div>
+      </section>
+
+      <aside class="u-main__sidebar u-main__sidebar--border-left collapse show"
+        id="work-notes" aria-label="Notes">
+
+        <div class="p-3 d-flex flex-column gap-4">
+
+            <h2 class="h6 mb-0">Notes</h2>
+
+            <form action="/b/works/01M2JRYB2955S1G07MG96P98XP/notes" method="post">
+              <label for="work-note-new" class="form-label">Add a note</label>
+              <textarea class="form-control mb-2" id="work-note-new" name="note" rows="3"></textarea>
+              <button type="submit" class="btn btn-secondary btn-sm">Add note</button>
+            </form>
+
+            <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+              <li>
+                <p class="small text-muted mb-1">Wouter Bosmans &middot; 12 September 2026</p>
+                <p class="mb-0">Returned to the author: the embargo end date is later than the publisher policy allows.</p>
+              </li>
+              <li>
+                <p class="small text-muted mb-1">Wouter Bosmans &middot; 9 September 2026</p>
+                <p class="mb-0">Checked the DOI against Crossref. Volume and page range match.</p>
+              </li>
+            </ul>
+
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+</div>

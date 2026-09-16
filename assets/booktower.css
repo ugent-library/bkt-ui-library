@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 56bfea9/2026-09-16 */
+/*! Booktower b528139/2026-09-16 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -2653,8 +2653,7 @@ li:last-child > .bt-work-card {
 }
 
 .u-main__body--split:has(> .u-main__sidebar:last-child) {
-  --u-main-split-sidebar-width: 22rem;
-  grid-template-columns: minmax(0, 1fr) minmax(0, var(--u-main-split-sidebar-width));
+  grid-template-columns: minmax(0, 1fr) clamp(12rem, 33%, 22rem);
 }
 
 .u-main__body--split:has(> .u-main__sidebar:last-child) > .u-main__content {
@@ -2665,8 +2664,13 @@ li:last-child > .bt-work-card {
   grid-column: 2;
 }
 
-.u-main__body--split > .u-main__sidebar.offcanvas-end {
-  --bs-offcanvas-width: min(22rem, 100vw);
+.u-main__body--split:has(> .u-main__sidebar:last-child:not(.show)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.u-main__body--split > .u-main__sidebar.collapsing {
+  display: none;
+  transition: none;
 }
 
 .u-main__footer {
@@ -2730,12 +2734,6 @@ li:last-child > .bt-work-card {
 }
 
 @media (max-width: 1199.98px) {
-  .u-main__body--split:has(> .u-main__sidebar.offcanvas-end) {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .u-main__body--split:has(> .u-main__sidebar.offcanvas-end) > .u-main__sidebar {
-    padding: 0;
-  }
   .u-main__body--filter-drawer {
     grid-template-columns: minmax(0, 1fr);
   }

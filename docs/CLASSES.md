@@ -621,6 +621,7 @@ btn-sm
 btn-success
 btn-warning
 card
+collapsing
 display-1
 display-2
 display-3
@@ -656,6 +657,7 @@ nav-tabs
 offcanvas-xl
 pagination
 progress
+show
 small
 spinner-border
 spinner-grow
