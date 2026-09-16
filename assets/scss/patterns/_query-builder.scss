@@ -69,12 +69,12 @@
   align-items: stretch;
 }
 
-/* Chrome under-sizes the grid track around a field-sized textarea and the content
-   overflows into the next row. Here the box keeps its size and scrolls. */
-.bt-query-builder__row .bt-textarea-auto {
-  field-sizing: fixed;
+.bt-query-builder__row--batch textarea {
+  field-sizing: content;
+  min-height: 3.5rem;
+  max-height: 14rem;
+  overflow-y: auto;
 }
-
 
 .bt-query-builder__row--error {
   background-color: var(--bt-red-50);
@@ -106,7 +106,7 @@
   min-width: 0;
 }
 
-.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-query-builder__date, .bt-textarea-auto) {
+.bt-query-builder__row-value > .form-control:not(.bt-query-builder__year, .bt-query-builder__date, textarea) {
   flex: 1 1 12rem;
   min-width: 8rem;
 }

@@ -251,7 +251,7 @@ are listed: `bc-avatar-and-text` follows `bc-avatar`, `c-thumbnail-small` follow
 | `c-abbr` | ⏳ | ⏳ Planned | Styled abbreviation with tooltip. |
 | `bc-panel-header`, `bc-panel-footer` | `u-main__content-header`, `u-main__content-footer` | 🔄 Renamed | The shell regions host a `bt-toolbar` directly, so the padding reset the old classes carried is gone. `bt-panel` is a different thing — the dropdown editor panel. |
 | `bc-toast` and `bc-toast__*` | `u-notifications` holding Bootstrap `.alert` | 🔄 Renamed | `u-notifications` is the fixed overlay stack and owns the z-tier; it brings no message styling. There is no v2 toast class. |
-| `c-numbered-textarea-container`, `c-numbered-textarea-line-numbers` | ⏳ | ⏳ Planned | Line-numbered textarea. `bt-textarea-auto` is the v2 growing textarea and has no line numbers. |
+| `c-numbered-textarea-container`, `c-numbered-textarea-line-numbers` | ⏳ | ⏳ Planned | Line-numbered textarea. v2 has no equivalent. |
 
 ---
 

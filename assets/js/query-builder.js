@@ -532,20 +532,5 @@ document.addEventListener('DOMContentLoaded', function () {
     sync();
   });
 
-  // ── Pasted identifier lists ─────────────────────────────────────────────────
-
-  const autogrow = CSS.supports('field-sizing', 'content') ? null : box => {
-    box.style.height = 'auto';
-    box.style.height = box.scrollHeight + 'px';
-  };
-
-  if (autogrow) {
-    list.addEventListener('input', event => {
-      const box = event.target.closest('.bt-textarea-auto');
-      if (box) autogrow(box);
-    });
-    list.querySelectorAll('.bt-textarea-auto').forEach(autogrow);
-  }
-
   sync();
 })();
