@@ -585,9 +585,11 @@ const handler = async (req, res) => {
 };
 
 module.exports = handler;
+module.exports.renderBodyTemplate = renderBodyTemplate;
 
 // ─── Dev server ───────────────────────────────────────────────────────────────
-if (IS_DEV) {
+// require.main: check-states.js
+if (IS_DEV && require.main === module) {
   http.createServer(handler).listen(PORT, () => {
     console.log('\n  ◎ Booktower UI Library');
     console.log('  ──────────────────────────────────────');

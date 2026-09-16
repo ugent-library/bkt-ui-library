@@ -31,6 +31,7 @@
 
     <!-- Live region for decision confirmations, Undo availability and the count -->
     <span id="action-status" role="status" aria-live="polite" class="visually-hidden">
+      <!-- @state-none: default filtered empty action-failed -- these states follow no decision, and action-failed shows its message in a visible alert -->
       <!-- @state: action-success -->
       Rejected: Soft actuator design for grip. Undo is available. 4 research outputs left.
       <!-- @state -->
@@ -47,6 +48,7 @@
           </div>
         </div>
         <div class="bt-toolbar__right">
+          <!-- @state-none: empty -- no candidates are left to review -->
           <!-- @state: default filtered action-failed -->
           <div class="bt-toolbar__item">
             <a href="candidate-focused-review.html" class="btn btn-primary btn-sm">

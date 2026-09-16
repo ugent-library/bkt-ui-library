@@ -42,6 +42,7 @@
 
     <!-- Live region for decision confirmations and the remaining count -->
     <span id="action-status" role="status" aria-live="polite" class="visually-hidden">
+      <!-- @state-none: single action-failed -- the single state announces its decision on the page it returns to, and action-failed announces through its visible alert -->
       <!-- @state: round-pending -->
       Submitted: Transfer learning across hospitals: a multicentric ICU study. 3 research outputs left.
       <!-- @state -->
@@ -67,10 +68,12 @@
               </ol>
             </nav>
             <h1 class="h3 mb-0">Review research output <!-- @state: round-pending action-failed claimed-elsewhere-submitted claimed-elsewhere-draft -->2/5<!-- @state --> <!-- @state: round-nothing-missing -->3/5<!-- @state -->
+              <!-- @state-none: single -- the single state reviews one candidate outside a round, so it has no position to count -->
             </h1>
           </div>
         </div>
         <div class="bt-toolbar__right">
+          <!-- @state-none: claimed-elsewhere-submitted claimed-elsewhere-draft -- the actions for a candidate claimed elsewhere are still under design -->
           <!-- @state: round-pending action-failed -->
             <div class="bt-toolbar__item">
               <a href="candidate-focused-review.html?state=round-nothing-missing" class="btn btn-ghost"

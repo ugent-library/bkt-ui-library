@@ -101,10 +101,24 @@ A template represents its data-dependent variants as **states in one file** — 
   either. Render the include ungated and mark the block instead: `public-works.html` renders one
   Advanced search dialog, shut, and its `builder-*` states carry `<div hidden data-qb-open></div>`.
 - Every declared state needs a block of its own, and every block name needs a host that declares it.
-- `npm run check:states` fails the build on all five.
+- Every state renders exactly one non-empty `<h1>`. A state left out of the heading's
+  blocks satisfies every rule above and still paints a titleless page, so `check:states`
+  renders each declared state to prove the heading survives.
+- A run of `@state` blocks separated by nothing but comments is one **region**, and every
+  declared state passes through every region. A state the region has nothing for is
+  recorded on the spot, with its reason:
+
+```html
+<!-- @state-none: no-files -- the record has no files, and the line above the region says so -->
+```
+
+  The name must be declared and must not be one the region already renders, so the
+  annotation cannot outlive the omission. Regions inside a partial are not checked:
+  the states belong to the host, and a shared partial has more than one.
+- `npm run check:states` fails the build on all seven.
 - The sidebar automatically shows a state button per declared state under the active template.
 - Existing examples: `biblio-researcher/dashboard.html`, `biblio-public/public-work-detail.html`.
-- **Checks read the raw file, not one rendered state.** `npm run check:html` sees all
+- **`check:html` reads the raw file, not one rendered state.** It sees all
   states at once, so ids must be unique across states (suffix per state:
   `files-heading-v1`, `files-heading-embargo`). When state variants of one landmark
   unavoidably share a visible name, put

@@ -2,6 +2,7 @@
 // The rules, and what each one breaks: docs/SERVER.md → Template states and Surface blocks.
 const fs = require('fs');
 const path = require('path');
+const { renderBodyTemplate } = require('../server.js');
 
 const root = path.join(__dirname, '..');
 const dirs = ['templates', 'elements', 'patterns', 'foundations', 'getting-started'];
@@ -180,9 +181,108 @@ for (const [file, names] of declared) {
   }
 }
 
+// ── Every region accounts for every state ─────────────────────────────────────
+
+const BLOCK = /<!--\s*@state:\s*([\w][\w\s-]*?)\s*-->[\s\S]*?<!--\s*@\/?state\s*-->/g;   // mirror of server.js filterStateContent
+const NONE = /<!--\s*@state-none:\s*([^>]*?)\s*-->/g;
+
+const lineOf = (src, index) => src.slice(0, index).split('\n').length;
+const between = (src, from, to) => src.slice(from, to).replace(/<!--[\s\S]*?-->/g, '').trim();
+
+for (const [file, names] of declared) {
+  const src = fs.readFileSync(file, 'utf8');
+  const declaredNames = new Set(names);
+
+  const groups = [];
+  for (const m of src.matchAll(BLOCK)) {
+    const block = { names: m[1].trim().split(/\s+/), start: m.index, end: m.index + m[0].length };
+    const last = groups[groups.length - 1];
+    if (last && between(src, last.end, block.start) === '') {
+      last.blocks.push(block);
+      last.end = block.end;
+    } else {
+      groups.push({ blocks: [block], start: block.start, end: block.end, allowed: new Map() });
+    }
+  }
+
+  for (const m of src.matchAll(NONE)) {
+    const start = m.index;
+    const end = m.index + m[0].length;
+    const line = lineOf(src, start);
+    const [listed, reason] = m[1].split(/\s+--\s+/);
+    const group = groups.find(g =>
+      (start > g.start && end < g.end) ||
+      (end <= g.start && between(src, end, g.start) === '') ||
+      (start >= g.end && between(src, g.end, start) === ''));
+
+    if (!group) {
+      errors.push(`${rel(file)}:${line}  @state-none sits outside any run of @state blocks — ` +
+        'put it directly above, below or inside the run it excuses');
+      continue;
+    }
+    if (!reason) {
+      errors.push(`${rel(file)}:${line}  @state-none names no reason — write ` +
+        `"<!-- @state-none: ${listed.trim()} -- why this region has nothing for them -->"`);
+      continue;
+    }
+    const rendered = new Set(group.blocks.flatMap(b => b.names));
+    for (const name of listed.trim().split(/\s+/)) {
+      if (!declaredNames.has(name)) {
+        errors.push(`${rel(file)}:${line}  @state-none names "${name}", which this template ` +
+          'does not declare in @states');
+      } else if (rendered.has(name)) {
+        errors.push(`${rel(file)}:${line}  @state-none names "${name}", which this region ` +
+          'already renders — delete the name');
+      } else {
+        group.allowed.set(name, reason);
+      }
+    }
+  }
+
+  for (const group of groups) {
+    const rendered = new Set(group.blocks.flatMap(b => b.names));
+    const missing = names.filter(n => !rendered.has(n) && !group.allowed.has(n));
+    if (missing.length) {
+      errors.push(`${rel(file)}:${lineOf(src, group.start)}  this region renders nothing for ` +
+        `"${missing.join('", "')}" — add the state to a block, or record the omission above the ` +
+        `region: <!-- @state-none: ${missing.join(' ')} -- why -->`);
+    }
+  }
+}
+
+// ── Every state still paints a page ───────────────────────────────────────────
+
+const headingText = html => html
+  .replace(/<[^>]*>/g, ' ')
+  .replace(/&[a-z]+;|&#\d+;/gi, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+for (const [file, names] of declared) {
+  const raw = fs.readFileSync(file, 'utf8');
+  for (const name of names) {
+    const { body } = renderBodyTemplate(raw, file, name);
+    const painted = body.replace(/<(template|script)\b[\s\S]*?<\/\1>/gi, '');
+    const found = [...painted.matchAll(/<h1\b[^>]*>([\s\S]*?)<\/h1>/gi)].map(m => headingText(m[1]));
+
+    if (!found.length) {
+      errors.push(`${rel(file)}  state "${name}" renders no <h1> — add the state ` +
+        'to the blocks inside the heading');
+    } else if (found.length > 1) {
+      errors.push(`${rel(file)}  state "${name}" renders ${found.length} <h1> elements — a page carries one ` +
+        'first-level heading. Gate the extra ones by state');
+    } else if (!found[0]) {
+      errors.push(`${rel(file)}  state "${name}" renders an empty <h1> — the heading's blocks ` +
+        'name every state but this one. Add it to the block carrying this state\'s title');
+    }
+  }
+}
+
 if (errors.length) {
   console.error('Template state problems (docs/SERVER.md → Template states):\n  ' +
     errors.join('\n  '));
   process.exit(1);
 }
-console.log(`check-states: ${declared.size} stateful templates, ${blocks.size} files clean.`);
+const stateCount = [...declared.values()].reduce((n, names) => n + names.length, 0);
+console.log(`check-states: ${declared.size} stateful templates, ${stateCount} states rendered, ` +
+  `${blocks.size} files clean.`);

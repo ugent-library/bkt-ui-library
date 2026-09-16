@@ -250,6 +250,7 @@
               Share
             </button> -->
           </div>
+          <!-- @state-none: v1 embargo -- v1 sends the reader to the Files section, and embargo already names its date in the action above -->
           <!-- @state: files logged-in in-list -->
           <p class="small text-muted mt-2">Accepted manuscript &middot; Open Access &middot; PDF &middot; 158,71 KB</p>
           <!-- @state -->
@@ -301,6 +302,7 @@
 
           <!-- Order: fullText first (selection ranking), then other kinds, open before restricted.
                Login line renders only when: anonymous + restricted rows + header CTA isn't the login button. -->
+          <!-- @state-none: no-files -- the record has no files, and the line above the region says so -->
           <!-- @state: files v1 -->
           <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
           <section aria-labelledby="files-heading-v1" class="mb-5">
@@ -522,7 +524,6 @@
           </section>
           <!-- @state -->
 
-          <!-- A thesis carries one deposited full text, no accepted/published split. -->
           <!-- @state: thesis alt-titles -->
           <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
           <section aria-labelledby="files-heading-thesis" class="mb-5">
@@ -667,7 +668,8 @@
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">DOI</dt>
               <dd class="col-sm-9 mb-0"><a href="https://doi.org/10.1002/ppp3.70125">10.1002/ppp3.70125</a></dd>
 
-              <!-- @state: files logged-in in-list -->
+              <!-- @state-none: v1 restricted embargo no-files -- the licence describes the file behind the download button, and these states offer no download -->
+              <!-- @state: files logged-in in-list thesis alt-titles -->
               <dt class="col-sm-3 text-uppercase text-muted fw-semibold bt-text-xsmall">License</dt>
               <dd class="col-sm-9 mb-0"><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></dd>
               <!-- @state -->

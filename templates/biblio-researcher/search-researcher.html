@@ -667,6 +667,7 @@
 
         </div><!-- /results-list -->
 
+        <!-- @state-none: no-matches -- a search without matches has nothing to count -->
         <!-- @state: default -->
         <div class="u-main__content-footer border-top">
           <!-- Results bar: /patterns/pagination.html -->
@@ -703,6 +704,28 @@
                 <!-- Sort values are provisional (patterns/pagination.html). -->
                 <label for="rs-sort" class="visually-hidden">Sort by</label>
                 <select id="rs-sort" class="form-select form-select-sm">
+                  <option value="year-desc" selected>Year (new to old)</option>
+                  <option value="year-asc">Year (old to new)</option>
+                  <option value="title-asc">Title (A&ndash;Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- @state -->
+
+        <!-- @state: direct-added -->
+        <div class="u-main__content-footer border-top">
+          <div class="bt-toolbar px-4 py-2">
+            <div class="bt-toolbar__left">
+              <div class="bt-toolbar__item">
+                <span class="text-muted small"><span class="visually-hidden">Showing </span>1&ndash;2 of 2</span>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-toolbar__item">
+                <label for="rs-da-sort" class="visually-hidden">Sort by</label>
+                <select id="rs-da-sort" class="form-select form-select-sm">
                   <option value="year-desc" selected>Year (new to old)</option>
                   <option value="year-asc">Year (old to new)</option>
                   <option value="title-asc">Title (A&ndash;Z)</option>
