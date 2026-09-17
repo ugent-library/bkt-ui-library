@@ -17,11 +17,13 @@ When this session wrote the prose, run the audit in an Explore subagent given on
 the diff and the rule files, and relay its verdicts.
 
 Output one verdict per sentence: the sentence, **keep** or **delete**, and the rule
-that decides it. No edits, no rewording, no rephrasing proposals. "All keep" is a
-valid result. End with the prose word count per file.
+that decides it. Two adjacent paragraphs with one job get **merge**. On a kit page a
+sentence the live demo shows is a delete. No edits, no rewording, no rephrasing
+proposals. "All keep" is a valid result. End with the prose word count per file, and
+per paragraph and section on kit pages.
 
 ## Apply (only on M's explicit go)
 
-Delete the delete verdicts. Change nothing else: no replacement framing, no
-pointers, no relocation into comments. Report word counts before and after — the
-count only moves down — and run `npm run check:prose`.
+Delete the delete verdicts and join the merge verdicts. Change nothing else: no
+replacement framing, no pointers, no relocation into comments. Report word counts
+before and after — the count only moves down — and run `npm run check:prose`.

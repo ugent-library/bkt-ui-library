@@ -277,7 +277,6 @@
 
   <section class="ds-section" id="backoffice">
     <h2 class="h4 mb-3">Backoffice cards</h2>
-    <p class="mb-4 col-8 text-muted small">Backoffice cards extend the same card with workflow state, responsibility, administrative metadata and role-specific actions. Journal articles, datasets and software get golden examples: the grammar stays stable while the payload changes by type.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Researcher — draft</h3>
@@ -394,7 +393,7 @@
         </article>
       </div>
       <div class="ds-demo-notes">
-        <p>Provenance lives in the created-by line: an automated import names the Biblio assistant and its source; a curator addition names the person. Work state decides the action — this incomplete draft leads with Complete. Draft is a placeholder; Raven owns the status a Plato-added work receives.</p>
+        <p>Draft is a placeholder; Raven owns the status a Plato-added work receives.</p>
       </div>
     </div>
 
@@ -427,7 +426,7 @@
         </article>
       </div>
       <div class="ds-demo-notes">
-        <p>A candidate is a private harvested Work matched through the researcher's linked identity; the source badge's user icon carries that match as visually hidden text. The title stays plain — Review, which opens the focused page, is the route in. Reject removes only this researcher's match, and the overview offers Undo. Claim timing, Skip and the remembered values are <code>docs/decisions/DD-003-candidate-review-is-a-focused-round.md</code>.</p>
+        <p>Claim timing, Skip and the remembered values are <code>docs/decisions/DD-003-candidate-review-is-a-focused-round.md</code>.</p>
       </div>
     </div>
 
@@ -463,9 +462,6 @@
           </div>
         </article>
       </div>
-      <div class="ds-demo-notes">
-        <p>A skipped candidate stays in the pending set and joins the next review round. The skip marker is server content on a metadata row, not a card variant.</p>
-      </div>
     </div>
 
     <div class="ds-demo">
@@ -496,9 +492,6 @@
             <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Sensors and Actuators A</span></p>
           </div>
         </article>
-      </div>
-      <div class="ds-demo-notes">
-        <p>The neutral Rejected badge marks the researcher's dismissed match; Undo returns it to the pending set. The Work itself is never deleted, merged or reassigned.</p>
       </div>
     </div>
 
@@ -902,7 +895,7 @@
 
   <section class="ds-section" id="compact">
     <h2 class="h4 mb-3">Compact dashboard cards</h2>
-    <p class="mb-4 col-8"><code>bt-work-card--compact</code> is the dashboard summary form of the same card: tighter vertical rhythm, nothing else — the server sends the compact payload. Full lists, search and review views keep the full card. The composition rules live in <code>docs/CLASS-USAGE.md</code>.</p>
+    <p class="mb-4 col-8"><code>bt-work-card--compact</code> is the dashboard summary form of the same card: tighter vertical rhythm, nothing else — the server sends the compact payload. The composition rules live in <code>docs/CLASS-USAGE.md</code>.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Compact — Incomplete work</h3>
@@ -970,9 +963,6 @@
           </article></li>
         </ol>
       </div>
-      <div class="ds-demo-notes">
-        <p>Missing-field summaries and Biblio messages stay complete and visible. The inline Complete metadata link is dropped only because the primary action opens the same form. A direct-added work keeps its origin as a metadata row: an <code>if-message-ai</code> icon with &ldquo;Added by Biblio assistant via Plato&rdquo;, as on the dashboard.</p>
-      </div>
     </div>
 
     <div class="ds-demo">
@@ -1004,7 +994,7 @@
         </ol>
       </div>
       <div class="ds-demo-notes">
-        <p>The title opens the Found for you overview at this candidate without changing it. The quiet Review opens the focused page for this one candidate; the section's primary action starts a round, and View all opens the overview.</p>
+        <p>The title opens the Found for you overview at this candidate without changing it.</p>
       </div>
     </div>
   </section>

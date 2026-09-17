@@ -7,8 +7,8 @@ can't be automated. For what each individual check *does*, see the README
 ## What CI runs
 
 On every pull request and push to `main`, GitHub Actions runs `npm test` on a
-Linux runner: `check:partials`, `check:classes`, `check:html`, `check:a11y`. A
-red result blocks the merge once the check is marked required.
+Linux runner. The README "Tests" table lists every check it runs. A red result
+blocks the merge once the check is marked required.
 
 `check:a11y-browser` (pa11y) is added later as a *separate, non-required* job. It
 needs a running server and a headless browser, so it is more prone to flaky

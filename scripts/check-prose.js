@@ -61,6 +61,8 @@ for (const [file, wordsLimit] of Object.entries(draftLimits)) {
 // Kit-page ceilings from docs/KIT-PAGES.md: prose outside demo bodies, demo labels,
 // code, tables and headings counts; foundations/ and getting-started/ are exempt.
 const kitLimits = [['elements', 250], ['patterns', 500]];
+const KIT_PARAGRAPH_WORDS = 40;
+const KIT_SECTION_WORDS = 80;
 const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
 const EXCLUDED_TAGS = new Set(['pre', 'code', 'table', 'script', 'style', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
 const EXCLUDED_CLASSES = ['ds-demo-body', 'ds-demo-label', 'ds-demo-title', 'ds-code', 'ds-eyebrow'];
@@ -69,13 +71,23 @@ function countKitProse(html) {
   html = html.replace(/<!--[\s\S]*?-->/g, ' ');
   const tagRe = /<(\/?)([a-zA-Z][a-zA-Z0-9-]*)((?:"[^"]*"|'[^']*'|[^'">])*)>/g;
   const stack = [];
+  const sections = [];
+  let section = null;
+  let paragraph = null;
+  let heading = null;
   let words = 0;
   let last = 0;
   let m;
   while ((m = tagRe.exec(html)) !== null) {
+    const text = html.slice(last, m.index);
+    if (heading) heading.text += text;
     if (!stack.some((el) => el.excluded)) {
-      const tokens = html.slice(last, m.index).replace(/&[a-z#0-9]+;/gi, ' ').match(/[\p{L}\p{N}][^\s<>]*/gu);
-      if (tokens) words += tokens.length;
+      const tokens = text.replace(/&[a-z#0-9]+;/gi, ' ').match(/[\p{L}\p{N}][^\s<>]*/gu);
+      if (tokens) {
+        words += tokens.length;
+        if (section) section.words += tokens.length;
+        if (paragraph) paragraph.words += tokens.length;
+      }
     }
     last = tagRe.lastIndex;
     const [, closing, rawTag, attrs] = m;
@@ -84,13 +96,29 @@ function countKitProse(html) {
     if (closing) {
       const at = stack.map((el) => el.tag).lastIndexOf(tag);
       if (at !== -1) stack.length = at;
+      if (tag === 'h2' && heading) {
+        section.name = heading.text.replace(/\s+/g, ' ').trim();
+        heading = null;
+      }
+      if (tag === 'p' && paragraph) {
+        section.paragraphs.push(paragraph);
+        paragraph = null;
+      }
     } else {
       const cls = attrs.match(/class\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
       const classes = ((cls && (cls[1] || cls[2])) || '').split(/\s+/);
+      const inExcluded = stack.some((el) => el.excluded);
       stack.push({ tag, excluded: EXCLUDED_TAGS.has(tag) || EXCLUDED_CLASSES.some((c) => classes.includes(c)) });
+      if (inExcluded) continue;
+      if (tag === 'h2' || (tag === 'header' && classes.includes('ds-page-header'))) {
+        section = { name: tag === 'header' ? 'page header' : '', words: 0, paragraphs: [] };
+        sections.push(section);
+        if (tag === 'h2') heading = { text: '' };
+      }
+      if (tag === 'p' && section) paragraph = { words: 0 };
     }
   }
-  return words;
+  return { words, sections };
 }
 
 const CHANGELOG_ENTRY_WORDS = 120;
@@ -116,9 +144,20 @@ let kitPages = 0;
 for (const [dir, limit] of kitLimits) {
   for (const name of fs.readdirSync(dir).filter((n) => n.endsWith('.html'))) {
     kitPages += 1;
-    const words = countKitProse(fs.readFileSync(`${dir}/${name}`, 'utf8'));
+    const path = `${dir}/${name}`;
+    const { words, sections } = countKitProse(fs.readFileSync(path, 'utf8'));
     if (words > limit) {
-      failures.push(`${dir}/${name}: ${words}/${limit} explanatory prose words (docs/KIT-PAGES.md)`);
+      failures.push(`${path}: ${words}/${limit} explanatory prose words (docs/KIT-PAGES.md)`);
+    }
+    for (const s of sections) {
+      if (s.words > KIT_SECTION_WORDS) {
+        failures.push(`${path} — "${s.name}": ${s.words}/${KIT_SECTION_WORDS} words in one section`);
+      }
+      for (const p of s.paragraphs) {
+        if (p.words > KIT_PARAGRAPH_WORDS) {
+          failures.push(`${path} — "${s.name}": ${p.words}/${KIT_PARAGRAPH_WORDS} words in one paragraph`);
+        }
+      }
     }
   }
 }

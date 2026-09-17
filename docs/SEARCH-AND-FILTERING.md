@@ -240,6 +240,8 @@ Applied filters surface as chips: the visible output of the sidebar and the pick
 - Display-only summaries are not removable and read as a soft, non-interactive badge.
 - **The query is never a chip.** It lives in the box and is cleared by the box's inline ×.
 - Sidebar tick ↔ chip appears; chip × ↔ sidebar unticks; both reflect the URL.
+- Ticking several values in one facet widens the result; each extra facet narrows it. The
+  public surface has no operator control.
 - A picker selection stays where the reader found it; the chip bar is the applied overview.
   Moving a selected row makes it harder to verify or add nearby values
   ([Baymard, *How to Design Applied Filters*](https://baymard.com/blog/how-to-design-applied-filters)).

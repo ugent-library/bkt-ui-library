@@ -25,12 +25,15 @@ researcher owns. Imported values that need no decision sit behind a read-only
 disclosure. The deposit stepper is not used. The primary action is **Submit publicly**,
 a split button whose one alternative is **Submit privately**. The other actions are
 **Save draft**, **Reject** and **Skip**, plus **Edit the full record**; Skip holds the
-candidate for the next round from either mode.
+candidate for the next round from either mode. A skipped card shows that as a line the
+server adds; the card itself does not change shape.
 
 The harvested Work is claimed the first time the researcher persists something:
 Submit publicly, Submit privately, Save draft or Edit the full record. Opening, Skip,
 Reject and Back never claim. Matched co-authors then see no candidate and reach the
-Work once it is submitted; another owner's draft is never linked.
+Work once it is submitted; another owner's draft is never linked. Reject only lets go of
+this researcher's match; the Work stays as it is, nothing is deleted, merged or handed to
+another researcher.
 
 The browser remembers typed values per candidate: Back, refresh and return restore
 them without claiming; Skip and Reject discard them. No unsaved-changes prompt.

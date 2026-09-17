@@ -42,9 +42,17 @@ Run after any template or SCSS editing session. (`docs/CI.md` points here.)
 
 | Check | Catches |
 |-------|---------|
+| `check:notes-private` | Anything under `notes/` tracked by git; the folder holds ProductBoard notes and this repo is public |
+| `check:prose` | Instruction documents over their line or word ceiling; limits live in `scripts/check-prose.js` |
 | `check:partials` | SCSS partials that exist but aren't `@use`d in `booktower.scss` (component would silently vanish from the compiled CSS) |
+| `check:states` | `@state` and `@surface-only` blocks the server would silently mis-render; rules in [docs/SERVER.md](docs/SERVER.md) |
 | `check:classes` | Classes used in HTML that no stylesheet defines, and booktower classes used nowhere — both directions must be zero |
 | `check:html` | Invalid HTML and generic accessibility errors, via html-validate (config in `.htmlvalidate.json`, with documented exceptions) |
+| `check:migration` | Old UI class roots with no entry in the old-to-new migration guide |
+| `check:doc-refs` | Rule references such as H1 or §A that no longer point into [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) |
+| `check:js` | A file in `assets/js/` missing from the [docs/JAVASCRIPT.md](docs/JAVASCRIPT.md) registry, a registry entry with no file, or a file no template or `server.js` loads |
+| `check:comments` | Code commented out to park it; rules in [docs/CODE-COMMENTS.md](docs/CODE-COMMENTS.md) |
+| `check:generated` | A card block inlined in a template that no longer matches the content module it was generated from |
 | `check:a11y` | The house rules from [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md); source: `scripts/check-a11y.js` |
 | `check:stamp` | Committed compiled CSS that came from `watch:css` instead of `npm run build` (watch output carries no stamp and no vendor prefixes) |
 

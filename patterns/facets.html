@@ -122,7 +122,7 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Show more toggle</h2>
-    <p class="mb-4">For a long list, show the top options and collapse the rest behind a <strong>Show more</strong> button at the foot of the group. The caret rotates on expand automatically — it is keyed on <code>aria-expanded</code>, so the toggle must carry <code>aria-expanded="false"</code> and the collapsed remainder must not have <code>show</code>. Live use: <a href="/templates/biblio-public/public-works.html">public-works</a> (Type, Language).</p>
+    <p class="mb-4">The caret rotates on expand automatically — it is keyed on <code>aria-expanded</code>, so the toggle must carry <code>aria-expanded="false"</code> and the collapsed remainder must not have <code>show</code>.</p>
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Show more</h3></div>
       <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
@@ -290,10 +290,5 @@
   <section class="ds-section">
     <h2 class="h4 mb-3">The facet sidebar in the search system</h2>
     <p class="mb-3">The facet sidebar is one input in the composed search system — see <a href="/patterns/search-and-filtering.html">Search &amp; filtering</a> for the assembly and <code>docs/SEARCH-AND-FILTERING.md</code> for the interaction rules.</p>
-    <ul>
-      <li><strong>Readout, not just input.</strong> Ticking a box surfaces a removable chip; removing that chip unticks the box. Both are views onto the URL (server-derived in production). The chips themselves are the <a href="/patterns/filter-picker.html">Filter picker</a>'s split-chip markup.</li>
-      <li><strong>How facets combine.</strong> Multiple values in one facet are OR; different facets are AND. There is no boolean control on the public surface — operator choice is an advanced/expert affordance.</li>
-      <li><strong>The public set is deliberate.</strong> Public carries only the browse-it dimensions — Access, Type, Year, Language, with Access first (OA-forward). Language holds its slot on parity alone (322 sessions in 7 months of live logs — a dropping candidate; Research discipline was already cut on the same evidence). High-cardinality dimensions (author, keywords, project, organization) go to the Add-filter picker, not the rail. The full placement taxonomy is in the doc (Rule 5).</li>
-    </ul>
   </section>
 </div>

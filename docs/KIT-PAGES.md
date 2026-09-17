@@ -9,7 +9,7 @@ A kit page shows; it does not explain. Demos carry the variants and states. Pros
 place only as:
 
 - purpose and when to choose the pattern;
-- behavior a static example cannot show, including focus and keyboard behavior;
+- behavior no demo can show, such as focus and keyboard behavior, timing and accessible names;
 - accessibility requirements specific to the pattern;
 - links to the owning partial, contract or implementation guide.
 
@@ -26,7 +26,9 @@ of markup, JavaScript or SCSS. Do not copy or summarize a contract from `docs/`;
 `npm run check:prose` enforces the ceilings: explanatory prose stays below 250 words on an element
 page and 500 on a pattern page. Demo labels, fixture content, reference tables, headings and code
 do not count. A foundation page may run longer when its prose is the subject, as on Design
-Principles.
+Principles. A paragraph stays below 40 words and a section, one `h2` block or the page header,
+below 80. One job per paragraph and one paragraph per job: give each paragraph a two-word heading;
+adjacent paragraphs that share one merge, then cut from the end.
 
 ## HTML comments
 
@@ -71,7 +73,8 @@ markup.
 </section>
 ```
 
-- Use semantic `<header>`, `<section>` and heading elements.
+- Use semantic `<header>`, `<section>` and heading elements. Omit the lead when the title carries
+  the purpose.
 - Section headings use `<h2 class="h4 mb-3">`.
 - Demo labels use `<h3 class="ds-demo-label">` or the nested `ds-demo-title` form.
 - `ds-demo-body` contains live examples. `ds-code` contains code; never mix them.

@@ -6,7 +6,7 @@ Code comments use [`CODE-COMMENTS.md`](CODE-COMMENTS.md). Specs also follow
 
 ## Output contract
 
-- Lead with the result or claim. Skip the preamble.
+- Lead each document and paragraph with its claim. Later sentences must be deletable.
 - Use the same term for the same thing throughout.
 - Give each paragraph one job. Most sentences carry one claim.
 - Use a list only when readers will scan or compare its items.
