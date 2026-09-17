@@ -182,8 +182,6 @@ bt-table-sticky-col
 
 bt-text-xsmall
 
-bt-textarea-auto
-
 bt-title-toolbar
 
 bt-toolbar
@@ -654,6 +652,7 @@ modal-dialog-scrollable
 nav
 nav-link
 nav-tabs
+offcanvas-end
 offcanvas-xl
 pagination
 progress

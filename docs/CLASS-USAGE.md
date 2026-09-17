@@ -50,7 +50,7 @@ Colour a badge with `text-bg-*`.
 
 - Give each `bt-query-builder__row` exactly three children and no layout classes: `bt-query-builder__row-kind`, then `bt-query-builder__phrase` holding the role select, the operator select and `bt-query-builder__row-value`, then `bt-query-builder__row-actions`.
 - `bt-query-builder__alts` is the inner list of an OR group. Its alternatives align with each other, not with the rows outside the group.
-- A row holding a `bt-textarea-auto` box for pasted identifiers also needs `bt-query-builder__row--batch`.
+- A row holding a textarea for pasted identifiers also needs `bt-query-builder__row--batch`.
 - A person token is `badge text-bg-primary-light`, sitting in the value cell next to a `badge badge--outline` button that opens the picker.
 - The field chooser opens from a `bt-btn-inline-edit` button. Its panel is `bt-panel bt-panel--wide` on a `dropdown-menu`. Each group inside carries `min-w-0` and holds a `dropdown-header` above a `ul.list-unstyled` of `dropdown-item` rows.
 

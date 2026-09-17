@@ -6,13 +6,18 @@ title: "[area][nn] "
 
 <!--
 Use docs/SPEC-WRITING.md and the biblio-issue-writer skill.
+Two types. A feature builds a page or region from a prototype and is numbered under
+its epic. An improvement moves a region Raven already has onto a Booktower contract
+and carries no number.
 User-facing issue: at most 275 prose words. Backend issue: 175.
 The prototype governs visible UI. Delete empty sections.
 -->
 
 ## Why
 
-<!-- In 3–5 sentences: current limitation, named persona need, and why it matters. -->
+<!-- Feature, 3–5 sentences: current limitation, named persona need, why it matters.
+     Improvement, 2–3 sentences: what Raven does locally, that Booktower now ships it,
+     whether the design may still change. -->
 
 ## What
 
@@ -33,7 +38,6 @@ placeholders. UI copy uses Raven's translation files.
 ## Acceptance criteria
 
 - [ ] Matches the prototype
-- [ ] Passes `docs/ACCESSIBILITY.md` pre-flight
 - [ ] `make build` passes
 
 ## Out of scope
