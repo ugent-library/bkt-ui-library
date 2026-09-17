@@ -106,5 +106,7 @@ notes in the flow.
 
 ## Other active design work
 
+- [`epics/`](epics/README.md) — epic proposals grouping the toplan with the open GitHub
+  issues (2026-09-17). Order is not priority.
 - [`ENTITY-PICKERS.md`](ENTITY-PICKERS.md) — organization and project picker questions.
 - [`WORK-CARD-HANDOFF.md`](WORK-CARD-HANDOFF.md) — work-card decisions and remaining work.
