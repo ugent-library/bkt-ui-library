@@ -60,7 +60,7 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 ### `clipboard.js`
 
 - **Purpose:** Copies the adjacent `<code>` or `data-clipboard-target`, then briefly changes the
-  button's label, icon and state.
+  button's label and copy icon; a primary button also turns green.
 - **Hosts:** All kit pages through `server.js`; explicitly included by `work-detail.html` for the
   consumer-facing template.
 - **Input/output:** Delegated click on `[data-clipboard]`; dispatches no custom event.
