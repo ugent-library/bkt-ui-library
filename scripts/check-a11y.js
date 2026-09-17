@@ -14,6 +14,7 @@ function* htmlFiles(dirs) {
 }
 
 const problems = [];
+const TEXT_TYPES = new Set(['text', 'search', 'url', 'tel', 'email', 'password', 'date', 'month', 'week', 'time', 'datetime-local', 'number']);
 
 // A1 + A2 — full page templates only (partials compose into them)
 for (const f of htmlFiles(['templates'])) {
@@ -25,7 +26,11 @@ for (const f of htmlFiles(['templates'])) {
     problems.push(`${f}: no <main id="main-content">`);
 }
 
-// A5 + B2 — all authored HTML
+const externalSubmit = new Set();
+for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', 'getting-started']))
+  for (const m of read(f).matchAll(/<(?:button|input)\b[^>]*\bform="([^"]+)"/g)) externalSubmit.add(m[1]);
+
+// A5 + B2 + C6 — all authored HTML
 for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', 'getting-started'])) {
   const html = read(f);
 
@@ -48,6 +53,18 @@ for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', '
       const line = read(f).slice(0, m.index).split('\n').length;
       problems.push(`${f}:${line}: icon-only <${m[1]}> without accessible name`);
     }
+  }
+
+  for (const m of html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/g)) {
+    const [, attrs, body] = m;
+    if (/<button\b(?![^>]*\btype="(?:button|reset)")|<input\b[^>]*\btype="(?:submit|image)"/.test(body)) continue;
+    const id = (attrs.match(/\bid="([^"]*)"/) || [])[1];
+    if (id && externalSubmit.has(id)) continue;
+    const textFields = [...body.matchAll(/<input\b([^>]*)>/g)]
+      .filter(i => TEXT_TYPES.has((i[1].match(/\btype="([^"]*)"/) || [, 'text'])[1]));
+    if (textFields.length === 1) continue;
+    const line = read(f).slice(0, m.index).split('\n').length;
+    problems.push(`${f}:${line}: <form> without a submit button and not exactly one text field (C6)`);
   }
 }
 

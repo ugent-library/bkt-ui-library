@@ -13,7 +13,6 @@ module.exports = function renderListPanel(prefix) {
       hx-target="#${prefix}-lists" hx-swap="innerHTML" hx-indicator="#${prefix}-searching">
     <span id="${prefix}-searching" class="htmx-indicator text-muted small" aria-live="polite">Searching&hellip;</span>
     <span id="${prefix}-saving" class="htmx-indicator text-muted small" aria-live="polite">Saving&hellip;</span>
-    <button type="submit" class="visually-hidden">Search lists</button>
   </form>
 </div>
 <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists" id="${prefix}-lists">${renderListPicker(prefix)}</div>
