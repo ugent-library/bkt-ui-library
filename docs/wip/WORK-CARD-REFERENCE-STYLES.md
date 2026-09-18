@@ -20,10 +20,13 @@ date renders no year; the public line never marks a field as missing.
 
 Every type's line is the same sequence, rendering only the slots its fields fill:
 
-    (year) genre. in container. event, imprint (series), position, pages.
+    (year) genre in container event imprint (series) position pages
+
+The layout separates the slots: the line is a flex row with a gap, and no separator
+character stands between slots.
 
 - **year** — the year part of `date`.
-- **genre** — the word that explains what follows: "PhD thesis.", "Report RPT-42."
+- **genre** — the word that explains what follows: "PhD thesis", "Report RPT-42"
 - **container** — the type's own: journal, host book, proceedings, magazine,
   newspaper, venue.
 - **event** — conference name and location.
@@ -38,33 +41,38 @@ Four exceptions, the whole list:
 - `book` and `edited_book` carry `edition edn.` before the imprint.
 - `doctoral_thesis` fills the imprint slot with the awarding institution, never a
   publisher.
-- `preprint` renders `[Preprint]` after the imprint, not as a leading genre word.
+- `preprint` renders `Preprint` after the imprint, not as a leading genre word.
 
 A type with nothing but a year — `other`, or any future type before its fields are
 mapped — renders `(year)`. There is no separate fallback rule: the order is the rule.
-How raven produces the line, and its exact punctuation, belongs to the
-implementation.
+How raven produces the line belongs to the implementation; the punctuation follows
+the rules below.
 
 ### Punctuation
 
 The examples below were rendered with a Harvard style (Cite Them Right) as a starting
-point, not as an authority. These rules are the line's, on the public surface:
+point, not as an authority; the gap between slots replaces that style's separators.
+These rules are the line's, on the public surface:
 
-- the year comes first, in parentheses: `(2024)`;
-- a genre word closes with a full stop: `PhD thesis.`, `Report RPT-42.`;
-  `[Preprint]` closes the line instead of opening it;
+- the year comes first, in parentheses, inside its filter link: `(2024)`;
+- a genre word carries no closing full stop: `PhD thesis`, `Report RPT-42` —
+  `2nd edn.` keeps the abbreviation's own dot; `Preprint` closes the line instead
+  of opening it;
 - the container is italic and carries no label, except `book_part`, which prefixes
   it with `in`;
-- a full stop closes the container before an imprint or an event; commas separate
-  the remaining slots;
-- place and publisher join with a colon: `Ghent: Academia Press`;
-- volume and issue read `32(1)`, no space before the parenthesis;
-- pages read `pp. 58–79`, or `p. 7` for a single page, with an en dash;
-- a series closes the line in parentheses: `(FEB Working Paper Series)`;
-- the line ends with a full stop, unless the year is all it has.
+- no full stop after the container, no comma between slots: the gap does the
+  separating;
+- inside one slot, punctuation stays: place and publisher join with a colon
+  (`Ghent: Academia Press`); a conference reads `name, location`; volume and issue
+  read `32(1)`, no space before the parenthesis;
+- pages read `pp. 58–79`, or `p. 7` for a single page, with an en dash; they join a
+  position in front of them with a comma (`32(1), pp. 58–79` — `2 March, p. 7`) and
+  otherwise stand alone;
+- a series closes its slot in parentheses: `(FEB Working Paper Series)`;
+- the line ends without a full stop.
 
-A slot with no value takes its separator with it: no dangling `in`, no `32()`, no
-double comma.
+A slot with no value renders nothing, and its gap goes with it: no dangling `in`, no
+`32()`, no empty slot.
 
 ### Per-type lines (derived examples)
 
@@ -72,30 +80,33 @@ What the order produces, type by type — for reading and review; the order and
 exceptions above are the intent. Examples are rendered output, not invented (see
 Sources); ⚑ marks a field that is 08's question.
 
+Containers are italic in the examples, as on the card; the gap between slots is the
+layout's.
+
 | Work type | Line composition | Example |
 |---|---|---|
-| `journal_article` | `(year) journal_title, volume(issue), pp. start–end.` — `article_number` in place of pages for e-only articles | `(2024) European Journal of Crime, Criminal Law and Criminal Justice, 32(1), pp. 58–79.` |
-| `book` | `(year) edition edn. place_of_publication: publisher (series_title).` | `(2024) 2nd edn. Ghent: Academia Press.` |
-| `edited_book` | as `book`; editors appear on the contributor line ("has editors, no authors") | `(2024) London: Routledge.` |
-| `book_part` | `(year) in book_title. place_of_publication: publisher, pp. start–end.` — no host-book editors on the card | `(2024) in Handbook of Urban Ecology. London: Routledge, pp. 100–120.` |
-| `book_review` | as `journal_article` — raven gives it the same venue and position fields | `(2025) Journal of Ecology Reviews, 12(2), pp. 301–303.` |
-| `reference_entry` | `(year) container. place: publisher, pp. start–end.` — intended shape; **raven fields missing** ⚑ | `(2023) Encyclopedia of Plant Science. Amsterdam: Elsevier, pp. 455–460.` |
-| `journal_issue` | `(year) journal_title, volume(issue).` — editors on the contributor line | `(2024) European Journal of Crime, Criminal Law and Criminal Justice, 32(1).` |
-| `conference_paper` | `(year) proceedings_title. conference.name, conference.location, pp. start–end.` — no publisher field in raven | `(2024) Proceedings of the 12th IFToMM World Congress. IFToMM World Congress, Tokyo, pp. 1–8.` |
-| `conference_abstract` | `(year) [proceedings_title.] conference.name, conference.location.` | `(2024) IFToMM World Congress, Tokyo.` |
-| `conference_poster` | as `conference_abstract` | `(2024) IFToMM World Congress, Tokyo.` |
-| `conference_presentation` | `(year) conference.name, conference.location.` | `(2024) IFToMM World Congress, Tokyo.` |
-| `preprint` | `(year) publisher [Preprint].` — `publisher` holds the preprint server (bioRxiv, arXiv, SSRN) | `(2026) bioRxiv [Preprint].` |
-| `working_paper` | `(year) place_of_publication: publisher (series_title).` | `(2025) Ghent: Ghent University Faculty of Economics.` |
-| `report` | `(year) Report report_number. place_of_publication: publisher (series_title).` | `(2025) Report RPT-42. Brussels: Agentschap Natuur en Bos.` |
-| `doctoral_thesis` | `(year) PhD thesis. awarding_institution.` — awarding institution, never the publisher field | `(2024) PhD thesis. Ghent University.` |
-| `magazine_article` | `(year) magazine_title, day month, pp. start–end.` — pages as in old biblio; **raven field missing** ⚑ | `(2025) Eos Wetenschap, 14 June, pp. 22–27.` |
-| `newspaper_article` | as `magazine_article` ⚑ | `(2025) De Standaard, 2 March, p. 7.` |
-| `online_post` | `(year) publisher, day month.` — publisher holds the issuing publication (Substack, group blog) per raven's field note | `(2025) Open Access Belgium, 1 September.` |
-| `media_appearance` | `(year) venue, day month.` | `(2025) Universiteit van Vlaanderen, 5 November.` |
-| `lecture` | `(year) venue, day month.` — location sits inside `venue` per its field definition | `(2025) UGent Data Stewards seminar, Ghent, 20 October.` |
-| `dataset` | `(year) publisher.` — publisher holds the repository, as on `preprint`; reconciling raven's applies-to gap is 08 ⚑ | `(2026) Zenodo.` |
-| `software` | as `dataset`, publisher included ⚑ — raven defers a software *version* field to after v1, and no records land in the type in v1 | `(2026) Zenodo.` |
+| `journal_article` | `(year) journal_title volume(issue), pp. start–end` — `article_number` in place of pages for e-only articles | `(2024) *European Journal of Crime, Criminal Law and Criminal Justice* 32(1), pp. 58–79` |
+| `book` | `(year) edition edn. place_of_publication: publisher (series_title)` | `(2024) 2nd edn. Ghent: Academia Press` |
+| `edited_book` | as `book`; editors appear on the contributor line ("has editors, no authors") | `(2024) London: Routledge` |
+| `book_part` | `(year) in book_title place_of_publication: publisher pp. start–end` — no host-book editors on the card | `(2024) in *Handbook of Urban Ecology* London: Routledge pp. 100–120` |
+| `book_review` | as `journal_article` — raven gives it the same venue and position fields | `(2025) *Journal of Ecology Reviews* 12(2), pp. 301–303` |
+| `reference_entry` | `(year) container place: publisher pp. start–end` — intended shape; **raven fields missing** ⚑ | `(2023) *Encyclopedia of Plant Science* Amsterdam: Elsevier pp. 455–460` |
+| `journal_issue` | `(year) journal_title volume(issue)` — editors on the contributor line | `(2024) *European Journal of Crime, Criminal Law and Criminal Justice* 32(1)` |
+| `conference_paper` | `(year) proceedings_title conference.name, conference.location pp. start–end` — no publisher field in raven | `(2024) *Proceedings of the 12th IFToMM World Congress* IFToMM World Congress, Tokyo pp. 1–8` |
+| `conference_abstract` | `(year) [proceedings_title] conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
+| `conference_poster` | as `conference_abstract` | `(2024) IFToMM World Congress, Tokyo` |
+| `conference_presentation` | `(year) conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
+| `preprint` | `(year) publisher Preprint` — `publisher` holds the preprint server (bioRxiv, arXiv, SSRN) | `(2026) *bioRxiv* Preprint` |
+| `working_paper` | `(year) place_of_publication: publisher (series_title)` | `(2025) Ghent: Ghent University Faculty of Economics` |
+| `report` | `(year) Report report_number place_of_publication: publisher (series_title)` | `(2025) Report RPT-42 Brussels: Agentschap Natuur en Bos` |
+| `doctoral_thesis` | `(year) PhD thesis awarding_institution` — awarding institution, never the publisher field | `(2024) PhD thesis Ghent University` |
+| `magazine_article` | `(year) magazine_title day month, pp. start–end` — pages as in old biblio; **raven field missing** ⚑ | `(2025) *Eos Wetenschap* 14 June, pp. 22–27` |
+| `newspaper_article` | as `magazine_article` ⚑ | `(2025) *De Standaard* 2 March, p. 7` |
+| `online_post` | `(year) publisher day month` — publisher holds the issuing publication (Substack, group blog) per raven's field note | `(2025) *Open Access Belgium* 1 September` |
+| `media_appearance` | `(year) venue day month` | `(2025) *Universiteit van Vlaanderen* 5 November` |
+| `lecture` | `(year) venue day month` — location sits inside `venue` per its field definition | `(2025) *UGent Data Stewards seminar* Ghent, 20 October` |
+| `dataset` | `(year) publisher` — publisher holds the repository, as on `preprint`; reconciling raven's applies-to gap is 08 ⚑ | `(2026) *Zenodo*` |
+| `software` | as `dataset`, publisher included ⚑ — raven defers a software *version* field to after v1, and no records land in the type in v1 | `(2026) *Zenodo*` |
 | `other` | the order, with whatever fields it carries | `(2024)` |
 
 ### Decisions
@@ -106,11 +117,11 @@ place here is the reasoning that would otherwise be lost:
 - **Where old biblio showed a field raven lacks, the card keeps showing it**, with a
   note per case (⚑ below).
 - **The publisher is the container on `dataset`, `software` and `preprint`** — all
-  three compose `(year) publisher.`, because the repository or server is where the
+  three compose `(year) publisher`, because the repository or server is where the
   work appeared. The field stays `publisher`, the name the old backoffice already
   uses; only its place in the line is new. Old biblio's bare dataset line came from a
   shared template with no slot for it, not from a decision to hide it.
-- **Genre words stay** — "PhD thesis.", "Report RPT-42.", "[Preprint]" render even
+- **Genre words stay** — "PhD thesis", "Report RPT-42", "Preprint" render even
   though the type badge names the type: each explains the field that follows it, and
   the line stays readable out of context. Year-only lines were considered and
   rejected.
@@ -139,7 +150,7 @@ are not in raven's registry:
   - the per-type applicability list (`metadata-work-fields.md`) leaves datasets out
 
   Both carry one — they compose the same line, so the question is settled once for
-  the pair. The line reads `(2026) Zenodo.`, and the backoffice scan shows the same
+  the pair. The line reads `(2026) Zenodo`, and the backoffice scan shows the same
   field.
 
 ---
