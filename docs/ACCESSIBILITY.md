@@ -209,7 +209,7 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:a11y` enfo
 
 ## D. Dynamic content and HTMX
 
-**D1. Every `hx-get` / `hx-post` has `hx-indicator`. The indicator shows that work runs; the status region speaks the outcome.** An `htmx-indicator` only toggles `display`; VoiceOver did not announce it, and other readers differ. The spoken message goes into a status region (D2) that each response rewrites out of band. One region per page lives in the host page, outside anything HTMX swaps.
+**D1. Every `hx-get` / `hx-post` has `hx-indicator`, and the indicator is visual only.** An `htmx-indicator` only toggles `display`; VoiceOver did not announce it, and other readers differ. The spoken message goes into a status region (D2) that each response rewrites out of band. One region per page lives in the host page, outside anything HTMX swaps.
 
 ```html
 <!-- ✓ Correct -->
