@@ -60,11 +60,14 @@ endpoints.
 
 - `GET /lists/panel?work=<id>` returns the lazy-loaded panel body. The work id becomes the prefix
   for every panel id, so several result cards can open panels without collisions.
-- `GET /lists?q=<text>` replaces the checklist. The search input triggers on `input` and `search`,
-  not `keyup`, so the native clear control also refreshes the list.
+- `GET /lists?q=<text>` replaces the checklist. The fixture answers after 600ms so the dimmed
+  state can be reviewed. The input triggers on `input` and `search`, not `keyup`, so the native
+  clear control also refreshes the list.
 - `POST /lists` creates a list and returns it selected. `PUT /lists/<slug>` and
   `DELETE /lists/<slug>` return the row (`<prefix>-<slug>-row`), swapped in place, so the typed
   query and open panel survive and a ticked row gains its Open link.
+- The `/lists` responses also carry `<span hx-swap-oob="innerHTML:#list-status">` for the page's
+  one status region: the match count, the created list, or the membership change.
 
 The fixture does not persist membership after a later checklist render.
 

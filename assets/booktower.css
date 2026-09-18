@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower f7748e3/2026-09-16 */
+/*! Booktower c1e21d0/2026-09-18 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -78,6 +78,7 @@
   --bt-dur-fast: 120ms;
   --bt-dur-base: 200ms;
   --bt-dur-slow: 350ms;
+  --bt-dur-wait: 300ms;
   /* ── Z-index scale ────────────────────────────────────────────────── */
   --bt-z-panel: 1000; /* floating panels: suggest, filter sheet */
   --bt-z-sticky: 1020; /* sticky chrome: app navbar, sticky headers    */
@@ -1930,6 +1931,21 @@ a.bt-avatar--outline:hover:not(:disabled) {
   gap: 0;
 }
 
+.bt-panel__body--checklist > * {
+  transition: opacity var(--bt-dur-base);
+}
+
+.bt-panel__body--checklist.htmx-request > * {
+  opacity: 0.5;
+  transition-delay: var(--bt-dur-wait);
+  animation: bt-pulse 1.2s ease-in-out calc(var(--bt-dur-wait) + var(--bt-dur-base)) infinite;
+}
+
+@keyframes bt-pulse {
+  50% {
+    opacity: 0.7;
+  }
+}
 .bt-panel__body .form-check {
   display: flex;
   align-items: flex-start;

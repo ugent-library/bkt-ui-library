@@ -57,11 +57,11 @@ for (const f of htmlFiles(['templates', 'elements', 'patterns', 'foundations', '
 
   for (const m of html.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/g)) {
     const [, attrs, body] = m;
-    if (/<button\b(?![^>]*\btype="(?:button|reset)")|<input\b[^>]*\btype="(?:submit|image)"/.test(body)) continue;
+    if (/<button\b(?![^>]*\stype="(?:button|reset)")|<input\b[^>]*\stype="(?:submit|image)"/.test(body)) continue;
     const id = (attrs.match(/\bid="([^"]*)"/) || [])[1];
     if (id && externalSubmit.has(id)) continue;
     const textFields = [...body.matchAll(/<input\b([^>]*)>/g)]
-      .filter(i => TEXT_TYPES.has((i[1].match(/\btype="([^"]*)"/) || [, 'text'])[1]));
+      .filter(i => TEXT_TYPES.has((i[1].match(/\stype="([^"]*)"/) || [, 'text'])[1]));
     if (textFields.length === 1) continue;
     const line = read(f).slice(0, m.index).split('\n').length;
     problems.push(`${f}:${line}: <form> without a submit button and not exactly one text field (C6)`);

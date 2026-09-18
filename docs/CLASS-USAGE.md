@@ -64,6 +64,7 @@ Colour a badge with `text-bg-*`.
 - `--checklist`, `--boolean`, `--year`, `--form` and `--list` are the body layouts, and any panel may use any of them. Rows in a `--list` body run an action; rows in a `--checklist` body tick a box.
 - Every `bt-panel__body` is a direct child of `bt-panel`. Add `border-top-0` to a first body that has no title above it. A panel holding prose rather than body blocks sets its own padding with `p-3`.
 - On a `dropdown-menu`, `bt-panel` already removes the menu's padding, so do not add `p-0` yourself.
+- Point every `hx-indicator` in the panel at the checklist body.
 - Action rows are plain `.dropdown-item`. When a checklist row ends in a link, put that link after the `form-check-label`, never inside it.
 - A `form-check-label` may carry `bt-result__name` and one `bt-meta-list` per group of values. [`patterns/people-search.html`](../patterns/people-search.html)
 
