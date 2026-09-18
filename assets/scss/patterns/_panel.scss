@@ -67,6 +67,17 @@
   flex-direction: column;
   gap: 0;
 }
+.bt-panel__body--checklist > * {
+  transition: opacity var(--bt-dur-base);
+}
+.bt-panel__body--checklist.htmx-request > * {
+  opacity: .5;
+  transition-delay: var(--bt-dur-wait);
+  animation: bt-pulse 1.2s ease-in-out calc(var(--bt-dur-wait) + var(--bt-dur-base)) infinite;
+}
+@keyframes bt-pulse {
+  50% { opacity: .7; }
+}
 .bt-panel__body .form-check {
   display: flex;
 

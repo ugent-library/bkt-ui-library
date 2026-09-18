@@ -652,7 +652,6 @@ modal-dialog-scrollable
 nav
 nav-link
 nav-tabs
-offcanvas-end
 offcanvas-xl
 pagination
 progress

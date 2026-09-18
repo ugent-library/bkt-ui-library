@@ -20,7 +20,6 @@
               <label class="visually-hidden" for="p-search">Search your lists</label>
               <input type="search" class="form-control form-control-sm" id="p-search" name="q"
                 placeholder="Search your lists&hellip;" autocomplete="off">
-              <button type="submit" class="visually-hidden">Search lists</button>
             </form>
           </div>
           <div class="bt-panel__body bt-panel__body--checklist" role="group" aria-label="Your lists">
@@ -47,7 +46,43 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; selecting a list leaves the panel open. The same field searches and names a new list.</p>
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Searching — the checklist dims and pulses</h3>
+      <div class="ds-demo-body" data-surface="public">
+        <div class="bt-panel bt-panel--wide" role="dialog" aria-label="Add to list">
+          <p class="bt-panel__title">Add this work to a list</p>
+          <div class="bt-panel__body">
+            <form class="w-100" action="/lists" method="get">
+              <label class="visually-hidden" for="p5-search">Search your lists</label>
+              <input type="search" class="form-control form-control-sm" id="p5-search" name="q"
+                value="Rea" placeholder="Search your lists&hellip;" autocomplete="off">
+            </form>
+          </div>
+          <div class="bt-panel__body bt-panel__body--checklist htmx-request" role="group" aria-label="Your lists">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p5-reading" checked>
+              <label class="form-check-label" for="p5-reading">Reading list</label>
+              <a href="/templates/biblio-researcher/list-detail.html" class="bt-link-more" aria-label="Open Reading list">Open <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p5-quantum">
+              <label class="form-check-label" for="p5-quantum">Quantum computing refs</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="p5-review">
+              <label class="form-check-label" for="p5-review">To cite in review</label>
+            </div>
+          </div>
+          <div class="bt-panel__actions">
+            <a href="/templates/biblio-researcher/lists.html" class="btn btn-ghost btn-sm">
+              My lists <i class="if if-arrow-right if--sm" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; selecting a list leaves the panel open. The same field searches and names a new list. The checklist dims only when a request outlasts 300ms.</p>
   </section>
 
   <section class="ds-section">
@@ -64,7 +99,6 @@
               <label class="visually-hidden" for="p2-search">Search your lists</label>
               <input type="search" class="form-control form-control-sm" id="p2-search" name="q"
                 value="Coastal erosion" placeholder="Search your lists&hellip;" autocomplete="off">
-              <button type="submit" class="visually-hidden">Search lists</button>
             </form>
           </div>
           <div class="bt-panel__body bt-panel__body--checklist">
@@ -94,7 +128,6 @@
               <label class="visually-hidden" for="p4-search">Search your lists</label>
               <input type="search" class="form-control form-control-sm" id="p4-search" name="q"
                 value="Reading" placeholder="Search your lists&hellip;" autocomplete="off">
-              <button type="submit" class="visually-hidden">Search lists</button>
             </form>
           </div>
           <div class="bt-panel__body bt-panel__body--checklist">
@@ -160,10 +193,11 @@
             hx-target="#atl-kit-panel" hx-swap="innerHTML" hx-indicator="#atl-kit-loading">
             <i class="if if-bookmark-line" aria-hidden="true"></i> Add to list
           </button>
-          <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-kit-panel" role="dialog" aria-label="Add to list">
+          <div class="dropdown-menu dropdown-menu-end bt-panel bt-panel--wide" id="atl-kit-panel" role="dialog" aria-label="Add to list" data-search-first>
             <p class="htmx-indicator p-3 mb-0 text-muted small" id="atl-kit-loading" aria-live="polite">Loading your lists&hellip;</p>
           </div>
         </div>
+        <div class="visually-hidden" id="list-status" role="status"></div>
       </div>
     </div>
 

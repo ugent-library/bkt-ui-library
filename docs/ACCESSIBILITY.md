@@ -194,7 +194,7 @@ The `*` is decorative (`aria-hidden`); assistive tech announces the field as req
 
 **C5. Autocomplete on personal data fields.** Any field that collects user-identifiable data must carry `autocomplete`. Minimum: `name`, `email`, `organization`. This is a WCAG 1.3.5 requirement.
 
-**C6. `<button type="submit">` inside every form.** Progressive enhancement: the form must be submittable without JavaScript and without HTMX. A real `action` attribute on `<form>` and a real submit button.
+**C6. Every form submits without JavaScript.** Progressive enhancement: a real `action` attribute on `<form>` and a real submit button, or exactly one text field, which submits on Enter by [implicit submission](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#implicit-submission). A hidden submit button is a Tab stop with no visible focus, so the add-to-list panel search has none.
 
 **Prototype exception:** prototype templates navigate between steps with `<a>` links, and those endpoints will never exist in the kit. A `<form>` that cannot satisfy this rule is omitted instead — mark the spot where the real implementation needs one:
 
@@ -203,19 +203,23 @@ The `*` is decorative (`aria-hidden`); assistive tech announces the field as req
 <div class="col-8">
 ```
 
-Any `<form>` that *is* present must satisfy this rule (`npm run check:html` enforces it via `wcag/h32`).
+Any `<form>` that *is* present must satisfy this rule (`npm run check:a11y` enforces it).
 
 ---
 
 ## D. Dynamic content and HTMX
 
-**D1. Every `hx-get` / `hx-post` has `hx-indicator`.** No silent loading states. The indicator element uses `aria-live="polite"`.
+**D1. Every `hx-get` / `hx-post` has `hx-indicator`, and the indicator is visual only.** An `htmx-indicator` only toggles `display`; VoiceOver did not announce it, and other readers differ. The spoken message goes into a status region (D2) that each response rewrites out of band. One region per page lives in the host page, outside anything HTMX swaps.
 
 ```html
 <!-- ✓ Correct -->
-<input hx-get="/search" hx-trigger="keyup changed delay:300ms"
-  hx-target="#results" hx-indicator="#search-indicator">
-<span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching&hellip;</span>
+<input hx-get="/lists" hx-trigger="input changed delay:200ms, search"
+  hx-target="#lists" hx-indicator="#lists">
+<div class="bt-panel__body bt-panel__body--checklist" id="lists">…</div>
+<div class="visually-hidden" id="list-status" role="status"></div>
+
+<!-- in the response, after the swapped content -->
+<span hx-swap-oob="innerHTML:#list-status">2 lists match.</span>
 ```
 
 **D2. Live regions must be in the DOM before the swap.** HTMX cannot inject an `aria-live` region and have it work immediately — screen readers only observe regions that existed at page load. The result count, status messages, and error regions must be present (even if empty) in the initial HTML.
@@ -248,7 +252,7 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:html` enfo
 
 **E4. Dropdowns.** Bootstrap dropdown keyboard handling is correct (Enter/Space open, Arrow keys navigate items, Escape closes). Do not replace Bootstrap dropdowns with custom implementations.
 
-A search-first panel is the exception, and only for where focus starts: it opens on its search box, because typing is the first act and the panel holds no `.dropdown-item` for the arrow keys to walk. Moving focus in obliges you to put it back — Bootstrap returns focus to the opener on Escape, but not for a panel closed from a button inside it, so Apply, Add and Cancel each focus the opener themselves. The filter editors and the people picker both work this way.
+A search-first panel is the exception, and only for where focus starts: it opens on its search box, because typing is the first act and the panel holds no `.dropdown-item` for the arrow keys to walk. Moving focus in obliges you to put it back — Bootstrap returns focus to the opener on Escape, but not for a panel closed from a button inside it, so Apply, Add and Cancel each focus the opener themselves. The filter editors and the people picker both work this way. In the add-to-list panel, Tab order is search field, checkboxes in order (a ticked row's Open link follows its box), create row, My lists.
 
 **E7. A button that opens a panel carries `aria-haspopup="dialog"`.** Every `bt-panel` on a `dropdown-menu` declares `role="dialog"` (Cite, Share, Add to list, the filter editors, the query builder's field chooser and people picker). Without the attribute the toggle announces as a collapsed button and the reader has no way to know a dialog is behind it. `aria-haspopup="true"` is wrong here: [MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-haspopup) states that `true` "is the same as `menu`". A toggle opening a plain menu of `.dropdown-item` rows — the ⋯ row-actions menus — needs nothing, since a menu is what a dropdown already implies.
 

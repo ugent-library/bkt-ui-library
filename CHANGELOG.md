@@ -5,6 +5,16 @@ What changed in v2, newest first. The old→new class map moved to
 
 ---
 
+## The add-to-list panel announces its results (v2.47, 2026-09-17)
+
+CSS changed — re-copy the compiled assets, and re-adapt the panel. The visible "Searching…" and
+"Saving…" text is gone: the checklist dims and pulses softly, only once a request outlasts
+`--bt-dur-wait`; under reduced motion it only dims. Canonical example: `patterns/panel.html`.
+
+## The panel search form drops its hidden submit button (v2.46, 2026-09-17)
+
+No CSS change — re-adapt the add-to-list panel. The search form's submit button is gone. See `patterns/panel.html`.
+
 ## Primary copy actions confirm in green (v2.45, 2026-09-16)
 
 No CSS change. A primary copy button now turns green while it confirms. See
