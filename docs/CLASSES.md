@@ -117,9 +117,11 @@ bt-meta-list--xs
 bt-meta-list__item
 
 bt-navbar
+bt-navbar__actions
 bt-navbar__brand
 bt-navbar__link
 bt-navbar__logo
+bt-navbar__offcanvas-actions
 bt-navbar__sep
 
 bt-panel

@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower 2967929/2026-09-18 */
+/*! Booktower 4e25d32/2026-09-18 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -2205,18 +2205,34 @@ a.bt-avatar--outline:hover:not(:disabled) {
   height: var(--bt-sp-5);
   background: var(--bt-border-color);
   flex-shrink: 0;
-  display: block;
+  display: none;
 }
 
+@media (min-width: 1400px) {
+  .bt-navbar__sep {
+    display: block;
+  }
+}
 .bt-navbar__brand {
   display: flex;
   align-items: center;
   gap: var(--bt-sp-2);
+  flex-shrink: 0;
   text-decoration: none;
   color: var(--bt-blue-800);
+  font-family: var(--bt-font-sans);
+  font-size: var(--bt-text-base);
   font-weight: 500;
-  text-decoration: none;
+  line-height: 1.2;
   text-wrap: nowrap;
+}
+
+.bt-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--bt-sp-2);
+  -webkit-margin-start: auto;
+          margin-inline-start: auto;
 }
 
 img.bt-navbar__logo {
@@ -2243,6 +2259,19 @@ img.bt-navbar__logo {
 @media (min-width: 1400px) {
   .navbar-nav .bt-navbar__link {
     display: inline-block;
+  }
+}
+.bt-navbar__offcanvas-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--bt-sp-2);
+  margin: var(--bt-sp-4) var(--bt-sp-3) 0;
+}
+
+@media (min-width: 1400px) {
+  .bt-navbar__offcanvas-actions {
+    display: none;
   }
 }
 .bt-navbar__link:hover {
