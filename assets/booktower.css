@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower af25972/2026-09-18 */
+/*! Booktower 2967929/2026-09-18 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -2234,6 +2234,17 @@ img.bt-navbar__logo {
   white-space: nowrap;
 }
 
+.navbar-nav .bt-navbar__link {
+  display: block;
+  padding-top: var(--bt-sp-2);
+  padding-bottom: var(--bt-sp-2);
+}
+
+@media (min-width: 1400px) {
+  .navbar-nav .bt-navbar__link {
+    display: inline-block;
+  }
+}
 .bt-navbar__link:hover {
   color: var(--bt-blue-700);
   background: var(--bt-gray-50);
