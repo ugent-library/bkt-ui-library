@@ -161,14 +161,17 @@ async function handleTemplateHtmx(req, res, urlPath, params, { loadFragment }) {
 
   if (urlPath === '/lists' && (method === 'GET' || method === 'POST')) {
     const prefix = target.replace(/-lists$/, '') || 'atl';
-    if (method === 'GET') return respond(c.renderListPicker(prefix, params.q || ''), 200);
-    return respond(c.renderListPicker(prefix, bodyParams.get('name') || 'New list', true), 260);
+    const q = params.q || '';
+    if (method === 'GET') return respond(c.renderListPicker(prefix, q) + c.renderListPicker.searchStatus(q), 600);
+    const name = bodyParams.get('name') || 'New list';
+    return respond(c.renderListPicker(prefix, name, true) + c.renderListPicker.createdStatus(name), 260);
   }
 
   if (/^\/lists\/[^/]+$/.test(urlPath) && (method === 'PUT' || method === 'DELETE')) {
     const slug = urlPath.slice('/lists/'.length);
     const prefix = target.replace(new RegExp(`-${slug}-row$`), '') || 'atl';
-    return respond(c.renderListRow(prefix, slug, method === 'PUT'), 180);
+    const member = method === 'PUT';
+    return respond(c.renderListRow(prefix, slug, member) + c.renderListPicker.rowStatus(slug, member), 180);
   }
 
   return false;

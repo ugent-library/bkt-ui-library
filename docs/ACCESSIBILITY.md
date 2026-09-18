@@ -209,13 +209,17 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:a11y` enfo
 
 ## D. Dynamic content and HTMX
 
-**D1. Every `hx-get` / `hx-post` has `hx-indicator`.** No silent loading states. The indicator element uses `aria-live="polite"`.
+**D1. Every `hx-get` / `hx-post` has `hx-indicator`. The indicator shows that work runs; the status region speaks the outcome.** An `htmx-indicator` only toggles `display`; VoiceOver did not announce it, and other readers differ. The spoken message goes into a status region (D2) that each response rewrites out of band. One region per page lives in the host page, outside anything HTMX swaps.
 
 ```html
 <!-- ✓ Correct -->
-<input hx-get="/search" hx-trigger="keyup changed delay:300ms"
-  hx-target="#results" hx-indicator="#search-indicator">
-<span id="search-indicator" class="htmx-indicator" aria-live="polite">Searching&hellip;</span>
+<input hx-get="/lists" hx-trigger="input changed delay:200ms, search"
+  hx-target="#lists" hx-indicator="#lists">
+<div class="bt-panel__body bt-panel__body--checklist" id="lists">…</div>
+<div class="visually-hidden" id="list-status" role="status"></div>
+
+<!-- in the response, after the swapped content -->
+<span hx-swap-oob="innerHTML:#list-status">2 lists match.</span>
 ```
 
 **D2. Live regions must be in the DOM before the swap.** HTMX cannot inject an `aria-live` region and have it work immediately — screen readers only observe regions that existed at page load. The result count, status messages, and error regions must be present (even if empty) in the initial HTML.

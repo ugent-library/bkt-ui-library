@@ -37,8 +37,8 @@ reviews; this document owns JavaScript behavior and dependencies.
 
 ## Loading
 
-The development server loads HTMX in the document head, then Bootstrap, `clipboard.js` and
-`popovers.js` at the end of every page. Page-specific scripts follow their host markup.
+The development server loads HTMX in the document head, then Bootstrap, `clipboard.js`,
+`popovers.js` and `list-panel.js` at the end of every page. Page-specific scripts follow their host markup.
 
 Only two local orders matter:
 
@@ -107,6 +107,13 @@ Remove a `-stub.js` include when its endpoint replaces the fixture response.
 - **Status:** Prototype-only because it rides on the client-only filter bar.
 - **Template debt:** `decorateRows()` builds a small value-and-chevron suffix with `innerHTML`.
   Move it to a template if that suffix grows.
+
+### `list-panel.js`
+
+- **Purpose:** Moves focus into the add-to-list panel's search field when it opens, on first load too.
+- **Hosts:** All pages through `server.js`; acts only on a `bt-panel` labelled "Add to list".
+- **Input/output:** Listens for `shown.bs.dropdown` and `htmx:afterSwap`; dispatches no event.
+- **Status:** Production-shaped behavior. Escape returns focus to the opener through Bootstrap.
 
 ### `org-tree.js`
 

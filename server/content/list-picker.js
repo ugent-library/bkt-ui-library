@@ -22,11 +22,12 @@ function renderRow(prefix, slug, name, member) {
   return `
 <div class="form-check" id="${rowId}">
   <input class="form-check-input" type="checkbox" id="${prefix}-${slug}"${member ? ' checked' : ''}
-    ${method} hx-target="#${rowId}" hx-swap="outerHTML" hx-indicator="#${prefix}-saving">
+    ${method} hx-target="#${rowId}" hx-swap="outerHTML" hx-indicator="#${prefix}-lists">
   <label class="form-check-label" for="${prefix}-${slug}">${escape(name)}</label>${open}
 </div>`;
 }
 
+const matchesFor = needle => LISTS.filter(list => list.name.toLowerCase().includes(needle));
 const listName = slug => (LISTS.find(list => list.slug === slug) || { name: slug.replace(/-/g, ' ') }).name;
 
 function renderListPicker(prefix, q = '', created = false) {
@@ -35,13 +36,13 @@ function renderListPicker(prefix, q = '', created = false) {
   if (created) return renderRow(prefix, slugify(query), query, true);
 
   const needle = query.toLowerCase();
-  const matches = LISTS.filter(list => list.name.toLowerCase().includes(needle));
+  const matches = matchesFor(needle);
   const rows = matches.map(list => renderRow(prefix, list.slug, list.name, list.member)).join('');
 
   if (!query || LISTS.some(list => list.name.toLowerCase() === needle)) return rows;
 
   return rows + `
-<form hx-post="/lists" hx-target="#${prefix}-lists" hx-swap="innerHTML" hx-indicator="#${prefix}-saving">
+<form hx-post="/lists" hx-target="#${prefix}-lists" hx-swap="innerHTML" hx-indicator="#${prefix}-lists">
   <input type="hidden" name="name" value="${escape(query)}">
   <button type="submit" class="dropdown-item">
     <i class="if if-add if--xs me-2" aria-hidden="true"></i> Create &ldquo;${escape(query)}&rdquo;
@@ -50,5 +51,20 @@ function renderListPicker(prefix, q = '', created = false) {
 }
 
 renderListPicker.renderRow = (prefix, slug, member) => renderRow(prefix, slug, listName(slug), member);
+
+const status = text => `\n<span hx-swap-oob="innerHTML:#list-status">${text}</span>`;
+const matchCount = n => (n === 1 ? '1 list matches.' : n ? `${n} lists match.` : 'No lists match.');
+
+renderListPicker.searchStatus = (q = '') => {
+  const query = q.trim();
+  const needle = query.toLowerCase();
+  const n = matchesFor(needle).length;
+  if (!query) return status(`${n} list${n === 1 ? '' : 's'}.`);
+  if (LISTS.some(list => list.name.toLowerCase() === needle)) return status(matchCount(n));
+  return status(`${matchCount(n)} Create &ldquo;${escape(query)}&rdquo; is available.`);
+};
+renderListPicker.createdStatus = name => status(`&ldquo;${escape(name)}&rdquo; created and added.`);
+renderListPicker.rowStatus = (slug, member) =>
+  status(`${member ? 'Added to' : 'Removed from'} ${escape(listName(slug))}.`);
 
 module.exports = renderListPicker;
