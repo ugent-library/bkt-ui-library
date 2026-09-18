@@ -1,0 +1,62 @@
+<!-- @title: Review flow — curator publication blocked -->
+<!-- @surface: backoffice -->
+
+<!-- Prototype note: the Work review states this limit before the click, so this screen is only
+     reached when a cluster opens mid-review. The shared queue has no lock, so that race is real. -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Publication blocked</h1>
+          </div>
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 2 of 3</span></div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Work review</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-blocked-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <span class="badge text-bg-warning mb-3">Not approved</span>
+                  <h2 id="curator-blocked-heading" class="h4">A multilingual corpus for civic participation research</h2>
+                  <p>Another curator opened a duplicate cluster on this Work while you were reading it, so it cannot become public. Nothing was approved.</p>
+                  <p class="mb-4">Consolidate the cluster, or approve it privately and leave publication for later.</p>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/curator-duplicates.html" class="btn btn-primary">Open duplicates</a>
+                    <a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-outline-primary">Approve privately and continue</a>
+                    <a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-ghost">Back to the Work</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="curator-blocked-cluster-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-blocked-cluster-heading" class="h5">The cluster</h2>
+                  <p class="small">Two Works share a DOI and a title.</p>
+                  <p class="fw-semibold mb-1">A multilingual corpus for civic participation research</p>
+                  <p class="small mb-3">Dataset · Sara Peeters · submitted yesterday</p>
+                  <p class="fw-semibold mb-1">Multilingual corpus for civic participation research</p>
+                  <p class="small mb-0">Dataset · harvested from DataCite · never public</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

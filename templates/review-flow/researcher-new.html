@@ -1,0 +1,54 @@
+<!-- @title: Review flow — researcher new Work -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/researcher-header.html -->
+  <!-- @include: templates/review-flow/partials/researcher-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">New Work</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-my-works.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> My works</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="researcher-new-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="researcher-new-heading" class="h4 mb-2">Start with what you have</h2>
+                  <p>We look for an existing record before you enter the details.</p>
+                  <form action="/templates/review-flow/researcher-work-form.html" method="get">
+                    <input type="hidden" name="state" value="edit">
+                    <label for="researcher-evidence" class="form-label">DOI, identifier, link or title</label>
+                    <div class="input-group">
+                      <input type="text" id="researcher-evidence" class="form-control" value="10.1111/geb.13844" autocomplete="off">
+                      <button type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                  </form>
+                  <p class="small mt-3 mb-0">You can also continue without an identifier and enter the Work manually.</p>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-new-effect-heading">
+              <div class="alert alert-light">
+                <h2 id="researcher-new-effect-heading" class="h6">What happens next</h2>
+                <p class="small mb-0">A human-created Work starts as your private draft. Imported source values remain traceable.</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

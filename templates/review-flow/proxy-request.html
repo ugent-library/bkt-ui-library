@@ -1,0 +1,46 @@
+<!-- @title: Review flow — proxy requested changes -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/proxy-header.html -->
+  <!-- @include: templates/review-flow/partials/proxy-sidebar-inbox.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Changes requested</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Proxy Inbox</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <form action="/templates/review-flow/proxy-inbox.html" method="get" class="card">
+            <input type="hidden" name="state" value="changes-sent">
+            <div class="card-body p-4">
+              <span class="badge text-bg-primary mb-3">Changes requested</span>
+              <h2 class="h4">Project</h2>
+              <p>Marie Curator: Which project supported this experiment?</p>
+              <label for="proxy-request-project" class="form-label">Project</label>
+              <select id="proxy-request-project" class="form-select mb-3">
+                <option selected>Microbial biofilm dynamics</option>
+                <option>No project</option>
+              </select>
+              <label for="proxy-request-message" class="form-label">Message <span class="small">(optional)</span></label>
+              <textarea id="proxy-request-message" class="form-control mb-3" rows="3">Confirmed with Harm: this is the correct project.</textarea>
+              <button type="submit" class="btn btn-primary">Send changes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

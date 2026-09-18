@@ -1,0 +1,57 @@
+<!-- @title: Review flow — researcher suggestion -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/researcher-header.html -->
+  <!-- @include: templates/review-flow/partials/researcher-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Suggest a change</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-reviewed.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Reviewed Work</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="researcher-suggestion-heading">
+              <form action="/templates/review-flow/researcher-inbox.html" method="get" class="card">
+                <input type="hidden" name="state" value="suggestion-sent">
+                <div class="card-body p-4">
+                  <h2 id="researcher-suggestion-heading" class="h4">Propose corrected values</h2>
+                  <p>The public record keeps its accepted values until a curator accepts these changes.</p>
+                  <label for="researcher-suggestion-project" class="form-label">Project</label>
+                  <select id="researcher-suggestion-project" class="form-select mb-3">
+                    <option selected>GreenCity — climate-ready public space</option>
+                    <option>Delta Futures</option>
+                  </select>
+                  <label for="researcher-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
+                  <textarea id="researcher-suggestion-message" class="form-control mb-3" rows="3">The dataset belongs to GreenCity, not Delta Futures.</textarea>
+                  <button type="submit" class="btn btn-primary">Send suggestion</button>
+                </div>
+              </form>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-suggestion-accepted-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="researcher-suggestion-accepted-heading" class="h5">Accepted value</h2>
+                  <p class="form-label mb-1">Project</p>
+                  <p class="mb-0">Delta Futures</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

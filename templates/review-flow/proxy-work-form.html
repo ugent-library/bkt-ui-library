@@ -1,0 +1,185 @@
+<!-- @title: Review flow — proxy Work form -->
+<!-- @surface: backoffice -->
+<!-- @states: edit, returned -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/proxy-header.html -->
+  <!-- @include: templates/review-flow/partials/proxy-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">
+              <!-- @state: edit -->Edit Work<!-- @state -->
+              <!-- @state: returned -->Returned Work<!-- @state -->
+            </h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Proxy Inbox</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <!-- [html-validate-disable-block unique-landmark, no-dup-id -- @state variants of one screen; only one renders per page] -->
+          <!-- @state: edit -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="proxy-form-summary-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-secondary">Draft</span></div>
+                  <h2 id="proxy-form-summary-heading" class="h4 mb-1">Characterisation of biofilm formation on stainless steel surfaces</h2>
+                  <p class="small text-muted mb-0">Journal article · Harm Van Acker · 2025</p>
+                </div>
+              </section>
+              <section class="card" aria-labelledby="proxy-edit-details-heading">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-details-heading" class="h4">Work details</h2>
+                  <label for="proxy-edit-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label>
+                  <input type="text" id="proxy-edit-title" class="form-control mb-3" value="Characterisation of biofilm formation on stainless steel surfaces" required autocomplete="off">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="proxy-edit-type" class="form-label">Type</label>
+                      <select id="proxy-edit-type" class="form-select">
+                        <option selected>Journal article</option>
+                        <option>Dataset</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="proxy-edit-doi" class="form-label">DOI</label>
+                      <input type="text" id="proxy-edit-doi" class="form-control" value="10.1080/08927014.2025.2201234" autocomplete="off">
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Contributors</p>
+                  <p class="mb-0">Harm Van Acker · Tony Coenye · Louise Martinez-Garcia</p>
+                </div>
+              </section>
+              <section class="card" aria-labelledby="proxy-edit-file-heading">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-file-heading" class="h4">File and access</h2>
+                  <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> biofilm-formation-aam.pdf</p>
+                  <p class="small">Accepted manuscript · 1.8 MB</p>
+                  <fieldset>
+                    <legend class="form-label">File access</legend>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="access" id="proxy-access-open" value="open" checked>
+                      <label class="form-check-label" for="proxy-access-open">Open access</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="access" id="proxy-access-restricted" value="restricted">
+                      <label class="form-check-label" for="proxy-access-restricted">Restricted</label>
+                    </div>
+                  </fieldset>
+                </div>
+              </section>
+              <section class="card" aria-labelledby="proxy-edit-submit-heading">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-submit-heading" class="h4">Submit</h2>
+                  <p>Submit publishes by default. Submit privately keeps the record out of the public site.</p>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/proxy-inbox.html?state=submitted-public" class="btn btn-primary">Submit</a>
+                    <a href="/templates/review-flow/proxy-inbox.html?state=submitted-private" class="btn btn-outline-primary">Submit privately</a>
+                    <a href="/templates/review-flow/proxy-all.html" class="btn btn-ghost">Save draft</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="proxy-edit-owner-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-owner-heading" class="h5">Work owner</h2>
+                  <p class="fw-semibold mb-1">Harm Van Acker</p>
+                  <p class="small mb-0">Created by Mieke Declercq acting as proxy. Proxy permissions are managed elsewhere.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+          <!-- @state: returned -->
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="proxy-form-summary-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-secondary"><i class="if if-lock" aria-hidden="true"></i> Private</span></div>
+                  <h2 id="proxy-form-summary-heading" class="h4 mb-1">Characterisation of biofilm formation on stainless steel surfaces</h2>
+                  <p class="small text-muted mb-0">Journal article · Harm Van Acker · 2025</p>
+                  <div class="alert alert-warning mb-0"><strong>Marie Curator:</strong> Please confirm the manuscript version.</div>
+                </div>
+              </section>
+              <section class="card" aria-labelledby="proxy-edit-details-heading">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-details-heading" class="h4">Work details</h2>
+                  <label for="proxy-edit-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label>
+                  <input type="text" id="proxy-edit-title" class="form-control mb-3" value="Characterisation of biofilm formation on stainless steel surfaces" required autocomplete="off">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="proxy-edit-type" class="form-label">Type</label>
+                      <select id="proxy-edit-type" class="form-select">
+                        <option selected>Journal article</option>
+                        <option>Dataset</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="proxy-edit-doi" class="form-label">DOI</label>
+                      <input type="text" id="proxy-edit-doi" class="form-control" value="10.1080/08927014.2025.2201234" autocomplete="off">
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Contributors</p>
+                  <p class="mb-0">Harm Van Acker · Tony Coenye · Louise Martinez-Garcia</p>
+                </div>
+              </section>
+              <section class="card" aria-labelledby="proxy-edit-file-heading">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-file-heading" class="h4">File and access</h2>
+                  <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> biofilm-formation-aam.pdf</p>
+                  <p class="small">Accepted manuscript · 1.8 MB</p>
+                  <fieldset>
+                    <legend class="form-label">File access</legend>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="access" id="proxy-access-open" value="open" checked>
+                      <label class="form-check-label" for="proxy-access-open">Open access</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="access" id="proxy-access-restricted" value="restricted">
+                      <label class="form-check-label" for="proxy-access-restricted">Restricted</label>
+                    </div>
+                  </fieldset>
+                </div>
+              </section>
+              <section class="card" aria-labelledby="proxy-edit-submit-heading">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-submit-heading" class="h4">Submit</h2>
+                  <p>Submit publishes by default. Submit privately keeps the record out of the public site.</p>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/proxy-inbox.html?state=submitted-public" class="btn btn-primary">Submit</a>
+                    <a href="/templates/review-flow/proxy-inbox.html?state=submitted-private" class="btn btn-outline-primary">Submit privately</a>
+                    <a href="/templates/review-flow/proxy-all.html" class="btn btn-ghost">Save draft</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="proxy-edit-owner-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-edit-owner-heading" class="h5">Work owner</h2>
+                  <p class="fw-semibold mb-1">Harm Van Acker</p>
+                  <p class="small mb-0">Created by Mieke Declercq acting as proxy. Proxy permissions are managed elsewhere.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

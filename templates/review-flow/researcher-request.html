@@ -1,0 +1,64 @@
+<!-- @title: Review flow — researcher requested changes -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/researcher-header.html -->
+  <!-- @include: templates/review-flow/partials/researcher-sidebar-inbox.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Changes requested</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Inbox</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-label="Requested project and funding fields">
+              <form action="/templates/review-flow/researcher-inbox.html" method="get" class="card">
+                <input type="hidden" name="state" value="changes-sent">
+                <div class="card-body p-4">
+                  <span class="badge text-bg-primary mb-3">Changes requested</span>
+                  <h2 id="researcher-request-heading" class="h4">Project and funding</h2>
+                  <p>Marie Curator: Which project funded the fieldwork? Add the project and funding reference.</p>
+                  <label for="researcher-request-project" class="form-label">Project</label>
+                  <select id="researcher-request-project" class="form-select mb-3">
+                    <option selected>GreenCity — climate-ready public space</option>
+                    <option>No project</option>
+                  </select>
+                  <label for="researcher-request-reference" class="form-label">Funding reference</label>
+                  <input type="text" id="researcher-request-reference" class="form-control mb-3" value="BOF24/GOA/014" autocomplete="off">
+                  <label for="researcher-request-message" class="form-label">Message <span class="small">(optional)</span></label>
+                  <textarea id="researcher-request-message" class="form-control mb-3" rows="3">This project covered the fieldwork and data preparation.</textarea>
+                  <div class="d-flex flex-wrap gap-2">
+                    <button type="submit" class="btn btn-primary">Send changes</button>
+                    <a href="/templates/review-flow/researcher-work-form.html?state=edit" class="btn btn-ghost">Open full form</a>
+                  </div>
+                </div>
+              </form>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="researcher-request-current-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="researcher-request-current-heading" class="h5">Current Work</h2>
+                  <p class="small">Reviewed · Public</p>
+                  <p class="fw-semibold mb-1">Mapping wetland recovery across the Scheldt basin</p>
+                  <p class="small mb-0">The public record stays unchanged while this request is open.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

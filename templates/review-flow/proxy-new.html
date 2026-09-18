@@ -1,0 +1,51 @@
+<!-- @title: Review flow — proxy new Work -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/proxy-header.html -->
+  <!-- @include: templates/review-flow/partials/proxy-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">New Work</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy-all.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> All proxied research</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <section class="card" aria-labelledby="proxy-new-heading">
+            <div class="card-body p-4">
+              <h2 id="proxy-new-heading" class="h4">Start a Work</h2>
+              <form action="/templates/review-flow/proxy-work-form.html" method="get">
+                <div class="row g-3 mb-3">
+                  <div class="col-md-5">
+                    <label for="proxy-new-person" class="form-label">Acting for</label>
+                    <select id="proxy-new-person" class="form-select">
+                      <option selected>Harm Van Acker</option>
+                      <option>Lina Vermeulen</option>
+                    </select>
+                  </div>
+                  <div class="col-md-7">
+                    <label for="proxy-new-evidence" class="form-label">DOI, identifier, link or title</label>
+                    <input type="text" id="proxy-new-evidence" class="form-control" value="10.1080/08927014.2025.2201234" autocomplete="off">
+                  </div>
+                </div>
+                <p class="small">The researcher is chosen inline because this New Work entry point is ambiguous. It is then carried through the flow.</p>
+                <button type="submit" class="btn btn-primary">Continue</button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

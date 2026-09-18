@@ -1,0 +1,100 @@
+<!-- @title: Review flow — curator duplicates -->
+<!-- @surface: backoffice -->
+
+<!-- Prototype note: this screen is in flux. Survivor choice, field-level merging and file
+     handling are not designed; the open questions sit at the foot of the page. -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Consolidate duplicates</h1>
+          </div>
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 2 of 3</span></div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Work review</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="curator-duplicates-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-duplicates-heading" class="h4">Two Works, one record</h2>
+                  <p>They share a DOI and a title. Choose which one survives. The other keeps resolving to it.</p>
+                  <fieldset>
+                    <legend class="form-label">Surviving Work</legend>
+                    <div class="border rounded p-3 mb-2">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="survivor" id="curator-survivor-deposited" value="deposited" checked>
+                        <label class="form-check-label" for="curator-survivor-deposited">
+                          <strong>A multilingual corpus for civic participation research</strong>
+                          <br>Dataset · Sara Peeters · deposited yesterday · one file · never public
+                        </label>
+                      </div>
+                    </div>
+                    <div class="border rounded p-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="survivor" id="curator-survivor-harvested" value="harvested">
+                        <label class="form-check-label" for="curator-survivor-harvested">
+                          <strong>Multilingual corpus for civic participation research</strong>
+                          <br>Dataset · harvested from DataCite · no files · never public
+                        </label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-duplicates-effect-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-duplicates-effect-heading" class="h4">What consolidation does</h2>
+                  <p>Sources, keys, internal notes and links move to the surviving Work.</p>
+                  <p class="mb-0">Neither Work has been public, so the consolidated one is deleted outright. A Work that had been public would keep resolving to the survivor instead.</p>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-duplicates-actions-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-duplicates-actions-heading" class="h4">Decision</h2>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/curator-review.html?state=work-2-consolidated" class="btn btn-primary">Consolidate</a>
+                    <a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-ghost">Not a duplicate</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="col-xl-4" aria-labelledby="curator-duplicates-open-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-duplicates-open-heading" class="h5">In flux</h2>
+                  <p class="small">This screen is a placeholder for a flow that has not been designed.</p>
+                  <details>
+                    <summary class="small">Open questions</summary>
+                    <ul class="small mt-2 mb-0">
+                      <li>Who chooses the survivor, and can a researcher disagree?</li>
+                      <li>What happens when the two records hold different values for the same field?</li>
+                      <li>What happens to files on the consolidated Work?</li>
+                      <li>How is a cluster of more than two Works presented?</li>
+                    </ul>
+                  </details>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

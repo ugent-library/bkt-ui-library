@@ -1,0 +1,298 @@
+<!-- @title: Review flow — proxy inbox -->
+<!-- @surface: backoffice -->
+<!-- @states: default, submitted-public, submitted-private, changes-sent, suggestion-sent -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/proxy-header.html -->
+  <!-- @include: templates/review-flow/partials/proxy-sidebar-inbox.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Proxy Inbox</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <!-- [html-validate-disable-block unique-landmark, no-dup-id -- @state variants of one screen; only one renders per page] -->
+
+          <!-- @state: default -->
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="proxy-action-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-3">
+                    <h2 id="proxy-action-heading" class="h4 mb-0">Needs your action</h2>
+                    <span class="badge text-bg-primary">3</span>
+                  </div>
+                  <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-return-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-return-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-work-form.html?state=returned">Characterisation of biofilm formation on stainless steel surfaces</a></p>
+                          <p class="mb-0">Please confirm the manuscript version.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-request-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Changes requested</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-request-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-request.html">Biofilm dynamics under repeated cleaning cycles</a></p>
+                          <p class="mb-0">Project information needs a response.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-other-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Lina Vermeulen</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-other-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-all.html">Portable sensing for coastal water quality</a></p>
+                          <p class="mb-0">Contributor order needs attention.</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <section class="col-xl-4" aria-labelledby="proxy-recent-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-recent-heading" class="h4">Recent activity</h2>
+                  <p class="fw-semibold mb-1">Suggestion accepted</p>
+                  <p class="small mb-0">For Harm Van Acker · Project updated today</p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: submitted-public -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Submitted · Public</p><p class="small text-muted mb-0">Characterisation of biofilm formation on stainless steel surfaces</p></div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="proxy-action-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-3">
+                    <h2 id="proxy-action-heading" class="h4 mb-0">Needs your action</h2>
+                    <span class="badge text-bg-primary">2</span>
+                  </div>
+                  <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-request-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Changes requested</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-request-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-request.html">Biofilm dynamics under repeated cleaning cycles</a></p>
+                          <p class="mb-0">Project information needs a response.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-other-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Lina Vermeulen</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-other-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-all.html">Portable sensing for coastal water quality</a></p>
+                          <p class="mb-0">Contributor order needs attention.</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <section class="col-xl-4" aria-labelledby="proxy-recent-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-recent-heading" class="h4">Recent activity</h2>
+                  <p class="fw-semibold mb-1">Suggestion accepted</p>
+                  <p class="small mb-0">For Harm Van Acker · Project updated today</p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: submitted-private -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Submitted · Private</p><p class="small text-muted mb-0">Characterisation of biofilm formation on stainless steel surfaces</p></div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="proxy-action-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-3">
+                    <h2 id="proxy-action-heading" class="h4 mb-0">Needs your action</h2>
+                    <span class="badge text-bg-primary">2</span>
+                  </div>
+                  <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-request-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Changes requested</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-request-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-request.html">Biofilm dynamics under repeated cleaning cycles</a></p>
+                          <p class="mb-0">Project information needs a response.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-other-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Lina Vermeulen</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-other-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-all.html">Portable sensing for coastal water quality</a></p>
+                          <p class="mb-0">Contributor order needs attention.</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <section class="col-xl-4" aria-labelledby="proxy-recent-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-recent-heading" class="h4">Recent activity</h2>
+                  <p class="fw-semibold mb-1">Suggestion accepted</p>
+                  <p class="small mb-0">For Harm Van Acker · Project updated today</p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: changes-sent -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Changes sent · with the Biblio team</p><p class="small text-muted mb-0">Biofilm dynamics under repeated cleaning cycles</p></div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="proxy-action-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-3">
+                    <h2 id="proxy-action-heading" class="h4 mb-0">Needs your action</h2>
+                    <span class="badge text-bg-primary">2</span>
+                  </div>
+                  <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-return-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-return-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-work-form.html?state=returned">Characterisation of biofilm formation on stainless steel surfaces</a></p>
+                          <p class="mb-0">Please confirm the manuscript version.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-other-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Lina Vermeulen</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-other-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-all.html">Portable sensing for coastal water quality</a></p>
+                          <p class="mb-0">Contributor order needs attention.</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <section class="col-xl-4" aria-labelledby="proxy-recent-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-recent-heading" class="h4">Recent activity</h2>
+                  <p class="fw-semibold mb-1">Suggestion accepted</p>
+                  <p class="small mb-0">For Harm Van Acker · Project updated today</p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: suggestion-sent -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Suggestion sent · the accepted value stays public</p><p class="small text-muted mb-0">Biofilm dynamics under repeated cleaning cycles</p></div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4">
+            <section class="col-xl-8" aria-labelledby="proxy-action-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-3">
+                    <h2 id="proxy-action-heading" class="h4 mb-0">Needs your action</h2>
+                    <span class="badge text-bg-primary">3</span>
+                  </div>
+                  <ol class="list-unstyled mb-0 d-flex flex-column gap-3">
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-return-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-return-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-work-form.html?state=returned">Characterisation of biofilm formation on stainless steel surfaces</a></p>
+                          <p class="mb-0">Please confirm the manuscript version.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-request-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Changes requested</span><span class="badge text-bg-light border">Harm Van Acker</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-request-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-request.html">Biofilm dynamics under repeated cleaning cycles</a></p>
+                          <p class="mb-0">Project information needs a response.</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card bt-work-card--compact" aria-labelledby="proxy-other-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-warning">Returned</span><span class="badge text-bg-light border">Lina Vermeulen</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="proxy-other-title" class="bt-work-card__title"><a href="/templates/review-flow/proxy-all.html">Portable sensing for coastal water quality</a></p>
+                          <p class="mb-0">Contributor order needs attention.</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <section class="col-xl-4" aria-labelledby="proxy-recent-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-recent-heading" class="h4">Recent activity</h2>
+                  <p class="fw-semibold mb-1">Suggestion accepted</p>
+                  <p class="small mb-0">For Harm Van Acker · Project updated today</p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <!-- @state -->
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

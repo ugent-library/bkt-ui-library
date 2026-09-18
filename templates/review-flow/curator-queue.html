@@ -1,0 +1,83 @@
+<!-- @title: Review flow — curator queue -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Review queue</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-queue-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="bt-title-toolbar mb-2">
+                    <h2 id="curator-queue-heading" class="h4 mb-0">Submitted</h2>
+                    <span class="badge text-bg-primary">3</span>
+                  </div>
+                  <p>One shared queue. Opening a Work starts a run through the rest.</p>
+                  <ol class="list-unstyled mb-0">
+                    <li>
+                      <article class="bt-work-card" aria-labelledby="curator-queue-1-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="curator-queue-1-title" class="bt-work-card__title"><a href="/templates/review-flow/curator-review.html?state=work-1">Characterisation of biofilm formation on stainless steel surfaces</a></p>
+                          <p class="mb-1">Journal article · Harm Van Acker · 2025</p>
+                          <p class="small mb-0">Submitted by Mieke Declercq, acting as proxy · 2 hours ago</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card" aria-labelledby="curator-queue-2-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-secondary">Private</span><span class="badge text-bg-warning">Duplicate cluster</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="curator-queue-2-title" class="bt-work-card__title"><a href="/templates/review-flow/curator-review.html?state=work-2">A multilingual corpus for civic participation research</a></p>
+                          <p class="mb-1">Dataset · Sara Peeters · 2026</p>
+                          <p class="small mb-0">Submitted by Sara Peeters · Yesterday</p>
+                        </div>
+                      </article>
+                    </li>
+                    <li>
+                      <article class="bt-work-card" aria-labelledby="curator-queue-3-title">
+                        <div class="bt-work-card__header"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                        <div class="bt-work-card__body">
+                          <p id="curator-queue-3-title" class="bt-work-card__title"><a href="/templates/review-flow/curator-review.html?state=work-3">Portable sensing for coastal water quality</a></p>
+                          <p class="mb-1">Journal article · Lina Vermeulen · 2026</p>
+                          <p class="small mb-0">Submitted by Lina Vermeulen · Yesterday</p>
+                        </div>
+                      </article>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="curator-other-queues-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-other-queues-heading" class="h5">Other work</h2>
+                  <div class="d-flex flex-column gap-2"><a href="/templates/review-flow/curator-requests.html" class="btn btn-outline-primary text-start">Requests <span class="badge text-bg-primary">2</span></a><a href="/templates/biblio-researcher/candidate-review.html" class="btn btn-ghost text-start">Candidates</a><a href="/templates/biblio-team/curate.html?view=duplicates" class="btn btn-ghost text-start">Duplicates</a></div>
+                  <details class="mt-3">
+                    <summary class="small">Coordination note</summary>
+                    <p class="small mt-2 mb-0">A run is a position in the shared queue, not a claim. Nothing is assigned or locked, so another curator can settle a Work you have not reached.</p>
+                  </details>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

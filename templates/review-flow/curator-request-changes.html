@@ -1,0 +1,67 @@
+<!-- @title: Review flow — curator request changes -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Review Work</h1>
+          </div>
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 1 of 3</span></div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <form action="/templates/review-flow/curator-review.html" method="get" class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-request-changes-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <input type="hidden" name="state" value="work-2-requested">
+                  <h2 id="curator-request-changes-heading" class="h4">Ask for named changes</h2>
+                  <p>The Work stays in its current status and visibility.</p>
+                  <fieldset class="mb-3">
+                    <legend class="form-label">Fields that need work</legend>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="curator-request-project" value="project" checked>
+                      <label class="form-check-label" for="curator-request-project">Project</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="curator-request-funding" value="funding" checked>
+                      <label class="form-check-label" for="curator-request-funding">Funding reference</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="curator-request-file" value="file">
+                      <label class="form-check-label" for="curator-request-file">File version</label>
+                    </div>
+                  </fieldset>
+                  <label for="curator-request-message" class="form-label">Message</label>
+                  <textarea id="curator-request-message" class="form-control mb-3" rows="4">Which project funded the fieldwork? Add the project and funding reference.</textarea>
+                  <button type="submit" class="btn btn-primary">Send and continue</button>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="curator-request-scope-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-request-scope-heading" class="h5">Owner sees</h2>
+                  <p class="small mb-0">The selected fields and this message first, with the full form one action away.</p>
+                </div>
+              </div>
+            </aside>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

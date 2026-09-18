@@ -1,0 +1,45 @@
+<!-- @title: Review flow — proxy suggestion -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/proxy-header.html -->
+  <!-- @include: templates/review-flow/partials/proxy-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Suggest a change</h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy-reviewed.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Reviewed Work</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
+          <form action="/templates/review-flow/proxy-inbox.html" method="get" class="card">
+            <input type="hidden" name="state" value="suggestion-sent">
+            <div class="card-body p-4">
+              <h2 class="h4">Propose corrected values</h2>
+              <p>The accepted Work and public page stay unchanged until a curator accepts this suggestion.</p>
+              <label for="proxy-suggestion-project" class="form-label">Project</label>
+              <select id="proxy-suggestion-project" class="form-select mb-3">
+                <option selected>Microbial biofilm dynamics</option>
+                <option>Industrial Hygiene Lab</option>
+              </select>
+              <label for="proxy-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
+              <textarea id="proxy-suggestion-message" class="form-control mb-3" rows="3">Harm confirmed the project correction.</textarea>
+              <button type="submit" class="btn btn-primary">Send suggestion</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,443 @@
+<!-- @title: Review flow — curator Work review -->
+<!-- @surface: backoffice -->
+<!-- @states: work-1, work-2, work-2-returned, work-2-requested, work-2-consolidated, work-3, reviewed -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">
+              <!-- @state: work-1 work-2 work-2-returned work-2-requested work-2-consolidated work-3 -->Review Work<!-- @state -->
+              <!-- @state: reviewed -->Reviewed Work<!-- @state -->
+            </h1>
+          </div>
+          <!-- @state-none: reviewed -- a settled Work is opened from the trail, not from a position in the run -->
+          <!-- @state: work-1 -->
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 1 of 3</span></div>
+          <!-- @state -->
+          <!-- @state: work-2 work-2-returned work-2-requested work-2-consolidated -->
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 2 of 3</span></div>
+          <!-- @state -->
+          <!-- @state: work-3 -->
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 3 of 3</span></div>
+          <!-- @state -->
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <!-- [html-validate-disable-block unique-landmark -- @state variants of one screen; only one renders per page] -->
+
+          <!-- @state: work-1 -->
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="curator-review-details-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="curator-review-details-heading" class="h4">Characterisation of biofilm formation on stainless steel surfaces</h2>
+                  <div class="row g-3">
+                    <div class="col-md-5">
+                      <p class="form-label mb-1">Type</p>
+                      <p class="mb-0">Journal article</p>
+                    </div>
+                    <div class="col-md-7">
+                      <p class="form-label mb-1">DOI</p>
+                      <p class="mb-0">10.1080/08927014.2025.2201234</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Contributors</p>
+                  <p>Harm Van Acker · Tony Coenye · Louise Martinez-Garcia</p>
+                  <p class="form-label mb-1">Provenance</p>
+                  <p class="mb-0">Crossref, corrected by Mieke Declercq acting for Harm Van Acker</p>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-context-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-context-heading" class="h4">Context</h2>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <p class="form-label mb-1">Project</p>
+                      <p class="mb-0">Microbial biofilm dynamics</p>
+                    </div>
+                    <div class="col-md-6">
+                      <p class="form-label mb-1">Funding reference</p>
+                      <p class="mb-0">01G00420</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Protected classification</p>
+                  <p class="mb-0">VABB: A1 journal article</p>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-files-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-files-heading" class="h4">File and access</h2>
+                  <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> biofilm-formation-aam.pdf</p>
+                  <p class="small">Accepted manuscript · PDF · 1.8 MB</p>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="curator-review-file-access" class="form-label">File access</label>
+                      <select id="curator-review-file-access" class="form-select">
+                        <option selected>Open access</option>
+                        <option>Restricted</option>
+                        <option>Embargo</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="curator-review-visibility" class="form-label">Record visibility</label>
+                      <select id="curator-review-visibility" class="form-select">
+                        <option selected>Public</option>
+                        <option>Private</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-actions-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-actions-heading" class="h4">Decision</h2>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-primary">Approve</a>
+                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
+                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="curator-review-history-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-history-heading" class="h5">History</h2>
+                  <ol class="small mb-3">
+                    <li>Submitted by Mieke, proxy · Today</li>
+                    <li>Created from Crossref · Yesterday</li>
+                  </ol>
+                  <p class="form-label mb-1">Submission message</p>
+                  <p class="small mb-0">Harm confirmed this is the accepted manuscript.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- Prototype note: the Undo label is provisional. Raven has no confirmed reverse transition for Review, and a first publication stamp cannot be withdrawn. -->
+          <!-- @state: work-2 -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Approved · Public</p><p class="small text-muted mb-0">Characterisation of biofilm formation on stainless steel surfaces</p></div>
+                <a href="/templates/review-flow/curator-review.html?state=work-1" class="btn btn-ghost btn-sm">Undo</a>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <!-- @state -->
+          <!-- @state: work-2-returned -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Returned · now private</p><p class="small text-muted mb-0">Characterisation of biofilm formation on stainless steel surfaces</p></div>
+                <a href="/templates/review-flow/curator-review.html?state=work-1" class="btn btn-ghost btn-sm">Undo</a>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <!-- @state -->
+          <!-- @state: work-2-requested -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Changes requested · Work unchanged</p><p class="small text-muted mb-0">Characterisation of biofilm formation on stainless steel surfaces</p></div>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: work-2 work-2-returned work-2-requested -->
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <div class="alert alert-warning mb-0"><strong>Open duplicate cluster.</strong> This Work can be approved, but not made public, until the cluster is consolidated. <a href="/templates/review-flow/curator-duplicates.html">Consolidate to publish</a></div>
+              <section class="card" aria-labelledby="curator-review-2-details-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="curator-review-2-details-heading" class="h4">A multilingual corpus for civic participation research</h2>
+                  <div class="row g-3">
+                    <div class="col-md-5">
+                      <p class="form-label mb-1">Type</p>
+                      <p class="mb-0">Dataset</p>
+                    </div>
+                    <div class="col-md-7">
+                      <p class="form-label mb-1">DOI</p>
+                      <p class="mb-0">10.5281/zenodo.14882301</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Contributors</p>
+                  <p>Sara Peeters · Joris Vandamme</p>
+                  <p class="form-label mb-1">Provenance</p>
+                  <p class="mb-0">Deposited by Sara Peeters</p>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-2-files-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-2-files-heading" class="h4">File and access</h2>
+                  <p class="fw-semibold mb-1"><i class="if if-file" aria-hidden="true"></i> civic-corpus-v2.zip</p>
+                  <p class="small">Dataset · ZIP · 412 MB</p>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="curator-review-2-file-access" class="form-label">File access</label>
+                      <select id="curator-review-2-file-access" class="form-select">
+                        <option selected>Restricted</option>
+                        <option>Open access</option>
+                        <option>Embargo</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="curator-review-2-visibility" class="form-label">Record visibility</label>
+                      <select id="curator-review-2-visibility" class="form-select">
+                        <option selected>Public</option>
+                        <option>Private</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-2-actions-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-2-actions-heading" class="h4">Decision</h2>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve privately</a>
+                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
+                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="curator-review-2-history-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-2-history-heading" class="h5">History</h2>
+                  <ol class="small mb-0">
+                    <li>Submitted by Sara Peeters · Yesterday</li>
+                    <li>Matched to a duplicate cluster · Yesterday</li>
+                  </ol>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: work-2-consolidated -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2"><div class="flex-grow-1"><p class="fw-semibold mb-0">Consolidated · this Work can be approved</p><p class="small text-muted mb-0">A multilingual corpus for civic participation research</p></div><button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button></div>
+            </div>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: work-2-consolidated -->
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="curator-review-2c-details-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="curator-review-2c-details-heading" class="h4">A multilingual corpus for civic participation research</h2>
+                  <div class="row g-3">
+                    <div class="col-md-5">
+                      <p class="form-label mb-1">Type</p>
+                      <p class="mb-0">Dataset</p>
+                    </div>
+                    <div class="col-md-7">
+                      <p class="form-label mb-1">DOI</p>
+                      <p class="mb-0">10.5281/zenodo.14882301</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Contributors</p>
+                  <p>Sara Peeters · Joris Vandamme</p>
+                  <p class="form-label mb-1">Provenance</p>
+                  <p class="mb-0">Deposited by Sara Peeters</p>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-2c-files-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-2c-files-heading" class="h4">File and access</h2>
+                  <p class="fw-semibold mb-1"><i class="if if-file" aria-hidden="true"></i> civic-corpus-v2.zip</p>
+                  <p class="small">Dataset · ZIP · 412 MB</p>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="curator-review-2c-file-access" class="form-label">File access</label>
+                      <select id="curator-review-2c-file-access" class="form-select">
+                        <option selected>Restricted</option>
+                        <option>Open access</option>
+                        <option>Embargo</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="curator-review-2c-visibility" class="form-label">Record visibility</label>
+                      <select id="curator-review-2c-visibility" class="form-select">
+                        <option selected>Public</option>
+                        <option>Private</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-2c-actions-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-2c-actions-heading" class="h4">Decision</h2>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve</a>
+                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
+                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="curator-review-2c-history-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-2c-history-heading" class="h5">History</h2>
+                  <ol class="small mb-0">
+                    <li>Submitted by Sara Peeters · Yesterday</li>
+                    <li>Matched to a duplicate cluster · Yesterday</li>
+                  </ol>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: work-3 -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Approved · Private</p><p class="small text-muted mb-0">A multilingual corpus for civic participation research</p></div>
+                <a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-ghost btn-sm">Undo</a>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="curator-review-3-details-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="curator-review-3-details-heading" class="h4">Portable sensing for coastal water quality</h2>
+                  <div class="row g-3">
+                    <div class="col-md-5">
+                      <p class="form-label mb-1">Type</p>
+                      <p class="mb-0">Journal article</p>
+                    </div>
+                    <div class="col-md-7">
+                      <p class="form-label mb-1">DOI</p>
+                      <p class="mb-0">10.1016/j.marpolbul.2026.117402</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <p class="form-label mb-1">Contributors</p>
+                  <p>Lina Vermeulen · Pieter De Roover</p>
+                  <p class="form-label mb-1">Provenance</p>
+                  <p class="mb-0">Deposited by Lina Vermeulen</p>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-3-files-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-3-files-heading" class="h4">File and access</h2>
+                  <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> coastal-sensing-vor.pdf</p>
+                  <p class="small">Version of record · PDF · 2.4 MB</p>
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="curator-review-3-file-access" class="form-label">File access</label>
+                      <select id="curator-review-3-file-access" class="form-select">
+                        <option selected>Open access</option>
+                        <option>Restricted</option>
+                        <option>Embargo</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="curator-review-3-visibility" class="form-label">Record visibility</label>
+                      <select id="curator-review-3-visibility" class="form-select">
+                        <option selected>Public</option>
+                        <option>Private</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card" aria-labelledby="curator-review-3-actions-heading">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-3-actions-heading" class="h4">Decision</h2>
+                  <div class="d-flex flex-wrap gap-2">
+                    <a href="/templates/review-flow/curator-run-complete.html?state=works" class="btn btn-primary">Approve</a>
+                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
+                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="curator-review-3-history-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-review-3-history-heading" class="h5">History</h2>
+                  <ol class="small mb-0">
+                    <li>Submitted by Lina Vermeulen · Yesterday</li>
+                  </ol>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: reviewed -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-reviewed-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="curator-reviewed-heading" class="h4">Characterisation of biofilm formation on stainless steel surfaces</h2>
+                  <p>Journal article · Harm Van Acker · 2025</p>
+                  <p class="mb-0">Reviewed by Marie Curator today. The public record carries the accepted values.</p>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 class="h5">History</h2>
+                  <ol class="small mb-0">
+                    <li>Reviewed by Marie · Today</li>
+                    <li>Submitted by Mieke, proxy · Today</li>
+                    <li>Created from Crossref · Yesterday</li>
+                  </ol>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

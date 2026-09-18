@@ -1,0 +1,97 @@
+<!-- @title: Review flow — curator run complete -->
+<!-- @surface: backoffice -->
+<!-- @states: works, requests -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @state: works -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+  <!-- @state -->
+  <!-- @state: requests -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-requests.html -->
+  <!-- @state -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">
+              <!-- @state: works -->Review run complete<!-- @state -->
+              <!-- @state: requests -->Requests settled<!-- @state -->
+            </h1>
+          </div>
+        </div>
+        <div class="bt-toolbar__right">
+          <!-- @state: works -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
+          <!-- @state -->
+          <!-- @state: requests -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-requests.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Requests</a></div>
+          <!-- @state -->
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <!-- [html-validate-disable-block unique-landmark -- @state variants of one screen; only one renders per page] -->
+
+          <!-- @state: works -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-done-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-done-heading" class="h4">Nothing left in the queue</h2>
+                  <p>Three Works settled in this run.</p>
+                  <ol class="list-unstyled mb-4 d-flex flex-column gap-2">
+                    <li><span class="badge text-bg-success">Reviewed</span> <a href="/templates/review-flow/curator-review.html?state=reviewed">Characterisation of biofilm formation on stainless steel surfaces</a></li>
+                    <li><span class="badge text-bg-success">Reviewed</span> A multilingual corpus for civic participation research</li>
+                    <li><span class="badge text-bg-success">Reviewed</span> Portable sensing for coastal water quality</li>
+                  </ol>
+                  <div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator-requests.html" class="btn btn-primary">Requests <span class="badge text-bg-light text-dark">2</span></a><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost">Review queue</a></div>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 class="h5">Where this lives</h2>
+                  <p class="small mb-0">Every outcome above stays in each Work's history and on the dashboard.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: requests -->
+          <div class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-requests-done-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="curator-requests-done-heading" class="h4">Nothing left in Requests</h2>
+                  <p>Two requests settled in this run.</p>
+                  <ol class="list-unstyled mb-4 d-flex flex-column gap-2">
+                    <li><span class="badge text-bg-success">Settled</span> Mapping wetland recovery across the Scheldt basin</li>
+                    <li><span class="badge text-bg-success">Settled</span> Biofilm dynamics under repeated cleaning cycles</li>
+                  </ol>
+                  <div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator-queue.html" class="btn btn-primary">Review queue</a><a href="/templates/review-flow/curator-requests.html" class="btn btn-ghost">Requests</a></div>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 class="h5">Where this lives</h2>
+                  <p class="small mb-0">Every outcome above stays in each Work's history and on the dashboard.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

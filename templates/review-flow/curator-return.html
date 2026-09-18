@@ -1,0 +1,50 @@
+<!-- @title: Review flow — curator return -->
+<!-- @surface: backoffice -->
+
+<div class="u-layout--app" data-surface="backoffice">
+  <!-- @include: templates/review-flow/partials/curator-header.html -->
+  <!-- @include: templates/review-flow/partials/curator-sidebar-works.html -->
+
+  <main id="main-content">
+    <div class="u-main__header">
+      <div class="bt-toolbar">
+        <div class="bt-toolbar__left">
+          <div class="bt-toolbar__item">
+            <h1 class="bt-toolbar__title">Review Work</h1>
+          </div>
+          <div class="bt-toolbar__item"><span class="text-muted small">Work 1 of 3</span></div>
+        </div>
+        <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-main__body">
+      <section class="u-main__content">
+        <div class="u-main__content-body bt-bg p-3 p-lg-4">
+          <form action="/templates/review-flow/curator-review.html" method="get" class="row g-4 align-items-start">
+            <section class="col-xl-8" aria-labelledby="curator-return-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <input type="hidden" name="state" value="work-2-returned">
+                  <h2 id="curator-return-heading" class="h4">Return to the owner</h2>
+                  <p>Return blocks progress and makes the Work private.</p>
+                  <label for="curator-return-message" class="form-label">Message <span class="text-danger" aria-hidden="true">*</span></label>
+                  <textarea id="curator-return-message" class="form-control mb-3" rows="4" required>Please confirm whether the uploaded PDF is the accepted manuscript or the published version.</textarea>
+                  <button type="submit" class="btn btn-primary">Return and continue</button>
+                </div>
+              </div>
+            </section>
+            <aside class="col-xl-4" aria-labelledby="curator-return-effect-heading">
+              <div class="alert alert-warning">
+                <h2 id="curator-return-effect-heading" class="h6">Effect</h2>
+                <p class="small mb-0">Status becomes Returned. Record visibility becomes private. File access does not change.</p>
+              </div>
+            </aside>
+          </form>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
