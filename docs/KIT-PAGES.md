@@ -69,7 +69,7 @@ markup.
       <!-- live component HTML -->
     </div>
   </div>
-  <div class="ds-demo-note">Notes</div>
+  <div class="ds-demo-notes">Notes</div>
 </section>
 ```
 

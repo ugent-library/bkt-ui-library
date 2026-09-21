@@ -1,0 +1,183 @@
+<!-- @title: Navbar — Booktower Design System -->
+<!-- @surface: public -->
+
+<div class="ds-page">
+  <header class="ds-page-header">
+    <p class="ds-eyebrow">Patterns</p>
+    <h1 class="display-1">Navbar</h1>
+    <p class="lead">The public site header (<code>bt-navbar</code>). Navigation collapses into an offcanvas drawer below the <code>xxl</code> breakpoint. The canonical markup lives in <code>templates/partials/public-header.html</code>.</p>
+  </header>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Logged out</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-label">Anonymous visitor</div>
+      <div class="ds-demo-body p-0">
+        <header class="bt-navbar">
+          <div class="bt-toolbar container navbar navbar-expand-xxl p-0">
+            <div class="bt-toolbar__left">
+              <a href="/templates/biblio-public/public-index.html" class="bt-navbar__brand">
+                <i class="if if-ghent-university if-md" aria-hidden="true"></i>
+                <span class="d-xxl-none">Biblio</span>
+                <span class="d-none d-xxl-inline-block">Ghent University Academic Repository &amp; Bibliography</span>
+              </a>
+              <div class="bt-navbar__sep" aria-hidden="true"></div>
+              <div class="offcanvas-xxl offcanvas-end" id="navbar-demo-out"
+                tabindex="-1"
+                aria-labelledby="navbar-demo-out-label">
+                <div class="offcanvas-header d-xxl-none">
+                  <h2 class="h6 mt-2 ps-1" id="navbar-demo-out-label">
+                    Menu
+                  </h2>
+                  <button type="button" class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    data-bs-target="#navbar-demo-out"
+                    aria-label="Cancel"></button>
+                </div>
+                <div class="offcanvas-body px-2">
+                  <nav aria-label="Site navigation, logged out">
+                    <ul class="navbar-nav">
+                      <li class="nav-item d-xxl-none">
+                        <a href="/templates/biblio-public/public-index.html" class="bt-navbar__link">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-works.html" class="bt-navbar__link" aria-current="page">Works</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-researchers.html" class="bt-navbar__link">Researchers</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-organisations.html" class="bt-navbar__link">Organizations</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-projects.html" class="bt-navbar__link">Projects</a>
+                      </li>
+                    </ul>
+                  </nav>
+                  <div class="bt-navbar__offcanvas-actions">
+                    <a href="/templates/biblio-researcher/dashboard.html" class="btn btn-secondary btn-sm">Log in</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-navbar__actions">
+                <a href="#" class="bt-navbar__link">
+                  <i class="if if-global" aria-hidden="true"></i>
+                  <span>EN</span>
+                </a>
+                <a href="/templates/biblio-researcher/dashboard.html" class="btn btn-secondary btn-sm d-none d-xxl-inline-block ms-1">
+                  Log in
+                </a>
+                <button class="btn btn-ghost d-xxl-none" type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#navbar-demo-out"
+                  aria-controls="navbar-demo-out"
+                  aria-label="Toggle navigation menu">
+                  <i class="if if-menu" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Logged in</h2>
+    <div class="ds-demo">
+      <div class="ds-demo-body p-0">
+        <header class="bt-navbar">
+          <div class="bt-toolbar container navbar navbar-expand-xxl p-0">
+            <div class="bt-toolbar__left">
+              <a href="/templates/biblio-public/public-index.html" class="bt-navbar__brand">
+                <i class="if if-ghent-university if-md" aria-hidden="true"></i>
+                <span class="d-xxl-none">Biblio</span>
+                <span class="d-none d-xxl-inline-block">Ghent University Academic Repository &amp; Bibliography</span>
+              </a>
+              <div class="bt-navbar__sep" aria-hidden="true"></div>
+              <div class="offcanvas-xxl offcanvas-end" id="navbar-demo-in"
+                tabindex="-1"
+                aria-labelledby="navbar-demo-in-label">
+                <div class="offcanvas-header d-xxl-none">
+                  <h2 class="h6 mt-2 ps-1" id="navbar-demo-in-label">
+                    Menu
+                  </h2>
+                  <button type="button" class="btn-close"
+                    data-bs-dismiss="offcanvas"
+                    data-bs-target="#navbar-demo-in"
+                    aria-label="Cancel"></button>
+                </div>
+                <div class="offcanvas-body px-2">
+                  <nav aria-label="Site navigation, logged in">
+                    <ul class="navbar-nav">
+                      <li class="nav-item d-xxl-none">
+                        <a href="/templates/biblio-public/public-index.html" class="bt-navbar__link">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-works.html" class="bt-navbar__link" aria-current="page">Works</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-researchers.html" class="bt-navbar__link">Researchers</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-organisations.html" class="bt-navbar__link">Organizations</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="/templates/biblio-public/public-projects.html" class="bt-navbar__link">Projects</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <div class="bt-toolbar__right">
+              <div class="bt-navbar__actions">
+                <a href="#" class="bt-navbar__link">
+                  <i class="if if-global" aria-hidden="true"></i>
+                  <span>EN</span>
+                </a>
+                <div class="dropdown">
+                  <button class="bt-avatar" type="button"
+                    data-bs-toggle="dropdown"
+                    aria-label="Account menu for Wouter Bosmans">
+                    WB
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><span class="dropdown-item-text">
+                      <strong>Wouter Bosmans</strong><br>
+                      <span class="text-muted">Wouter.Bosmans@UGent.be</span>
+                    </span></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/templates/biblio-researcher/dashboard.html">
+                        <i class="if if-add if--sm me-2" aria-hidden="true"></i>
+                        Manage research output
+                      </a></li>
+                    <li><a class="dropdown-item" href="#">
+                        <i class="if if-bookmark-line if--sm me-2" aria-hidden="true"></i>
+                        My lists
+                      </a></li>
+                    <li><a class="dropdown-item" href="#">
+                        <i class="if if-settings if--sm me-2" aria-hidden="true"></i>
+                        Settings
+                      </a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Log out</a></li>
+                  </ul>
+                </div>
+                <button class="btn btn-ghost d-xxl-none" type="button"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#navbar-demo-in"
+                  aria-controls="navbar-demo-in"
+                  aria-label="Toggle navigation menu">
+                  <i class="if if-menu" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+    </div>
+  </section>
+</div>
