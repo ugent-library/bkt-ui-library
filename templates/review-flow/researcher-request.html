@@ -25,31 +25,38 @@
       <section class="u-main__content">
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
           <div class="row g-4 align-items-start">
-            <section class="col-xl-8" aria-label="Requested project and funding fields">
-              <form id="researcher-request-form" action="/templates/review-flow/researcher-inbox.html" method="get" class="card">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="researcher-request-summary-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="researcher-request-summary-heading" class="h4 mb-1">Mapping wetland recovery across the Scheldt basin</h2>
+                  <p class="small text-muted mb-0">Dataset · Wouter Bosmans, Annelies De Smet · 2025</p>
+                  <div class="alert alert-light mb-0"><strong>Marie Curator:</strong> Which project funded the fieldwork? Add the project and funding reference.</div>
+                </div>
+              </section>
+
+              <form id="researcher-request-form" action="/templates/review-flow/researcher-inbox.html" method="get" class="card" aria-label="Requested project and funding fields">
                 <input type="hidden" name="state" value="changes-sent">
                 <div class="card-body p-4">
                   <span class="badge text-bg-primary mb-3">Changes requested</span>
                   <h2 id="researcher-request-heading" class="h4">Project and funding</h2>
-                  <p>Marie Curator: Which project funded the fieldwork? Add the project and funding reference.</p>
                   <label for="researcher-request-project" class="form-label">Project</label>
                   <select id="researcher-request-project" class="form-select mb-3">
                     <option selected>GreenCity — climate-ready public space</option>
+                    <option>Delta Futures</option>
                     <option>No project</option>
                   </select>
                   <label for="researcher-request-reference" class="form-label">Funding reference</label>
-                  <input type="text" id="researcher-request-reference" class="form-control mb-3" value="BOF24/GOA/014" autocomplete="off">
+                  <input type="text" id="researcher-request-reference" class="form-control mb-3" value="BOF23/GOA/021" autocomplete="off">
                   <label for="researcher-request-message" class="form-label">Message <span class="small">(optional)</span></label>
                   <textarea id="researcher-request-message" class="form-control" rows="3">This project covered the fieldwork and data preparation.</textarea>
                 </div>
               </form>
-            </section>
-            <aside class="col-xl-4" aria-labelledby="researcher-request-current-heading">
+            </div>
+            <aside class="col-xl-4" aria-labelledby="researcher-request-effect-heading">
               <div class="card">
                 <div class="card-body p-4">
-                  <h2 id="researcher-request-current-heading" class="h5">Current Work</h2>
-                  <p class="small">Reviewed · Public</p>
-                  <p class="fw-semibold mb-1">Mapping wetland recovery across the Scheldt basin</p>
+                  <h2 id="researcher-request-effect-heading" class="h5">Effect</h2>
                   <p class="small mb-0">The public record stays unchanged while this request is open.</p>
                 </div>
               </div>

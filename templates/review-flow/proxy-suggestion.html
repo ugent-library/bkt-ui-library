@@ -24,20 +24,97 @@
       <section class="u-main__content">
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
           <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
-          <form id="proxy-suggestion-form" action="/templates/review-flow/proxy-inbox.html" method="get" class="card">
-            <input type="hidden" name="state" value="suggestion-sent">
-            <div class="card-body p-4">
-              <h2 class="h4">Propose corrected values</h2>
-              <p>The accepted Work and public page stay unchanged until a curator accepts this suggestion.</p>
-              <label for="proxy-suggestion-project" class="form-label">Project</label>
-              <select id="proxy-suggestion-project" class="form-select mb-3">
-                <option selected>Microbial biofilm dynamics</option>
-                <option>Industrial Hygiene Lab</option>
-              </select>
-              <label for="proxy-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
-              <textarea id="proxy-suggestion-message" class="form-control" rows="3">Harm confirmed the project correction.</textarea>
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="proxy-suggestion-summary-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="proxy-suggestion-summary-heading" class="h4 mb-1">Biofilm dynamics under repeated cleaning cycles</h2>
+                  <p class="small text-muted mb-0">Journal article · Harm Van Acker, Tony Coenye · 2024</p>
+                </div>
+              </section>
+
+              <form id="proxy-suggestion-form" action="/templates/review-flow/proxy-inbox.html" method="get" class="d-flex flex-column gap-4">
+                <input type="hidden" name="state" value="suggestion-sent">
+                <section class="card" aria-labelledby="proxy-suggestion-details-heading">
+                  <div class="card-body p-4">
+                    <h2 id="proxy-suggestion-details-heading" class="h4 mb-3">Work details</h2>
+                    <div class="mb-3">
+                      <label for="proxy-suggestion-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label>
+                      <input type="text" id="proxy-suggestion-title" class="form-control" value="Biofilm dynamics under repeated cleaning cycles" required autocomplete="off">
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="proxy-suggestion-type" class="form-label">Type</label>
+                        <select id="proxy-suggestion-type" class="form-select">
+                          <option selected>Journal article</option>
+                          <option>Dataset</option>
+                          <option>Book chapter</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="proxy-suggestion-doi" class="form-label">DOI</label>
+                        <input type="text" id="proxy-suggestion-doi" class="form-control" value="10.1016/j.bioflm.2024.100112" autocomplete="off">
+                      </div>
+                    </div>
+                    <hr>
+                    <label for="proxy-suggestion-contributors" class="form-label">Contributors</label>
+                    <input type="text" id="proxy-suggestion-contributors" class="form-control" value="Harm Van Acker; Tony Coenye" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-label="Work project and funding fields">
+                  <div class="card-body p-4">
+                    <h2 class="h4 mb-3">Project and funding</h2>
+                    <label for="proxy-suggestion-project" class="form-label">Project</label>
+                    <select id="proxy-suggestion-project" class="form-select mb-3">
+                      <option selected>Microbial biofilm dynamics</option>
+                      <option>Industrial Hygiene Lab</option>
+                    </select>
+                    <label for="proxy-suggestion-funding" class="form-label">Funding reference</label>
+                    <input type="text" id="proxy-suggestion-funding" class="form-control" value="01G01822" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-labelledby="proxy-suggestion-file-heading">
+                  <div class="card-body p-4">
+                    <h2 id="proxy-suggestion-file-heading" class="h4 mb-3">File and access</h2>
+                    <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> biofilm-cleaning-aam.pdf</p>
+                    <p class="small">Accepted manuscript · PDF · 1.4 MB</p>
+                    <fieldset>
+                      <legend class="form-label">File access</legend>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="file_access" id="proxy-suggestion-access-open" value="open" checked>
+                        <label class="form-check-label" for="proxy-suggestion-access-open">Open access</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="file_access" id="proxy-suggestion-access-restricted" value="restricted">
+                        <label class="form-check-label" for="proxy-suggestion-access-restricted">Restricted</label>
+                      </div>
+                    </fieldset>
+                    <hr>
+                    <p class="form-label mb-1">Protected classifications</p>
+                    <p class="mb-0">Microbiology <span class="small">(read-only)</span></p>
+                  </div>
+                </section>
+
+                <section class="card" aria-label="Suggestion message">
+                  <div class="card-body p-4">
+                    <label for="proxy-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
+                    <textarea id="proxy-suggestion-message" class="form-control" rows="3">Harm confirmed the project correction.</textarea>
+                  </div>
+                </section>
+              </form>
             </div>
-          </form>
+            <aside class="col-xl-4" aria-labelledby="proxy-suggestion-effect-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-suggestion-effect-heading" class="h5">Effect</h2>
+                  <p class="small mb-0">The accepted Work and public page stay unchanged until a curator accepts this suggestion.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
     </div>

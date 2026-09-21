@@ -1,6 +1,6 @@
 <!-- @title: Review flow — researcher Work form -->
 <!-- @surface: backoffice -->
-<!-- @states: edit, returned -->
+<!-- @states: edit, returned, submitted -->
 
 <div class="u-layout--app" data-surface="backoffice">
   <!-- @include: templates/review-flow/partials/researcher-header.html -->
@@ -8,17 +8,26 @@
 
   <main id="main-content">
     <div class="u-main__header">
-      <div><a href="/templates/review-flow/researcher-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Inbox</a></div>
+      <div>
+        <!-- @state: edit returned -->
+        <a href="/templates/review-flow/researcher-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Inbox</a>
+        <!-- @state -->
+        <!-- @state: submitted -->
+        <a href="/templates/review-flow/researcher-my-works.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> My works</a>
+        <!-- @state -->
+      </div>
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
             <h1 class="bt-toolbar__title">
               <!-- @state: edit -->Edit Work<!-- @state -->
               <!-- @state: returned -->Returned Work<!-- @state -->
+              <!-- @state: submitted -->Submitted Work<!-- @state -->
             </h1>
           </div>
         </div>
         <div class="bt-toolbar__right">
+          <!-- @state: edit returned -->
           <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-my-works.html" class="btn btn-ghost">Save draft</a></div>
           <div class="bt-toolbar__item">
             <div class="btn-group">
@@ -31,6 +40,10 @@
               </ul>
             </div>
           </div>
+          <!-- @state -->
+          <!-- @state: submitted -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-my-works.html" class="btn btn-primary">Save</a></div>
+          <!-- @state -->
         </div>
       </div>
     </div>
@@ -207,6 +220,98 @@
                   </div>
                 </section>
 
+              </div>
+            </div>
+            <aside class="col-xl-4" aria-labelledby="researcher-source-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="researcher-source-heading" class="h5">Source</h2>
+                  <dl class="mb-0">
+                    <dt>Record</dt>
+                    <dd>Deposited by Wouter Bosmans</dd>
+                    <dt>Metadata</dt>
+                    <dd>Crossref, corrected by Wouter</dd>
+                    <dt>Last saved</dt>
+                    <dd class="mb-0">Today, 10:42</dd>
+                  </dl>
+                </div>
+              </div>
+            </aside>
+          </div>
+          <!-- @state -->
+
+          <!-- @state: submitted -->
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8">
+              <div class="d-flex flex-column gap-4">
+                <section class="card" aria-labelledby="researcher-form-summary-heading">
+                  <div class="card-body p-4">
+                    <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-primary">Submitted</span><span class="badge text-bg-success">Public</span></div>
+                    <h2 id="researcher-form-summary-heading" class="h4 mb-1">Urban forests as essential infrastructure for climate resilience</h2>
+                    <p class="small text-muted mb-0">Journal article · Wouter Bosmans, Karen De Pauw, Judith Van den Berg · 2026</p>
+                  </div>
+                </section>
+                <section class="card" aria-labelledby="researcher-edit-details-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-details-heading" class="h4 mb-3">Work details</h2>
+                    <div class="mb-3">
+                      <label for="researcher-edit-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label>
+                      <input type="text" id="researcher-edit-title" class="form-control" value="Urban forests as essential infrastructure for climate resilience" required autocomplete="off">
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="researcher-edit-type" class="form-label">Type</label>
+                        <select id="researcher-edit-type" class="form-select">
+                          <option selected>Journal article</option>
+                          <option>Dataset</option>
+                          <option>Book chapter</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="researcher-edit-doi" class="form-label">DOI</label>
+                        <input type="text" id="researcher-edit-doi" class="form-control" value="10.1111/geb.13844" autocomplete="off">
+                      </div>
+                    </div>
+                    <hr>
+                    <label for="researcher-edit-contributors" class="form-label">Contributors</label>
+                    <input type="text" id="researcher-edit-contributors" class="form-control" value="Wouter Bosmans; Karen De Pauw; Judith Van den Berg" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-label="Work project and funding fields">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-context-heading" class="h4 mb-3">Project and funding</h2>
+                    <label for="researcher-edit-project" class="form-label">Project</label>
+                    <select id="researcher-edit-project" class="form-select mb-3">
+                      <option selected>GreenCity — climate-ready public space</option>
+                      <option>No project</option>
+                    </select>
+                    <label for="researcher-edit-funding" class="form-label">Funding reference</label>
+                    <input type="text" id="researcher-edit-funding" class="form-control" value="BOF24/GOA/014" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-labelledby="researcher-edit-file-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-edit-file-heading" class="h4 mb-3">File and access</h2>
+                    <p class="fw-semibold mb-1"><i class="if if-file-pdf" aria-hidden="true"></i> urban-forests-aam.pdf</p>
+                    <p class="small">Accepted manuscript · PDF · 2.1 MB</p>
+                    <fieldset>
+                      <legend class="form-label">File access</legend>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="file_access" id="researcher-access-open" value="open" checked>
+                        <label class="form-check-label" for="researcher-access-open">Open access</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="file_access" id="researcher-access-restricted" value="restricted">
+                        <label class="form-check-label" for="researcher-access-restricted">Restricted</label>
+                      </div>
+                    </fieldset>
+                    <hr>
+                    <p class="form-label mb-1">Protected classifications</p>
+                    <p class="mb-0">VABB: A1 journal article <span class="small">(read-only)</span></p>
+                  </div>
+                </section>
               </div>
             </div>
             <aside class="col-xl-4" aria-labelledby="researcher-source-heading">

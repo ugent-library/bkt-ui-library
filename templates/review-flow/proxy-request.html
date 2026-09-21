@@ -15,6 +15,7 @@
           </div>
         </div>
         <div class="bt-toolbar__right">
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy-work-form.html?state=edit" class="btn btn-ghost">Open full form</a></div>
           <div class="bt-toolbar__item"><button type="submit" form="proxy-request-form" class="btn btn-primary">Send changes</button></div>
         </div>
       </div>
@@ -24,21 +25,42 @@
       <section class="u-main__content">
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
           <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
-          <form id="proxy-request-form" action="/templates/review-flow/proxy-inbox.html" method="get" class="card">
-            <input type="hidden" name="state" value="changes-sent">
-            <div class="card-body p-4">
-              <span class="badge text-bg-primary mb-3">Changes requested</span>
-              <h2 class="h4">Project</h2>
-              <p>Marie Curator: Which project supported this experiment?</p>
-              <label for="proxy-request-project" class="form-label">Project</label>
-              <select id="proxy-request-project" class="form-select mb-3">
-                <option selected>Microbial biofilm dynamics</option>
-                <option>No project</option>
-              </select>
-              <label for="proxy-request-message" class="form-label">Message <span class="small">(optional)</span></label>
-              <textarea id="proxy-request-message" class="form-control" rows="3">Confirmed with Harm: this is the correct project.</textarea>
+          <div class="row g-4 align-items-start">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="proxy-request-summary-heading">
+                <div class="card-body p-4">
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="proxy-request-summary-heading" class="h4 mb-1">Biofilm dynamics under repeated cleaning cycles</h2>
+                  <p class="small text-muted mb-0">Journal article · Harm Van Acker, Tony Coenye · 2024</p>
+                  <div class="alert alert-light mb-0"><strong>Marie Curator:</strong> Which project supported this experiment?</div>
+                </div>
+              </section>
+
+              <form id="proxy-request-form" action="/templates/review-flow/proxy-inbox.html" method="get" class="card" aria-label="Requested project field">
+                <input type="hidden" name="state" value="changes-sent">
+                <div class="card-body p-4">
+                  <span class="badge text-bg-primary mb-3">Changes requested</span>
+                  <h2 class="h4">Project</h2>
+                  <label for="proxy-request-project" class="form-label">Project</label>
+                  <select id="proxy-request-project" class="form-select mb-3">
+                    <option selected>Microbial biofilm dynamics</option>
+                    <option>Industrial Hygiene Lab</option>
+                    <option>No project</option>
+                  </select>
+                  <label for="proxy-request-message" class="form-label">Message <span class="small">(optional)</span></label>
+                  <textarea id="proxy-request-message" class="form-control" rows="3">Confirmed with Harm: this is the correct project.</textarea>
+                </div>
+              </form>
             </div>
-          </form>
+            <aside class="col-xl-4" aria-labelledby="proxy-request-effect-heading">
+              <div class="card">
+                <div class="card-body p-4">
+                  <h2 id="proxy-request-effect-heading" class="h5">Effect</h2>
+                  <p class="small mb-0">The public record stays unchanged while this request is open.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
     </div>

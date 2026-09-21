@@ -24,28 +24,92 @@
       <section class="u-main__content">
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
           <div class="row g-4 align-items-start">
-            <section class="col-xl-8" aria-labelledby="researcher-suggestion-heading">
-              <form id="researcher-suggestion-form" action="/templates/review-flow/researcher-inbox.html" method="get" class="card">
-                <input type="hidden" name="state" value="suggestion-sent">
+            <div class="col-xl-8 d-flex flex-column gap-4">
+              <section class="card" aria-labelledby="researcher-suggestion-summary-heading">
                 <div class="card-body p-4">
-                  <h2 id="researcher-suggestion-heading" class="h4">Propose corrected values</h2>
-                  <p>The public record keeps its accepted values until a curator accepts these changes.</p>
-                  <label for="researcher-suggestion-project" class="form-label">Project</label>
-                  <select id="researcher-suggestion-project" class="form-select mb-3">
-                    <option selected>GreenCity — climate-ready public space</option>
-                    <option>Delta Futures</option>
-                  </select>
-                  <label for="researcher-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
-                  <textarea id="researcher-suggestion-message" class="form-control" rows="3">The dataset belongs to GreenCity, not Delta Futures.</textarea>
+                  <div class="d-flex flex-wrap gap-2 mb-3"><span class="badge text-bg-success">Reviewed</span><span class="badge text-bg-success">Public</span></div>
+                  <h2 id="researcher-suggestion-summary-heading" class="h4 mb-1">Mapping wetland recovery across the Scheldt basin</h2>
+                  <p class="small text-muted mb-0">Dataset · Wouter Bosmans, Annelies De Smet · 2025</p>
                 </div>
+              </section>
+
+              <form id="researcher-suggestion-form" action="/templates/review-flow/researcher-inbox.html" method="get" class="d-flex flex-column gap-4">
+                <input type="hidden" name="state" value="suggestion-sent">
+                <section class="card" aria-labelledby="researcher-suggestion-details-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-suggestion-details-heading" class="h4 mb-3">Work details</h2>
+                    <div class="mb-3">
+                      <label for="researcher-suggestion-title" class="form-label">Title <span class="text-danger" aria-hidden="true">*</span></label>
+                      <input type="text" id="researcher-suggestion-title" class="form-control" value="Mapping wetland recovery across the Scheldt basin" required autocomplete="off">
+                    </div>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label for="researcher-suggestion-type" class="form-label">Type</label>
+                        <select id="researcher-suggestion-type" class="form-select">
+                          <option selected>Dataset</option>
+                          <option>Journal article</option>
+                          <option>Book chapter</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="researcher-suggestion-doi" class="form-label">DOI</label>
+                        <input type="text" id="researcher-suggestion-doi" class="form-control" value="10.5281/zenodo.14920431" autocomplete="off">
+                      </div>
+                    </div>
+                    <hr>
+                    <label for="researcher-suggestion-contributors" class="form-label">Contributors</label>
+                    <input type="text" id="researcher-suggestion-contributors" class="form-control" value="Wouter Bosmans; Annelies De Smet" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-label="Work project and funding fields">
+                  <div class="card-body p-4">
+                    <h2 class="h4 mb-3">Project and funding</h2>
+                    <label for="researcher-suggestion-project" class="form-label">Project</label>
+                    <select id="researcher-suggestion-project" class="form-select mb-3">
+                      <option selected>GreenCity — climate-ready public space</option>
+                      <option>Delta Futures</option>
+                    </select>
+                    <label for="researcher-suggestion-funding" class="form-label">Funding reference</label>
+                    <input type="text" id="researcher-suggestion-funding" class="form-control" value="BOF23/GOA/021" autocomplete="off">
+                  </div>
+                </section>
+
+                <section class="card" aria-labelledby="researcher-suggestion-file-heading">
+                  <div class="card-body p-4">
+                    <h2 id="researcher-suggestion-file-heading" class="h4 mb-3">File and access</h2>
+                    <p class="fw-semibold mb-1"><i class="if if-file" aria-hidden="true"></i> wetland-recovery.csv</p>
+                    <p class="small">Dataset · CSV · 48 MB</p>
+                    <fieldset>
+                      <legend class="form-label">File access</legend>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="file_access" id="researcher-suggestion-access-open" value="open" checked>
+                        <label class="form-check-label" for="researcher-suggestion-access-open">Open access</label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="file_access" id="researcher-suggestion-access-restricted" value="restricted">
+                        <label class="form-check-label" for="researcher-suggestion-access-restricted">Restricted</label>
+                      </div>
+                    </fieldset>
+                    <hr>
+                    <p class="form-label mb-1">Protected classifications</p>
+                    <p class="mb-0">Environmental sciences <span class="small">(read-only)</span></p>
+                  </div>
+                </section>
+
+                <section class="card" aria-label="Suggestion message">
+                  <div class="card-body p-4">
+                    <label for="researcher-suggestion-message" class="form-label">Message <span class="small">(optional)</span></label>
+                    <textarea id="researcher-suggestion-message" class="form-control" rows="3">The dataset belongs to GreenCity, not Delta Futures.</textarea>
+                  </div>
+                </section>
               </form>
-            </section>
-            <aside class="col-xl-4" aria-labelledby="researcher-suggestion-accepted-heading">
+            </div>
+            <aside class="col-xl-4" aria-labelledby="researcher-suggestion-effect-heading">
               <div class="card">
                 <div class="card-body p-4">
-                  <h2 id="researcher-suggestion-accepted-heading" class="h5">Accepted value</h2>
-                  <p class="form-label mb-1">Project</p>
-                  <p class="mb-0">Delta Futures</p>
+                  <h2 id="researcher-suggestion-effect-heading" class="h5">Effect</h2>
+                  <p class="small mb-0">The public record keeps its accepted values until a curator accepts these changes.</p>
                 </div>
               </div>
             </aside>

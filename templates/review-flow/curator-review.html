@@ -1,6 +1,6 @@
 <!-- @title: Review flow — curator Work review -->
 <!-- @surface: backoffice -->
-<!-- @states: work-1, work-2, work-2-returned, work-2-requested, work-2-consolidated, work-3, reviewed -->
+<!-- @states: work-1, work-2, work-2-returned, work-2-requested, work-2-consolidated, work-3, work-3-consolidated, reviewed -->
 
 <div class="u-layout--app" data-surface="backoffice">
   <!-- @include: templates/review-flow/partials/curator-header.html -->
@@ -13,7 +13,7 @@
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
             <h1 class="bt-toolbar__title">
-              <!-- @state: work-1 work-2 work-2-returned work-2-requested work-2-consolidated work-3 -->Review Work<!-- @state -->
+              <!-- @state: work-1 work-2 work-2-returned work-2-requested work-2-consolidated work-3 work-3-consolidated -->Review Work<!-- @state -->
               <!-- @state: reviewed -->Reviewed Work<!-- @state -->
             </h1>
           </div>
@@ -24,13 +24,13 @@
           <!-- @state: work-2 work-2-returned work-2-requested work-2-consolidated -->
           <div class="bt-toolbar__item"><span class="text-muted small">Work 2 of 3</span></div>
           <!-- @state -->
-          <!-- @state: work-3 -->
+          <!-- @state: work-3 work-3-consolidated -->
           <div class="bt-toolbar__item"><span class="text-muted small">Work 3 of 3</span></div>
           <!-- @state -->
         </div>
         <div class="bt-toolbar__right">
           <!-- @state-none: reviewed -- a settled Work carries no decision; it is opened to be read -->
-          <!-- @state: work-1 work-2 work-2-returned work-2-requested work-2-consolidated work-3 -->
+          <!-- @state: work-1 work-2 work-2-returned work-2-requested work-2-consolidated work-3 work-3-consolidated -->
           <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a></div>
           <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a></div>
           <!-- @state -->
@@ -41,9 +41,9 @@
           <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve privately</a></div>
           <!-- @state -->
           <!-- @state: work-2-consolidated -->
-          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-3-consolidated" class="btn btn-primary">Approve</a></div>
           <!-- @state -->
-          <!-- @state: work-3 -->
+          <!-- @state: work-3 work-3-consolidated -->
           <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-run-complete.html?state=works" class="btn btn-primary">Approve</a></div>
           <!-- @state -->
         </div>
@@ -324,6 +324,19 @@
               </div>
             </div>
           </div>
+          <!-- @state -->
+          <!-- @state: work-3-consolidated -->
+          <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div class="toast show" role="status" aria-live="polite" aria-atomic="true">
+              <div class="toast-body d-flex align-items-start gap-2">
+                <div class="flex-grow-1"><p class="fw-semibold mb-0">Approved · Public</p><p class="small text-muted mb-0">A multilingual corpus for civic participation research</p></div>
+                <a href="/templates/review-flow/curator-review.html?state=work-2-consolidated" class="btn btn-ghost btn-sm">Undo</a>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Dismiss"></button>
+              </div>
+            </div>
+          </div>
+          <!-- @state -->
+          <!-- @state: work-3 work-3-consolidated -->
           <div class="row g-4 align-items-start">
             <div class="col-xl-8 d-flex flex-column gap-4">
               <section class="card" aria-labelledby="curator-review-3-details-heading">
