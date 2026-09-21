@@ -8,6 +8,7 @@
 
   <main id="main-content">
     <div class="u-main__header">
+      <div><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
@@ -28,7 +29,23 @@
           <!-- @state -->
         </div>
         <div class="bt-toolbar__right">
-          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
+          <!-- @state-none: reviewed -- a settled Work carries no decision; it is opened to be read -->
+          <!-- @state: work-1 work-2 work-2-returned work-2-requested work-2-consolidated work-3 -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a></div>
+          <!-- @state -->
+          <!-- @state: work-1 -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-primary">Approve</a></div>
+          <!-- @state -->
+          <!-- @state: work-2 work-2-returned work-2-requested -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve privately</a></div>
+          <!-- @state -->
+          <!-- @state: work-2-consolidated -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve</a></div>
+          <!-- @state -->
+          <!-- @state: work-3 -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-run-complete.html?state=works" class="btn btn-primary">Approve</a></div>
+          <!-- @state -->
         </div>
       </div>
     </div>
@@ -107,16 +124,6 @@
                 </div>
               </section>
 
-              <section class="card" aria-labelledby="curator-review-actions-heading">
-                <div class="card-body p-4">
-                  <h2 id="curator-review-actions-heading" class="h4">Decision</h2>
-                  <div class="d-flex flex-wrap gap-2">
-                    <a href="/templates/review-flow/curator-review.html?state=work-2" class="btn btn-primary">Approve</a>
-                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
-                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
-                  </div>
-                </div>
-              </section>
             </div>
             <aside class="col-xl-4" aria-labelledby="curator-review-history-heading">
               <div class="card">
@@ -219,16 +226,6 @@
                 </div>
               </section>
 
-              <section class="card" aria-labelledby="curator-review-2-actions-heading">
-                <div class="card-body p-4">
-                  <h2 id="curator-review-2-actions-heading" class="h4">Decision</h2>
-                  <div class="d-flex flex-wrap gap-2">
-                    <a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve privately</a>
-                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
-                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
-                  </div>
-                </div>
-              </section>
             </div>
             <aside class="col-xl-4" aria-labelledby="curator-review-2-history-heading">
               <div class="card">
@@ -302,16 +299,6 @@
                 </div>
               </section>
 
-              <section class="card" aria-labelledby="curator-review-2c-actions-heading">
-                <div class="card-body p-4">
-                  <h2 id="curator-review-2c-actions-heading" class="h4">Decision</h2>
-                  <div class="d-flex flex-wrap gap-2">
-                    <a href="/templates/review-flow/curator-review.html?state=work-3" class="btn btn-primary">Approve</a>
-                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
-                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
-                  </div>
-                </div>
-              </section>
             </div>
             <aside class="col-xl-4" aria-labelledby="curator-review-2c-history-heading">
               <div class="card">
@@ -386,16 +373,6 @@
                 </div>
               </section>
 
-              <section class="card" aria-labelledby="curator-review-3-actions-heading">
-                <div class="card-body p-4">
-                  <h2 id="curator-review-3-actions-heading" class="h4">Decision</h2>
-                  <div class="d-flex flex-wrap gap-2">
-                    <a href="/templates/review-flow/curator-run-complete.html?state=works" class="btn btn-primary">Approve</a>
-                    <a href="/templates/review-flow/curator-request-changes.html" class="btn btn-outline-primary">Request changes</a>
-                    <a href="/templates/review-flow/curator-return.html" class="btn btn-ghost">Return</a>
-                  </div>
-                </div>
-              </section>
             </div>
             <aside class="col-xl-4" aria-labelledby="curator-review-3-history-heading">
               <div class="card">

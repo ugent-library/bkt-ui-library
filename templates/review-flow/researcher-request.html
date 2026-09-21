@@ -7,6 +7,7 @@
 
   <main id="main-content">
     <div class="u-main__header">
+      <div><a href="/templates/review-flow/researcher-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Inbox</a></div>
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
@@ -14,7 +15,8 @@
           </div>
         </div>
         <div class="bt-toolbar__right">
-          <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Inbox</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/researcher-work-form.html?state=edit" class="btn btn-ghost">Open full form</a></div>
+          <div class="bt-toolbar__item"><button type="submit" form="researcher-request-form" class="btn btn-primary">Send changes</button></div>
         </div>
       </div>
     </div>
@@ -24,7 +26,7 @@
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
           <div class="row g-4 align-items-start">
             <section class="col-xl-8" aria-label="Requested project and funding fields">
-              <form action="/templates/review-flow/researcher-inbox.html" method="get" class="card">
+              <form id="researcher-request-form" action="/templates/review-flow/researcher-inbox.html" method="get" class="card">
                 <input type="hidden" name="state" value="changes-sent">
                 <div class="card-body p-4">
                   <span class="badge text-bg-primary mb-3">Changes requested</span>
@@ -38,11 +40,7 @@
                   <label for="researcher-request-reference" class="form-label">Funding reference</label>
                   <input type="text" id="researcher-request-reference" class="form-control mb-3" value="BOF24/GOA/014" autocomplete="off">
                   <label for="researcher-request-message" class="form-label">Message <span class="small">(optional)</span></label>
-                  <textarea id="researcher-request-message" class="form-control mb-3" rows="3">This project covered the fieldwork and data preparation.</textarea>
-                  <div class="d-flex flex-wrap gap-2">
-                    <button type="submit" class="btn btn-primary">Send changes</button>
-                    <a href="/templates/review-flow/researcher-work-form.html?state=edit" class="btn btn-ghost">Open full form</a>
-                  </div>
+                  <textarea id="researcher-request-message" class="form-control" rows="3">This project covered the fieldwork and data preparation.</textarea>
                 </div>
               </form>
             </section>

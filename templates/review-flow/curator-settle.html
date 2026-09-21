@@ -8,6 +8,7 @@
 
   <main id="main-content">
     <div class="u-main__header">
+      <div><a href="/templates/review-flow/curator-requests.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Requests</a></div>
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
@@ -21,7 +22,18 @@
           <!-- @state -->
         </div>
         <div class="bt-toolbar__right">
-          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-requests.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Requests</a></div>
+          <!-- @state: request-1 -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-settle.html?state=request-2-clarification" class="btn btn-ghost">Ask for clarification</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-settle.html?state=request-2-declined" class="btn btn-ghost">Decline</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-settle.html?state=request-2-adapted" class="btn btn-outline-primary">Adapt and accept</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-settle.html?state=request-2-accepted" class="btn btn-primary">Accept</a></div>
+          <!-- @state -->
+          <!-- @state: request-2 request-2-accepted request-2-adapted request-2-declined request-2-clarification -->
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-ghost">Ask for clarification</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-ghost">Decline</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-outline-primary">Adapt and accept</a></div>
+          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-primary">Accept</a></div>
+          <!-- @state -->
         </div>
       </div>
     </div>
@@ -55,8 +67,7 @@
                     </div>
                   </fieldset>
                   <label for="curator-settle-comment" class="form-label mt-3">Comment <span class="small">(optional)</span></label>
-                  <textarea id="curator-settle-comment" class="form-control mb-3" rows="3"></textarea>
-                  <div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator-settle.html?state=request-2-accepted" class="btn btn-primary">Accept</a><a href="/templates/review-flow/curator-settle.html?state=request-2-adapted" class="btn btn-outline-primary">Adapt and accept</a><a href="/templates/review-flow/curator-settle.html?state=request-2-declined" class="btn btn-ghost">Decline</a><a href="/templates/review-flow/curator-settle.html?state=request-2-clarification" class="btn btn-ghost">Ask for clarification</a></div>
+                  <textarea id="curator-settle-comment" class="form-control" rows="3"></textarea>
                 </div>
               </div>
             </section>
@@ -141,8 +152,7 @@
                     </div>
                   </fieldset>
                   <label for="curator-settle-2-comment" class="form-label mt-3">Comment <span class="small">(optional)</span></label>
-                  <textarea id="curator-settle-2-comment" class="form-control mb-3" rows="3"></textarea>
-                  <div class="d-flex flex-wrap gap-2"><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-primary">Accept</a><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-outline-primary">Adapt and accept</a><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-ghost">Decline</a><a href="/templates/review-flow/curator-run-complete.html?state=requests" class="btn btn-ghost">Ask for clarification</a></div>
+                  <textarea id="curator-settle-2-comment" class="form-control" rows="3"></textarea>
                 </div>
               </div>
             </section>

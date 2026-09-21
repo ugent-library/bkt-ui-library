@@ -7,6 +7,7 @@
 
   <main id="main-content">
     <div class="u-main__header">
+      <div><a href="/templates/review-flow/proxy-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Proxy Inbox</a></div>
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
@@ -14,7 +15,7 @@
           </div>
         </div>
         <div class="bt-toolbar__right">
-          <div class="bt-toolbar__item"><a href="/templates/review-flow/proxy-inbox.html?state=default" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Proxy Inbox</a></div>
+          <div class="bt-toolbar__item"><button type="submit" form="proxy-request-form" class="btn btn-primary">Send changes</button></div>
         </div>
       </div>
     </div>
@@ -23,7 +24,7 @@
       <section class="u-main__content">
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
           <div class="alert alert-light alert--sm"><strong>Acting for:</strong> Harm Van Acker</div>
-          <form action="/templates/review-flow/proxy-inbox.html" method="get" class="card">
+          <form id="proxy-request-form" action="/templates/review-flow/proxy-inbox.html" method="get" class="card">
             <input type="hidden" name="state" value="changes-sent">
             <div class="card-body p-4">
               <span class="badge text-bg-primary mb-3">Changes requested</span>
@@ -35,8 +36,7 @@
                 <option>No project</option>
               </select>
               <label for="proxy-request-message" class="form-label">Message <span class="small">(optional)</span></label>
-              <textarea id="proxy-request-message" class="form-control mb-3" rows="3">Confirmed with Harm: this is the correct project.</textarea>
-              <button type="submit" class="btn btn-primary">Send changes</button>
+              <textarea id="proxy-request-message" class="form-control" rows="3">Confirmed with Harm: this is the correct project.</textarea>
             </div>
           </form>
         </div>

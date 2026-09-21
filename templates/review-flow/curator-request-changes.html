@@ -7,6 +7,7 @@
 
   <main id="main-content">
     <div class="u-main__header">
+      <div><a href="/templates/review-flow/curator-review.html?state=work-1" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Work review</a></div>
       <div class="bt-toolbar">
         <div class="bt-toolbar__left">
           <div class="bt-toolbar__item">
@@ -15,7 +16,7 @@
           <div class="bt-toolbar__item"><span class="text-muted small">Work 1 of 3</span></div>
         </div>
         <div class="bt-toolbar__right">
-          <div class="bt-toolbar__item"><a href="/templates/review-flow/curator-queue.html" class="btn btn-ghost btn-sm"><i class="if if-arrow-left" aria-hidden="true"></i> Review queue</a></div>
+          <div class="bt-toolbar__item"><button type="submit" form="curator-request-changes-form" class="btn btn-primary">Send and continue</button></div>
         </div>
       </div>
     </div>
@@ -23,7 +24,7 @@
     <div class="u-main__body">
       <section class="u-main__content">
         <div class="u-main__content-body bt-bg p-3 p-lg-4">
-          <form action="/templates/review-flow/curator-review.html" method="get" class="row g-4 align-items-start">
+          <form id="curator-request-changes-form" action="/templates/review-flow/curator-review.html" method="get" class="row g-4 align-items-start">
             <section class="col-xl-8" aria-labelledby="curator-request-changes-heading">
               <div class="card">
                 <div class="card-body p-4">
@@ -46,8 +47,7 @@
                     </div>
                   </fieldset>
                   <label for="curator-request-message" class="form-label">Message</label>
-                  <textarea id="curator-request-message" class="form-control mb-3" rows="4">Which project funded the fieldwork? Add the project and funding reference.</textarea>
-                  <button type="submit" class="btn btn-primary">Send and continue</button>
+                  <textarea id="curator-request-message" class="form-control" rows="4">Which project funded the fieldwork? Add the project and funding reference.</textarea>
                 </div>
               </div>
             </section>
