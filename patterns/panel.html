@@ -8,7 +8,6 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Anatomy</h2>
-    <p class="mb-4"><code>bt-panel</code> contains a title, one or more body blocks, and an optional actions footer. For search-first panels, place the search body above a scrollable checklist body.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Add-to-list picker — search-first</h3>
@@ -82,12 +81,12 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">Typing filters the checklist; selecting a list leaves the panel open. The same field searches and names a new list. The checklist dims only when a request outlasts 300ms.</p>
+    <p class="mb-0 col-8 text-muted small">The checklist dims only when a request outlasts 300ms.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Create from the search field</h2>
-    <p class="mb-4">Offer Create when the typed name is not an exact match. Keep it alongside partial matches; remove it when the list already exists.</p>
+    <p class="mb-4">Offer Create alongside partial matches; remove it only when the typed name exactly matches an existing list.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Nothing matches — create the typed name</h3>
@@ -175,12 +174,10 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">With no lists, show the create form as the complete body. After creation, return to the picker with the new list selected.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">In a dropdown</h2>
-    <p class="mb-4">On result cards, the panel is a Bootstrap dropdown menu with <code>data-bs-auto-close="outside"</code>. Load its body on first open and keep it open while someone selects lists. Search re-renders on <code>input</code>, not <code>keyup</code>, so the native clear control also refreshes the checklist.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Recipe — the toggle a template writes</h3>
@@ -201,7 +198,7 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8 text-muted small">Prefix panel ids per record. Membership updates leave the checklist in place so the query survives; creating a list returns it selected. The prototype route contract is in <code>docs/SERVER.md</code>.</p>
+    <p class="mb-0 col-8 text-muted small">The prototype route contract is in <code>docs/SERVER.md</code>.</p>
   </section>
 
   <section class="ds-section" id="already-in-a-list">
@@ -244,6 +241,6 @@
 
   <section class="ds-section">
     <h2 class="h4 mb-3">Uses</h2>
-    <p class="mb-0">Use panels for add-to-list pickers and <a href="/patterns/filter-picker.html">filter editors</a>. On small screens, filter editors flow inside the filters tray.</p>
+    <p class="mb-0">Use panels for add-to-list pickers and <a href="/patterns/filter-picker.html">filter editors</a>.</p>
   </section>
 </div>
