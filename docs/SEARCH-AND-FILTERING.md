@@ -354,13 +354,35 @@ system honours it and shows the zero-results state. (How a zero-count value is s
 greyed, disabled, or a plain "0" — is an implementation detail; that it *stays* is the
 rule.)
 
-Facet values are ordered by count, most first; a **selected value stays put** — it does
-not reshuffle or drop under a "More" collapse.
+A value the collection has never held is not a facet value: seed zeros from what the
+index holds, never from a configured vocabulary.
+
+Facet values are ordered by count, most first, except where the dimension is ordinal —
+see Year below. A **selected value stays put** — it does not reshuffle or drop under a
+"More" collapse.
 
 The dead-end-avoidance principle is Baymard's — a silently-zero result is a dead-end to
 prevent or offer recovery from ([*Ecommerce Filter UI*](https://baymard.com/learn/ecommerce-filter-ui)).
 That page doesn't prescribe the exact zero-count treatment; keeping the value visible
 rather than removing it is our choice, for list stability.
+
+### Year — which years the sidebar shows
+
+Year is ordinal: it is ordered by year, newest first, not by count.
+
+The list is a window on the present — the current year, the two before it and the two
+ahead, five rows. A selected year outside the window keeps its place, in year order with
+the rest. Everything else reaches the reader through the `From`/`To` inputs.
+
+Those inputs carry the collection's real span: the oldest and newest year that currently
+has records, as both the `min`/`max` bounds and the placeholder a reader sees. The span
+follows the query like any other count, so it narrows as the reader narrows.
+
+Current biblio runs a wider version of the same idea in `lib/Biblio/Helper.pm` →
+`show_year_facet_term`: ten rows, the current year with seven behind and two ahead, and a
+selected year outside the window drags its neighbours in with it. It also offers "Last 5
+years" and "Last 10 years" shortcuts and draws a bar per year. None of that is adopted;
+the shortcuts stay out until a reader need for them is recorded.
 
 ### Identifier — one filter, scheme auto-detected
 
