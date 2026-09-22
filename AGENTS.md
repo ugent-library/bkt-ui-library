@@ -141,6 +141,8 @@ Use the smallest implementation that works. Do not add helpers, configuration,
 comments or abstractions for hypothetical use. Planning notes are local and record
 only decisions or open questions that a later session needs.
 
+For prototype fidelity and review, see `docs/FEATURE-WORKFLOW.md` (Prototype scope).
+
 Comments explain silent or non-local traps. Prototype HTML may also keep a concise,
 source-local `Prototype note:` for design in flux. See `docs/CODE-COMMENTS.md`.
 

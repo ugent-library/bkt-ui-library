@@ -2,7 +2,8 @@
 
 <!-- Follow docs/SPEC-WRITING.md. Maximum 500 words. -->
 
-Build <phase and surface>. Label unresolved backend behavior as prototype stubs.
+Build <phase and surface>. Follow [Prototype scope](FEATURE-WORKFLOW.md#prototype-scope).
+Label unresolved backend behavior as prototype stubs.
 
 ## Read first
 
@@ -23,7 +24,7 @@ Name every existing page region that may change. Preserve all other work.
 |---|---|---|
 | <surface> | <state> | <content, status and actions> |
 
-Include empty, success, failure, stale/concurrent and resumed states when they apply.
+Include only states needed for the design decision.
 
 ## Reusable kit coverage
 
@@ -38,18 +39,20 @@ one page.
 ## Interaction, responsive and accessibility rules
 
 - Name the primary action and visual order of secondary actions.
-- Define URLs, back/refresh behavior, focus after replacement and live announcements.
+- Name interactions that must work for this review. For those interactions, define
+  URLs, back/refresh behavior, focus after replacement and live announcements.
 - Preserve complete labels; define stacking or reflow at narrow widths.
 - Name feature-specific semantic and accessible-name requirements.
 - Verify desktop, narrow split-screen and 375 px without horizontal scrolling.
 
 ## Boundaries
 
-<!-- State exclusions and preserved behavior. Do not hide unresolved scope here. -->
+<!-- State exclusions, preserved behavior and simulation limits. Keep unresolved
+     product scope explicit. -->
 
 ## Ready for review when
 
-Every state is selectable, every reusable part has canonical kit coverage, documented
+Every listed state is selectable, every reusable part has canonical kit coverage, documented
 classes and icons are used, and `npm test` passes. Inspect wide and narrow pages in the
 browser, run the accessibility pre-flight and record when screen-reader testing was
 not performed. Wait for prototype acceptance before drafting Raven issues.

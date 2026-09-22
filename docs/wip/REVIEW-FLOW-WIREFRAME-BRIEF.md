@@ -18,7 +18,7 @@ connected parts:
 
 ## Overview
 
-Create `templates/review-flow/index.html`. Each card represents one app-flow page or state and
+Use `templates/review-flow/0-index.html`. Each card represents one app-flow page or state and
 shows its heading, essential context and actions. Every card links to that exact page
 and state. Give system and public-record effects their own quiet lane; they are not
 actor walkthroughs.
@@ -37,16 +37,15 @@ Create connected pages for:
 - Curator: review queue, Work review, Return or Request changes, Requests queue,
   request settlement, and outcome.
 
-Use the existing Booktower backoffice shell and patterns. These should feel like
-usable application pages, not diagrams: form controls accept input, choices work,
-and buttons lead to the next page or state. There is no backend.
+Use the existing Booktower backoffice shell and patterns, following
+[Prototype scope](../FEATURE-WORKFLOW.md#prototype-scope).
 
 Show enough realistic content to establish the eventual page's feel: Work title and
 type, contributors, identifier or provenance, project or funding, files and access,
 deposit status, record visibility, the relevant message, proposed values and short
 history. Show only what matters on that page and every action available there.
 
-An actor's action stays in that actor's application and shows their resulting state.
+An actor's action stays in that actor's application and shows a representative outcome.
 The overview shows the effect on other actors. A separate prototype-only actor
 switcher may open the receiving actor's state; it sits outside the app shell and is
 clearly not product UI.
@@ -55,7 +54,7 @@ clearly not product UI.
 
 - Use real content and controls with deliberately plain layout. Do not use empty
   boxes, settle production layout or polish every field.
-- Give every state its own URL; back and refresh restore it.
+- Give every demonstrated state its own URL; back and refresh restore that example.
 - Add no actor, state, queue or action absent from the accepted analysis.
 - Keep source, TBC and policy notes small, neutral and available only on deliberate
   inspection.
@@ -63,8 +62,8 @@ clearly not product UI.
 
 ## Ready for review when
 
-Every overview card opens its exact app state. Each actor can complete their path,
-all visible actions work, and the other actors' resulting states can be inspected.
+Every overview card opens its intended example. Each actor's main path and distinct
+action outcomes, including effects on other actors, are understandable.
 Use documented classes and icons, run `npm test`, inspect wide and narrow layouts,
 and complete the accessibility pre-flight. Wait for prototype acceptance before
 drafting Raven issues.

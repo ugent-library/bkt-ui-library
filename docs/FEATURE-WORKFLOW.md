@@ -40,6 +40,16 @@ Create a design decision only when an accepted choice needs durable rationale or
 supersedes an earlier design. Routine visible behavior stays in the prototype and its
 owning guide.
 
+## Prototype scope
+
+Show enough representative states to decide the design. Fixed data and outcomes,
+unpreserved input and predefined links are acceptable. Build working interactions
+only when needed for review; no simulated backend or exhaustive state matrix.
+
+Fix easy discrepancies; others block only when they mislead the design decision.
+Note relevant limits once in the brief or source. HTML, accessibility and kit
+contracts still apply.
+
 ## Prototype and kit rules
 
 Build full-page prototypes and reusable coverage together. Inventory every reusable
