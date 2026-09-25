@@ -20,6 +20,10 @@
         if (event.target !== shell) return;
         shell.removeEventListener('transitionend', revealAfterOpen);
         revealActiveNavItem();
+        if (search) {
+          search.focus();
+          search.select();
+        }
       };
       shell.addEventListener('transitionend', revealAfterOpen);
     }
