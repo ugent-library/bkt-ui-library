@@ -15,9 +15,9 @@
   - No scope indicator — always the researcher's own works
   - No saved views — researcher has no curation presets
   - Facets: Status, Type, Year, Access — no VABB, no proxy flag, no tier filters
-  - Cards: no Review button, no tier badge, no proxy flag
+  - Cards: V1 edit and add-to-list actions, no tier badge, no proxy flag
   - Table: no VABB column, no proxy column
-  - Sidebar: researcher nav (Inbox, Review deadlines, Suggestions, Incomplete)
+  - Sidebar: researcher nav (Inbox, deadlines, Suggestions, Incomplete)
   - Result count phrasing: "Your 4,831 research outputs" not "4,831 research outputs"
 -->
 
@@ -326,30 +326,19 @@
                   <span class="bt-work-card__meta-item">Open</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <div class="bt-work-card__action-group">
-                    <div class="dropdown">
-                      <button class="btn btn-ghost btn-sm bt-work-card__more-action" type="button" data-bs-toggle="dropdown"
-                        aria-label="More actions for Entanglement entropy in quantum spin chains">
-                        <i class="if if-more if--sm" aria-hidden="true"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="if if-bar-chart if--sm bt-work-card__dropdown-icon" aria-hidden="true"></i>View Altmetric</a></li>
-                      </ul>
-                    </div>
-                    <a href="#" class="btn btn-ghost btn-sm"
-                      aria-label="Request changes: Entanglement entropy in quantum spin chains">
-                      <i class="if if-message if--sm" aria-hidden="true"></i> Request changes
-                    </a>
-                    <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
-                      aria-label="View public page: Entanglement entropy in quantum spin chains">
-                      <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
-                    </a>
-                  </div>
+                  <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Entanglement entropy in quantum spin chains with long-range interactions">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                  </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Entanglement entropy in quantum spin chains with long-range interactions">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="r-card-title-01" class="bt-work-card__title">
-                  <a href="work-detail.html">Entanglement entropy in quantum spin chains with long-range interactions</a>
+                  <a href="work-detail.html?mode=view">Entanglement entropy in quantum spin chains with long-range interactions</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Bart De Moor<span class="visually-hidden"> (UGent)</span></a></span>,
@@ -373,15 +362,19 @@
                   <span class="bt-work-card__meta-item">Restricted</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="#" class="btn btn-ghost btn-sm"
-                    aria-label="Edit: Machine learning approaches to protein folding">
+                  <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Machine learning approaches to protein folding prediction: benchmarks and limitations">
                     <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                   </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Machine learning approaches to protein folding prediction: benchmarks and limitations">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="r-card-title-02" class="bt-work-card__title">
-                  <a href="work-detail.html">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
+                  <a href="work-detail.html?mode=view">Machine learning approaches to protein folding prediction: benchmarks and limitations</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Hendrickx<span class="visually-hidden"> (UGent)</span></a></span>,
@@ -402,26 +395,19 @@
                   <span class="bt-work-card__meta-item">Dataset</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <div class="bt-work-card__action-group">
-                    <div class="dropdown">
-                      <button class="btn btn-ghost btn-sm bt-work-card__more-action" type="button" data-bs-toggle="dropdown"
-                        aria-label="More actions for Climate forcing data over Belgium">
-                        <i class="if if-more if--sm" aria-hidden="true"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end">
-                        <li><button type="button" class="dropdown-item"><i class="if if-delete if--sm me-2" aria-hidden="true"></i>Delete draft</button></li>
-                      </ul>
-                    </div>
-                    <a href="deposit-1-0-find.html" class="btn btn-primary btn-sm"
-                      aria-label="Continue deposit: Climate forcing data over Belgium">
-                      <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Continue
-                    </a>
-                  </div>
+                  <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+                  </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="r-card-title-03" class="bt-work-card__title">
-                  <a href="work-detail.html">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
+                  <a href="work-detail.html?mode=view">Climate forcing data over Belgium 1950–2023: gridded temperature and precipitation</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Colette Goossens<span class="visually-hidden"> (UGent)</span></a></span>,
@@ -453,19 +439,19 @@
                   <span class="bt-work-card__meta-item">Doctoral thesis</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="#" class="btn btn-ghost btn-sm"
-                    aria-label="Request changes: Adaptive reuse of postwar social housing">
-                    <i class="if if-message if--sm" aria-hidden="true"></i> Request changes
+                  <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Adaptive reuse of postwar social housing in Flanders">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                   </a>
-                  <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
-                    aria-label="View public page: Adaptive reuse of postwar social housing">
-                    <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
-                  </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Adaptive reuse of postwar social housing in Flanders">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="r-card-title-04" class="bt-work-card__title">
-                  <a href="work-detail.html">Adaptive reuse of postwar social housing in Flanders</a>
+                  <a href="work-detail.html?mode=view">Adaptive reuse of postwar social housing in Flanders</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Renee Peeters<span class="visually-hidden"> (UGent)</span></a></span>
@@ -485,15 +471,19 @@
                   <span class="bt-work-card__meta-item">Embargo 01/05/2026 &ndash; 01/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="#" class="btn btn-primary btn-sm"
-                    aria-label="Edit and resubmit: Nutrient cycling in restored wetlands">
-                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit &amp; resubmit
+                  <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Nutrient cycling in restored wetlands of the Scheldt estuary">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                   </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Nutrient cycling in restored wetlands of the Scheldt estuary">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="r-card-title-05" class="bt-work-card__title">
-                  <a href="work-detail.html">Nutrient cycling in restored wetlands of the Scheldt estuary</a>
+                  <a href="work-detail.html?mode=view">Nutrient cycling in restored wetlands of the Scheldt estuary</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Renee Peeters<span class="visually-hidden"> (UGent)</span></a></span>,
@@ -534,7 +524,7 @@
               <tbody>
                 <tr>
                   <td>
-                    <a href="work-detail.html" class="fw-semibold text-reset text-decoration-none">Entanglement entropy in quantum spin chains</a>
+                    <a href="work-detail.html?mode=view" class="fw-semibold text-reset text-decoration-none">Entanglement entropy in quantum spin chains</a>
                     <div class="small text-muted mt-1">Bart De Moor, Tristan Adriaens, Louise Vanderstraeten</div>
                   </td>
                   <td>Journal article</td>
@@ -542,14 +532,14 @@
                   <td><span class="badge text-bg-success-light">Reviewed</span> <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span></td>
                   <td>Open</td>
                   <td class="text-end">
-                    <a href="#" class="btn btn-ghost btn-sm" aria-label="Request changes: Entanglement entropy">
-                      <i class="if if-message if--xs" aria-hidden="true"></i> Request changes
+                    <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: Entanglement entropy">
+                      <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
                     </a>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <a href="work-detail.html" class="fw-semibold text-reset text-decoration-none">Machine learning approaches to protein folding prediction</a>
+                    <a href="work-detail.html?mode=view" class="fw-semibold text-reset text-decoration-none">Machine learning approaches to protein folding prediction</a>
                     <div class="small text-muted mt-1">Eline Hendrickx, Andres Verhasselt</div>
                   </td>
                   <td>Journal article</td>
@@ -557,7 +547,7 @@
                   <td><span class="badge text-bg-info-light">Submitted</span> <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span></td>
                   <td>Open</td>
                   <td class="text-end">
-                    <a href="#" class="btn btn-ghost btn-sm" aria-label="Edit: Machine learning approaches">
+                    <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: Machine learning approaches">
                       <i class="if if-edit if--xs" aria-hidden="true"></i> Edit
                     </a>
                   </td>
@@ -581,15 +571,19 @@
                   <span class="bt-work-card__meta-item">Doctoral thesis</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="deposit-1-1-find.html?state=direct-added" class="btn btn-primary btn-sm"
-                    aria-label="Complete: Self-healing polymer networks for soft robotics">
-                    <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
+                  <a href="work-detail.html?state=direct-added&amp;mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Self-healing polymer networks for soft robotics">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                   </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Self-healing polymer networks for soft robotics">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="da-card-title-01" class="bt-work-card__title">
-                  <a href="work-detail.html?state=direct-added">Self-healing polymer networks for soft robotics</a>
+                  <a href="work-detail.html?state=direct-added&amp;mode=view">Self-healing polymer networks for soft robotics</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Baert<span class="visually-hidden"> (UGent)</span></a></span>
@@ -621,15 +615,19 @@
                   <span class="bt-work-card__meta-item">Open</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="/templates/biblio-public/public-work-detail.html" class="btn btn-ghost btn-sm"
-                    aria-label="View public page: Coastal adaptation dataset for the Belgian coast">
-                    <i class="if if-eye if--sm" aria-hidden="true"></i> View public page
+                  <a href="work-detail.html?state=reviewed&amp;mode=edit" class="btn btn-ghost btn-sm"
+                    aria-label="Edit: Coastal adaptation dataset for the Belgian coast">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                   </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1"
+                    aria-label="Add to list: Coastal adaptation dataset for the Belgian coast">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
                 <p id="da-card-title-02" class="bt-work-card__title">
-                  <a href="work-detail.html?state=reviewed">Coastal adaptation dataset for the Belgian coast</a>
+                  <a href="work-detail.html?state=reviewed&amp;mode=view">Coastal adaptation dataset for the Belgian coast</a>
                 </p>
                 <p class="bt-work-card__authors">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Renee Peeters<span class="visually-hidden"> (UGent)</span></a></span>,

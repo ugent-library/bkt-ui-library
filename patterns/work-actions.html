@@ -4,7 +4,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Work actions</h1>
-    <p class="lead">Actions on research output. Public actions help readers cite, save, and reach files; backoffice actions help researchers, curators, and reviewers act on the record's workflow state.</p>
+    <p class="lead">Actions on research output. Public actions help readers cite, save, and reach files; backoffice V1 keeps record navigation simple while V2 keeps the future workflow model.</p>
   </header>
 
   <nav aria-label="On this page" class="mb-4">
@@ -12,8 +12,9 @@
       <li class="list-inline-item"><a href="#principles">Principles</a></li>
       <li class="list-inline-item"><a href="#public">Public</a></li>
       <li class="list-inline-item"><a href="#public-v2">Public access — future v2</a></li>
-      <li class="list-inline-item"><a href="#backoffice">Backoffice</a></li>
-      <li class="list-inline-item"><a href="#matrix">Role/state matrix</a></li>
+      <li class="list-inline-item"><a href="#backoffice-v1">Backoffice V1</a></li>
+      <li class="list-inline-item"><a href="#backoffice-v2">Backoffice V2</a></li>
+      <li class="list-inline-item"><a href="#matrix">V2 matrix</a></li>
       <li class="list-inline-item"><a href="#detail">Detail header</a></li>
     </ul>
   </nav>
@@ -35,7 +36,7 @@
           <tr>
             <th scope="row">Primary action</th>
             <td>Access CTA on detail headers; card access CTA only in the future v2 pattern.</td>
-            <td>Review, Continue, Edit, Edit &amp; resubmit, Request changes, or View, depending on role and state.</td>
+            <td>V1 uses Edit for the action row. V2 adds role and state actions.</td>
           </tr>
           <tr>
             <th scope="row">More actions</th>
@@ -45,7 +46,7 @@
           <tr>
             <th scope="row">Secondary links</th>
             <td>Cite and Add to list in the card header.</td>
-            <td>Curator/reviewer utility links in the card footer: files, public page, DOI, WoS, PubMed, Altmetric.</td>
+            <td>V1 keeps utilities out of the action row. V2 adds footer utilities when available.</td>
           </tr>
           <tr>
             <th scope="row">Element choice</th>
@@ -272,9 +273,45 @@
     </div>
   </section>
 
-  <section class="ds-section" id="backoffice">
-    <h2 class="h4 mb-3">Backoffice card actions</h2>
-    <p class="mb-4 col-8 text-muted small">Backoffice cards extend the public card grammar. The action row stays in the header, but the payload is workflow-specific.</p>
+  <section class="ds-section" id="backoffice-v1">
+    <h2 class="h4 mb-3">Backoffice card actions — V1</h2>
+    <p class="mb-4 col-8 text-muted small">V1 gives Raven one implementable action model. The title opens the work detail page in view mode. Edit opens the same work in edit mode. Add to list acts on the current page.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">V1 action row</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <article class="bt-work-card" aria-labelledby="wa-v1-title">
+          <div class="bt-work-card__header">
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-info-light">Submitted</span>
+              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
+              <span class="bt-work-card__meta-item">Restricted</span>
+            </div>
+            <div class="bt-work-card__actions">
+              <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm"
+                aria-label="Edit: Machine learning approaches to protein folding prediction: benchmarks and limitations">
+                <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+              </a>
+              <button type="button" class="btn btn-ghost btn-sm p-1"
+                aria-label="Add to list: Machine learning approaches to protein folding prediction: benchmarks and limitations">
+                <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="bt-work-card__body">
+            <p id="wa-v1-title" class="bt-work-card__title"><a href="work-detail.html?mode=view">Machine learning approaches to protein folding prediction: benchmarks and limitations</a></p>
+            <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Hendrickx<span class="visually-hidden"> (UGent)</span></a></span>, <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Andres Verhasselt<span class="visually-hidden"> (UGent)</span></a></span></p>
+            <p class="bt-work-card__pub"><a href="#">(<time datetime="2025">2025</time>)</a> <a href="#"><cite>Nature Computational Science</cite></a></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ds-section" id="backoffice-v2">
+    <h2 class="h4 mb-3">Backoffice card actions — V2 future workflow actions</h2>
+    <p class="mb-4 col-8 text-muted small">V2 preserves the role and state action model for a later workflow release. Raven owns routes and permissions.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Researcher draft — Continue, with Delete draft in more actions</h3>
@@ -294,7 +331,7 @@
                     <i class="if if-more if--sm" aria-hidden="true"></i>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end">
-                    <li><button type="button" class="dropdown-item text-danger"><i class="if if-trash if--sm bt-work-card__dropdown-icon" aria-hidden="true"></i>Delete draft</button></li>
+                    <li><button type="button" class="dropdown-item text-danger"><i class="if if-delete if--sm bt-work-card__dropdown-icon" aria-hidden="true"></i>Delete draft</button></li>
                   </ul>
                 </div>
                 <a href="#" class="btn btn-primary btn-sm"
@@ -466,8 +503,8 @@
   </section>
 
   <section class="ds-section" id="matrix">
-    <h2 class="h4 mb-3">Role and state matrix</h2>
-    <p class="mb-3 col-8 text-muted small">Backoffice actions depend on both the audience and the record state.</p>
+    <h2 class="h4 mb-3">V2 role and state matrix</h2>
+    <p class="mb-3 col-8 text-muted small">Future workflow actions depend on both the audience and the record state. V1 does not use this matrix.</p>
 
     <div class="table-responsive">
       <table class="table table-hover align-middle">

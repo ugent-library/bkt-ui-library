@@ -4,7 +4,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Work card</h1>
-    <p class="lead">The primary list unit for research output. Public cards are the minimum readable form; backoffice cards extend the same grammar with workflow state, responsibility, administrative metadata, and actions.</p>
+    <p class="lead">The primary list unit for research output. Public cards are the minimum readable form; backoffice cards use a simple V1 action row before the future workflow model lands.</p>
   </header>
 
   <nav aria-label="On this page" class="mb-4">
@@ -13,7 +13,7 @@
       <li class="list-inline-item"><a href="#variants">Variants</a></li>
       <li class="list-inline-item"><a href="#states">States</a></li>
       <li class="list-inline-item"><a href="#public">Public</a></li>
-      <li class="list-inline-item"><a href="#backoffice">Backoffice</a></li>
+      <li class="list-inline-item"><a href="#backoffice">Backoffice V2</a></li>
       <li class="list-inline-item"><a href="#compact">Compact</a></li>
     </ul>
   </nav>
@@ -36,13 +36,18 @@
                   <span class="bt-work-card__meta-item">Open</span>
                 </div>
                 <div class="bt-work-card__actions">
-                  <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Example work title">
-                    <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Review
+                  <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: Example work title">
+                    <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                   </a>
+                  <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Add to list: Example work title">
+                    <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+                  </button>
                 </div>
               </div>
               <div class="bt-work-card__body">
-                <p id="grammar-title" class="bt-work-card__title">Example work title</p>
+                <p id="grammar-title" class="bt-work-card__title">
+                  <a href="work-detail.html?mode=view">Example work title</a>
+                </p>
                 <p class="bt-work-card__authors mb-0">
                   <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">First Author<span class="visually-hidden"> (UGent)</span></a></span>,
                   <span class="bt-work-card__author"><a href="?q=Second%20Author">Second Author</a></span>
@@ -54,7 +59,7 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8">Put result cards in an ordered list. Use <code>&lt;article&gt;</code> for the card and name it from its title with <code>aria-labelledby</code>. If a backoffice need does not fit the shared header, body, or footer, review this grammar before adding another structure.</p>
+    <p class="mb-0 col-8">Put result cards in an ordered list. Use <code>&lt;article&gt;</code> and <code>aria-labelledby</code>. In backoffice V1, the title opens view mode, Edit opens edit mode, and Add to list names the work.</p>
   </section>
 
   <section class="ds-section" id="variants">
@@ -81,8 +86,8 @@
           <tr>
             <th scope="row">Title</th>
             <td>Link</td>
-            <td>Link to the researcher read view</td>
-            <td>Plain text; the primary action opens the record or review</td>
+            <td>Link to the backoffice view mode</td>
+            <td>Link to the backoffice view mode</td>
           </tr>
           <tr>
             <th scope="row">Contributors</th>
@@ -112,13 +117,13 @@
             <th scope="row">Footer utilities</th>
             <td>None</td>
             <td>Optional</td>
-            <td>Files, public page, and external services</td>
+            <td>Files, public page, and external services in V2</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <p class="mb-0 col-8">See <a href="/patterns/work-actions.html">work actions</a> for action placement by role and state. Reference-line composition is documented in <code>docs/wip/WORK-CARD-REFERENCE-STYLES.md</code>.</p>
+    <p class="mb-0 col-8">See <a href="/patterns/work-actions.html">work actions</a> for the V1 action row and the V2 future workflow matrix. Reference-line composition is documented in <code>docs/wip/WORK-CARD-REFERENCE-STYLES.md</code>.</p>
   </section>
 
   <section class="ds-section" id="states">
@@ -276,7 +281,8 @@
   </section>
 
   <section class="ds-section" id="backoffice">
-    <h2 class="h4 mb-3">Backoffice cards</h2>
+    <h2 class="h4 mb-3">Backoffice cards — V2 future workflow examples</h2>
+    <p class="mb-4 col-8 text-muted small">The shared grammar above shows the V1 action row. These examples keep the richer role and state model as a future workflow reference.</p>
 
     <div class="ds-demo">
       <h3 class="ds-demo-label">Researcher — draft</h3>
