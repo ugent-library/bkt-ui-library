@@ -20,7 +20,7 @@ date renders no year; the public line never marks a field as missing.
 
 Every type's line is the same sequence, rendering only the slots its fields fill:
 
-    (year) genre in container event imprint (series) position pages
+    (year) genre container event imprint (series) position pages
 
 The layout separates the slots: the line is a flex row with a gap, and no separator
 character stands between slots.
@@ -35,9 +35,8 @@ character stands between slots.
 - **position** — `volume(issue)`, or `day month` on dated types.
 - **pages** — `pp. start–end`; `article_number` where an e-only article has none.
 
-Four exceptions, the whole list:
+Three exceptions, the whole list:
 
-- `book_part` prefixes its container with `in`.
 - `book` and `edited_book` carry `edition edn.` before the imprint.
 - `doctoral_thesis` fills the imprint slot with the awarding institution, never a
   publisher.
@@ -55,11 +54,10 @@ point, not as an authority; the gap between slots replaces that style's separato
 These rules are the line's, on the public surface:
 
 - the year comes first, in parentheses, inside its filter link: `(2024)`;
-- a genre word carries no closing full stop: `PhD thesis`, `Report RPT-42` —
+- a genre word has no closing full stop: `PhD thesis`, `Report RPT-42` —
   `2nd edn.` keeps the abbreviation's own dot; `Preprint` closes the line instead
   of opening it;
-- the container is italic and carries no label, except `book_part`, which prefixes
-  it with `in`;
+- the container is italic and has no label;
 - no full stop after the container, no comma between slots: the gap does the
   separating;
 - inside one slot, punctuation stays: place and publisher join with a colon
@@ -71,7 +69,7 @@ These rules are the line's, on the public surface:
 - a series closes its slot in parentheses: `(FEB Working Paper Series)`;
 - the line ends without a full stop.
 
-A slot with no value renders nothing, and its gap goes with it: no dangling `in`, no
+A slot with no value renders nothing, and its gap goes with it: no dangling words, no
 `32()`, no empty slot.
 
 ### Per-type lines (derived examples)
@@ -88,7 +86,7 @@ layout's.
 | `journal_article` | `(year) journal_title volume(issue), pp. start–end` — `article_number` in place of pages for e-only articles | `(2024) *European Journal of Crime, Criminal Law and Criminal Justice* 32(1), pp. 58–79` |
 | `book` | `(year) edition edn. place_of_publication: publisher (series_title)` | `(2024) 2nd edn. Ghent: Academia Press` |
 | `edited_book` | as `book`; editors appear on the contributor line ("has editors, no authors") | `(2024) London: Routledge` |
-| `book_part` | `(year) in book_title place_of_publication: publisher pp. start–end` — no host-book editors on the card | `(2024) in *Handbook of Urban Ecology* London: Routledge pp. 100–120` |
+| `book_part` | `(year) book_title place_of_publication: publisher pp. start–end` — no host-book editors on the card | `(2024) *Handbook of Urban Ecology* London: Routledge pp. 100–120` |
 | `book_review` | as `journal_article` — raven gives it the same venue and position fields | `(2025) *Journal of Ecology Reviews* 12(2), pp. 301–303` |
 | `reference_entry` | `(year) container place: publisher pp. start–end` — intended shape; **raven fields missing** ⚑ | `(2023) *Encyclopedia of Plant Science* Amsterdam: Elsevier pp. 455–460` |
 | `journal_issue` | `(year) journal_title volume(issue)` — editors on the contributor line | `(2024) *European Journal of Crime, Criminal Law and Criminal Justice* 32(1)` |
@@ -107,7 +105,7 @@ layout's.
 | `lecture` | `(year) venue day month` — location sits inside `venue` per its field definition | `(2025) *UGent Data Stewards seminar* Ghent, 20 October` |
 | `dataset` | `(year) publisher` — publisher holds the repository, as on `preprint`; reconciling raven's applies-to gap is 08 ⚑ | `(2026) *Zenodo*` |
 | `software` | as `dataset`, publisher included ⚑ — raven defers a software *version* field to after v1, and no records land in the type in v1 | `(2026) *Zenodo*` |
-| `other` | the order, with whatever fields it carries | `(2024)` |
+| `other` | the order, with whatever fields it has | `(2024)` |
 
 ### Decisions
 
@@ -145,7 +143,7 @@ are not in raven's registry:
 - `magazine_article` / `newspaper_article`: no pages field. Old biblio showed pages;
   the card keeps them.
 - `dataset` and `software`: two raven docs disagree on the publisher.
-  - the migration map (`metadata-work-types.md`) carries biblio's dataset publisher
+  - the migration map (`metadata-work-types.md`) has biblio's dataset publisher
     into `publisher`
   - the per-type applicability list (`metadata-work-fields.md`) leaves datasets out
 
@@ -167,13 +165,13 @@ Separated meta items, each part only when present:
 year · container · publisher · volume · (issue) · start–end
 ```
 
-- **year** — the year part of `date`. Where a work carries none, the scan says so.
+- **year** — the year part of `date`. Where a work has none, the scan says so.
 - **container** — per type: `journal_abbreviations[0]` falling back to
   `journal_title` (journal_article, book_review, journal_issue); `book_title`
   (book_part); `proceedings_title` (conference types); `magazine_title` /
   `newspaper_title` / `venue` for the public-engagement types. Abbreviation-first is
   the scan's signature.
-- **publisher, volume, (issue), pages** — where the type carries them.
+- **publisher, volume, (issue), pages** — where the type has them.
 
 Type-agnostic by construction: any of the 23 types renders whatever it has, so a new
 type needs no new rule. Dates follow the backoffice format

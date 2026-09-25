@@ -44,7 +44,7 @@ the old wording** and are M's to update.
 - **The publisher-as-container takes `<cite>` and the filter link** — Zenodo and
   bioRxiv render like any other container name.
 - **Closed access should not be shown on the public page.** A public card's access
-  vocabulary is open, restricted and embargo; a work whose files are all closed carries
+  vocabulary is open, restricted and embargo; a work whose files are all closed has
   no access element on the public page, the way no file and a private file already do.
   Closed or private renders on a backoffice record page's file rows with `if-forbid`
   and in the backoffice cards.
@@ -122,10 +122,9 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 
 - **No subtypes on cards.** The public epic's question is closed, and its Why now
   states the rule.
-- **#181 reference fields**: all four ⚑ fields are built — raven keeps every
-  field old Biblio carries. The dataset publisher's docs conflict is #181's work; the
-  software version is dropped, raven defers the field past v1 and no records land in
-  the type.
+- **#181 reference fields**: raven keep every field old Biblio has. The dataset
+  publisher's docs conflict is #181's work; the software version is dropped, raven
+  defers the field past v1 and no records land in the type.
 - **#182 container filter**: matches the container title string, as public Biblio
   does (`parent exact`); every container filters, publisher-as-venue names (Zenodo,
   bioRxiv) included, so the identifier-coverage question is gone. Identifier
@@ -174,7 +173,7 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   Biblio-team-facing missing-items groups; filtering/facets/counts for "Missing X"
   are out of scope for this pass. Nothing about completeness reaches the public
   surface. Compact metadata-row markers can show scan-critical missing values such
-  as access, but the responsibility block carries the full list. Primary identity
+  as access, but the responsibility block has the full list. Primary identity
   fields such as title do not use the marker pattern. Question closed.
 - **#194 / anonymous Add to list**: the button shows for every visitor; an anonymous
   click routes through login and back. #166 owns the panel and already states
@@ -197,9 +196,9 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 - **The publisher is the container on `dataset`, `software` and `preprint`** — all three compose
   `(year) publisher.`, matching `preprint`; old biblio's bare dataset line was a
   template accident. Spec doc and all prototype dataset/software cards updated;
-  dataset joins the ⚑ set, so #184 depends on #181 for five types.
+  dataset joins the ⚑ set.
 - **The reference line spec** (`docs/wip/WORK-CARD-REFERENCE-STYLES.md`) is one
-  order + four exceptions; the per-type table is derived examples. There is no
+  order + three exceptions; the per-type table is derived examples. There is no
   fallback rule: the order is the rule.
 - **Punctuation and line production belong to the implementation.** The CSL render is
   provenance for the examples — one line in Sources. The scan line's part rendering is
@@ -233,7 +232,7 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   confirms which transitions are supported. The current deletion semantics live in
   `docs/DOMAIN-VOCABULARY.md`.
 
-#181 has none: raven keeps every field old Biblio carries, and the software
+#181 has none: raven keeps every field old Biblio has, and the software
 version is dropped — raven defers the field past v1 and no records land in the type.
 
 ## M's raven edits, still to do

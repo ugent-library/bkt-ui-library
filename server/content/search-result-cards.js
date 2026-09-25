@@ -111,7 +111,7 @@ ${card({
     badges: restricted + type('Book chapter'),
     title: 'Canopy cover in Flanders: patterns and policy',
     authors: [dePauw(), author('Jonas Maes', { ugent: true })].join(', '),
-    line: `${year(2024)} <span>in ${container('Handbook of urban ecology')}</span> <span>London: Routledge</span> <span>pp. 100&ndash;120</span>`
+    line: `${year(2024)} ${container('Handbook of urban ecology')} <span>London: Routledge</span> <span>pp. 100&ndash;120</span>`
   })}
 ${card({
     id: 'card-feed-05',

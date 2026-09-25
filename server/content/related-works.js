@@ -72,7 +72,7 @@ ${matchCard({
     type: 'Book chapter',
     title: 'Community-led climate adaptation in Flemish mid-sized cities',
     year: 2023,
-    line: `<span>in ${container('Handbook of urban ecology')}</span> <span>London: Routledge</span> <span>pp. 210&ndash;228</span>`,
+    line: `${container('Handbook of urban ecology')} <span>London: Routledge</span> <span>pp. 210&ndash;228</span>`,
     keywords: [
       { label: 'Resilience', shared: true },
       { label: 'Ghent', shared: true },
