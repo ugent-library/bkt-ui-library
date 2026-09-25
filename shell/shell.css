@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower fcfba3a/2026-09-25 */
+/*! Booktower 2b31b4e/2026-09-25 */
 /*
  * Booktower Design System — Shell
  * The chrome that wraps every page in the design system.
@@ -16,12 +16,22 @@ body {
   background: var(--bt-gray-900);
 }
 
+body[data-surface=backoffice] {
+  height: 100vh;
+  overflow: hidden;
+}
+
 /* ─── Shell layout ───────────────────────────────────────────────────────────── */
 .bt-shell {
   display: grid;
   grid-template-columns: var(--bt-nav-width) 1fr;
   min-height: 100vh;
   transition: grid-template-columns var(--bt-dur-base) var(--bt-ease);
+}
+
+body[data-surface=backoffice] .bt-shell {
+  min-height: 0;
+  height: 100vh;
 }
 
 .bt-shell.prototype-mode {

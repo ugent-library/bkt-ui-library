@@ -2,12 +2,22 @@ body {
   background: var(--bt-gray-900);
 }
 
+body[data-surface="backoffice"] {
+  height: 100vh;
+  overflow: hidden;
+}
+
 /* ─── Shell layout ───────────────────────────────────────────────────────────── */
 .bt-shell {
   display: grid;
   grid-template-columns: var(--bt-nav-width) 1fr;
   min-height: 100vh;
   transition: grid-template-columns var(--bt-dur-base) var(--bt-ease);
+}
+
+body[data-surface="backoffice"] .bt-shell {
+  min-height: 0;
+  height: 100vh;
 }
 
 .bt-shell.prototype-mode {

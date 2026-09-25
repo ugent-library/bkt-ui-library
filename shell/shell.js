@@ -225,6 +225,47 @@
 
   setupDemoSourceToggles();
 
+  const APP_SCROLLERS = '.u-main__content-body, .u-main__sidebar, .u-main__panel, .bt-sidebar';
+
+  function getHashTarget() {
+    const raw = window.location.hash.slice(1);
+    if (!raw) return null;
+
+    try {
+      return document.getElementById(decodeURIComponent(raw));
+    } catch {
+      return document.getElementById(raw);
+    }
+  }
+
+  function alignAppHashTarget() {
+    const target = getHashTarget();
+    if (!target?.closest('.u-layout--app')) return;
+
+    const btContent = document.getElementById('bt-content');
+    const scroller = target.matches(APP_SCROLLERS) ? target : target.closest(APP_SCROLLERS);
+
+    window.scrollTo(0, 0);
+    if (document.scrollingElement) document.scrollingElement.scrollTop = 0;
+    if (btContent) btContent.scrollTop = 0;
+
+    if (!scroller || scroller === target) return;
+
+    const targetRect = target.getBoundingClientRect();
+    const scrollerRect = scroller.getBoundingClientRect();
+    const marginTop = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    scroller.scrollTop = Math.max(0, scroller.scrollTop + targetRect.top - scrollerRect.top - marginTop);
+  }
+
+  function scheduleAppHashTargetAlignment() {
+    alignAppHashTarget();
+    requestAnimationFrame(alignAppHashTarget);
+  }
+
+  scheduleAppHashTargetAlignment();
+  window.addEventListener('load', scheduleAppHashTargetAlignment);
+  window.addEventListener('hashchange', scheduleAppHashTargetAlignment);
+
   // ─── Keyboard shortcuts ──────────────────────────────────────────────────────
   document.addEventListener('keydown', e => {
     const mod = e.metaKey || e.ctrlKey;
