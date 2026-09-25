@@ -150,9 +150,13 @@ What HTMX is *not* for — reach for something else here: real-time collaboratio
 
 ## Formatting conventions
 
-Visible text is European-formatted; machine formats stay ISO.
+Visible text follows the surface; machine formats stay ISO.
 
-- Dates: dd/mm/yyyy (e.g. 01/05/2027).
+- Public dates: human-readable day-month-year (e.g. 1 May 2027).
+- Backoffice dates: `dd/mm/yyyy` for dates and `dd/mm/yyyy hh:mm` for
+  timestamps (e.g. 01/05/2027, 01/05/2027 09:32).
+- Relative dates are not used, except in dashboard activity streams where
+  recency is the content.
 - Decimals: comma (e.g. 158,71 KB).
 - Machine formats stay ISO: `datetime` attributes, JSON-LD, date input
   values, query syntax.

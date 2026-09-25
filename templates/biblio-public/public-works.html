@@ -232,7 +232,7 @@
                 </div>
                 <div class="bt-toolbar__item d-none d-lg-block">
                   <!-- Add filter — public discovery "search-it" dimensions the sidebar can't hold.
-                      Author + Identifier are index-backed today; organization / venue / project /
+                      Author + Identifier are index-backed; organization / venue / project /
                       keyword need a raven field + facet config first (see docs/SEARCH-AND-FILTERING.md,
                       Rule 5). Chips are client-side stubs. -->
                   <div class="dropdown" id="wf-add-filter-dropdown">
@@ -2193,7 +2193,7 @@
         <div class="tab-content">
           <div class="tab-pane fade show active" id="share-panel-link" role="tabpanel"
             aria-labelledby="share-tab-link">
-            <p>Bookmark or send this search. The link re-runs it, so it always shows what matches today.</p>
+            <p>Bookmark or send this search.</p>
             <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-url">https://biblio.ugent.be/works?{query}</code>
             <button type="button" class="btn btn-outline-secondary btn-sm"
               data-clipboard data-clipboard-target="#share-url">
@@ -2201,8 +2201,7 @@
               <span class="btn-text">Copy link</span>
             </button>
             <p class="form-text mb-0">
-              The link carries the query, never whether the builder was open. Placeholder:
-              the public URL grammar is raven's to design.
+              <!-- Prototype note: Placeholder: the public URL grammar is raven's to design. -->
             </p>
           </div>
 
@@ -2246,22 +2245,19 @@
 
           <div class="tab-pane fade" id="share-panel-api" role="tabpanel"
             aria-labelledby="share-tab-api">
-            <p>Read these results from your own application, or refresh them into Excel or Power BI.</p>
+            <p>Reuse this results in your own applications.</p>
             <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-api">GET https://biblio.ugent.be/api/works?{query}&amp;format=json</code>
             <button type="button" class="btn btn-outline-secondary btn-sm"
               data-clipboard data-clipboard-target="#share-api">
               <i class="if if-copy" aria-hidden="true"></i>
               <span class="btn-text">Copy request</span>
             </button>
-            <p class="form-text mb-0">
-              Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
-              is raven's to define.
-            </p>
+            <!-- Prototype note: Placeholder. raven already marshals JSON, JSONL and CSL; the public query API
+              is raven's to define. -->
           </div>
 
           <div class="tab-pane fade" id="share-panel-feed" role="tabpanel"
             aria-labelledby="share-tab-feed">
-            <p>Follow this search in a feed reader. New matching research output arrives as it is published.</p>
             <code class="d-block bt-bg-white border rounded px-3 py-2 mb-2 text-break min-w-0" id="share-feed">https://biblio.ugent.be/feed/search?{query}</code>
             <button type="button" class="btn btn-outline-secondary btn-sm"
               data-clipboard data-clipboard-target="#share-feed">

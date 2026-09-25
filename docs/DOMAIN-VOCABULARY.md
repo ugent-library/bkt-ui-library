@@ -310,10 +310,16 @@ In the UI: surfaces as a change history view on a Work detail page (who changed 
 
 ### Dates in the UI
 
-- **Public surface** — human-readable: "5 August 2026". Public work cards carry no
-  metadata timestamps; the only dates on them are the reference line's own and the
-  embargo badge's release date.
-- **Backoffice surface** — `dd/mm/yyyy hh:mm`, built for scanning.
+- **Public surface** — human-readable day-month-year: "5 August 2026".
+  Bibliographic years stay as years: "2026" or "(2026)". Public work cards
+  carry no metadata timestamps; the only dates on them are the reference line's
+  own and the embargo badge's release date.
+- **Backoffice surface** — `dd/mm/yyyy` for dates and `dd/mm/yyyy hh:mm` for
+  timestamps, built for scanning.
+- **Machine values** — ISO in `datetime` attributes, JSON-LD, date input values
+  and query syntax.
+- **Relative dates** — use only in dashboard activity streams, where recency is
+  the content. Elsewhere, write the actual date.
 - **The backoffice card logs three moments**: who created the metadata and when;
   who last changed it and when; and, where the record was also touched by the
   system (an import, a background job), the last system change and when.
