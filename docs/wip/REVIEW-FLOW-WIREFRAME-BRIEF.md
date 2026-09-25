@@ -23,8 +23,8 @@ shows its heading, essential context and actions. Every card links to that exact
 and state. Give system and public-record effects their own quiet lane; they are not
 actor walkthroughs.
 
-Show Candidates and duplicate consolidation only as links to their existing flows.
-Do not expand them here.
+Keep Candidates in its existing flow. The consolidation placeholder follows the
+analysis's §6 decisions; its field and file choices still need a representative example.
 
 ## App flow
 
@@ -52,6 +52,8 @@ clearly not product UI.
 
 ## Boundaries
 
+- Revise the Return/resubmission route against the analysis's current review decisions;
+  the existing route is superseded.
 - Use real content and controls with deliberately plain layout. Do not use empty
   boxes, settle production layout or polish every field.
 - Give every demonstrated state its own URL; back and refresh restore that example.

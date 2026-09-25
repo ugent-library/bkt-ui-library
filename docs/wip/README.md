@@ -87,14 +87,16 @@ high-level flow wireframes. The analysis and its actor-level breadboards
 precede the bet and per-screen breadboards by design.
 
 **Stage:** Flow wireframes (pre-bet)
-**Accepted:** [`REVIEW-FLOW-ANALYSIS.md`](REVIEW-FLOW-ANALYSIS.md) is the
-baseline (`✚` marks settled); one full-landscape flow map plus four
-clickable place pages in `templates/review-flow/`; email is opt-in, researchers and
-proxies only, and the recipient decides the cadence
+**Accepted:** The [current review decisions](REVIEW-FLOW-ANALYSIS.md#current-review-decisions--baseline-revision-pending)
+revise the baseline: Request changes for missing information, Return/withdraw for
+exclusion, curator corrections, curator-controlled consolidation, whole-record review
+with all questions and current values on one screen, and no Undo.
+The two email cadences and proxy grouping are provisionally accepted
 ([`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md)).
-**Blocking:** None for prototyping; Raven implementation questions remain subtle
-notes in the flow.
-**Next:** Human design acceptance of the clickable `templates/review-flow/` prototype.
+**Blocking:** Curator rounds and researcher action on Return/withdraw remain open;
+Raven must resolve exclusion on re-entry. These do not prevent representative examples.
+**Next:** Align the baseline, dependent guides and prototype with the Return/withdraw
+and consolidation decisions before design acceptance.
 
 1. [`REVIEW-FLOW-ANALYSIS.md`](REVIEW-FLOW-ANALYSIS.md) — the baseline:
    model, rail, actor flow breadboards, Raven dependencies, assumptions and

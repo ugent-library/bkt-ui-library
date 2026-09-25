@@ -4,6 +4,29 @@ This is the baseline for the high-level flow wireframes, the review-flow bet and
 the per-screen breadboards. Booktower owns the design; Raven owns the domain model
 and implementation.
 
+## Current review decisions — baseline revision pending
+
+- The first save wins.
+- **Request changes:** important information is missing.
+- **Return / withdraw:** the Work must stay out of the bibliography, including on
+  re-entry or duplicate import. Raven must determine how exclusion is retained and
+  matched; its existing Return command does not establish this behavior.
+  Researcher autonomy remains open: a question or action may accompany exclusion;
+  it is not automatically an informational outcome.
+- Curators correct bibliographic details themselves, such as pagination and WoS ID.
+- Curator review rounds are undefined. The prototype's numbered sequence decides
+  neither their scope nor interruption and resumption behavior.
+- Undo is not part of this flow.
+- Show the whole Work with all questions and changes on one screen. Routine field
+  review needs no explicit confirmation; researcher proposals do. Compare overlapping
+  fields against the latest saved value.
+- Clarification leaves only that request waiting; other requests can proceed. Save
+  and resume behavior remains open.
+- Show who else is viewing the Work and who changed it earlier.
+
+These decisions supersede the Return → correction → resubmission route below and
+in the linked prototypes and guides.
+
 ## Sources and marks
 
 - Raven `main`: `deposit_status.go`, `revisions.go`, `grant.go`,
@@ -168,7 +191,9 @@ ENTRY: curator opens Review --> {Queues}
   [Delete]
 
 {Consolidation review}
-  "Survivor prefilled with the duplicate's sources, keys, notes and links"
+  <Most reliable Work, chosen by the curator>
+  "Proposed additions to empty fields are clearly marked"
+  <Curator chooses additions, changes and files to retain>
   [Consolidate] --> OUT: survivor Work
 
 {Publication blocked}
@@ -355,23 +380,7 @@ remains open `○`. `ReviewerNote` already maps to curator-only notes and
 
 ### Email notifications
 
-Email is opt-in for researchers and proxies `✚`. It is sent when another person acts
-on a Work in the recipient's My works scope; the recipient's own actions stay silent.
-Active proxies and the owner each receive it if they opted in. A settled suggestion
-also notifies its suggester `✚`.
-
-| Event | Mail includes |
-|---|---|
-| Return | Comment and Work link |
-| Changes requested | Named fields, message and scoped-view link |
-| Suggestion settled | Outcome and comment |
-| Request settled by adaptation or rejection | Changed or restored fields and comment |
-| Approval | Public or private outcome and Work link |
-| Deletion or consolidation | Reason and redirect or tombstone target |
-| Found for you | Candidate digest |
-| Added for you | Work link and Not yours? route |
-
-Cadence, digest shape and settings are owned by
+Recipients, events, mail content, cadence, digest shape and settings are owned by
 [`EMAIL-NOTIFICATIONS-ANALYSIS.md`](EMAIL-NOTIFICATIONS-ANALYSIS.md).
 
 ## 6. Independent axes and related workflows
@@ -401,18 +410,22 @@ ACTIVE --[Delete]--> DELETED --[Purge]--> PURGED
   +------[Restore]-----+                    id resolves with 410
 
 [Consolidate X into Y]
-  + X never public --> hard-delete X
-  + X once public  --> X redirects to Y; redirects stay one hop
+  + X redirects to Y, including when never public ✚
 ```
 
 Delete hides a Work without changing its stored visibility or deposit status;
 Restore returns it unchanged `●◐`. A `takedown` reason affects tombstone wording and
 audit. A housekeeping job purges never-public trash after retention `◐`.
 
-A duplicate must be consolidated, not deleted. Consolidation moves sources, keys,
-notes and links to the survivor. A once-public identifier keeps resolving: a
-consolidated Work redirects to its survivor `●`; a purged Work leaves a scrubbed
-tombstone `◐`.
+A curator chooses the most reliable Work as survivor `✚`. Values from those records
+can fill empty fields; the proposed additions must be clear. The curator decides what is added or changed, including
+when existing values differ. Files transfer to the survivor; the curator chooses
+which to retain. This also applies to clusters of more than two records; their
+presentation remains to be designed.
+
+Sources, keys, notes and links move to the survivor. Redirects for never-public
+records and curator-controlled value and file transfer require Raven confirmation
+`○`; the earlier model hard-deleted never-public duplicates.
 
 ### Retraction
 
@@ -458,12 +471,14 @@ This design needs the following capabilities. Raven decides how to provide them.
 | Proposed values stay outside the Work and public site until acceptance; accept or adapt applies them | A normal update replaces the public projection immediately |
 | Migrated Message storage readable by owner and curator | The migration catalog drops Message |
 | Per-user email opt-in for researchers and proxies | Only a job-outcome tray exists |
+| A stored per-user language preference | Raven matches the request locale (`app/locale.go`) and stores no preference; `app/profile.go` names it future work |
 | Submit-and-publish and an owner-side publish grant | The grant matrix has no visibility capability |
 | Carrier for an embargoed external deposit | Record-level `restricted` is written but never read |
 | Candidate status per researcher: New, Skipped, Added or Rejected | Absent |
 | First-class curator queues | Search only filters on deposit status |
 | Withdrawal that preserves the Work and history, sets visibility to private and requires a message | No withdrawal action distinct from deletion |
-| Conflict recovery that carries non-overlapping changes forward and presents overlaps without losing submitted data | A revision conflict returns an error; only validation failures re-render the form |
+| Show concurrent viewers and earlier editors | Local Raven `f3c76f0`: `RecordEvents` exposes actor and time (`record.go`); live presence is future work (`docs/architecture-overview.md`, Notifications). `record_updated` stores no field diff. |
+| Refuse stale forms using the original revision; preserve submitted data | Code review of local Raven `f3c76f0`: the engine checks revisions, but `backofficeUpdateWork` uses the revision loaded during POST and ignores the posted version for conflict checking. The form must be adapted; conflicts currently reach the generic server-error handler. |
 
 ## 8. Unconfirmed assumptions
 
