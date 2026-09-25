@@ -18,13 +18,13 @@
 
 **`bt-work-card--compact`** — this makes the card's padding, margins and gaps smaller and changes nothing else. Do not hide, shorten or rewrite card content with CSS. The button on a compact card is `btn-xs`, and on a normal card `btn-sm`. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-work-card__meta`** — this marks every metadata row in a card, not only the row in the header. Inside it, `bt-work-card__meta-item` marks a text value. A vertical rule appears between two neighbouring values, but never after a badge and never after the last value. [`patterns/work-card.html`](../patterns/work-card.html)
+**`bt-work-card__meta`** — this marks every metadata row in a card, not only the row in the header. Inside it, `bt-work-card__meta-item` marks a text value. A vertical rule appears between two neighbouring values, but never after a badge and never after the last value. Put each fact in its own item; the component supplies the separation. [`patterns/work-card.html`](../patterns/work-card.html), [`patterns/metadata.html`](../patterns/metadata.html)
 
 **`bt-work-card__author`** — use one of these per contributor. Put the identifier icons, such as ORCID, inside `bt-work-card__author` but outside the link. Put the `visually-hidden` text naming them inside the link. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-meta-list`** — this is the metadata row used outside a card, on detail-page file rows, suggestion rows and person rows. Never use it inside a card. Each `bt-meta-list__item` pairs a leading icon with its text. `bt-meta-list--xs` is the denser version; rows inside a panel stay at the normal size. [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
+**`bt-meta-list`** — this is the metadata row used outside a card, on detail-page file rows, suggestion rows and person rows. Never use it inside a card. Each fact is a `bt-meta-list__item`; pair a leading icon with its text inside that item. `bt-meta-list--xs` is the denser version; rows inside a panel stay at the normal size. [`patterns/metadata.html`](../patterns/metadata.html), [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
 
-**Two metadata rows, two separators** — inside a card, `bt-work-card__meta-item` puts a vertical rule between neighbouring values. Every other metadata row, including the one in a detail heading, separates values by the row's gap instead. Both are correct. Do not change one to match the other.
+**Two metadata rows, two separators** — inside a card, `bt-work-card__meta-item` puts a vertical rule between neighbouring values. Every other metadata row, including the one in a detail heading, separates values by the row's gap instead. Both are correct. Do not change one to match the other. Write separators as structure, not text punctuation.
 
 **Table** — tables are plain Bootstrap and Booktower adds no table class. In a title cell, put `fw-semibold text-reset text-decoration-none` on the link and `small text-muted mt-1` on the line below it. In an action cell, put `text-end` on the `<td>` and `btn-ghost btn-sm` on the buttons inside. Mark a selected row with `.table-active` on the `<tr>`.
 

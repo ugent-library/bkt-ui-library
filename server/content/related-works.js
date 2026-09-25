@@ -31,10 +31,10 @@ function matchCard({ id, type, title, year, line, keywords }) {
         <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=David%20S.%20Ellsworth">David S. Ellsworth</a></span>,
         <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
         <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Camille%20Vervoort">Camille Vervoort</a></span>,
-        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>
+        <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>,
         <span class="text-muted">et al. +6 more authors</span>
       </p>
-      <p class="bt-work-card__pub">(<a href="/templates/biblio-public/public-works.html?year=${year}"><time datetime="${year}">${year}</time></a>) ${line}</p>
+      <p class="bt-work-card__pub"><a href="/templates/biblio-public/public-works.html?year=${year}">(<time datetime="${year}">${year}</time>)</a> ${line}</p>
       <div class="d-flex flex-wrap gap-1">
         ${kw}
       </div>
@@ -50,7 +50,7 @@ ${matchCard({
     type: 'Journal article',
     title: 'Cooling co-benefits of urban tree networks in compact European cities',
     year: 2025,
-    line: `${container('Landscape and Urban Planning')}, 240, 104912.`,
+    line: `${container('Landscape and Urban Planning')} <span>240, 104912</span>`,
     keywords: [
       { label: 'Green infrastructure', shared: true },
       { label: 'Trees', shared: false }
@@ -61,7 +61,7 @@ ${matchCard({
     type: 'Journal article',
     title: 'Planning biodiversity corridors through urban green infrastructure',
     year: 2024,
-    line: `${container('Urban Ecosystems')}, 27(3), pp. 455&ndash;470.`,
+    line: `${container('Urban Ecosystems')} <span>27(3), pp. 455&ndash;470</span>`,
     keywords: [
       { label: 'Biodiversity', shared: false },
       { label: 'Urban climate', shared: true }
@@ -72,7 +72,7 @@ ${matchCard({
     type: 'Book chapter',
     title: 'Community-led climate adaptation in Flemish mid-sized cities',
     year: 2023,
-    line: `in ${container('Handbook of urban ecology')}. London: Routledge, pp. 210&ndash;228.`,
+    line: `<span>in ${container('Handbook of urban ecology')}</span> <span>London: Routledge</span> <span>pp. 210&ndash;228</span>`,
     keywords: [
       { label: 'Resilience', shared: true },
       { label: 'Ghent', shared: true },

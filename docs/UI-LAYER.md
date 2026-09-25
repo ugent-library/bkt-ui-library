@@ -160,10 +160,9 @@ Visible text follows the surface; machine formats stay ISO.
 - Decimals: comma (e.g. 158,71 KB).
 - Machine formats stay ISO: `datetime` attributes, JSON-LD, date input
   values, query syntax.
-- File meta line sequence, always: version · access · format · size
-  (e.g. Accepted manuscript · Restricted · PDF · 100,25 KB). An embargo
-  lift date follows access: version · access · lift date · format ·
-  size (… · Restricted · Open access from 01/05/2027 · PDF · …).
+- File meta line sequence, always: version, access, format, size. An
+  embargo lift date follows access. Render each value as a metadata item;
+  punctuation is content only when it belongs to the value.
 
 ---
 

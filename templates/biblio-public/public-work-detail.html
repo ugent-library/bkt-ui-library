@@ -252,7 +252,7 @@
           </div>
           <!-- @state-none: v1 embargo -- v1 sends the reader to the Files section, and embargo already names its date in the action above -->
           <!-- @state: files logged-in in-list -->
-          <p class="bt-meta-list bt-meta-list--xs mt-2">
+          <p class="bt-meta-list mt-2">
             <span class="bt-meta-list__item">Accepted manuscript</span>
             <span class="bt-meta-list__item">Open access</span>
             <span class="bt-meta-list__item">PDF</span>
@@ -260,18 +260,17 @@
           </p>
           <!-- @state -->
           <!-- @state: restricted -->
-          <p class="bt-meta-list bt-meta-list--xs mt-2">
+          <p class="bt-meta-list mt-2">
             <span class="bt-meta-list__item">Accepted manuscript</span>
             <span class="bt-meta-list__item">Restricted</span>
             <span class="bt-meta-list__item">PDF</span>
-            <span class="bt-meta-list__item">158,71 KB</span>
           </p>
           <!-- @state -->
           <!-- @state: no-files -->
           <p class="small text-muted mt-2">No full text available in Biblio</p>
           <!-- @state -->
           <!-- @state: thesis alt-titles -->
-          <p class="bt-meta-list bt-meta-list--xs mt-2">
+          <p class="bt-meta-list mt-2">
             <span class="bt-meta-list__item">Full text</span>
             <span class="bt-meta-list__item">Open access</span>
             <span class="bt-meta-list__item">PDF</span>
@@ -538,11 +537,17 @@
           </section>
           <!-- @state -->
 
-          <!-- File is private now, embargo opens it later: type + date, never the name -->
           <!-- @state: embargo -->
           <!-- [html-validate-disable-next unique-landmark -- @state variants of one section; only one renders per page] -->
           <section aria-labelledby="files-heading-embargo" class="mb-5">
-            <h2 id="files-heading-embargo" class="h4 mb-3">Files</h2>
+            <div class="bt-toolbar">
+              <div class="bt-toolbar__left">
+                <h2 id="files-heading-embargo" class="h4 mb-0">Files</h2>
+              </div>
+              <div class="bt-toolbar__right">
+                <p class="small"><a href="#">Log in</a> to download restricted files.</p>
+              </div>
+            </div>
             <ul class="list-group list-group-flush list-unstyled mb-0">
               <li class="list-group-item d-flex align-items-center gap-3 px-0">
                 <i class="if if-time" aria-hidden="true"></i>
@@ -551,7 +556,7 @@
                   <p class="bt-meta-list">
                     <span class="badge text-bg-warning-light">
                       <i class="if if-time" aria-hidden="true"></i>
-                      Embargo
+                      Restricted, embargo
                     </span>
                     <span class="bt-meta-list__item">PDF</span>
                     <span class="bt-meta-list__item">Open access from <time datetime="2027-05-01">1 May 2027</time></span>
@@ -619,10 +624,10 @@
                     <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=David%20S.%20Ellsworth">David S. Ellsworth</a></span>,
                     <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
                     <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Camille%20Vervoort">Camille Vervoort</a></span>,
-                    <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>
+                    <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>,
                     <span class="text-muted">et al. +6 more authors</span>
                   </p>
-                  <p class="bt-work-card__pub">(<a href="/templates/biblio-public/public-works.html?year=2025"><time datetime="2025">2025</time></a>) <a href="/templates/biblio-public/public-works.html?container=Landscape%20and%20Urban%20Planning"><cite>Landscape and Urban Planning</cite></a>, 240, 104912.</p>
+                  <p class="bt-work-card__pub"><a href="/templates/biblio-public/public-works.html?year=2025">(<time datetime="2025">2025</time>)</a> <a href="/templates/biblio-public/public-works.html?container=Landscape%20and%20Urban%20Planning"><cite>Landscape and Urban Planning</cite></a> <span>240, 104912</span></p>
                   <div class="d-flex flex-wrap gap-1">
                     <a href="#" class="badge text-bg-primary-light text-decoration-none">Green infrastructure <span class="visually-hidden">(shared keyword)</span></a>
                     <a href="#" class="badge text-bg-secondary text-decoration-none">Trees</a>
@@ -648,10 +653,10 @@
                     <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=David%20S.%20Ellsworth">David S. Ellsworth</a></span>,
                     <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
                     <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Camille%20Vervoort">Camille Vervoort</a></span>,
-                    <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>
+                    <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>,
                     <span class="text-muted">et al. +6 more authors</span>
                   </p>
-                  <p class="bt-work-card__pub">(<a href="/templates/biblio-public/public-works.html?year=2024"><time datetime="2024">2024</time></a>) <a href="/templates/biblio-public/public-works.html?container=Urban%20Ecosystems"><cite>Urban Ecosystems</cite></a>, 27(3), pp. 455&ndash;470.</p>
+                  <p class="bt-work-card__pub"><a href="/templates/biblio-public/public-works.html?year=2024">(<time datetime="2024">2024</time>)</a> <a href="/templates/biblio-public/public-works.html?container=Urban%20Ecosystems"><cite>Urban Ecosystems</cite></a> <span>27(3), pp. 455&ndash;470</span></p>
                   <div class="d-flex flex-wrap gap-1">
                     <a href="#" class="badge text-bg-secondary text-decoration-none">Biodiversity</a>
                     <a href="#" class="badge text-bg-primary-light text-decoration-none">Urban climate <span class="visually-hidden">(shared keyword)</span></a>
@@ -677,10 +682,10 @@
                     <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=David%20S.%20Ellsworth">David S. Ellsworth</a></span>,
                     <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Lauwers<span class="visually-hidden"> (UGent)</span></a></span>,
                     <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Camille%20Vervoort">Camille Vervoort</a></span>,
-                    <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>
+                    <span class="bt-work-card__author"><a href="/templates/biblio-public/public-works.html?q=Mark%20G.%20Tjoelker">Mark G. Tjoelker</a></span>,
                     <span class="text-muted">et al. +6 more authors</span>
                   </p>
-                  <p class="bt-work-card__pub">(<a href="/templates/biblio-public/public-works.html?year=2023"><time datetime="2023">2023</time></a>) in <a href="/templates/biblio-public/public-works.html?container=Handbook%20of%20urban%20ecology"><cite>Handbook of urban ecology</cite></a>. London: Routledge, pp. 210&ndash;228.</p>
+                  <p class="bt-work-card__pub"><a href="/templates/biblio-public/public-works.html?year=2023">(<time datetime="2023">2023</time>)</a> <span>in <a href="/templates/biblio-public/public-works.html?container=Handbook%20of%20urban%20ecology"><cite>Handbook of urban ecology</cite></a></span> <span>London: Routledge</span> <span>pp. 210&ndash;228</span></p>
                   <div class="d-flex flex-wrap gap-1">
                     <a href="#" class="badge text-bg-primary-light text-decoration-none">Resilience <span class="visually-hidden">(shared keyword)</span></a>
                     <a href="#" class="badge text-bg-primary-light text-decoration-none">Ghent <span class="visually-hidden">(shared keyword)</span></a>
