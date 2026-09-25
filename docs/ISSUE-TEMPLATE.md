@@ -15,7 +15,7 @@ The prototype governs visible UI. Delete empty sections.
 
 ## Why
 
-<!-- Feature, 3–5 sentences: current limitation, named persona need, why it matters.
+<!-- Feature, 3–5 sentences: current limitation, who needs the change, why it matters.
      Improvement, 2–3 sentences: what Raven does locally, that Booktower now ships it,
      whether the design may still change. -->
 

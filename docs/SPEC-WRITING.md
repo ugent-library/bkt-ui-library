@@ -92,15 +92,13 @@ Delete empty sections and sentences whose removal changes no decision or action.
 Specs cover the problem, the evidence, what the user sees, what the product promises
 and what is out of scope. Raven owns the domain model and implementation mechanism.
 
-### Evidence and people
+### Evidence
 
 Sync ProductBoard demand with `npm run sync:demand`. Record findings in
 `notes/demand/FINDINGS.md` and cite note IDs in the spec. A need without a note is an
 assumption and must read as one.
 
-Name a documented persona with its type, such as “Sue Kerr (academic reader).” State
-what they need and why. If no persona fits, name a concrete role and flag the research
-gap.
+State who needs the change and why, in the reader's own words.
 
 ### Requirements
 
