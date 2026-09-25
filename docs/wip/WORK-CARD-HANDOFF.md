@@ -93,8 +93,7 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 
 - **The fast lane is out of scope for the epic.** "Complete metadata" opens the
   record's edit form; the scoped edit view stays a design of its own in
-  `notes/TOPLAN.md`. #191 and `DOMAIN-VOCABULARY` say so now, without the
-  "until the fast lane exists" hedge.
+  `notes/TOPLAN.md`.
 - **The proxy role is out of scope for the epic.** Every action row in #194
   belongs to a researcher or a curator. Add a proxy variant once the role is designed;
   the open-design list below tracks it, and `templates/biblio-proxy/` is empty.
@@ -117,16 +116,6 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   The axes meet in one place, the backoffice `set_to_reviewed` action, which reviews
   and then applies the `reviewed_visibility` the curator picked — a choice, not a
   consequence.
-
-## Backoffice card messages
-
-- A Biblio message is researcher-facing. Show it in a light yellow block with the
-  message icon; a returned Work's reason uses this style.
-- An internal librarian note is curator-only. Show it in a light gray block with the
-  lock icon.
-- Missing metadata is separate from both message types. Prototype examples and
-  "Complete metadata" may remain, but both are out of scope for the Raven work-card
-  issue.
 
 ## Decisions 2026-08-07 — applied to the drafts
 
@@ -178,9 +167,9 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   is a WIP reference for critique and building. The doc moves to raven with
   #184, or the implementation's reading of it does. Noted at the top of the doc.
 - **#190 missing metadata**: backoffice cards may show missing-items groups, with
-  filtering/facets/counts for "Missing X" out of scope. Missing metadata stays
-  separate from Biblio messages and internal librarian notes; it does not determine
-  their style. Nothing about completeness reaches the public surface. Compact
+  filtering/facets/counts for "Missing X" out of scope. Missing metadata remains a
+  separate concern even when its line shares a message block; it does not determine
+  the block's alert class. Nothing about completeness reaches the public surface. Compact
   metadata-row markers can show scan-critical missing values such as access, while
   the responsibility block has the full list. Primary identity fields such as title
   do not use the marker pattern. Question closed.

@@ -155,17 +155,17 @@ four statuses on their own list.
 
 ### Messages on backoffice cards
 
-**Biblio message** is a researcher-facing message from the Biblio team. It uses a
-light yellow `alert-warning` block with the `if-message` icon and is visible to the
-researcher and curator. A returned Work's return reason is a Biblio message.
+**Biblio message** is a researcher-facing message from the Biblio team. It uses an
+`alert-warning` block with the `if-message` icon and is visible to the researcher
+and curator. A returned Work's return reason is a Biblio message.
 
-**Internal librarian note** is curator-only. It uses a light gray `alert-light` block
-with the `if-lock` icon. It is not shown to researchers.
+**Internal librarian note** is curator-only. It uses an `alert-light` block with the
+`if-lock` icon. It is not shown to researchers.
 
-Missing metadata is a separate prototype example, not a Biblio message or internal
-note. It may use a light gray block and a "Complete metadata" action; both are out of
-scope for the Raven work-card issue. Missing metadata does not determine message
-styling.
+Missing metadata can appear as a "Missing:" line above either message. The message
+type determines the block's alert class and icon. When missing metadata appears
+alone, it uses an `alert-warning` block with the `if-message` icon. Only that
+standalone warning may offer "Complete metadata".
 
 Where each text lives in raven:
 
@@ -185,7 +185,7 @@ pending requests rather than whole-record locks where possible.
 "Complete metadata" opens the record's edit form. The researcher fast lane — an edit
 view scoped to the missing fields — is the focused review pattern (see Candidate). It
 exists for candidates today; applying it to Incomplete Works is intended but not yet
-designed, and out of scope for the work-card issues.
+designed.
 
 Missing metadata that affects card scanning can also appear where the value would
 normally sit, as a compact metadata item: `Missing access`, `Missing year`, `Missing
