@@ -1,54 +1,45 @@
 # Email notifications — analysis
 
-Home: `booktower-ui-library/docs/wip/EMAIL-NOTIFICATIONS-ANALYSIS.md`. Owns
-email notification design for the next Biblio. The review-flow baseline
-(`REVIEW-FLOW-ANALYSIS.md`, §5 *Email notifications*) decided: email is
-opt-in per user, for researchers and proxies, sent when another actor
-touches a work in the recipient's scope, and each mail deep-links. This
-analysis takes cadence, digest shape and the setting from there. Marks
-follow the review-flow legend (`✚` decided here, `○` open).
+## Recipients and events
 
-## Two event classes
+Email is opt-in for researchers and proxies. A mail goes out when another person acts
+on a Work in the recipient's My works scope; the recipient's own actions stay silent.
+The owner and every active proxy each receive it if they opted in. A settled
+suggestion also notifies its suggester.
 
-Cadence is a per-class question:
+| Event | Mail includes |
+|---|---|
+| Return | Comment and Work link |
+| Changes requested | Named fields, message and scoped-view link |
+| Suggestion settled | Outcome and comment |
+| Request settled by adaptation or rejection | Changed or restored fields and comment |
+| Approval | Public or private outcome and Work link |
+| Deletion or consolidation | Reason and redirect or tombstone target |
+| Found for you | Candidate digest |
+| Added for you | Work link and Not yours? route |
 
-| Class | Events (review-flow §5 list) | Someone waits? |
+## Settings
+
+Each recipient confirms two independent settings; no per-event controls.
+
+| Setting | Choices | Suggested on opt-in |
 |---|---|---|
-| Asks | work returned, changes requested | Yes: the flow blocks until the recipient acts |
-| Awareness | approved, request settled against you, deleted/merged, found for you, added for you | No; nothing waits on the recipient |
+| Needs my action | Instant, daily, weekly, off | Instant |
+| For information | Daily, weekly, monthly, off | Monthly |
 
-## What each cadence looks like
+A mail follows the Inbox section its event lands in: Needs your action or Recent
+activity.
 
-A curator returns a work on Tuesday:
+For a slower action cadence, explain: “Change requests also arrive at this frequency.”
 
-| Cadence | The recipient's inbox | Effect on a review round |
-|---|---|---|
-| Instant | One mail per event; a curator clearing a queue can burst several mails within minutes | Return read the same day; a round closes in days |
-| Weekly digest | One mail on a fixed day: the week's events, grouped per work, one line each | A Return waits up to seven days unread; a two-round review takes about three weeks |
-| Monthly digest | A newsletter: the month across all works | Rounds effectively stop; only awareness events survive this cadence |
+## Delivery
 
-`✚` A digest groups by work, newest first, one deep-linking line per event.
-`✚` An empty period stays silent.
-`○` Coalescing for instant bursts (one mail per curator + work within a
-short window) stays open.
+Mail uses the recipient's interface language. Replies reach biblio@ugent.be.
+Digests go out in the morning. Events on one Work for one recipient combine into one
+instant mail within a short window. The mail shows the state at the moment it is sent.
 
-## The setting
+## Digests
 
-**Decision `✚`: the recipient decides.** A researcher or proxy who picks a
-digest gets everything at that cadence, blocking asks included. The
-setting states the consequence next to the choice: returns and change
-requests also wait for the digest.
-
-`○` Open — how many knobs:
-
-1. One cadence for everything; the consequence line carries the warning.
-2. Two choices: a cadence for asks, a cadence for awareness.
-3. Per-event choices. Maximal control; a settings screen few will read.
-
-## Open
-
-- Which digest cadences to offer (weekly only, or daily / weekly /
-  monthly), and the send day and hour.
-- Sender address, reply-to (helpdesk?), mail language per user.
-- Proxy digests: one digest merging own and proxied works, or split per
-  role.
+One digest per delivery groups Works by researcher, with own Works in a separate
+group. Within each group, Works appear newest first; each event has one line and a
+direct link. Empty periods stay silent.
