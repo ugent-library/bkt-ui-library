@@ -347,11 +347,16 @@ In the UI: surfaces as a change history view on a Work detail page (who changed 
 ### Visibility
 Describes who can access a file. Per-file, not per-work. Field and values are raven's (`raven/docs/metadata-work-fields.md` → Files); records carry their own `visibility` with the same values.
 
-| Value | Label | Badge |
-|-------|-------|-------|
-| `public` | Open access | `badge text-bg-success` + `if-open-access` |
-| `restricted` | public: "Restricted access"; backoffice: "Restricted" | `badge text-bg-secondary` + `if-lock` |
-| `private` | backoffice: "Private" | never rendered on the public surface — not even a count |
+| File visibility | Public file-row label | Public file-row badge |
+|---|---|---|
+| `public` | Open access | `badge text-bg-success-light` + `if-open-access` |
+| `restricted` | Restricted | `badge text-bg-light border` + `if-lock` |
+| `private` | — | never rendered on the public surface — not even a count |
+
+An embargoed file that is currently restricted keeps the neutral file-row badge, uses
+`if-time`, and names its future access and release date in the metadata line. File-row
+badges are quieter than the derived work-access badge on public cards and detail headings;
+the latter summarizes the most useful full-text access, not this file's visibility.
 
 Private files leave no public trace whatsoever: no count, no badge, no machine-facing output. Even revealing that a file *exists* is a patent risk (tech transfer). "All files private" renders identically to "no files".
 
@@ -473,11 +478,11 @@ The UB2030 plan takes a strong position: open access is the institutional defaul
 
 **In search and discovery:**
 - OA status should be a prominent, early filter — not buried
-- the open-access badge (`badge text-bg-success` + `if-open-access`) should be visually distinct and positive, not neutral
-- **only open access carries colour.** Restricted and embargo are neutral badges
-  (`badge text-bg-secondary`), told apart by icon: `if-lock` for restricted, `if-time` for
-  embargo (which names the date). They are correct outcomes, not warnings — the orange
-  `text-bg-warning` they used to wear read as an error and competed with open access
+- open access should be visually distinct and positive, not neutral; the work summary
+  carries more weight than each file row
+- **only open access carries colour.** Restricted and embargo are neutral, told apart
+  by icon: `if-lock` for restricted, `if-time` for embargo. They are correct outcomes,
+  not warnings — orange made them read as errors and competed with open access
 - **closed access belongs to backoffice, not to public** — it renders on a backoffice
   record page, with `if-forbid`, and backoffice cards. A card carries an access element
   only for an open, restricted or embargoed file on public; a work whose files are all
@@ -618,8 +623,8 @@ access are never badges on the backoffice.
 
 ### Public cards
 
-Work access (raven's `Work.Access()`) is the only public badge system, and only open
-access carries colour — open → `badge text-bg-success` + `if-open-access`, restricted
+Work access (raven's `Work.Access()`) is the public card and detail-heading summary,
+not a file-row badge. Only open access carries colour — open → `badge text-bg-success` + `if-open-access`, restricted
 → `badge text-bg-secondary` + `if-lock`, embargo → `badge text-bg-secondary` +
 `if-time`, naming the date ("Embargo until 1 May 2027"). The public card keeps
 "Restricted access", which is what a reader outside academia understands; the
