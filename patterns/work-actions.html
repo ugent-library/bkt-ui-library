@@ -10,12 +10,13 @@
   <nav aria-label="On this page" class="mb-4">
     <ul class="list-inline mb-0">
       <li class="list-inline-item"><a href="#principles">Principles</a></li>
-      <li class="list-inline-item"><a href="#public">Public</a></li>
-      <li class="list-inline-item"><a href="#public-v2">Public access — future v2</a></li>
+      <li class="list-inline-item"><a href="#public">Public V1</a></li>
+      <li class="list-inline-item"><a href="#public-v2">Public V2</a></li>
       <li class="list-inline-item"><a href="#backoffice-v1">Backoffice V1</a></li>
+      <li class="list-inline-item"><a href="#candidates">Backoffice candidates</a></li>
       <li class="list-inline-item"><a href="#backoffice-v2">Backoffice V2</a></li>
-      <li class="list-inline-item"><a href="#matrix">V2 matrix</a></li>
-      <li class="list-inline-item"><a href="#detail">Detail header</a></li>
+      <li class="list-inline-item"><a href="#matrix">Backoffice V2 matrix</a></li>
+      <li class="list-inline-item"><a href="#detail">Public detail header</a></li>
     </ul>
   </nav>
 
@@ -35,8 +36,8 @@
         <tbody>
           <tr>
             <th scope="row">Primary action</th>
-            <td>Access CTA on detail headers; card access CTA only in the future v2 pattern.</td>
-            <td>V1 uses Edit for the action row. V2 adds role and state actions.</td>
+            <td>Access CTA on detail headers; card access CTA only in V2.</td>
+            <td>V1 uses Edit for the action row; compact dashboard cards keep their task action, such as Complete. V2 adds role and state actions.</td>
           </tr>
           <tr>
             <th scope="row">More actions</th>
@@ -46,7 +47,7 @@
           <tr>
             <th scope="row">Secondary links</th>
             <td>Cite and Add to list in the card header.</td>
-            <td>V1 keeps utilities out of the action row. V2 adds footer utilities when available.</td>
+            <td>Add to list in the action row; compact dashboard cards may omit it. Record links in the curator card footer.</td>
           </tr>
           <tr>
             <th scope="row">Element choice</th>
@@ -58,7 +59,7 @@
   </section>
 
   <section class="ds-section" id="public">
-    <h2 class="h4 mb-3">Public card actions</h2>
+    <h2 class="h4 mb-3">Public card actions — V1</h2>
     <p class="mb-4 col-8 text-muted small">Cite and Add to list sit in the top-right action row. The title navigates and the badge communicates access.</p>
 
     <div class="ds-demo">
@@ -94,7 +95,7 @@
   </section>
 
   <section class="ds-section" id="public-v2">
-    <h2 class="h4 mb-3">Public card access — future v2</h2>
+    <h2 class="h4 mb-3">Public card actions — V2</h2>
     <p class="mb-4 col-8 text-muted small">These candidates are not the current card contract. A later version may add one access action after Cite and Add to list when there is one clear route.</p>
 
     <div class="ds-demo">
@@ -309,8 +310,108 @@
     </div>
   </section>
 
+  <section class="ds-section" id="candidates">
+    <h2 class="h4 mb-3">Backoffice candidate actions <span class="badge text-bg-light border ms-2 align-middle">In progress</span></h2>
+    <p class="mb-4 col-8 text-muted small">Candidate behavior is defined under Candidate in <code>docs/DOMAIN-VOCABULARY.md</code>.</p>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">New candidate — Review, with Reject</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <article class="bt-work-card" aria-labelledby="wa-candidate">
+          <div class="bt-work-card__header">
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+              <span class="bt-work-card__meta-item">Journal article</span>
+            </div>
+          </div>
+          <div class="bt-work-card__body">
+            <p id="wa-candidate" class="bt-work-card__title">
+              Transfer learning across hospitals: a multicentric ICU study
+            </p>
+            <p class="bt-work-card__authors">
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=Marc%20Lef%C3%A8vre">Marc Lefèvre</a></span>
+            </p>
+            <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span></p>
+          </div>
+          <div class="bt-work-card__footer">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Transfer learning across hospitals: a multicentric ICU study">Review</a>
+              <a href="#" class="btn btn-secondary btn-sm" aria-label="Reject: Transfer learning across hospitals: a multicentric ICU study">Reject</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Skipped candidate — Review, with Reject</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <article class="bt-work-card" aria-labelledby="wa-candidate-skipped">
+          <div class="bt-work-card__header">
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
+              <span class="bt-work-card__meta-item">Journal article</span>
+            </div>
+          </div>
+          <div class="bt-work-card__body">
+            <p id="wa-candidate-skipped" class="bt-work-card__title">
+              Thermal drift compensation in tactile sensor arrays
+            </p>
+            <p class="bt-work-card__authors">
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>
+            </p>
+            <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Sensors and Actuators A</span></p>
+            <div class="bt-work-card__meta">
+              <i class="if if-skip-right-line text-muted" aria-hidden="true"></i>
+              <span class="bt-work-card__meta-item">Skipped in your last round</span>
+            </div>
+          </div>
+          <div class="bt-work-card__footer">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Thermal drift compensation in tactile sensor arrays">Review</a>
+              <a href="#" class="btn btn-secondary btn-sm" aria-label="Reject: Thermal drift compensation in tactile sensor arrays">Reject</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Rejected candidate — Undo</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <article class="bt-work-card" aria-labelledby="wa-candidate-rejected">
+          <div class="bt-work-card__header">
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-light border">Rejected</span>
+              <span class="badge text-bg-secondary">Web of Science</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
+            </div>
+            <div class="bt-work-card__actions">
+              <a href="#" class="btn btn-secondary btn-sm"
+                aria-label="Undo rejection: Tactile sensing benchmarks for prosthetic grippers">
+                <i class="if if-arrow-go-back if--sm" aria-hidden="true"></i> Undo
+              </a>
+            </div>
+          </div>
+          <div class="bt-work-card__body">
+            <p id="wa-candidate-rejected" class="bt-work-card__title">
+              Tactile sensing benchmarks for prosthetic grippers
+            </p>
+            <p class="bt-work-card__authors">
+              <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>
+            </p>
+            <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Sensors and Actuators A</span></p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="ds-section" id="backoffice-v2">
-    <h2 class="h4 mb-3">Backoffice card actions — V2 future workflow actions</h2>
+    <h2 class="h4 mb-3">Backoffice card actions — V2</h2>
     <p class="mb-4 col-8 text-muted small">V2 preserves the role and state action model for a later workflow release. Raven owns routes and permissions.</p>
 
     <div class="ds-demo">
@@ -344,9 +445,52 @@
           <div class="bt-work-card__body">
             <p id="wa-researcher-draft" class="bt-work-card__title"><a href="#">Climate forcing data over Belgium 1950-2023: gridded temperature and precipitation</a></p>
             <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Colette Goossens<span class="visually-hidden"> (UGent)</span></a></span>, <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Pinar Termonia<span class="visually-hidden"> (UGent)</span></a></span></p>
-            <p class="bt-work-card__pub"><a href="#">(<time datetime="2023">2025</time>)</a> <a href="#"><cite>Zenodo</cite></a></p>
+            <p class="bt-work-card__pub"><a href="#">(<time datetime="2025">2025</time>)</a> <a href="#"><cite>Zenodo</cite></a></p>
           </div>
         </article>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <h3 class="ds-demo-label">Researcher direct-added draft — Complete</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <article class="bt-work-card" aria-labelledby="wa-direct-added">
+          <div class="bt-work-card__header">
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-warning-light">Draft</span>
+              <span class="bt-work-card__meta-item">Doctoral thesis</span>
+            </div>
+            <div class="bt-work-card__actions">
+              <a href="#" class="btn btn-primary btn-sm" aria-label="Complete: Self-healing polymer networks for soft robotics">
+                <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
+              </a>
+            </div>
+          </div>
+          <div class="bt-work-card__body">
+            <p id="wa-direct-added" class="bt-work-card__title"><a href="#">Self-healing polymer networks for soft robotics</a></p>
+            <p class="bt-work-card__authors">
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Baert<span class="visually-hidden"> (UGent)</span></a></span>
+            </p>
+            <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
+            <div class="alert alert-warning alert--sm mb-2" role="note" aria-label="Missing metadata">
+              <div class="d-flex align-items-start gap-2">
+                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
+                <div>
+                  <p class="mb-1"><strong>Missing:</strong> abstract, license.</p>
+                  <p class="mb-0"><a href="#" class="fw-medium">Complete metadata</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bt-work-card__footer">
+            <div class="bt-work-card__meta align-items-center">
+              <span>Created 28/08/2026 by Biblio assistant via Plato</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="ds-demo-notes">
+        <p>Draft is a placeholder; Raven owns the status a Plato-added work receives.</p>
       </div>
     </div>
 
@@ -371,7 +515,7 @@
           <div class="bt-work-card__body">
             <p id="wa-researcher-submitted" class="bt-work-card__title"><a href="#">Machine learning approaches to protein folding prediction: benchmarks and limitations</a></p>
             <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Eline Hendrickx<span class="visually-hidden"> (UGent)</span></a></span>, <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Andres Verhasselt<span class="visually-hidden"> (UGent)</span></a></span></p>
-            <p class="bt-work-card__pub"><a href="#">(<time datetime="2023">2025</time>)</a> <a href="#"><cite>Nature Computational Science</cite></a></p>
+            <p class="bt-work-card__pub"><a href="#">(<time datetime="2025">2025</time>)</a> <a href="#"><cite>Nature Computational Science</cite></a></p>
           </div>
         </article>
       </div>
@@ -446,17 +590,6 @@
               </div>
             </div>
           </div>
-          <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta bt-work-card__meta--borderless">
-              <span class="bt-work-card__meta-item">Biblio ID BT2026-DATA-0412</span>
-              <span class="bt-work-card__meta-item">Created 13/07/2026 by Sara De Wilde</span>
-            </div>
-            <div class="bt-work-card__meta">
-              <a href="#" class="bt-work-card__meta-item">View record</a>
-              <a href="#" class="bt-work-card__meta-item">Full texts &amp; files</a>
-              <a href="#" class="bt-work-card__meta-item">Public record</a>
-            </div>
-          </div>
         </article>
       </div>
     </div>
@@ -484,26 +617,13 @@
             <p class="bt-work-card__authors"><span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent)</span></a></span>, <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>, <span class="text-muted">+8 more authors</span></p>
             <p class="bt-work-card__pub"><a href="#">(<time datetime="2020">2020</time>)</a> <a href="#"><cite>International Journal of Environmental Research and Public Health</cite></a> <span>Vol. 17</span><span>Issue 7</span><span>pp. 12-32</span></p>
           </div>
-          <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta bt-work-card__meta--borderless">
-              <span class="bt-work-card__meta-item">Biblio ID 01G3TZB614X7XXR52JYYGAND25</span>
-              <span class="bt-work-card__meta-item">Created 13/07/2023 by Valerie Van Den Bussche</span>
-              <span class="bt-work-card__meta-item">System update 08/05/2026 13:47</span>
-            </div>
-            <div class="bt-work-card__meta">
-              <a href="#" class="bt-work-card__meta-item">View record</a>
-              <a href="#" class="bt-work-card__meta-item">Full texts &amp; files</a>
-              <a href="#" class="bt-work-card__meta-item">DOI</a>
-              <a href="#" class="bt-work-card__meta-item">Public record</a>
-            </div>
-          </div>
         </article>
       </div>
     </div>
   </section>
 
   <section class="ds-section" id="matrix">
-    <h2 class="h4 mb-3">V2 role and state matrix</h2>
+    <h2 class="h4 mb-3">Backoffice V2 role and state matrix</h2>
     <p class="mb-3 col-8 text-muted small">Future workflow actions depend on both the audience and the record state. V1 does not use this matrix.</p>
 
     <div class="table-responsive">
@@ -518,13 +638,14 @@
         </thead>
         <tbody>
           <tr><th scope="row">Researcher</th><td>Draft</td><td>Continue</td><td>Delete draft in the more menu</td></tr>
+          <tr><th scope="row">Researcher</th><td>Direct-added draft</td><td>Complete</td><td>None</td></tr>
           <tr><th scope="row">Researcher</th><td>Submitted</td><td>Edit</td><td>None unless an external utility exists</td></tr>
           <tr><th scope="row">Researcher</th><td>Returned</td><td>Edit &amp; resubmit</td><td>Return reason lives in the message block</td></tr>
           <tr><th scope="row">Researcher</th><td>Reviewed</td><td>Request changes</td><td>View public page and Altmetric in more actions when available</td></tr>
           <tr><th scope="row">Curator / reviewer</th><td>Draft</td><td>View</td><td>Intervene after opening the work</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Submitted</td><td>Review</td><td>Files, public page, DOI, WoS, PubMed, Altmetric in footer when available</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Returned</td><td>View</td><td>Intervene after opening the work; footer links stay available</td></tr>
-          <tr><th scope="row">Curator / reviewer</th><td>Reviewed</td><td>View, ghost</td><td>The record is done; footer links stay available</td></tr>
+          <tr><th scope="row">Curator / reviewer</th><td>Submitted</td><td>Review</td><td>None</td></tr>
+          <tr><th scope="row">Curator / reviewer</th><td>Returned</td><td>View</td><td>Intervene after opening the work</td></tr>
+          <tr><th scope="row">Curator / reviewer</th><td>Reviewed</td><td>View, ghost</td><td>The record is done</td></tr>
         </tbody>
       </table>
     </div>

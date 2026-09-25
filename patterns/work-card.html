@@ -4,7 +4,7 @@
   <header class="ds-page-header col-6" data-surface="public">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Work card</h1>
-    <p class="lead">The primary list unit for research output. Public cards are the minimum readable form; backoffice cards use a simple V1 action row before the future workflow model lands.</p>
+    <p class="lead">The primary list unit for research output. Public cards are the minimum readable form; backoffice cards use the same structure with surface-specific metadata.</p>
   </header>
 
   <nav aria-label="On this page" class="mb-4">
@@ -13,7 +13,7 @@
       <li class="list-inline-item"><a href="#variants">Variants</a></li>
       <li class="list-inline-item"><a href="#states">States</a></li>
       <li class="list-inline-item"><a href="#public">Public</a></li>
-      <li class="list-inline-item"><a href="#backoffice">Backoffice V2</a></li>
+      <li class="list-inline-item"><a href="#backoffice">Backoffice</a></li>
       <li class="list-inline-item"><a href="#compact">Compact</a></li>
     </ul>
   </nav>
@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <p class="mb-0 col-8">Put result cards in an ordered list. Use <code>&lt;article&gt;</code> and <code>aria-labelledby</code>. In backoffice V1, the title opens view mode, Edit opens edit mode, and Add to list names the work.</p>
+    <p class="mb-0 col-8">Put result cards in an ordered list. Use <code>&lt;article&gt;</code> and <code>aria-labelledby</code>. The action row is a slot; action choices live in <a href="/patterns/work-actions.html">work actions</a>.</p>
   </section>
 
   <section class="ds-section" id="variants">
@@ -86,8 +86,8 @@
           <tr>
             <th scope="row">Title</th>
             <td>Link</td>
-            <td>Link to the backoffice view mode</td>
-            <td>Link to the backoffice view mode</td>
+            <td>Link</td>
+            <td>Link</td>
           </tr>
           <tr>
             <th scope="row">Contributors</th>
@@ -110,24 +110,24 @@
           <tr>
             <th scope="row">Administrative context</th>
             <td>None</td>
-            <td>Departments, projects, related-record count, Biblio ID, and audit trail</td>
-            <td>The same, plus VABB and legacy context when relevant</td>
+            <td>Keep light: status, access, messages, Biblio ID, and the latest change</td>
+            <td>Curator scan metadata: departments, projects, VABB, legacy marker, related-record count, Biblio ID, timestamps, and record links</td>
           </tr>
           <tr>
-            <th scope="row">Footer utilities</th>
+            <th scope="row">Record links</th>
             <td>None</td>
-            <td>Optional</td>
-            <td>Files, public page, and external services in V2</td>
+            <td>None</td>
+            <td>When available</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <p class="mb-0 col-8">See <a href="/patterns/work-actions.html">work actions</a> for the V1 action row and the V2 future workflow matrix. Reference-line composition is documented in <code>docs/wip/WORK-CARD-REFERENCE-STYLES.md</code>.</p>
+    <p class="mb-0 col-8">Reference-line composition is documented in <code>docs/wip/WORK-CARD-REFERENCE-STYLES.md</code>.</p>
   </section>
 
   <section class="ds-section" id="states">
-    <h2 class="h4 mb-3">States, access, and actions</h2>
+    <h2 class="h4 mb-3">States and access</h2>
 
     <div class="row g-4">
       <div class="col-lg-6">
@@ -281,13 +281,13 @@
   </section>
 
   <section class="ds-section" id="backoffice">
-    <h2 class="h4 mb-3">Backoffice cards — V2 future workflow examples</h2>
-    <p class="mb-4 col-8 text-muted small">The shared grammar above shows the V1 action row. These examples keep the richer role and state model as a future workflow reference.</p>
+    <h2 class="h4 mb-3">Backoffice cards</h2>
+    <p class="mb-4 col-8 text-muted small">Backoffice cards keep the same shell. Researcher cards stay light. Curator cards may add scan metadata from the old Biblio card.</p>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher — draft</h3>
+      <h3 class="ds-demo-label">Researcher card — light payload</h3>
       <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-researcher-draft">
+        <article class="bt-work-card" aria-labelledby="wc-researcher-light">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-warning-light">Draft</span>
@@ -295,282 +295,51 @@
               <span class="bt-work-card__meta-item">No full text</span>
             </div>
             <div class="bt-work-card__actions">
-              <div class="bt-work-card__action-group">
-                <div class="dropdown">
-                  <button type="button" class="btn btn-ghost btn-sm bt-work-card__more-action" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More actions: Urban tree canopy measurements for Flemish cities">
-                    <i class="if if-more if--sm" aria-hidden="true"></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><button type="button" class="dropdown-item"><i class="if if-delete if--sm me-2" aria-hidden="true"></i>Delete draft</button></li>
-                  </ul>
-                </div>
-                <a href="#" class="btn btn-primary btn-sm" aria-label="Continue: Urban tree canopy measurements for Flemish cities">
-                  <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Continue
-                </a>
-              </div>
+              <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: Urban tree canopy measurements for Flemish cities">
+                <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+              </a>
+              <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Add to list: Urban tree canopy measurements for Flemish cities">
+                <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <div class="bt-work-card__body">
-            <p id="wc-researcher-draft" class="bt-work-card__title"><a href="#">Urban tree canopy measurements for Flemish cities</a></p>
+            <p id="wc-researcher-light" class="bt-work-card__title">
+              <a href="work-detail.html?mode=view">Urban tree canopy measurements for Flemish cities</a>
+            </p>
             <p class="bt-work-card__authors">
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent)</span></a></span>,
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Agentschap%20Natuur%20en%20Bos">Agentschap Natuur en Bos</a></span>,
-              <span class="text-muted">+2 more contributors</span>
+              <span class="bt-work-card__author"><a href="?q=Agentschap%20Natuur%20en%20Bos">Agentschap Natuur en Bos</a></span>
             </p>
             <p class="bt-work-card__pub"><a href="#">(<time datetime="2026">2026</time>)</a> <a href="#">Zenodo</a> <a href="#">DOI pending</a> <a href="#">CSV</a></p>
-            <div class="alert alert-warning alert--sm mb-2" role="note" aria-label="Missing metadata">
+            <div class="alert alert-warning alert--sm mb-0" role="note" aria-label="Missing metadata">
               <div class="d-flex align-items-start gap-2">
                 <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <div>
-                  <p class="mb-1"><strong>Missing:</strong> full text, DOI or WoS ID, abstract.</p>
-                  <p class="mb-0"><a href="#" class="fw-medium">Complete metadata</a></p>
-                </div>
+                <p class="mb-0"><strong>Missing:</strong> full text, funding, licence.</p>
               </div>
-            </div>
-            <div class="bt-work-card__meta">
-              <i class="if if-building text-muted" aria-hidden="true"></i>
-              <span class="badge text-bg-light border">DI10</span>
-              <span class="badge text-bg-light border">DI05</span>
-            </div>
-            <div class="bt-work-card__meta align-items-start">
-              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
-              <div class="d-flex flex-column gap-1">
-                <span><a href="#">Urban biodiversity corridors</a> <span class="text-muted">BOF/24J/014</span></span>
-              </div>
-            </div>
-            <div class="bt-work-card__meta">
-              <i class="if if-database text-muted" aria-hidden="true"></i>
-              <span class="bt-work-card__meta-item">1 related publication</span>
             </div>
           </div>
-          <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta align-items-center">
-              <span class="input-group">
+          <div class="bt-work-card__footer">
+            <div class="bt-work-card__meta column-gap-3">
+              <span class="input-group w-auto">
                 <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
                   <i class="if if-copy if--xs" aria-hidden="true"></i>
                   <span class="btn-text">Biblio ID</span>
                 </button>
                 <code class="border small align-content-center">01H8XK4E3Z95GB7W2X2S8Y9M0A</code>
               </span>
-              <span>Created 13/07/2026 10:32 by Karen De Pauw</span>
+              <span>Last edited 14/08/2026 by a Biblio team member</span>
             </div>
           </div>
         </article>
       </div>
     </div>
 
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher — direct-added (Plato import)</h3>
+    <div class="ds-demo" id="curator-scan-metadata">
+      <h3 class="ds-demo-label">Curator card — scan metadata</h3>
       <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-researcher-direct-added">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-warning-light">Draft</span>
-              <span class="bt-work-card__meta-item">Doctoral thesis</span>
-            </div>
-            <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-primary btn-sm" aria-label="Complete: Self-healing polymer networks for soft robotics">
-                <i class="if if-edit if--sm" aria-hidden="true"></i> Complete
-              </a>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-researcher-direct-added" class="bt-work-card__title"><a href="#">Self-healing polymer networks for soft robotics</a></p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Baert<span class="visually-hidden"> (UGent)</span></a></span>
-            </p>
-            <p class="bt-work-card__pub"><time datetime="2026">2026</time></p>
-            <div class="alert alert-warning alert--sm mb-2" role="note" aria-label="Missing metadata">
-              <div class="d-flex align-items-start gap-2">
-                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <div>
-                  <p class="mb-1"><strong>Missing:</strong> abstract, license.</p>
-                  <p class="mb-0"><a href="#" class="fw-medium">Complete metadata</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="bt-work-card__footer">
-            <div class="bt-work-card__meta align-items-center">
-              <span>Created 28/08/2026 09:12 by Biblio assistant via Plato</span>
-            </div>
-          </div>
-        </article>
-      </div>
-      <div class="ds-demo-notes">
-        <p>Draft is a placeholder; Raven owns the status a Plato-added work receives.</p>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher — candidate (Found for you)</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-researcher-candidate">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
-              <span class="bt-work-card__meta-item">Journal article</span>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-researcher-candidate" class="bt-work-card__title">
-              Transfer learning across hospitals: a multicentric ICU study
-            </p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Sofie Van Hoecke<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Marc%20Lef%C3%A8vre">Marc Lefèvre</a></span>
-            </p>
-            <p class="bt-work-card__pub"><span>(<time datetime="2025">2025</time>)</span><span>Journal of Clinical Monitoring</span></p>
-          </div>
-          <div class="bt-work-card__footer">
-            <div class="d-flex align-items-center gap-2 flex-wrap">
-              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Transfer learning across hospitals: a multicentric ICU study">Review</a>
-              <a href="#" class="btn btn-secondary btn-sm" aria-label="Reject: Transfer learning across hospitals: a multicentric ICU study">Reject</a>
-            </div>
-          </div>
-        </article>
-      </div>
-      <div class="ds-demo-notes">
-        <p>Claim timing, Skip and the remembered values are <code>docs/decisions/DD-003-candidate-review-is-a-focused-round.md</code>.</p>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher — candidate, skipped in the last round</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-researcher-candidate-skipped">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-secondary"><i class="if if-user" aria-hidden="true"></i> Web of Science<span class="visually-hidden">, matched through your linked identity</span></span>
-              <span class="bt-work-card__meta-item">Journal article</span>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-researcher-candidate-skipped" class="bt-work-card__title">
-              Thermal drift compensation in tactile sensor arrays
-            </p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>
-            </p>
-            <p class="bt-work-card__pub"><span>(<time datetime="2023">2023</time>)</span><span>Sensors and Actuators A</span></p>
-            <div class="bt-work-card__meta">
-              <i class="if if-skip-right-line text-muted" aria-hidden="true"></i>
-              <span class="bt-work-card__meta-item">Skipped in your last round</span>
-            </div>
-          </div>
-          <div class="bt-work-card__footer">
-            <div class="d-flex align-items-center gap-2 flex-wrap">
-              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Thermal drift compensation in tactile sensor arrays">Review</a>
-              <a href="#" class="btn btn-secondary btn-sm" aria-label="Reject: Thermal drift compensation in tactile sensor arrays">Reject</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher — candidate, rejected</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-researcher-candidate-rejected">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-light border">Rejected</span>
-              <span class="badge text-bg-secondary">Web of Science</span>
-              <span class="bt-work-card__meta-item">Journal article</span>
-            </div>
-            <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-secondary btn-sm"
-                aria-label="Undo rejection: Tactile sensing benchmarks for prosthetic grippers">
-                <i class="if if-arrow-go-back if--sm" aria-hidden="true"></i> Undo
-              </a>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-researcher-candidate-rejected" class="bt-work-card__title">
-              Tactile sensing benchmarks for prosthetic grippers
-            </p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><a href="?q=Jun%20Ito">Jun Ito</a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karel De Vos<span class="visually-hidden"> (UGent)</span></a></span>
-            </p>
-            <p class="bt-work-card__pub"><span>(<time datetime="2024">2024</time>)</span><span>Sensors and Actuators A</span></p>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Researcher — reviewed, request changes</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-researcher-reviewed">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-success-light">Reviewed</span>
-              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="badge text-bg-light border"><i class="if if-arrow-go-back" aria-hidden="true"></i> Retracted</span>
-              <span class="bt-work-card__meta-item">Journal article</span>
-              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
-            </div>
-            <div class="bt-work-card__actions">
-              <div class="bt-work-card__action-group">
-                <div class="dropdown">
-                  <button type="button" class="btn btn-ghost btn-sm bt-work-card__more-action" data-bs-toggle="dropdown" aria-expanded="false" aria-label="More actions: Neuropsychiatric aspects of COVID-19 pandemic">
-                    <i class="if if-more if--sm" aria-hidden="true"></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#"><i class="if if-bar-chart if--sm bt-work-card__dropdown-icon" aria-hidden="true"></i>View Altmetric</a></li>
-                  </ul>
-                </div>
-                <a href="#" class="btn btn-ghost btn-sm" aria-label="Request changes: Neuropsychiatric aspects of COVID-19 pandemic">
-                  <i class="if if-message if--sm" aria-hidden="true"></i> Request changes
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-researcher-reviewed" class="bt-work-card__title"><a href="#">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a></p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Ziggy%20Palumbo">Ziggy Palumbo</a></span>,
-              <span class="text-muted">+6 more authors</span>
-            </p>
-            <p class="bt-work-card__pub"><a href="#">(<time datetime="2020">2020</time>)</a> <a href="#">International Journal of Environmental Research and Public Health</a> <span>17(7), pp. 12&ndash;32</span></p>
-            <div class="bt-work-card__meta">
-              <i class="if if-building text-muted" aria-hidden="true"></i>
-              <span class="badge text-bg-light border">DI10</span>
-              <span class="badge text-bg-light border">DI05</span>
-            </div>
-            <div class="bt-work-card__meta align-items-start">
-              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
-              <div class="d-flex gap-3">
-                <span><a href="#">Valorisation of cytokine traps: IL33 as lead case</a>, <span class="text-muted">F2016/IOF-ADV/307</span></span>
-              </div>
-            </div>
-          </div>
-          <div class="bt-work-card__footer">
-            <div class="bt-work-card__meta align-items-center">
-              <span class="input-group">
-                <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
-                  <i class="if if-copy if--xs" aria-hidden="true"></i>
-                  <span class="btn-text">Biblio ID</span>
-                </button>
-                <code class="border small align-content-center">01G3TZB614X7XXR52JYYGAND25</code>
-              </span>
-              <span>Created 13/07/2023 10:22 by Valerie Van Den Bussche</span>
-              <span>Last edited 11/08/2026 11:56 by Miet Claes</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Curator / reviewer — submitted</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-curator-submitted">
+        <article class="bt-work-card" aria-labelledby="wc-curator-scan">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
               <span class="badge text-bg-info-light">Submitted</span>
@@ -579,41 +348,41 @@
               <span class="bt-work-card__meta-item">Restricted</span>
             </div>
             <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: Overdue athletes salaries in professional football">
-                <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Review
+              <a href="curate-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: Overdue athletes salaries in professional football">
+                <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
               </a>
+              <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Add to list: Overdue athletes salaries in professional football">
+                <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <div class="bt-work-card__body">
-            <p id="wc-curator-submitted" class="bt-work-card__title">Overdue athletes salaries in professional football</p>
+            <p id="wc-curator-scan" class="bt-work-card__title">
+              <a href="curate-detail.html?mode=view">Overdue athletes salaries in professional football</a>
+            </p>
             <p class="bt-work-card__authors">
               <span class="bt-work-card__author"><a href="?q=Louise%20Vandercruysse">Louise Vandercruysse</a></span>,
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Torry Vander Beken<span class="visually-hidden"> (UGent)</span></a></span>,
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Arnold Vermeersch<span class="visually-hidden"> (UGent)</span></a></span>
             </p>
-            <p class="bt-work-card__pub"><a href="#">(<time>2024</time>)</a> <a href="#">European Journal of Crime, Criminal Law and Criminal Justice</a> <span>Vol. 32, Issue 1, pp. 58&ndash;79</span></p>
-            <div class="alert alert-warning alert--sm mb-1" role="note" aria-label="For the researcher">
-              <div class="d-flex align-items-start gap-2">
-                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <div>
-                  <p class="mb-1"><strong>Missing:</strong> full text.</p>
-                  <p class="mb-0"><strong>Message:</strong> upload the author accepted manuscript, not the publisher PDF.</p>
-                </div>
-              </div>
-            </div>
-            <div class="alert alert-light alert--sm mb-2" role="note" aria-label="For curators">
-              <div class="d-flex align-items-start gap-2">
-                <i class="if if-lock flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <div>
-                  <p class="mb-1"><strong>Missing:</strong> ISSN, volume, pages.</p>
-                  <p class="mb-0"><strong>Internal note:</strong> waiting for author accepted manuscript; contacted the author on 28/07.</p>
-                </div>
-              </div>
-            </div>
-            <div class="bt-work-card__meta">
+            <p class="bt-work-card__pub"><a href="#">(<time datetime="2024">2024</time>)</a> <a href="#">European Journal of Crime, Criminal Law and Criminal Justice</a> <span>32(1), pp. 58&ndash;79</span></p>
+            <div class="bt-work-card__meta mt-2">
               <i class="if if-building text-muted" aria-hidden="true"></i>
               <span class="badge text-bg-light border">RE23</span>
               <span class="badge text-bg-light border">RE22</span>
+            </div>
+            <div class="bt-work-card__meta align-items-start">
+              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div class="d-flex flex-column gap-1">
+                <span><a href="#">Sports law and social rights</a> <span class="text-muted">BOF/24J/103</span></span>
+              </div>
+            </div>
+            <div class="bt-work-card__meta">
+              <i class="if if-bar-chart text-muted" aria-hidden="true"></i>
+              <span class="bt-work-card__meta-item">VABB: c:vabb:339050</span>
+              <span class="bt-work-card__meta-item">VABB-3</span>
+              <span class="bt-work-card__meta-item">not approved</span>
+              <span class="bt-work-card__meta-item">2024</span>
             </div>
             <div class="bt-work-card__meta">
               <i class="if if-database text-muted" aria-hidden="true"></i>
@@ -621,16 +390,17 @@
             </div>
           </div>
           <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta align-items-center">
-              <span class="input-group">
+            <div class="bt-work-card__meta column-gap-3">
+              <span class="input-group w-auto">
                 <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
                   <i class="if if-copy if--xs" aria-hidden="true"></i>
                   <span class="btn-text">Biblio ID</span>
                 </button>
                 <code class="border small align-content-center">01J1ZPQ1PR0Z7Z0R74KV7SDTFP</code>
               </span>
-              <span>Created 14/04/2024 09:10 by Marie Curator</span>
-              <span>System update 08/05/2026 13:47</span>
+              <span>Created 14/04/2024 by Marie Curator</span>
+              <span>Last edited 11/08/2026 by Marie Curator</span>
+              <span>System update 08/05/2026</span>
             </div>
             <div class="bt-work-card__meta">
               <a href="#">View publication</a>
@@ -638,7 +408,6 @@
               <a href="#">DOI</a>
               <a href="#">WoS</a>
               <a href="#">PubMed</a>
-              <a href="#">Altmetric</a>
               <a href="#">Public record</a>
             </div>
           </div>
@@ -646,51 +415,119 @@
       </div>
     </div>
 
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Curator / reviewer — missing access</h3>
+    <div class="ds-demo" id="curator-legacy-metadata">
+      <h3 class="ds-demo-label">Curator card — Legacy marker</h3>
       <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-curator-missing-access">
+        <article class="bt-work-card" aria-labelledby="wc-curator-legacy">
           <div class="bt-work-card__header">
             <div class="bt-work-card__meta">
-              <span class="badge text-bg-info-light">Submitted</span>
+              <span class="badge text-bg-success-light">Reviewed</span>
               <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Dataset</span>
-              <span class="bt-work-card__meta-item text-warning"><i class="if if-alert" aria-hidden="true"></i> Missing access</span>
-              <span class="bt-work-card__meta-item">CC-BY-4.0</span>
+              <span class="badge text-bg-light border"><i class="if if-forbid" aria-hidden="true"></i> Legacy</span>
+              <span class="bt-work-card__meta-item">Journal article</span>
+              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span>
+              <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
             </div>
             <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: High-resolution soil moisture readings for Flemish trial fields">
-                <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Review
+              <a href="curate-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
               </a>
+              <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Add to list: Neuropsychiatric aspects of COVID-19 pandemic">
+                <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+              </button>
             </div>
           </div>
           <div class="bt-work-card__body">
-            <p id="wc-curator-missing-access" class="bt-work-card__title">High-resolution soil moisture readings for Flemish trial fields</p>
+            <p id="wc-curator-legacy" class="bt-work-card__title">
+              <a href="curate-detail.html?mode=view">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</a>
+            </p>
+            <p class="bt-work-card__authors">
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
+              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>,
+              <span class="bt-work-card__author"><a href="?q=Ziggy%20Palumbo">Ziggy Palumbo</a></span>,
+              <span class="text-muted">+6 more authors</span>
+            </p>
+            <p class="bt-work-card__pub"><a href="#">(<time datetime="2020">2020</time>)</a> <a href="#">International Journal of Environmental Research and Public Health</a> <span>17(7), pp. 12&ndash;32</span></p>
+            <div class="bt-work-card__meta mt-2">
+              <i class="if if-building text-muted" aria-hidden="true"></i>
+              <span class="badge text-bg-light border">DI10</span>
+              <span class="badge text-bg-light border">DI05</span>
+            </div>
+            <div class="bt-work-card__meta align-items-start">
+              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
+              <div class="d-flex flex-column gap-1">
+                <span><a href="#">Valorisation of cytokine traps</a> <span class="text-muted">F2016/IOF-ADV/307</span></span>
+                <span><a href="#">Archaeological material of ed-Dur</a> <span class="text-muted">F2016/IOF-ADV/308</span></span>
+              </div>
+            </div>
+            <div class="bt-work-card__meta">
+              <i class="if if-bar-chart text-muted" aria-hidden="true"></i>
+              <span class="bt-work-card__meta-item">VABB: c:vabb:339050</span>
+              <span class="bt-work-card__meta-item">VABB-3</span>
+              <span class="bt-work-card__meta-item">not approved</span>
+              <span class="bt-work-card__meta-item">2013</span>
+            </div>
+            <div class="bt-work-card__meta">
+              <i class="if if-database text-muted" aria-hidden="true"></i>
+              <span class="bt-work-card__meta-item">1 related dataset</span>
+            </div>
+          </div>
+          <div class="bt-work-card__footer d-flex flex-column gap-1">
+            <div class="bt-work-card__meta column-gap-3">
+              <span class="input-group w-auto">
+                <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
+                  <i class="if if-copy if--xs" aria-hidden="true"></i>
+                  <span class="btn-text">Biblio ID</span>
+                </button>
+                <code class="border small align-content-center">01G3TZB614X7XXR52JYYGAND25</code>
+              </span>
+              <span>Created 13/07/2023 by Valerie Van Den Bussche</span>
+              <span>Last edited 11/08/2026 by Marie Curator</span>
+              <span>System update 08/05/2026</span>
+            </div>
+            <div class="bt-work-card__meta">
+              <a href="#">View publication</a>
+              <a href="#">Full texts &amp; files</a>
+              <a href="#">DOI</a>
+              <a href="#">Public record</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="ds-demo" id="curator-dataset-external-repository">
+      <h3 class="ds-demo-label">Dataset curator card — external repository</h3>
+      <div class="ds-demo-body" data-surface="backoffice">
+        <article class="bt-work-card" aria-labelledby="wc-dataset-external">
+          <div class="bt-work-card__header">
+            <div class="bt-work-card__meta">
+              <span class="badge text-bg-success-light">Reviewed</span>
+              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
+              <span class="bt-work-card__meta-item">Dataset</span>
+              <span class="bt-work-card__meta-item">Open</span>
+              <span class="bt-work-card__meta-item">CC-BY-4.0</span>
+            </div>
+            <div class="bt-work-card__actions">
+              <a href="curate-detail.html?mode=edit" class="btn btn-ghost btn-sm" aria-label="Edit: High-resolution soil moisture readings for Flemish trial fields">
+                <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
+              </a>
+              <button type="button" class="btn btn-ghost btn-sm p-1" aria-label="Add to list: High-resolution soil moisture readings for Flemish trial fields">
+                <i class="if if-bookmark-line if--sm" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="bt-work-card__body">
+            <p id="wc-dataset-external" class="bt-work-card__title">
+              <a href="curate-detail.html?mode=view">High-resolution soil moisture readings for Flemish trial fields</a>
+            </p>
             <p class="bt-work-card__authors">
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Sara De Wilde<span class="visually-hidden"> (UGent)</span></a></span>,
               <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Niels Verbruggen<span class="visually-hidden"> (UGent)</span></a></span>,
               <span class="bt-work-card__author"><a href="?q=Instituut%20voor%20Landbouwonderzoek">Instituut voor Landbouwonderzoek</a></span>
             </p>
-            <p class="bt-work-card__pub"><a href="#">(<time>2026</time>)</a> <a href="#">DataverseUGent</a> <span>DOI 10.48804/BTU7KS</span> <span>CSV, NetCDF</span></p>
-            <div class="alert alert-warning alert--sm mb-1" role="note" aria-label="Missing metadata">
-              <div class="d-flex align-items-start gap-2">
-                <i class="if if-message flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <div>
-                  <p class="mb-1"><strong>Missing:</strong> file access.</p>
-                  <p class="mb-0"><a href="#" class="fw-medium">Complete metadata</a></p>
-                </div>
-              </div>
-            </div>
-            <div class="alert alert-light alert--sm mb-2" role="note" aria-label="For curators">
-              <div class="d-flex align-items-start gap-2">
-                <i class="if if-lock flex-shrink-0 mt-1" aria-hidden="true"></i>
-                <div>
-                  <p class="mb-1"><strong>Missing:</strong> access decision for the deposited dataset file.</p>
-                  <p class="mb-0"><strong>Internal note:</strong> check whether the field data contains partner-restricted measurements before review.</p>
-                </div>
-              </div>
-            </div>
-            <div class="bt-work-card__meta">
+            <p class="bt-work-card__pub"><a href="#">(<time datetime="2026">2026</time>)</a> <a href="#">DataverseUGent</a> <a href="#">DOI 10.48804/BTU7KS</a> <a href="#">CSV, NetCDF</a></p>
+            <div class="bt-work-card__meta mt-2">
               <i class="if if-building text-muted" aria-hidden="true"></i>
               <span class="badge text-bg-light border">LA21</span>
               <span class="badge text-bg-light border">LA24</span>
@@ -707,191 +544,24 @@
             </div>
           </div>
           <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta align-items-center">
-              <span class="input-group">
+            <div class="bt-work-card__meta column-gap-3">
+              <span class="input-group w-auto">
                 <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
                   <i class="if if-copy if--xs" aria-hidden="true"></i>
                   <span class="btn-text">Biblio ID</span>
                 </button>
                 <code class="border small align-content-center">01K1A7DQC8PS7X9M8V2R4T3H4K</code>
               </span>
-              <span>Created 09/08/2026 14:18 by Sara De Wilde</span>
-              <span>System update 10/08/2026 03:10</span>
+              <span>Created 09/08/2026 by Sara De Wilde</span>
+              <span>Last edited 10/08/2026 by Marie Curator</span>
+              <span>System update 10/08/2026</span>
             </div>
             <div class="bt-work-card__meta">
               <a href="#">View dataset</a>
               <a href="#">Files</a>
               <a href="#">DOI</a>
+              <a href="#">View in external repository</a>
               <a href="#">Public record</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Curator / reviewer — reviewed</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-curator-reviewed">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-success-light">Reviewed</span>
-              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Journal article</span>
-              <span class="bt-work-card__meta-item">Embargo 23/05/2026 &ndash; 23/05/2027</span> <span class="bt-work-card__meta-item">Private <i class="if if-arrow-right if--xs bt-work-card__meta-transition-icon" aria-hidden="true"></i><span class="visually-hidden">to </span>Open</span>
-            </div>
-            <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="View: Neuropsychiatric aspects of COVID-19 pandemic">
-                <i class="if if-eye if--sm" aria-hidden="true"></i> View
-              </a>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-curator-reviewed" class="bt-work-card__title">Neuropsychiatric aspects of COVID-19 pandemic: a selective review</p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><i class="if if-orcid" aria-hidden="true"></i><a href="#">Jane Cooper<span class="visually-hidden"> (UGent, ORCID)</span></a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Barbara Simmons<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Ziggy%20Palumbo">Ziggy Palumbo</a></span>,
-              <span class="text-muted">+6 more authors</span>,
-              <span>supervised by</span>
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Ellis Howard<span class="visually-hidden"> (UGent)</span></a></span>
-            </p>
-            <p class="bt-work-card__pub"><a href="#">(<time>2020</time>)</a> <a href="#">International Journal of Environmental Research and Public Health</a> <span>Vol. 17, Issue 7, pp. 12&ndash;32</span></p>
-            <div class="bt-work-card__meta">
-              <i class="if if-building text-muted" aria-hidden="true"></i>
-              <span class="badge text-bg-light border">DI10</span>
-              <span class="badge text-bg-light border">DI05</span>
-            </div>
-            <div class="bt-work-card__meta align-items-start">
-              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
-              <div class="d-flex gap-3">
-                <span><a href="#">Valorisation of cytokine traps: IL33 as lead case</a>, <span class="text-muted">F2016/IOF-ADV/307</span></span>
-                <span><a href="#">The archaeological material of ed-Dur (Umm al-Qaiwain, UAE)</a> <span class="text-muted">F2016/IOF-ADV/308</span></span>
-              </div>
-            </div>
-            <div class="bt-work-card__meta bt-work-card__meta--borderless">
-              <i class="if if-bar-chart text-muted" aria-hidden="true"></i>
-              <span class="bt-work-card__meta-item">VABB: c:vabb:339050</span><span class="bt-work-card__meta-item">VABB-3</span><span class="bt-work-card__meta-item">not approved <span class="bt-work-card__meta-item"></span>2013</span>
-            </div>
-          </div>
-          <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta align-items-center">
-              <span class="input-group">
-                <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
-                  <i class="if if-copy if--xs" aria-hidden="true"></i>
-                  <span class="btn-text">Biblio ID</span>
-                </button>
-                <code class="border small align-content-center">01G3TZB614X7XXR52JYYGAND25</code>
-              </span>
-              <span>Created 13/07/2023 10:22 by Valerie Van Den Bussche</span>
-              <span>Last edited 11/08/2026 11:56 by Miet Claes</span>
-              <span>System update 08/05/2026 13:47</span>
-            </div>
-            <div class="bt-work-card__meta">
-              <a href="#">View publication</a>
-              <a href="#">Full texts &amp; files</a>
-              <a href="#">DOI</a>
-              <a href="#">Public record</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Dataset — golden type example</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-dataset">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-success-light">Reviewed</span>
-              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Dataset</span>
-              <span class="bt-work-card__meta-item">Open</span>
-              <span class="bt-work-card__meta-item">CC-BY-4.0</span>
-            </div>
-            <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-ghost btn-sm" aria-label="View: Urban tree canopy measurements for Flemish cities">
-                <i class="if if-eye if--sm" aria-hidden="true"></i> View
-              </a>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-dataset" class="bt-work-card__title">Urban tree canopy measurements for Flemish cities</p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Karen De Pauw<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Agentschap%20Natuur%20en%20Bos">Agentschap Natuur en Bos</a></span>
-            </p>
-            <p class="bt-work-card__pub"><a href="#">(<time datetime="2026">2026</time>)</a> <a href="#">Zenodo</a> <a href="#">DOI 10.5281/zenodo.1234567</a> <a href="#">CSV, GeoJSON</a></p>
-            <div class="bt-work-card__meta">
-              <i class="if if-building text-muted" aria-hidden="true"></i>
-              <span class="badge text-bg-light border">DI10</span>
-              <span class="badge text-bg-light border">DI05</span>
-            </div>
-            <div class="bt-work-card__meta align-items-start">
-              <i class="if if-briefcase text-muted flex-shrink-0 mt-1" aria-hidden="true"></i>
-              <div class="d-flex flex-column gap-1">
-                <span><a href="#">Urban biodiversity corridors</a> <span class="text-muted">BOF/24J/014</span></span>
-              </div>
-            </div>
-            <div class="bt-work-card__meta">
-              <i class="if if-article text-muted" aria-hidden="true"></i>
-              <span class="bt-work-card__meta-item">2 related publications</span>
-            </div>
-          </div>
-          <div class="bt-work-card__footer d-flex flex-column gap-1">
-            <div class="bt-work-card__meta align-items-center">
-              <span class="input-group">
-                <button type="button" class="btn btn-outline-secondary btn-xs border" data-clipboard>
-                  <i class="if if-copy if--xs" aria-hidden="true"></i>
-                  <span class="btn-text">Biblio ID</span>
-                </button>
-                <code class="border small align-content-center">01H8XK4E3Z95GB7W2X2S8Y9M0A</code>
-              </span>
-              <span>Created 13/07/2026 10:32 by Karen De Pauw</span>
-              <span>System update 08/05/2026 13:47</span>
-            </div>
-            <div class="bt-work-card__meta">
-              <a href="#">View dataset</a>
-              <a href="#">Files</a>
-              <a href="#">DOI</a>
-              <a href="#">Public record</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="ds-demo">
-      <h3 class="ds-demo-label">Software — candidate type example</h3>
-      <div class="ds-demo-body" data-surface="backoffice">
-        <article class="bt-work-card" aria-labelledby="wc-software">
-          <div class="bt-work-card__header">
-            <div class="bt-work-card__meta">
-              <span class="badge text-bg-info-light">Submitted</span>
-              <span class="badge text-bg-light border"><i class="if if-eye" aria-hidden="true"></i> Public</span>
-              <span class="bt-work-card__meta-item">Software</span>
-              <span class="bt-work-card__meta-item">Open</span>
-              <span class="bt-work-card__meta-item">MIT licence</span>
-            </div>
-            <div class="bt-work-card__actions">
-              <a href="#" class="btn btn-primary btn-sm" aria-label="Review: CanopyLab">
-                <i class="if if-arrow-right if--sm" aria-hidden="true"></i> Review
-              </a>
-            </div>
-          </div>
-          <div class="bt-work-card__body">
-            <p id="wc-software" class="bt-work-card__title">CanopyLab: tools for modelling urban tree shade</p>
-            <p class="bt-work-card__authors">
-              <span class="bt-work-card__author"><i class="if if-ghent-university" aria-hidden="true"></i><a href="#">Jonas Maes<span class="visually-hidden"> (UGent)</span></a></span>,
-              <span class="bt-work-card__author"><a href="?q=Elena%20Neri">Elena Neri</a></span>
-            </p>
-            <p class="bt-work-card__pub"><a href="#">(<time datetime="2026">2026</time>)</a><a href="#">GitHub / Zenodo</a><a href="#">DOI 10.5281/zenodo.1234567</a><a href="#">Python</a></p>
-            <div class="bt-work-card__meta">
-              <i class="if if-database text-muted" aria-hidden="true"></i>
-              <span class="bt-work-card__meta-item">1 related dataset</span>
-              <span class="bt-work-card__meta-item">2 related publications</span>
             </div>
           </div>
         </article>
@@ -945,8 +615,8 @@
                 <span class="bt-work-card__meta-item">Conference paper</span>
               </div>
               <div class="bt-work-card__actions">
-                <a href="#" class="btn btn-primary btn-xs" aria-label="Edit and resubmit: Contrastive learning for cross-lingual biomedical text mining">
-                  <i class="if if-edit if--sm" aria-hidden="true"></i> Edit &amp; resubmit
+                <a href="work-detail.html?mode=edit" class="btn btn-ghost btn-xs" aria-label="Edit: Contrastive learning for cross-lingual biomedical text mining">
+                  <i class="if if-edit if--sm" aria-hidden="true"></i> Edit
                 </a>
               </div>
             </div>
@@ -972,7 +642,7 @@
     </div>
 
     <div class="ds-demo">
-      <h3 class="ds-demo-label">Compact — Found for you candidate</h3>
+      <h3 class="ds-demo-label">Compact — Found for you candidate <span class="badge text-bg-light border ms-2 align-middle">In progress</span></h3>
       <div class="ds-demo-body" data-surface="backoffice">
         <ol class="list-unstyled mb-0" aria-label="Research output found for you">
           <li><article class="bt-work-card bt-work-card--compact" aria-labelledby="wc-compact-candidate">
@@ -998,9 +668,6 @@
             </div>
           </article></li>
         </ol>
-      </div>
-      <div class="ds-demo-notes">
-        <p>The title opens the Found for you overview at this candidate without changing it.</p>
       </div>
     </div>
   </section>

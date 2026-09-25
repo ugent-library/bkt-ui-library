@@ -13,7 +13,7 @@ fills the gaps in `raven.css`.
 - [ ] [#40](https://github.com/ugent-library/bkt-ui-library/issues/40) Define the curator record-notes component contract — after #39; the notes sit in that aside
 - [ ] [#27](https://github.com/ugent-library/bkt-ui-library/issues/27) Confirmation dialog with a computed preview: change a work's type
 - [ ] Draft state on the researcher page
-- [ ] Edit form the actions point at; `work-edit` has returned and accepted
+- [ ] Edit form the actions point at; `work-edit` has returned and reviewed
 - [ ] Returned-record message binds to raven's event comment; no separate store
 - `later` Fast lane: complete a record — the CTA opens the edit form until it exists
 - `later` Proxy view — epic 10
