@@ -53,7 +53,8 @@ The examples below were rendered with a Harvard style (Cite Them Right) as a sta
 point, not as an authority; the gap between slots replaces that style's separators.
 These rules are the line's, on the public surface:
 
-- the year comes first, in parentheses, inside its filter link: `(2024)`;
+- the year comes first, in parentheses, inside its link where raven has a
+  works-overview target: `(2024)`;
 - a genre word has no closing full stop: `PhD thesis`, `Report RPT-42` —
   `2nd edn.` keeps the abbreviation's own dot; `Preprint` closes the line instead
   of opening it;
@@ -76,7 +77,8 @@ A slot with no value renders nothing, and its gap goes with it: no dangling word
 
 What the order produces, type by type — for reading and review; the order and
 exceptions above are the intent. Examples are rendered output, not invented (see
-Sources); ⚑ marks a field that is 08's question.
+Sources); ⚑ marks a value raven does not expose yet: the slot is omitted until it
+does, and #184 does not wait for it.
 
 Containers are italic in the examples, as on the card; the gap between slots is the
 layout's.
@@ -103,7 +105,7 @@ layout's.
 | `online_post` | `(year) publisher day month` — publisher holds the issuing publication (Substack, group blog) per raven's field note | `(2025) *Open Access Belgium* 1 September` |
 | `media_appearance` | `(year) venue day month` | `(2025) *Universiteit van Vlaanderen* 5 November` |
 | `lecture` | `(year) venue day month` — location sits inside `venue` per its field definition | `(2025) *UGent Data Stewards seminar* Ghent, 20 October` |
-| `dataset` | `(year) publisher` — publisher holds the repository, as on `preprint`; reconciling raven's applies-to gap is 08 ⚑ | `(2026) *Zenodo*` |
+| `dataset` | `(year) publisher` — publisher holds the repository, as on `preprint`; raven's two docs disagree on whether a dataset carries it ⚑ | `(2026) *Zenodo*` |
 | `software` | as `dataset`, publisher included ⚑ — raven defers a software *version* field to after v1, and no records land in the type in v1 | `(2026) *Zenodo*` |
 | `other` | the order, with whatever fields it has | `(2024)` |
 
@@ -112,8 +114,8 @@ layout's.
 The per-type rules live in the order, exceptions and table above. What earns a
 place here is the reasoning that would otherwise be lost:
 
-- **Where old biblio showed a field raven lacks, the card keeps showing it**, with a
-  note per case (⚑ below).
+- **Where raven lacks a value old biblio showed, the slot is omitted.** The prototype
+  shows the intended shape with placeholder data; the cases are listed under ⚑ below.
 - **The publisher is the container on `dataset`, `software` and `preprint`** — all
   three compose `(year) publisher`, because the repository or server is where the
   work appeared. The field stays `publisher`, the name the old backoffice already
@@ -128,27 +130,28 @@ place here is the reasoning that would otherwise be lost:
   record: WHATWG reserves the element for a work's own title, and a container is
   arguably not that, so this is accepted practice rather than spec-endorsed. The
   publisher on `preprint`, `dataset` and `software` is the container, so it takes
-  `<cite>` and the filter link like any other container name.
+  `<cite>`, and a link where raven has a works-overview target, like any other
+  container name (#182).
 
 Card-level rules — links on line parts, the contributor line, no classification
 badge — live with the card grammar, not here.
 
-### ⚑ Remaining — raven gaps to raise
+### ⚑ Values raven does not expose — omitted until it does
 
-The prototype shows the intended shape with placeholder data and a note; the fields
-are not in raven's registry:
+The prototype shows the intended shape with placeholder data; raven's registry does
+not expose these values, so the card omits the slot. Modelling one is a new raven
+issue when the value becomes required, not a blocker for #184:
 
 - `reference_entry`: no container title (the encyclopedia), no publisher, no pages.
-  Old biblio showed all three (as `misc`); the card keeps them.
-- `magazine_article` / `newspaper_article`: no pages field. Old biblio showed pages;
-  the card keeps them.
+  Old biblio showed all three (as `misc`).
+- `magazine_article` / `newspaper_article`: no pages field. Old biblio showed pages.
 - `dataset` and `software`: two raven docs disagree on the publisher.
   - the migration map (`metadata-work-types.md`) has biblio's dataset publisher
     into `publisher`
   - the per-type applicability list (`metadata-work-fields.md`) leaves datasets out
 
-  Both carry one — they compose the same line, so the question is settled once for
-  the pair. The line reads `(2026) Zenodo`, and the backoffice scan shows the same
+  Both types compose the same line, so one answer settles the pair. Where the value
+  is stored, the line reads `(2026) Zenodo` and the backoffice scan shows the same
   field.
 
 ---

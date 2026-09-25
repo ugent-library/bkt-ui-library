@@ -10,12 +10,12 @@ Task: <state the task>.
 
 ## State
 
-Fifteen documents in `docs/wip/` besides this one, named `WORK-CARD-*` — two epics,
-twelve children, plus `WORK-CARD-REFERENCE-STYLES.md`:
+Two documents remain in `docs/wip/`: this one and `WORK-CARD-REFERENCE-STYLES.md`.
+The issue drafts were deleted after filing (c096ad3). What they became:
 
-- `WORK-CARD-00-EPIC-public.md` — filed as #185. Children: #180 grammar,
-  #184 reference line, #183 access badge, #181 backend fields,
-  #182 backend container filter.
+- `WORK-CARD-00-EPIC-public.md` — filed as #185. Children: #180 grammar (closed),
+  #184 reference line, #183 access badge (closed), #181 backend fields (closed, not
+  planned — nothing waits on it), #182 source links from the reference line.
 - `WORK-CARD-00-EPIC-backoffice.md` — filed as #195. Children: #189 card,
   #191 messages, #194 actions, #193 retracted indicator, #192
   backend retraction, #190 missing-metadata.
@@ -25,8 +25,8 @@ twelve children, plus `WORK-CARD-REFERENCE-STYLES.md`:
 ## Decisions this round — prototype swept against the public epic
 
 A review of the filed public issues against the prototype produced these. All are
-applied to `docs/wip/` and the prototype; **the filed issues #180–#185 still carry
-the old wording** and are M's to update.
+applied to `docs/wip/` and the prototype. #185 and #184 carry them; #182's body is
+still the old container-filter text and is M's to rewrite.
 
 - **Every contributor name is a link.** A contributor raven holds a page for goes to
   that page; every other name — an external co-author, an organisation, free text —
@@ -35,13 +35,13 @@ the old wording** and are M's to update.
   contributor is gone from the card, the kit page, `docs/CLASS-USAGE.md` and
   `docs/SEARCH-AND-FILTERING.md` (Rule 3 and Scoped links).
 - **Public cards carry no project part.** Projects live on the detail pages and in
-  backoffice cards. Year, container and publisher-as-container are the public card's filter
-  links; project is struck from #180, the public epic, the search doc and the kit
-  prose.
+  backoffice cards. Year, container and publisher-as-container are the public card's
+  source links, where raven has a works-overview target; project is struck from #180,
+  the public epic, the search doc and the kit prose.
 - **Public cards show ten names; backoffice cards show three**, then the count. The
   public card puts `et al.` before the count. Supervisors stay on the backoffice
   card.
-- **The publisher-as-container takes `<cite>` and the filter link** — Zenodo and
+- **The publisher-as-container takes `<cite>` and the source link** — Zenodo and
   bioRxiv render like any other container name.
 - **Closed access should not be shown on the public page.** A public card's access
   vocabulary is open, restricted and embargo; a work whose files are all closed has
@@ -118,24 +118,35 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   and then applies the `reviewed_visibility` the curator picked — a choice, not a
   consequence.
 
+## Backoffice card messages
+
+- A Biblio message is researcher-facing. Show it in a light yellow block with the
+  message icon; a returned Work's reason uses this style.
+- An internal librarian note is curator-only. Show it in a light gray block with the
+  lock icon.
+- Missing metadata is separate from both message types. Prototype examples and
+  "Complete metadata" may remain, but both are out of scope for the Raven work-card
+  issue.
+
 ## Decisions 2026-08-07 — applied to the drafts
 
 - **No subtypes on cards.** The public epic's question is closed, and its Why now
   states the rule.
-- **#181 reference fields**: raven keep every field old Biblio has. The dataset
-  publisher's docs conflict is #181's work; the software version is dropped, raven
-  defers the field past v1 and no records land in the type.
-- **#182 container filter**: matches the container title string, as public Biblio
-  does (`parent exact`); every container filters, publisher-as-venue names (Zenodo,
-  bioRxiv) included, so the identifier-coverage question is gone. Identifier
-  filtering (ISSN/ISBN) stays in the manual filter bar, never behind a card link.
-  A backoffice link matches the displayed string — short title if available,
-  otherwise the full title, keeping the old backoffice's behaviour. Closed in
-  #182.
-- **Card filter links land on the works overview, on every card** — detail pages
+- **#181 closed, not planned.** #184 renders each line from the values raven
+  exposes; a ⚑ slot is omitted until its value is required, then modelled in a new
+  raven issue. The software version is dropped: raven defers the field past v1 and
+  no records land in the type.
+- **#182 source links, not a container filter.** A venue is not a container (nics,
+  #182), and raven does not force journals, host books, proceedings, venues and
+  repositories into one concept. A reference-line value links only where raven has
+  a real works-overview result target; every other value renders as text. Raven owns
+  the search model, field mapping and URL parameter shape. Identifier filtering
+  (ISSN/ISBN) stays in the manual filter bar, never behind a card link. #182 is open;
+  its body still needs this wording.
+- **Card source links land on the works overview, on every card** — detail pages
   included; on the overview itself and in backoffice lists the click narrows the
-  list in view. Year, container, project and publisher-as-venue names all link; the
-  year link is feature parity with live. Applied in `docs/SEARCH-AND-FILTERING.md` (Rule 3
+  list in view. Year, container and publisher-as-venue names link where raven has a
+  target; the year link is feature parity with live. Applied in `docs/SEARCH-AND-FILTERING.md` (Rule 3
   table, Scoped links, Identifier picker), #180, #184, #182, the
   public epic and the work-card kit prose. Templates aligned: card links carry the `?container=`
   placeholder; publisher-as-venue names (Zenodo, bioRxiv) link on public and
@@ -151,10 +162,8 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   `cql: parent exact "<title>"`; the log report measures ~204k of those
   link-follows over seven months. Don't reintroduce the removal. The screenshots
   settled something else instead: **live matches the parent title string, not an
-  identifier**. Decided: #182 keeps the title string, as public Biblio does. Every
-  container filters, so the identifier-coverage question is gone. The two-strings
-  follow-up (backoffice abbreviation vs public full title) is closed too: each
-  link matches what it displays.
+  identifier**. What raven matches on is raven's to decide (#182); the link itself
+  stays wherever raven can honour it.
 - **Retraction is not backoffice-only**: the public epic now says a retracted
   work stays public, citable and marked, never hidden.
 - **Peer-review indicator removed** from the public epic — not sure it is wanted
@@ -163,18 +172,18 @@ The epic was held on three missing screens. Two are out of scope, one is built.
   undesigned.
 - **Placeholder drift (`pp. 12–29`) verified fixed** in the templates; the stale
   defect note is deleted from the public epic.
-- **Per-type line posed as a question** (#184): the reasoning against today's
-  single template is now in #184's Why; whether the composition is worth its
-  rendering cost is #184's open question, and needs a team decision.
+- **Per-type line decided** in #184: build it. The reasoning against today's single
+  template is in #184's Why.
 - **The spec doc's durable home is raven**: `docs/wip/WORK-CARD-REFERENCE-STYLES.md`
   is a WIP reference for critique and building. The doc moves to raven with
   #184, or the implementation's reading of it does. Noted at the top of the doc.
-- **#190 missing metadata**: backoffice cards get researcher-facing and
-  Biblio-team-facing missing-items groups; filtering/facets/counts for "Missing X"
-  are out of scope for this pass. Nothing about completeness reaches the public
-  surface. Compact metadata-row markers can show scan-critical missing values such
-  as access, but the responsibility block has the full list. Primary identity
-  fields such as title do not use the marker pattern. Question closed.
+- **#190 missing metadata**: backoffice cards may show missing-items groups, with
+  filtering/facets/counts for "Missing X" out of scope. Missing metadata stays
+  separate from Biblio messages and internal librarian notes; it does not determine
+  their style. Nothing about completeness reaches the public surface. Compact
+  metadata-row markers can show scan-critical missing values such as access, while
+  the responsibility block has the full list. Primary identity fields such as title
+  do not use the marker pattern. Question closed.
 - **#194 / anonymous Add to list**: the button shows for every visitor; an anonymous
   click routes through login and back. #166 owns the panel and already states
   it, so nothing is pending for this card-actions pass.
@@ -231,9 +240,6 @@ The epic was held on three missing screens. Two are out of scope, one is built.
 - Design delete, tombstone, replacement, restore and undelete actions after Raven
   confirms which transitions are supported. The current deletion semantics live in
   `docs/DOMAIN-VOCABULARY.md`.
-
-#181 has none: raven keeps every field old Biblio has, and the software
-version is dropped — raven defers the field past v1 and no records land in the type.
 
 ## M's raven edits, still to do
 

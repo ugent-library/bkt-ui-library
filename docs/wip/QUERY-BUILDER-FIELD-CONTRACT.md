@@ -125,5 +125,4 @@ decides which fields may be public.
 
 ## Open questions
 
-The count's behaviour, including how exact it is, is decided in
-[`ISSUE-04`](QUERY-BUILDER-ISSUE-04-count.md).
+The count's behaviour, including how exact it is, is decided in Raven #227.

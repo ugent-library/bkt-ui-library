@@ -155,22 +155,17 @@ four statuses on their own list.
 
 ### Messages on backoffice cards
 
-Two blocks, split by audience — lines inside, never columns:
+**Biblio message** is a researcher-facing message from the Biblio team. It uses a
+light yellow `alert-warning` block with the `if-message` icon and is visible to the
+researcher and curator. A returned Work's return reason is a Biblio message.
 
-**For the researcher** — `alert alert-light alert--sm` at rest; `alert-warning` only
-on a card whose filled badge marks the viewer's move (see `CLASS-USAGE.md`, Alert
-modifiers). Visible to researcher *and* curator.
-Lines, in order: automated missing items the researcher is accountable for;
-the **Biblio message** (curator → researcher note); the "Complete metadata" call to
-action. Examples include the file or external object, file-version/access-risk answers,
-abstract, contributors, keywords, projects and licence, when the active work profile
-and rules require them.
+**Internal librarian note** is curator-only. It uses a light gray `alert-light` block
+with the `if-lock` icon. It is not shown to researchers.
 
-**For curators** — `alert alert-light alert--sm` with the `if-lock` icon, curator only.
-Lines: automated missing items the Biblio team is accountable for; the **Internal
-note** (curator → curators; old biblio: "Librarian message"). Examples include
-container, publisher, date/year, ISSN/ISBN, volume, issue, pages and policy-rule
-outcomes, when the active work profile and rules require them.
+Missing metadata is a separate prototype example, not a Biblio message or internal
+note. It may use a light gray block and a "Complete metadata" action; both are out of
+scope for the Raven work-card issue. Missing metadata does not determine message
+styling.
 
 Where each text lives in raven:
 

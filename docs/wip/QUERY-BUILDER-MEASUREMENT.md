@@ -1,7 +1,6 @@
 # What we measure — query builder
 
-This is the product-owned measurement contract. Raven implementation issue:
-[`QUERY-BUILDER-ISSUE-01-measurement.md`](QUERY-BUILDER-ISSUE-01-measurement.md).
+This is the product-owned measurement contract. Raven #224 owns implementation.
 Engineering owns identifiers, storage, sampling and retention.
 
 Measure surfaces, artifacts and query structure, never people. Use no cookies, user
