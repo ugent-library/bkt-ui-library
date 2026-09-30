@@ -255,6 +255,8 @@ A funded research project (e.g. an FWO or BOF grant). Has start/end dates and ca
 
 In the UI: linked from Work detail pages. Searchable as a filter in the backoffice. A work can be linked to multiple projects.
 
+A project has one public identifier, the project code (e.g. `01DI3915`). GISMO, funders and researchers use this number. Before GISMO it was called the IWETO number. GISMO's internal UUID is not shown as text. It only builds the Research Explorer link `https://research.ugent.be/web/result/project/<uuid>/details`, shown only for projects Research Explorer lists. See DD-007.
+
 ### User
 An application account. May be linked to a PersonIdentity (most staff users) or not (admin/service accounts). Has a global role: `admin` or `user`. Curation rights are expressed through Grants, not the role field alone.
 

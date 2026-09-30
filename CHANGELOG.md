@@ -5,6 +5,15 @@ What changed in v2, newest first. The old→new class map moved to
 
 ---
 
+## Projects show one project code (v2.48, 2026-09-30)
+
+No CSS change — re-adapt the project cards and the project detail page. A project shows one
+identifier, labelled *Project code*: the number GISMO, funders and researchers use, formerly the
+IWETO number. The "IWETO ID" and "GISMO ID" rows are gone. A project Research Explorer lists links
+out with "View on Research Explorer", `https://research.ugent.be/web/result/project/<uuid>/details`.
+A project it does not list shows no link. "Project ID" reads "Project code" on every page and in
+the project picker. See `docs/decisions/DD-007-one-project-code.md`.
+
 ## The add-to-list panel announces its results (v2.47, 2026-09-17)
 
 CSS changed — re-copy the compiled assets, and re-adapt the panel. The visible "Searching…" and
@@ -65,8 +74,8 @@ for the Add-filter dimensions still open their editor. Demonstrated on Facets.
 
 ## Project picker rows name their values (v2.39, 2026-09-10)
 
-CSS changed — re-copy the compiled assets. A project picker row labels its acronym, project ID,
-funder and programme. *Project ID* is the project's own identifier in raven, not a grant's award
+CSS changed — re-copy the compiled assets. A project picker row labels its acronym, project code,
+funder and programme. *Project code* is the project's own identifier in raven, not a grant's award
 number. Identifiers sit in `code`; the row search matches all of them. Stack one `bt-meta-list`
 per group; picker panel rows drop `bt-meta-list--xs` for the base size, and the dense variant stays
 for the people-search overlay. A filter-bar picker keeps the panel's own search placeholder rather
