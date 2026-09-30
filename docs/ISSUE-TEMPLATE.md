@@ -39,6 +39,7 @@ placeholders. UI copy uses Raven's translation files.
 
 - [ ] Matches the prototype
 - [ ] `make build` passes
+- [ ] Before opening the PR, review added and modified comments against the comment rules in Raven’s `AGENTS.md` or `CLAUDE.md`.
 
 ## Out of scope
 
