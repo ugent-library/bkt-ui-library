@@ -93,15 +93,15 @@ layout's.
 | `reference_entry` | `(year) container place: publisher pp. start–end` — intended shape; **raven fields missing** ⚑ | `(2023) *Encyclopedia of Plant Science* Amsterdam: Elsevier pp. 455–460` |
 | `journal_issue` | `(year) journal_title volume(issue)` — editors on the contributor line | `(2024) *European Journal of Crime, Criminal Law and Criminal Justice* 32(1)` |
 | `conference_paper` | `(year) proceedings_title conference.name, conference.location pp. start–end` — no publisher field in raven | `(2024) *Proceedings of the 12th IFToMM World Congress* IFToMM World Congress, Tokyo pp. 1–8` |
-| `conference_abstract` | `(year) [proceedings_title] conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
-| `conference_poster` | as `conference_abstract` | `(2024) IFToMM World Congress, Tokyo` |
+| `conference_abstract` | `(year) [proceedings_title] conference.name, conference.location volume(issue), pp. start–end` — without a `proceedings_title`, the `journal_title` is the container: Web of Science files a meeting abstract under the journal that printed it | `(2024) IFToMM World Congress, Tokyo` · `(2025) *Gait & Posture* 121(Supplement), pp. 24–25` |
+| `conference_poster` | `(year) [proceedings_title] conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
 | `conference_presentation` | `(year) conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
 | `preprint` | `(year) publisher Preprint` — `publisher` holds the preprint server (bioRxiv, arXiv, SSRN) | `(2026) *bioRxiv* Preprint` |
 | `working_paper` | `(year) place_of_publication: publisher (series_title)` | `(2025) Ghent: Ghent University Faculty of Economics` |
 | `report` | `(year) Report report_number place_of_publication: publisher (series_title)` | `(2025) Report RPT-42 Brussels: Agentschap Natuur en Bos` |
 | `doctoral_thesis` | `(year) PhD thesis awarding_institution` — awarding institution, never the publisher field | `(2024) PhD thesis Ghent University` |
-| `magazine_article` | `(year) magazine_title day month, pp. start–end` — pages as in old biblio; **raven field missing** ⚑ | `(2025) *Eos Wetenschap* 14 June, pp. 22–27` |
-| `newspaper_article` | as `magazine_article` ⚑ | `(2025) *De Standaard* 2 March, p. 7` |
+| `magazine_article` | `(year) magazine_title volume(issue), pp. start–end` — `day month` when the article has no volume or issue; old biblio showed volume, issue and pages; **raven fields missing** ⚑ | `(2026) *Poëziekrant* 50(1), pp. 34–36` · `(2025) *Eos Wetenschap* 14 June, pp. 22–27` |
+| `newspaper_article` | as `magazine_article` ⚑ — the line usually shows the date, because most newspapers have no volume or issue | `(2025) *De Standaard* 2 March, p. 7` |
 | `online_post` | `(year) publisher day month` — publisher holds the issuing publication (Substack, group blog) per raven's field note | `(2025) *Open Access Belgium* 1 September` |
 | `media_appearance` | `(year) venue day month` | `(2025) *Universiteit van Vlaanderen* 5 November` |
 | `lecture` | `(year) venue day month` — location sits inside `venue` per its field definition | `(2025) *UGent Data Stewards seminar* Ghent, 20 October` |
@@ -144,7 +144,8 @@ issue when the value becomes required, not a blocker for #184:
 
 - `reference_entry`: no container title (the encyclopedia), no publisher, no pages.
   Old biblio showed all three (as `misc`).
-- `magazine_article` / `newspaper_article`: no pages field. Old biblio showed pages.
+- `magazine_article` / `newspaper_article`: no volume, issue or pages field. Old
+  biblio showed all three (as `misc`). Raven issue #461 proposes adding them.
 - `dataset` and `software`: two raven docs disagree on the publisher.
   - the migration map (`metadata-work-types.md`) has biblio's dataset publisher
     into `publisher`
