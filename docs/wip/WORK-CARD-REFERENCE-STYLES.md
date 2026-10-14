@@ -32,7 +32,7 @@ character stands between slots.
 - **event** — conference name and location.
 - **imprint** — `place_of_publication: publisher`.
 - **series** — `series_title`, in parentheses.
-- **position** — `volume(issue)`, or `day month` on dated types.
+- **position** — `volume(issue)`, and `day month` on dated types.
 - **pages** — `pp. start–end`; `article_number` where an e-only article has none.
 
 Three exceptions, the whole list:
@@ -100,8 +100,8 @@ layout's.
 | `working_paper` | `(year) place_of_publication: publisher (series_title)` | `(2025) Ghent: Ghent University Faculty of Economics` |
 | `report` | `(year) Report report_number place_of_publication: publisher (series_title)` | `(2025) Report RPT-42 Brussels: Agentschap Natuur en Bos` |
 | `doctoral_thesis` | `(year) PhD thesis awarding_institution` — awarding institution, never the publisher field | `(2024) PhD thesis Ghent University` |
-| `magazine_article` | `(year) magazine_title volume(issue), pp. start–end` — `day month` when the article has no volume or issue; old biblio showed volume, issue and pages; **raven fields missing** ⚑ | `(2026) *Poëziekrant* 50(1), pp. 34–36` · `(2025) *Eos Wetenschap* 14 June, pp. 22–27` |
-| `newspaper_article` | as `magazine_article` ⚑ — the line usually shows the date, because most newspapers have no volume or issue | `(2025) *De Standaard* 2 March, p. 7` |
+| `magazine_article` | `(year) magazine_title volume(issue), day month, pp. start–end` — each part only when the article has it; old biblio showed volume, issue and pages; **raven fields missing** ⚑ | `(2026) *Poëziekrant* 50(1), pp. 34–36` · `(2025) *Eos Wetenschap* 14 June, pp. 22–27` |
+| `newspaper_article` | as `magazine_article` ⚑ | `(2025) *De Standaard* 2 March, p. 7` |
 | `online_post` | `(year) publisher day month` — publisher holds the issuing publication (Substack, group blog) per raven's field note | `(2025) *Open Access Belgium* 1 September` |
 | `media_appearance` | `(year) venue day month` | `(2025) *Universiteit van Vlaanderen* 5 November` |
 | `lecture` | `(year) venue day month` — location sits inside `venue` per its field definition | `(2025) *UGent Data Stewards seminar* Ghent, 20 October` |
