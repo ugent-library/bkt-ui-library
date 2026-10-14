@@ -29,8 +29,9 @@ character stands between slots.
 - **genre** — the word that explains what follows: "PhD thesis", "Report RPT-42"
 - **container** — the type's own: journal, host book, proceedings, magazine,
   newspaper, venue.
-- **event** — conference name and location.
-- **imprint** — `place_of_publication: publisher`.
+- **event** — conference name and location, on the conference types and `other`.
+- **imprint** — `place_of_publication: publisher`. Journal articles, book reviews and
+  conference abstracts have none: their journal or proceedings identifies them.
 - **series** — `series_title`, in parentheses.
 - **position** — `volume(issue)`, and `day month` on dated types.
 - **pages** — `pp. start–end`; `article_number` where an e-only article has none.
@@ -92,7 +93,7 @@ layout's.
 | `book_review` | as `journal_article` — raven gives it the same venue and position fields | `(2025) *Journal of Ecology Reviews* 12(2), pp. 301–303` |
 | `reference_entry` | `(year) container place: publisher pp. start–end` — intended shape; **raven fields missing** ⚑ | `(2023) *Encyclopedia of Plant Science* Amsterdam: Elsevier pp. 455–460` |
 | `journal_issue` | `(year) journal_title volume(issue)` — editors on the contributor line | `(2024) *European Journal of Crime, Criminal Law and Criminal Justice* 32(1)` |
-| `conference_paper` | `(year) proceedings_title conference.name, conference.location pp. start–end` — no publisher field in raven | `(2024) *Proceedings of the 12th IFToMM World Congress* IFToMM World Congress, Tokyo pp. 1–8` |
+| `conference_paper` | `(year) proceedings_title conference.name, conference.location publisher volume(issue), pp. start–end` | `(2024) *Proceedings of the 12th IFToMM World Congress* IFToMM World Congress, Tokyo pp. 1–8` |
 | `conference_abstract` | `(year) [proceedings_title] conference.name, conference.location volume(issue), pp. start–end` — without a `proceedings_title`, the `journal_title` is the container: Web of Science files a meeting abstract under the journal that printed it | `(2024) IFToMM World Congress, Tokyo` · `(2025) *Gait & Posture* 121(Supplement), pp. 24–25` |
 | `conference_poster` | `(year) [proceedings_title] conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
 | `conference_presentation` | `(year) conference.name, conference.location` | `(2024) IFToMM World Congress, Tokyo` |
