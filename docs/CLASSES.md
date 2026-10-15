@@ -113,6 +113,7 @@ bt-hero__content
 bt-link-more
 
 bt-meta-list
+bt-meta-list--lg
 bt-meta-list--xs
 bt-meta-list__item
 

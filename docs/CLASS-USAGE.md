@@ -22,7 +22,7 @@
 
 **`bt-work-card__author`** — use one of these per contributor. Put the identifier icons, such as ORCID, inside `bt-work-card__author` but outside the link. Put the `visually-hidden` text naming them inside the link. [`patterns/work-card.html`](../patterns/work-card.html)
 
-**`bt-meta-list`** — this is the metadata row used outside a card, on detail-page file rows, suggestion rows and person rows. Never use it inside a card. Each fact is a `bt-meta-list__item`; pair a leading icon with its text inside that item. `bt-meta-list--xs` is the denser version; rows inside a panel stay at the normal size. [`patterns/metadata.html`](../patterns/metadata.html), [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
+**`bt-meta-list`** — this is the metadata row used outside a card, on detail-page file rows, suggestion rows and person rows. Never use it inside a card. Each fact is a `bt-meta-list__item`; pair a leading icon with its text inside that item. `bt-meta-list--xs` is the denser version; rows inside a panel stay at the normal size. `bt-meta-list--lg` is for the reference line on a work detail page. [`patterns/metadata.html`](../patterns/metadata.html), [`assets/scss/patterns/_booktower-components.scss`](../assets/scss/patterns/_booktower-components.scss)
 
 **Two metadata rows, two separators** — inside a card, `bt-work-card__meta-item` puts a vertical rule between neighbouring values. Every other metadata row, including the one in a detail heading, separates values by the row's gap instead. Both are correct. Do not change one to match the other. Write separators as structure, not text punctuation.
 
