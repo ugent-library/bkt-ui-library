@@ -6,6 +6,7 @@
     <h1 class="display-1">Query builder</h1>
     <p class="lead">Advanced search for building a shareable research set. Each condition keeps its field, operator, and value visible.</p>
   </header>
+  <!-- Prototype note: the prototype is larger than V1. The live count, OR groups and spelling feedback are not in V1, and the V1 fields are not chosen yet (DD-006). -->
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The dialog is a URL state</h2>
@@ -252,15 +253,15 @@
       <li><a href="/templates/biblio-public/public-works.html?state=builder-full-query">builder-full-query</a> — a realistic assembled query.</li>
       <li><a href="/templates/biblio-public/public-works.html?state=builder-empty">builder-empty</a> — a first visit.</li>
       <li><a href="/templates/biblio-public/public-works.html?state=builder-one-condition">builder-one-condition</a> — a query opened with one existing scope.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-or-group">builder-or-group</a> — a one-level OR group (phase 3).</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-no-results">builder-no-results</a> — a query with no matches; the spelling feedback is phase 3.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-or-group">builder-or-group</a> — a one-level OR group. Not in V1.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-no-results">builder-no-results</a> — a query with no matches, with spelling feedback on one condition. Not in V1.</li>
     </ul>
 
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The count, and the one exit</h2>
-    <p class="mb-4">The submit reports the live approximate count through <code>aria-live</code>. Complete conditions update the URL immediately, so Show results, Escape, and Close leave the builder without applying or discarding a pending draft.</p>
+    <p class="mb-4">The submit reports the live approximate count through <code>aria-live</code>. In V1 the button reads Show results, without a count. Complete conditions update the URL immediately, so Show results, Escape, and Close leave the builder without applying or discarding a pending draft.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Exit bar</h3></div>
@@ -311,7 +312,7 @@
     <h2 class="h4 mb-3">Where the rest lives</h2>
     <ul class="mb-0">
       <li>Simple search, facets, and chips: <a href="/patterns/search-and-filtering.html">search &amp; filtering</a> and <a href="/patterns/facets.html">facets</a>.</li>
-      <li>Field and operator contract: <code>docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md</code>.</li>
+      <li>Candidate fields for V1: <code>docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md</code>.</li>
       <li>Interaction contract: <code>docs/JAVASCRIPT.md</code>.</li>
       <li>Prototype URLs are placeholders; Raven owns the public URL grammar.</li>
     </ul>

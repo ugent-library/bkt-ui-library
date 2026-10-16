@@ -1,15 +1,17 @@
 # Query builder legacy coverage — context for raven's translator
 
-Context, not specification: raven decides every translation. The builder's fields,
-operators and values live in
-[`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md); the acceptance
-cases in [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md), whose subset B
-is the translator's gate.
+The field overview reflects the earlier, larger prototype, not the V1 tasks in
+[DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md).
+
+This is context; raven decides every translation. Fields, operators and values live in
+[`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md). Subset B of
+[`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) is the translator's
+acceptance test.
 
 ## Field overview
 
-Labels, operators and qualifiers are copied from the contract for overview; the contract
-decides.
+Labels, operators and qualifiers are copied from the contract; when they differ, the
+contract wins.
 
 | id | label | covers (legacy) | operators | qualifier |
 |---|---|---|---|---|
@@ -67,7 +69,7 @@ if curators or reviewers turn out to still use them.
 
 ## Translator only
 
-Legacy names a translated query may carry, which no builder row offers:
+Legacy names that can appear in an old query but have no builder row:
 
 | legacy name | context |
 |---|---|

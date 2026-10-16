@@ -1,7 +1,10 @@
 # Golden query set — draft
 
-*Generated from the full frontend query log (2025-12-31 → 2026-07-09, 101,940,897 lines) by
-`notes/_powerquery/build_set.py`. Evidence: [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md).*
+Subset A labels which queries the earlier, larger prototype can author, not the V1
+tasks in [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md).
+Legacy-link fidelity remains required even for queries V1 will not author.
+
+*Generated from the full frontend query log (2025-12-31 → 2026-07-09, 101,940,897 lines). Evidence: [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md).*
 
 **All values are fixtures** (`PERSON_1`, `DOI_1`, `ID_1`, …) — no logged value, name or
 identifier appears in this file. The frequencies are real: occurrences in human form traffic
@@ -14,22 +17,18 @@ identifier appears in this file. The frequencies are real: occurrences in human 
 | **A — builder expressibility** | human `form` queries (advanced + expert, n=3,589) | the builder can author this query | **prototype** | every case is either authorable, or signed off as *field not exposed*, *over cap* or *parked for a later phase* |
 | **B — translator fidelity** | all of A **plus** machine `direct`/`link` traffic and legacy embed parameters | the legacy query keeps resolving to the right new query | raven | 100%, no exceptions — this is the "100% keeps working" constraint |
 
-B is strictly larger than A, and it is **not prototype scope**: it is the translator
-workstream's requirements list, recorded here because this is where the evidence lives. The
-prototype is judged on A only.
-
-Automation: `_powerquery/golden-queries.json` carries the same cases machine-readably (case
-id, structure, fixture query, subset, scope, observed frequency) so a test runner can iterate
-them instead of a human reading a table.
+B contains all of A and more. It is **not prototype scope** but the translator's
+requirements list, kept here because the evidence lives here. The prototype is judged on A
+only.
 
 ## Selection rule (so the set is reproducible)
 
 Reduce every logged query to a **structural signature**: the multiset of (field, operator)
 pairs + the boolean shape + a value-count bucket (1 / 2–9 / 10–49 / 50+). Deduplicate on
 signature; per signature keep the highest-frequency example, and additionally the longest
-example where value count matters. Deterministic, re-runnable when the log grows, and
-reviewable — each case carries its signature and its observed frequency. Empty field ×
-operator cells are out of scope by evidence, recorded as such.
+example where value count matters. The rule gives the same set on every run and can be
+rerun when the log grows; each case carries its signature and observed frequency.
+Field-operator combinations that nobody used are out of scope.
 
 ## What "passes" means
 
@@ -46,10 +45,9 @@ shared or committed; the structure is what is being tested, not the people.
 
 ## The cases
 
-194 cases. Field exposure statuses live in
-[`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md): a case on a field the
-ledger keeps off the public surface resolves to *backoffice* / *not exposed* for subset A,
-whatever its proposed label reads.
+194 cases. [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) decides
+which fields are public. A case on a field the contract keeps off the public surface counts
+as *backoffice* or *not exposed* in subset A, whatever its proposed label.
 
 ## C1 — field × operator matrix (form traffic) — 85 cases
 
@@ -212,7 +210,7 @@ whatever its proposed label reads.
 | C3.48 | `title = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term |
 | C3.49 | `author = PERSON_1 AND year >= 2020 AND type any "journalArticle" AND classification any "A1" AND affiliation any "ORG_1" AND publicationstatus any "published"` | 1 | A+B | backoffice | composite, 1 OR term; backoffice builder field |
 | C3.50 | `basic = TEXT AND year >= 2020 AND type any "journalArticle" AND publicationstatus any "published" AND articletype any "original"` | 1 | A+B | backoffice | composite, 1 OR term; basic rides in the search box; backoffice builder field |
-| C3.51 | `(basic = TEXT or … or basic = TEXT  (3 terms)) AND author = PERSON_1` | 1 | A+B | parked | waits for phase-3 OR groups; revived only on demand |
+| C3.51 | `(basic = TEXT or … or basic = TEXT  (3 terms)) AND author = PERSON_1` | 1 | A+B | parked | needs OR groups, which V1 leaves out |
 | C3.52 | `basic = TEXT` | 1 | A+B | in scope | single-field value list, 1 OR term; basic rides in the search box |
 | C3.53 | `title any "TEXT" and (author any "PERSON_1" or type exact journalArticle)` | 1 | A+B | in scope | composite, 1 OR term |
 | C3.54 | `publisher = PUBLISHER_1 or … or publisher = PUBLISHER_1  (3 terms)` | 1 | A+B | in scope | single-field value list, 2-4 OR terms |
@@ -289,4 +287,3 @@ traffic per tier, so its percentages are smaller for the same query.
 |---|---|---:|---|---|---|
 | C8.01 | `author any "PERSON_1 PERSON_2" ;hide_info=1` | 1,411 | B | in scope | count from a 34% sample of the log |
 | C8.02 | `author = PERSON_1 or author = PERSON_2 ;style=apa` | 583 | B | in scope | citation style — distinct from the sort choice |
-

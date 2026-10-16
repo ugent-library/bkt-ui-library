@@ -33,40 +33,57 @@ becomes the overview, `candidate-focused-review.html` is new and
 (`docs/DOMAIN-VOCABULARY.md`, “Accepted value and pending request”), not part of
 Candidates.
 
-## Query builder (Advanced search) — phase-1 revision
+## Standard public search — redesign direction
 
-One visual builder replacing Advanced and Expert search. **Reading order for a first review:**
+**Stage:** Direction accepted; interface design pending.
+**Accepted:** [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md):
+the standard search page will be reworked as a separate interface problem from
+Advanced search. Both preserve the same query meaning. Current guide rules remain
+the baseline until replacement designs are accepted.
+**Blocking:** Filter arrangement, labels, period presets and defaults are not decided.
+These do not block scoping the builder.
+**Next:** After the builder scope review, take up the standard search interface in its
+own bounded review, coordinating shared entry/return paths where needed.
 
-**Stage:** Phase-1 prototype revision on `feature/query-builder-phase-1`; the filed
-Raven issues own implementation.
-**Accepted:** Prototype and issue set filed as Raven #223–#230, plus the phase-2
-placeholder #295. The backoffice field set is phase 2 (fields TBD); OR groups are
-phase 3 (#230).
-**Blocking:** Ownership audit before deleting the legacy drafts.
-**Next:** Move remaining live facts to their owners and remove this WIP entry. The
-field contract is promoted out of `docs/wip/`, not deleted.
+Candidates retained for that review, not accepted choices:
 
-1. [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md) — the proposal: problem, capability,
-   definition of done, risks. Start here; it is one page.
-2. [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) — the field ledger:
-   which fields each surface offers, with their labels, operators and inputs.
-3. [`QUERY-BUILDER-MEASUREMENT.md`](QUERY-BUILDER-MEASUREMENT.md) — what we measure and why.
-4. Raven #223–#230 and #295 own the implementation scope. The local issue copies
-   were deleted after filing.
+- Open content, type and period directly visible; record filters and language under
+  More filters; one desktop filter area versus the current sidebar/Add-filter split.
+- Relative period presets plus a custom range; exact labels and periods remain open.
+- Open content opt-in (proposed), default filtering or ranking higher. The domain
+  guide's OA default applies to deposit, not search; no search-policy approval
+  dependency has been established.
 
-Supporting material, read as needed:
+Earlier plans do not approve a new layout or enlarge the builder scope.
 
-- [`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md) — translator context:
-  the legacy names each field covers, the folds and the drops. Not a specification.
-- [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) — 194 acceptance cases (all
-  values are fixtures), the gate for "every existing query keeps working". The numbers behind
-  it: [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md).
-- [`QUERY-BUILDER-OR-GROUPS.md`](QUERY-BUILDER-OR-GROUPS.md) — the group: how a row becomes
-  an alternative, and which queries need it.
+## Query builder (Advanced search) — V1
 
-Two documents these reference live in `notes/`, which is not in the repository:
-`PLAN-measurement.md` (the house measurement standard, product-owned) and
-`REPORT-search-log-analysis.md` (the base search-log analysis). Ask if you need them.
+One smaller public builder replaces Advanced and Expert authoring; existing query links
+keep working. The backoffice gets its own V1 builder (#295), which covers pasted ID batches.
+
+**Stage:** V1 task selection, then prototype revision. Raven #223–#230 still describe
+the earlier, larger scope.
+**Accepted:** [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md):
+no live count, no OR groups, no spelling suggestions; V1 goes live and live use is the test.
+[DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md):
+ordinary filter design is a separate review. Saved searches and sharing formats remain
+separate parity work.
+**Blocking:** The V1 tasks are not chosen. The ownership audit still blocks removal of
+legacy drafts.
+**Next:** Choose the tasks and their fields, revise the prototype, then rescope Raven
+#223–#230.
+
+Read [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md). Reference, as needed:
+
+- [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) — the field set of
+  the earlier prototype, with labels, operators and inputs; the menu for V1 fields.
+- [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) — 194 cases (all values are
+  fixtures). Subset B lists the legacy queries whose links must keep their meaning.
+- [`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md) — the legacy names
+  each field covers, for Raven's translator.
+- [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md) — the query-log numbers.
+- [`QUERY-BUILDER-OR-GROUPS.md`](QUERY-BUILDER-OR-GROUPS.md) — OR-group design; in the
+  prototype, not in V1.
 
 ## Review & curation flow — flow wireframes
 

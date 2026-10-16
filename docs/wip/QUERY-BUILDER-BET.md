@@ -1,93 +1,77 @@
-# Product bet — one query builder for power search
+# Product bet — a smaller Advanced search query builder
 
-*Evidence: [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md) · Field
-contract: [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md)*
+*V1 scope proposal · Boundary: [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md) ·
+Standard search: [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md) ·
+Evidence: [query log](QUERY-BUILDER-EVIDENCE.md)*
 
 ## Problem
 
-Advanced search omits fields, operators and combinations. Expert search supports
-them but requires query language. One visual builder should replace both without
-removing any accepted legacy query or breaking its URL.
+People who build a public research set need to define, check and reuse it without query
+syntax. Today they choose between an Advanced form that lacks useful fields and an Expert
+form that needs query language.
 
-The public builder serves:
-
-- Wim Webb (researcher with a site), who embeds group output;
-- Ans Rapport (faculty communications officer), who builds faculty sets and checks
-  their count;
-- Quinn Query (external analyst), who pastes identifiers and exports results;
-- Cody Crawley (machine reader), who follows the addresses they publish.
-
-The backoffice can reuse the pattern with its own field set for Marie Curator
-(bibliographic reviewer) and Rhea View (review coordinator).
-
-Humans author about 19 power queries a day. Power search represents 2.1% of human
-searches, while its URLs carry 63% of Biblio traffic in the 2026-H1 evidence.
+Clause totals in the query log overstate demand. The 645 DOI clauses come from 19 submissions in 5 sessions. Person or organization combined with year
+or type appears in 461 submissions across 190 sessions. Old links are replayed heavily,
+which argues for keeping them working, not for building more authoring.
 
 ## Solution
 
-The builder opens over the results. Each condition is a plain-language field,
-operator and value. Rows join with AND; groups express OR across fields. The selected
-field sets the operators and input. An approximate count helps people refine the set.
+One builder replaces the Advanced and Expert screens. It opens in the
+[accepted dialog](../decisions/DD-001-advanced-search-dialog.md) and leaves through
+**Show results**; the results page shows the count. Old links and embeds keep their
+meaning. When an old link holds a query V1 cannot edit, the builder says so, and starting
+a new search is a deliberate step.
 
-Phase 1 replaces both tiers in one release. Shipping without OR groups would support
-less than Expert search does today.
+V1 supports a few tasks that ordinary filters handle poorly:
 
-**Phase 1 — first useful release**
+| Candidate task | Why the builder |
+|---|---|
+| Work by a person or organization, in a period, of a type | Combines several filters in one set; arrives from an entity page with the scope already filled in |
+| Recent, openly available work on a topic | Unproven; filters with a topic search may already be enough |
+| Work co-authored by two people | The person filter means either person; two author conditions mean both. Demand is unproven |
+| Words in the title, or a named journal or host | General search cannot limit text to one field |
 
-- condition rows for the public field contract;
-- multi-value paste and OR groups;
-- entity pickers for people, organizations and projects;
-- year ranges and negation;
-- approximate count;
-- Share as Link, Embed, API or Feed;
-- Save search for signed-in people;
-- measurements required by the success criteria.
+Project-specific authoring is also a candidate. The
+[field contract](QUERY-BUILDER-FIELD-CONTRACT.md) holds field designs to choose from.
 
-Everything except Save search remains anonymous. More complex query authoring stays
-with the API.
+**Open full text or dataset** means Biblio offers the content for download or the record
+links to where it is stored. A metadata record alone does not count.
 
-## Rabbit holes
-
-- Existing embeds depend on the citation-style and info-block parameters.
-- Durable addresses must preserve OR, negation and identifier batches up to the cap.
-- Request classification must remain comparable with the current form, link, direct
-  and bot baseline.
-- The legacy translator is a separate development workstream.
+**Later:** the backoffice V1 (#295) for pasted ID batches and curator review sets; more
+fields when live use asks for them. Saved searches and sharing formats are separate
+parity work.
 
 ## No-gos
 
-- A free-field condition searching all metadata, later full text too — out of scope for
-  now; the search box carries open text.
-- Simple search and results-list redesign
-- Curator analysis, cross-tabs or bulk operations
-- A new query language or URL grammar defined in the prototype
-- Mass-user features; people enter power search deliberately
+- No live count, OR groups or spelling suggestions. The prototype keeps them, marked as
+  outside V1.
+- No query language.
+- No separate has-file condition, because it would hide content stored elsewhere.
 
 ## How we know it works
 
-1. Every golden-set subset B case passes. Every subset A case is authorable or has an
-   accepted exception.
-2. Power search keeps its 2.1% share of human searches, compared year over year on
-   matching academic periods.
+V1 goes live, and live use is the test. Before launch, the legacy cases in
+[golden set](QUERY-BUILDER-GOLDEN-SET.md) subset B pass. The baseline is about 19 authored
+queries a day. Compare each month with the same month a year earlier, because use follows
+the academic year.
 
-Copies and saves are diagnostic, not success measures; checking the count without
-copying can still be success.
+After launch, look for three signals:
+
+- builder queries end in a copied link, embed, export or saved search;
+- empty result sets stay rare;
+- use concentrates in the fields V1 offers.
+
+Count authored queries separately from replayed links. Measure on the server, never
+people: no cookies, user identifiers, third-party trackers or client-side tracking. Raven
+#224 builds the measurement. Session IDs and query text
+are personal data, so aggregation and retention need DPO review.
 
 ## The ask
 
-**Go or no-go on phase 1.** What is wrong or impossible?
+Go or no-go on this V1 scope.
 
 ## Open questions
 
-**Blockers**
-
-1. Can Raven give every supported query a durable public address, including OR,
-   negation and capped batches? Raven may answer that a supported shape is impossible.
-2. Does the public and backoffice field selection in the field contract stand?
-
-**Later**
-
-1. Interviews must identify what the current tiers do well; logs show actions, not
-   unmet needs.
-2. Should future bets add builders for people, organizations or projects? Current
-   power-search evidence covers research output only.
+- **Which candidate tasks enter V1?** The chosen tasks decide the fields, operators and
+  values. Then the prototype shows entry, return and an old link V1 cannot edit, and
+  Raven #223–#230 are rescoped.

@@ -3,18 +3,17 @@
 *Full pass over the frontend query log (2025-12-31 → 2026-07-09, 101,940,897 lines, 15.7 GB),
 2026-08-04. The numbers behind [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md), the exposure
 statuses in [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) and the cases in
-[`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md). How the extraction was run:
-`notes/PROMPT-golden-query-extraction.md`. Privacy: aggregates and structures only, no names, no
+[`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md). Privacy: aggregates and structures only, no names, no
 raw queries, no session ids.*
 
-## The one paragraph
+## Summary
 
 The acceptance set is buildable and small. The **human** side is 3,589 authored queries using
 **40 distinct fields** and 9 operators. The **machine** side is 72.9M replays whose entire contract
 fits in **25 query structures (98.9% of hits)**. Two findings change design decisions: real batch
 sizes reach **763 values / 9,336 characters**, which no query-string permalink carries; and the
 fields humans never authored are almost all fields the old UI never offered — `doi` is authored
-644× in expert search and **1×** in advanced, which is defection, not disinterest.
+644× in expert search and **1×** in advanced: people left the advanced form to find it.
 
 ## What humans authored
 
@@ -68,9 +67,10 @@ Session-level pass, 2026-08-19: the same 3,589 authored queries grouped by the l
 - **The session id behaves like a session.** No session spans more than 24 hours (median 184
   seconds, p90 3.4 hours), and none of the 1,601 carries a bot-tagged event.
 
-## What the deltas between the two tiers show
+## What the difference between the two forms shows
 
-Absence from the authored log is not evidence of no need — the old advanced UI only offered the fields it offered. The tier delta makes the gap visible:
+A field missing from the authored log does not mean nobody needs it: the old advanced form
+offered only its own fields. The difference between the two forms shows the gap:
 
 | field | advanced/form | expert/form | reading |
 |---|---:|---:|---|
@@ -81,8 +81,6 @@ Absence from the authored log is not evidence of no need — the old advanced UI
 | `embargo` | 1 | 31 | idem |
 | `datecreated` | 1 | 18 | idem |
 | `basic` / `title` | 676 / 377 | 4 / 1 | the reverse: free text is an advanced-form habit |
-
-This is the unmet-need evidence the bet says the log cannot show. It can — in the difference between the two tiers.
 
 ## The machine contract is 25 structures
 
@@ -118,8 +116,8 @@ Two exist in the wild, both attached to author-scoped queries: **`;hide_info=1`*
 
 ## Per-field evidence behind the exposure decisions
 
-Statuses are decided in `QUERY-BUILDER-FIELD-CONTRACT.md`; this table is the evidence they
-rested on.
+`QUERY-BUILDER-FIELD-CONTRACT.md` decides each field's status; this table shows the evidence
+behind it.
 
 | field | authored by humans? | machine hits | recommendation |
 |---|---|---:|---|
@@ -144,8 +142,8 @@ rested on.
 ## Search cases — team coordinator interview (2026-09-01)
 
 Three worked cases from the biblio team coordinator (administration; steers the review
-team without doing curator work — Rhea View). Not from the log: the first interview
-evidence against the bet's open question that logs show actions, not unmet needs.
+team without doing curator work — Rhea View). They come from an interview, not the
+log, and show needs the log cannot.
 
 **Case 1 — VABB appeal.** Goal: make wrongly rejected publications count for VABB, and
 so for funding. She built the 2026 appeal from three backoffice exports — reviewer tag
@@ -182,10 +180,10 @@ cannot be trusted as workflow state.
 
 ## What this log cannot answer
 
-- **Intent and outcome.** The log records nothing about what a query returned, so a query that found nothing is invisible. Recording that one fact alongside the query is what buys it.
+- **Intent and outcome.** The log records nothing about what a query returned, so a query that found nothing is invisible. Logging whether a query found results would fix that.
 - **Whether an authored query satisfied the author.** Only that it was submitted.
 - **Whether a list was on screen.** The log records queries, not page views, so someone who read
   a record page before opening the power tier counts as arriving cold. 38.2% is a ceiling.
 - **Which distinct permalinks matter most.** We counted shapes, not URLs (deliberately: privacy and memory). Ranking literal URLs needs a separate pass with a retention rule.
 - **URL-level context.** The log carries the query, not the full request URL, so embed parameters only surface where they were glued into the query string. Fuller embed evidence needs webserver access logs.
-- **Anything about people.** By construction.
+- **Anything about people.** The analysis kept no personal data.

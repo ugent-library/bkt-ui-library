@@ -1,24 +1,12 @@
 <!--
-  The host supplies the heading this form is named by (id="conditions-heading"), the box it sits
-  in and the bar under it — search-advanced-dialog.html, on public-works.html. The layout is
-  argued at patterns/query-builder.html.
-
-  Top-level items are this element's direct [data-qb-row] and [data-qb-group] children, so a row
-  carries no extra marker attribute.
-
-  Picking a person, an organization or a project is the same act as on the results page, so each
-  is the same panel the works filter bar clones: people-picker-panel.html,
-  organization-picker-panel.html and project-picker-panel.html, which the host includes alongside
-  this file.
-
-  The built blocks also name the host pages' own states: public-works.html's (results, best-bet,
-  no-results, no-query, facet-set-in-builder) and the backoffice lists' (default, direct-added,
-  no-matches — search-researcher.html and curate.html). Drop them and the dialog renders empty;
-  no check catches it.
-
-  The fields and their per-field operators are in docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. The
-  shared block holds one condition per public field; the backoffice block one per backoffice
-  field. A demo row in a block that public states share must be a public field.
+  The host supplies #conditions-heading, the dialog box and the action bar
+  (search-advanced-dialog.html), and includes the people, organization and project picker panels.
+  The shared block takes public fields only. Fields and operators:
+  docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md.
+  Prototype note: every @state list also names the host pages' states (public-works.html,
+  search-researcher.html, curate.html); drop one and the dialog renders empty, and no check
+  catches it. query-builder.js treats the direct [data-qb-row] and [data-qb-group] children as
+  the top-level conditions.
 -->
 <form id="qb-form" action="public-works.html" method="get"
   aria-labelledby="conditions-heading">
@@ -30,8 +18,8 @@
     <!-- @state -->
 
     <!-- @state: builder-one-condition -->
-    <!-- Arrival from an entity page or a filtered list: the scope is already a row,
-          editable and removable like any other. The usual case, not an extra. -->
+    <!-- Prototype note: opening the builder from an entity page or a filtered list adds its scope
+          as an ordinary row. -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -83,7 +71,7 @@
     <!-- @state -->
 
     <!-- @state: builder-full-query results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
-    <!-- One condition per public field, in chooser order. -->
+    <!-- Prototype note: one demo condition per public field, in chooser order. -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -623,7 +611,8 @@
     <!-- @state -->
 
     <!-- @surface-only: backoffice -->
-    <!-- One condition per backoffice field, plus the backoffice Access level operator. -->
+    <!-- Prototype note: one demo condition per backoffice field, plus the backoffice Access level
+         operator. -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -753,8 +742,6 @@
       </div>
     </div>
 
-    <!-- Paste lives IN the row: a growing textarea, scheme recognised per value.
-          Unrecognised lines are reported, never silently dropped. -->
     <div class="bt-query-builder__row bt-query-builder__row--batch" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -779,8 +766,8 @@
   01KPQ4D2KG9E 01K30SYZCNAV 01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF
   01K4D2KG9EFW 01KHPQ4D2KG9 01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
   01KJ30SYZCNA 01KZCNAVRHPQ ISBN-onbekend zie-bijlage-3</textarea>
-          <!-- Written out, not computed: the prototype shows what recognition reports, it does
-                not recognise. The counts and the listed lines match the sample above. -->
+          <!-- Prototype note: this report is static. Keep its counts and lines in step with the
+                sample above. -->
           <p class="form-text mb-0" id="qb-val-18-help">
             Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.
           </p>
@@ -1461,7 +1448,6 @@
     <!-- @surface-only -->
 
     <!-- @state: builder-no-results -->
-    <!-- Recovery options: docs/wip/QUERY-BUILDER-ISSUE-04-count.md. -->
     <div class="bt-query-builder__row bt-query-builder__row--warning" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -1564,7 +1550,7 @@
     </div>
 
 
-    <!-- Prototype note: the spelling feedback ("nothing matches this spelling") is phase 3. -->
+    <!-- Prototype note: spelling feedback is not in V1. -->
     <div class="bt-query-builder__row bt-query-builder__row--error" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -1605,8 +1591,9 @@
     <!-- @state -->
 
     <!-- @state: builder-or-group -->
-    <!-- Prototype note: OR groups are phase 3. A group is a state of a row, made by the
-          row's "or…" action; it collapses back to a plain row when one alternative is left. -->
+    <!-- Prototype note: OR groups are not in V1. Choosing "or…" on a row wraps it in a group
+          with an empty second alternative; removing alternatives until one is left turns the
+          group back into a row. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">
         &hellip;where <em>any</em> of these conditions is true:
@@ -1699,7 +1686,8 @@
       </div>
     </fieldset>
 
-    <!-- A narrowed role only reads correctly inside an OR: one person, two roles. -->
+    <!-- Prototype note: keep this example inside the group; one person in two roles only reads
+         correctly as alternatives. -->
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">
         &hellip;where <em>any</em> of these conditions is true:
@@ -1885,7 +1873,7 @@
         <i class="if if-add if--xs" aria-hidden="true"></i>
         Add a condition
       </button>
-      <!-- Filled from #qb-chooser on first open: the search, then the grouped fields. -->
+      <!-- Prototype note: empty on purpose; the JS fills it from #qb-chooser on first open. -->
       <div class="dropdown-menu bt-panel bt-panel--wide" role="dialog"
             aria-label="Choose a field" data-qb-chooser-slot></div>
     </div>
@@ -1893,8 +1881,8 @@
   <!-- @state -->
 </form>
 
-<!-- The chooser, defined once. Every entry point carries an empty slot that the JS fills on
-     first open, so the panel appears at the control that asked for it. -->
+<!-- Prototype note: cloned into each empty chooser slot on first open, so the panel opens at
+     the control that asked for it. -->
   <template id="qb-chooser">
       <div class="bt-panel__body border-top-0 d-flex align-items-center gap-2">
         <i class="if if-search text-muted" aria-hidden="true"></i>
@@ -1907,13 +1895,13 @@
       </div>
   </template>
 
-<!-- The blank state again, for the JS to clone back in when the last condition goes. -->
+<!-- Prototype note: cloned back in when the last condition is removed. -->
   <template id="qb-blank">
     <!-- @include: templates/partials/search-advanced-blank.html -->
   </template>
 
-<!-- The value tokens. Crestless is the default; the crest is the exception, marking a person
-     with a UGent person record (data-person-ugent on the picker row). -->
+<!-- Value tokens. The crest marks a person with a UGent person record (data-person-ugent on
+     the picker row); other tokens have none. -->
   <template id="qb-token">
     <span class="badge text-bg-primary-light" data-qb-token>
       <span data-qb-token-name></span>
@@ -1933,10 +1921,9 @@
     </span>
   </template>
 
-<!-- The multi-value checklist, the fourth caller of the picker-slot mechanism: an "is any of"
-     value opens it beside the row's Add-values button. Its rows are cloned from
-     #filter-checklist-row, one per option of the row's own select, so no value list is written
-     twice; the search body is shown only past eight rows. -->
+<!-- Checklist for "is any of" values, opened beside the row's Add-values button. Prototype
+     note: the JS clones one #filter-checklist-row per option of the row's own select and shows
+     search only past eight rows. -->
   <template id="qb-checklist-panel">
     <p class="bt-panel__title" data-picker-title>Values</p>
     <div class="bt-panel__body">
@@ -1953,9 +1940,9 @@
     </div>
   </template>
 
-<!-- The markup a chooser pick clones. One template per value shape; the field name is written
-     into the label on clone, and identify() re-pairs each control with its label. Which
-     operators a field really offers: docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. -->
+<!-- Prototype note: choosing a field clones one of these row templates, one per value shape.
+     The JS writes the field name into the label, and identify() pairs each control with its
+     label again. Operators per field: docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. -->
   <template id="qb-row-text">
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
@@ -1987,8 +1974,7 @@
       </div>
     </div>
   </template>
-  <!-- The container condition (Appeared in): the text row plus the kind-of-container
-       qualifier, defaulting to all kinds. -->
+  <!-- Appeared in: text plus a container-kind qualifier, which defaults to all kinds. -->
   <template id="qb-row-container">
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
@@ -2011,8 +1997,8 @@
           <option>series</option>
           <option>show or lecture series</option>
           <option>venue</option>
-          <!-- Prototype note: publisher place's fuzzy-search behaviour is untested —
-               raven checks it at implementation. -->
+          <!-- Prototype note: fuzzy search on publisher place is untested; Raven tests it
+               during implementation. -->
           <option>publisher place</option>
         </select>
         <span class="small text-muted" data-qb-op-fixed>is</span>
@@ -2029,9 +2015,8 @@
       </div>
     </div>
   </template>
-  <!-- The entity condition (Organization, Project): the contributor row minus the role, one
-       token per picked entity. The chooser entry names the panel the slot clones and the
-       Add-button copy (data-qb-panel, data-qb-add). -->
+  <!-- Organization and Project. Prototype note: the chooser entry sets which picker panel the slot clones
+       (data-qb-panel) and the Add button text (data-qb-add). -->
   <template id="qb-row-entity">
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
@@ -2187,8 +2172,7 @@
       </div>
     </div>
   </template>
-  <!-- The record-history condition: one event — created, last changed or reviewed — by
-       whom (empty = anyone) and when (empty = any time). -->
+  <!-- Record history: an empty person means anyone; an empty date means any time. -->
   <template id="qb-row-record-history">
     <div class="bt-query-builder__row" data-qb-row data-qb-history>
       <div class="bt-query-builder__row-kind">
@@ -2343,7 +2327,7 @@
     </div>
   </template>
 
-<!-- The group a row becomes. Prototype note: OR groups are phase 3. -->
+<!-- Prototype note: cloned when "or…" turns a row into a group. OR groups are not in V1. -->
   <template id="qb-group">
     <fieldset class="bt-query-builder__group" data-qb-group>
       <legend class="form-label h6 mb-2">

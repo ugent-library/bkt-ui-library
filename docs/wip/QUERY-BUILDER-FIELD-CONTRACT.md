@@ -1,19 +1,22 @@
-# Query builder field contract — draft
+# Query builder field contract — earlier prototype
 
-Fields, labels, operators and inputs offered by each surface. Raven owns backend mappings.
-Which legacy names each field covers, the folds and the drops:
-[`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md). Evidence:
-[`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md); cases:
+This is the field set of the earlier, larger prototype: the menu for choosing V1 fields,
+not the V1 selection in [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md).
+Identifier batches belong to the backoffice V1.
+Raven owns backend mappings and safe input limits.
+
+The legacy names each field covers are in
+[`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md), the numbers in
+[`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md) and the test cases in
 [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md).
 
 ## Contract rules
 
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
-- Several values in one condition match any of them; `is any of` spells it where the operator
-  is a choice. An OR group joins separate conditions (phase 3). Two Person rows therefore mean both
-  people.
-- A qualifier changes how the same kind of value is read, such as a person's role. Otherwise the
-  question gets a separate field entry.
+- Several values in one condition match any of them. Where the operator is a choice,
+  `is any of` says so. Two Person rows mean both people.
+- A qualifier changes how the same kind of value is read, such as a person's role. Any other difference
+  gets its own field.
 - List inputs accept pasted batches and report unread values, including what the cap drops.
   Pickers disable further values at the cap.
   A condition takes at most five values on the public surface and twenty on the backoffice;
@@ -39,8 +42,8 @@ they disagree.
 
 ## Public
 
-The public builder offers these fields. Rule 5 in `docs/SEARCH-AND-FILTERING.md`
-decides which fields may be public.
+The earlier prototype offers these public fields. Rule 5 in
+`docs/SEARCH-AND-FILTERING.md` decides which fields may be public.
 
 | id | label | operators | value input |
 |---|---|---|---|
@@ -64,18 +67,20 @@ decides which fields may be public.
 - Organization means the credit recorded on the work,
   based on affiliation at the time rather than a person's current post. It therefore stays stable
   when a person moves or holds several posts. Matching a unit includes its descendants. The legacy
-  `external` field becomes Ghent University *is*; the negation is backoffice-only.
+  `external` field becomes *Organization is Ghent University*; the negation is backoffice-only.
 - The Person id is `TBD`: Raven's live person filter is named `author` and carries no role, so
   Raven must name the role-aware filter this row needs.
 - Year bounds are inclusive.
-- Appeared in means the container and may be qualified by kind. Journal abbreviations also match.
+- Appeared in matches the container, such as a journal, book or series; a qualifier can limit
+  the kind. Journal abbreviations also match.
   *Anywhere* includes `publisher` where raven's crosswalk makes it the container (reports,
   online posts). Conference means the event and matches its name, organiser or location.
 - Funding programme is project metadata, not a field of its own. The project picker shows it
   on each funding entry and whole-row search matches it; no condition filters on it. Nobody
   asked for one, and raven holds it as free text with no authority behind it, so it cannot be
   faceted. Build a condition only on an explicit ask.
-- Access says whether it opens. Attached content says which visible file kind exists. Its
+- Access says whether a file can be opened. Attached content says which kind of visible file
+  the record has. Its
   *Full text or dataset* value means the record's main file: raven's role stays `full_text`,
   and a dataset's data lives at its identifier.
 
@@ -106,23 +111,19 @@ decides which fields may be public.
 - Publication status describes the work, not its deposit. It has no sidebar facet.
 - Licence uses the record's closed list. *Rights unknown* matches that explicit value; *No
   licence* matches an unset licence; *Other licence* matches a value outside the named list. A copyright
-  statement is rendered from the licence, so no separate condition exists (raven models none).
-- Identifier lookup on the public surface stays in the search box (rule 3); the paste box is
-  backoffice.
+  statement is rendered from the licence, so there is no separate copyright condition; raven does not model one.
+- Identifier lookup on the public surface stays in the search box (rule 3); the paste box for identifier
+  lists is backoffice-only.
 - Access level and Organization gain *is not* on the backoffice; legacy `file.access <> open`
   (103 logged) stays authorable there.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year
   remain separate external assertions. The prototype's Classification, VABB and JCR lists
   are mock values; raven's catalogs confirm them.
-- One Record history condition carries the event — created, last changed or reviewed — with
-  who and when: a person, any Biblio team member, or the system (imports, Plato), and a
-  from–to date pair. An empty half does not constrain. Date defended stays separate work
+- One Record history condition covers created, last changed or reviewed, with who and
+  when: a person, any Biblio team member, or the system (imports, Plato), and a
+  from–to date pair. An empty date leaves that side open. Date defended stays separate work
   metadata. Reviewed carries the legacy approval; there is no submission date. Raven names
-  `record_history` and the reviewed timestamp.
-- Each JCR metric remains separate because its value and operators differ. Bands count from 1,
+  the `record_history` filter and the reviewed timestamp.
+- Each JCR metric remains separate because its value and operators differ. Band 1 is
   the top. The category catalog, and which JCR consumers survive, wait on raven's Journal
   authority ([raven#284](https://github.com/ugent-library/raven/issues/284)).
-
-## Open questions
-
-The count's behaviour, including how exact it is, is decided in Raven #227.

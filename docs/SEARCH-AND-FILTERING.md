@@ -5,6 +5,13 @@ search reuses the same primitives with more dimensions and is deepened separatel
 search — one query builder replacing the legacy advanced and expert tiers — is in design:**
 `docs/wip/README.md` § Query builder; its pattern page is `patterns/query-builder.html`.
 
+The standard search page will be reworked separately from Advanced search
+([DD-008](decisions/DD-008-public-search-and-builder-separate-design-scopes.md)).
+Current placement rules below remain the baseline until that redesign is accepted.
+Scope Advanced search under DD-006 first, then develop its accepted scope; ordinary
+filter layout and defaults do not block that work. Both interfaces preserve the same
+query meaning. Their active proposals are tracked separately in `docs/wip/README.md`.
+
 For the component markup this composes, see the kit pages: `elements/search-bar.html`
 (search form), `patterns/filter-picker.html` (Add-filter picker + editor + chips),
 `patterns/facets.html` (sidebar checklists + ranges), `patterns/sidebar.html`

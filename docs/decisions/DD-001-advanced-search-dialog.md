@@ -6,8 +6,8 @@ Scope: Public
 
 ## Decision
 
-Advanced search opens in a wide dialog over the results page. The dialog owns query conditions,
-the approximate count and one exit to the results. Share, Save search and Export remain on the
+Advanced search opens in a wide dialog over the results page. The dialog owns query conditions
+and one exit to the results. Share, Save search and Export remain on the
 results toolbar because they act on the resulting set.
 
 Use a panel for a short choice anchored to its trigger, a dialog for a focused task that needs the

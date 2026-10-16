@@ -1,5 +1,8 @@
 # OR rule groups
 
+Not in V1 ([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). The
+prototype keeps OR groups for a later release.
+
 Design companion to the [query builder bet](QUERY-BUILDER-BET.md). Cases come from the
 [golden set](QUERY-BUILDER-GOLDEN-SET.md); the interaction appears in the `builder-or-group`
 state of `templates/partials/search-advanced-conditions.html`.
@@ -58,17 +61,3 @@ negation in one grammar. The release gate is an unchanged URL → builder state 
 C3.28's legacy syntax has two possible meanings; resolving imported ambiguity belongs to the
 translator, not the builder.
 
-Counting uses the same query model. Per-condition evaluation remains a QA tool rather than a
-public feature.
-
-## Coverage
-
-Subset A of the golden set is covered as follows:
-
-- Public: all C1 cases on the 21 public fields, C2 paste batches, the public year ranges, C5
-  stress cases, C8 embed parameters and the four grouped C3 signatures.
-- Backoffice or not exposed: classification, date created, impact factor and journal category,
-  subject to the [field contract](QUERY-BUILDER-FIELD-CONTRACT.md).
-- Translator-only: the legacy parse artifacts `field`, `for` and `of`.
-- Backoffice widgets: numeric comparison for impact factor. Boolean legacy values map to named
-  Affiliation or Classification choices, so they do not need a generic boolean widget.
