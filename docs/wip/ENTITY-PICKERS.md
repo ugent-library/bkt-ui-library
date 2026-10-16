@@ -21,8 +21,8 @@ hierarchy and selection state are shown.
 
 ## Project
 
-A row names the project, labels its acronym and project ID, then carries one line per
-funding entry with that entry's funder and programme. *Project ID* is the project's own
+A row names the project, labels its acronym and project code, then carries one line per
+funding entry with that entry's funder and programme. *Project code* is the project's own
 identifier, the sense raven gives the term, not a grant's award number. Period and a
 Research Explorer link stay on the project pages: in a 480px panel they cost more room
 than they earn.
