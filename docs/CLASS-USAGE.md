@@ -56,6 +56,8 @@ Colour a badge with `text-bg-*`.
 
 ## Forms and controls
 
+**`bt-copy-group`** — put the copy button before its `<code>`. [`patterns/copy-to-clipboard.html`](../patterns/copy-to-clipboard.html)
+
 **`bt-search-clear`** — put this on a `btn btn-ghost` **between the input and the submit button**, and put all three in an `.input-group`. Give it `aria-label="Clear search"` and an `if-close` icon. Use an `<a>` when clearing loads a new URL, and a `<button type="button">` when it filters a list in place. The button takes its size from the input group. On a field with `type="search"`, the browser's own clear button is hidden. [`elements/search-bar.html`](../elements/search-bar.html)
 
 **`bt-panel`** — a panel holds a title, one or more `bt-panel__body` blocks, and an optional `bt-panel__actions` footer. [`patterns/panel.html`](../patterns/panel.html)

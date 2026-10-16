@@ -97,6 +97,8 @@ bt-btn-check__group
 
 bt-btn-inline-edit
 
+bt-copy-group
+
 bt-detail-heading
 bt-detail-heading__title
 

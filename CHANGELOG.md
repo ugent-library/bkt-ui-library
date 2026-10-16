@@ -5,6 +5,13 @@ What changed in v2, newest first. The old→new class map moved to
 
 ---
 
+## Copy groups stack when they do not fit (v2.49, 2026-10-16)
+
+CSS changed — re-copy the compiled assets, and re-adapt every Biblio ID copy group. Replace
+`input-group w-auto` with `bt-copy-group`, drop `border` from the button and every class from the
+`<code>`. When the pair does not fit, the ID moves above a full-width button. Canonical example:
+`patterns/copy-to-clipboard.html`.
+
 ## Projects show one project code (v2.48, 2026-09-30)
 
 No CSS change — re-adapt the project cards and the project detail page. A project shows one

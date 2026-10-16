@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! Booktower e54c68d/2026-10-14 */
+/*! Booktower 57990cb/2026-10-15 */
 /* No web fonts — system font stack only. Monospace uses the OS default stack. */
 /* ═══════════════════════════════════════════════════════════════════════════════
    FOUNDATION TOKENS
@@ -1462,6 +1462,43 @@ a.badge:focus-visible {
 .input-group--hero > .btn {
   border-radius: var(--bt-radius-md) !important;
   font-size: var(--bt-text);
+}
+
+/* -- bt-copy-group -- no Bootstrap equivalent: input-group borders cannot follow a wrap */
+.bt-copy-group {
+  display: inline-flex;
+  flex-wrap: wrap-reverse;
+  gap: var(--bs-border-width);
+  max-width: 100%;
+  vertical-align: middle;
+  background-color: var(--bt-border-color);
+  border: var(--bt-border);
+  border-radius: var(--bt-radius);
+  overflow: hidden;
+}
+
+.bt-copy-group > * {
+  flex: 1 0 auto;
+  max-width: 100%;
+}
+
+.bt-copy-group > .btn {
+  --bs-btn-bg: var(--bt-white);
+  --bs-btn-border-width: 0;
+  justify-content: center;
+  border-radius: 0;
+}
+
+.bt-copy-group > .btn:focus-visible {
+  outline-offset: -3px;
+}
+
+.bt-copy-group > code {
+  align-content: center;
+  font-size: var(--bt-text-xs);
+  text-align: center;
+  overflow-wrap: anywhere;
+  border-radius: 0;
 }
 
 /* -- bt-search-clear -- */
