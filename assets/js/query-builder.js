@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function capOf(row) {
-    return row.closest('[data-surface]')?.dataset.surface === 'backoffice' ? 20 : 5;
+    return row.closest('[data-surface]')?.dataset.surface === 'backoffice' ? 50 : 5;
   }
 
   function syncPanelCap(row, slot) {

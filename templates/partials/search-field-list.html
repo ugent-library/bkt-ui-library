@@ -2,6 +2,8 @@
   The advanced-search field list: every chooser group, one entry per field in
   docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md. Backoffice-only entries and groups are gated to the
   backoffice surface (docs/SEARCH-AND-FILTERING.md rule 5).
+  Prototype note: public entries outside V1 render only in builder-all-fields; the version that
+  offers them is not decided.
 
   Included by search-advanced-conditions.html, inside the #qb-chooser template, so every row's
   chooser holds the same list. Ids repeat because each row clones that template; identify()
@@ -18,9 +20,11 @@
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="title" data-qb-label="Title" data-qb-template="qb-row-text"
       data-qb-op-fixed="matches">Title</button></li>
+    <!-- @state: builder-all-fields default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="abstract" data-qb-label="Abstract" data-qb-template="qb-row-text"
       data-qb-ops="contains,does not contain,is,is not">Abstract</button></li>
+    <!-- @state -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="keyword" data-qb-label="Keywords" data-qb-template="qb-row-text"
       data-qb-op-fixed="is"
@@ -72,20 +76,22 @@
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="container" data-qb-label="Appeared in" data-qb-template="qb-row-container"
       data-qb-help="Titles and identifiers both match; separate by semicolons.">Appeared in</button></li>
+    <!-- @state: builder-all-fields default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="conference" data-qb-label="Conference" data-qb-template="qb-row-text"
       data-qb-op-fixed="is">Conference</button></li>
+    <!-- @state -->
+    <!-- @state: builder-all-fields default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publisher" data-qb-label="Publisher" data-qb-template="qb-row-text"
       data-qb-ops="contains,does not contain,is,is not">Publisher</button></li>
+    <!-- @state -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="language" data-qb-label="Language" data-qb-template="qb-row-choice"
       data-qb-op-fixed="is" data-qb-multi-values
       data-qb-values="Abkhazian,Achinese,Acoli,Adangme,Adyghe,Afar,Afrihili,Afrikaans,Afro-Asiatic languages,Ainu,Akan,Akkadian,Albanian,Aleut,Algonquian languages,Altaic languages,Amharic,Ancient Greek,Angika,Apache languages,Arabic,Aragonese,Arapaho,Arawak,Armenian,Aromanian,Artificial languages,Assamese,Asturian,Athapascan languages,Australian languages,Austronesian languages,Avaric,Avestan,Awadhi,Aymara,Azerbaijani,Balinese,Baltic languages,Baluchi,Bambara,Bamileke languages,Banda languages,Bantu languages,Basa,Bashkir,Basque,Batak languages,Beja,Belarusian,Bemba,Bengali,Berber languages,Bhojpuri,Bihari languages,Bikol,Bini,Bislama,Blin,Blissymbols,Bosnian,Braj,Breton,Buginese,Bulgarian,Buriat,Burmese,Caddo,Catalan,Caucasian languages,Cebuano,Celtic languages,Central American Indian languages,Central Khmer,Chagatai,Chamic languages,Chamorro,Chechen,Cherokee,Cheyenne,Chibcha,Chichewa,Chinese,Chinook jargon,Chipewyan,Choctaw,Church Slavic,Chuukese,Chuvash,Classical Newari,Classical Syriac,Coptic,Cornish,Corsican,Cree,Creek,Creoles and pidgins,Crimean Tatar,Croatian,Cushitic languages,Czech,Dakota,Danish,Dargwa,Delaware,Dinka,Divehi,Dogri,Dravidian languages,Duala,Dutch,Dyula,Dzongkha,Eastern Frisian,Efik,Egyptian,Ekajuk,Elamite,English,English based Creoles and pidgins,Erzya,Esperanto,Estonian,Ewe,Ewondo,Fang,Fanti,Faroese,Fijian,Filipino,Finnish,Finno-Ugrian languages,Fon,French,French-based Creoles and pidgins,Friulian,Fulah,Ga,Gaelic,Galibi Carib,Galician,Ganda,Gayo,Gbaya,Geez,Georgian,German,Germanic languages,Gilbertese,Gondi,Gorontalo,Gothic,Grebo,Guarani,Gujarati,Gwich'in,Haida,Haitian,Hausa,Hawaiian,Hebrew,Herero,Hiligaynon,Himachali languages,Hindi,Hiri Motu,Hittite,Hmong,Hungarian,Hupa,Iban,Icelandic,Ido,Igbo,Ijo languages,Iloko,Inari Sami,Indic languages,Indo-European languages,Indonesian,Ingush,Interlingua,Interlingue,Inuktitut,Inupiaq,Iranian languages,Irish,Iroquoian languages,Italian,Japanese,Javanese,Judeo-Arabic,Judeo-Persian,Kabardian,Kabyle,Kachin,Kalaallisut,Kalmyk,Kamba,Kannada,Kanuri,Kara-Kalpak,Karachay-Balkar,Karelian,Karen languages,Kashmiri,Kashubian,Kawi,Kazakh,Khasi,Khoisan languages,Khotanese,Kikuyu,Kimbundu,Kinyarwanda,Kirghiz,Klingon,Komi,Kongo,Konkani,Korean,Kosraean,Kpelle,Kru languages,Kuanyama,Kumyk,Kurdish,Kurukh,Kutenai,Ladino,Lahnda,Lamba,Land Dayak languages,Lao,Latin,Latvian,Lezghian,Limburgan,Lingala,Lithuanian,Lojban,Low German,Lower Sorbian,Lozi,Luba-Katanga,Luba-Lulua,Luiseno,Lule Sami,Lunda,Luo,Lushai,Luxembourgish,Macedonian,Madurese,Magahi,Maithili,Makasar,Malagasy,Malay,Malayalam,Maltese,Manchu,Mandar,Mandingo,Manipuri,Manobo languages,Manx,Maori,Mapudungun,Marathi,Mari,Marshallese,Marwari,Masai,Mayan languages,Mende,Mi'kmaq,Middle Dutch,Middle English,Middle French,Middle High German,Middle Irish,Minangkabau,Mirandese,Modern Greek,Mohawk,Moksha,Mon-Khmer languages,Mongo,Mongolian,Mossi,Multiple languages,Munda languages,N'Ko,Nahuatl languages,Nauru,Navajo,Ndonga,Neapolitan,Nepal Bhasa,Nepali,Nias,Niger-Kordofanian languages,Nilo-Saharan languages,Niuean,No linguistic content,Nogai,North American Indian languages,North Ndebele,Northern Frisian,Northern Sami,Norwegian,Norwegian Bokmål,Norwegian Nynorsk,Nubian languages,Nyamwezi,Nyankole,Nyoro,Nzima,Occitan,Official Aramaic,Ojibwa,Old English,Old French,Old High German,Old Irish,Old Norse,Old Persian,Old Provençal,Oriya,Oromo,Osage,Ossetian,Otomian languages,Ottoman Turkish,Pahlavi,Palauan,Pali,Pampanga,Pangasinan,Panjabi,Papiamento,Papuan languages,Pedi,Persian,Philippine languages,Phoenician,Pohnpeian,Polish,Portuguese,Portuguese-based Creoles and pidgins,Prakrit languages,Pushto,Quechua,Rajasthani,Rapanui,Rarotongan,Reserved for local use,Romance languages,Romanian,Romansh,Romany,Rundi,Russian,Salishan languages,Samaritan Aramaic,Sami languages,Samoan,Sandawe,Sango,Sanskrit,Santali,Sardinian,Sasak,Scots,Selkup,Semitic languages,Serbian,Serer,Shan,Shona,Sichuan Yi,Sicilian,Sidamo,Sign Languages,Siksika,Sindhi,Sinhala,Sino-Tibetan languages,Siouan languages,Skolt Sami,Slave,Slavic languages,Slovak,Slovenian,Sogdian,Somali,Songhai languages,Soninke,Sorbian languages,South American Indian languages,South Ndebele,Southern Altai,Southern Sami,Southern Sotho,Spanish,Sranan Tongo,Sukuma,Sumerian,Sundanese,Susu,Swahili,Swati,Swedish,Swiss German,Syriac,Tagalog,Tahitian,Tai languages,Tajik,Tamashek,Tamil,Tatar,Telugu,Tereno,Tetum,Thai,Tibetan,Tigre,Tigrinya,Timne,Tiv,Tlicho,Tlingit,Tok Pisin,Tokelau,Tonga (Nyasa),Tonga (Tonga Islands),Tsimshian,Tsonga,Tswana,Tumbuka,Tupi languages,Turkish,Turkmen,Tuvalu,Tuvinian,Twi,Udmurt,Ugaritic,Uighur,Ukrainian,Umbundu,Uncoded languages,Undetermined,Upper Sorbian,Urdu,Uzbek,Vai,Venda,Vietnamese,Volapük,Votic,Wakashan languages,Walloon,Waray,Washo,Welsh,Western Frisian,Wolaitta,Wolof,Xhosa,Yakut,Yao,Yapese,Yiddish,Yoruba,Yupik languages,Zande languages,Zapotec,Zaza,Zenaga,Zhuang,Zulu,Zuni">Language</button></li>
-    <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="identifier" data-qb-label="Identifier" data-qb-template="qb-row-batch">Identifier</button></li>
-    <!-- @surface-only -->
   </ul>
 </div>
 <div class="min-w-0" data-qb-choice-group role="group" aria-labelledby="qb-g-access">
@@ -110,9 +116,11 @@
       data-qb-op-fixed="is"
       data-qb-values="CC0 1.0,CC BY 4.0,CC BY-SA 4.0,CC BY-NC 4.0,CC BY-ND 4.0,CC BY-NC-SA 4.0,CC BY-NC-ND 4.0,In copyright,Rights unknown,Other licence,No licence">Licence</button></li>
     <!-- @surface-only -->
+    <!-- @state: builder-all-fields default direct-added no-matches -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="file_type" data-qb-label="Attached content" data-qb-template="qb-row-choice"
       data-qb-values="Full text or dataset,Supplementary material,Table of contents,Peer review report,Colophon,Data fact sheet,Agreement">Attached content</button></li>
+    <!-- @state -->
     <!-- @surface-only: backoffice -->
     <li><button class="dropdown-item" type="button" data-qb-choice
       data-qb-field="publication_version" data-qb-label="Full-text version" data-qb-template="qb-row-choice"

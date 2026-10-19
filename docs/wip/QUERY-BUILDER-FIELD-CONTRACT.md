@@ -3,8 +3,9 @@
 This is the field set of the earlier, larger prototype. The public V1 offers these rows:
 `contributor` (with role), `organization`, `project`, `keyword`, `identifier`, `access`,
 `work_type`, `year`, `language`, `title` and `container`. The others wait for live use
-([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). Identifier
-batches and Classification belong to the backoffice V1.
+([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). The public
+Identifier row takes up to five identifiers; longer batches and Classification belong to the
+backoffice V1. The other public rows wait for a later version, not yet decided.
 Raven owns backend mappings and safe input limits.
 
 The legacy names each field covers are in
@@ -15,15 +16,14 @@ The legacy names each field covers are in
 ## Contract rules
 
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
-- The public V1 shows only `is` and `is not`, plus `is between` on Year. Several values in
-  one `is` row match any of them, and in one `is not` row exclude all of them; the label does
-  not change. Two Person rows mean both people.
+- Several values in one condition match any of them. Where the operator is a choice,
+  `is any of` says so. Two Person rows mean both people.
 - A qualifier changes how the same kind of value is read, such as a person's role. Any other difference
   gets its own field.
 - List inputs accept pasted batches and report unread values, including what the cap drops.
   Pickers disable further values at the cap.
-  A condition takes at most five values on the public surface and twenty on the backoffice;
-  the backoffice cap rises when curators hit it in real work.
+  A public condition takes at most five values. The backoffice cap is 50 until the backoffice
+  V1 (#295) decides; logged identifier batches reach 763 values.
 - Public URLs expose only public records. Committed examples use fixtures.
 - An id is Raven's filter name, so a shared URL and a Raven query read alike. Where Raven names
   no filter, the id follows Raven's naming grammar. A row that deviates from either says so
@@ -63,6 +63,7 @@ The earlier prototype offers these public fields. Rule 5 in
 | `publisher` | Publisher | contains, does not contain, is, is not | text |
 | `language` | Language | is | language picker; raven's ISO 639-2/B vocabulary (`language.go`), shown by English name |
 | `access` | Access | is | select: Open access, Restricted, Under embargo, Metadata only |
+| `identifier` | Identifier | is any of, is, is not | list; up to five identifiers, scheme recognised per value |
 | `file_type` | Attached content | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 
 ### Public decisions
@@ -115,8 +116,8 @@ The earlier prototype offers these public fields. Rule 5 in
 - Licence uses the record's closed list. *Rights unknown* matches that explicit value; *No
   licence* matches an unset licence; *Other licence* matches a value outside the named list. A copyright
   statement is rendered from the licence, so there is no separate copyright condition; raven does not model one.
-- Identifier lookup on the public surface stays in the search box (rule 3); the paste box for identifier
-  lists is backoffice-only.
+- The search box still finds a single identifier (rule 3). The public Identifier row takes up
+  to five; the backoffice 50 for now.
 - Access and Organization gain *is not* on the backoffice; legacy `file.access <> open`
   (103 logged) stays authorable there.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year

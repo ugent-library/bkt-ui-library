@@ -17,6 +17,22 @@
     <!-- @include: templates/partials/search-advanced-blank.html -->
     <!-- @state -->
 
+    <!-- @state: builder-legacy-query -->
+    <!-- Prototype note: an old link whose query V1 cannot show as conditions. The query text is a
+          fixture; the results behind the dialog still follow it. -->
+    <div class="alert alert-info alert--sm mb-0" role="note" aria-label="Search from an older link">
+      <div class="d-flex align-items-start gap-2">
+        <i class="if if-info-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+        <div>
+          <p class="mb-1">This search comes from an older link. Advanced search can't show it as
+            conditions, but the results still follow it.</p>
+          <p class="mb-2"><code class="text-break">author any "PERSON_1" and (parent = "TEXT" or publisher = "TEXT")</code></p>
+          <a class="btn btn-secondary btn-sm" href="/templates/biblio-public/public-works.html?state=builder-empty">Start a new search</a>
+        </div>
+      </div>
+    </div>
+    <!-- @state -->
+
     <!-- @state: builder-one-condition -->
     <!-- Prototype note: opening the builder from an entity page or a filtered list adds its scope
           as an ordinary row. -->
@@ -70,9 +86,7 @@
     </div>
     <!-- @state -->
 
-    <!-- @state: builder-full-query results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
-    <!-- Prototype note: V1 drops the "is any of" operator; several values in an "is" row mean any of
-         them. The rows below still show the earlier operator lists. -->
+    <!-- @state: builder-full-query builder-all-fields results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
     <!-- Prototype note: one demo condition per public field, in chooser order. -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
@@ -98,6 +112,9 @@
       </div>
     </div>
 
+    <!-- @state -->
+    <!-- @state: builder-all-fields default direct-added no-matches -->
+    <!-- Prototype note: fields after V1; the version that offers them is not decided. -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -128,6 +145,8 @@
       </div>
     </div>
 
+    <!-- @state -->
+    <!-- @state: builder-full-query builder-all-fields results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -422,6 +441,8 @@
       </div>
     </div>
 
+    <!-- @state -->
+    <!-- @state: builder-all-fields default direct-added no-matches -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -476,6 +497,8 @@
       </div>
     </div>
 
+    <!-- @state -->
+    <!-- @state: builder-full-query builder-all-fields results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -565,6 +588,8 @@
       </div>
     </div>
 
+    <!-- @state -->
+    <!-- @state: builder-all-fields default direct-added no-matches -->
     <div class="bt-query-builder__row" data-qb-row>
       <div class="bt-query-builder__row-kind">
         <div class="dropdown">
@@ -766,20 +791,26 @@
             rows="6" aria-describedby="qb-val-18-help qb-val-18-recognised qb-val-18-over qb-val-18-unrecognised">01KMXJ30SYZC 01K167MXJ30S 01KEFW5TB816 01KVRHPQ4D2K 01K8167MXJ30 01KNAVRHPQ4D
   01K2KG9EFW5T 01KFW5TB8167 10.1038/s41586-024-07123-4 10.1103/PhysRevLett.132.010801 01KW5TB8167M 01K9EFW5TB81
   01KPQ4D2KG9E 01K30SYZCNAV 01KG9EFW5TB8 01KXJ30SYZCN 01KAVRHPQ4D2 01KQ4D2KG9EF
-  01K4D2KG9EFW 01KHPQ4D2KG9 01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
+  01K4D2KG9EFW 01KHPQ4D2KG9
+  01KM9S346Q3D 01K25VT4F5V3 01K7E3S3E28J 01KT97KB6CQ6 01K43DZVMXXQ 01KKFBF5KZNW
+  01KJ47TAN9ZT 01K24MNPZX45 01KHY43KWJRP 01K1XPA7Z3DJ 01K8FSSZ5AWS 01KH8VHTPRE9
+  01K5B9EE0ZBG 01KJ09TQM83X 01KSSSS6YS3C 01K4DWA7N360 01K96Q14DR9G 01KPQY77ZXYY
+  01KK596NGYA1 01KDQ91K5GQA 01KPENECFSEC 01KZP11HYGCP 01KWPQ5E6EYC 01KNDY0YP57R
+  01KCYBVN5SXS 01K5AA819X9Y 01KP981068VC 01KD1GDJFMGT 01K83PXT891W 01KB09B9Y73M
+  01KYZCNAVRHP 01KB8167MXJ3 01KRHPQ4D2KG 01K5TB8167MX
   01KJ30SYZCNA 01KZCNAVRHPQ ISBN-onbekend zie-bijlage-3</textarea>
           <!-- Prototype note: this report is static. Keep its counts and lines in step with the
                 sample above. -->
           <p class="form-text mb-0" id="qb-val-18-help">
-            Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.
+            Separate by spaces, commas, semicolons, or line breaks. Up to 50 identifiers.
           </p>
           <p class="form-text mb-0" id="qb-val-18-recognised">
-            <strong>20 identifiers kept.</strong> 18 Biblio IDs, 2 DOIs.
+            <strong>50 identifiers kept.</strong> 48 Biblio IDs, 2 DOIs.
           </p>
           <div class="alert alert-warning alert--sm m-0" id="qb-val-18-over">
             <p class="mb-1">
               <i class="if if-alert me-1" aria-hidden="true"></i>
-              <strong>6 identifiers are over the limit of 20 and are not being searched.</strong>
+              <strong>6 identifiers are over the limit of 50 and are not being searched.</strong>
             </p>
             <ul class="font-monospace">
               <li>01KYZCNAVRHP</li>
@@ -804,7 +835,7 @@
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>
         <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
-          aria-label="Remove condition 18: identifier is any of 20 IDs">
+          aria-label="Remove condition 18: identifier is any of 50 IDs">
           <i class="if if-delete if--xs" aria-hidden="true"></i>
         </button>
       </div>
@@ -1867,7 +1898,7 @@
 
   </div>
 
-  <!-- @state: builder-empty builder-full-query builder-one-condition builder-or-group builder-no-results results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
+  <!-- @state: builder-empty builder-full-query builder-all-fields builder-one-condition builder-or-group builder-no-results results best-bet no-results no-query facet-set-in-builder default direct-added no-matches -->
   <div class="bt-query-builder__add">
     <div class="dropdown">
       <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="dropdown"
@@ -2317,7 +2348,13 @@
           <label class="visually-hidden" for="qb-t-batch-val">Identifiers</label>
           <textarea class="form-control form-control-sm font-monospace"
             id="qb-t-batch-val" rows="3"></textarea>
-          <p class="form-text mb-0">Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.</p>
+          <!-- @surface-only: public -->
+          <p class="form-text mb-0">Separate by spaces, commas, semicolons, or line breaks. Up to 5 identifiers.</p>
+          <!-- @surface-only -->
+          <!-- @surface-only: backoffice -->
+          <!-- Prototype note: the backoffice cap is not decided (#295); 50 is a placeholder. -->
+          <p class="form-text mb-0">Separate by spaces, commas, semicolons, or line breaks. Up to 50 identifiers.</p>
+          <!-- @surface-only -->
         </div>
       </div>
       <div class="bt-query-builder__row-actions" data-qb-actions>

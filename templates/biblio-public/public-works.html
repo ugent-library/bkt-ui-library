@@ -1,6 +1,6 @@
 <!-- @title: Search — Biblio UGent -->
 <!-- @surface: public -->
-<!-- @states: results, best-bet, no-results, no-query, facet-set-in-builder, builder-full-query, builder-empty, builder-one-condition, builder-or-group, builder-no-results -->
+<!-- @states: results, best-bet, no-results, no-query, facet-set-in-builder, builder-full-query, builder-empty, builder-one-condition, builder-or-group, builder-no-results, builder-all-fields, builder-legacy-query -->
 <!--
   Public search page — search-first with multi-entity autocomplete.
 
@@ -14,12 +14,13 @@
     query-builder.js    — the Advanced search dialog: row → OR group, approximate count
 
   The Advanced search dialog is at the bottom, once, shut: search-advanced-dialog.html holds its
-  chrome, the two builder partials hold its contents. This page has ten states on two axes.
+  chrome, the two builder partials hold its contents. This page has twelve states on two axes.
   Five say what the list holds — results, best-bet, no-results, no-query, facet-set-in-builder.
-  Five say what the builder holds — builder-full-query, builder-empty, builder-one-condition,
-  builder-or-group, builder-no-results — and each marks it open over the same list. A builder
+  Seven say what the builder holds — builder-full-query, builder-empty, builder-one-condition,
+  builder-or-group, builder-no-results, builder-all-fields, builder-legacy-query — and each
+  marks it open over the same list. A builder
   state reuses the list regions of the state behind it: builder-empty sits over the unfiltered
-  list, the other four over the result list.
+  list, the other six over the result list.
 
   In production the address renders the open dialog; here ?state= does, per
   patterns/query-builder.html.
@@ -70,7 +71,7 @@
                  href carries ?state= instead: the kit's no-query state is the whole corpus,
                  so it renders no chips. An empty box hides the ×. -->
             <!-- [html-validate-disable-block no-dup-id, form-dup-name -- @state blocks; one renders at a time] -->
-            <!-- @state: results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+            <!-- @state: results facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
             <div class="input-group input-group-lg mb-3">
               <input
                 type="text"
@@ -212,7 +213,7 @@
                   <!-- Chips rendered by filter-bar.js from data-initial-filters —
                       per state: a name search and an empty query start clean. -->
                   <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
-                  <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+                  <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips"
                     data-initial-filters='{
@@ -323,7 +324,7 @@
           <div id="wf-head-list">
             <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
             <h2 class="h5 mb-0" id="filters-offcanvas-title">Filters</h2>
-            <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+            <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
             <span class="text-muted small" id="wf-sheet-count">27 research outputs</span>
             <!-- @state -->
             <!-- @state: no-query builder-empty -->
@@ -373,7 +374,7 @@
 
         <!-- Nothing recounts on a tick, so the zero-results state keeps the narrowed
              counts. -->
-        <!-- @state: results best-bet no-results builder-full-query builder-one-condition builder-or-group builder-no-results -->
+        <!-- @state: results best-bet no-results builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
         <fieldset>
           <legend class="form-label h6 mb-2">Access</legend>
           <div class="d-flex form-check">
@@ -423,7 +424,7 @@
 
         <hr>
 
-        <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+        <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
         <!-- Type -->
         <fieldset>
           <legend class="form-label h6 mb-2">Type</legend>
@@ -875,7 +876,7 @@
         <div class="d-lg-none p-3 border-top" id="wf-sheet-footer">
           <div class="d-flex align-items-center gap-2" id="wf-foot-list">
             <span id="wf-clear-slot"></span>
-            <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+            <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
             <button type="button" class="btn btn-primary flex-grow-1 justify-content-center"
               data-bs-dismiss="offcanvas" data-bs-target="#filters-offcanvas">
               Show 27 research outputs
@@ -976,7 +977,7 @@
 
         <!-- 27 results at 50 per page is one page: the bar keeps the count and drops the
              pagination (/patterns/pagination.html). -->
-        <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+        <!-- @state: results best-bet facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
         <div class="bt-toolbar mb-4">
           <div class="bt-toolbar__left">
             <div class="bt-toolbar__item">
@@ -1125,7 +1126,7 @@
         <!-- The list is one fixed set of 27 cards, a showcase of every card variant — so
              it matches the narrowed count exactly, and stands in, abridged, for the
              corpus story's 179. -->
-        <!-- @state: results best-bet no-query facet-set-in-builder builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
+        <!-- @state: results best-bet no-query facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-empty builder-one-condition builder-or-group builder-no-results -->
 
         <!-- Card actions (Cite, Add to list, access CTA) and the toolbar's Save
              search / Export / Subscribe are OUT OF SCOPE for the search & filtering
@@ -2116,9 +2117,15 @@
           </ul>
 
           <!-- Drops filter params only; the query is cleared by the box's × (Rule 2). -->
-          <a href="public-works.html?q=Quantm+computing" class="btn btn-secondary btn-sm">
-            <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
-          </a>
+          <div class="d-flex flex-wrap gap-2">
+            <a href="public-works.html?q=Quantm+computing" class="btn btn-secondary btn-sm">
+              <i class="if if-close if--xs" aria-hidden="true"></i> Clear all filters
+            </a>
+            <a href="public-works.html?advanced=1" class="btn btn-secondary btn-sm"
+              data-bs-toggle="modal" data-bs-target="#advanced-search-modal">
+              <i class="if if-search-eye-line if--xs" aria-hidden="true"></i> Change in Advanced search
+            </a>
+          </div>
         </div>
         <!-- @state -->
 
@@ -2280,7 +2287,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
-        <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-one-condition builder-or-group builder-no-results -->
+        <!-- @state: results best-bet no-results facet-set-in-builder builder-full-query builder-all-fields builder-legacy-query builder-one-condition builder-or-group builder-no-results -->
         <h2 class="modal-title h5" id="export-modal-title">Export 27 research outputs</h2>
         <!-- @state -->
         <!-- @state: no-query builder-empty -->
@@ -2333,7 +2340,7 @@
 </div>
 
 <!-- @state-none: results best-bet no-results no-query facet-set-in-builder -- these states render the Advanced search dialog shut -->
-<!-- @state: builder-full-query builder-empty builder-one-condition builder-or-group builder-no-results -->
+<!-- @state: builder-full-query builder-all-fields builder-legacy-query builder-empty builder-one-condition builder-or-group builder-no-results -->
 <div hidden data-qb-open></div>
 <!-- @state -->
 

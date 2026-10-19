@@ -38,16 +38,24 @@ The tasks need two kinds of fields:
 | Person, Organization, Project, Keywords, Identifier, Access, Type, Year, Language | Every ordinary public filter. A filter set in search must reappear in the builder as an editable row |
 | Title, Appeared in, a role on Person | Tasks filters cannot do: words in the title, a named journal or host, author versus editor |
 
-Rows offer only **is** and **is not**, plus **is between** on Year. Several values in one
-row match any of them; no separate *is any of* appears. Field designs are in the
+Rows offer **is** and **is not**, plus **is any of** where a field often takes several
+values and **is between** on Year. A public row takes at most five values, so Identifier
+holds up to five identifiers. Field designs are in the
 [field contract](QUERY-BUILDER-FIELD-CONTRACT.md).
 
 **Open full text or dataset** means Biblio offers the content for download or the record
 links to where it is stored. A metadata record alone does not count.
 
-**Later:** the backoffice V1 (#295) for pasted ID batches, Classification and curator
-review sets; more public fields when live use asks for them. Saved searches and sharing formats are separate
-parity work.
+**Later:**
+
+- a public version with every public field, shown in the prototype's `builder-all-fields`
+  state; which version offers them is not decided;
+- the backoffice V1 (#295) with every field, including pasted ID batches, Classification and
+  curator review sets; the prototype shows it on
+  [curate](../../templates/biblio-team/curate.html) and
+  [search-researcher](../../templates/biblio-researcher/search-researcher.html).
+
+Saved searches and sharing formats are separate parity work.
 
 ## No-gos
 
