@@ -37,18 +37,7 @@ Record:
 
 Do not record routine applications of an existing principle. Link to the principle instead.
 
-## Replace a decision
+## Change a decision
 
-Do not rewrite the old rationale. Add a new record, then connect both files:
-
-```text
-Status: Superseded by DD-019
-```
-
-```text
-Status: Accepted
-Supersedes: DD-012
-```
-
-The accepted record states the current decision. The superseded record remains evidence of
-what was previously decided and why.
+Rewrite the record so it states the current decision, or delete a record that no longer
+applies. Git keeps earlier versions.
