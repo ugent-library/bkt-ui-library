@@ -17,17 +17,16 @@
     <!-- @include: templates/partials/search-advanced-blank.html -->
     <!-- @state -->
 
-    <!-- @state: builder-legacy-query -->
-    <!-- Prototype note: an old link whose query V1 cannot show as conditions. The query text is a
-          fixture; the results behind the dialog still follow it. -->
-    <div class="alert alert-info alert--sm mb-0" role="note" aria-label="Search from an older link">
+    <!-- @state: builder-query-language -->
+    <!-- Prototype note: behaviour to discuss with Raven. Assumed for now: conditions cannot be
+          added on top; clearing starts an empty builder, closing keeps the search. The query stays
+          editable in the URL. -->
+    <div class="alert alert-info alert--sm mb-0" role="note">
       <div class="d-flex align-items-start gap-2">
         <i class="if if-info-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
         <div>
-          <p class="mb-1">This search comes from an older link. Advanced search can't show it as
-            conditions, but the results still follow it.</p>
-          <p class="mb-2"><code class="text-break">author any "PERSON_1" and (parent = "TEXT" or publisher = "TEXT")</code></p>
-          <a class="btn btn-secondary btn-sm" href="/templates/biblio-public/public-works.html?state=builder-empty">Start a new search</a>
+          <p class="mb-2">Your results come from a link with conditions that can't be changed here.</p>
+          <a class="btn btn-secondary btn-sm" href="/templates/biblio-public/public-works.html?state=builder-empty">Clear and build a new query</a>
         </div>
       </div>
     </div>
