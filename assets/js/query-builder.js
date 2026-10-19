@@ -107,9 +107,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function syncPanelCap(row, slot) {
-    const boxes = slot.querySelectorAll('[data-picker-rows] input[type="checkbox"]');
+    const boxes = slot.querySelectorAll(
+      '[data-picker-rows] input[type="checkbox"], [data-qb-text-option] input');
     const full = Array.from(boxes).filter(b => b.checked).length >= capOf(row);
     boxes.forEach(b => { if (!b.checked) b.disabled = full; });
+    const note = slot.querySelector('[data-qb-cap-note]');
+    if (note) {
+      note.hidden = !full;
+      note.textContent = full ? 'You can pick up to ' + capOf(row) + '.' : '';
+    }
   }
 
   function capAdd(row) {
@@ -319,6 +325,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (pickerSlot.dataset.qbPickerSlot === 'qb-checklist-panel') {
           fillChecklist(pickerSlot, row);
         }
+        pickerSlot.querySelector('[data-picker-actions]')?.before(
+          document.getElementById('qb-cap-note').content.firstElementChild.cloneNode(true));
+        if (pickerSlot.dataset.qbPickerSlot === 'person-picker') {
+          pickerSlot.querySelector('[data-picker-rows]').after(
+            document.getElementById('qb-person-text').content.firstElementChild.cloneNode(true));
+        }
         identify(pickerSlot);
       }
       const present = Array.from(row.querySelectorAll('[data-qb-token]'))
@@ -423,7 +435,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function applyPicked(row, panel) {
     const cell = row.querySelector('[data-qb-value]');
-    panel.querySelectorAll('[data-picker-rows] input[type="checkbox"]').forEach(box => {
+    panel.querySelectorAll('[data-picker-rows] input[type="checkbox"], [data-qb-text-option] input')
+      .forEach(box => {
       const existing = row.querySelector(`[data-qb-token][data-id="${box.dataset.id}"]`);
       if (box.checked && !existing &&
         cell.querySelectorAll('[data-qb-token]').length < capOf(row)) {
@@ -453,8 +466,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const search = event.target.closest('[data-picker-search]');
     if (!search) return;
     const needle = search.value.trim().toLowerCase();
-    search.closest('[data-qb-picker-slot]')
-      .querySelectorAll('[data-picker-rows] .form-check').forEach(option => {
+    const slot = search.closest('[data-qb-picker-slot]');
+    const text = slot.querySelector('[data-qb-text-option]');
+    if (text) {
+      text.hidden = !needle;
+      text.querySelector('[data-picker-name]').textContent = '“' + search.value.trim() + '”';
+      text.querySelector('input').dataset.id = 'text:' + needle;
+    }
+    slot.querySelectorAll('[data-picker-rows] .form-check').forEach(option => {
         const label = option.querySelector('label');
         option.hidden = Boolean(needle) &&
           !label.textContent.toLowerCase().includes(needle);

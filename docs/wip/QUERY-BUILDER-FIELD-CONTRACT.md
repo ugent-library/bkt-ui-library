@@ -53,7 +53,7 @@ The earlier prototype offers these public fields. Rule 5 in
 | `title` | Title | matches | text; autocompletes against titles (`TBD` raven capability) |
 | `abstract` | Abstract | contains, does not contain, is, is not | text |
 | `keyword` | Keywords | is any of | text; several values separated by commas or semicolons; autocompletes (`TBD` raven capability) |
-| `contributor` `TBD` | Person | is any of · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker |
+| `contributor` `TBD` | Person | is any of · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker, or a typed name matched as text |
 | `organization` | Organization | is any of | organization picker |
 | `project` | Project | is any of | project picker |
 | `work_type` | Publication type | is any of | type picker; raven's work-type catalog (`work_type.go`) |
@@ -115,8 +115,7 @@ The earlier prototype offers these public fields. Rule 5 in
 - Licence uses the record's closed list. *Rights unknown* matches that explicit value; *No
   licence* matches an unset licence; *Other licence* matches a value outside the named list. A copyright
   statement is rendered from the licence, so there is no separate copyright condition; raven does not model one.
-- The search box still finds a single identifier (rule 3). The public Identifier row takes up
-  to five; the backoffice 50 for now.
+- The search box still finds a single identifier (rule 3).
 - Access, Organization and Person gain *is not* on the backoffice; legacy `file.access <> open`
   (103 logged) stays authorable there.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year
