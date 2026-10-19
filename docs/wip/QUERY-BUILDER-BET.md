@@ -22,23 +22,31 @@ One builder replaces the Advanced and Expert screens. It opens in the
 meaning. When an old link holds a query V1 cannot edit, the builder says so, and starting
 a new search is a deliberate step.
 
-V1 supports a few tasks that ordinary filters handle poorly:
+V1 serves these tasks:
 
-| Candidate task | Why the builder |
+| Task | Why the builder |
 |---|---|
-| Work by a person or organization, in a period, of a type | Combines several filters in one set; arrives from an entity page with the scope already filled in |
-| Recent, openly available work on a topic | Unproven; filters with a topic search may already be enough |
-| Work co-authored by two people | The person filter means either person; two author conditions mean both. Demand is unproven |
-| Words in the title, or a named journal or host | General search cannot limit text to one field |
+| Work by a person or organization, in a period, of a type | Combines several filters into one set; arrives from an entity page with the scope filled in |
+| Recent, openly available work on a topic | Live use shows whether people revise this set in the builder or with filters |
+| Work co-authored by two people | Two Person rows mean both people; the filter means either |
+| Words in the title, or a named journal or host | General search can't limit text to one field |
 
-Project-specific authoring is also a candidate. The
-[field contract](QUERY-BUILDER-FIELD-CONTRACT.md) holds field designs to choose from.
+The tasks need two kinds of fields:
+
+| Fields | Why |
+|---|---|
+| Person, Organization, Project, Keywords, Identifier, Access, Type, Year, Language | Every ordinary public filter. A filter set in search must reappear in the builder as an editable row |
+| Title, Appeared in, a role on Person | Tasks filters cannot do: words in the title, a named journal or host, author versus editor |
+
+Rows offer only **is** and **is not**, plus **is between** on Year. Several values in one
+row match any of them; no separate *is any of* appears. Field designs are in the
+[field contract](QUERY-BUILDER-FIELD-CONTRACT.md).
 
 **Open full text or dataset** means Biblio offers the content for download or the record
 links to where it is stored. A metadata record alone does not count.
 
-**Later:** the backoffice V1 (#295) for pasted ID batches and curator review sets; more
-fields when live use asks for them. Saved searches and sharing formats are separate
+**Later:** the backoffice V1 (#295) for pasted ID batches, Classification and curator
+review sets; more public fields when live use asks for them. Saved searches and sharing formats are separate
 parity work.
 
 ## No-gos
@@ -59,11 +67,13 @@ After launch, look for three signals:
 
 - builder queries end in a copied link, embed, export or saved search;
 - empty result sets stay rare;
-- use concentrates in the fields V1 offers.
+- use concentrates in the fields V1 offers;
+- few people use **Missing a field? Tell us** in the builder, and no single field gets
+  repeated requests.
 
 Count authored queries separately from replayed links. Measure on the server, never
 people: no cookies, user identifiers, third-party trackers or client-side tracking. Raven
-#224 builds the measurement. Session IDs and query text
+#224 builds the measurement, and it ships with V1. Session IDs and query text
 are personal data, so aggregation and retention need DPO review.
 
 ## The ask
@@ -72,6 +82,8 @@ Go or no-go on this V1 scope.
 
 ## Open questions
 
-- **Which candidate tasks enter V1?** The chosen tasks decide the fields, operators and
-  values. Then the prototype shows entry, return and an old link V1 cannot edit, and
-  Raven #223–#230 are rescoped.
+- **Where does V1 fail?** Set the limits before launch: the share of builder queries
+  that find nothing, and the number of requests for one missing field.
+
+Next: the prototype shows entry, return and an old link V1 cannot edit; then Raven
+#223–#230 are rescoped.

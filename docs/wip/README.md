@@ -61,17 +61,16 @@ Earlier plans do not approve a new layout or enlarge the builder scope.
 One smaller public builder replaces Advanced and Expert authoring; existing query links
 keep working. The backoffice gets its own V1 builder (#295), which covers pasted ID batches.
 
-**Stage:** V1 task selection, then prototype revision. Raven #223–#230 still describe
+**Stage:** Prototype revision for the V1 field set. Raven #223–#230 still describe
 the earlier, larger scope.
 **Accepted:** [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md):
 no live count, no OR groups, no spelling suggestions; V1 goes live and live use is the test.
 [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md):
 ordinary filter design is a separate review. Saved searches and sharing formats remain
 separate parity work.
-**Blocking:** The V1 tasks are not chosen. The ownership audit still blocks removal of
+**Blocking:** Failure limits for the live test are not set. The ownership audit still blocks removal of
 legacy drafts.
-**Next:** Choose the tasks and their fields, revise the prototype, then rescope Raven
-#223–#230.
+**Next:** Revise the prototype, then rescope Raven #223–#230.
 
 Read [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md). Reference, as needed:
 

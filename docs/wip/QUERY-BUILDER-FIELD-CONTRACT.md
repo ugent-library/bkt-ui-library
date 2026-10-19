@@ -1,8 +1,10 @@
 # Query builder field contract — earlier prototype
 
-This is the field set of the earlier, larger prototype: the menu for choosing V1 fields,
-not the V1 selection in [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md).
-Identifier batches belong to the backoffice V1.
+This is the field set of the earlier, larger prototype. The public V1 offers these rows:
+`contributor` (with role), `organization`, `project`, `keyword`, `identifier`, `access`,
+`work_type`, `year`, `language`, `title` and `container`. The others wait for live use
+([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). Identifier
+batches and Classification belong to the backoffice V1.
 Raven owns backend mappings and safe input limits.
 
 The legacy names each field covers are in
@@ -13,8 +15,9 @@ The legacy names each field covers are in
 ## Contract rules
 
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
-- Several values in one condition match any of them. Where the operator is a choice,
-  `is any of` says so. Two Person rows mean both people.
+- The public V1 shows only `is` and `is not`, plus `is between` on Year. Several values in
+  one `is` row match any of them, and in one `is not` row exclude all of them; the label does
+  not change. Two Person rows mean both people.
 - A qualifier changes how the same kind of value is read, such as a person's role. Any other difference
   gets its own field.
 - List inputs accept pasted batches and report unread values, including what the cap drops.
@@ -59,7 +62,7 @@ The earlier prototype offers these public fields. Rule 5 in
 | `conference` | Conference | is | text |
 | `publisher` | Publisher | contains, does not contain, is, is not | text |
 | `language` | Language | is | language picker; raven's ISO 639-2/B vocabulary (`language.go`), shown by English name |
-| `access` | Access level | is | select: Open access, Restricted, Under embargo, Metadata only |
+| `access` | Access | is | select: Open access, Restricted, Under embargo, Metadata only |
 | `file_type` | Attached content | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
 
 ### Public decisions
@@ -114,7 +117,7 @@ The earlier prototype offers these public fields. Rule 5 in
   statement is rendered from the licence, so there is no separate copyright condition; raven does not model one.
 - Identifier lookup on the public surface stays in the search box (rule 3); the paste box for identifier
   lists is backoffice-only.
-- Access level and Organization gain *is not* on the backoffice; legacy `file.access <> open`
+- Access and Organization gain *is not* on the backoffice; legacy `file.access <> open`
   (103 logged) stays authorable there.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year
   remain separate external assertions. The prototype's Classification, VABB and JCR lists

@@ -129,7 +129,7 @@ as *backoffice* or *not exposed* in subset A, whatever its proposed label.
 | C1.74 | `copyrightstatement <> STATEMENT_1` | 1 | A+B | not exposed | the licence renders the statement; Licence is the condition |
 | C1.75 | `copyrightstatement any "STATEMENT_1"` | 1 | A+B | not exposed | the licence renders the statement; Licence is the condition |
 | C1.76 | `editor any "PERSON_1"` | 1 | A+B | in scope |  |
-| C1.77 | `file <> 1` | 1 | A+B | in scope | legacy has-file boolean — Access level *is* Metadata only |
+| C1.77 | `file <> 1` | 1 | A+B | in scope | legacy has-file boolean — Access *is* Metadata only |
 | C1.78 | `for all "TEXT"` | 1 | B | translator-only | parse artifact — must not crash |
 | C1.79 | `jcr.impact_factor > 5` | 1 | A+B | not exposed | backoffice field — the public builder drops it |
 | C1.80 | `language <> eng` | 1 | A+B | in scope |  |

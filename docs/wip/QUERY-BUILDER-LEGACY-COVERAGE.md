@@ -27,7 +27,7 @@ contract wins.
 | `conference` | Conference | `conference` | is | — |
 | `publisher` | Publisher | `publisher` | contains, does not contain, is, is not | — |
 | `language` | Language | `language` | is | — |
-| `access` | Access level | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is; the backoffice adds is not | — |
+| `access` | Access | `file.access`, `accesslevel`, `embargo`, has-full-text, `file` (has-file boolean) | is; the backoffice adds is not | — |
 | `file_type` | Attached content | `file.kind` | is, is not, is any of | — |
 | `visibility` | Record visibility | — | is, is not, is any of | — |
 | `deposit_status` | Deposit status | — | is, is not, is any of | — |
