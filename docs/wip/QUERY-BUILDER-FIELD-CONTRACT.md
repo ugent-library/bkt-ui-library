@@ -117,7 +117,7 @@ The earlier prototype offers these public fields. Rule 5 in
   statement is rendered from the licence, so there is no separate copyright condition; raven does not model one.
 - The search box still finds a single identifier (rule 3). The public Identifier row takes up
   to five; the backoffice 50 for now.
-- Access and Organization gain *is not* on the backoffice; legacy `file.access <> open`
+- Access, Organization and Person gain *is not* on the backoffice; legacy `file.access <> open`
   (103 logged) stays authorable there.
 - Classification is UGent's publication typology. VABB evaluation, type and submission year
   remain separate external assertions. The prototype's Classification, VABB and JCR lists
