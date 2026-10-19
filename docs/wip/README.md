@@ -60,6 +60,9 @@ Earlier plans do not approve a new layout or enlarge the builder scope.
 
 One smaller public builder replaces Advanced and Expert authoring; existing query links
 keep working. The backoffice gets its own V1 builder (#295), which covers pasted ID batches.
+Product's planning assumption is that this route is available when public V1 replaces
+the old screens. The prototype also retains labelled future directions without committing
+them to a release.
 
 **Stage:** Prototype revision for the V1 field set. Raven #223–#230 still describe
 the earlier, larger scope.
@@ -68,9 +71,9 @@ no live count, no OR groups, no spelling suggestions; V1 goes live and live use 
 [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md):
 ordinary filter design is a separate review. Saved searches and sharing formats remain
 separate parity work.
-**Blocking:** Failure limits for the live test are not set. The ownership audit still blocks removal of
-legacy drafts.
-**Next:** Revise the prototype, then rescope Raven #223–#230.
+**Blocking:** None for prototype revision.
+**Next:** Make V1 and future directions clear in the prototype and reconcile its current
+documentation, then review for acceptance before rescoping Raven #223–#230.
 
 Read [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md). Reference, as needed:
 

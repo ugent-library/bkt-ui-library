@@ -6,13 +6,12 @@ Evidence: [query log](QUERY-BUILDER-EVIDENCE.md)*
 
 ## Problem
 
-People who build a public research set need to define, check and reuse it without query
-syntax. Today they choose between an Advanced form that lacks useful fields and an Expert
-form that needs query language.
+People building public research sets need to define, check and reuse them. Today's Advanced
+form lacks useful fields; Expert requires query language.
 
-Clause totals in the query log overstate demand. The 645 DOI clauses come from 19 submissions in 5 sessions. Person or organization combined with year
-or type appears in 461 submissions across 190 sessions. Old links are replayed heavily,
-which argues for keeping them working, not for building more authoring.
+Clause totals overstate demand: 645 DOI clauses come from 19 submissions in 5 sessions.
+Person or organization with year or type appears in 461 submissions across 190 sessions.
+Heavy link replay supports compatibility.
 
 ## Solution
 
@@ -26,72 +25,45 @@ V1 serves these tasks:
 
 | Task | Why the builder |
 |---|---|
-| Work by a person or organization, in a period, of a type | Combines several filters into one set; arrives from an entity page with the scope filled in |
-| Recent, openly available work on a topic | Live use shows whether people revise this set in the builder or with filters |
+| Work by a person or organization, in a period, of a type | Combines filters; preserves scope from entity pages |
+| Recent, openly available work on a topic | Test whether people prefer revising this through filters or the builder |
 | Work co-authored by two people | Two Person rows mean both people; the filter means either |
 | Words in the title, or a named journal or host | General search can't limit text to one field |
-
-The tasks need two kinds of fields:
 
 | Fields | Why |
 |---|---|
 | Person, Organization, Project, Keywords, Identifier, Access, Type, Year, Language | Every ordinary public filter. A filter set in search must reappear in the builder as an editable row |
 | Title, Appeared in, a role on Person | Tasks filters cannot do: words in the title, a named journal or host, author versus editor |
 
-Rows offer **is** and **is not**, plus **is any of** where a field often takes several
-values and **is between** on Year. A public row takes at most five values, so Identifier
-holds up to five identifiers. Field designs are in the
-[field contract](QUERY-BUILDER-FIELD-CONTRACT.md).
+The [field contract](QUERY-BUILDER-FIELD-CONTRACT.md) specifies operators per field.
+A public row takes at most five values, including Identifier.
 
 **Open full text or dataset** means Biblio offers the content for download or the record
 links to where it is stored. A metadata record alone does not count.
 
-**Later:**
+**Future directions:** additional fields, live counts, OR groups and spelling feedback
+remain in labelled prototype states, separate from V1 and without release commitments.
 
-- a public version with every public field, shown in the prototype's `builder-all-fields`
-  state; which version offers them is not decided;
-- the backoffice V1 (#295) with every field, including pasted ID batches, Classification and
-  curator review sets; the prototype shows it on
-  [curate](../../templates/biblio-team/curate.html) and
-  [search-researcher](../../templates/biblio-researcher/search-researcher.html).
+**Backoffice:** assume its route for pasted ID batches and curator tasks will be
+available when public V1 replaces the old screens, as directed by product. Its scope
+belongs to #295; the prototype shows it on
+[curate](../../templates/biblio-team/curate.html) and
+[search-researcher](../../templates/biblio-researcher/search-researcher.html).
 
 Saved searches and sharing formats are separate parity work.
 
 ## No-gos
 
-- No live count, OR groups or spelling suggestions. The prototype keeps them, marked as
-  outside V1.
+- No live count, OR groups or spelling suggestions in V1.
 - No query language.
 - No separate has-file condition, because it would hide content stored elsewhere.
 
 ## How we know it works
 
-V1 goes live, and live use is the test. Before launch, the legacy cases in
-[golden set](QUERY-BUILDER-GOLDEN-SET.md) subset B pass. The baseline is about 19 authored
-queries a day. Compare each month with the same month a year earlier, because use follows
-the academic year.
+People can build the set they need, understand what it includes and reuse it.
+Live use shows where V1 prevents a necessary task.
 
-After launch, look for three signals:
+Test plan: TBD, in a separate document later.
 
-- builder queries end in a copied link, embed, export or saved search;
-- empty result sets stay rare;
-- use concentrates in the fields V1 offers;
-- few people use **Missing a field? Tell us** in the builder, and no single field gets
-  repeated requests.
-
-Count authored queries separately from replayed links. Measure on the server, never
-people: no cookies, user identifiers, third-party trackers or client-side tracking. Raven
-#224 builds the measurement, and it ships with V1. Session IDs and query text
-are personal data, so aggregation and retention need DPO review.
-
-## The ask
-
-Go or no-go on this V1 scope.
-
-## Open questions
-
-- **Where does V1 fail?** Set the limits before launch: the share of builder queries
-  that find nothing, and the number of requests for one missing field.
-
-Next: the prototype shows entry, return and an old link V1 cannot edit; then Raven
-#223–#230 are rescoped.
+Existing links keep their meaning; the [golden set](QUERY-BUILDER-GOLDEN-SET.md)
+subset B must pass before launch. Measurement ships with V1 (Raven #224).
