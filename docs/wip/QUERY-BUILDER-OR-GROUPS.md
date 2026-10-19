@@ -4,7 +4,7 @@ Not in V1 ([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.m
 prototype keeps OR groups for a later release.
 
 Design companion to the [query builder bet](QUERY-BUILDER-BET.md). Cases come from the
-[golden set](QUERY-BUILDER-GOLDEN-SET.md); the interaction appears in the `builder-or-group`
+[golden set](QUERY-BUILDER-GOLDEN-SET.md); the interaction appears in the `explore-or-groups`
 state of `templates/partials/search-advanced-conditions.html`.
 
 ## Decision

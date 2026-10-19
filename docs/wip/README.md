@@ -72,8 +72,8 @@ no live count, no OR groups, no spelling suggestions; V1 goes live and live use 
 ordinary filter design is a separate review. Saved searches and sharing formats remain
 separate parity work.
 **Blocking:** None for prototype revision.
-**Next:** Make V1 and future directions clear in the prototype and reconcile its current
-documentation, then review for acceptance before rescoping Raven #223–#230.
+**Next:** Review the prototype and its kit page for acceptance, then rescope Raven
+#223–#230.
 
 Read [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md). Reference, as needed:
 

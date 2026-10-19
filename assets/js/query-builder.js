@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const dialog = document.getElementById('advanced-search-modal');
   const open = new URLSearchParams(location.search).has('advanced') ||
     document.querySelector('[data-qb-open]');
-  if (dialog && open) bootstrap.Modal.getOrCreateInstance(dialog).show();
+  if (!dialog || !open) return;
+  const opener = document.querySelector('[data-bs-target="#advanced-search-modal"]');
+  if (opener) dialog.addEventListener('hidden.bs.modal', () => opener.focus(), { once: true });
+  bootstrap.Modal.getOrCreateInstance(dialog).show();
 });
 
 (function () {

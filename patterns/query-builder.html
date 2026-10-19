@@ -4,19 +4,17 @@
   <header class="ds-page-header col-8">
     <p class="ds-eyebrow">Patterns</p>
     <h1 class="display-1">Query builder</h1>
-    <p class="lead">Advanced search for building a shareable research set. Each condition keeps its field, operator, and value visible.</p>
+    <p class="lead">Advanced search opens over the results on <a href="/templates/biblio-public/public-works.html?state=builder-fields">public works</a>. Every condition must match, and each keeps its field, operator and value visible.</p>
   </header>
-  <!-- Prototype note: the prototype is larger than V1. The live count, OR groups and spelling feedback are not in V1, and the V1 fields are not chosen yet (DD-006). -->
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">The dialog is a URL state</h2>
-    <p class="mb-3">The dialog gives realistic multi-row queries a focused, wide workspace while the result list remains visible as context. The container decision is recorded in <code>docs/decisions/DD-001-advanced-search-dialog.md</code>.</p>
-    <p class="mb-0">Opening adds <code>&amp;advanced=1</code>; closing removes it. Reload and Back preserve the expected state. Shared links keep the query but omit <code>advanced=1</code>.</p>
+    <h2 class="h4 mb-3">The dialog</h2>
+    <p class="mb-0">Opening adds <code>&amp;advanced=1</code> to the address and closing removes it, so Reload and Back restore the dialog. Closing returns focus to the control that opened the dialog, or to Advanced search when the page loaded with it open. Why a dialog: <code>docs/decisions/DD-001-advanced-search-dialog.md</code>.</p>
   </section>
 
   <section class="ds-section">
     <h2 class="h4 mb-3">The condition row</h2>
-    <p class="mb-4">The operator determines the value control. Every control has a row-specific accessible name.</p>
+    <p class="mb-4">Each control's accessible name includes its field or row number.</p>
 
     <div class="ds-demo">
       <div class="ds-demo-label"><h3 class="ds-demo-title">Two rows</h3></div>
@@ -34,20 +32,6 @@
             </div>
           </div>
           <div class="bt-query-builder__row-actions" data-qb-actions>
-            <div class="dropdown">
-              <button type="button" class="btn btn-ghost btn-sm text-muted"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-label="More actions for condition 1">
-                <i class="if if-more if--xs" aria-hidden="true"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                  <button type="button" class="dropdown-item" data-qb-or>
-                    <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
-                  </button>
-                </li>
-              </ul>
-            </div>
             <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
               aria-label="Remove condition 1: title matches quantum computing">
               <i class="if if-delete if--xs" aria-hidden="true"></i>
@@ -74,20 +58,6 @@
             </div>
           </div>
           <div class="bt-query-builder__row-actions" data-qb-actions>
-            <div class="dropdown">
-              <button type="button" class="btn btn-ghost btn-sm text-muted"
-                data-bs-toggle="dropdown" aria-expanded="false"
-                aria-label="More actions for condition 2">
-                <i class="if if-more if--xs" aria-hidden="true"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                  <button type="button" class="dropdown-item" data-qb-or>
-                    <i class="if if-add if--xs me-2" aria-hidden="true"></i>Add an &lsquo;or&rsquo;
-                  </button>
-                </li>
-              </ul>
-            </div>
             <button type="button" class="btn btn-ghost btn-sm" data-qb-remove
               aria-label="Remove condition 2: publication year is between 2015 and 2020">
               <i class="if if-delete if--xs" aria-hidden="true"></i>
@@ -104,64 +74,50 @@
         <div class="bt-query-builder__conditions">
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Abstract</p>
+            <p class="mb-0 fw-semibold">Keywords</p>
           </div>
           <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qbv-text-op">Operator, Abstract</label>
-            <select class="form-select form-select-sm" id="kit-qbv-text-op" data-qb-op>
-              <option selected>contains</option>
-              <option>does not contain</option>
-              <option>is</option>
-              <option>is not</option>
-            </select>
+            <span class="small text-muted" data-qb-op-fixed>is any of</span>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <label class="visually-hidden" for="kit-qbv-text-val">Value, Abstract</label>
-              <input type="text" class="form-control form-control-sm" id="kit-qbv-text-val" value="machine learning">
+              <label class="visually-hidden" for="kit-qbv-text-val">Value, Keywords</label>
+              <input type="text" class="form-control form-control-sm" id="kit-qbv-text-val" value="sensor networks; urban climate">
+              <p class="form-text mb-0">Separate by commas or semicolons.</p>
             </div>
           </div>
         </div>
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Publication status</p>
+            <p class="mb-0 fw-semibold">Access</p>
           </div>
           <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qbv-choice-op">Operator, Publication status</label>
-            <select class="form-select form-select-sm" id="kit-qbv-choice-op" data-qb-op>
-              <option selected>is</option>
-              <option>is not</option>
-              <option>is any of</option>
-            </select>
+            <span class="small text-muted" data-qb-op-fixed>is</span>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <label class="visually-hidden" for="kit-qbv-choice-val">Value, Publication status</label>
+              <label class="visually-hidden" for="kit-qbv-choice-val">Value, Access</label>
               <select class="form-select form-select-sm bt-query-builder__value-select" id="kit-qbv-choice-val">
-                <option>Unpublished</option>
-                <option selected>In press</option>
-                <option>Published</option>
+                <option selected>Open access</option>
+                <option>Restricted</option>
+                <option>Under embargo</option>
+                <option>Metadata only</option>
               </select>
             </div>
           </div>
         </div>
         <div class="bt-query-builder__row">
           <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Deposit status</p>
+            <p class="mb-0 fw-semibold">Publication type</p>
           </div>
           <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qbv-multi-op">Operator, Deposit status</label>
-            <select class="form-select form-select-sm" id="kit-qbv-multi-op" data-qb-op>
-              <option>is</option>
-              <option>is not</option>
-              <option selected>is any of</option>
-            </select>
+            <span class="small text-muted" data-qb-op-fixed>is any of</span>
             <div class="bt-query-builder__row-value" data-qb-value>
-              <span class="badge text-bg-primary-light" data-qb-token data-id="Submitted">
-                Submitted
-                <button type="button" aria-label="Remove Submitted from the Deposit status condition">
+              <span class="badge text-bg-primary-light" data-qb-token data-id="Journal article">
+                Journal article
+                <button type="button" aria-label="Remove Journal article from the Publication type condition">
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                 </button>
               </span>
-              <span class="badge text-bg-primary-light" data-qb-token data-id="Returned">
-                Returned
-                <button type="button" aria-label="Remove Returned from the Deposit status condition">
+              <span class="badge text-bg-primary-light" data-qb-token data-id="Book part">
+                Book part
+                <button type="button" aria-label="Remove Book part from the Publication type condition">
                   <i class="if if-close if--xs" aria-hidden="true"></i>
                 </button>
               </span>
@@ -187,7 +143,7 @@
               <option>as editor</option>
               <option>as supervisor</option>
             </select>
-            <span class="small text-muted" data-qb-op-fixed>is</span>
+            <span class="small text-muted" data-qb-op-fixed>is any of</span>
             <div class="bt-query-builder__row-value" data-qb-value>
               <span class="badge text-bg-primary-light" data-qb-token data-id="p5">
                 <i class="if if-ghent-university if--xs" aria-hidden="true"></i>
@@ -200,25 +156,6 @@
                 <i class="if if-add if--xs" aria-hidden="true"></i>
                 Add a person
               </button>
-            </div>
-          </div>
-        </div>
-        <div class="bt-query-builder__row">
-          <div class="bt-query-builder__row-kind">
-            <p class="mb-0 fw-semibold">Publication year</p>
-          </div>
-          <div class="bt-query-builder__phrase">
-            <label class="visually-hidden" for="kit-qbv-year-op">Operator, Publication year</label>
-            <select class="form-select form-select-sm" id="kit-qbv-year-op" data-qb-op>
-              <option data-qb-list-op>is</option>
-              <option selected data-qb-pair-op>is between</option>
-            </select>
-            <div class="bt-query-builder__row-value" data-qb-value>
-              <label class="visually-hidden" for="kit-qbv-year-from">First year, Publication year</label>
-              <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qbv-year-from" value="1998" min="1800" max="2100">
-              <span class="small text-muted">and</span>
-              <label class="visually-hidden" for="kit-qbv-year-to">Last year, Publication year</label>
-              <input type="number" class="form-control form-control-sm bt-query-builder__year" id="kit-qbv-year-to" value="2004" min="1800" max="2100">
             </div>
           </div>
         </div>
@@ -236,7 +173,7 @@
             <div class="bt-query-builder__row-value" data-qb-value>
               <label class="visually-hidden" for="kit-qbv-batch-val">Identifiers</label>
               <textarea class="form-control form-control-sm font-monospace" id="kit-qbv-batch-val" rows="2">10.1038/s41586-024-07123-4 01KMXJ30SYZC 01K167MXJ30S</textarea>
-              <p class="form-text mb-0">Separate by spaces, commas, semicolons, or line breaks. Up to 20 identifiers.</p>
+              <p class="form-text mb-0">Separate by spaces, commas, semicolons, or line breaks. Up to 5 identifiers.</p>
             </div>
           </div>
         </div>
@@ -246,27 +183,29 @@
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">The states</h2>
-    <p class="mb-4">The works template owns the complete states:</p>
-
-    <ul class="mb-4">
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-full-query">builder-full-query</a> — a realistic assembled query.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-empty">builder-empty</a> — a first visit.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-one-condition">builder-one-condition</a> — a query opened with one existing scope.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-query-language">builder-query-language</a> — after opening Advanced search on a query the builder cannot show. Behaviour to discuss with Raven.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-all-fields">builder-all-fields</a> — every public field. Not in V1; the version that offers them is not decided.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-or-group">builder-or-group</a> — a one-level OR group. Not in V1.</li>
-      <li><a href="/templates/biblio-public/public-works.html?state=builder-no-results">builder-no-results</a> — a query with no matches, with spelling feedback on one condition. Not in V1.</li>
-    </ul>
-
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">The count, and the one exit</h2>
-    <p class="mb-4">The submit reports the live approximate count through <code>aria-live</code>. In V1 the button reads Show results, without a count. Complete conditions update the URL immediately, so Show results, Escape, and Close leave the builder without applying or discarding a pending draft.</p>
+    <h2 class="h4 mb-3">The exit</h2>
+    <p class="mb-4">Complete conditions update the address at once, so Show results, Escape and Close keep every condition. A live count announces each change through <code>aria-live</code>.</p>
 
     <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Exit bar</h3></div>
+      <div class="ds-demo-label"><h3 class="ds-demo-title">V1 exit bar</h3></div>
+      <div class="ds-demo-body">
+        <div class="bt-toolbar">
+          <div class="bt-toolbar__right">
+            <button type="button" class="btn btn-ghost">
+              <i class="if if-close" aria-hidden="true"></i>
+              Clear all
+            </button>
+            <button type="button" class="btn btn-primary">
+              <i class="if if-search" aria-hidden="true"></i>
+              Show results
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-demo">
+      <div class="ds-demo-label"><h3 class="ds-demo-title">Exploration: exit bar with a live count</h3></div>
       <div class="ds-demo-body">
         <div class="bt-toolbar">
           <div class="bt-toolbar__right">
@@ -282,41 +221,33 @@
         </div>
       </div>
     </div>
-
   </section>
 
   <section class="ds-section">
-    <h2 class="h4 mb-3">When a facet cannot express the condition</h2>
-    <p class="mb-4">A condition can express a negation, a range, a pasted batch, or a value the facet does not offer. See the <a href="/templates/biblio-public/public-works.html?state=facet-set-in-builder">facet-set-in-builder</a> state; Raven owns the implementation scope.</p>
-
-    <div class="ds-demo">
-      <div class="ds-demo-label"><h3 class="ds-demo-title">Held by an advanced condition</h3></div>
-      <div class="ds-demo-body col-11 col-xxl-3 col-xl-4 col-lg-5 col-md-7">
-        <fieldset>
-          <legend class="form-label h6 mb-2">Access</legend>
-          <div class="border rounded-3 p-3 bt-bg-alt">
-            <p class="mb-1">
-              <i class="if if-search-eye-line if--sm" aria-hidden="true"></i>
-              Set in advanced search
-            </p>
-            <p class="mb-2">is <strong>Metadata only</strong></p>
-            <a href="/templates/biblio-public/public-works.html?advanced=1" class="btn btn-ghost btn-sm px-0">
-              Edit this condition
-            </a>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-
-  </section>
-
-  <section class="ds-section">
-    <h2 class="h4 mb-3">Where the rest lives</h2>
+    <h2 class="h4 mb-3">States</h2>
+    <h3 class="h6">V1</h3>
+    <ul class="mb-4">
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-empty">builder-empty</a> — a first visit.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-one-condition">builder-one-condition</a> — opened with one filter, which becomes a row.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-fields">builder-fields</a> — every V1 field.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=builder-query-language">builder-query-language</a> — opened on a link the builder cannot edit.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=no-results">no-results</a> — no matches after Show results.</li>
+    </ul>
+    <h3 class="h6">Explorations</h3>
     <ul class="mb-0">
-      <li>Simple search, facets, and chips: <a href="/patterns/search-and-filtering.html">search &amp; filtering</a> and <a href="/patterns/facets.html">facets</a>.</li>
-      <li>Candidate fields for V1: <code>docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md</code>.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=explore-spelling">explore-spelling</a> — a live count and spelling feedback on one condition.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=explore-or-groups">explore-or-groups</a> — one-level OR groups.</li>
+      <li><a href="/templates/biblio-public/public-works.html?state=explore-more-fields">explore-more-fields</a> — public fields beyond V1.</li>
+    </ul>
+  </section>
+
+  <section class="ds-section">
+    <h2 class="h4 mb-3">Related</h2>
+    <ul class="mb-0">
+      <li>Search box, facets and chips: <a href="/patterns/search-and-filtering.html">search &amp; filtering</a> and <a href="/patterns/facets.html">facets</a>.</li>
+      <li>Fields and operators: <code>docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md</code>.</li>
       <li>Interaction contract: <code>docs/JAVASCRIPT.md</code>.</li>
-      <li>Prototype URLs are placeholders; Raven owns the public URL grammar.</li>
+      <li>Raven owns the public URL grammar; prototype URLs are placeholders.</li>
     </ul>
   </section>
 </div>

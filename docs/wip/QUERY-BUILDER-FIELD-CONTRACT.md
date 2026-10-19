@@ -16,8 +16,8 @@ The legacy names each field covers are in
 ## Contract rules
 
 - A row contains field, optional qualifier, operator and value. All top-level rows must match.
-- Several values in one condition match any of them. Where the operator is a choice,
-  `is any of` says so. Two Person rows mean both people.
+- A row with several values reads `is any of` and matches any of them. Two Person rows
+  mean both people.
 - A qualifier changes how the same kind of value is read, such as a person's role. Any other difference
   gets its own field.
 - List inputs accept pasted batches and report unread values, including what the cap drops.
@@ -52,16 +52,16 @@ The earlier prototype offers these public fields. Rule 5 in
 |---|---|---|---|
 | `title` | Title | matches | text; autocompletes against titles (`TBD` raven capability) |
 | `abstract` | Abstract | contains, does not contain, is, is not | text |
-| `keyword` | Keywords | is | text; several values separated by commas or semicolons; autocompletes (`TBD` raven capability) |
-| `contributor` `TBD` | Person | is · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker |
-| `organization` | Organization | is | organization picker |
-| `project` | Project | is | project picker |
-| `work_type` | Publication type | is | type picker; raven's work-type catalog (`work_type.go`) |
+| `keyword` | Keywords | is any of | text; several values separated by commas or semicolons; autocompletes (`TBD` raven capability) |
+| `contributor` `TBD` | Person | is any of · role: in any role / as author / as first author / as last author / as sole author / as editor / as supervisor | person picker |
+| `organization` | Organization | is any of | organization picker |
+| `project` | Project | is any of | project picker |
+| `work_type` | Publication type | is any of | type picker; raven's work-type catalog (`work_type.go`) |
 | `year` | Publication year | is, is between | a year list for is, separated by commas or semicolons; a pair for between |
-| `container` | Appeared in | is · where: anywhere / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place | text; several values separated by semicolons; an identifier also matches (`TBD` schemes — raven names them) |
+| `container` | Appeared in | is any of · where: anywhere / journal / book / proceedings / magazine / newspaper / series / show or lecture series / venue / publisher place | text; several values separated by semicolons; an identifier also matches (`TBD` schemes — raven names them) |
 | `conference` | Conference | is | text |
 | `publisher` | Publisher | contains, does not contain, is, is not | text |
-| `language` | Language | is | language picker; raven's ISO 639-2/B vocabulary (`language.go`), shown by English name |
+| `language` | Language | is any of | language picker; raven's ISO 639-2/B vocabulary (`language.go`), shown by English name |
 | `access` | Access | is | select: Open access, Restricted, Under embargo, Metadata only |
 | `identifier` | Identifier | is any of, is, is not | list; up to five identifiers, scheme recognised per value |
 | `file_type` | Attached content | is, is not, is any of | select: Full text or dataset, Supplementary material, Table of contents, Peer review report, Colophon, Data fact sheet, Agreement |
@@ -74,7 +74,6 @@ The earlier prototype offers these public fields. Rule 5 in
   `external` field becomes *Organization is Ghent University*; the negation is backoffice-only.
 - The Person id is `TBD`: Raven's live person filter is named `author` and carries no role, so
   Raven must name the role-aware filter this row needs.
-- Year bounds are inclusive.
 - Appeared in matches the container, such as a journal, book or series; a qualifier can limit
   the kind. Journal abbreviations also match.
   *Anywhere* includes `publisher` where raven's crosswalk makes it the container (reports,
