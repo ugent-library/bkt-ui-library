@@ -60,10 +60,14 @@ Saved searches and sharing formats are separate parity work.
 
 ## How we know it works
 
-People can build the set they need, understand what it includes and reuse it.
-Live use shows where V1 prevents a necessary task.
+Assess three outcomes:
 
-Test plan: TBD, in a separate document later.
+- **Task success:** can people build the intended set and correctly understand it?
+- **Usefulness:** can they use the set for their purpose, such as viewing, sharing or exporting?
+- **Gaps:** which necessary tasks does V1 prevent?
+
+Usage, empty results and field choices help explain problems; they do not establish
+success on their own. Measurement methods and thresholds: TBD in a separate test plan later.
 
 Existing links keep their meaning; the [golden set](QUERY-BUILDER-GOLDEN-SET.md)
 subset B must pass before launch. Measurement ships with V1 (Raven #224).
