@@ -64,16 +64,15 @@ Product's planning assumption is that this route is available when public V1 rep
 the old screens. The prototype also retains labelled future directions without committing
 them to a release.
 
-**Stage:** Prototype revision for the V1 field set. Raven #223–#230 still describe
-the earlier, larger scope.
+**Stage:** Issue handoff. The prototype and its kit page are accepted.
 **Accepted:** [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md):
 no live count, no OR groups, no spelling suggestions; V1 goes live and live use is the test.
 [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md):
 ordinary filter design is a separate review. Saved searches and sharing formats remain
 separate parity work.
-**Blocking:** None for prototype revision.
-**Next:** Review the prototype and its kit page for acceptance, then rescope Raven
-#223–#230.
+**Blocking:** None.
+**Next:** Replace the Raven issue bodies with
+[`QUERY-BUILDER-ISSUES.md`](QUERY-BUILDER-ISSUES.md), then run the handoff cleanup.
 
 Read [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md). Reference, as needed:
 
