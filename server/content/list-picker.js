@@ -11,19 +11,19 @@ const LIST_PAGE = '/templates/biblio-researcher/list-detail.html';
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
 const escape = value => String(value).replace(/[&<>"]/g, ch => ESCAPES[ch]);
 
+const openLink = (slug, name, member) => (member
+  ? `<a href="${LIST_PAGE}" class="bt-link-more" aria-label="Open ${escape(name)}">Open <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>`
+  : '');
+
+// The response must not replace the checkbox: docs/ACCESSIBILITY.md D4.
+// htmx-routes.js reads the prefix back out of the checkbox id.
 function renderRow(prefix, slug, name, member) {
-  const method = member ? `hx-delete="/lists/${slug}"` : `hx-put="/lists/${slug}"`;
-  // htmx-routes.js reads the prefix back out of this id.
-  const rowId = `${prefix}-${slug}-row`;
-  const open = member
-    ? `
-  <a href="${LIST_PAGE}" class="bt-link-more" aria-label="Open ${escape(name)}">Open <i class="if if-arrow-right if--xs" aria-hidden="true"></i></a>`
-    : '';
   return `
-<div class="form-check" id="${rowId}">
-  <input class="form-check-input" type="checkbox" id="${prefix}-${slug}"${member ? ' checked' : ''}
-    ${method} hx-target="#${rowId}" hx-swap="outerHTML" hx-indicator="#${prefix}-lists">
-  <label class="form-check-label" for="${prefix}-${slug}">${escape(name)}</label>${open}
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" id="${prefix}-${slug}" name="member" value="true"${member ? ' checked' : ''}
+    hx-post="/lists/${slug}" hx-swap="none" hx-indicator="#${prefix}-lists">
+  <label class="form-check-label" for="${prefix}-${slug}">${escape(name)}</label>
+  <span id="${prefix}-${slug}-open">${openLink(slug, name, member)}</span>
 </div>`;
 }
 
@@ -50,8 +50,6 @@ function renderListPicker(prefix, q = '', created = false) {
 </form>`;
 }
 
-renderListPicker.renderRow = (prefix, slug, member) => renderRow(prefix, slug, listName(slug), member);
-
 const status = text => `\n<span hx-swap-oob="innerHTML:#list-status">${text}</span>`;
 const matchCount = n => (n === 1 ? '1 list matches.' : n ? `${n} lists match.` : 'No lists match.');
 
@@ -64,7 +62,8 @@ renderListPicker.searchStatus = (q = '') => {
   return status(`${matchCount(n)} Create &ldquo;${escape(query)}&rdquo; is available.`);
 };
 renderListPicker.createdStatus = name => status(`&ldquo;${escape(name)}&rdquo; created and added.`);
-renderListPicker.rowStatus = (slug, member) =>
-  status(`${member ? 'Added to' : 'Removed from'} ${escape(listName(slug))}.`);
+renderListPicker.membership = (prefix, slug, member) =>
+  `\n<span hx-swap-oob="innerHTML:#${prefix}-${slug}-open">${openLink(slug, listName(slug), member)}</span>`
+  + status(`${member ? 'Added to' : 'Removed from'} ${escape(listName(slug))}.`);
 
 module.exports = renderListPicker;

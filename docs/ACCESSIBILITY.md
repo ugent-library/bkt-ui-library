@@ -237,6 +237,7 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:a11y` enfo
 - Deposit step advance → move focus to the new step's `<h2>` (add `tabindex="-1"` to the heading, call `.focus()`).
 - Modal close → return focus to the element that opened the modal.
 - HTMX partial that replaces a section the user was interacting with → move focus to the replaced region's first meaningful element.
+- A checkbox or switch that saves when it changes → the response must not replace it. When HTMX replaces the focused control, the focus moves to the new control, and VoiceOver reads that move instead of the status message. Give the control `hx-swap="none"`, and update the status region (D1) and other affected elements out of band. An unticked box sends no value, so the server treats a missing value as unticked. Keep the control outside a `<form>`: HTMX sends every field of that form, so unticking one box still sends `member=true` when another box in the form is ticked. When the request fails, return the control to its previous state and announce the error (D3).
 
 **D5. `hx-target` selectors must exist in the DOM at request time**, not just at page load. If the target is conditionally rendered, use `hx-swap="outerHTML"` on the element itself or ensure the container is always present.
 

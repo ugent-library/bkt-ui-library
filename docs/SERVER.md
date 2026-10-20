@@ -63,9 +63,12 @@ endpoints.
 - `GET /lists?q=<text>` replaces the checklist. The fixture answers after 600ms so the dimmed
   state can be reviewed. The input triggers on `input` and `search`, not `keyup`, so the native
   clear control also refreshes the list.
-- `POST /lists` creates a list and returns it selected. `PUT /lists/<slug>` and
-  `DELETE /lists/<slug>` return the row (`<prefix>-<slug>-row`), swapped in place, so the typed
-  query and open panel survive and a ticked row gains its Open link.
+- `POST /lists` creates a list and returns it selected.
+- Ticking or unticking a list checkbox sends `POST /lists/<slug>`, with `member=true` only when
+  the box is ticked. The checkbox has `hx-swap="none"`, as
+  [`ACCESSIBILITY.md` D4](ACCESSIBILITY.md#d-dynamic-content-and-htmx) requires. When
+  `member=true` arrives, the response puts the Open link in `<prefix>-<slug>-open`. Otherwise it
+  empties that element.
 - The `/lists` responses also carry `<span hx-swap-oob="innerHTML:#list-status">` for the page's
   one status region: the match count, the created list, or the membership change.
 

@@ -5,6 +5,13 @@ What changed in v2, newest first. The old→new class map moved to
 
 ---
 
+## Ticking a list no longer replaces its checkbox (v2.50, 2026-10-20)
+
+No CSS change — re-adapt the add-to-list checklist. Each checkbox gets `name="member" value="true"`,
+`hx-post="/lists/<slug>"` and `hx-swap="none"`. The Open link moves into
+`<span id="<prefix>-<slug>-open">`. The rule is in `docs/ACCESSIBILITY.md` D4, the routes in
+`docs/SERVER.md`.
+
 ## Copy groups stack when they do not fit (v2.49, 2026-10-16)
 
 CSS changed — re-copy the compiled assets, and re-adapt every Biblio ID copy group. Replace
