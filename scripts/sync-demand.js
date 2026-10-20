@@ -24,7 +24,7 @@ if (!TOKEN) {
 
 async function fetchNotes() {
   const first = new URL('https://api.productboard.com/v2/notes');
-  if (since) first.searchParams.set('createdFrom', since);
+  if (since) first.searchParams.set('createdFrom', since.includes('T') ? since : `${since}T00:00:00Z`);
 
   const all = [];
   let next = first.toString();
