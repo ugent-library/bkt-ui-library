@@ -1,7 +1,7 @@
 # OR rule groups
 
 Not in V1 ([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). The
-prototype keeps OR groups for a later release.
+prototype keeps OR groups as an exploration. No V2 release scope is agreed.
 
 Design companion to the [query builder bet](QUERY-BUILDER-BET.md). Cases come from the
 [golden set](QUERY-BUILDER-GOLDEN-SET.md); the interaction appears in the `explore-or-groups`

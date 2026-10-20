@@ -41,4 +41,5 @@ Raven's field set is
 - `patterns/filter-picker.html`
 - `templates/partials/organization-picker-panel.html`
 - `templates/partials/project-picker-panel.html`
+- `docs/SEARCH-AND-FILTERING.md`
 - `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`

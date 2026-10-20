@@ -42,6 +42,6 @@ not displace the results.
 ## References
 
 - [`patterns/query-builder.html`](../../patterns/query-builder.html)
-- [`docs/wip/QUERY-BUILDER-BET.md`](../wip/QUERY-BUILDER-BET.md)
-- [`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`](../wip/QUERY-BUILDER-FIELD-CONTRACT.md)
+- [Search and filtering](../SEARCH-AND-FILTERING.md)
+- [Raven #228 — dialog implementation](https://github.com/ugent-library/raven/issues/228)
 - [`foundations/design-principles.html`](../../foundations/design-principles.html)

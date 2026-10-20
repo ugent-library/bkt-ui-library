@@ -45,6 +45,7 @@ Review that shared path together before implementation.
 
 - [Search and filtering](../SEARCH-AND-FILTERING.md)
 - [Active work](../wip/README.md)
-- [Advanced search proposal](../wip/QUERY-BUILDER-BET.md)
+- [Accepted Advanced search prototype](../../patterns/query-builder.html)
+- [Raven #223](https://github.com/ugent-library/raven/issues/223)
 - [DD-006 — smaller builder](DD-006-query-builder-v1-replaces-power-search.md)
 - [DD-001 — dialog over results](DD-001-advanced-search-dialog.md)

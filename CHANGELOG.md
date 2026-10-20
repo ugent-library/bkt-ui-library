@@ -116,8 +116,8 @@ unchanged. New row templates: `qb-row-date`, `qb-row-quantity`, `qb-row-record-h
 The backoffice researcher and curator works lists compose the same partials and `query-builder.js`
 as `public-works.html`, and open the public Advanced search dialog. One field list carries every
 chooser group; backoffice entries are gated by surface (v2.36). Re-adapt the field list against
-`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`, which owns every field, operator, catalog and value
-cap. Legacy coverage for the translator: `docs/wip/QUERY-BUILDER-LEGACY-COVERAGE.md`.
+[historical query-builder-field-contract](https://github.com/ugent-library/booktower-ui-library/blob/e0bb9a405164ac2d4124b26c77287b32f376e057/docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md), which owns every field, operator, catalog and value
+cap. Legacy coverage for the translator: [historical query-builder-legacy-coverage](https://github.com/ugent-library/booktower-ui-library/blob/e0bb9a405164ac2d4124b26c77287b32f376e057/docs/wip/QUERY-BUILDER-LEGACY-COVERAGE.md).
 
 ## Backoffice-only markup is gated by surface, not state names (v2.36, 2026-09-09)
 
@@ -151,7 +151,7 @@ through `data-result-actions`, `data-result-actions-toggle` and `data-result-act
 Re-adapt the results bar and carry the new `assets/js/result-actions.js` (`docs/JAVASCRIPT.md`).
 
 Every entry in `templates/partials/search-field-list.html` sets `data-qb-field` to its id in
-`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`; re-apply the ids if you adapted the partial.
+[historical query-builder-field-contract](https://github.com/ugent-library/booktower-ui-library/blob/e0bb9a405164ac2d4124b26c77287b32f376e057/docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md); re-apply the ids if you adapted the partial.
 
 `alert--seamless-inbox` is removed, against the promise in `docs/CLASS-USAGE.md`. Confirmations
 render as a standard `alert` inside the scrollable content column, never in the page chrome.
@@ -215,12 +215,12 @@ and supersedes v2.16 and v2.20.
 
 `public-search-advanced.html` is retired: the builder renders once, as a wide dialog over
 `public-works.html`, at `?advanced=1`. An empty query is legal
-(`docs/wip/QUERY-BUILDER-EVIDENCE.md`).
+([historical query-builder-evidence](https://github.com/ugent-library/booktower-ui-library/blob/e0bb9a405164ac2d4124b26c77287b32f376e057/docs/wip/QUERY-BUILDER-EVIDENCE.md)).
 
 `query-builder.js`, `people-search.js` and the filter bars read only hooks: `data-qb-*`,
 `[data-qb-count]`, `__row--error`, `__row--warning`, `data-picker-*`, `data-id`, `data-ps-row`,
 `data-filter-bar`. One picker panel partial per entity. Contracts: `docs/CLASS-USAGE.md`,
-`docs/JAVASCRIPT.md`, `docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md`.
+`docs/JAVASCRIPT.md`, [historical query-builder-field-contract](https://github.com/ugent-library/booktower-ui-library/blob/e0bb9a405164ac2d4124b26c77287b32f376e057/docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md).
 
 `[hidden] { display: none !important; }` — never `d-*` on an element JS toggles with `hidden`. New
 `bt-search-clear` with `search-clear.js`. `bt-panel` zeroes `dropdown-menu` padding: drop any

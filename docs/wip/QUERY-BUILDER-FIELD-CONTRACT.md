@@ -1,11 +1,14 @@
-# Query builder field contract — earlier prototype
+# Query builder field reference
 
-This is the field set of the earlier, larger prototype. The public V1 offers these rows:
+Public V1 design is accepted and handed off. Backoffice V1 is unfinished; its field
+set and limits remain proposals under Raven #295. Fields beyond public V1 remain
+explorations, without an agreed V2 scope.
+
+Public V1 offers these rows:
 `contributor` (with role), `organization`, `project`, `keyword`, `identifier`, `access`,
-`work_type`, `year`, `language`, `title` and `container`. The others wait for live use
-([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). The public
-Identifier row takes up to five identifiers; longer batches and Classification belong to the
-backoffice V1. The other public rows wait for a later version, not yet decided.
+`work_type`, `year`, `language`, `title` and `container`
+([DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)). Longer identifier
+batches and Classification belong to backoffice work.
 Raven owns backend mappings and safe input limits.
 
 The legacy names each field covers are in
@@ -30,8 +33,7 @@ The legacy names each field covers are in
   explicitly. Labels stay free to differ: the UI says *Publication type*, the id says
   `work_type`.
 
-`templates/partials/search-field-list.html` follows these tables. Fix this contract first when
-they disagree.
+`templates/partials/search-field-list.html` follows these tables. The prototype owns visible behavior; Raven owns backend semantics.
 
 | Operator | What it means to the user |
 |---|---|

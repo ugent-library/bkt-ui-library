@@ -34,8 +34,8 @@ the results to the builder because a set was empty or too large.
 
 ## References
 
-- [`docs/wip/QUERY-BUILDER-BET.md`](../wip/QUERY-BUILDER-BET.md)
-- [`docs/wip/QUERY-BUILDER-EVIDENCE.md`](../wip/QUERY-BUILDER-EVIDENCE.md)
+- [Search and filtering](../SEARCH-AND-FILTERING.md)
+- [Historical query-log analysis](../wip/QUERY-BUILDER-EVIDENCE.md) — field totals count clauses, not people; 645 DOI clauses came from 19 submissions in 5 sessions
 - [`patterns/query-builder.html`](../../patterns/query-builder.html)
 - [DD-001 — dialog over results](DD-001-advanced-search-dialog.md)
 - [Raven #223](https://github.com/ugent-library/raven/issues/223)

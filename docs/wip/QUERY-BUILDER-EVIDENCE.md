@@ -1,5 +1,9 @@
 # Evidence — the power-query log
 
+Historical evidence retained for backoffice V1 and future search design. Field totals
+below count clauses, not users or submissions: 645 DOI clauses came from 19 submissions
+in 5 sessions. These totals do not establish release scope.
+
 *Full pass over the frontend query log (2025-12-31 → 2026-07-09, 101,940,897 lines, 15.7 GB),
 2026-08-04. The numbers behind [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md), the exposure
 statuses in [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) and the cases in

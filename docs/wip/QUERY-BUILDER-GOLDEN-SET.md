@@ -1,4 +1,7 @@
-# Golden query set — draft
+# Golden query set
+
+Retained for Raven legacy-translation testing and assessing backoffice or future
+authoring scope. Public V1 handoff does not complete that work.
 
 Subset A labels which queries the earlier, larger prototype can author, not the V1
 tasks in [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md).

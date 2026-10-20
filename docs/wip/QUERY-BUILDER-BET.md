@@ -1,6 +1,7 @@
 # Product bet — a smaller Advanced search query builder
 
-*V1 scope proposal · Boundary: [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md) ·
+*Public V1 design accepted; Raven issues updated. Retained as context for unfinished
+backoffice work and future exploration. Boundary: [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md) ·
 Standard search: [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md) ·
 Evidence: [query log](QUERY-BUILDER-EVIDENCE.md)*
 

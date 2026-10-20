@@ -41,9 +41,9 @@ the standard search page will be reworked as a separate interface problem from
 Advanced search. Both preserve the same query meaning. Current guide rules remain
 the baseline until replacement designs are accepted.
 **Blocking:** Filter arrangement, labels, period presets and defaults are not decided.
-These do not block scoping the builder.
-**Next:** After the builder scope review, take up the standard search interface in its
-own bounded review, coordinating shared entry/return paths where needed.
+These belong to this redesign.
+**Next:** Review the standard search interface, coordinating its entry and return paths
+with the accepted Advanced search prototype.
 
 Candidates retained for that review, not accepted choices:
 
@@ -56,35 +56,25 @@ Candidates retained for that review, not accepted choices:
 
 Earlier plans do not approve a new layout or enlarge the builder scope.
 
-## Query builder (Advanced search) — V1
+## Query builder — backoffice V1 and future directions
 
-One smaller public builder replaces Advanced and Expert authoring; existing query links
-keep working. The backoffice gets its own V1 builder (#295), which covers pasted ID batches.
-Product's planning assumption is that this route is available when public V1 replaces
-the old screens. The prototype also retains labelled future directions without committing
-them to a release.
+**Stage:** Backoffice scope proposal. Public V1 design and kit are accepted; its Raven
+issues have been updated.
+**Accepted:** [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md)
+sets the public V1 boundary. [DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md)
+keeps the standard search redesign separate.
+**Blocking:** Backoffice V1 fields and value limits remain undecided
+([Raven #295](https://github.com/ugent-library/raven/issues/295)).
+**Next:** Scope the first useful backoffice release from curator tasks. Public V2 is
+not scoped; the `explore-*` prototype states retain future directions.
 
-**Stage:** Issue handoff. The prototype and its kit page are accepted.
-**Accepted:** [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md):
-no live count, no OR groups, no spelling suggestions; V1 goes live and live use is the test.
-[DD-008](../decisions/DD-008-public-search-and-builder-separate-design-scopes.md):
-ordinary filter design is a separate review. Saved searches and sharing formats remain
-separate parity work.
-**Blocking:** None.
-**Next:** Replace the Raven issue bodies with
-[`QUERY-BUILDER-ISSUES.md`](QUERY-BUILDER-ISSUES.md), then run the handoff cleanup.
-
-Read [`QUERY-BUILDER-BET.md`](QUERY-BUILDER-BET.md). Reference, as needed:
-
-- [`QUERY-BUILDER-FIELD-CONTRACT.md`](QUERY-BUILDER-FIELD-CONTRACT.md) — the field set of
-  the earlier prototype, with labels, operators and inputs; the menu for V1 fields.
-- [`QUERY-BUILDER-GOLDEN-SET.md`](QUERY-BUILDER-GOLDEN-SET.md) — 194 cases (all values are
-  fixtures). Subset B lists the legacy queries whose links must keep their meaning.
-- [`QUERY-BUILDER-LEGACY-COVERAGE.md`](QUERY-BUILDER-LEGACY-COVERAGE.md) — the legacy names
-  each field covers, for Raven's translator.
-- [`QUERY-BUILDER-EVIDENCE.md`](QUERY-BUILDER-EVIDENCE.md) — the query-log numbers.
-- [`QUERY-BUILDER-OR-GROUPS.md`](QUERY-BUILDER-OR-GROUPS.md) — OR-group design; in the
-  prototype, not in V1.
+- [Public V1 bet](QUERY-BUILDER-BET.md) — accepted design context and success criteria.
+- [Field reference](QUERY-BUILDER-FIELD-CONTRACT.md) — public V1 fields, backoffice
+  proposals and fields beyond V1.
+- [Evidence](QUERY-BUILDER-EVIDENCE.md) — historical query analysis and curator tasks.
+- [Golden set](QUERY-BUILDER-GOLDEN-SET.md) and [legacy coverage](QUERY-BUILDER-LEGACY-COVERAGE.md)
+  — test fixtures and translator context.
+- [OR groups](QUERY-BUILDER-OR-GROUPS.md) — future exploration, outside public V1.
 
 ## Review & curation flow — flow wireframes
 

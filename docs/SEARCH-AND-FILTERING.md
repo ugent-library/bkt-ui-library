@@ -2,15 +2,15 @@
 
 The settled interaction model for the **public** search & filtering surface. Backoffice
 search reuses the same primitives with more dimensions and is deepened separately. **Advanced
-search — one query builder replacing the legacy advanced and expert tiers — is in design:**
-`docs/wip/README.md` § Query builder; its pattern page is `patterns/query-builder.html`.
+search replaces the legacy Advanced and Expert authoring screens.** Its accepted prototype
+and reusable examples live in [Query builder](../patterns/query-builder.html);
+[Raven #223](https://github.com/ugent-library/raven/issues/223) owns V1 implementation.
 
 The standard search page will be reworked separately from Advanced search
 ([DD-008](decisions/DD-008-public-search-and-builder-separate-design-scopes.md)).
 Current placement rules below remain the baseline until that redesign is accepted.
-Scope Advanced search under DD-006 first, then develop its accepted scope; ordinary
-filter layout and defaults do not block that work. Both interfaces preserve the same
-query meaning. Their active proposals are tracked separately in `docs/wip/README.md`.
+Both interfaces preserve the same query meaning. The standard search redesign remains
+tracked in `docs/wip/README.md`.
 
 For the component markup this composes, see the kit pages: `elements/search-bar.html`
 (search form), `patterns/filter-picker.html` (Add-filter picker + editor + chips),
@@ -23,6 +23,32 @@ shipped): `PLAN-search-query-state.md`, `PLAN-public-works-parity.md`,
 `REPORT-search-log-analysis.md`, `ARCHIVE-PLAN-filter-subsystem.md`, and
 `ARCHIVE-PROPOSAL-panel-unification.md`. Those are gitignored, so this doc is the durable
 record — the settled decisions survive here if the notes disappear.
+
+---
+
+## Advanced search V1
+
+The [prototype](../patterns/query-builder.html) owns fields, operators and value controls.
+Top-level conditions must all match; several values in one condition match any of them.
+Two Person conditions therefore require both people. Public conditions take up to five
+values. Raven owns filter names, matching rules and catalogs; backoffice limits remain
+part of [#295](https://github.com/ugent-library/raven/issues/295).
+
+V1 uses **Show results**, without a live count. OR groups, extra public fields and spelling
+feedback remain `explore-*` prototype states, outside V1. Free text stays in the search box;
+sharing and saving remain results-page work.
+
+Existing query links keep their meaning even when V1 cannot edit them. The translator's
+fixture baseline is [golden set subset B](wip/QUERY-BUILDER-GOLDEN-SET.md),
+with [legacy mapping context](wip/QUERY-BUILDER-LEGACY-COVERAGE.md).
+These references describe legacy compatibility, not V1 authoring scope.
+The [earlier field proposal](wip/QUERY-BUILDER-FIELD-CONTRACT.md)
+is context for backoffice refinement, not an accepted backoffice release.
+
+Success means people can build and correctly understand the intended set, use it for
+their purpose and complete necessary tasks. Usage, empty results and field choices help
+explain gaps; they do not prove success alone. Measurement ships with V1
+([#224](https://github.com/ugent-library/raven/issues/224)); its test plan follows separately.
 
 ---
 
@@ -289,7 +315,7 @@ Curation, workflow, and expert dimensions are deliberately kept off the public s
 status, subtype, research group, librarian tags, created/updated dates — as is cross-tab /
 bulk / impact analysis. These belong to the
 backoffice, whose extended builder reuses the public Advanced search component with more
-fields (`docs/wip/QUERY-BUILDER-FIELD-CONTRACT.md` holds the field ledger). Public Advanced
+fields ([Raven #295](https://github.com/ugent-library/raven/issues/295) owns that scope). Public Advanced
 search offers public fields only; the backoffice search UI itself is undecided and is deepened
 elsewhere, not here.
 
@@ -298,7 +324,7 @@ I read it?"). **Full-text version** — the COAR published / accepted / author-v
 distinction — earns no sidebar slot either, because it is a repository-savvy distinction and
 the record shows it per file. It is a backoffice builder field, as is publication status.
 **Classification** (A1/A2/… research-evaluation tags) is a curator tag, so it earns no public
-slot; it is a backoffice builder field, and the field ledger holds its values. Publisher-side publication status is not a
+slot; it is a backoffice builder field, with values owned by Raven. Publisher-side publication status is not a
 separate axis; raven models it as `PublicationVersions`, which the full-text-version field
 surfaces. Indexing `publication_version` is raven work not yet done.
 

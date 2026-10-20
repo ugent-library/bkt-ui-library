@@ -72,7 +72,7 @@ Reviewers and curators deposit and curate: they enter old records, PDF drops, co
 
 ## Rhea View — "review coordinator / team lead"
 **Curator / reviewer profile**
-*Based on: the review coordinator (D4) + a work-dispatching lead + the goals map + the team coordinator's search cases (2026-09, `docs/wip/QUERY-BUILDER-EVIDENCE.md`).*
+*Based on: the review coordinator (D4) + a work-dispatching lead + the goals map + the team coordinator's search cases (2026-09, [interview evidence](wip/QUERY-BUILDER-EVIDENCE.md#search-cases--team-coordinator-interview-2026-09-01)).*
 
 - **Does:** plans + divides work; owns money/compliance (WoS funding, A1 validation; VABB/GPRC for SSH); dispatches urgent projects.
 - **Does the compliance reporting herself (2026-09 search cases):** VABB appeal to VLIR (three backoffice exports joined and narrowed in Excel, 227 records checked one by one); copublication overviews for diplomatic visits (InCites + VABB data; biblio only via a pasted id set on public advanced search); WOS-id gap checks via public xlsx exports because the backoffice takes no id set. Excel is her join tool; deliverables are .doc/.xlsx; tags select, exclude — and mislead, since their coverage is incomplete.

@@ -1,5 +1,8 @@
 # Query builder legacy coverage — context for raven's translator
 
+Retained for unfinished translation and backoffice work. This mapping does not
+approve a backoffice V1 or public V2 field set.
+
 The field overview reflects the earlier, larger prototype, not the V1 tasks in
 [DD-006](../decisions/DD-006-query-builder-v1-replaces-power-search.md).
 
