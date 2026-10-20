@@ -207,7 +207,7 @@
                   <!-- Chips rendered by filter-bar.js from data-initial-filters —
                       per state: a name search and an empty query start clean. -->
                   <!-- [html-validate-disable-block no-dup-id -- @state blocks; one renders at a time] -->
-                  <!-- @state: results best-bet no-results builder-fields explore-more-fields builder-query-language builder-one-condition explore-or-groups explore-spelling -->
+                  <!-- @state: results best-bet no-results builder-fields explore-more-fields builder-one-condition explore-or-groups explore-spelling -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips"
                     data-initial-filters='{
@@ -219,7 +219,7 @@
                     }'>
                   </div>
                   <!-- @state -->
-                  <!-- @state: no-query builder-empty -->
+                  <!-- @state: no-query builder-empty builder-query-language -->
                   <div class="d-flex flex-wrap align-items-center gap-2" role="group"
                     aria-label="Active filters" id="wf-active-chips">
                   </div>
@@ -947,6 +947,16 @@
             </a>
           </div>
         </article>
+        <!-- @state -->
+
+        <!-- @state: builder-query-language -->
+        <div class="alert alert-info alert--sm mb-4" role="note">
+          <div class="d-flex align-items-start gap-2">
+            <i class="if if-info-circle flex-shrink-0 mt-1" aria-hidden="true"></i>
+            <p class="mb-0">These results come from a link with conditions you can't change
+              here. <a href="public-works.html?state=no-query">Start a new search</a></p>
+          </div>
+        </div>
         <!-- @state -->
 
         <!-- 27 results at 50 per page is one page: the bar keeps the count and drops the
