@@ -69,7 +69,7 @@ endpoints.
   [`ACCESSIBILITY.md` D4](ACCESSIBILITY.md#d-dynamic-content-and-htmx) requires. When
   `member=true` arrives, the response puts the Open link in `<prefix>-<slug>-open`. Otherwise it
   empties that element.
-- The `/lists` responses also carry `<span hx-swap-oob="innerHTML:#list-status">` for the page's
+- The `/lists` responses also carry `<span hx-swap-oob="innerHTML:#page-status">` for the page's
   one status region: the match count, the created list, or the membership change.
 
 The fixture does not persist membership after a later checklist render.
