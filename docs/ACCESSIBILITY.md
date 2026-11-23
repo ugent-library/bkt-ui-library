@@ -216,10 +216,11 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:a11y` enfo
 <input hx-get="/lists" hx-trigger="input changed delay:200ms, search"
   hx-target="#lists" hx-indicator="#lists">
 <div class="bt-panel__body bt-panel__body--checklist" id="lists">…</div>
-<div class="visually-hidden" id="list-status" role="status"></div>
+<!-- once per page, outside anything HTMX swaps -->
+<div class="visually-hidden" id="page-status" role="status"></div>
 
 <!-- in the response, after the swapped content -->
-<span hx-swap-oob="innerHTML:#list-status">2 lists match.</span>
+<span hx-swap-oob="innerHTML:#page-status">2 lists match.</span>
 ```
 
 **D2. Live regions must be in the DOM before the swap.** HTMX cannot inject an `aria-live` region and have it work immediately — screen readers only observe regions that existed at page load. The result count, status messages, and error regions must be present (even if empty) in the initial HTML.
@@ -227,7 +228,7 @@ Any `<form>` that *is* present must satisfy this rule (`npm run check:a11y` enfo
 ```html
 <!-- ✓ Correct — empty on load, populated by HTMX -->
 <span aria-live="polite" id="result-count">4,831 records</span>
-<span id="save-status" role="status" aria-live="polite"></span>
+<div class="visually-hidden" id="page-status" role="status"></div>
 ```
 
 **D3. `role="status"` vs `role="alert"`.** Use `role="status"` (polite) for confirmations: saved, copied, updated. Use `role="alert"` (assertive) only for errors that block the user. Never use `role="alert"` for success messages — it interrupts whatever the screen reader was doing.

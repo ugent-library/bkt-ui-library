@@ -50,7 +50,7 @@ function renderListPicker(prefix, q = '', created = false) {
 </form>`;
 }
 
-const status = text => `\n<span hx-swap-oob="innerHTML:#list-status">${text}</span>`;
+const status = text => `\n<span hx-swap-oob="innerHTML:#page-status">${text}</span>`;
 const matchCount = n => (n === 1 ? '1 list matches.' : n ? `${n} lists match.` : 'No lists match.');
 
 renderListPicker.searchStatus = (q = '') => {
